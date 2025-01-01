@@ -12,3 +12,4 @@
 | 6 | 2026-09-26 | banimal | history | `docs/manual/user-manual.html` | `88c703ad` | Banimal™ Connector Manual | 29828 | 26 | 2 | 58.0 |
 | 7 | 2026-09-26 | banimal | history | `docs/manual/user-manual.html` | `a2049634` | Banimal™ Connector Manual | 29351 | 26 | 2 | 57.9 |
 | 8 | 2026-09-26 | fruitful-superagent | main | `claude/artifacts/banimal-connector-manual-6aa4bd2e/index.html` | `0752e034` | Banimal™ Connector Manual | 281247 | 19 | 2 | 76.1 |
+| 9 |  | banimal | main | `docs/manual/user-manual.html` | `df27979a` | Banimal™ Connector Manual | 37176 | 48 | 2 | 80.7 |
