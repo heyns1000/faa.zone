@@ -27,7 +27,7 @@
       </div>
     </header>
 
-    <!-- 🎛️ Terminal -->
+    <!-- 🎛️ Terminal Interface -->
     <main class="flex-grow flex flex-col items-center justify-center px-4 py-12">
       <div class="w-full max-w-2xl bg-treatyDark p-6 rounded-xl shadow-lg border border-treatyGold">
 
@@ -37,19 +37,22 @@
           <p class="text-sm text-treatySilver">Speak directly to the Vault.</p>
         </div>
 
-        <!-- Prompt Form -->
-        <form id="vaultForm" class="flex flex-col gap-4" onsubmit="return false;">
-          <textarea id="vaultInput" rows="4" placeholder="Enter your scroll prompt…" class="w-full p-4 bg-black text-white border border-treatySilver rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-treatyGold placeholder-treatySilver"></textarea>
-          <button id="vaultSend" type="button" class="bg-treatyGold text-black font-bold py-2 px-4 rounded hover:bg-yellow-400 transition">
-            Send Prompt →
-          </button>
+        <!-- GPT-style Input Field -->
+        <form id="vaultForm" class="flex flex-col gap-4 relative" onsubmit="return false;">
+          <div class="relative">
+            <textarea id="vaultInput" rows="4" placeholder="Enter your scroll prompt…" class="w-full p-4 pr-12 bg-black text-white border border-treatySilver rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-treatyGold placeholder-treatySilver"></textarea>
+            <button id="vaultSend" type="button" class="absolute bottom-2 right-2 text-treatyGold hover:text-yellow-400 transition" title="Send">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4l16 8-16 8v-6l11-2-11-2V4z"/>
+              </svg>
+            </button>
+          </div>
         </form>
 
-        <!-- Glyph Output -->
+        <!-- Echo Output -->
         <div id="vaultOutput" class="mt-6 p-4 bg-black border border-treatySilver rounded-lg min-h-[120px] font-mono text-sm whitespace-pre-wrap text-treatySilver glyph-blink">
           🔮 Vault standing by…
         </div>
-
       </div>
     </main>
 
@@ -58,7 +61,7 @@
       VaultClaim™ Active · FAA.Zone Treaty Scroll · ⌘ ClaimRoot 2025
     </footer>
 
-    <!-- ⚙️ Terminal Logic -->
+    <!-- ⚙️ Vault Logic -->
     <script>
       const input = document.getElementById('vaultInput');
       const output = document.getElementById('vaultOutput');
@@ -77,14 +80,16 @@
           output.classList.remove('glyph-blink');
           output.textContent = `🌀 Treaty Echo:\n\n🦍 ${prompt}`;
         }, 1300);
+
+        input.value = ""; // Clear after send
       }
 
-      // Manual button click
+      // Button click
       button.addEventListener('click', sendToVault);
 
-      // Ctrl+Enter / Cmd+Enter inside textarea
+      // Press Enter to submit, Shift+Enter = newline
       input.addEventListener('keydown', (e) => {
-        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        if (e.key === 'Enter' && !e.shiftKey) {
           e.preventDefault();
           sendToVault();
         }
