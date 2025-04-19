@@ -5,47 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>VaultMaster Terminal — FAA.Zone</title>
     <link href="https://faa.zone/treaty.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="VaultMaster GPT · FAA.Zone Claim Terminal #1" />
+    <style>
+      .glyph-blink {
+        animation: blink 1.2s infinite alternate;
+      }
+      @keyframes blink {
+        0% { opacity: 0.5; }
+        100% { opacity: 1; }
+      }
+    </style>
   </head>
   <body class="bg-black text-white min-h-screen flex flex-col justify-between">
 
-    <!-- Header -->
+    <!-- 🧬 Header -->
     <header class="w-full p-6 border-b border-treatyGold bg-black z-50 sticky top-0">
       <div class="max-w-6xl mx-auto flex items-center justify-between">
         <h1 class="text-2xl font-bold text-treatyGold">🦍 VaultMaster Terminal</h1>
-        <a href="/" class="text-sm text-treatySilver hover:text-white">← Back to FAA.Zone</a>
+        <a href="/" class="text-sm text-treatySilver hover:text-white transition">← Back to FAA.Zone</a>
       </div>
     </header>
 
-    <!-- Terminal Interface -->
+    <!-- 🎛️ Terminal -->
     <main class="flex-grow flex flex-col items-center justify-center px-4 py-12">
       <div class="w-full max-w-2xl bg-treatyDark p-6 rounded-xl shadow-lg border border-treatyGold">
 
-        <!-- Glyph Header -->
+        <!-- Terminal Headline -->
         <div class="text-center mb-6">
           <p class="text-xl font-medium text-treatyGold">VaultMaster Interface</p>
           <p class="text-sm text-treatySilver">Speak directly to the Vault.</p>
         </div>
 
-        <!-- Prompt Box -->
+        <!-- Prompt Form -->
         <form id="vaultForm" class="flex flex-col gap-4">
           <textarea id="vaultInput" rows="4" placeholder="Enter your scroll prompt…" class="w-full p-4 bg-black text-white border border-treatySilver rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-treatyGold placeholder-treatySilver"></textarea>
-          <button type="submit" class="bg-treatyGold text-black font-bold py-2 px-4 rounded hover:bg-yellow-400 transition">Send Prompt →</button>
+          <button type="submit" class="bg-treatyGold text-black font-bold py-2 px-4 rounded hover:bg-yellow-400 transition">
+            Send Prompt →
+          </button>
         </form>
 
-        <!-- Output Area -->
-        <div id="vaultOutput" class="mt-6 p-4 bg-black border border-treatySilver rounded-lg min-h-[120px] font-mono text-sm whitespace-pre-wrap text-treatySilver">🔮 Vault standing by…</div>
+        <!-- Glyph Output -->
+        <div id="vaultOutput" class="mt-6 p-4 bg-black border border-treatySilver rounded-lg min-h-[120px] font-mono text-sm whitespace-pre-wrap text-treatySilver glyph-blink">
+          🔮 Vault standing by…
+        </div>
 
       </div>
     </main>
 
-    <!-- Footer -->
+    <!-- 📜 Footer -->
     <footer class="bg-black border-t border-treatySilver p-6 text-center text-xs text-treatySilver">
       VaultClaim™ Active · FAA.Zone Treaty Scroll · ⌘ ClaimRoot 2025
     </footer>
 
-    <!-- Terminal Logic -->
+    <!-- ⚙️ Terminal JS -->
     <script>
       const form = document.getElementById('vaultForm');
       const input = document.getElementById('vaultInput');
@@ -62,19 +75,13 @@
 
         output.textContent = "⏳ Syncing with Vault…";
 
-        try {
-          const response = await fetch("https://api.faa.zone/vault", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ prompt }),
-          });
-
-          const data = await response.json();
-          output.textContent = `🌀 Treaty Echo:\n\n${data.reply}`;
-        } catch (error) {
-          output.textContent = "❌ Vault unreachable. Please try again.";
-        }
+        // ✅ Fake GPT Echo Logic
+        setTimeout(() => {
+          output.classList.remove('glyph-blink');
+          output.textContent = `🌀 Treaty Echo:\n\n🦍 ${prompt}`;
+        }, 1300);
       });
     </script>
+
   </body>
 </html>
