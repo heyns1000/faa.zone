@@ -38,9 +38,9 @@
         </div>
 
         <!-- Prompt Form -->
-        <form id="vaultForm" class="flex flex-col gap-4">
+        <form id="vaultForm" class="flex flex-col gap-4" onsubmit="return false;">
           <textarea id="vaultInput" rows="4" placeholder="Enter your scroll prompt…" class="w-full p-4 bg-black text-white border border-treatySilver rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-treatyGold placeholder-treatySilver"></textarea>
-          <button type="submit" class="bg-treatyGold text-black font-bold py-2 px-4 rounded hover:bg-yellow-400 transition">
+          <button id="vaultSend" type="button" class="bg-treatyGold text-black font-bold py-2 px-4 rounded hover:bg-yellow-400 transition">
             Send Prompt →
           </button>
         </form>
@@ -58,40 +58,37 @@
       VaultClaim™ Active · FAA.Zone Treaty Scroll · ⌘ ClaimRoot 2025
     </footer>
 
-    <!-- ⚙️ Terminal JS -->
+    <!-- ⚙️ Terminal Logic -->
     <script>
-      <script>
-  const form = document.getElementById('vaultForm');
-  const input = document.getElementById('vaultInput');
-  const output = document.getElementById('vaultOutput');
+      const input = document.getElementById('vaultInput');
+      const output = document.getElementById('vaultOutput');
+      const button = document.getElementById('vaultSend');
 
-  function sendToVault() {
-    const prompt = input.value.trim();
-    if (!prompt) {
-      output.textContent = "⚠️ Please enter a prompt to send.";
-      return;
-    }
+      function sendToVault() {
+        const prompt = input.value.trim();
+        if (!prompt) {
+          output.textContent = "⚠️ Please enter a prompt to send.";
+          return;
+        }
 
-    output.textContent = "⏳ Syncing with Vault…";
+        output.textContent = "⏳ Syncing with Vault…";
 
-    // ✨ Simulated Echo
-    setTimeout(() => {
-      output.classList.remove('glyph-blink');
-      output.textContent = `🌀 Treaty Echo:\n\n🦍 ${prompt}`;
-    }, 1300);
-  }
+        setTimeout(() => {
+          output.classList.remove('glyph-blink');
+          output.textContent = `🌀 Treaty Echo:\n\n🦍 ${prompt}`;
+        }, 1300);
+      }
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    sendToVault();
-  });
+      // Manual button click
+      button.addEventListener('click', sendToVault);
 
-  // ✅ Submit on Ctrl+Enter or Cmd+Enter
-  input.addEventListener('keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-      e.preventDefault();
-      sendToVault();
-    }
-  });
-</script>
-
+      // Ctrl+Enter / Cmd+Enter inside textarea
+      input.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+          e.preventDefault();
+          sendToVault();
+        }
+      });
+    </script>
+  </body>
+</html>
