@@ -60,28 +60,38 @@
 
     <!-- ⚙️ Terminal JS -->
     <script>
-      const form = document.getElementById('vaultForm');
-      const input = document.getElementById('vaultInput');
-      const output = document.getElementById('vaultOutput');
+      <script>
+  const form = document.getElementById('vaultForm');
+  const input = document.getElementById('vaultInput');
+  const output = document.getElementById('vaultOutput');
 
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const prompt = input.value.trim();
+  function sendToVault() {
+    const prompt = input.value.trim();
+    if (!prompt) {
+      output.textContent = "⚠️ Please enter a prompt to send.";
+      return;
+    }
 
-        if (!prompt) {
-          output.textContent = "⚠️ Please enter a prompt to send.";
-          return;
-        }
+    output.textContent = "⏳ Syncing with Vault…";
 
-        output.textContent = "⏳ Syncing with Vault…";
+    // ✨ Simulated Echo
+    setTimeout(() => {
+      output.classList.remove('glyph-blink');
+      output.textContent = `🌀 Treaty Echo:\n\n🦍 ${prompt}`;
+    }, 1300);
+  }
 
-        // ✅ Fake GPT Echo Logic
-        setTimeout(() => {
-          output.classList.remove('glyph-blink');
-          output.textContent = `🌀 Treaty Echo:\n\n🦍 ${prompt}`;
-        }, 1300);
-      });
-    </script>
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    sendToVault();
+  });
 
-  </body>
-</html>
+  // ✅ Submit on Ctrl+Enter or Cmd+Enter
+  input.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      e.preventDefault();
+      sendToVault();
+    }
+  });
+</script>
+
