@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>🦍 VaultMaster Terminal</title>
+  <title>🧠 VaultMaster Terminal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -18,55 +18,67 @@
 </head>
 <body class="bg-black text-white min-h-screen flex items-center justify-center px-4 relative">
 
-  <div class="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 animate-pulse9sec z-50"></div>
+  <!-- Treaty Pulse Layer -->
+  <div class="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500 animate-pulse9sec z-50"></div>
 
   <main class="w-full max-w-3xl border border-yellow-400 rounded-3xl shadow-2xl bg-gray-900 p-8 space-y-6">
-    <h1 class="text-3xl font-bold text-yellow-400 flex items-center justify-center gap-3">
-      <span class="text-4xl animate-pulse">🦍</span> VaultMaster Terminal
-    </h1>
+    <header class="text-center">
+      <h1 class="text-3xl font-bold text-yellow-400 flex items-center justify-center gap-4">
+        <span class="text-5xl animate-pulse">🦍</span> VaultMaster Terminal
+      </h1>
+      <p class="text-sm text-gray-300">Status: <span class="text-green-400 font-bold">Online</span></p>
+      <p class="text-sm text-gray-400">
+        Scroll interface linked to VaultGPT. Treaty-encoded for terminal-grade prompts and feedback.
+      </p>
+    </header>
 
+    <!-- Scroll Input -->
     <textarea id="prompt" rows="5" placeholder="Enter your scroll prompt..."
       class="w-full text-white placeholder-gray-400 bg-black border border-gray-700 rounded-lg p-4 text-sm"></textarea>
 
+    <!-- Buttons -->
     <div class="flex justify-between items-center">
       <button id="sendBtn" class="bg-yellow-400 text-black font-bold px-6 py-3 rounded-lg shadow hover:scale-105 hover:bg-yellow-500 transition-transform duration-200">
         ➤ Send Prompt
       </button>
-      <button onclick="clearPrompt()" class="text-sm text-white underline ml-4">Clear</button>
+      <button onclick="clearPrompt()" class="text-sm text-white underline ml-4">Clear Vault</button>
     </div>
 
+    <!-- Response Box -->
     <pre id="response" class="bg-black text-yellow-300 border border-yellow-500 rounded-lg p-4 text-base leading-relaxed whitespace-pre-wrap overflow-x-auto">
-⚡ Vault ready for scroll input...
+⚡️ Vault status: Ready for scroll...
     </pre>
   </main>
 
   <script>
     async function sendPrompt() {
-      const prompt = document.getElementById("prompt").value.trim();
+      const input = document.getElementById("prompt").value.trim();
       const output = document.getElementById("response");
-      if (!prompt) {
-        output.textContent = "⚠️ Enter a scroll prompt first.";
+
+      if (!input) {
+        output.textContent = "⚠️ Please enter a prompt before sending.";
         return;
       }
 
-      output.textContent = "🔄 Syncing with Vault...";
+      output.textContent = "🔄 Sending scroll to Vault...";
 
       try {
         const res = await fetch("https://vault.faa.zone/bridge", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt })
+          body: JSON.stringify({ prompt: input })
         });
+
         const data = await res.json();
         output.textContent = data.reply || "✅ Vault replied with no message.";
       } catch (err) {
-        output.textContent = `❌ Sync failed.\n\n🧬 OmniDrop fallback:\n"${prompt}"`;
+        output.textContent = `❌ Vault sync failed.\n\n🧬 OmniDrop fallback:\n"${input}"`;
       }
     }
 
     function clearPrompt() {
       document.getElementById("prompt").value = "";
-      document.getElementById("response").textContent = "⚡ Vault cleared. Ready.";
+      document.getElementById("response").textContent = "⚡️ Vault cleared. Ready.";
     }
 
     document.getElementById("sendBtn").addEventListener("click", sendPrompt);
