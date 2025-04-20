@@ -8,3 +8,4 @@
 | 2 | 2025-04-20 | faa.zone | history | `docs/terminals/distribution.html` | `74d48611` | 📦 Distribution Terminal | 3415 | 3 | 2 | 34.3 |
 | 3 | 2025-04-20 | faa.zone | history | `docs/terminals/freight-ops.html` | `690b4e7b` | 🚚 Freight Ops Terminal | 3398 | 3 | 2 | 34.3 |
 | 4 | 2025-04-20 | faa.zone | history | `docs/terminals/global-view.html` | `f1fb4816` | 🌍 Global View Terminal | 3393 | 3 | 2 | 34.3 |
+| 5 | 2025-04-20 | faa.zone | history | `docs/terminals/loop-watch.html` | `483a52cc` | ♻️ Loop Watch Terminal | 3400 | 3 | 2 | 34.3 |
