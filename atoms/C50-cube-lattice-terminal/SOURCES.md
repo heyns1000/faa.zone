@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-04-20 | faa.zone | history | `docs/terminals/cube-lattice.html` | `c57c15ee` | 🧱 Cube Lattice Terminal | 3699 | 3 | 2 | 34.4 |
+| 2 | 2025-04-20 | faa.zone | history | `docs/terminals/distribution.html` | `74d48611` | 📦 Distribution Terminal | 3415 | 3 | 2 | 34.3 |
