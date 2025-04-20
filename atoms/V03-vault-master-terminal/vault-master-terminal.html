@@ -1,0 +1,43 @@
+<script>
+async function sendPrompt() {
+  const input = document.getElementById("prompt").value.trim();
+  const responseBox = document.getElementById("response");
+
+  if (!input) {
+    responseBox.textContent = "⚠️ Treaty input required. Glyph not 
+received.";
+    return;
+  }
+
+  responseBox.textContent = "🔄 Dispatching scroll to VaultLayer...";
+
+  try {
+    const res = await fetch("https://vault.faa.zone/bridge", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt: input })
+    });
+
+    if (!res.ok) throw new Error(`Bridge error: ${res.status}`);
+
+    const data = await res.json();
+    responseBox.innerHTML = `<div class='text-green-600 font-mono'>✅ 
+VaultGPT:</div><br>${data.reply || "🧬 Treaty confirmed."}`;
+
+  } catch (err) {
+    console.warn("VaultBridge unreachable. Activating OmniDrop.");
+    responseBox.innerHTML = `
+      <div class="font-mono text-purple-600">
+        🧬 <strong>OmniDrop™ Activated</strong><br><br>
+        <span class="text-sm text-gray-700">VaultBridge unreachable. Local 
+response enabled.</span><br><br>
+        <span class="text-green-500">🧠 Scroll Received:</span><br>
+        "<span class="italic">${input}</span>"<br><br>
+        <span class="text-yellow-400">✅ Treaty Acknowledged. Scroll claim 
+registered in fallback state.</span>
+      </div>
+    `;
+  }
+}
+</script>
+
