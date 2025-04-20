@@ -1,54 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>📦 7038 FAA Brands</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>📦 7038 FAA Brands Terminal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>@keyframes 
-pulse9sec{0%,100%{transform:scaleX(0);}50%{transform:scaleX(1);}}.animate-pulse9sec{animation:pulse9sec 
-9s infinite ease-in-out;transform-origin:left;}</style>
+  <style>
+    @keyframes pulse9sec { 0%, 100% { transform: scaleX(0); } 50% { transform: scaleX(1); } }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-0.25rem); } }
+    .animate-pulse9sec { animation: pulse9sec 9s infinite ease-in-out; transform-origin: left; }
+    .float-glyph { animation: float 3s ease-in-out infinite; }
+  </style>
 </head>
-<body class="bg-white text-gray-900 font-sans min-h-screen flex 
-items-center justify-center px-4">
-<div class="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-500 
-via-blue-500 to-pink-500 animate-pulse9sec z-50"></div>
-<div class="w-full max-w-3xl bg-gray-100 rounded-3xl shadow-xl border 
-border-yellow-400 p-8 space-y-6">
-<h1 class="text-3xl font-extrabold text-yellow-700 text-center">📦 7038 
-FAA Brands</h1>
-<p class="text-center text-sm text-gray-600">Status: <span 
-class="text-green-600 font-bold">Online</span></p>
-<p class="text-center text-sm text-gray-600">Terminal scroll for viewing, 
-querying, and claiming from the 7038 FAA Treaty-aligned brand 
-registrants.</p>
-<textarea id="prompt" rows="6" placeholder="Enter brand registry 
-scroll..." class="w-full bg-white text-yellow-700 
-placeholder:text-yellow-400 border border-yellow-300 rounded-xl px-4 py-3 
+<body class="bg-black text-white min-h-screen flex items-center justify-center px-4">
+
+  <div class="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-400 via-pink-500 to-indigo-600 animate-pulse9sec z-50"></div>
+
+  <main class="w-full max-w-3xl border border-amber-500 rounded-3xl shadow-2xl bg-black/80 backdrop-blur p-8 space-y-6">
+    <header class="text-center">
+      <h1 class="text-3xl font-bold text-amber-400 flex items-center justify-center gap-4">
+        <span class="text-5xl float-glyph">📦</span> 7038 FAA Brands Terminal <span class="text-4xl animate-pulse">🧬</span>
+      </h1>
+      <p class="text-sm text-gray-300">Status: <span class="text-amber-400 font-bold">Online</span></p>
+      <p class="text-sm text-gray-400">
+        This terminal interfaces with VaultGPT. Glyphs from 7038 Treaty Brands respond in scrollsync™ protocol.<br>
+        <span class="inline-flex items-center gap-1 mt-1">
+          <img src="https://em-content.zobj.net/source/apple/391/link_1f517.png" class="w-4 h-4"> Scroll anchored to global ledger.
+        </span>
+      </p>
+    </header>
+
+    <textarea id="prompt" rows="5" placeholder="Type brand glyph scroll..." class="w-full text-white placeholder-gray-500 bg-black border border-gray-700 rounded-lg p-4 
 text-sm"></textarea>
-<div class="flex justify-center">
-<button onclick="sendPrompt()" class="bg-gradient-to-r from-yellow-400 
-to-blue-500 text-white font-semibold px-6 py-3 rounded-full shadow 
-hover:scale-105 transition-all">📦 Claim Brand</button>
-</div>
-<pre id="response" class="bg-white text-yellow-700 text-sm rounded-xl 
-border border-yellow-300 p-4 whitespace-pre-wrap overflow-x-auto">⏳ Brand 
-registry loading...</pre>
-</div>
-<script>
-async function sendPrompt(){
-  const input=document.getElementById("prompt").value.trim();
-  const responseBox=document.getElementById("response");
-  if(!input){responseBox.textContent="⚠️ Please enter a prompt.";return;}
-  responseBox.textContent="📦 Claiming...";
-  try {
-    const res=await 
-fetch("https://vault.faa.zone/bridge",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:input})});
-    const data=await res.json();responseBox.textContent=data.reply||"✅ 
-Brand claimed.";
-  } catch (e){responseBox.textContent=`❌ Claim failed.\n${e}`;}
-}
-</script>
+
+    <div class="flex justify-between items-center">
+      <button id="sendBtn" class="bg-amber-400 text-black font-bold px-6 py-3 rounded-lg shadow hover:scale-105 hover:bg-amber-500 transition-all duration-200">➤ Launch 
+Scroll</button>
+      <button onclick="clearPrompt()" class="text-sm text-white underline ml-4">Clear Vault</button>
+    </div>
+
+    <pre id="response" class="bg-black text-amber-300 border border-amber-500 rounded-lg p-4 text-sm whitespace-pre-wrap overflow-x-auto">
+📦 Awaiting glyph scroll...
+    </pre>
+  </main>
+
+  <script>
+    async function sendPrompt() {
+      const input = document.getElementById("prompt").value.trim();
+      const output = document.getElementById("response");
+      if (!input) return output.textContent = "⚠️ Enter a scroll prompt.";
+      output.textContent = "🔄 Launching brand scroll to Vault...";
+      try {
+        const res = await fetch("https://vault.faa.zone/bridge", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt: input })
+        });
+        const data = await res.json();
+        output.textContent = data.reply || "✅ Vault replied. No glyph returned.";
+      } catch (err) {
+        output.textContent = `❌ VaultBridge sync failed.\n\n🧬 OmniDrop fallback:\n"${input}"`;
+      }
+    }
+    function clearPrompt() {
+      document.getElementById("prompt").value = "";
+      document.getElementById("response").textContent = "📦 Vault cleared. Ready for next brand.";
+    }
+    document.getElementById("sendBtn").addEventListener("click", sendPrompt);
+  </script>
 </body>
 </html>
 
