@@ -1,62 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>🧠 VaultMaster Terminal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { background: #000; font-family: monospace; color: #fff; margin: 
-0; }
-    .wrap { max-width: 600px; margin: 40px auto; border: 4px solid #fc0; 
-border-radius: 12px; background: #111; padding: 24px; }
-    h1 { font-size: 24px; color: #f5b3ff; margin-bottom: 10px; }
-    textarea, #vault-response {
-      width: 100%; background: #000; color: #fff;
-      font-family: monospace; font-size: 16px;
-      border: 1px solid #888; border-radius: 6px;
-      padding: 10px; margin-top: 10px;
+    @keyframes pulse9sec {
+      0%, 100% { transform: scaleX(0); }
+      50% { transform: scaleX(1); }
     }
-    button {
-      background: #FFD700; color: #000;
-      padding: 10px 18px; margin-top: 12px;
-      font-weight: bold; border: none; border-radius: 6px;
-      cursor: pointer;
+    .animate-pulse9sec {
+      animation: pulse9sec 9s infinite ease-in-out;
+      transform-origin: left;
     }
   </style>
 </head>
-<body>
-  <div class="wrap">
-    <h1>🧠 VaultMaster Terminal</h1>
-    <p>Status: <strong>Online</strong></p>
-    <p>This terminal serves as the primary interface for VaultGPT, Treaty 
-coordination, and ScrollClaim™ orchestration.</p>
-    <textarea id="vault-input" rows="4" placeholder="Enter your scroll 
-prompt..."></textarea>
-    <button onclick="sendToVault()">Send Prompt ➜</button>
-    <pre id="vault-response">⏳ Waiting for Vault response...</pre>
+<body class="bg-white text-gray-900 font-sans min-h-screen flex 
+items-center justify-center px-4">
+
+  <!-- Pulse Strip -->
+  <div class="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 
+via-purple-500 to-pink-500 animate-pulse9sec z-50"></div>
+
+  <div class="w-full max-w-3xl bg-gray-100 rounded-3xl shadow-xl border 
+border-yellow-400 p-8 space-y-6">
+    <h1 class="text-3xl font-extrabold text-blue-700 text-center">🧠 
+VaultMaster Terminal</h1>
+    <p class="text-center text-sm text-gray-600">Status: <span 
+class="text-green-600 font-bold">Online</span></p>
+    <p class="text-center text-sm text-gray-600">This terminal interfaces 
+with VaultGPT, Treaty Systems, and ScrollClaim™ orchestration.</p>
+
+    <textarea id="prompt" rows="6" placeholder="Type your Vault scroll 
+prompt here..."
+      class="w-full bg-white text-blue-700 placeholder:text-blue-300 
+border border-blue-200 rounded-xl px-4 py-3 text-sm"></textarea>
+
+    <div class="flex justify-center">
+      <button onclick="sendPrompt()"
+        class="bg-gradient-to-r from-blue-500 to-purple-600 text-white 
+font-semibold px-6 py-3 rounded-full shadow hover:scale-105 
+transition-all">
+        🚀 Send to Vault
+      </button>
+    </div>
+
+    <pre id="response" class="bg-white text-purple-600 text-sm rounded-xl 
+border border-purple-300 p-4 whitespace-pre-wrap overflow-x-auto">⏳ 
+Awaiting scroll sync...</pre>
   </div>
 
   <script>
-    function sendToVault() {
-      const input = document.getElementById("vault-input").value;
-      document.getElementById("vault-response").textContent = 
-"Sending...";
-      fetch("https://vault.faa.zone/bridge", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: input })
-      })
-      .then(r => r.json())
-      .then(data => {
-        document.getElementById("vault-response").textContent = data.reply 
-|| "✅ Vault response received.";
-      })
-      .catch(err => {
-        document.getElementById("vault-response").textContent = "⚠️ Vault 
-could not respond.\nCheck connection.";
-      });
+    async function sendPrompt() {
+      const inputElement = document.getElementById("prompt");
+      const responseBox = document.getElementById("response");
+      const input = inputElement.value.trim();
+
+      if (!input) {
+        responseBox.textContent = "⚠️ Please enter a prompt before 
+sending.";
+        return;
+      }
+
+      responseBox.textContent = "🔄 Syncing with Vault...";
+
+      try {
+        const res = await fetch("https://vault.faa.zone/bridge", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt: input })
+        });
+
+        if (!res.ok) {
+          throw new Error("Vault returned a non-200 response.");
+        }
+
+        const data = await res.json();
+        responseBox.textContent = data.reply || "✅ Vault replied with no 
+message.";
+      } catch (error) {
+        responseBox.textContent = ❌ Failed to connect to 
+Vault.\n${error};
+      }
     }
   </script>
 </body>
 </html>
-
