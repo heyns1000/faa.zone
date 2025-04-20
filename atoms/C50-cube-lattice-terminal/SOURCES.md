@@ -11,3 +11,4 @@
 | 5 | 2025-04-20 | faa.zone | history | `docs/terminals/loop-watch.html` | `483a52cc` | ♻️ Loop Watch Terminal | 3400 | 3 | 2 | 34.3 |
 | 6 | 2025-04-20 | faa.zone | history | `docs/terminals/seedwave.html` | `000bd630` | 🌱 Seedwave Terminal | 3698 | 3 | 2 | 34.4 |
 | 7 | 2025-04-20 | faa.zone | history | `docs/terminals/signal.html` | `ef86448f` | 🔐 Signal Terminal | 3386 | 3 | 2 | 34.3 |
+| 8 | 2025-04-20 | faa.zone | history | `docs/terminals/vault-master-terminal.html` | `e9729720` | 🧠 VaultMaster Terminal | 3706 | 3 | 2 | 34.4 |
