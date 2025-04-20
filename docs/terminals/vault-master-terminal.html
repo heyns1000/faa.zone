@@ -14,9 +14,6 @@
       animation: pulse9sec 9s infinite ease-in-out;
       transform-origin: left;
     }
-    .gorilla-pulse {
-      animation: bounce 2s infinite;
-    }
   </style>
 </head>
 <body class="bg-black text-white min-h-screen flex items-center justify-center px-4 relative">
@@ -31,10 +28,7 @@
       </h1>
       <p class="text-sm text-gray-300">Status: <span class="text-green-400 font-bold">Online</span></p>
       <p class="text-sm text-gray-400">
-        This terminal interfaces with VaultGPT, Treaty coordination, and ScrollClaim™ orchestration.<br>
-        <span class="inline-flex items-center gap-1 mt-1">
-          <img src="https://em-content.zobj.net/source/apple/391/link_1f517.png" alt="Link Icon" class="w-4 h-4"> Scroll connected to master ledger.
-        </span>
+        Scroll interface linked to VaultGPT. Treaty-encoded for terminal-grade prompts and feedback.
       </p>
     </header>
 
@@ -75,12 +69,10 @@
           body: JSON.stringify({ prompt: input })
         });
 
-        if (!res.ok) throw new Error(Bridge response error: ${res.status});
-
         const data = await res.json();
         output.textContent = data.reply || "✅ Vault replied with no message.";
       } catch (err) {
-        output.textContent = ❌ Failed to sync with Vault.\n\n🧼 OmniDrop fallback:\n"${input}";
+        output.textContent = `❌ Vault sync failed.\n\n🧬 OmniDrop fallback:\n"${input}"`;
       }
     }
 
@@ -92,4 +84,5 @@
     document.getElementById("sendBtn").addEventListener("click", sendPrompt);
   </script>
 </body>
-</html> 
+</html>
+
