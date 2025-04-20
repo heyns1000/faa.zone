@@ -2,43 +2,44 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>🦍 VaultMaster Terminal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    @keyframes pulse9sec {
-      0%, 100% { transform: scaleX(0); }
-      50% { transform: scaleX(1); }
-    }
-    .animate-pulse9sec {
-      animation: pulse9sec 9s infinite ease-in-out;
-      transform-origin: left;
-    }
+    @keyframes pulse9sec { 0%, 100% { transform: scaleX(0); } 50% { transform: scaleX(1); } }
+    .pulse-bar { animation: pulse9sec 9s infinite ease-in-out; transform-origin: left; }
   </style>
 </head>
 <body class="bg-black text-white min-h-screen flex items-center justify-center px-4 relative">
-  <div class="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 via-pink-500 to-indigo-500 animate-pulse9sec z-50"></div>
+  <div class="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 pulse-bar z-50"></div>
 
-  <main class="w-full max-w-2xl bg-gray-900 border border-yellow-500 rounded-2xl shadow-2xl p-8 space-y-6">
+  <main class="w-full max-w-3xl border border-blue-400 rounded-3xl shadow-2xl bg-gray-900 p-8 space-y-6">
     <header class="text-center">
-      <h1 class="text-3xl font-bold text-yellow-400 flex items-center justify-center gap-2">
-        🦍 VaultMaster Terminal
+      <h1 class="text-3xl font-bold text-blue-400 flex items-center justify-center gap-4">
+        <span class="text-5xl animate-pulse">🦍</span> VaultMaster Terminal
       </h1>
-      <p class="text-sm text-gray-400">ScrollGPT Online | Treaty-Synced</p>
+      <p class="text-sm text-gray-300">Status: <span class="text-green-400 font-bold">Online</span></p>
+      <p class="text-sm text-gray-400">
+        This terminal scroll-syncs with VaultGPT™ for treaty protocol execution.<br>
+        <span class="inline-flex items-center gap-1 mt-1">
+          <img src="https://em-content.zobj.net/source/apple/391/link_1f517.png" class="w-4 h-4" />
+          Connected to VaultMesh
+        </span>
+      </p>
     </header>
 
-    <textarea id="prompt" rows="5" placeholder="Enter your scroll prompt..." class="w-full text-white placeholder-gray-500 bg-black border border-gray-600 rounded-xl p-4 
+    <textarea id="prompt" rows="5" placeholder="Enter your scroll prompt..." class="w-full text-white placeholder-gray-400 bg-black border border-gray-700 rounded-lg p-4 
 text-sm"></textarea>
 
-    <div class="flex justify-between items-center mt-2">
-      <button id="sendBtn" class="bg-yellow-400 text-black font-bold px-6 py-2 rounded-lg hover:bg-yellow-500 transition-all">
+    <div class="flex justify-between items-center">
+      <button id="sendBtn" class="bg-blue-400 text-black font-bold px-6 py-3 rounded-lg shadow hover:scale-105 hover:bg-blue-500 transition-all duration-200">
         ➤ Send Prompt
       </button>
-      <button onclick="clearPrompt()" class="text-sm text-gray-300 underline">Clear Vault</button>
+      <button onclick="clearPrompt()" class="text-sm text-white underline ml-4">Clear</button>
     </div>
 
-    <pre id="response" class="bg-black text-yellow-300 border border-yellow-500 rounded-xl p-4 text-sm whitespace-pre-wrap overflow-x-auto">
-⚡ Scroll ready. Vault standing by.
+    <pre id="response" class="bg-black text-blue-300 border border-blue-500 rounded-lg p-4 text-base leading-relaxed whitespace-pre-wrap overflow-x-auto">
+⚡️ Vault status: Ready to receive scroll...
     </pre>
   </main>
 
@@ -46,13 +47,9 @@ text-sm"></textarea>
     async function sendPrompt() {
       const input = document.getElementById("prompt").value.trim();
       const output = document.getElementById("response");
+      if (!input) return output.textContent = "⚠️ Enter scroll before sending.";
 
-      if (!input) {
-        output.textContent = "⚠️ Please enter a scroll before sending.";
-        return;
-      }
-
-      output.textContent = "🧠 Sending scroll to Vault...";
+      output.textContent = "🔄 Sending to VaultBridge...";
 
       try {
         const res = await fetch("https://vault.faa.zone/bridge", {
@@ -60,17 +57,16 @@ text-sm"></textarea>
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ prompt: input })
         });
-
         const data = await res.json();
-        output.textContent = data.reply || "✅ Vault replied, no message returned.";
+        output.textContent = data.reply || "✅ Vault replied. No message.";
       } catch (err) {
-        output.textContent = `❌ Sync failed.\n\n🧬 OmniDrop fallback:\n"${input}"`;
+        output.textContent = `❌ Connection failed.\n\n🧬 OmniDrop Fallback:\n"${input}"`;
       }
     }
 
     function clearPrompt() {
       document.getElementById("prompt").value = "";
-      document.getElementById("response").textContent = "⚡ Vault cleared. Ready for scroll.";
+      document.getElementById("response").textContent = "⚡️ Vault cleared. Ready.";
     }
 
     document.getElementById("sendBtn").addEventListener("click", sendPrompt);
