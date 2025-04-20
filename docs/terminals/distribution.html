@@ -2,51 +2,65 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>📦 Distribution GPT</title>
+  <title>📦 Distribution Terminal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>@keyframes 
-pulse9sec{0%,100%{transform:scaleX(0);}50%{transform:scaleX(1);}}.animate-pulse9sec{animation:pulse9sec 
-9s infinite ease-in-out;transform-origin:left;}</style>
+  <style>
+    @keyframes pulse9sec { 0%, 100% { transform: scaleX(0); } 50% { transform: scaleX(1); } }
+    .animate-pulse9sec { animation: pulse9sec 9s infinite ease-in-out; transform-origin: left; }
+    .gorilla-pulse { animation: bounce 2s infinite; }
+  </style>
 </head>
-<body class="bg-white text-gray-900 font-sans min-h-screen flex 
-items-center justify-center px-4">
-<div class="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 
-via-red-500 to-pink-600 animate-pulse9sec z-50"></div>
-<div class="w-full max-w-3xl bg-gray-100 rounded-3xl shadow-xl border 
-border-yellow-400 p-8 space-y-6">
-<h1 class="text-3xl font-extrabold text-yellow-700 text-center">📦 
-Distribution GPT</h1>
-<p class="text-center text-sm text-gray-600">Status: <span 
-class="text-green-600 font-bold">Online</span></p>
-<p class="text-center text-sm text-gray-600">This terminal handles 
-Vault-linked dispatching, drop waves, and sector channel rollout.</p>
-<textarea id="prompt" rows="6" placeholder="Prompt a scroll dispatch..." 
-class="w-full bg-white text-yellow-700 placeholder:text-yellow-400 border 
-border-yellow-300 rounded-xl px-4 py-3 text-sm"></textarea>
-<div class="flex justify-center">
-<button onclick="sendPrompt()" class="bg-gradient-to-r from-yellow-400 
-to-pink-500 text-white font-semibold px-6 py-3 rounded-full shadow 
-hover:scale-105 transition-all">📦 Send Drop</button>
-</div>
-<pre id="response" class="bg-white text-yellow-700 text-sm rounded-xl 
-border border-yellow-300 p-4 whitespace-pre-wrap overflow-x-auto">⏳ 
-Dispatch pending...</pre>
-</div>
-<script>
-async function sendPrompt(){
-  const input=document.getElementById("prompt").value.trim();
-  const responseBox=document.getElementById("response");
-  if(!input){responseBox.textContent="⚠️ Please enter a prompt.";return;}
-  responseBox.textContent="📦 Routing drop...";
-  try {
-    const res=await 
-fetch("https://vault.faa.zone/bridge",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:input})});
-    const data=await res.json();responseBox.textContent=data.reply||"✅ 
-Drop confirmed.";
-  } catch (e){responseBox.textContent=`❌ Dispatch failed.\n${e}`;}
-}
-</script>
+<body class="bg-black text-white min-h-screen flex items-center justify-center px-4 relative">
+  <div class="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 via-yellow-400 to-amber-500 animate-pulse9sec z-50"></div>
+  <main class="w-full max-w-3xl border border-orange-500 rounded-3xl shadow-2xl bg-gray-900 p-8 space-y-6">
+    <header class="text-center">
+      <h1 class="text-3xl font-bold text-orange-400 flex items-center justify-center gap-4">
+        <span class="text-5xl animate-pulse">📦</span> Distribution Terminal
+      </h1>
+      <p class="text-sm text-gray-300">Status: <span class="text-orange-400 font-bold">Online</span></p>
+      <p class="text-sm text-gray-400">
+        This terminal interfaces with VaultGPT, Treaty coordination, and ScrollClaim™ orchestration.<br>
+        <span class="inline-flex items-center gap-1 mt-1">
+          <img src="https://em-content.zobj.net/source/apple/391/link_1f517.png" class="w-4 h-4"> Scroll connected to master ledger.
+        </span>
+      </p>
+    </header>
+    <textarea id="prompt" rows="5" placeholder="Enter your scroll prompt..." class="w-full text-white placeholder-gray-400 bg-black border border-gray-700 rounded-lg p-4 
+text-sm"></textarea>
+    <div class="flex justify-between items-center">
+      <button id="sendBtn" class="bg-orange-400 text-black font-bold px-6 py-3 rounded-lg shadow hover:scale-105 hover:bg-orange-500 transition-transform duration-200">➤ 
+Send Prompt</button>
+      <button onclick="clearPrompt()" class="text-sm text-white underline ml-4">Clear Vault</button>
+    </div>
+    <pre id="response" class="bg-black text-orange-300 border border-orange-500 rounded-lg p-4 text-base leading-relaxed whitespace-pre-wrap overflow-x-auto">
+⚡️ Vault status: Ready for scroll...
+    </pre>
+  </main>
+  <script>
+    async function sendPrompt() {
+      const input = document.getElementById("prompt").value.trim();
+      const output = document.getElementById("response");
+      if (!input) return output.textContent = "⚠️ Please enter a prompt before sending.";
+      output.textContent = "🔄 Sending scroll to Vault...";
+      try {
+        const res = await fetch("https://vault.faa.zone/bridge", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt: input })
+        });
+        const data = await res.json();
+        output.textContent = data.reply || "✅ Vault replied with no message.";
+      } catch (err) {
+        output.textContent = `❌ Failed to sync with Vault.\n\n🧬 OmniDrop fallback:\n"${input}"`;
+      }
+    }
+    function clearPrompt() {
+      document.getElementById("prompt").value = "";
+      document.getElementById("response").textContent = "⚡️ Vault cleared. Ready.";
+    }
+    document.getElementById("sendBtn").addEventListener("click", sendPrompt);
+  </script>
 </body>
 </html>
 
