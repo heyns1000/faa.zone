@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>🧠 VaultMaster Terminal</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    @keyframes pulse9sec { 0%, 100% { transform: scaleX(0); } 50% { 
-transform: scaleX(1); } }
-    .animate-pulse9sec { animation: pulse9sec 9s infinite ease-in-out; 
-transform-origin: left; }
+    @keyframes pulse9sec {
+      0%, 100% { transform: scaleX(0); }
+      50% { transform: scaleX(1); }
+    }
+    .animate-pulse9sec {
+      animation: pulse9sec 9s infinite ease-in-out;
+      transform-origin: left;
+    }
   </style>
 </head>
 <body class="bg-white text-gray-900 font-sans min-h-screen flex 
 items-center justify-center px-4">
-
-  <!-- Glyph Pulse -->
   <div class="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 
 via-purple-500 to-pink-500 animate-pulse9sec z-50"></div>
 
-  <!-- Terminal Box -->
   <div class="w-full max-w-3xl bg-gray-100 rounded-3xl shadow-xl border 
 border-yellow-400 p-8 space-y-6">
     <h1 class="text-3xl font-extrabold text-blue-700 text-center">🧠 
@@ -50,16 +51,17 @@ Awaiting scroll sync...</pre>
 
   <script>
     async function sendPrompt() {
-      const input = document.getElementById("prompt").value.trim();
+      const inputElement = document.getElementById("prompt");
       const responseBox = document.getElementById("response");
+      const input = inputElement.value.trim();
 
       if (!input) {
-        responseBox.textContent = "⚠️ Treaty input required. Glyph not 
-received.";
+        responseBox.textContent = "⚠️ Please enter a prompt before 
+sending.";
         return;
       }
 
-      responseBox.textContent = "🔄 Dispatching scroll to VaultLayer...";
+      responseBox.textContent = "🔄 Syncing with Vault...";
 
       try {
         const res = await fetch("https://vault.faa.zone/bridge", {
@@ -68,25 +70,16 @@ received.";
           body: JSON.stringify({ prompt: input })
         });
 
-        if (!res.ok) throw new Error(`Bridge error: ${res.status}`);
+        if (!res.ok) {
+          throw new Error("Vault returned a non-200 response.");
+        }
 
         const data = await res.json();
-        responseBox.innerHTML = `<div class='text-green-600 font-mono'>✅ 
-VaultGPT:</div><br>${data.reply || "🧬 Treaty confirmed."}`;
-
-      } catch (err) {
-        console.warn("Vault fallback activated:", err);
-        responseBox.innerHTML = `
-          <div class="font-mono text-purple-600">
-            🧬 <strong>OmniDrop™ Activated</strong><br><br>
-            <span class="text-sm text-gray-700">VaultBridge unreachable. 
-Local response enabled.</span><br><br>
-            <span class="text-green-500">🧠 Scroll Received:</span><br>
-            "<span class="italic">${input}</span>"<br><br>
-            <span class="text-yellow-400">✅ Treaty Acknowledged. Scroll 
-claim registered in fallback state.</span>
-          </div>
-        `;
+        responseBox.textContent = data.reply || "✅ Vault replied with no 
+message.";
+      } catch (error) {
+        responseBox.textContent = `❌ Failed to connect to 
+Vault.\n${error}`;
       }
     }
   </script>
