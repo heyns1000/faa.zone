@@ -94,6 +94,27 @@
     © 2025 FAA™ Mining Layer. All Rights Reserved. Synced with VaultYield™.
   </footer>
 
+<div id="sector-content-container" class="mt-10 px-6 max-w-6xl mx-auto"></div>
+
+<script>
+  const sectorMap = {
+    mining: '/sectors/mining/index.html'
+  };
+
+  document.querySelectorAll('.sector-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const sector = link.getAttribute('data-sector');
+      const url = sectorMap[sector];
+      if (url) {
+        document.getElementById('sector-content-container').innerHTML =
+          `<div class="text-white text-sm mb-2">🔄 Loading sector...</div>
+           <iframe src="${url}" class="w-full h-[900px] border-none rounded-xl"></iframe>`;
+      }
+    });
+  });
+</script>
+
   <script>
     function updateSharePrice() {
       const mockPrice = (880 + Math.random() * 20).toFixed(2);
