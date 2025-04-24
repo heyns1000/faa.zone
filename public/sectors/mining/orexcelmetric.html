@@ -1,0 +1,118 @@
+// ⚡ JIC MINING FULL-TIER METRICS GRID
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { Check, AlertTriangle, RefreshCw, Download, Lock, UploadCloud, FileBarChart2, Info, Gauge, AlertCircle, CircleCheck } from "lucide-react";
+
+export default function OreXcelDashboard() {
+  const [glupEnabled, setGlupEnabled] = useState(true);
+  const [licenseValid, setLicenseValid] = useState(true);
+  const [exportTriggered, setExportTriggered] = useState(false);
+  const [scanInProgress, setScanInProgress] = useState(false);
+  const [batchData, setBatchData] = useState([
+    { name: "JIC Core A", grade: 84 },
+    { name: "JIC Core B", grade: 79 },
+    { name: "JIC Core C", grade: 91 }
+  ]);
+  const avgGrade = batchData.reduce((acc, cur) => acc + cur.grade, 0) / batchData.length;
+  const minGrade = Math.min(...batchData.map(d => d.grade));
+  const maxGrade = Math.max(...batchData.map(d => d.grade));
+
+  const handleScan = () => {
+    setScanInProgress(true);
+    setTimeout(() => {
+      setScanInProgress(false);
+    }, 1200);
+  };
+
+  const handleExport = () => {
+    setExportTriggered(true);
+    setTimeout(() => {
+      setExportTriggered(false);
+    }, 1000);
+  };
+
+  return (
+    <div className="space-y-8 p-6">
+      <h1 className="text-3xl font-extrabold text-gray-800 tracking-tight">OreXcel™ Tier-4 FAA Dashboard — JIC Mining Node</h1>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <Card><CardContent className="p-4"><p className="text-sm text-gray-500">Average Grade</p><p className="text-2xl font-bold text-blue-600">{avgGrade.toFixed(2)}%</p></CardContent></Card>
+        <Card><CardContent className="p-4"><p className="text-sm text-gray-500">Minimum Grade</p><p className="text-2xl font-bold text-red-500">{minGrade}%</p></CardContent></Card>
+        <Card><CardContent className="p-4"><p className="text-sm text-gray-500">Maximum Grade</p><p className="text-2xl font-bold text-green-600">{maxGrade}%</p></CardContent></Card>
+        <Card><CardContent className="p-4 flex items-center gap-2"><Gauge /><span className="font-semibold text-sm">FAA Compliance Grade: <span className="text-green-500">Pass</span></span></CardContent></Card>
+      </div>
+
+      <Tabs defaultValue="overview">
+        <TabsList className="flex-wrap">
+          <TabsTrigger value="overview">Live Signal</TabsTrigger>
+          <TabsTrigger value="metrics">Detailed Metrics</TabsTrigger>
+          <TabsTrigger value="report">Clause Reports</TabsTrigger>
+          <TabsTrigger value="settings">Node Config</TabsTrigger>
+          <TabsTrigger value="alerts">Alerts</TabsTrigger>
+          <TabsTrigger value="timeline">Audit Trail</TabsTrigger>
+          <TabsTrigger value="token">Export & Tokenize</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="overview">
+          <Card><CardContent className="p-4">
+            <h2 className="text-lg font-bold mb-4">Signal Feed — Grade Chart</h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={batchData}><XAxis dataKey="name" /><YAxis /><CartesianGrid strokeDasharray="3 3" /><Tooltip /><Line type="monotone" dataKey="grade" stroke="#00B2FF" /></LineChart>
+            </ResponsiveContainer>
+          </CardContent></Card>
+        </TabsContent>
+
+        <TabsContent value="metrics">
+          <Card><CardContent className="p-4 space-y-4">
+            <div className="flex items-center justify-between"><span className="text-sm">Yield Variance:</span><span className="text-blue-700 font-bold">{(maxGrade - minGrade).toFixed(2)}%</span></div>
+            <div className="flex items-center justify-between"><span className="text-sm">Grade Consistency Index:</span><span className="text-green-600">✓ Stable</span></div>
+            <div className="flex items-center justify-between"><span className="text-sm">Scan Time</span><span>1.2s (Simulated)</span></div>
+          </CardContent></Card>
+        </TabsContent>
+
+        <TabsContent value="report">
+          <Card><CardContent className="p-4 space-y-2">
+            {batchData.map((entry, idx) => (
+              <div key={idx} className="border p-3 rounded flex justify-between"><span>{entry.name}</span><Button variant="outline" size="sm">Generate FAA Sheet</Button></div>
+            ))}
+          </CardContent></Card>
+        </TabsContent>
+
+        <TabsContent value="settings">
+          <Card><CardContent className="p-4 space-y-4">
+            <div className="flex justify-between"><Label htmlFor="glup">GLUP Logic</Label><Switch id="glup" checked={glupEnabled} onCheckedChange={setGlupEnabled} /></div>
+            <div className="flex justify-between"><Label>FAA Lock</Label><Lock /></div>
+            <div className="flex justify-between"><Label>License</Label><span className={`text-sm ${licenseValid ? 'text-green-600' : 'text-red-600'}`}>{licenseValid ? '✅ Valid' : '⚠️ Invalid'}</span></div>
+          </CardContent></Card>
+        </TabsContent>
+
+        <TabsContent value="alerts">
+          <Card><CardContent className="p-4 space-y-2">
+            <div className="flex items-center gap-2 text-yellow-600"><AlertCircle /> No Ethics Breach Reported</div>
+            <div className="flex items-center gap-2 text-green-600"><CircleCheck /> GLUP Logic Passed</div>
+          </CardContent></Card>
+        </TabsContent>
+
+        <TabsContent value="timeline">
+          <Card><CardContent className="p-4">
+            <p className="text-sm text-gray-600">🕒 22:20 — Scan Executed (JIC Core C)</p>
+            <p className="text-sm text-gray-600">🕒 22:19 — FAA ClauseIndex Synced</p>
+            <p className="text-sm text-gray-600">🕒 22:18 — Node Session Initialized</p>
+          </CardContent></Card>
+        </TabsContent>
+
+        <TabsContent value="token">
+          <Card><CardContent className="p-4 space-y-2">
+            <Button className="w-full" variant="default"><Download className="mr-2" /> Export Full Report (PDF)</Button>
+            <Button className="w-full" variant="outline"><UploadCloud className="mr-2" /> Push to FAA Token Grid</Button>
+          </CardContent></Card>
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
+}
