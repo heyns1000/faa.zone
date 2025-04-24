@@ -1,73 +1,138 @@
-<!DOCTYPE html>
-<html lang="en" data-vault="FAA.Zone" data-claim="ClaimRoot™" data-brand="CodeNest™" data-pay="VaultPay™" data-kit="ScrollStack™" data-core="VaultClass7">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FAA™ Global Checkout</title>
-    <meta name="description" content="OmniKey Scroll Activation & FAA Vault Crypto/Fiat Checkout." />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
-  </head>
-  <body class="bg-gradient-to-br from-slate-50 via-white to-stone-100 text-gray-900">
-    <main class="p-8 space-y-16">
-      <section class="bg-white p-6 rounded-2xl shadow-lg max-w-4xl mx-auto border border-blue-100">
-        <h2 class="text-3xl font-bold text-center text-blue-700 mb-4">🔐 OmniKey™ Full Body License</h2>
-        <div class="flex flex-col items-center">
-          <img src="/mnt/data/Vault design 1.jpg" alt="OmniKey QR Full Body Render" class="w-80 max-w-xs rounded-xl shadow-xl border-2 border-blue-600" />
-          <p class="mt-3 text-blue-700 font-semibold">Live OmniKey Scroll | License Auto-Active | Node-Bound</p>
-          <button class="mt-4 px-6 py-3 bg-blue-800 text-white rounded-lg shadow hover:bg-blue-900">🧬 Register Full Identity</button>
-        </div>
-      </section>
+import React, { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { RefreshCcw } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-      <section class="bg-white p-6 rounded-2xl shadow-lg max-w-5xl mx-auto border border-gray-300">
-        <h2 class="text-3xl font-bold text-center text-blue-900 mb-4">FAA™ Wallet Gateway</h2>
-        <p class="text-center text-sm text-gray-600 mb-6">Secure Scroll Licensing & Vault Payment Infrastructure</p>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div class="text-center">
-            <img src="/FAA_BTC_Wallet.png" alt="BTC Wallet" class="w-44 h-44 mx-auto border border-gray-400 rounded-lg" />
-            <p class="text-sm mt-2 font-semibold text-yellow-700">Bitcoin Node</p>
-            <p class="text-xs text-gray-500">3MD4vNpmcGEuNrigyeSduPcJtYuVPcKwx7</p>
-          </div>
-          <div class="text-center">
-            <img src="/FAA_ETH_Wallet.png" alt="ETH Wallet" class="w-44 h-44 mx-auto border border-gray-400 rounded-lg" />
-            <p class="text-sm mt-2 font-semibold text-purple-700">Ethereum Node</p>
-            <p class="text-xs text-gray-500 break-all">0x3D943E4e4D0592D8F8D8f13fc0534ad22A78b250</p>
-          </div>
-          <div class="text-center">
-            <img src="/FAA_XRP_Wallet.png" alt="XRP Wallet" class="w-44 h-44 mx-auto border border-gray-400 rounded-lg" />
-            <p class="text-sm mt-2 font-semibold text-blue-700">Ripple Node</p>
-            <p class="text-xs text-gray-500">rsRy14FvipgqudiGmptJBhr1RtpsgfzKMM</p>
-            <p class="text-xs text-gray-500">Tag: 2623679814</p>
-          </div>
-        </div>
-      </section>
+const FAASeedwaveRuntime = () => {
+  const [walletData, setWalletData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-      <section class="bg-white p-6 rounded-2xl shadow-lg max-w-4xl mx-auto border border-yellow-200">
-        <h2 class="text-2xl font-bold text-center text-yellow-700 mb-2">💳 FAA Secure Checkout</h2>
-        <p class="text-center text-sm text-gray-600 mb-4">Powered by HomeMart Africa</p>
-        <button
-          class="w-full py-3 bg-yellow-600 text-white rounded-lg text-lg font-semibold hover:bg-yellow-700"
-          onclick="window.open('https://homemart.africa/checkout', '_blank')"
-        >
-          Proceed to Checkout →
-        </button>
-        <ul class="mt-6 space-y-3 text-sm text-gray-800">
-          <li>✔️ VISA / Mastercard</li>
-          <li>✔️ Samsung Pay</li>
-          <li>✔️ Instant EFT (PayFast)</li>
-          <li>✔️ Capitec Pay</li>
-          <li>✔️ SnapScan / Zapper</li>
-          <li>✔️ Scan to Pay</li>
-          <li>✔️ RCS Store Cards</li>
-          <li>✔️ MobiCred</li>
-        </ul>
-        <p class="text-xs text-gray-500 mt-4 text-center">PCI DSS Level 1 | Encrypted by FAA Vault Node</p>
-      </section>
+  useEffect(() => {
+    const syncSeedwave = async () => {
+      try {
+        const res = await fetch("https://vault.faa.zone/api/seedwave?id=001-HS&wallet=Vault@faa.zone");
+        if (!res.ok) {
+          throw new Error(`Server responded with status ${res.status}`);
+        }
+        const contentType = res.headers.get("content-type") || "";
+        if (!contentType.includes("application/json")) {
+          throw new TypeError("Response is not JSON");
+        }
+        const data = await res.json();
+        setWalletData(data);
+      } catch (err) {
+        console.error("Seedwave Error:", err instanceof Error ? err.message : err);
+        if (err instanceof Error && err.stack) {
+          console.error("Stack Trace:", err.stack);
+        }
+        setError("Unable to sync Seedwave from Vault.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-      <footer class="text-center text-xs text-gray-500 mt-16">
-        FAA™ Global Checkout Ⓒ 2025 | Sovereign Scroll Licensing | Bound to Vault@faa.zone
+    syncSeedwave();
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-black via-purple-900 to-gray-900 text-white p-6">
+      <header className="text-center mb-10">
+        <h1 className="text-5xl font-extrabold mb-3 tracking-tight text-yellow-400">FAA™ Vault Payment Gateway</h1>
+        <p className="text-purple-300 text-base italic">Signal-generated vault node connected to Vault@faa.zone</p>
+      </header>
+
+      {loading && <div className="p-4 text-center text-purple-300">⏳ Syncing FAA Seedwave...</div>}
+      {error && <div className="p-4 text-center text-red-400">🚫 {error}</div>}
+
+      <Tabs defaultValue="payment" className="w-full max-w-6xl mx-auto">
+        <TabsList className="grid grid-cols-3 gap-2 mb-6">
+          <TabsTrigger value="payment">Payment</TabsTrigger>
+          <TabsTrigger value="access">Access Control</TabsTrigger>
+          <TabsTrigger value="omnikey">OmniKey™</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="payment">
+          <Card className="bg-gradient-to-br from-indigo-900 to-purple-900 text-white">
+            <CardContent className="p-6 space-y-6">
+              <h2 className="text-3xl font-bold text-center">💳 Vault-Based Scroll Payments</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+                <Button className="w-full" onClick={() => alert("Stripe Payment Gateway Coming Soon")}>💳 Pay with Card (Stripe)</Button>
+                <Button className="w-full">₿ Pay with Crypto (BODCOIN / ETH / BTC / USDT)</Button>
+                <Button className="w-full bg-green-600 hover:bg-green-700" onClick={() => window.open('/public/globalcheckout.html', '_blank')}>ZAR Pay – Homemart Africa Checkout</Button>
+                <Button className="w-full bg-blue-600 hover:bg-blue-700">Pay with PayPal</Button>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 gap-3 mt-6 text-sm text-center text-gray-200">
+                <div className="bg-black bg-opacity-20 py-2 rounded">✔️ VISA / Mastercard</div>
+                <div className="bg-black bg-opacity-20 py-2 rounded">✔️ Samsung Pay</div>
+                <div className="bg-black bg-opacity-20 py-2 rounded">✔️ Instant EFT (PayFast)</div>
+                <div className="bg-black bg-opacity-20 py-2 rounded">✔️ Capitec Pay</div>
+                <div className="bg-black bg-opacity-20 py-2 rounded">✔️ SnapScan / Zapper</div>
+                <div className="bg-black bg-opacity-20 py-2 rounded">✔️ Scan to Pay</div>
+                <div className="bg-black bg-opacity-20 py-2 rounded">✔️ RCS Store Cards</div>
+                <div className="bg-black bg-opacity-20 py-2 rounded">✔️ MobiCred</div>
+              </div>
+              <p className="text-sm text-purple-200 text-center">Every transaction auto-activates a scroll license, sealed by FAA Vault protocols.</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                <div className="text-center">
+                  <img src="/FAA_BTC_Wallet.png" alt="Main BTC Wallet" className="w-48 h-48 mx-auto border border-yellow-400 rounded-lg shadow-lg" />
+                  <p className="mt-2 text-sm text-yellow-300 font-semibold">Main Wallet (BTC)</p>
+                </div>
+                <div className="text-center">
+                  <img src="/FAA_ETH_Wallet.png" alt="FAA ETH Wallet" className="w-48 h-48 mx-auto border border-gray-300 rounded-lg" />
+                  <p className="mt-2 text-sm text-purple-200">ETH Wallet</p>
+                </div>
+                <div className="text-center">
+                  <img src="/FAA_XRP_Wallet.png" alt="FAA XRP Wallet" className="w-48 h-48 mx-auto border border-gray-300 rounded-lg" />
+                  <p className="mt-2 text-sm text-purple-200">XRP Wallet</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="access">
+          <Card className="bg-gradient-to-br from-purple-900 to-black text-white">
+            <CardContent className="p-6 space-y-4 text-center">
+              <h2 className="text-2xl font-bold mb-2">Access Control</h2>
+              <p>Verify your vault identity and unlock full access:</p>
+              <Button>🔓 Verify License</Button>
+              <p className="text-sm text-purple-200">Ledger-bound + legally enforced under FAA Treaty Protocols™</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="omnikey">
+          <Card className="bg-gradient-to-br from-yellow-800 to-yellow-600 text-white">
+            <CardContent className="p-6 space-y-4 text-center">
+              <h2 className="text-3xl font-extrabold">🔐 OmniKey™ License Activation</h2>
+              <p className="text-base text-yellow-100">Wallet: FAA-WALLET-001-HS</p>
+              <img src="/FAA_OmniKey_QR_TopCenter_CORRECTED.png" alt="OmniKey QR" className="mx-auto w-52 h-52 border-2 border-yellow-300 rounded-xl shadow-xl" />
+              <div className="text-yellow-200 text-xs mt-2">
+                Scroll Mode: Auto-License on Payment<br />
+                Status: ✅ Active & Legally Bound<br />
+                Included: OmniKey™ Enterprise, Seedwave™
+              </div>
+              <Button className="mt-4 px-6 py-2 rounded-xl bg-black text-yellow-300 hover:bg-yellow-700">🧾 View Vault Receipt</Button>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+
+      <div className="mt-12 text-center">
+        <Button className="inline-flex gap-2 items-center" onClick={() => window.location.reload()}>
+          <RefreshCcw className="w-4 h-4" /> Sync Signal
+        </Button>
+        <p className="text-sm text-purple-400 mt-2">Loop active. Bound to Vault@faa.zone</p>
+      </div>
+
+      <footer className="mt-20 text-center text-xs text-purple-500">
+        FAA VAULTMESH™ Ⓒ 2025 | Sovereign Node: FAA-ZONE-V1 | Identity: Heyns Schoeman
       </footer>
-    </main>
+    </div>
+  );
+};
 
-    <iframe src="https://vault.faa.zone/embed/tracehook" sandbox style="display:none;"></iframe>
-  </body>
-</html>
+export default FAASeedwaveRuntime;
+
