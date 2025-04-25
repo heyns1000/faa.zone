@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
@@ -67,7 +67,6 @@ const scrolls = [
 
 export default function AutobornSyncGrid() {
   const [pulses, setPulses] = useState(scrolls.map(s => ({ ...s, data: generatePulse(s.base) })));
-  const [isVisible, setIsVisible] = useState(false);  // State to manage component visibility
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -76,59 +75,47 @@ export default function AutobornSyncGrid() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleClick = () => {
-    setIsVisible(!isVisible); // Toggle visibility on user click
-  };
-
   return (
     <div className="p-6 max-w-7xl mx-auto text-gray-800 space-y-8">
       <h1 className="text-2xl font-bold text-indigo-600">🧬 AutoBorn™ Master Sync Grid</h1>
 
-      {/* Button to trigger rendering of the sync grid */}
-      <Button variant="default" size="sm" onClick={handleClick} className="mb-6">
-        {isVisible ? 'Hide Sync Grid' : 'Show Sync Grid'}
-      </Button>
-
-      {/* Conditionally render the sync grid */}
-      {isVisible && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {pulses.map((scroll) => (
-            <a key={scroll.id} href={scroll.link} target="_blank" rel="noopener noreferrer">
-              <Card className="bg-white border shadow rounded-xl hover:shadow-md transition">
-                <CardContent className="p-4">
-                  <div className="flex justify-between items-center mb-2">
-                    <h2 className="font-bold text-lg">{scroll.icon} {scroll.brand}</h2>
-                    <span className="text-xs text-gray-500">{scroll.type}</span>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {pulses.map((scroll) => (
+          <a key={scroll.id} href={scroll.link} target="_blank" rel="noopener noreferrer">
+            <Card className="bg-white border shadow rounded-xl hover:shadow-md transition">
+              <CardContent className="p-4">
+                <div className="flex justify-between items-center mb-2">
+                  <h2 className="font-bold text-lg">{scroll.icon} {scroll.brand}</h2>
+                  <span className="text-xs text-gray-500">{scroll.type}</span>
+                </div>
+                <p className="text-sm">💳 License Fee: {scroll.licenseFee}</p>
+                <p className="text-sm">📦 Monthly: {scroll.monthly}</p>
+                <p className="text-sm">💰 Royalty: {scroll.royalty}</p>
+                <p className="text-xs mt-1 flex items-center gap-1 text-gray-600"><Timer className="w-4 h-4" /> Countdown: {scroll.countdown}s</p>
+                <p className="text-xs flex items-center gap-1 text-gray-600"><Globe className="w-4 h-4" /> Region: {scroll.region}</p>
+                <p className="text-xs mt-1 text-gray-500">Vault ID: {scroll.vaultId}</p>
+                <a href={scroll.claimRoot} target="_blank" className="text-blue-600 text-xs underline mt-1 inline-block">🌐 ClaimRoot™</a>
+                <div className="mt-4">
+                  <div className="h-2 w-full bg-gray-200 rounded">
+                    <div className="bg-green-400 h-2 rounded animate-pulse" style={{ width: `${(scroll.countdown / 60) * 100}%` }}></div>
                   </div>
-                  <p className="text-sm">💳 License Fee: {scroll.licenseFee}</p>
-                  <p className="text-sm">📦 Monthly: {scroll.monthly}</p>
-                  <p className="text-sm">💰 Royalty: {scroll.royalty}</p>
-                  <p className="text-xs mt-1 flex items-center gap-1 text-gray-600"><Timer className="w-4 h-4" /> Countdown: {scroll.countdown}s</p>
-                  <p className="text-xs flex items-center gap-1 text-gray-600"><Globe className="w-4 h-4" /> Region: {scroll.region}</p>
-                  <p className="text-xs mt-1 text-gray-500">Vault ID: {scroll.vaultId}</p>
-                  <a href={scroll.claimRoot} target="_blank" className="text-blue-600 text-xs underline mt-1 inline-block">🌐 ClaimRoot™</a>
-                  <div className="mt-4">
-                    <div className="h-2 w-full bg-gray-200 rounded">
-                      <div className="bg-green-400 h-2 rounded animate-pulse" style={{ width: `${(scroll.countdown / 60) * 100}%` }}></div>
-                    </div>
-                  </div>
-                  <div className="h-32 mt-4">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={scroll.data}>
-                        <XAxis dataKey="time" hide />
-                        <YAxis domain={['auto', 'auto']} hide />
-                        <Tooltip />
-                        <Line type="monotone" dataKey="value" stroke={scroll.color} strokeWidth={2} dot={false} />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </div>
-                  <Button variant="default" size="sm" className="mt-4 w-full bg-black text-white">Pay with VaultPay™</Button>
-                </CardContent>
-              </Card>
-            </a>
-          ))}
-        </div>
-      )}
+                </div>
+                <div className="h-32 mt-4">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={scroll.data}>
+                      <XAxis dataKey="time" hide />
+                      <YAxis domain={['auto', 'auto']} hide />
+                      <Tooltip />
+                      <Line type="monotone" dataKey="value" stroke={scroll.color} strokeWidth={2} dot={false} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+                <Button variant="default" size="sm" className="mt-4 w-full bg-black text-white">Pay with VaultPay™</Button>
+              </CardContent>
+            </Card>
+          </a>
+        ))}
+      </div>
 
       <div className="mt-12 bg-white border-t pt-6">
         <h2 className="text-xl font-bold text-gray-800 mb-4">🔍 AutoBorn™ Feature Matrix</h2>
@@ -155,5 +142,4 @@ export default function AutobornSyncGrid() {
     </div>
   );
 }
-
 
