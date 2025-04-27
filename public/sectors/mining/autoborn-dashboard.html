@@ -16,87 +16,92 @@
     <h1 class="text-3xl font-bold text-indigo-600 mb-8 text-center">🧬 AutoBorn™ Master Sync Grid
     </h1>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-      <!-- Scroll Card 1 -->
-      <div class="bg-white rounded-xl shadow hover:shadow-md transition p-6">
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="text-xl font-bold">🚗 AutoBorn™ Prime</h2>
-          <span class="text-xs text-gray-500">Master Scroll</span>
-        </div>
-        <p class="text-sm">💳 License Fee: R12,000</p>
-        <p class="text-sm">📦 Monthly: R999 (Live)</p>
-        <p class="text-sm">💰 Royalty: 9.2% / Split: G</p>
-        <p class="text-xs mt-2 text-gray-600">VAULT-092X-AUTO</p>
-        <a href="https://faa.zone/claimroot/autoborn-prime" target="_blank" class="text-xs text-blue-600 underline mt-2 inline-block">🌐 ClaimRoot™</a>
-        <div class="mt-4">
-          <div class="h-2 w-full bg-gray-200 rounded">
-            <div class="h-2 bg-yellow-400 rounded" style="width: 42%"></div>
-          </div>
-        </div>
-        <div class="h-32 mt-4">
-          <canvas id="chart1"></canvas>
-        </div>
-        <a href="/sectors/mining/autoborn-dashboard.html" class="mt-4 block bg-black text-white text-center py-2 rounded-lg text-sm">Pay with VaultPay™</a>
-      </div>
-
-      <!-- Scroll Card 2 -->
-      <div class="bg-white rounded-xl shadow hover:shadow-md transition p-6">
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="text-xl font-bold">⛏️ AutoBorn™ MinerLink</h2>
-          <span class="text-xs text-gray-500">Sub Scroll</span>
-        </div>
-        <p class="text-sm">💳 License Fee: R8,700</p>
-        <p class="text-sm">📦 Monthly: R760 (Node)</p>
-        <p class="text-sm">💰 Royalty: 6.1% / Split: L</p>
-        <p class="text-xs mt-2 text-gray-600">VAULT-092X-MINER</p>
-        <a href="https://faa.zone/claimroot/autoborn-minerlink" target="_blank" class="text-xs text-blue-600 underline mt-2 inline-block">🌐 ClaimRoot™</a>
-        <div class="mt-4">
-          <div class="h-2 w-full bg-gray-200 rounded">
-            <div class="h-2 bg-blue-400 rounded" style="width: 37%"></div>
-          </div>
-        </div>
-        <div class="h-32 mt-4">
-          <canvas id="chart2"></canvas>
-        </div>
-        <a href="/sectors/mining/autoborn-dashboard.html" class="mt-4 block bg-black text-white text-center py-2 rounded-lg text-sm">Pay with VaultPay™</a>
-      </div>
-
-      <!-- Scroll Card 3 -->
-      <div class="bg-white rounded-xl shadow hover:shadow-md transition p-6">
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="text-xl font-bold">📦 AutoBorn™ VaultMesh</h2>
-          <span class="text-xs text-gray-500">Deploy License</span>
-        </div>
-        <p class="text-sm">💳 License Fee: R15,400</p>
-        <p class="text-sm">📦 Monthly: R1,340 (HQ)</p>
-        <p class="text-sm">💰 Royalty: 10.5% / Split: R</p>
-        <p class="text-xs mt-2 text-gray-600">VAULT-092X-MESH</p>
-        <a href="https://faa.zone/claimroot/autoborn-vaultmesh" target="_blank" class="text-xs text-blue-600 underline mt-2 inline-block">🌐 ClaimRoot™</a>
-        <div class="mt-4">
-          <div class="h-2 w-full bg-gray-200 rounded">
-            <div class="h-2 bg-green-400 rounded" style="width: 55%"></div>
-          </div>
-        </div>
-        <div class="h-32 mt-4">
-          <canvas id="chart3"></canvas>
-        </div>
-        <a href="/sectors/mining/autoborn-dashboard.html" class="mt-4 block bg-black text-white text-center py-2 rounded-lg text-sm">Pay with VaultPay™</a>
-      </div>
-
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="cards-grid">
+      <!-- Cards will be dynamically injected here -->
     </div>
   </div>
 
   <script>
-    const randomData = () => Array.from({ length: 9 }, () => ({ x: '', y: Math.random() * 100 }));
+    const scrolls = [
+      {
+        id: 'scroll-9082',
+        brand: 'AutoBorn™ Prime',
+        icon: '🚗',
+        type: 'Master Scroll',
+        licenseFee: 'R12,000',
+        monthly: 'R999 (Live)',
+        royalty: '9.2% / Split: G',
+        countdown: 42,
+        vaultId: 'VAULT-092X-AUTO',
+        claimRoot: 'https://faa.zone/claimroot/autoborn-prime',
+        color: '#facc15'
+      },
+      {
+        id: 'scroll-9083',
+        brand: 'AutoBorn™ MinerLink',
+        icon: '⛏️',
+        type: 'Sub Scroll',
+        licenseFee: 'R8,700',
+        monthly: 'R760 (Node)',
+        royalty: '6.1% / Split: L',
+        countdown: 37,
+        vaultId: 'VAULT-092X-MINER',
+        claimRoot: 'https://faa.zone/claimroot/autoborn-minerlink',
+        color: '#60a5fa'
+      },
+      {
+        id: 'scroll-9084',
+        brand: 'AutoBorn™ VaultMesh',
+        icon: '📦',
+        type: 'Deploy License',
+        licenseFee: 'R15,400',
+        monthly: 'R1,340 (HQ)',
+        royalty: '10.5% / Split: R',
+        countdown: 55,
+        vaultId: 'VAULT-092X-MESH',
+        claimRoot: 'https://faa.zone/claimroot/autoborn-vaultmesh',
+        color: '#34d399'
+      }
+    ];
 
-    const createChart = (id, color) => {
+    function renderCards() {
+      const container = document.getElementById('cards-grid');
+      container.innerHTML = '';
+      scrolls.forEach((scroll, index) => {
+        container.innerHTML += `
+          <div class="bg-white rounded-xl shadow hover:shadow-md transition p-6" id="${scroll.id}">
+            <div class="flex justify-between items-center mb-4">
+              <h2 class="text-xl font-bold">${scroll.icon} ${scroll.brand}</h2>
+              <span class="text-xs text-gray-500">${scroll.type}</span>
+            </div>
+            <p class="text-sm">💳 License Fee: ${scroll.licenseFee}</p>
+            <p class="text-sm">📦 Monthly: ${scroll.monthly}</p>
+            <p class="text-sm">💰 Royalty: ${scroll.royalty}</p>
+            <p class="text-xs mt-2 text-gray-600">${scroll.vaultId}</p>
+            <a href="${scroll.claimRoot}" target="_blank" class="text-xs text-blue-600 underline mt-2 inline-block">🌐 ClaimRoot™</a>
+            <div class="mt-4">
+              <div class="h-2 w-full bg-gray-200 rounded">
+                <div id="pulse-${scroll.id}" class="h-2 rounded" style="width: ${scroll.countdown}%; background-color: ${scroll.color};"></div>
+              </div>
+            </div>
+            <p class="text-xs text-gray-500 mt-2" id="countdown-${scroll.id}">Countdown: ${scroll.countdown}s</p>
+            <div class="h-32 mt-4">
+              <canvas id="chart-${scroll.id}"></canvas>
+            </div>
+            <a href="/sectors/mining/autoborn-dashboard.html" class="mt-4 block bg-black text-white text-center py-2 rounded-lg text-sm">Pay with VaultPay™</a>
+          </div>
+        `;
+        createChart(`chart-${scroll.id}`, scroll.color);
+      });
+    }
+
+    function createChart(id, color) {
       const ctx = document.getElementById(id).getContext('2d');
       new Chart(ctx, {
         type: 'line',
         data: {
           datasets: [{
-            data: randomData(),
+            data: Array.from({ length: 9 }, () => ({ x: '', y: Math.random() * 100 })),
             borderColor: color,
             backgroundColor: 'transparent',
             tension: 0.4,
@@ -110,11 +115,23 @@
           plugins: { legend: { display: false }, tooltip: { enabled: false } }
         }
       });
-    };
+    }
 
-    createChart('chart1', '#facc15');
-    createChart('chart2', '#60a5fa');
-    createChart('chart3', '#34d399');
+    function startCountdown() {
+      setInterval(() => {
+        scrolls.forEach(scroll => {
+          if (scroll.countdown > 0) {
+            scroll.countdown--;
+            document.getElementById(`countdown-${scroll.id}`).innerText = `Countdown: ${scroll.countdown}s`;
+            document.getElementById(`pulse-${scroll.id}`).style.width = `${scroll.countdown}%`;
+          }
+        });
+      }, 1000);
+    }
+
+    renderCards();
+    startCountdown();
+
   </script>
 
 </body>
