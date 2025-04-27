@@ -294,6 +294,37 @@
       <p class="text-sm text-gray-500 mt-10">📎 This plan can now be exported as HTML, PDF, or ZIP.</p>
     </div>
   </section>
+</section>
+
+<!-- 🛡️ Treaty Terminal Start -->
+<div style="padding: 40px; text-align: center;">
+  <h2>🛡️ Treaty Terminal 🛡️</h2>
+  <input id="promptInput" placeholder="Type your Treaty command..." style="margin-top:20px;padding:10px;width:80%;" /><br>
+  <button onclick="sendPrompt()" style="margin-top:10px;padding:10px 20px;background:#007acc;color:white;border:none;border-radius:5px;">
+    Send to VaultGPT
+  </button>
+  <pre id="vaultResponse" style="margin-top:20px;text-align:left;background:#eef1f5;padding:20px;border-radius:8px;">
+Awaiting your command...
+  </pre>
+</div>
+
+<script>
+async function sendPrompt() {
+  const prompt = document.getElementById('promptInput').value;
+  if (!prompt) return;
+  const response = await fetch('/bridge', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ prompt })
+  });
+  const data = await response.json();
+  document.getElementById('vaultResponse').innerText = data.reply || 'No reply from Vault.';
+}
+</script>
+<!-- 🛡️ Treaty Terminal End -->
+
+<!-- Footer -->
+<footer class="py-12 px-6 text-center bg-gray-900 text-white text-sm">
 
   <!-- Footer -->
   <footer class="py-12 px-6 text-center bg-gray-900 text-white text-sm">
