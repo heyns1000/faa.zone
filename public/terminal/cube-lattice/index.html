@@ -52,25 +52,25 @@
         return;
       }
 
-      output.textContent = "🔄 Sending cube sync to VaultBridge...";
+      output.textContent = "🔄 Sending cube sync scroll to VaultBridge...";
 
       try {
-        const res = await fetch("https://vault.faa.zone/bridge", {
+        const res = await fetch("https://faa.zone/vaultbridge", {  // ✅ Corrected Target
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ prompt: input })
         });
 
         const data = await res.json();
-        output.textContent = data.reply || "✅ VaultGPT replied with no message.";
+        output.textContent = data.reply || "✅ VaultGPT acknowledged but returned no scroll.";
       } catch (err) {
-        output.textContent = `❌ Vault fallback triggered.\n\n🧬 OmniDrop:\n"${input}"`;
+        output.textContent = `❌ Connection failed.\n\n🧬 OmniDrop fallback triggered:\n"${input}"`;
       }
     }
 
     function clearPrompt() {
       document.getElementById("prompt").value = "";
-      document.getElementById("response").textContent = "⚡️ Cube Lattice cleared. Ready.";
+      document.getElementById("response").textContent = "⚡️ Cube Lattice cleared. Ready for new scroll.";
     }
 
     document.getElementById("sendBtn").addEventListener("click", sendPrompt);
