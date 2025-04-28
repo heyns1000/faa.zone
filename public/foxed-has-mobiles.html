@@ -16,7 +16,6 @@
       0%, 100% { background: radial-gradient(circle at center, #f9fafb, #e0e7ff); }
       50% { background: radial-gradient(circle at center, #e0e7ff, #f9fafb); }
     }
-
     /* Fade-in animation */
     .fade-in {
       opacity: 0;
@@ -124,7 +123,7 @@
   </div>
 </footer>
 
-<!-- Fade-In Scroll Effect -->
+<!-- Fade-In Scroll + Treaty Pulse + Back Button Snippet -->
 <script>
   const faders = document.querySelectorAll('.fade-in');
   const appearOptions = { threshold: 0.1 };
@@ -135,15 +134,29 @@
       observer.unobserve(entry.target);
     });
   }, appearOptions);
-
-  faders.forEach(fader => {
-    appearOnScroll.observe(fader);
-  });
+  faders.forEach(fader => { appearOnScroll.observe(fader); });
 
   // TreatyPulse Clock
   setInterval(() => {
     console.log('✅ FAA Treaty Pulse at ' + new Date().toLocaleTimeString());
   }, 9000);
+
+  // 🧩 Browser History for Anchor Scrolls
+  document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href');
+      history.pushState(null, '', targetId);
+      document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  window.addEventListener('popstate', function() {
+    const id = window.location.hash;
+    if (id) {
+      document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+    }
+  });
 </script>
 
 </body>
