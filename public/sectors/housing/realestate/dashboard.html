@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FAA Real Estate AI™ Dashboard</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <style>
     html { scroll-behavior: smooth; }
     .pulse-grid {
@@ -37,19 +39,6 @@
       font-weight: bold;
       margin-top: 10px;
     }
-    .sign-in-btn {
-      background-color: #4CAF50;
-      color: white;
-      padding: 15px 25px;
-      font-size: 1.1em;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      margin: 10px;
-    }
-    .sign-in-btn:hover {
-      background-color: #45a049;
-    }
   </style>
 </head>
 <body class="bg-gray-800 text-white tracking-tight">
@@ -62,7 +51,7 @@
   </p>
 </header>
 
-<!-- NAVIGATION (including Owner, Agent, Client logins) -->
+<!-- NAVIGATION -->
 <nav class="flex flex-wrap gap-4 px-6 py-4 text-sm font-medium bg-gray-100 border-b sticky top-20 z-40">
   <a href="vault-upload.html" class="text-indigo-700 hover:underline">📤 Upload Deals</a>
   <a href="realestate-replay.html" class="text-indigo-700 hover:underline">🧠 Deal Replay</a>
@@ -75,18 +64,11 @@
   <a href="agent-insights.html" class="text-indigo-700 hover:underline">🧭 Agent Insights</a>
 </nav>
 
-<!-- OWNER, AGENT, CLIENT SIGN IN BUTTONS -->
-<div class="flex justify-center gap-6 mt-10">
-  <a href="/sectors/housing/realestate/owner-login.html" class="sign-in-btn">Owner Login</a>
-  <a href="/sectors/housing/realestate/agent-login.html" class="sign-in-btn">Agent Login</a>
-  <a href="/sectors/housing/realestate/client-login.html" class="sign-in-btn">Client Login</a>
-</div>
-
 <!-- MAIN DASHBOARD CONTENT -->
 <section class="max-w-7xl mx-auto px-6 py-16">
   <div class="bg-black text-white p-6 rounded-xl shadow-lg mb-8">
     <h2 class="text-2xl font-bold text-yellow-400">📊 Real-Time Property Pulse</h2>
-    <p class="text-sm text-gray-400">Global real estate valuation trends synced with FAA Real Estate AI™ PulseGrid™.</p>
+    <p class="text-sm text-gray-500">Global real estate valuation trends synced with FAA Real Estate AI™ PulseGrid™.</p>
     <div class="pulse-grid" id="pulseGridChart"></div>
   </div>
 
@@ -135,37 +117,55 @@
   FAA Real Estate AI™ | VaultMesh™ | TreatyGrid™ | Sovereign Forecast Mesh © 2025
 </footer>
 
-<script type="text/javascript">
-  // Initialize PulseGrid™ Chart (Real-Time Pulse)
+<!-- SALES PULSE CHART SCRIPT -->
+<script type="module">
+document.addEventListener('DOMContentLoaded', () => {
   const ctx = document.getElementById('pulseGridChart').getContext('2d');
-  const pulseChart = new Chart(ctx, {
+  const provinces = ['Gauteng', 'Western Cape', 'KwaZulu-Natal', 'Eastern Cape', 'Limpopo', 'Mpumalanga', 'North West', 'Free State', 'Northern Cape'];
+  const baseTurnovers = [2572306, 2338460, 2125873, 1932612, 1756920, 1597200, 1452000, 1320000, 1200000];
+
+  const salesData = {
+    labels: [],
+    datasets: provinces.map((prov, idx) => ({
+      label: prov,
+      data: [],
+      borderColor: `hsl(${idx * 40}, 70%, 50%)`,
+      borderWidth: 2,
+      fill: false,
+      tension: 0.4
+    }))
+  };
+
+  const chart = new Chart(ctx, {
     type: 'line',
-    data: {
-      labels: Array.from({ length: 30 }, (_, i) => `Day ${i+1}`),
-      datasets: [{
-        label: 'Average Global Property Value',
-        data: Array.from({ length: 30 }, () => Math.random() * 1000000 + 2000000),  // Simulated data
-        borderColor: '#FFD700',
-        fill: false,
-        tension: 0.1,
-      }]
-    },
+    data: salesData,
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      animation: false,
       scales: {
-        y: { min: 2000000, max: 3500000, ticks: { callback: v => `R${v.toLocaleString()}` } }
+        y: { min: 1000000, max: 3000000, ticks: { callback: v => 'R' + (v / 1000).toFixed(0) + 'k' } }
       },
-      plugins: { legend: { position: 'top' } }
+      plugins: { legend: { position: 'bottom' } }
     }
   });
 
-  // Simulate real-time data update every 3 seconds
-  setInterval(() => {
-    pulseChart.data.datasets[0].data.shift();
-    pulseChart.data.datasets[0].data.push(Math.random() * 1000000 + 2000000); // Simulated value update
-    pulseChart.update();
-  }, 3000);
+  function pushData() {
+    const now = new Date().toLocaleTimeString();
+    if (salesData.labels.length > 30) {
+      salesData.labels.shift();
+      salesData.datasets.forEach(d => d.data.shift());
+    }
+    salesData.labels.push(now);
+    salesData.datasets.forEach((d, idx) => {
+      d.data.push(baseTurnovers[idx] + Math.random() * 30000 - 15000); // Simulating fluctuating data
+    });
+    chart.update();
+  }
+
+  pushData();
+  setInterval(pushData, 3000);  // Update every 3 seconds
+});
 </script>
 
 </body>
