@@ -18,25 +18,26 @@
       transform-origin: left;
     }
 
-    /* Mobile Responsive Navbar */
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 80px;
-        left: 0;
-        background-color: #111827;
-        width: 100%;
-        padding: 1rem;
-        gap: 1rem;
-        z-index: 100;
-      }
-      .nav-links.active {
-        display: flex;
-      }
-      .hamburger {
-        display: block;
+/* Fix navigation overflow on mobile without changing layout */
+@media (max-width: 768px) {
+  header nav {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 0.5rem; /* adds a little spacing below nav for scroll bar */
+  }
+
+  header nav::-webkit-scrollbar {
+    display: none; /* hides scrollbar for clean look */
+  }
+
+  header nav a {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 0.5rem; /* small spacing between links */
+    font-size: 0.9rem; /* slightly smaller font for better fit */
+  }
+}
+
       }
     }
   </style>
@@ -92,12 +93,14 @@
   </section>
 
   <script>
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.querySelector('.nav-links');
+    (() => {
+      const hamburger = document.querySelector('.hamburger');
+      const navLinksEl = document.querySelector('.nav-links');
 
-    hamburger.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-    });
+      hamburger.addEventListener('click', () => {
+        navLinksEl.classList.toggle('active');
+      });
+    })();
   </script>
 </body>
 </html>
