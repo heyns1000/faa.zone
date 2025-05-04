@@ -314,6 +314,183 @@ function showSectorPanel(panelId) {
   }
 }
 </script>
+  <!-- UNIVERSAL PANEL TOGGLER -->
+<script>
+function showSectorPanel(panelId) {
+  document.querySelectorAll('[id^="sector-"], #embedded-banking-snapshot, #embedded-agriculture-snapshot').forEach(el => el.classList.add('hidden'));
+  const el = document.getElementById(panelId);
+  if (el) {
+    el.classList.remove('hidden');
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    console.warn('[FAA] Panel not found:', panelId);
+  }
+}
+</script>
+
+<!-- Embedded Banking Snapshot Panel -->
+<div id="embedded-banking-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
+  <div class="text-2xl font-bold text-gray-800 mb-4">🏦 FAA™ Banking Core Brand Dashboard (136 Brands)</div>
+  <div id="brand-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+  <div class="p-6" id="brand-snapshots"></div>
+</div>
+
+<!-- Embedded Agriculture Snapshot Panel -->
+<div id="embedded-agriculture-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
+  <div class="text-2xl font-bold text-green-800 mb-4">🌾 FAA™ Agriculture Core Brand Dashboard (84 Brands)</div>
+  <div id="agri-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+  <div class="p-6" id="agri-snapshots"></div>
+</div>
+
+<!-- OMNI AGRO-DROPDOWN NAV ITEM -->
+<div class="relative group">
+  <div class="bg-green-100 px-4 py-3 min-h-[52px] rounded shadow text-center font-semibold block w-full cursor-pointer transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105">
+    🌿 Agriculture Core Brands
+  </div>
+  <div class="absolute z-50 bg-white border rounded mt-1 shadow-lg w-64 max-h-96 overflow-y-auto hidden group-hover:block">
+    <button onclick="showSectorPanel('embedded-agriculture-snapshot')" class="block w-full text-left px-4 py-2 text-sm hover:bg-green-50 font-medium">
+      🌾 View All Agriculture Scrolls
+    </button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="text-center text-xs text-gray-400 mt-16 py-6 border-t">
+  FAA.Zone ScrollGrid · PulseTrade Certified · TreatyMesh Validated
+</footer>
+
+<!-- CHART SCRIPT -->
+<script>
+const agriBrands = [
+  'CropLink','SoilPulse','RootYield','AquaFarm','AgriMesh','GrowNode','GrainCast','SoilBank','CropID','AgriVault',
+  'PulseHarvest','MarketSoil','DroneFarm','RuralOps','SeedGrid','FarmChain','AgriScore','SoilNet','CropDoc','TerraVault',
+  'AgriID','SproutFlow','GrainSafe','FieldSync','AgriDepot','DroneCrop','CropTrace','PulseSoil','SeedRoot','RuralFlow',
+  'MarketGrow','AgriRank','SoilLogic','AgriSync','NutrientGrid','FieldCast','CropSource','YieldStack','FarmPulse','SoilTech',
+  'GreenTrace','CropVault','AgriCast','TerraPulse','SoilTrace','PulseAg','GrowVault','FieldNet','DroneSoil','SoilGrid',
+  'HarvestLoop','RuralMesh','FarmFlag','AgriFlow','SoilVault','FieldProof','DroneTrace','MarketRoots','NutrientPath','CropPulse',
+  'AgriPulse','EcoSeed','AgriMetrics','DroneGrid','GreenNode','RootVault','FieldToken','AgriPlan','SoilYield','SeedVault',
+  'MarketLink','CropFlow','RuralCast','AgriSyncPro','SoilLine','EcoAgri','HarvestNode','TerraSoil','CropMesh','AgriSignal',
+  'RuralVault','PulseGrow','MarketSoilX','AgriOmni'
+];
+
+const agriSubNodes = [
+  ['CropLink ID™','CropLink Vault™','CropLink Field™','CropLink Yield™'],
+  ['SoilPulse Trace™','SoilPulse Data™','SoilPulse Alert™'],
+  ['RootYield Base™','RootYield Chain™','RootYield X™'],
+  ['AquaFarm Sync™','AquaFarm Logi™','AquaFarm Vault™'],
+  ['AgriMesh Route™','AgriMesh Pulse™','AgriMesh View™'],
+  ['GrowNode Basic™','GrowNode Trade™','GrowNode Vault™'],
+  ['GrainCast Forecast™','GrainCast Scroll™'],
+  ['SoilBank Ledger™','SoilBank Pay™'],
+  ['CropID Scanner™','CropID Trust™'],
+  ['AgriVault Lock™','AgriVault Chain™','AgriVault Seed™'],
+  ['PulseHarvest Sync™','PulseHarvest Drop™','PulseHarvest Vault™'],
+  ['MarketSoil Rate™','MarketSoil Feed™','MarketSoil UI™'],
+  ['DroneFarm View™','DroneFarm Grid™','DroneFarm Trace™'],
+  ['RuralOps Node™','RuralOps Pulse™','RuralOps Chain™'],
+  ['SeedGrid Vault™','SeedGrid Scan™','SeedGrid Growth™'],
+  ['FarmChain Link™','FarmChain Claim™','FarmChain Credit™'],
+  ['AgriScore Index™','AgriScore Node™'],
+  ['SoilNet Base™','SoilNet UI™'],
+  ['CropDoc Scan™','CropDoc Aid™'],
+  ['TerraVault Ledger™','TerraVault View™','TerraVault Chain™'],
+  ['AgriID Chain™','AgriID Badge™','AgriID Verify™'],
+  ['SproutFlow Loop™','SproutFlow Track™'],
+  ['GrainSafe Lock™','GrainSafe Audit™'],
+  ['FieldSync Signal™','FieldSync Grid™'],
+  ['AgriDepot Map™','AgriDepot Sync™','AgriDepot Drop™'],
+  ['DroneCrop Watch™','DroneCrop Sync™'],
+  ['CropTrace Root™','CropTrace Link™'],
+  ['PulseSoil Core™','PulseSoil Signal™'],
+  ['SeedRoot Tag™','SeedRoot Layer™'],
+  ['RuralFlow Map™','RuralFlow Loop™','RuralFlow Chain™'],
+  ['MarketGrow Pulse™','MarketGrow Cast™','MarketGrow Deals™'],
+  ['AgriRank Score™','AgriRank Matrix™'],
+  ['SoilLogic Grid™','SoilLogic Forecast™'],
+  ['AgriSync UI™','AgriSync Chain™'],
+  ['NutrientGrid Base™','NutrientGrid Flux™'],
+  ['FieldCast Audio™','FieldCast Relay™'],
+  ['CropSource Ledger™','CropSource ID™'],
+  ['YieldStack UI™','YieldStack Payout™','YieldStack Index™'],
+  ['FarmPulse Loop™','FarmPulse Mesh™'],
+  ['SoilTech DNA™','SoilTech Live™'],
+  ['GreenTrace Chain™','GreenTrace Pulse™'],
+  ['CropVault Lock™','CropVault Ledger™','CropVault Cert™'],
+  ['AgriCast Signal™','AgriCast Feed™'],
+  ['TerraPulse Soil™','TerraPulse Vault™'],
+  ['SoilTrace ID™','SoilTrace Certify™'],
+  ['PulseAg Loop™','PulseAg Node™'],
+  ['GrowVault Root™','GrowVault Share™'],
+  ['FieldNet Mesh™','FieldNet Ping™'],
+  ['DroneSoil View™','DroneSoil Trace™'],
+  ['SoilGrid X™','SoilGrid Key™','SoilGrid Base™'],
+  ['HarvestLoop Yield™','HarvestLoop Stack™'],
+  ['RuralMesh Net™','RuralMesh Pulse™'],
+  ['FarmFlag Cert™','FarmFlag Signal™'],
+  ['AgriFlow Path™','AgriFlow Ledger™'],
+  ['SoilVault Lock™','SoilVault View™'],
+  ['FieldProof Claim™','FieldProof Relay™'],
+  ['DroneTrace Tag™','DroneTrace Vault™'],
+  ['MarketRoots X™','MarketRoots Grid™'],
+  ['NutrientPath Map™','NutrientPath Scan™'],
+  ['CropPulse Signal™','CropPulse Ledger™'],
+  ['AgriPulse Loop™','AgriPulse Ledger™'],
+  ['EcoSeed Vault™','EcoSeed Sync™'],
+  ['AgriMetrics Signal™','AgriMetrics Vault™'],
+  ['DroneGrid Node™','DroneGrid View™'],
+  ['GreenNode Base™','GreenNode Relay™'],
+  ['RootVault Claim™','RootVault Transfer™'],
+  ['FieldToken ID™','FieldToken Pay™'],
+  ['AgriPlan Builder™','AgriPlan Node™'],
+  ['SoilYield Track™','SoilYield Pulse™'],
+  ['SeedVault ID™','SeedVault Ledger™'],
+  ['MarketLink Chain™','MarketLink Signal™'],
+  ['CropFlow Sync™','CropFlow Vault™'],
+  ['RuralCast Net™','RuralCast Pulse™'],
+  ['AgriSyncPro UI™','AgriSyncPro Lock™'],
+  ['SoilLine Scan™','SoilLine Pulse™'],
+  ['EcoAgri Cert™','EcoAgri Grid™'],
+  ['HarvestNode Chain™','HarvestNode Log™'],
+  ['TerraSoil View™','TerraSoil DNA™'],
+  ['CropMesh Grid™','CropMesh Flow™'],
+  ['AgriSignal Node™','AgriSignal Loop™'],
+  ['RuralVault Lock™','RuralVault Cert™'],
+  ['PulseGrow Timer™','PulseGrow Sync™'],
+  ['MarketSoilX Index™','MarketSoilX Ledger™'],
+  ['AgriOmni Node™','AgriOmni Relay™']
+];
+
+function toggleSnapshot(id) {
+  document.querySelectorAll('.brand-snapshot').forEach(el => el.classList.add('hidden'));
+  const active = document.getElementById(id);
+  if (active) active.classList.remove('hidden');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const grid = document.getElementById('agri-grid');
+  const snapContainer = document.getElementById('agri-snapshots');
+
+  agriBrands.forEach((brand, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-green-100 hover:text-green-800 font-semibold cursor-pointer';
+    btn.innerHTML = `${brand}<sup>™</sup>`;
+    btn.onclick = () => toggleSnapshot(`agri-snap-${i}`);
+    grid.appendChild(btn);
+
+    const subList = agriSubNodes[i].map(n => `<li>🔹 ${n}</li>`).join('');
+    const snap = document.createElement('div');
+    snap.id = `agri-snap-${i}`;
+    snap.className = 'brand-snapshot hidden';
+    snap.innerHTML = `
+      <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+      <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+        ${subList}
+      </ul>`;
+    snapContainer.appendChild(snap);
+  });
+});
+</script>
+
 <!-- Embedded Banking Snapshot Panel -->
 <div id="embedded-banking-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
   <div class="text-2xl font-bold text-gray-800 mb-4">🏦 FAA™ Banking Core Brand Dashboard (136 Brands)</div>
