@@ -468,70 +468,32 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 </div>
 
+<!-- Embedded Agriculture Snapshot Panel -->
+<div id="embedded-agriculture-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
+  <div class="text-2xl font-bold text-green-800 mb-4">🌾 FAA™ Agriculture Core Brand Dashboard (84 Brands)</div>
+  <div id="agri-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+  <div class="p-6" id="agri-snapshots"></div>
+</div>
+
 <!-- FOOTER -->
 <footer class="text-center text-xs text-gray-400 mt-16 py-6 border-t">
   FAA.Zone ScrollGrid · PulseTrade Certified · TreatyMesh Validated
 </footer>
 
-<!-- CHART SCRIPT -->
+<!-- UNIVERSAL PANEL TOGGLER -->
 <script>
-const coreBrands = [
-  'FinGrid','TradeAmp','LoopPay','TaxNova','VaultMaster','Gridwise','CrateDance','CashGlyph','Foresync','OmniRank',
-  'ZenoBank','CruxSpend','PulseHive','WireVault','BitTrust','MeshCredit','NovaScore','ZentryPay','FlowDrift','AlphaClearing',
-  'LumenBank','DeltaCustody','FractalFund','TorusFinance','VectorMint','RapidTally','FathomBank','KiteYield','BondRhythm','EchoTrust',
-  'QuantArk','NodeCapital','VeritasPay','TrustCage','CoreLedge','SkyFin','MintFuse','OrbitBank','HashVault','MicroDelta',
-  'AnchorPrime','FleetGrid','ZoomLedge','BeaconBank','CrateTeller','NumenYield','SparkScore','MetaBank','AetherTrust','TrueCustody',
-  'NeutronMint','SiloCash','JetReconcile','PulseClearing','SyncTeller','TangentBank','NovaLedger','GlideBank','TraceFin','RootBank',
-  'BankSingularity','PillarTrust','AxonFin','MonetGrid','LayerBank','VergePay','StackCash','CrownBank','PrismScore','HaloMint',
-  'CentraClear','TrustForge','OmniBank','NanoPay','LatticeScore','NobleCredit','ChainBank','PulseMint','BridgeLedger','ChronoBank',
-  'UnityFin','GridTrust','SparkVault','LucidBank','RiverMint','FlightClearing','NetTeller','PeakCustody','FlarePay','DarkBank',
-  'OriginTrust','ShardLedger','IndexPay','AltimeterFin','EchoClearing','FrameCustody','ZenithGrid','AtomScore','CoreMeta','CruxFin',
-  'PulseMatrix','BalanceGrid','GoldMint','ClearStack','QuantumBank','ScriptScore','SyncVault','FolioTrust','HyperFin','ToneLedger',
-  'IndexGrid','LineBank','CoreAlpha','LogicPay','NodeYield','RatioMint','LockLedger','PrimeGrid','TrustAmp','FundLattice',
-  'CreditHelix','AuraVault','DataBank','RingMint','GlyphTrust','NebulaBank','ZenScore','LoopTrust','AxialFin','OmniLoop',
-  'AlphaPulse','NexusBank','VaultHelix','ScriptTeller','TallyCore','FuseMint'
-];
+function showSectorPanel(panelId) {
+  // Hide all sector and embedded panels
+  document.querySelectorAll('[id^="sector-"], [id^="embedded-"]').forEach(el => el.classList.add('hidden'));
 
-const subNodes = [
-  'Ledger Mesh','Arbitrage Core','Token Router','Tax Engine','Vault Lock','Compliance Matrix','Logistics Fin','Currency Glyph','Forecast Engine','Signal Tracker',
-  'Zeno Mesh','Crux Bridge','Hive Monitor','Wire Reconciler','Bit Locker','Credit Splice','Score Vector','Zentry Core','Drift Trace','Alpha Ledger',
-  'Lumen Pulse','Delta Secure','Fractal Trace','Torus Signal','Mint Bridge','Tally Stream','Bank Depth','Kite Path','Bond Engine','Echo Stack',
-  'Ark Model','Node Gate','Veritas Sync','Cage Mapper','Core Trace','Sky Sweep','Mint Grid','Orbit Channel','Hash Clear','Micro Chain',
-  'Anchor Lock','Fleet Sync','Zoom Channel','Beacon Path','Crate Vault','Numen Index','Spark Flow','Meta Signal','Aether Drift','Custody Map',
-  'Neutron Signal','Cash Stream','Jet Grid','Pulse Map','Sync Grid','Tangent Vector','Nova Route','Glide Core','Trace Engine','Root Node',
-  'Bank Shift','Pillar Core','Axon Thread','Monet Route','Layer Core','Verge Node','Stack Tally','Crown Core','Prism Gate','Halo Grid',
-  'Clearance Vector','Forge Sync','Bank Mesh','Nano Token','Lattice Path','Noble Curve','Chain Vector','Mint Grid','Bridge Path','Chrono Index',
-  'Unity Sync','Trust Matrix','Vault Score','Lucid Gate','Mint Route','Flight Signal','Teller Index','Custody Trace','Flare Lock','Dark Stream',
-  'Origin Pulse','Shard Bank','Pay Score','Altimeter Path','Clearing Core','Frame Lock','Zenith Route','Score Helix','Meta Stack','Crux Trace',
-  'Pulse Engine','Balance Tally','Gold Trace','Stack Mesh','Quantum Sync','Script Pulse','Vault Stack','Trust Model','Hyper Lock','Tone Gate',
-  'Grid Index','Line Mesh','Alpha Signal','Logic Gate','Yield Route','Ratio Core','Ledger Path','Prime Helix','Amp Signal','Lattice Node',
-  'Credit Curve','Vault Pulse','Data Mesh','Ring Gate','Glyph Stack','Bank Channel','Zen Gate','Loop Vault','Axial Index','Loop Stack',
-  'Pulse Vector','Bank Curve','Helix Gate','Teller Pulse','Tally Signal','Mint Vault'
-];
-
-document.addEventListener('DOMContentLoaded', () => {
-  const grid = document.getElementById('brand-grid');
-  const snapContainer = document.getElementById('brand-snapshots');
-
-  for (let i = 0; i < coreBrands.length; i++) {
-    const btn = document.createElement('button');
-    btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-indigo-100 hover:text-indigo-800 font-semibold cursor-pointer';
-    btn.innerHTML = `${coreBrands[i]}<sup>™</sup>`;
-    btn.onclick = () => toggleSnapshot(`snap-${i}`);
-    grid.appendChild(btn);
-
-    const snap = document.createElement('div');
-    snap.id = `snap-${i}`;
-    snap.className = 'brand-snapshot hidden';
-    snap.innerHTML = `
-      <div class='text-xl font-semibold mb-2'>${coreBrands[i]}<sup>™</sup> Snapshot</div>
-      <div class='bg-white border rounded p-4 shadow text-sm'>
-        Sub-Node: <strong>${subNodes[i]}</strong>
-      </div>`;
-    snapContainer.appendChild(snap);
+  const el = document.getElementById(panelId);
+  if (el) {
+    el.classList.remove('hidden');
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    console.warn('[FAA] Panel not found:', panelId);
   }
-});
-
+}
 function toggleSnapshot(id) {
   document.querySelectorAll('.brand-snapshot').forEach(el => el.classList.add('hidden'));
   const active = document.getElementById(id);
@@ -539,63 +501,130 @@ function toggleSnapshot(id) {
 }
 </script>
 
-<script type="module">
+<script>
+const agriBrands = [
+  'CropLink','SoilPulse','RootYield','AquaFarm','AgriMesh','GrowNode','GrainCast','SoilBank','CropID','AgriVault',
+  'PulseHarvest','MarketSoil','DroneFarm','RuralOps','SeedGrid','FarmChain','AgriScore','SoilNet','CropDoc','TerraVault',
+  'AgriID','SproutFlow','GrainSafe','FieldSync','AgriDepot','DroneCrop','CropTrace','PulseSoil','SeedRoot','RuralFlow',
+  'MarketGrow','AgriRank','SoilLogic','AgriSync','NutrientGrid','FieldCast','CropSource','YieldStack','FarmPulse','SoilTech',
+  'GreenTrace','CropVault','AgriCast','TerraPulse','SoilTrace','PulseAg','GrowVault','FieldNet','DroneSoil','SoilGrid',
+  'HarvestLoop','RuralMesh','FarmFlag','AgriFlow','SoilVault','FieldProof','DroneTrace','MarketRoots','NutrientPath','CropPulse',
+  'AgriPulse','EcoSeed','AgriMetrics','DroneGrid','GreenNode','RootVault','FieldToken','AgriPlan','SoilYield','SeedVault',
+  'MarketLink','CropFlow','RuralCast','AgriSyncPro','SoilLine','EcoAgri','HarvestNode','TerraSoil','CropMesh','AgriSignal',
+  'RuralVault','PulseGrow','MarketSoilX','AgriOmni'
+];
+
+const agriSubNodes = [
+  ['CropLink ID™','CropLink Vault™','CropLink Field™','CropLink Yield™'],
+  ['SoilPulse Trace™','SoilPulse Data™','SoilPulse Alert™'],
+  ['RootYield Base™','RootYield Chain™','RootYield X™'],
+  ['AquaFarm Sync™','AquaFarm Logi™','AquaFarm Vault™'],
+  ['AgriMesh Route™','AgriMesh Pulse™','AgriMesh View™'],
+  ['GrowNode Basic™','GrowNode Trade™','GrowNode Vault™'],
+  ['GrainCast Forecast™','GrainCast Scroll™'],
+  ['SoilBank Ledger™','SoilBank Pay™'],
+  ['CropID Scanner™','CropID Trust™'],
+  ['AgriVault Lock™','AgriVault Chain™','AgriVault Seed™'],
+  ['PulseHarvest Sync™','PulseHarvest Drop™','PulseHarvest Vault™'],
+  ['MarketSoil Rate™','MarketSoil Feed™','MarketSoil UI™'],
+  ['DroneFarm View™','DroneFarm Grid™','DroneFarm Trace™'],
+  ['RuralOps Node™','RuralOps Pulse™','RuralOps Chain™'],
+  ['SeedGrid Vault™','SeedGrid Scan™','SeedGrid Growth™'],
+  ['FarmChain Link™','FarmChain Claim™','FarmChain Credit™'],
+  ['AgriScore Index™','AgriScore Node™'],
+  ['SoilNet Base™','SoilNet UI™'],
+  ['CropDoc Scan™','CropDoc Aid™'],
+  ['TerraVault Ledger™','TerraVault View™','TerraVault Chain™'],
+  ['AgriID Chain™','AgriID Badge™','AgriID Verify™'],
+  ['SproutFlow Loop™','SproutFlow Track™'],
+  ['GrainSafe Lock™','GrainSafe Audit™'],
+  ['FieldSync Signal™','FieldSync Grid™'],
+  ['AgriDepot Map™','AgriDepot Sync™','AgriDepot Drop™'],
+  ['DroneCrop Watch™','DroneCrop Sync™'],
+  ['CropTrace Root™','CropTrace Link™'],
+  ['PulseSoil Core™','PulseSoil Signal™'],
+  ['SeedRoot Tag™','SeedRoot Layer™'],
+  ['RuralFlow Map™','RuralFlow Loop™','RuralFlow Chain™'],
+  ['MarketGrow Pulse™','MarketGrow Cast™','MarketGrow Deals™'],
+  ['AgriRank Score™','AgriRank Matrix™'],
+  ['SoilLogic Grid™','SoilLogic Forecast™'],
+  ['AgriSync UI™','AgriSync Chain™'],
+  ['NutrientGrid Base™','NutrientGrid Flux™'],
+  ['FieldCast Audio™','FieldCast Relay™'],
+  ['CropSource Ledger™','CropSource ID™'],
+  ['YieldStack UI™','YieldStack Payout™','YieldStack Index™'],
+  ['FarmPulse Loop™','FarmPulse Mesh™'],
+  ['SoilTech DNA™','SoilTech Live™'],
+  ['GreenTrace Chain™','GreenTrace Pulse™'],
+  ['CropVault Lock™','CropVault Ledger™','CropVault Cert™'],
+  ['AgriCast Signal™','AgriCast Feed™'],
+  ['TerraPulse Soil™','TerraPulse Vault™'],
+  ['SoilTrace ID™','SoilTrace Certify™'],
+  ['PulseAg Loop™','PulseAg Node™'],
+  ['GrowVault Root™','GrowVault Share™'],
+  ['FieldNet Mesh™','FieldNet Ping™'],
+  ['DroneSoil View™','DroneSoil Trace™'],
+  ['SoilGrid X™','SoilGrid Key™','SoilGrid Base™'],
+  ['HarvestLoop Yield™','HarvestLoop Stack™'],
+  ['RuralMesh Net™','RuralMesh Pulse™'],
+  ['FarmFlag Cert™','FarmFlag Signal™'],
+  ['AgriFlow Path™','AgriFlow Ledger™'],
+  ['SoilVault Lock™','SoilVault View™'],
+  ['FieldProof Claim™','FieldProof Relay™'],
+  ['DroneTrace Tag™','DroneTrace Vault™'],
+  ['MarketRoots X™','MarketRoots Grid™'],
+  ['NutrientPath Map™','NutrientPath Scan™'],
+  ['CropPulse Signal™','CropPulse Ledger™'],
+  ['AgriPulse Loop™','AgriPulse Ledger™'],
+  ['EcoSeed Vault™','EcoSeed Sync™'],
+  ['AgriMetrics Signal™','AgriMetrics Vault™'],
+  ['DroneGrid Node™','DroneGrid View™'],
+  ['GreenNode Base™','GreenNode Relay™'],
+  ['RootVault Claim™','RootVault Transfer™'],
+  ['FieldToken ID™','FieldToken Pay™'],
+  ['AgriPlan Builder™','AgriPlan Node™'],
+  ['SoilYield Track™','SoilYield Pulse™'],
+  ['SeedVault ID™','SeedVault Ledger™'],
+  ['MarketLink Chain™','MarketLink Signal™'],
+  ['CropFlow Sync™','CropFlow Vault™'],
+  ['RuralCast Net™','RuralCast Pulse™'],
+  ['AgriSyncPro UI™','AgriSyncPro Lock™'],
+  ['SoilLine Scan™','SoilLine Pulse™'],
+  ['EcoAgri Cert™','EcoAgri Grid™'],
+  ['HarvestNode Chain™','HarvestNode Log™'],
+  ['TerraSoil View™','TerraSoil DNA™'],
+  ['CropMesh Grid™','CropMesh Flow™'],
+  ['AgriSignal Node™','AgriSignal Loop™'],
+  ['RuralVault Lock™','RuralVault Cert™'],
+  ['PulseGrow Timer™','PulseGrow Sync™'],
+  ['MarketSoilX Index™','MarketSoilX Ledger™'],
+  ['AgriOmni Node™','AgriOmni Relay™']
+];
+
 document.addEventListener('DOMContentLoaded', () => {
-  const ctx = document.getElementById('pulseChart').getContext('2d');
-  const labels = [];
-  const sectors = ['Housing', 'Mining', 'Media', 'Finance', 'Youth', 'Ritual', 'Packaging'];
+  const grid = document.getElementById('agri-grid');
+  const snapContainer = document.getElementById('agri-snapshots');
 
-  const data = {
-    labels,
-    datasets: sectors.map((label, i) => ({
-      label,
-      data: [],
-      borderColor: `hsl(${i * 40}, 70%, 50%)`,
-      borderWidth: 2,
-      fill: false,
-      tension: 0.3
-    }))
-  };
+  agriBrands.forEach((brand, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-green-100 hover:text-green-800 font-semibold cursor-pointer';
+    btn.innerHTML = `${brand}<sup>™</sup>`;
+    btn.onclick = () => toggleSnapshot(`agri-snap-${i}`);
+    grid.appendChild(btn);
 
-  const chart = new Chart(ctx, {
-    type: 'line',
-    data,
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      animation: false,
-      scales: {
-        y: {
-          min: 1500,
-          max: 5000,
-          ticks: {
-            callback: v => v + ' syncs'
-          }
-        }
-      },
-      plugins: { legend: { position: 'bottom' } }
-    }
+    const subList = agriSubNodes[i].map(n => `<li>🔹 ${n}</li>`).join('');
+    const snap = document.createElement('div');
+    snap.id = `agri-snap-${i}`;
+    snap.className = 'brand-snapshot hidden mt-6';
+    snap.innerHTML = `
+      <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+      <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+        ${subList}
+      </ul>`;
+    snapContainer.appendChild(snap);
   });
-
-  function pushData() {
-    const time = new Date().toLocaleTimeString();
-    if (labels.length > 30) {
-      labels.shift();
-      data.datasets.forEach(ds => ds.data.shift());
-    }
-    labels.push(time);
-    data.datasets.forEach((ds, i) => {
-      const base = 2000 + i * 400;
-      ds.data.push(base + Math.random() * 300 - 150);
-    });
-    chart.update();
-  }
-
-  pushData();
-  setInterval(pushData, 4000);
 });
 </script>
-
-</body>
+  </body>
 </html>
 
