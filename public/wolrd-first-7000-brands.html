@@ -50,19 +50,21 @@
   <a href="ecosync-logs.html" class="hover:text-indigo-600 hover:-translate-y-1 hover:scale-105 transition">📥 Ecosync Logs</a>
 </nav>
 
-  <!-- SECTOR GRID NAVIGATION -->
+ <!-- SECTOR GRID NAVIGATION -->
 <nav class="bg-white border-b px-6 py-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8 gap-4 text-sm">
 
-  <!-- Agri & Banking use JS-based panel rendering -->
+  <!-- Agri, Banking, Creative: use JS-based panel rendering -->
   <a href="#" onclick="showSectorPanel('embedded-agriculture-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">
     🌱 Agriculture & Biotech
   </a>
   <a href="#" onclick="showSectorPanel('embedded-banking-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">
     🏦 Banking & Finance
   </a>
+  <a href="#" onclick="showSectorPanel('embedded-creative-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">
+    🖋️ Creative Tech
+  </a>
 
- <a href="#" onclick="showSectorPanel('embedded-creative-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block transition hover:-translate-y-1 hover:scale-105">🖋️ Creative Tech</a>
-  <!-- Remaining sectors link out to dedicated HTML pages -->
+  <!-- Other sectors link out to separate HTML pages -->
   <a href="sector-logistics.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">📦 Distribution & Logistics</a>
   <a href="sector-education.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">📚 Education & IP</a>
   <a href="sector-fashion.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">✂ Fashion & Identity</a>
@@ -87,6 +89,14 @@
   <a href="sector-youth.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🧒 Youth & Learning</a>
   <a href="sector-zerowaste.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">♻️ Zero Waste</a>
 </nav>
+
+<!-- Embedded Creative Tech Snapshot Panel -->
+<div id="embedded-creative-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
+  <div class="text-2xl font-bold text-purple-800 mb-4">🖋️ FAA™ Creative Tech Core Brand Dashboard (10 Brands)</div>
+  <div id="creative-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+  <div class="p-6" id="creative-snapshots"></div>
+</div>
+
 
 <!-- EMBEDDED SECTOR PANELS (Agri + Banking) -->
 <section class="px-6 pt-8">
@@ -441,47 +451,46 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <script>
-  const creativeBrands = [
-    'MediaGrid', 'StudioPath', 'SoundReel', 'EditFrame', 'MotionKit',
-    'GhostTrace', 'TalentMap', 'SignalVerse', 'ScrollPlay', 'FXStream'
-  ];
+const creativeBrands = [
+  'MediaGrid', 'StudioPath', 'SoundReel', 'EditFrame', 'MotionKit',
+  'GhostTrace', 'TalentMap', 'SignalVerse', 'ScrollPlay', 'FXStream'
+];
 
-  const creativeSubNodes = [
-    ['SceneLink™', 'FXLayer™', 'ClipVault™'],
-    ['StudioSync™', 'StagePulse™', 'RenderMesh™'],
-    ['AudioTrace™', 'VoiceVault™', 'WaveLoop™'],
-    ['CutChain™', 'TimelineScroll™', 'FXSnap™'],
-    ['VectorNode™', 'AnimCast™', 'ScrollFX™'],
-    ['TraceBlock™', 'ScreenShield™', 'CloneLock™'],
-    ['LedgerID™', 'Royaltix™', 'PayoutTag™'],
-    ['FreqCast™', 'GridWave™', 'AudioMesh™'],
-    ['PlayNode™', 'FrameTrigger™', 'RenderSync™'],
-    ['FXRender™', 'ScrollVision™', 'LoopFrame™']
-  ];
+const creativeSubNodes = [
+  ['SceneLink™', 'FXLayer™', 'ClipVault™'],
+  ['StudioSync™', 'StagePulse™', 'RenderMesh™'],
+  ['AudioTrace™', 'VoiceVault™', 'WaveLoop™'],
+  ['CutChain™', 'TimelineScroll™', 'FXSnap™'],
+  ['VectorNode™', 'AnimCast™', 'ScrollFX™'],
+  ['TraceBlock™', 'ScreenShield™', 'CloneLock™'],
+  ['LedgerID™', 'Royaltix™', 'PayoutTag™'],
+  ['FreqCast™', 'GridWave™', 'AudioMesh™'],
+  ['PlayNode™', 'FrameTrigger™', 'RenderSync™'],
+  ['FXRender™', 'ScrollVision™', 'LoopFrame™']
+];
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const grid = document.getElementById('creative-grid');
-    const snapContainer = document.getElementById('creative-snapshots');
+document.addEventListener('DOMContentLoaded', () => {
+  const grid = document.getElementById('creative-grid');
+  const snapContainer = document.getElementById('creative-snapshots');
+  if (!grid || !snapContainer) return;
 
-    if (!grid || !snapContainer) return;
+  creativeBrands.forEach((brand, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-purple-100 hover:text-purple-800 font-semibold cursor-pointer';
+    btn.innerHTML = `${brand}<sup>™</sup>`;
+    btn.onclick = () => toggleSnapshot(`creative-snap-${i}`);
+    grid.appendChild(btn);
 
-    creativeBrands.forEach((brand, i) => {
-      const btn = document.createElement('button');
-      btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-purple-100 hover:text-purple-800 font-semibold cursor-pointer';
-      btn.innerHTML = `${brand}<sup>™</sup>`;
-      btn.onclick = () => toggleSnapshot(`creative-snap-${i}`);
-      grid.appendChild(btn);
-
-      const subList = creativeSubNodes[i].map(n => `<li>🔹 ${n}</li>`).join('');
-      const snap = document.createElement('div');
-      snap.id = `creative-snap-${i}`;
-      snap.className = 'brand-snapshot hidden mt-6';
-      snap.innerHTML = `
-        <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
-        <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
-          ${subList}
-        </ul>`;
-      snapContainer.appendChild(snap);
-    });
+    const subList = creativeSubNodes[i].map(n => `<li>🔹 ${n}</li>`).join('');
+    const snap = document.createElement('div');
+    snap.id = `creative-snap-${i}`;
+    snap.className = 'brand-snapshot hidden mt-6';
+    snap.innerHTML = `
+      <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+      <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+        ${subList}
+      </ul>`;
+    snapContainer.appendChild(snap);
   });
+});
 </script>
