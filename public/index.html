@@ -50,14 +50,17 @@
   <a href="ecosync-logs.html" class="hover:text-indigo-600 hover:-translate-y-1 hover:scale-105 transition">📥 Ecosync Logs</a>
 </nav>
 
-  <!-- SECTOR GRID NAVIGATION -->
+   <!-- SECTOR GRID NAVIGATION -->
 <nav class="bg-white border-b px-6 py-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8 gap-4 text-sm">
 
   <!-- Agri & Banking use JS-based panel rendering -->
   <a href="#" onclick="showSectorPanel('embedded-agriculture-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">
     🌱 Agriculture & Biotech
   </a>
-  <a href="#" onclick="showSectorPanel('embedded-banking-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">
+  <a href="#" onclick="showSectorPanel('embedded-fsf-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">
+    🥦 Food, Soil & Farming
+  </a>
+   <a href="#" onclick="showSectorPanel('embedded-banking-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">
     🏦 Banking & Finance
   </a>
 
@@ -94,6 +97,15 @@
   </div>
   <div id="agri-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="agri-snapshots"></div>
+</div>
+
+  <!-- Embedded FSF Sector Panel -->
+<div id="embedded-fsf-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
+  <div class="text-2xl font-bold text-green-700 mb-4">
+    🥦 FAA™ Food, Soil & Farming Brand Dashboard (83 Brands)
+  </div>
+  <div id="fsf-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+  <div class="p-6" id="fsf-snapshots"></div>
 </div>
 
 
@@ -650,4 +662,161 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+
+  <script>
+  // 🧠 Final Snapshot Toggle Function
+  function toggleSnapshot(id) {
+    document.querySelectorAll('.brand-snapshot').forEach(el => el.classList.add('hidden'));
+    const active = document.getElementById(id);
+    if (active) active.classList.remove('hidden');
+  }
+
+  const fsfBrands = [
+    'AgriCore', 'SoilHealth', 'FarmFresh', 'CropCircle', 'HarvestHub', 'TerraNova', 'GreenSprout', 'AgroLife',
+    'BioFarm', 'EcoHarvest', 'SeedLink', 'SoilSmart', 'FarmWise', 'CropGuard', 'HarvestEase', 'TerraGrow',
+    'GreenField', 'AgroTech', 'BioYield', 'EcoFarm', 'AgriPulse', 'BioCrop', 'FarmLink', 'SoilGuard', 'GreenHarvest',
+    'TerraFarm', 'SeedSmart', 'CropCare', 'HarvestPro', 'SoilSense', 'FarmVision', 'AgroTech', 'BioSoil',
+    'CropTrack', 'HarvestLink', 'SoilLab', 'FarmManage', 'AgriData', 'BioGrow', 'EcoFarm', 'CropMesh', 'SeedRoot',
+    'SoilVault', 'PlantCast', 'YieldNode', 'FarmBeacon', 'BioSprout', 'SoilTrace', 'HarvestCore', 'PlantLink',
+    'TerraLoop', 'SoilPulse', 'GreenPatch', 'FarmSync', 'RootMesh', 'BioCluster', 'SproutIndex', 'MoistureMap',
+    'EcoZone', 'CropRelay', 'FarmCloud', 'SoilFrame', 'HarvestPing', 'CropCode', 'AgroNode', 'SeedNest', 'TraceFarm',
+    'SproutChain', 'SoilStack', 'AgriPanel', 'RootClaim', 'MoistureNode', 'CrateFarm', 'PlantPing', 'AgroLoop',
+    'CropGrid', 'VendorSprout', 'BioPing', 'EcoFarmGrid', 'TerraCode', 'HarvestVault', 'CropBinder', 'SoilCertify'
+  ];
+
+
+const fsfSubNodes = [
+  ['SoilSync','CropTrack','FarmLink','HarvestNet'],
+  ['BioBoost','NutrientFlow','EarthGuard','RootMax'],
+  ['OrganicGrow','PureHarvest','GreenCycle','EcoFarm'],
+  ['YieldMap','PlantPulse','GrowthScan','FieldSense'],
+  ['GrainGate','ProducePath','MarketLink','FarmFlow'],
+  ['LandRevive','SoilBalance','EcoTill','AgroRenew'],
+  ['SeedStart','PlantBoost','GrowTrack','EcoRoot'],
+  ['FarmVital','CropCare','SoilSense','HarvestEase'],
+  ['EcoGrow','NaturalYield','SoilPure','PlantHealth'],
+  ['GreenField','CropCycle','SoilNurture','FarmSustain'],
+  ['GerminatePro','PlantConnect','GrowNet','RootLink'],
+  ['NutrientTrack','EarthMonitor','SoilScan','FertilEase'],
+  ['AgriPlan','CropManage','FieldGuide','HarvestLogic'],
+  ['PestShield','DiseaseControl','PlantProtect','YieldSecure'],
+  ['GrainFlow','ProduceEase','MarketAccess','FarmSimplify'],
+  ['LandEnrich','SoilEnhance','EcoFert','AgroBoost'],
+  ['SeedSelect','PlantOptimize','GrowManage','EcoCultivate'],
+  ['FarmInnovate','CropTech','SoilAdvance','HarvestTech'],
+  ['EcoProduce','NaturalHarvest','SoilRich','PlantGain'],
+  ['GreenCultivate','CropSustain','SoilCare','FarmEco'],
+  ['SoilMonitor','CropSensor','FieldData','HarvestAlert'],
+  ['OrganicSeed','PlantHealth','GrowthTrack','EcoYield'],
+  ['AgriConnect','FieldNet','CropShare','HarvestSync'],
+  ['NutrientShield','ErosionControl','pHBalance','RootProtect'],
+  ['EcoCrop','SustainableYield','BioFertilizer','FarmSustain'],
+  ['LandOptimize','SoilEnhance','CropBoost','AgroManage'],
+  ['GerminationTrack','PlantMap','GrowthPredict','YieldForecast'],
+  ['PestMonitor','DiseaseAlert','PlantHealthCheck','YieldSecure'],
+  ['GrainQuality','ProduceSorting','MarketAccess','FarmLogistics'],
+  ['MoistureDetect','NutrientMap','SoilProfile','FertilityIndex'],
+  ['SatelliteImagery','CropAnalysis','FieldMapping','YieldEstimation'],
+  ['PrecisionFarming','SmartIrrigation','DroneSurvey','DataAnalytics'],
+  ['MicrobeEnhance','OrganicMatter','SoilRegen','EcoBalance'],
+  ['PlantGrowthMonitor','FieldProgress','HarvestTimeline','YieldReport'],
+  ['SupplyChainConnect','ProduceTrace','MarketIntegration','FarmNetwork'],
+  ['pHTesting','NutrientAnalysis','SoilSampling','FertilityReport'],
+  ['TaskScheduler','ResourceAllocation','LaborTracking','EquipmentMonitor'],
+  ['CropRecords','FieldHistory','YieldAnalytics','FarmReports'],
+  ['OrganicInputs','PlantNutrition','GrowthEnhancer','EcoSolutions'],
+  ['SustainablePractices','RenewableEnergy','WasteManagement','Biodiversity'],
+  ['FieldNet','SoilGrid','YieldLink','NodeTrace'],
+  ['GermCode','SeedID','RootLink','GrowthStart'],
+  ['VaultSoil','SampleSecure','LabLink','ResultSync'],
+  ['GrowthSignal','WeatherFeed','PlantAlert','FieldNotify'],
+  ['NodePath','HarvestTrace','ScrollYield','CropGrid'],
+  ['ZonePing','CropAlert','SignalYield','TraceLight'],
+  ['EcoSeed','VitalTrace','GreenMap','GrowStream'],
+  ['SampleLink','DataStream','FertilMap','FieldTest'],
+  ['HarvestPing','VendorClaim','YieldPoint','CrateDrop'],
+  ['PlantID','CrossNode','ZoneSync','QRRoot'],
+  ['AgriCycle','SoilWave','CropSync','EcoChain'],
+  ['PulseCheck','GrowthWave','DepthTrace','FieldFlow'],
+  ['ZoneGrid','OrganicNode','FarmSquare','PlantDrop'],
+  ['SyncPoint','CropMerge','LandSplit','VendorMesh'],
+  ['NodeSeed','GridSprout','PathFert','MicroPulse'],
+  ['CropGroup','FieldChain','VendorLoop','YieldRing'],
+  ['ZoneScan','PlantGrid','GrowthMeter','SeedSync'],
+  ['AquaNode','RootHumidity','DepthScan','FieldAqua'],
+  ['GreenClaim','NaturalPath','FarmMesh','ZoneCert'],
+  ['YieldSync','VendorCast','CrateSend','RouteField'],
+  ['ScrollFarm','VendorPanel','YieldDash','FieldUpload'],
+  ['FrameID','EarthLine','GridSoil','TestPath'],
+  ['PingGrid','DropYield','ClaimNode','AlertField'],
+  ['BarcodeRoot','GrowthTag','ScrollField','LabelGrow'],
+  ['LandID','CropNode','FieldLink','SoilRoute'],
+  ['NestCode','SproutDrop','GrowthLog','FarmBase'],
+  ['FarmScan','VendorLink','HarvestLedger','ScrollProof'],
+  ['ChainGrow','YieldLink','NodeDrop','EcoSprout'],
+  ['StackClaim','DepthScan','FertilRow','SoilVault'],
+  ['PanelSync','ScrollDash','CropView','VendorControl'],
+  ['ClaimTrace','RootID','VendorStamp','FieldLock'],
+  ['HydrateLink','DepthSync','MoistPulse','NodeRain'],
+  ['CrateLedger','DropPanel','MarketNode','VendorCrate'],
+  ['AlertRoot','ScanGrow','PlantTrace','PingField'],
+  ['LoopClaim','SoilCycle','FarmMesh','GrowthPath'],
+  ['GridYield','MapTrack','HarvestView','CropLink'],
+  ['VendorID','FarmStart','ClaimMap','SproutVault'],
+  ['MicroScan','HealthAlert','GrowthWatch','RootPath'],
+  ['EcoPlot','FarmJoin','GreenPanel','ZoneMesh'],
+  ['SoilDNA','SeedLog','CropCodeX','ScanTag'],
+  ['VaultDrop','CrateClaim','PayoutLock','FieldSecure'],
+  ['BinderLoop','VendorTrace','ScrollTag','FarmCode'],
+  ['TestLog','ResultPath','QRProof','SoilPass']
+];
+
+
+function toggleSnapshot(id) {
+  document.querySelectorAll('.brand-snapshot').forEach(el => el.classList.add('hidden'));
+  const active = document.getElementById(id);
+  if (active) active.classList.remove('hidden');
+}
+
+// ✅ Food, Soil & Farming Brand Renderer
+function renderFSFSection() {
+  const grid = document.getElementById('fsf-grid');
+  const snapContainer = document.getElementById('fsf-snapshots');
+
+  if (!grid || !snapContainer || !Array.isArray(fsfBrands) || !Array.isArray(fsfSubNodes)) {
+    console.warn('[FSF Grid] Missing DOM elements or data arrays.');
+    return;
+  }
+
+  if (fsfBrands.length !== fsfSubNodes.length) {
+    console.warn(`[FSF Grid] Mismatched lengths: fsfBrands (${fsfBrands.length}) vs fsfSubNodes (${fsfSubNodes.length})`);
+    return;
+  }
+
+  fsfBrands.forEach((brand, i) => {
+    // Render brand button
+    const btn = document.createElement('button');
+    btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-green-100 hover:text-green-800 font-semibold cursor-pointer';
+    btn.innerHTML = `${brand}<sup>™</sup>`;
+    btn.onclick = () => toggleSnapshot(`fsf-snap-${i}`);
+    grid.appendChild(btn);
+
+    // Render brand snapshot
+    const subList = (fsfSubNodes[i] || []).map(n => `<li>🔹 ${n}</li>`).join('');
+    const snap = document.createElement('div');
+    snap.id = `fsf-snap-${i}`;
+    snap.className = 'brand-snapshot hidden mt-6';
+    snap.innerHTML = `
+      <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+      <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+        ${subList}
+      </ul>`;
+    snapContainer.appendChild(snap);
+  });
+}
+
+// ✅ Run it on DOM ready
+document.addEventListener('DOMContentLoaded', renderFSFSection);
+</script>
+
 
