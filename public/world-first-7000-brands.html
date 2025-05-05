@@ -1781,44 +1781,48 @@ const ailogicSubNodes = [
   ['MapClaim', 'VaultSync', 'QRSignal', 'LogicMesh'],
 ];
 
-
 function renderAILogicSection() {
   const grid = document.getElementById('ailogic-grid');
   const snapContainer = document.getElementById('ailogic-snapshots');
 
-  if (!grid || !snapContainer) {
-    console.error('[FAA] Required DOM element(s) missing.');
+  if (!grid || !snapContainer || !Array.isArray(ailogicBrands) || !Array.isArray(ailogicSubNodes)) {
+    console.error('[FAA] Missing grid, container or data arrays');
     return;
   }
 
-  if (ailogicBrands.length !== ailogicSubNodes.length) {
-    console.warn([FAA] Brand/Sub-node array length mismatch: Brands=${ailogicBrands.length}, SubNodes=${ailogicSubNodes.length});
-  }
+  const brandCount = Math.min(ailogicBrands.length, ailogicSubNodes.length);
 
-  const minLength = Math.min(ailogicBrands.length, ailogicSubNodes.length);
-
-  for (let i = 0; i < minLength; i++) {
+  for (let i = 0; i < brandCount; i++) {
     const brand = ailogicBrands[i];
+    const subList = ailogicSubNodes[i].map(n => `<li>🔹 ${n}</li>`).join('');
+
+    // Button
     const btn = document.createElement('button');
     btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-indigo-100 hover:text-indigo-800 font-semibold cursor-pointer';
-    btn.innerHTML = ${brand}<sup>™</sup>;
-    btn.onclick = () => toggleSnapshot(ailogic-snap-${i});
+    btn.innerHTML = `${brand}<sup>™</sup>`;
+    btn.onclick = () => toggleSnapshot(`ailogic-snap-${i}`);
     grid.appendChild(btn);
 
-    // Create corresponding sub-node snapshot
-    const subList = (ailogicSubNodes[i] || []).map(n => <li>🔹 ${n}</li>).join('');
+    // Snapshot
     const snap = document.createElement('div');
-    snap.id = ailogic-snap-${i};
+    snap.id = `ailogic-snap-${i}`;
     snap.className = 'brand-snapshot hidden mt-6';
-    snap.innerHTML = 
+    snap.innerHTML = `
       <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
       <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
         ${subList}
-      </ul>;
+      </ul>`;
     snapContainer.appendChild(snap);
   }
 }
-<script>
+
+function toggleSnapshot(id) {
+  document.querySelectorAll('.brand-snapshot').forEach(el => el.classList.add('hidden'));
+  const target = document.getElementById(id);
+  if (target) target.classList.remove('hidden');
+}
+
+document.addEventListener('DOMContentLoaded', renderAILogicSection);
   const sectorList = {
     "ai-logic": "🧠 AI, Logic & Grid",
     "creative": "🖋️ Creative Tech",
@@ -1852,6 +1856,7 @@ function renderAILogicSection() {
   }
 
   window.addEventListener('DOMContentLoaded', () => {
+    renderAILogicSection();
     const select = document.getElementById("sectorSelect");
     for (let key in sectorList) {
       const option = document.createElement("option");
@@ -1876,7 +1881,7 @@ function renderAILogicSection() {
     sectorData[sector].nodes.push(subnodes);
 
     document.getElementById("adminStatus").textContent =
-      ✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes);
+      `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
 
     document.getElementById("brandInput").value = "";
     document.getElementById("subnodesInput").value = "";
@@ -1894,28 +1899,27 @@ function renderAILogicSection() {
     }
 
     const data = sectorData[sectorKey];
-    const html = data.brands.map((brand, i) => 
+    const html = data.brands.map((brand, i) => `
       <div class="mb-6 border rounded shadow p-4">
         <h3 class="text-lg font-bold text-indigo-700 mb-2">${brand}<sup>™</sup></h3>
         <ul class="text-sm list-disc list-inside">
-          ${data.nodes[i].map(n => <li>🔹 ${n}</li>).join("")}
+          ${data.nodes[i].map(n => `<li>🔹 ${n}</li>`).join("")}
         </ul>
       </div>
-    ).join("");
+    `).join("");
 
-    const panelId = render-${sectorKey};
+    const panelId = `render-${sectorKey}`;
     const existing = document.getElementById(panelId);
     if (existing) existing.remove();
 
     const panel = document.createElement("div");
     panel.id = panelId;
     panel.className = "my-8";
-    panel.innerHTML = <h2 class="text-xl font-bold mb-4">${sectorList[sectorKey]} Brands</h2>${html};
+    panel.innerHTML = `<h2 class="text-xl font-bold mb-4">${sectorList[sectorKey]} Brands</h2>${html}`;
 
     container.appendChild(panel);
   }
-   </script>  <!-- ✅ CLOSE script here -->
-
+</script>
 <section class="bg-white p-6 rounded shadow mt-16 mx-6" id="admin-panel">
   <h2 class="text-xl font-bold text-gray-800 mb-4">⚙️ Admin Panel — Add Brand & Subnodes</h2>
   <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
