@@ -86,7 +86,9 @@
   <a href="sector-voice.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🎙️ Voice & Audio</a>
   <a href="sector-webless.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">📴 Webless Systems</a>
   <a href="sector-nft.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🔁 NFT & Ownership</a>
-  <a href="sector-youth.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🧒 Youth & Learning</a>
+  <a href="#" onclick="showSectorPanel('embedded-education-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">
+  🎓 Education & Youth Sector
+</a>
   <a href="sector-zerowaste.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">♻️ Zero Waste</a>
 </nav>
 
@@ -129,6 +131,15 @@
   </div>
   <div id="logistics-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="logistics-snapshots"></div>
+</div>
+
+  <!-- Embedded Education Sector Panel -->
+<div id="embedded-education-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
+  <div class="text-2xl font-bold text-green-700 mb-4">
+    🎓 FAA™ Education & Youth Brand Dashboard (66 Brands)
+  </div>
+  <div id="education-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+  <div class="p-6" id="education-snapshots"></div>
 </div>
 
 
@@ -812,3 +823,123 @@ function renderFSFSection() {
 // ✅ Run it on DOM ready
 document.addEventListener('DOMContentLoaded', renderFSFSection);
 </script>
+
+
+  <script>
+const educationBrands = [
+  'EduNest', 'FormFlex', 'ScrollBooks', 'MindLift', 'GridClass', 'YouthSignal', 'TalentNest', 'PeerPath', 'ScrollGrade', 'LearnMesh',
+  'EduChain', 'SkillCast', 'YouthForge', 'QuizNet', 'ScrollLabs', 'LearnFlag', 'ScholarMesh', 'VaultEdu', 'YouthSphere', 'EduGlow',
+  'LearnBloom', 'MentorLoop', 'YouthID', 'ScrollQuiz', 'PupilChain', 'IdeaGrid', 'VaultLearn', 'SkillNest', 'ClassFlow', 'CertifyCast',
+  'PathMentor', 'IdeaNest', 'SchoolVault', 'LearnSignal', 'GridBadge', 'ScrollCraft', 'MindBoard', 'ClassEcho', 'VaultPupil', 'YouthSignal',
+  'TeachStack', 'StudyCast', 'RoleGrid', 'LearnFrame', 'PulseAcademy', 'GradeSync', 'TeachCircle', 'CampusNet', 'StudyBoard', 'ScrollPath',
+  'LearnQuest', 'EduNestPro', 'LoopStudy', 'GradeForge', 'IdeaLink', 'TeachTrack', 'VaultClass', 'BadgeMesh', 'EduCast', 'YouthGrid',
+  'LearnProof', 'PathCoach', 'TalentID', 'OmniPupil', 'SchoolChain', 'GradeVault'
+];
+
+const educationSubNodes = [
+  ['LearnNode', 'ScrollSeed', 'CampusID', 'MentorLink', 'PathClaim'],
+  ['SkillWrap', 'GradeSync', 'CourseMap', 'IDTrack', 'PupilMesh'],
+  ['ChapterFlow', 'StoryTag', 'QuizLink', 'YieldRead', 'TextClaim'],
+  ['BoostTrack', 'LearnSignal', 'LevelUp', 'FocusPath', 'VaultPace'],
+  ['ClassNode', 'TeachSync', 'VaultBoard', 'EduAlert', 'NodeAttend'],
+  ['SignalDrop', 'SkillPing', 'PeerMesh', 'RoleAssign', 'TrackEcho'],
+  ['TalentVault', 'ClaimCoach', 'RoleTree', 'PayoutPath', 'CertifyNode'],
+  ['PeerMap', 'ConnectNode', 'SkillVote', 'PathSync', 'LearnOrbit'],
+  ['GradeID', 'TestVault', 'YieldCredit', 'ExamSync', 'ResultNode'],
+  ['MeshID', 'ModuleLink', 'ClassSync', 'ProgressTag', 'LoopNode'],
+  ['CourseLink', 'CreditVault', 'CertDrop', 'LearnKey', 'ScrollLedger'],
+  ['CastNode', 'MentorPing', 'PeerEcho', 'PayoutRank', 'TalentDrop'],
+  ['ForgePath', 'BuildMesh', 'IdeaClaim', 'LearnFoundry', 'PeerLoop'],
+  ['QuizTrigger', 'TestField', 'GradeWave', 'RecallGrid', 'PassSync'],
+  ['LabNode', 'ProjectClaim', 'IdeaTrace', 'SkillXP', 'ModuleYield'],
+  ['FlagRaise', 'SchoolLink', 'RegionTrack', 'PupilEcho', 'ClaimNode'],
+  ['MeshTrack', 'GradeRelay', 'ScrollDegree', 'LearnVault', 'StudyPulse'],
+  ['IDVault', 'CertChain', 'TranscriptGrid', 'SecureLearn', 'DegreeDrop'],
+  ['CircleCast', 'ClassLink', 'ScrollTribe', 'GroupEcho', 'PeerRing'],
+  ['SignalLight', 'LearnPulse', 'BrainSync', 'FlashGrade', 'EnlightNode'],
+  ['BloomNode', 'GrowthTrack', 'SkillSeed', 'EduSprout', 'PeerSoil'],
+  ['LoopConnect', 'WisdomPath', 'MentorVault', 'ScrollPing', 'TeachBond'],
+  ['IDSync', 'LearnerNode', 'ProofTag', 'IdentityScroll', 'JoinClass'],
+  ['QuizNode', 'AnswerTag', 'TimerMesh', 'ScoreClaim', 'ReviewPulse'],
+  ['PupilBlock', 'TaskNode', 'LedgerPath', 'EduEcho', 'LearnLock'],
+  ['IdeaDrop', 'GridThink', 'SparkVault', 'PeerPush', 'ThoughtClaim'],
+  ['SecureScroll', 'GradeLock', 'ChainTest', 'RecordMesh', 'PayoutGrade'],
+  ['NestGrow', 'RoleTree', 'PeerRoot', 'MentorNode', 'CertPulse'],
+  ['FlowSync', 'ClassRoute', 'PeerGroup', 'ScrollRing', 'LessonCast'],
+  ['CastAward', 'NodeBadge', 'VaultProof', 'ScrollCredit', 'ChainEarn'],
+  ['MentorMap', 'GrowthLink', 'TrailNode', 'ScrollCoach', 'PeerTrace'],
+  ['NestPath', 'SparkClaim', 'ScrollTree', 'PupilEcho', 'ThoughtPulse'],
+  ['VaultGate', 'IDBoard', 'RosterDrop', 'GridEnroll', 'SecureClass'],
+  ['SignalNode', 'BrainPing', 'LessonTrack', 'EduCast', 'PathAlert'],
+  ['BadgeSync', 'PathAward', 'TagNode', 'CreditDrop', 'CertLock'],
+  ['CraftScroll', 'YieldPath', 'PeerSkill', 'VaultMaker', 'ProjectPulse'],
+  ['BoardTag', 'ClassSignal', 'IdeaPost', 'TaskDrop', 'VoteMark'],
+  ['EchoNode', 'SyncMesh', 'StudentCast', 'AlertPing', 'ScrollPlay'],
+  ['PupilID', 'SecureClaim', 'GradeVault', 'TrackNode', 'CertTrigger'],
+  ['PeerAlert', 'LoopClaim', 'ScrollWave', 'VoiceDrop', 'IDMesh'],
+  ['StackLink', 'LessonPulse', 'GradeBeam', 'TrackNode', 'PeerPath'],
+  ['StudyStream', 'PeerJoin', 'QuizSignal', 'ReviewGrid', 'ClassLink'],
+  ['RoleMap', 'ClaimSync', 'PeerTree', 'IdentityPath', 'TagTrack'],
+  ['FrameNode', 'LessonTrace', 'PupilMesh', 'CastDrop', 'ScoreProof'],
+  ['AcademyPing', 'PeerLight', 'FocusPath', 'VaultLearn', 'BadgeSync'],
+  ['GradeLink', 'ResultEcho', 'TestMesh', 'PassTrack', 'VaultSheet'],
+  ['CircleCast', 'MentorPulse', 'ScrollBeam', 'IdeaClaim', 'PeerRing'],
+  ['CampusID', 'GroupPath', 'ScrollZone', 'PeerAlert', 'ConnectMesh'],
+  ['StudyNode', 'NoteTrace', 'ProjectGrid', 'SyncClaim', 'ViewRank'],
+  ['PathLink', 'VaultCredit', 'PeerYield', 'LessonGrid', 'ClassSync'],
+  ['QuestNode', 'MapTrack', 'StudyGoal', 'ProgressPath', 'PeerSignal'],
+  ['NestID', 'PathPulse', 'MentorNode', 'VaultGrade', 'PupilClaim'],
+  ['StudyLoop', 'GridSync', 'QuizWave', 'PeerCast', 'ReviewTrack'],
+  ['ForgeNode', 'GradeRing', 'ResultPush', 'CertPath', 'LearnLine'],
+  ['SparkLine', 'LoopLink', 'IdeaDrop', 'MentorPing', 'ClassTrace'],
+  ['ClassFlow', 'InstructorNode', 'FeedbackGrid', 'PeerScore', 'PathEcho'],
+  ['SecureNode', 'RosterClaim', 'EnrollTrack', 'PeerMap', 'ClassKey'],
+  ['BadgeID', 'VaultLink', 'ScrollProof', 'AwardBeam', 'PayoutPing'],
+  ['CoursePing', 'ClassSignal', 'LectureDrop', 'QuizRelay', 'PeerPush'],
+  ['MeshLearn', 'PeerTrace', 'StudyJoin', 'PupilMark', 'LessonSync'],
+  ['ProofID', 'CourseClaim', 'ScrollCert', 'VaultDrop', 'GradeLoop'],
+  ['CoachNode', 'RolePath', 'ScrollEcho', 'StudyChain', 'CertPush'],
+  ['TalentClaim', 'VaultPass', 'SkillMap', 'IDScroll', 'LearnLock'],
+  ['OmniLearn', 'ScrollLoop', 'ViewNode', 'ClassCast', 'IDTrack'],
+  ['LedgerLearn', 'BlockEnroll', 'VaultBoard', 'PeerPath', 'ClassFlow'],
+  ['VaultClaim', 'CreditPing', 'ScoreSheet', 'SecureDrop', 'LedgerTrack']
+];
+
+function renderEducationSection() {
+  const grid = document.getElementById('education-grid');
+  const snapContainer = document.getElementById('education-snapshots');
+
+  if (!grid || !snapContainer || !Array.isArray(educationBrands) || !Array.isArray(educationSubNodes)) {
+    console.warn('[Education Grid] Missing DOM elements or data arrays.');
+    return;
+  }
+
+  if (educationBrands.length !== educationSubNodes.length) {
+    console.warn(`[Education Grid] Mismatched lengths: ${educationBrands.length} vs ${educationSubNodes.length}`);
+    return;
+  }
+
+  educationBrands.forEach((brand, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-green-100 hover:text-green-800 font-semibold cursor-pointer';
+    btn.innerHTML = `${brand}<sup>™</sup>`;
+    btn.onclick = () => toggleSnapshot(`edu-snap-${i}`);
+    grid.appendChild(btn);
+
+    const subList = (educationSubNodes[i] || []).map(n => `<li>🔹 ${n}</li>`).join('');
+    const snap = document.createElement('div');
+    snap.id = `edu-snap-${i}`;
+    snap.className = 'brand-snapshot hidden mt-6';
+    snap.innerHTML = `
+      <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+      <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+        ${subList}
+      </ul>`;
+    snapContainer.appendChild(snap);
+  });
+}
+
+// ✅ Trigger renderer after DOM is loaded
+document.addEventListener('DOMContentLoaded', renderEducationSection);
+</script>
+
