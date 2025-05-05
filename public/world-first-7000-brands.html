@@ -1885,6 +1885,7 @@ document.addEventListener('DOMContentLoaded', renderAILogicSection);
 // 🧠 OmniAdmin Brand Manager
 // ==============================
 
+// --- Sector Registry
 const sectorList = {
   "ai-logic": "🧠 AI, Logic & Grid",
   "creative": "🖋️ Creative Tech",
@@ -1917,9 +1918,17 @@ for (let key in sectorList) {
   sectorData[key] = { brands: [], nodes: [] };
 }
 
+// --- On Page Load
+document.addEventListener('DOMContentLoaded', () => {
+  renderAILogicSection();       // Optional if using existing AI logic grid
+  populateSectorDropdown();     // Critical for admin dropdown to work
+});
+
+// --- Populate sector dropdown
 function populateSectorDropdown() {
   const select = document.getElementById("sectorSelect");
   if (!select) return;
+
   for (let key in sectorList) {
     const option = document.createElement("option");
     option.value = key;
@@ -1928,6 +1937,7 @@ function populateSectorDropdown() {
   }
 }
 
+// --- Add brand to sector
 function addBrandToSector() {
   const sector = document.getElementById("sectorSelect").value;
   const brand = document.getElementById("brandInput").value.trim();
@@ -1951,6 +1961,7 @@ function addBrandToSector() {
   renderSectorOutput(sector);
 }
 
+// --- Render output by sector
 function renderSectorOutput(sectorKey) {
   let container = document.getElementById("output-section");
   if (!container) {
@@ -1981,9 +1992,30 @@ function renderSectorOutput(sectorKey) {
 
   container.appendChild(panel);
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  renderAILogicSection(); // assuming this already exists
-  populateSectorDropdown();
-});
 </script>
+<section class="bg-white p-6 rounded shadow mt-16 mx-6" id="admin-panel">
+  <h2 class="text-xl font-bold text-gray-800 mb-4">⚙️ Admin Panel — Add Brand & Subnodes</h2>
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div>
+      <label class="text-sm font-medium block mb-1">📂 Sector</label>
+      <select id="sectorSelect" class="w-full border rounded p-2">
+        <!-- Populated dynamically -->
+      </select>
+    </div>
+    <div>
+      <label class="text-sm font-medium block mb-1">🏷 Brand Name</label>
+      <input id="brandInput" class="w-full border rounded p-2" placeholder="e.g. OmniCastX" />
+    </div>
+    <div>
+      <label class="text-sm font-medium block mb-1">📌 Subnodes (comma-separated)</label>
+      <input id="subnodesInput" class="w-full border rounded p-2" placeholder="e.g. VaultDrop, QRClaim" />
+    </div>
+    <div class="flex items-end">
+      <button onclick="addBrandToSector()" class="bg-indigo-600 text-white px-4 py-2 rounded shadow hover:bg-indigo-700">
+        ➕ Add Brand
+      </button>
+    </div>
+  </div>
+  <p id="adminStatus" class="text-sm mt-4 text-gray-500"></p>
+</section>
+
