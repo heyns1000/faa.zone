@@ -84,7 +84,9 @@
   <a href="sector-trade.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🧺 Trade Systems</a>
   <a href="sector-utilities.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🔋 Utilities & Energy</a>
   <a href="sector-voice.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🎙️ Voice & Audio</a>
-  <a href="sector-webless.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">📴 Webless Systems</a>
+  <a href="#" onclick="showSectorPanel('embedded-webless-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">
+  📴 Webless Tech & Nodes
+</a>
   <a href="sector-nft.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🔁 NFT & Ownership</a>
   <a href="#" onclick="showSectorPanel('embedded-education-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">
   🎓 Education & Youth Sector
@@ -140,6 +142,15 @@
   </div>
   <div id="education-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="education-snapshots"></div>
+</div>
+
+    <!-- Embedded Webless Sector Panel -->
+<div id="embedded-webless-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
+  <div class="text-2xl font-bold text-gray-700 mb-4">
+    🛰️ FAA™ Webless Tech Core Brand Dashboard (103 Brands)
+  </div>
+  <div id="webless-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+  <div class="p-6" id="webless-snapshots"></div>
 </div>
 
 
@@ -942,4 +953,161 @@ function renderEducationSection() {
 // ✅ Trigger renderer after DOM is loaded
 document.addEventListener('DOMContentLoaded', renderEducationSection);
 </script>
+
+
+  <script>
+const weblessBrands = [
+  'OmniQR', 'MeshSync', 'VaultBeacon', 'TapClaim', 'ScrollKey', 'AirLoop', 'DotGrid', 'VaultTouch', 'PouchCast', 'YieldTrace',
+  'TapSync', 'TouchProof', 'MeshKey', 'QRPad', 'DotPulse', 'FlashNode', 'ScrollFuse', 'PassiveYield', 'QRClaimMesh', 'VaultTouchPro',
+  'AirDropVault', 'MeshTrigger', 'ZeroLink', 'PaperID', 'SignalFrame', 'TapMesh', 'TagBeacon', 'ScrollTouch', 'ClaimPatch', 'LightGrid',
+  'VaultPrint', 'OmniTag', 'ScanToken', 'PassiveKey', 'VaultCast', 'ScrollNodeX', 'FrameSync', 'QRPath', 'DotLogic', 'BeaconMesh',
+  'NFCVault', 'LightPulse', 'ScrollRelay', 'OfflineYield', 'DotClaim', 'ZeroMesh', 'CastLink', 'FrameYield', 'MeshProof', 'PaperVault',
+  'SyncPulse', 'PassiveCast', 'TriggerDrop', 'SignalTag', 'GridID', 'ScrollPing', 'NFCDrop', 'VaultEcho', 'PassiveSync', 'QRBeam',
+  'NFCTrace', 'ScrollMark', 'LightDrop', 'MeshStamp', 'OmniTouch', 'AirPrint', 'FlashID', 'CastMesh', 'QRNode', 'PulseRoute',
+  'DropCast', 'ClaimPrint', 'VaultTag', 'QRFuse', 'TapVault', 'PrintSync', 'TraceCast', 'PassiveRoute', 'CastProof', 'AirPath',
+  'QRMesh', 'ScrollZero', 'TagSync', 'GridTouch', 'LightTrace', 'PassiveVault', 'EchoGrid', 'CastToken', 'TraceNode', 'NFCGrid',
+  'ProofCast', 'SignalDrop', 'TouchFlow', 'TagNode', 'YieldPath', 'ScanMark', 'BeamNode', 'DotClaimPro', 'QRTrigger', 'TouchNodeX',
+  'TraceQR', 'PaperMesh', 'ZeroID'
+];
+
+const weblessSubNodes = [
+  ['QRNode', 'YieldPing', 'ClaimGrid', 'ScanFlow', 'RouteToken'],
+  ['NodeJoin', 'MeshPulse', 'ConnectGrid', 'DropRoute', 'SignalFlow'],
+  ['FlashNode', 'SecurePing', 'LightPath', 'VaultCast', 'NodePing'],
+  ['NFCTrigger', 'ScrollTap', 'NodePush', 'PayoutTouch', 'QRClaim'],
+  ['KeyNode', 'UnlockTrack', 'AccessVault', 'PeerPass', 'SecureDrop'],
+  ['LoopCast', 'AirPing', 'PassiveTrack', 'QRWave', 'SignalBoard'],
+  ['DotNode', 'MeshPrint', 'InkLink', 'FormSync', 'TagPulse'],
+  ['TouchID', 'QRAccess', 'ScrollPulse', 'FieldTrigger', 'NodeProof'],
+  ['DeviceDrop', 'LoopTouch', 'PulseSend', 'AirLabel', 'AssetBeam'],
+  ['QRDrop', 'PathYield', 'SignalToken', 'ScanLock', 'LoopClaim'],
+  ['ScrollNode', 'QRConnect', 'TouchBeam', 'PeerSync', 'PathTrigger'],
+  ['ProofLink', 'TagScan', 'YieldPath', 'ScrollTouch', 'DataNode'],
+  ['MeshCode', 'AccessRoute', 'NodeTrace', 'LockDrop', 'AirJoin'],
+  ['GridTouch', 'SignalDrop', 'TagFrame', 'VaultClick', 'QRPush'],
+  ['PulseWave', 'FrameDrop', 'DotYield', 'ScrollEcho', 'ProofPad'],
+  ['NodePing', 'LightPath', 'QRSync', 'PassiveDrop', 'AirGrid'],
+  ['FuseNode', 'TouchLoop', 'NFCTrace', 'QRJoin', 'DeviceCast'],
+  ['PassiveNode', 'QRTrace', 'ScrollMark', 'AirSync', 'RouteKey'],
+  ['ClaimGrid', 'MeshLock', 'TouchYield', 'TagTrace', 'NodeTap'],
+  ['SecureTap', 'NodeCast', 'ProofScroll', 'QRBeam', 'LinkMesh'],
+  ['AirTag', 'YieldNode', 'VaultSend', 'QRTrigger', 'TapClaim'],
+  ['TriggerNode', 'PassiveSync', 'TouchCast', 'LinkClaim', 'ScrollDrop'],
+  ['QRNodeZero', 'OfflineConnect', 'ScrollTrack', 'VaultLoop', 'MeshYield'],
+  ['QRPrint', 'ScrollForm', 'NodeMark', 'ScanVault', 'OfflineYield'],
+  ['LightID', 'SignalTrace', 'NodeGrid', 'ScrollFlash', 'MeshPath'],
+  ['TouchGrid', 'PassiveYield', 'ScrollTouch', 'NFCMap', 'VaultDrop'],
+  ['TagNode', 'FlashPath', 'YieldLink', 'TouchMark', 'NodePush'],
+  ['SecureTouch', 'PeerDrop', 'NFCVault', 'QRSignal', 'CastTrace'],
+  ['ScrollPatch', 'TagClaim', 'QRLink', 'ProofMark', 'PassiveTrace'],
+  ['FlashNode', 'TouchEcho', 'SignalCast', 'LightDrop', 'MeshJoin'],
+  ['QRLayout', 'SecureForm', 'TouchScan', 'VaultCopy', 'MeshIndex'],
+  ['TagPath', 'TouchNode', 'ClaimGrid', 'DotJoin', 'VaultID'],
+  ['TokenNode', 'ScanPath', 'YieldDot', 'QRMesh', 'ProofCast'],
+  ['KeyNode', 'NFCYield', 'QRSync', 'DropToken', 'TraceLoop'],
+  ['CastSignal', 'LinkNode', 'ScrollSync', 'ProofDrop', 'BeamClaim'],
+  ['NodePulse', 'TrackEcho', 'TouchID', 'QRLog', 'PassiveMap'],
+  ['FrameID', 'SyncNode', 'VaultPath', 'QRTrigger', 'CastMark'],
+  ['GridTrace', 'DropClaim', 'QRIndex', 'ProofNode', 'VaultSync'],
+  ['DotMap', 'ScrollPulse', 'YieldClaim', 'MeshCode', 'NFCGrid'],
+  ['BeaconTrack', 'NodeLight', 'FlashYield', 'SecureDrop', 'TagCast'],
+  ['TapSecure', 'ScrollID', 'CastProof', 'DropPath', 'NFCGrid'],
+  ['SignalNode', 'FlashCast', 'QRWave', 'DropTrigger', 'MeshVault'],
+  ['QRRelay', 'TokenPath', 'BeamNode', 'ScanCast', 'PassiveDrop'],
+  ['ClaimMark', 'VaultGrid', 'MeshTrack', 'PaperTag', 'SignalBeam'],
+  ['TagRoute', 'ScrollDot', 'QRTrack', 'VaultPulse', 'NodeID'],
+  ['NodeZero', 'MeshDrop', 'QRClaim', 'ProofRoute', 'PassivePath'],
+  ['TouchEcho', 'ScrollMark', 'NFCNode', 'VaultSync', 'ClaimPulse'],
+  ['GridPrint', 'ScrollProof', 'PassiveLine', 'DropCast', 'YieldQR'],
+  ['ClaimMesh', 'SecureQR', 'SignalTrack', 'PeerVault', 'DotCast'],
+  ['VaultTag', 'QRMark', 'ScrollPath', 'SignalDrop', 'CastClaim'],
+  ['QRJoin', 'NodeTrack', 'SignalNode', 'VaultBeam', 'ProofFlow'],
+  ['CastPing', 'NodeLink', 'YieldPath', 'DropSignal', 'NFCProof'],
+  ['BeamYield', 'TapNode', 'QRClaim', 'DropSync', 'SignalPush'],
+  ['TagEcho', 'SignalCast', 'QRNode', 'VaultPath', 'ClaimLight'],
+  ['ScrollGrid', 'TokenTouch', 'SyncTrace', 'DropMesh', 'CastMark'],
+  ['PingGrid', 'MeshEcho', 'PassiveTap', 'VaultDrop', 'QRFlash'],
+  ['TouchNode', 'QRClaim', 'DropTrack', 'SecureLoop', 'MeshPath'],
+  ['SignalEcho', 'ProofScan', 'ScrollPush', 'DropClaim', 'NFCVault'],
+  ['PassiveGrid', 'NodeLink', 'TapClaim', 'QRJoin', 'SignalChain'],
+  ['BeamTrigger', 'NodeClaim', 'TouchCast', 'VaultMap', 'SignalDrop'],
+  ['TagProof', 'QRTrack', 'TapCast', 'VaultEcho', 'SignalGrid'],
+  ['ScrollTag', 'TracePath', 'QRSync', 'NodeDrop', 'YieldLine'],
+  ['SignalPush', 'QRGlow', 'TouchFlash', 'VaultCast', 'DropNode'],
+  ['DotClaim', 'PrintID', 'VaultStamp', 'TagRoute', 'SecureMesh'],
+  ['TouchGrid', 'VaultPath', 'NFCNode', 'QRClaim', 'EchoBeam'],
+  ['ScrollForm', 'InkNode', 'NFCLink', 'DotDrop', 'PassiveTag'],
+  ['FlashNode', 'LightPing', 'QRTrack', 'NFCScan', 'ProofBeam'],
+  ['MeshEcho', 'NodeJoin', 'QRLoop', 'TouchProof', 'VaultDrop'],
+  ['QRMark', 'TokenID', 'PathScan', 'ScrollEcho', 'MeshSync'],
+  ['SignalPath', 'TouchYield', 'ScrollPulse', 'QRLine', 'NFCNode'],
+  ['DropEcho', 'MeshPing', 'QRTouch', 'ScrollFlash', 'PassiveTrace'],
+  ['FormYield', 'NodeScan', 'PaperToken', 'VaultID', 'TagCast'],
+  ['QRLink', 'ScrollRoute', 'NodeClaim', 'SignalMap', 'SecureDrop'],
+  ['FusePath', 'ScanBeam', 'VaultRoute', 'QRNode', 'TouchCast'],
+  ['NFCTrack', 'ClaimProof', 'TapLink', 'VaultEcho', 'NodeDrop'],
+  ['SyncMark', 'InkDrop', 'VaultTrack', 'TagProof', 'PassivePath'],
+  ['QRSignal', 'TagPing', 'VaultDrop', 'TouchID', 'SecureCast'],
+  ['MeshClaim', 'QRTrack', 'NodePath', 'TouchBeam', 'VaultSync'],
+  ['SignalClaim', 'NodeEcho', 'QRSync', 'VaultID', 'PassiveDrop'],
+  ['AirNode', 'VaultMark', 'SignalPing', 'NFCTrace', 'MeshDrop'],
+  ['QRJoin', 'VaultGrid', 'PathNode', 'ScanRoute', 'SignalCast'],
+  ['ZeroClaim', 'NodeDrop', 'QRTag', 'VaultLoop', 'PassiveKey'],
+  ['TagLoop', 'VaultNode', 'QRPath', 'TouchTrace', 'BeamClaim'],
+  ['GridClaim', 'PathDrop', 'ScrollSignal', 'NFCVault', 'QRLink'],
+  ['FlashScan', 'QRMark', 'VaultBeam', 'NodeDrop', 'AirClaim'],
+  ['SecureDrop', 'VaultPing', 'QRPath', 'NFCMap', 'TagLoop'],
+  ['EchoNode', 'QRTrack', 'PassiveSync', 'VaultCast', 'MeshPulse'],
+  ['TokenLink', 'ScrollPush', 'QRBeam', 'NodeVault', 'SignalProof'],
+  ['QRLine', 'MeshTouch', 'VaultNode', 'TapTrack', 'ProofClaim'],
+  ['GridTap', 'ScrollNode', 'TouchPath', 'VaultClaim', 'QRTag'],
+  ['CastEcho', 'QRClaim', 'PassiveTrace', 'SignalLink', 'DropTrack'],
+  ['QRDrop', 'TouchClaim', 'VaultPath', 'NodeBeam', 'ScrollMark'],
+  ['FlowLink', 'QRYield', 'VaultTrace', 'SignalDrop', 'MeshID'],
+  ['TagPing', 'VaultEcho', 'MeshClaim', 'QRTouch', 'NFCYield'],
+  ['YieldQR', 'ScrollTag', 'VaultClaim', 'PassiveRoute', 'SignalGrid'],
+  ['ScanNode', 'QRDrop', 'VaultPath', 'ClaimLoop', 'TagProof'],
+  ['BeamTrack', 'ScrollClaim', 'TouchEcho', 'VaultPing', 'QRFlow'],
+  ['DotTag', 'VaultPush', 'ScrollMark', 'QRTrigger', 'MeshPath'],
+  ['TriggerNode', 'ScrollRoute', 'VaultBeam', 'QRLink', 'SignalEcho'],
+  ['XNode', 'QRClaim', 'SignalPath', 'VaultTrack', 'PassiveTouch'],
+  ['QRProof', 'VaultDrop', 'ScrollNode', 'PassiveClaim', 'NodeLink'],
+  ['MeshPrint', 'ScrollTrack', 'QRDrop', 'SignalGrid', 'VaultMap'],
+  ['IDVault', 'ScrollMark', 'PassiveToken', 'QRJoin', 'AirPath']
+];
+
+  
+function renderWeblessSection() {
+  const grid = document.getElementById('webless-grid');
+  const snapContainer = document.getElementById('webless-snapshots');
+
+  if (!grid || !snapContainer || weblessBrands.length !== weblessSubNodes.length) {
+    console.warn('[Webless Grid] DOM elements missing or array mismatch');
+    return;
+  }
+
+  weblessBrands.forEach((brand, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-indigo-100 hover:text-indigo-800 font-semibold cursor-pointer';
+    btn.innerHTML = `${brand}<sup>™</sup>`;
+    btn.onclick = () => toggleSnapshot(`webless-snap-${i}`);
+    grid.appendChild(btn);
+
+    const subList = weblessSubNodes[i].map(n => `<li>🔹 ${n}</li>`).join('');
+    const snap = document.createElement('div');
+    snap.id = `webless-snap-${i}`;
+    snap.className = 'brand-snapshot hidden mt-6';
+    snap.innerHTML = `
+      <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+      <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+        ${subList}
+      </ul>`;
+    snapContainer.appendChild(snap);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', renderWeblessSection);
+</script>
+
+
 
