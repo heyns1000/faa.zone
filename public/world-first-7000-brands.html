@@ -78,7 +78,9 @@
   <a href="sector-justice.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">⚖ Justice & Ethics</a>
   <a href="sector-knowledge.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🧠 Knowledge & Archives</a>
   <a href="sector-micromesh.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">☰ Micro-Mesh Logistics</a>
-  <a href="sector-media.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🌀 Media & Motion</a>
+ <a href="#" onclick="showSectorPanel('embedded-media-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">
+  🎬 Motion, Media & Sonic
+</a>
   <a href="sector-nutrition.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">✿ Nutrition & Food Chain</a>
   <a href="sector-ai.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🧬 Omni AI Systems</a>
   <a href="sector-packaging.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">📦 Packaging & Materials</a>
@@ -173,6 +175,15 @@
   </div>
   <div id="housing-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="housing-snapshots"></div>
+</div>
+
+    <!-- Embedded Motion, Media & Sonic Sector Panel -->
+<div id="embedded-media-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
+  <div class="text-2xl font-bold text-gray-700 mb-4">
+    🎬 FAA™ Motion, Media & Sonic Core Brand Dashboard (78 Brands)
+  </div>
+  <div id="media-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+  <div class="p-6" id="media-snapshots"></div>
 </div>
 
 
@@ -1426,6 +1437,132 @@ document.addEventListener('DOMContentLoaded', renderHealthSection);
   }
 
   document.addEventListener('DOMContentLoaded', renderHousingSection);
+</script>
+
+
+  <script>
+const mediaBrands = [
+  'FrameCast', 'SonicGrid', 'EditMesh', 'PulseMedia', 'VaultVision', 'ScrollSound', 'RenderCast', 'VoiceLoop', 'AudioDrop', 'MediaMesh',
+  'VisualClaim', 'SoundCert', 'SyncLoop', 'MotionID', 'MediaRelay', 'BeatCast', 'RenderVault', 'VoiceProof', 'ScenePulse', 'SoundNest',
+  'MediaGrid', 'Audiomark', 'EditClaim', 'SonicVault', 'MotionMap', 'TrackLine', 'SceneLink', 'LoopMix', 'AudioFlag', 'EchoNode',
+  'VisualVault', 'AudioMesh', 'RenderDrop', 'SoundCast', 'ClipTrace', 'AudioClaim', 'PulseVault', 'MotionCert', 'SoundPath', 'StreamNode',
+  'MediaID', 'SonicProof', 'AudioTag', 'SceneGrid', 'EchoVault', 'ClipNode', 'BeatProof', 'SoundBoard', 'MediaPulse', 'RenderSync',
+  'SceneLock', 'SonicLine', 'AudioSpan', 'TrackProof', 'MotionDrop', 'VaultMix', 'AudioIndex', 'VisualCast', 'MediaTrace', 'PulseTrack',
+  'EchoClaim', 'FrameNode', 'AudioMap', 'StreamCert', 'SonicView', 'RenderBoard', 'ClipVault', 'TrackScene', 'PulseNode', 'AudioDropX',
+  'SceneIndex', 'BeatGrid', 'VaultRender', 'SoundLoop', 'MediaLine', 'VoiceCast', 'SonicIndex', 'MotionPanel'
+];
+
+const mediaSubNodes = [
+  ['VaultScene', 'MediaNode', 'QRStream', 'ClipTag'],
+  ['AudioNode', 'WavePulse', 'QRMix', 'VaultTrack'],
+  ['ClipClaim', 'VaultCut', 'QREdit', 'LayerLink'],
+  ['StreamSignal', 'QRDrop', 'VaultFrame', 'EchoTag'],
+  ['VaultClip', 'QRLabel', 'MotionIndex', 'SceneMap'],
+  ['SoundNode', 'QRTrack', 'VaultEcho', 'MixProof'],
+  ['RenderGrid', 'VaultOutput', 'QREncode', 'ClipPush'],
+  ['VoicePing', 'TrackID', 'QRLine', 'VaultAudio'],
+  ['DropWave', 'VaultClaim', 'QRNode', 'SoundPrint'],
+  ['ClipMesh', 'VaultFrame', 'QRPlay', 'RenderTag'],
+  ['FrameNode', 'VaultTag', 'QRAngle', 'EditCast'],
+  ['CertifyMix', 'VaultTrack', 'QRWave', 'AudioLine'],
+  ['LoopNode', 'VaultPing', 'QRFlow', 'EchoTrack'],
+  ['MotionTag', 'QRPath', 'VaultScene', 'ClipSync'],
+  ['ClipRoute', 'VaultMesh', 'QRSignal', 'TrackDrop'],
+  ['BeatNode', 'VaultDrop', 'QRMix', 'SoundRoute'],
+  ['VaultProject', 'QREncode', 'MediaCert', 'TrackMap'],
+  ['AudioProof', 'VaultChain', 'QRWave', 'ClaimPing'],
+  ['PulseTrack', 'VaultEcho', 'QRScene', 'FramePush'],
+  ['NestID', 'VaultClaim', 'QRGrid', 'MixEcho'],
+  ['GridSync', 'VaultLabel', 'QRLine', 'TrackFrame'],
+  ['SoundCert', 'QRClip', 'VaultWave', 'EchoProof'],
+  ['CutNode', 'VaultEcho', 'QREdit', 'ClipFlow'],
+  ['VaultTone', 'QRPath', 'WaveNode', 'SoundChain'],
+  ['ClipPath', 'VaultPing', 'QRScene', 'AudioLink'],
+  ['LineTrack', 'VaultAudio', 'QRSync', 'SoundCast'],
+  ['QRConnect', 'VaultScript', 'ClipRoute', 'FrameID'],
+  ['MixVault', 'QRDrop', 'SoundLine', 'AudioJoin'],
+  ['VaultTag', 'QRBeat', 'TrackProof', 'ClaimNote'],
+  ['VaultEcho', 'QRWave', 'SoundLink', 'PingTrack'],
+  ['VaultProof', 'QRView', 'FrameTrace', 'ClipClaim'],
+  ['MeshNode', 'QRSignal', 'VaultSync', 'WaveEcho'],
+  ['DropStream', 'VaultFrame', 'QRPush', 'MediaLine'],
+  ['CastWave', 'QRMix', 'VaultBeam', 'TrackEcho'],
+  ['TraceClip', 'VaultScan', 'QRNode', 'ScenePath'],
+  ['ClaimDrop', 'QRProof', 'VaultRoute', 'SoundTrack'],
+  ['VaultPing', 'QRTrack', 'SoundGrid', 'EchoTag'],
+  ['CertNode', 'VaultLock', 'QRDrop', 'ClipTrack'],
+  ['PathTrack', 'VaultAudio', 'QRRoute', 'MixMap'],
+  ['NodeDrop', 'VaultStream', 'QRScene', 'AudioLine'],
+  ['IDTrack', 'VaultView', 'QRNode', 'ClipEcho'],
+  ['ProofPath', 'VaultPing', 'QRMix', 'EchoTrack'],
+  ['TagNode', 'VaultClaim', 'QRDrop', 'TrackEcho'],
+  ['GridNode', 'VaultScene', 'QRTrack', 'RenderProof'],
+  ['VaultEcho', 'SoundClaim', 'QRTrace', 'AudioBeam'],
+  ['ClipLink', 'VaultDrop', 'QRScene', 'TagLine'],
+  ['BeatID', 'VaultSound', 'QRTrack', 'MixFlow'],
+  ['BoardLine', 'VaultGrid', 'QRBeat', 'ClipTrack'],
+  ['PulseGrid', 'QRFlash', 'VaultSync', 'AudioNode'],
+  ['SyncLine', 'QRDrop', 'VaultEcho', 'SceneNode'],
+  ['LockNode', 'QRFrame', 'VaultScene', 'ProofTag'],
+  ['LineTag', 'QRDrop', 'VaultMix', 'TrackClaim'],
+  ['SpanLine', 'VaultEcho', 'QRTrack', 'LoopPath'],
+  ['VaultClaim', 'QRWave', 'SoundPing', 'EchoTrack'],
+  ['DropClip', 'VaultPush', 'QRScene', 'TrackGrid'],
+  ['MixDrop', 'QRLine', 'VaultBeam', 'TrackTag'],
+  ['IndexVault', 'QRPing', 'TrackScene', 'EchoLine'],
+  ['CastGrid', 'VaultNode', 'QRProof', 'ClipPush'],
+  ['TraceNode', 'QRDrop', 'VaultMap', 'RenderRoute'],
+  ['PulseID', 'QREcho', 'VaultClaim', 'TrackMap'],
+  ['VaultTrace', 'QRScene', 'EchoDrop', 'ClipNode'],
+  ['NodeID', 'QRPanel', 'VaultView', 'SceneSync'],
+  ['MapNode', 'QRDrop', 'VaultPing', 'TrackLine'],
+  ['CertifyScene', 'VaultWave', 'QRNode', 'ClipTrack'],
+  ['ViewGrid', 'VaultEcho', 'QRAudio', 'TagPath'],
+  ['BoardClip', 'QRMap', 'VaultTag', 'MediaFlow'],
+  ['ClipProof', 'VaultScene', 'QRDrop', 'FrameTrace'],
+  ['SceneID', 'QRLink', 'VaultClaim', 'ClipEcho'],
+  ['NodeBeat', 'VaultTrack', 'QRSound', 'EchoDrop'],
+  ['DropTrack', 'QRMix', 'VaultOutput', 'NodeSync'],
+  ['IndexTag', 'QRClaim', 'VaultFile', 'ClipGrid'],
+  ['GridWave', 'QRDrop', 'VaultEcho', 'SoundNode'],
+  ['RenderTag', 'VaultProject', 'QRPush', 'SyncLine'],
+  ['LoopEcho', 'VaultTrack', 'QRClaim', 'ClipNode'],
+  ['LineRoute', 'QRDrop', 'VaultIndex', 'TrackCast'],
+  ['VoiceID', 'VaultScene', 'QRClip', 'AudioEcho'],
+  ['IndexNode', 'QRSound', 'VaultDrop', 'PingTrack'],
+  ['PanelSync', 'QRTrack', 'VaultFrame', 'ClipClaim']
+];
+
+function renderMediaSection() {
+  const grid = document.getElementById('media-grid');
+  const snapContainer = document.getElementById('media-snapshots');
+
+  if (!grid || !snapContainer || mediaBrands.length !== mediaSubNodes.length) {
+    console.warn('[Media Grid] DOM elements missing or array mismatch');
+    return;
+  }
+
+  mediaBrands.forEach((brand, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-indigo-100 hover:text-indigo-800 font-semibold cursor-pointer';
+    btn.innerHTML = `${brand}<sup>™</sup>`;
+    btn.onclick = () => toggleSnapshot(`media-snap-${i}`);
+    grid.appendChild(btn);
+
+    const subList = mediaSubNodes[i].map(n => `<li>🔹 ${n}</li>`).join('');
+    const snap = document.createElement('div');
+    snap.id = `media-snap-${i}`;
+    snap.className = 'brand-snapshot hidden mt-6';
+    snap.innerHTML = `
+      <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+      <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+        ${subList}
+      </ul>`;
+    snapContainer.appendChild(snap);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', renderMediaSection);
 </script>
 
 
