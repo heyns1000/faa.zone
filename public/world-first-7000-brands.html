@@ -82,7 +82,9 @@
   🎬 Motion, Media & Sonic
 </a>
   <a href="sector-nutrition.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">✿ Nutrition & Food Chain</a>
-  <a href="sector-ai.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🧬 Omni AI Systems</a>
+  <a href="#" onclick="showSectorPanel('embedded-ailogic-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">
+  🧠 AI, Logic & Grid Systems
+</a>
   <a href="sector-packaging.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">📦 Packaging & Materials</a>
   <a href="sector-quantum.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">✴️ Quantum Protocols</a>
   <a href="sector-ritual.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">☯ Ritual & Culture</a>
@@ -184,6 +186,15 @@
   </div>
   <div id="media-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="media-snapshots"></div>
+</div>
+
+  <!-- Embedded AI Logic Sector Panel -->
+<div id="embedded-ailogic-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
+  <div class="text-2xl font-bold text-gray-700 mb-4">
+    🧠 FAA™ AI, Logic & Grid Dashboard (188 Brands)
+  </div>
+  <div id="ailogic-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+  <div class="p-6" id="ailogic-snapshots"></div>
 </div>
 
 
@@ -1564,5 +1575,261 @@ function renderMediaSection() {
 
 document.addEventListener('DOMContentLoaded', renderMediaSection);
 </script>
+
+
+  <script>
+const ailogicBrands = [
+  'OmniKey', 'SignalPulse', 'MeshIndex', 'ClaimNodeX', 'LogicEcho',
+  'OmniRender', 'SyncLine', 'TokenBoard', 'SignalClaim', 'GridCast',
+  'MeshSync', 'VaultGrid', 'TraceLoop', 'LogicMap', 'PulseKey',
+  'CertDrop', 'OmniTrack', 'TokenProof', 'AIGrid', 'SyncProof',
+  'OmniScan', 'SignalLine', 'MeshCore', 'VaultDrop', 'OmniLink',
+  'TokenYield', 'ClaimSync', 'CertLogic', 'OmniPathX', 'PulseClaim',
+  'GridTrace', 'AIBeam', 'SignalYield', 'LogicBoard', 'OmniSync',
+  'VaultAI', 'TraceCast', 'LogicPing', 'SignalMesh', 'OmniGrid',
+  'OmniProof', 'GridLink', 'CertAI', 'TokenMark', 'OmniDropX',
+  'PulseForm', 'MeshMark', 'LogicPingX', 'OmniLogicX', 'CertSync',
+  'GridYield', 'VaultPing', 'ClaimDrop', 'OmniLine', 'LogicTrace',
+  'TokenNode', 'MeshGrid', 'AITrack', 'SignalID', 'OmniCertX',
+  'VaultSignal', 'LogicCastX', 'TokenTraceX', 'LogicNest', 'CertBeam',
+  'OmniGridX', 'MeshCast', 'TraceAI', 'PulseBoard', 'SyncMesh',
+  'VaultLink', 'OmniEcho', 'LogicLoop', 'SignalTrack', 'MeshID',
+  'LogicCert', 'OmniMesh', 'SyncLogic', 'VaultPath', 'TokenCast',
+  'GridBoard', 'AIForm', 'OmniTrackX', 'SignalCast', 'LogicMark',
+  'CertLoop', 'PulseLogic', 'MeshFlow', 'OmniCertGrid', 'VaultBoard',
+  'AIYieldGrid', 'ClaimNodeGrid', 'OmniLogicField', 'GridNode', 'OmniSyncCore',
+  'BeamLogic', 'LogicGridX', 'OmniMap', 'CertNode', 'SignalTrace',
+  'MeshCert', 'VaultIndex', 'QRLogic', 'CastMesh', 'OmniProofChain',
+  'SyncAI', 'LogicDrop', 'GridRoot', 'OmniNode', 'TokenRoot',
+  'LogicCertX', 'OmniPattern', 'BeamIndex', 'MeshProof', 'SignalCore',
+  'SyncClaim', 'AIFrame', 'CertTag', 'PulseEcho', 'GridProof',
+  'SignalPanel', 'SyncFrame', 'MeshRoute', 'OmniEchoX', 'LogicPanel',
+  'OmniBeacon', 'ClaimSyncX', 'OmniWave', 'CertPing', 'VaultField',
+  'LogicSeal', 'OmniPulse', 'NodeGrid', 'SignalCastX', 'MeshClaimX',
+  'OmniClaim', 'TokenSignal', 'SyncSignal', 'OmniBeam', 'CertSignal',
+  'VaultAITrack', 'PulseRoot', 'OmniClaimX', 'BeamClaim', 'GridBeam',
+  'AIMapX', 'OmniRoot', 'SignalMeshX', 'OmniProofX', 'TokenCert',
+  'VaultAIProof', 'OmniLoopX', 'CertSyncBeam', 'LogicTraceX', 'TokenScanX',
+  'MeshSignalX', 'PulseFrame', 'SyncPulseX', 'BeamIndexX', 'OmniLogicNet',
+  'TokenSeal', 'LogicField', 'VaultMapX', 'AITraceGrid', 'ClaimFormX',
+  'SignalProofX', 'MeshEcho', 'GridLogicField', 'LogicRootX', 'OmniTagX',
+  'SignalFlowX', 'VaultTraceX', 'GridEchoX', 'AIClaimX', 'OmniMapX',
+  'SyncFormX', 'BeamNodeX', 'LogicMeshCore', 'CertTrackX', 'TokenPingX',
+  'MeshNodeX', 'AIProofCast', 'OmniDropGrid', 'GridScanX', 'VaultMeshX',
+  'LogicZoneX', 'OmniLogicTrace', 'AIMapSync',
+];
+
+  
+const ailogicSubNodes = [
+  ['TraceBeam', 'VaultEcho', 'QRPath', 'MeshID'],
+  ['BeamNode', 'VaultTrack', 'QRLogic', 'SignalDrop'],
+  ['YieldTrack', 'VaultMap', 'QRClaim', 'OmniPath'],
+  ['BoardNode', 'VaultCert', 'QRFrame', 'MeshCast'],
+  ['SyncGrid', 'VaultEcho', 'QRNode', 'TokenLink'],
+  ['AIPath', 'VaultClaim', 'QRLogic', 'SyncTag'],
+  ['CastGrid', 'VaultTrack', 'QRPing', 'SignalEcho'],
+  ['PingNode', 'VaultBeam', 'QRProof', 'MeshDrop'],
+  ['MeshTrace', 'VaultDrop', 'QRNode', 'LogicPush'],
+  ['GridPath', 'VaultFrame', 'QRSignal', 'TokenPing'],
+  ['ProofTag', 'VaultEcho', 'QRNode', 'SyncTrack'],
+  ['LinkNode', 'VaultRoute', 'QRLogic', 'PulseBeam'],
+  ['CertSignal', 'VaultTag', 'QRDrop', 'LogicNode'],
+  ['MarkID', 'VaultSync', 'QRClaim', 'OmniGrid'],
+  ['DropCast', 'VaultMesh', 'QRRoute', 'SignalClaim'],
+  ['FormLogic', 'VaultEcho', 'QRSync', 'MeshMap'],
+  ['MarkNode', 'VaultGrid', 'QRPing', 'SignalFlow'],
+  ['PingRoute', 'VaultTrack', 'QRNode', 'TokenDrop'],
+  ['LogicSync', 'VaultPath', 'QRFrame', 'MeshClaim'],
+  ['SyncPath', 'VaultMark', 'QRSignal', 'TraceNode'],
+  ['YieldMesh', 'VaultDrop', 'QRNode', 'PulseLogic'],
+  ['PingCast', 'VaultProof', 'QRLine', 'OmniLogic'],
+  ['DropLogic', 'VaultFrame', 'QRTrack', 'SignalGrid'],
+  ['LineTrace', 'VaultClaim', 'QRMap', 'GridProof'],
+  ['TracePath', 'VaultEcho', 'QRSignal', 'AIGrid'],
+  ['NodeClaim', 'VaultRoute', 'QRBeam', 'PulseForm'],
+  ['GridID', 'VaultPath', 'QRLogic', 'SignalTag'],
+  ['TrackEcho', 'VaultCert', 'QRDrop', 'OmniCast'],
+  ['IDFrame', 'VaultPing', 'QRLogic', 'MeshDrop'],
+  ['CertProof', 'VaultTrace', 'QRLink', 'AIPath'],
+  ['SignalNode', 'VaultRoute', 'QRPing', 'GridLogic'],
+  ['CastMap', 'VaultDrop', 'QRFrame', 'MeshNode'],
+  ['TraceRoute', 'VaultPing', 'QRGrid', 'OmniTag'],
+  ['NestClaim', 'VaultEcho', 'QRTrack', 'MeshProof'],
+  ['BeamToken', 'VaultSync', 'QRPath', 'LogicFlow'],
+  ['GridCast', 'VaultDrop', 'QRSignal', 'SyncForm'],
+  ['CastFrame', 'VaultLogic', 'QRDrop', 'TokenGrid'],
+  ['AILogic', 'VaultClaim', 'QRTrack', 'SyncNode'],
+  ['BoardLine', 'VaultPath', 'QRClaim', 'LogicBeam'],
+  ['MeshRoute', 'VaultGrid', 'QRSignal', 'TokenDrop'],
+  ['LinkTag', 'VaultCast', 'QRFrame', 'SignalFlow'],
+  ['EchoPath', 'VaultProof', 'QRDrop', 'LogicNode'],
+  ['LoopNode', 'VaultEcho', 'QRSync', 'GridCast'],
+  ['TrackPing', 'VaultMap', 'QRNode', 'MeshLine'],
+  ['IDNode', 'VaultGrid', 'QRFlow', 'PulseClaim'],
+  ['CertForm', 'VaultSync', 'QRBeam', 'GridClaim'],
+  ['MeshVault', 'QRSignal', 'DropClaim', 'LogicPulse'],
+  ['LogicTrace', 'VaultPing', 'QRNode', 'GridCast'],
+  ['PathDrop', 'VaultTrack', 'QRRoute', 'OmniMap'],
+  ['CastNode', 'VaultDrop', 'QRTrack', 'MeshSignal'],
+  ['BoardPing', 'VaultDrop', 'QRTrack', 'SignalCast'],
+  ['FormLine', 'VaultSync', 'QRNode', 'LogicPath'],
+  ['TrackProof', 'VaultEcho', 'QRClaim', 'PulseSync'],
+  ['CastFlow', 'VaultMark', 'QRGrid', 'OmniLink'],
+  ['MarkTrace', 'VaultForm', 'QRLogic', 'MeshSync'],
+  ['LoopPath', 'VaultRoute', 'QRNode', 'SignalCert'],
+  ['LogicLine', 'VaultPing', 'QRTrack', 'GridForm'],
+  ['FlowPath', 'VaultClaim', 'QRNode', 'OmniRoute'],
+  ['GridClaim', 'VaultMark', 'QRLogic', 'SyncEcho'],
+  ['BoardLink', 'VaultEcho', 'QRDrop', 'TokenMesh'],
+  ['YieldSync', 'VaultLogic', 'QRTrack', 'MeshDrop'],
+  ['NodeMap', 'VaultPath', 'QRProof', 'SignalFrame'],
+  ['FieldNode', 'VaultGrid', 'QRTag', 'LogicFlow'],
+  ['NodeClaim', 'VaultMark', 'QRLink', 'PulseMap'],
+  ['SyncForm', 'VaultCast', 'QRTrack', 'MeshBeam'],
+  ['LogicRoute', 'VaultDrop', 'QRBeam', 'SignalID'],
+  ['GridMap', 'VaultProof', 'QRToken', 'MeshNode'],
+  ['MapEcho', 'VaultPing', 'QRDrop', 'CertLine'],
+  ['NodeTrack', 'VaultGrid', 'QRRoute', 'OmniYield'],
+  ['TraceNode', 'VaultEcho', 'QRLink', 'LogicDrop'],
+  ['CertMap', 'VaultTrack', 'QRPath', 'PulseProof'],
+  ['IndexGrid', 'VaultLink', 'QRClaim', 'MeshRoute'],
+  ['LogicID', 'VaultForm', 'QRBeam', 'OmniTrack'],
+  ['MeshPing', 'VaultFlow', 'QRDrop', 'SignalMark'],
+  ['ChainID', 'VaultProof', 'QRTag', 'LogicRoot'],
+  ['AIForm', 'VaultRoute', 'QRClaim', 'MeshLogic'],
+  ['DropPing', 'VaultMark', 'QRTrack', 'OmniForm'],
+  ['RootNode', 'VaultClaim', 'QRMesh', 'PulseTrack'],
+  ['NodeLink', 'VaultDrop', 'QRSignal', 'GridMark'],
+  ['RootGrid', 'VaultEcho', 'QRClaim', 'SignalMesh'],
+  ['CertDrop', 'VaultRoute', 'QRToken', 'PulseCast'],
+  ['PatternGrid', 'VaultPing', 'QRMap', 'AIClaim'],
+  ['IndexEcho', 'VaultForm', 'QRLogic', 'MeshPath'],
+  ['ProofNode', 'VaultTrack', 'QRFlow', 'OmniID'],
+  ['CoreRoute', 'VaultPing', 'QRLogic', 'GridDrop'],
+  ['ClaimMesh', 'VaultGrid', 'QRTrack', 'OmniEcho'],
+  ['FrameNode', 'VaultRoute', 'QRProof', 'MeshFlow'],
+  ['TagClaim', 'VaultEcho', 'QRDrop', 'SignalNode'],
+  ['EchoLine', 'VaultPath', 'QRSync', 'LogicNode'],
+  ['ProofClaim', 'VaultBeam', 'QRNode', 'OmniMark'],
+  ['PanelLogic', 'VaultGrid', 'QRDrop', 'TokenEcho'],
+  ['FrameClaim', 'VaultTrack', 'QRFlow', 'GridPing'],
+  ['RouteNode', 'VaultCast', 'QRTrack', 'OmniTag'],
+  ['EchoClaim', 'VaultSync', 'QRLogic', 'SignalDrop'],
+  ['PanelPath', 'VaultProof', 'QRNode', 'MeshClaim'],
+  ['BeaconGrid', 'VaultTrack', 'QRSignal', 'PulseRoute'],
+  ['SyncDrop', 'VaultForm', 'QRNode', 'GridTrace'],
+  ['WaveNode', 'VaultMap', 'QRTrack', 'LogicLine'],
+  ['PingNode', 'VaultDrop', 'QRTag', 'MeshGrid'],
+  ['FieldLink', 'VaultFrame', 'QRClaim', 'SignalBeam'],
+  ['SealPath', 'VaultCert', 'QRDrop', 'TokenNode'],
+  ['PulseCast', 'VaultEcho', 'QRTrack', 'LogicClaim'],
+  ['GridLogic', 'VaultDrop', 'QRSync', 'PulseNode'],
+  ['CastLine', 'VaultRoute', 'QRNode', 'MeshLogic'],
+  ['ClaimPing', 'VaultMap', 'QRDrop', 'SignalLogic'],
+  ['ClaimGrid', 'VaultTrace', 'QRPath', 'LogicPing'],
+  ['SignalNode', 'VaultEcho', 'QRTrack', 'MeshProof'],
+  ['SyncDrop', 'VaultBeam', 'QRClaim', 'LogicRoute'],
+  ['BeamNode', 'VaultClaim', 'QRTrack', 'GridTag'],
+  ['CertFlow', 'VaultEcho', 'QRMap', 'LogicMark'],
+  ['AITrack', 'VaultGrid', 'QRClaim', 'TokenNode'],
+  ['RootPath', 'VaultCast', 'QRSignal', 'MeshTrace'],
+  ['ClaimFrame', 'VaultEcho', 'QRNode', 'LogicLine'],
+  ['BeamFlow', 'VaultMark', 'QRSignal', 'MeshDrop'],
+  ['BeamNode', 'VaultForm', 'QRTrack', 'LogicPanel'],
+  ['MapClaim', 'VaultTrack', 'QRPing', 'SignalDrop'],
+  ['RootGrid', 'VaultPath', 'QRDrop', 'MeshClaim'],
+  ['MeshCast', 'VaultLink', 'QRNode', 'LogicSync'],
+  ['ProofChain', 'VaultForm', 'QRLogic', 'SyncTrace'],
+  ['CertID', 'VaultTag', 'QRClaim', 'OmniFrame'],
+  ['ProofNode', 'VaultCert', 'QRDrop', 'TokenPath'],
+  ['LoopClaim', 'VaultPing', 'QRLogic', 'GridBeam'],
+  ['SyncToken', 'VaultTrack', 'QRClaim', 'LogicForm'],
+  ['TraceCast', 'VaultNode', 'QRFlow', 'BeamEcho'],
+  ['ScanPath', 'VaultGrid', 'QRTrace', 'TokenMark'],
+  ['MeshDrop', 'VaultSignal', 'QRLogic', 'PulseClaim'],
+  ['FrameID', 'VaultEcho', 'QRTrack', 'SignalSync'],
+  ['PulseSync', 'VaultRoute', 'QRDrop', 'MeshLogic'],
+  ['IndexProof', 'VaultMap', 'QRBeam', 'TokenRoute'],
+  ['LogicGrid', 'VaultClaim', 'QRFlow', 'SyncMark'],
+  ['SealNode', 'VaultFrame', 'QRLogic', 'PulseBeam'],
+  ['FieldClaim', 'VaultDrop', 'QRNode', 'TokenTrace'],
+  ['MapLine', 'VaultEcho', 'QRSignal', 'SyncTrack'],
+  ['AIGridID', 'VaultTrace', 'QRClaim', 'MeshEcho'],
+  ['FormClaim', 'VaultNode', 'QRDrop', 'LogicMap'],
+  ['ProofDrop', 'VaultPing', 'QRPath', 'SignalNode'],
+  ['EchoLine', 'VaultGrid', 'QRTrack', 'MeshLogic'],
+  ['LogicRoute', 'VaultClaim', 'QRMesh', 'NodeIndex'],
+  ['RootBeam', 'VaultSignal', 'QRTag', 'PulseGrid'],
+  ['TagNode', 'VaultDrop', 'QRSignal', 'LogicTrace'],
+  ['FlowTrack', 'VaultMap', 'QRClaim', 'MeshNode'],
+  ['TraceLoop', 'VaultProof', 'QRDrop', 'SyncFrame'],
+  ['EchoClaim', 'VaultBeam', 'QRNode', 'LogicBoard'],
+  ['AIClaimPath', 'VaultDrop', 'QRFrame', 'SignalTrace'],
+  ['MapSync', 'VaultGrid', 'QRTrack', 'TokenLogic'],
+  ['FormDrop', 'VaultCast', 'QRRoute', 'MeshFrame'],
+  ['BeamLine', 'VaultLogic', 'QRTrack', 'AIFlow'],
+  ['MeshCore', 'VaultEcho', 'QRToken', 'LogicPing'],
+  ['TrackCert', 'VaultPath', 'QRLogic', 'MeshEcho'],
+  ['PingRoute', 'VaultDrop', 'QRNode', 'GridTrack'],
+  ['NodePath', 'VaultSync', 'QRTrace', 'TokenMark'],
+  ['ClaimProof', 'VaultEcho', 'QRDrop', 'LogicField'],
+  ['DropMesh', 'VaultMap', 'QRNode', 'PulseSync'],
+  ['ScanTrack', 'VaultPing', 'QRClaim', 'BeamNode'],
+  ['MeshVault', 'VaultEcho', 'QRMap', 'SignalGrid'],
+  ['ZoneClaim', 'VaultProof', 'QRTrace', 'GridEcho'],
+  ['TraceLogic', 'VaultPath', 'QRBeam', 'OmniID'],
+  ['MapClaim', 'VaultSync', 'QRSignal', 'LogicMesh'],
+];
+
+
+function renderAILogicSection() {
+  const grid = document.getElementById('ailogic-grid');
+  const snapContainer = document.getElementById('ailogic-snapshots');
+
+  if (!grid || !snapContainer) {
+    console.error('[FAA] Required DOM element(s) missing.');
+    return;
+  }
+
+  if (ailogicBrands.length !== ailogicSubNodes.length) {
+    console.warn(`[FAA] Brand/Sub-node array length mismatch: Brands=${ailogicBrands.length}, SubNodes=${ailogicSubNodes.length}`);
+  }
+
+  // Use the shorter of the two to avoid runtime errors
+  const minLength = Math.min(ailogicBrands.length, ailogicSubNodes.length);
+
+  for (let i = 0; i < minLength; i++) {
+    const brand = ailogicBrands[i];
+
+    // Create brand button
+    const btn = document.createElement('button');
+    btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-indigo-100 hover:text-indigo-800 font-semibold cursor-pointer';
+    btn.innerHTML = `${brand}<sup>™</sup>`;
+    btn.onclick = () => toggleSnapshot(`ailogic-snap-${i}`);
+    grid.appendChild(btn);
+
+    // Create corresponding sub-node snapshot
+    const subList = (ailogicSubNodes[i] || []).map(n => `<li>🔹 ${n}</li>`).join('');
+    const snap = document.createElement('div');
+    snap.id = `ailogic-snap-${i}`;
+    snap.className = 'brand-snapshot hidden mt-6';
+    snap.innerHTML = `
+      <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+      <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+        ${subList}
+      </ul>`;
+    snapContainer.appendChild(snap);
+  }
+}
+
+function toggleSnapshot(id) {
+  document.querySelectorAll('.brand-snapshot').forEach(el => el.classList.add('hidden'));
+  const el = document.getElementById(id);
+  if (el) el.classList.remove('hidden');
+}
+
+document.addEventListener('DOMContentLoaded', renderAILogicSection);
+</script>
+
 
 
