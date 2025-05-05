@@ -492,89 +492,99 @@ const creativeSubNodes = [
   ['PlayNode™', 'FrameTrigger™', 'RenderSync™'],
   ['FXRender™', 'ScrollVision™', 'LoopFrame™']
 ];
+<!-- 🔁 Sector Toggle + Snapshot Logic -->
 <script>
-// 🌱 AGRICULTURE BRANDS + SNAPSHOTS
-document.addEventListener('DOMContentLoaded', () => {
-  const agriGrid = document.getElementById('agri-grid');
-  const agriSnapContainer = document.getElementById('agri-snapshots');
+  // Show a specific sector panel
+  function showSectorPanel(panelId) {
+    document.querySelectorAll('[id^="sector-"], [id^="embedded-"]').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('.brand-snapshot').forEach(el => el.classList.add('hidden'));
 
-  if (agriGrid && agriSnapContainer && typeof agriBrands !== 'undefined') {
-    agriBrands.forEach((brand, i) => {
-      const btn = document.createElement('button');
-      btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-green-100 hover:text-green-800 font-semibold cursor-pointer';
-      btn.innerHTML = `${brand}<sup>™</sup>`;
-      btn.onclick = () => toggleSnapshot(`agri-snap-${i}`);
-      agriGrid.appendChild(btn);
-
-      const subList = agriSubNodes[i].map(n => `<li>🔹 ${n}</li>`).join('');
-      const snap = document.createElement('div');
-      snap.id = `agri-snap-${i}`;
-      snap.className = 'brand-snapshot hidden mt-6';
-      snap.innerHTML = `
-        <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
-        <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
-          ${subList}
-        </ul>`;
-      agriSnapContainer.appendChild(snap);
-    });
+    const target = document.getElementById(panelId);
+    if (target) {
+      target.classList.remove('hidden');
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      console.warn('[FAA] Panel not found:', panelId);
+    }
   }
 
-  // 🏦 BANKING BRANDS + SNAPSHOTS
-  const bankGrid = document.getElementById('brand-grid');
-  const bankSnapContainer = document.getElementById('brand-snapshots');
-
-  if (bankGrid && bankSnapContainer && typeof bankingBrands !== 'undefined') {
-    bankingBrands.forEach((brand, i) => {
-      const btn = document.createElement('button');
-      btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-blue-100 hover:text-blue-800 font-semibold cursor-pointer';
-      btn.innerHTML = `${brand}<sup>™</sup>`;
-      btn.onclick = () => toggleSnapshot(`bank-snap-${i}`);
-      bankGrid.appendChild(btn);
-
-      const snap = document.createElement('div');
-      snap.id = `bank-snap-${i}`;
-      snap.className = 'brand-snapshot hidden mt-6';
-      snap.innerHTML = `
-        <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
-        <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
-          <li>🔹 ${bankingSubNodes[i]}</li>
-        </ul>`;
-      bankSnapContainer.appendChild(snap);
-    });
+  // Show snapshot in same panel
+  function toggleSnapshot(id) {
+    document.querySelectorAll('.brand-snapshot').forEach(el => el.classList.add('hidden'));
+    const active = document.getElementById(id);
+    if (active) active.classList.remove('hidden');
   }
 
-  // 🖋️ CREATIVE TECH BRANDS + SNAPSHOTS
-  const creativeGrid = document.getElementById('creative-grid');
-  const creativeSnapContainer = document.getElementById('creative-snapshots');
+  // RENDER BRANDS ON PAGE LOAD
+  document.addEventListener('DOMContentLoaded', () => {
+    // AGRO BRANDS
+    const agriGrid = document.getElementById('agri-grid');
+    const agriSnapContainer = document.getElementById('agri-snapshots');
+    if (agriGrid && agriSnapContainer && typeof agriBrands !== 'undefined') {
+      agriBrands.forEach((brand, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-green-100 hover:text-green-800 font-semibold cursor-pointer';
+        btn.innerHTML = `${brand}<sup>™</sup>`;
+        btn.onclick = () => toggleSnapshot(`agri-snap-${i}`);
+        agriGrid.appendChild(btn);
 
-  if (creativeGrid && creativeSnapContainer && typeof creativeBrands !== 'undefined') {
-    creativeBrands.forEach((brand, i) => {
-      const btn = document.createElement('button');
-      btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-purple-100 hover:text-purple-800 font-semibold cursor-pointer';
-      btn.innerHTML = `${brand}<sup>™</sup>`;
-      btn.onclick = () => toggleSnapshot(`creative-snap-${i}`);
-      creativeGrid.appendChild(btn);
+        const subList = agriSubNodes[i].map(n => `<li>🔹 ${n}</li>`).join('');
+        const snap = document.createElement('div');
+        snap.id = `agri-snap-${i}`;
+        snap.className = 'brand-snapshot hidden mt-6';
+        snap.innerHTML = `
+          <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+          <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+            ${subList}
+          </ul>`;
+        agriSnapContainer.appendChild(snap);
+      });
+    }
 
-      const subList = creativeSubNodes[i].map(n => `<li>🔹 ${n}</li>`).join('');
-      const snap = document.createElement('div');
-      snap.id = `creative-snap-${i}`;
-      snap.className = 'brand-snapshot hidden mt-6';
-      snap.innerHTML = `
-        <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
-        <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
-          ${subList}
-        </ul>`;
-      creativeSnapContainer.appendChild(snap);
-    });
-  }
-});
-</script>
+    // BANKING BRANDS
+    const bankGrid = document.getElementById('brand-grid');
+    const bankSnapContainer = document.getElementById('brand-snapshots');
+    if (bankGrid && bankSnapContainer && typeof bankingBrands !== 'undefined') {
+      bankingBrands.forEach((brand, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-blue-100 hover:text-blue-800 font-semibold cursor-pointer';
+        btn.innerHTML = `${brand}<sup>™</sup>`;
+        btn.onclick = () => toggleSnapshot(`bank-snap-${i}`);
+        bankGrid.appendChild(btn);
 
-<!-- ✅ SNAPSHOT TOGGLER FUNCTION (required globally) -->
-<script>
-function toggleSnapshot(id) {
-  document.querySelectorAll('.brand-snapshot').forEach(el => el.classList.add('hidden'));
-  const active = document.getElementById(id);
-  if (active) active.classList.remove('hidden');
+        const snap = document.createElement('div');
+        snap.id = `bank-snap-${i}`;
+        snap.className = 'brand-snapshot hidden mt-6';
+        snap.innerHTML = `
+          <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+          <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+            <li>🔹 ${bankingSubNodes[i]}</li>
+          </ul>`;
+        bankSnapContainer.appendChild(snap);
+      });
+    }
+
+   // CREATIVE BRANDS
+const creativeGrid = document.getElementById('creative-grid');
+const creativeSnapContainer = document.getElementById('creative-snapshots');
+
+if (creativeGrid && creativeSnapContainer && typeof creativeBrands !== 'undefined') {
+  creativeBrands.forEach((brand, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-purple-100 hover:text-purple-800 font-semibold cursor-pointer';
+    btn.innerHTML = `${brand}<sup>™</sup>`;
+    btn.onclick = () => toggleSnapshot(`creative-snap-${i}`);
+    creativeGrid.appendChild(btn);
+
+    const subList = creativeSubNodes[i].map(n => `<li>🔹 ${n}</li>`).join('');
+    const snap = document.createElement('div');
+    snap.id = `creative-snap-${i}`;
+    snap.className = 'brand-snapshot hidden mt-6';
+    snap.innerHTML = `
+      <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+      <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+        ${subList}
+      </ul>`;
+    creativeSnapContainer.appendChild(snap);
+  });
 }
-</script>
