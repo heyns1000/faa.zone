@@ -72,7 +72,9 @@
   <a href="#" onclick="showSectorPanel('embedded-health-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">
   🧠 Health & Hygiene
 </a>
-  <a href="sector-housing.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🏗️ Infrastructure & Housing</a>
+<a href="#" onclick="showSectorPanel('embedded-housing-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">
+  🏗️ Housing & Infrastructure
+</a>
   <a href="sector-justice.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">⚖ Justice & Ethics</a>
   <a href="sector-knowledge.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🧠 Knowledge & Archives</a>
   <a href="sector-micromesh.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">☰ Micro-Mesh Logistics</a>
@@ -162,6 +164,15 @@
   </div>
   <div id="health-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="health-snapshots"></div>
+</div>
+
+    <!-- Embedded Housing & Infrastructure Sector Panel -->
+<div id="embedded-housing-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
+  <div class="text-2xl font-bold text-gray-700 mb-4">
+    🏗️ FAA™ Housing & Infrastructure Core Brand Dashboard (91 Brands)
+  </div>
+  <div id="housing-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+  <div class="p-6" id="housing-snapshots"></div>
 </div>
 
 
@@ -1274,6 +1285,147 @@ document.addEventListener('DOMContentLoaded', renderWeblessSection);
 }
 
 document.addEventListener('DOMContentLoaded', renderHealthSection);
+</script>
+
+
+  <script>
+  const housingBrands = [
+    'BuildNest', 'InfraGrid', 'CivicPath', 'VaultFrame', 'ArchiLoop', 'ScrollPlot', 'UrbanTrace', 'BuildChain', 'PlotMesh', 'LandClaim',
+    'CementDrop', 'CivicVault', 'StructFlow', 'QRBuild', 'RoadMapX', 'SiteTrace', 'CivicPlan', 'VaultRoof', 'PlotCast', 'TileYield',
+    'ScanPermit', 'BuildTrack', 'CementVault', 'GridScan', 'SiteVault', 'PermitGrid', 'CivicPrint', 'RoofMesh', 'ScrollYard', 'PlotLink',
+    'GeoClaim', 'PermitCast', 'BuildYield', 'CivicEcho', 'ArchiVault', 'ScrollPlan', 'ZoningBoard', 'SiteSnap', 'BuildBeam', 'InfraLoop',
+    'CivicSync', 'HousingVault', 'LandNodeX', 'ClaimBoard', 'UrbanMap', 'BuildNet', 'CivicGrid', 'FormPanel', 'YieldPermit', 'StructMark',
+    'PlanCast', 'HousingID', 'CementCast', 'TileProof', 'GridYield', 'ArchPlan', 'PlotSync', 'CivicDrop', 'ZonePath', 'ClaimGrid',
+    'TileVault', 'StructID', 'CivicYield', 'BuildCert', 'PlanNode', 'ScrollBuild', 'ZoneVault', 'GridPermit', 'TileCast', 'YieldCivic',
+    'HousingLoop', 'BuildMark', 'FrameGrid', 'CivicTag', 'UrbanYield', 'ArchiID', 'PermitPath', 'StructCast', 'TileFlow', 'ClaimNode',
+    'BuildEcho', 'CivicMesh', 'ZoningNode', 'ScrollRoof', 'LandCast', 'GeoPermit', 'YieldBuild', 'UrbanPanel', 'PlanTrace', 'CivicProof',
+    'FrameYield'
+  ];
+
+  const housingSubNodes = [
+    ['PlotVault', 'GridPermit', 'ScrollClaim', 'LandNode'],
+    ['QRPipe', 'SignalTrace', 'VaultZone', 'NodeLayout'],
+    ['PermitID', 'RoutePlan', 'VaultForm', 'ZoningMesh'],
+    ['FrameDrop', 'BuildQR', 'ClaimSync', 'SiteNode'],
+    ['DesignTrace', 'VaultDraw', 'BlueprintNode', 'CivicCast'],
+    ['QRClaim', 'VaultMap', 'LandTrack', 'NodePing'],
+    ['StreetPlan', 'VaultRoad', 'SignalGrid', 'SurveyNode'],
+    ['QRBuild', 'SiteVault', 'ContractorLink', 'NodePermit'],
+    ['MeshTag', 'VaultCoord', 'ZoningNode', 'ClaimForm'],
+    ['ParcelGrid', 'PlotPath', 'VaultTag', 'ClaimNode'],
+    ['QRPour', 'NodeTrack', 'VaultMix', 'BatchSignal'],
+    ['RegisterPath', 'ZoningClaim', 'QRDrop', 'CivicNode'],
+    ['FrameSignal', 'VaultBeam', 'NodeGrid', 'BuildSync'],
+    ['BuildNode', 'ScrollTrace', 'VaultCheck', 'PermitQR'],
+    ['QRRoute', 'VaultPath', 'PavingNode', 'InfraClaim'],
+    ['QRZone', 'ClaimNode', 'VaultFlag', 'SurveyGrid'],
+    ['GridNode', 'CouncilDrop', 'QRZoning', 'VaultSheet'],
+    ['RooftopPing', 'BuildEcho', 'QRPanel', 'TileDrop'],
+    ['PlotSignal', 'VaultDrop', 'LandNode', 'QRClaim'],
+    ['TileGrid', 'VaultTrack', 'QRPlace', 'PatternNode'],
+    ['QRPermit', 'VaultForm', 'ZoneProof', 'ClaimSync'],
+    ['ProgressScan', 'QRPlan', 'VaultStage', 'NodeEcho'],
+    ['MixNode', 'VaultDrop', 'PourClaim', 'TagBatch'],
+    ['QRSurvey', 'VaultMap', 'GeoTrack', 'NodeClaim'],
+    ['QRCode', 'SiteTrack', 'VaultBuild', 'PermitSync'],
+    ['PermitNode', 'QRClaim', 'ZoningPing', 'VaultLink'],
+    ['BlueprintDrop', 'VaultForm', 'DesignTrack', 'QRScan'],
+    ['TileClaim', 'VaultPitch', 'QRShingle', 'LayoutNode'],
+    ['YardMap', 'VaultPlace', 'GridNode', 'QRFence'],
+    ['QRMap', 'VaultConnect', 'GridPath', 'ClaimRoute'],
+    ['VaultPlot', 'QRCoords', 'LandMesh', 'ScanMark'],
+    ['ClaimEcho', 'VaultPermit', 'QRBoard', 'RouteNode'],
+    ['PayoutNode', 'StageClaim', 'VaultCycle', 'QRProgress'],
+    ['CivicNode', 'QRDrop', 'PlanLink', 'VaultLedger'],
+    ['VaultDraft', 'ScanFloor', 'QRRender', 'NodeTrace'],
+    ['GridLine', 'QRClaim', 'VaultSheet', 'PermitTrace'],
+    ['MapNode', 'QRCheck', 'VaultProof', 'ZoneRoute'],
+    ['NodePing', 'QRMap', 'VaultBuild', 'LandTag'],
+    ['QRSpan', 'VaultFrame', 'ReinforceTrack', 'NodeSet'],
+    ['InfraSignal', 'VaultRing', 'QRFlow', 'SiteNode'],
+    ['SyncNode', 'QRForm', 'CouncilClaim', 'VaultPath'],
+    ['TitleDrop', 'QRZone', 'VaultProof', 'ClaimKey'],
+    ['GeoRoute', 'VaultClaim', 'QRTrack', 'ScanField'],
+    ['QRDesk', 'PermitFlow', 'VaultConfirm', 'GridEcho'],
+    ['MapTrace', 'VaultPlan', 'SurveyQR', 'BuildPath'],
+    ['NetNode', 'QRPermit', 'VaultJoin', 'PathStage'],
+    ['GridPass', 'ZoningPing', 'VaultLink', 'CouncilTrace'],
+    ['QRForm', 'PermitMark', 'VaultEntry', 'ScanLine'],
+    ['ClaimPing', 'VaultProof', 'QRYield', 'GridSync'],
+    ['QRBeam', 'FrameLink', 'VaultPath', 'NodeGrid'],
+    ['CastNode', 'QRDrop', 'VaultSync', 'BlueLine'],
+    ['HouseTag', 'VaultLabel', 'QRTrack', 'ClaimFlow'],
+    ['MixForm', 'QRNode', 'VaultDrop', 'YieldClaim'],
+    ['TileMap', 'QRGrid', 'VaultShingle', 'NodePin'],
+    ['YieldNode', 'QRTrack', 'VaultSync', 'PermitPath'],
+    ['ArchiFlow', 'VaultClaim', 'QRNode', 'BlueprintTrack'],
+    ['LandMesh', 'QRPing', 'VaultMap', 'TagEcho'],
+    ['ClaimVault', 'QRBoard', 'SyncTag', 'NodeSubmit'],
+    ['ZoneNode', 'QRRoute', 'VaultLock', 'GridTag'],
+    ['GridLock', 'VaultCheck', 'QRNode', 'SiteClaim'],
+    ['QRSet', 'VaultGrid', 'PatternScan', 'ShingleClaim'],
+    ['IDTag', 'VaultNode', 'QRProof', 'BuildTrack'],
+    ['YieldCert', 'VaultPayout', 'GridTag', 'QRSplit'],
+    ['CertifyNode', 'QRPermit', 'VaultSync', 'ScanProof'],
+    ['NodeMap', 'VaultBoard', 'QRTrace', 'ZoneClaim'],
+    ['ScrollForm', 'QRDrop', 'VaultLine', 'PanelNode'],
+    ['VaultProof', 'QRZone', 'ClaimRoute', 'MapTrace'],
+    ['PermitTrack', 'QRClaim', 'VaultDesk', 'PlanID'],
+    ['TileEcho', 'QRLayer', 'VaultDrop', 'PatternID'],
+    ['CouncilID', 'QRClaim', 'VaultShare', 'SyncNode'],
+    ['LoopPath', 'VaultPing', 'ClaimSync', 'QRPermit'],
+    ['QRTag', 'MarkNode', 'VaultCert', 'ZoneDrop'],
+    ['FrameDrop', 'VaultNode', 'QRBeam', 'SetClaim'],
+    ['TagClaim', 'VaultEcho', 'QRCouncil', 'FormNode'],
+    ['CityPlan', 'QRBuild', 'VaultMetric', 'ScanNode'],
+    ['IDDrop', 'QRSketch', 'VaultLog', 'PlanTrace'],
+    ['PermitFlow', 'QRForm', 'VaultLine', 'ZoneCert'],
+    ['CastGrid', 'QRForm', 'VaultSteel', 'EchoNode'],
+    ['FlowPattern', 'QRDrop', 'VaultTile', 'MeshClaim'],
+    ['QRClaim', 'VaultZone', 'LockPath', 'MapTrack'],
+    ['EchoNode', 'QRPermit', 'VaultWave', 'SyncLine'],
+    ['MeshTrace', 'QRDrop', 'VaultMap', 'TagNode'],
+    ['QRZone', 'VaultTrace', 'RegionMap', 'ScanEcho'],
+    ['RoofTag', 'VaultPanel', 'QRClaim', 'TileLine'],
+    ['CastNode', 'QRDrop', 'VaultAnchor', 'ClaimPing'],
+    ['GeoScan', 'QRField', 'VaultPermit', 'TagNode'],
+    ['QRTrack', 'VaultFlow', 'BuildCredit', 'PayoutLink'],
+    ['PanelForm', 'QRDrop', 'VaultPing', 'GridNode'],
+    ['TraceClaim', 'VaultNode', 'QRCycle', 'ScrollMap'],
+    ['CertGrid', 'VaultZoning', 'QRBoard', 'CouncilLink'],
+    ['QRFrame', 'VaultEcho', 'PayoutNode', 'StructLoop']
+  ];
+
+  function renderHousingSection() {
+    const grid = document.getElementById('housing-grid');
+    const snapContainer = document.getElementById('housing-snapshots');
+
+    if (!grid || !snapContainer || housingBrands.length !== housingSubNodes.length) {
+      console.warn('[Housing Grid] DOM elements missing or array mismatch');
+      return;
+    }
+
+    housingBrands.forEach((brand, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-yellow-100 hover:text-yellow-800 font-semibold cursor-pointer';
+      btn.innerHTML = `${brand}<sup>™</sup>`;
+      btn.onclick = () => toggleSnapshot(`housing-snap-${i}`);
+      grid.appendChild(btn);
+
+      const subList = housingSubNodes[i].map(n => `<li>🔹 ${n}</li>`).join('');
+      const snap = document.createElement('div');
+      snap.id = `housing-snap-${i}`;
+      snap.className = 'brand-snapshot hidden mt-6';
+      snap.innerHTML = `
+        <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+        <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+          ${subList}
+        </ul>`;
+      snapContainer.appendChild(snap);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', renderHousingSection);
 </script>
 
 
