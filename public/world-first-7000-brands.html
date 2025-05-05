@@ -69,7 +69,9 @@
   <a href="sector-education.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">📚 Education & IP</a>
   <a href="sector-fashion.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">✂ Fashion & Identity</a>
   <a href="sector-gaming.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🎮 Gaming & Simulation</a>
-  <a href="sector-health.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">⚗ Health & Hygiene</a>
+  <a href="#" onclick="showSectorPanel('embedded-health-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">
+  🧠 Health & Hygiene
+</a>
   <a href="sector-housing.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🏗️ Infrastructure & Housing</a>
   <a href="sector-justice.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">⚖ Justice & Ethics</a>
   <a href="sector-knowledge.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🧠 Knowledge & Archives</a>
@@ -152,6 +154,16 @@
   <div id="webless-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="webless-snapshots"></div>
 </div>
+
+    <!-- Embedded Health & Hygiene Sector Panel -->
+<div id="embedded-health-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
+  <div class="text-2xl font-bold text-gray-700 mb-4">
+    🧠 FAA™ Health & Hygiene Core Brand Dashboard (93 Brands)
+  </div>
+  <div id="health-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+  <div class="p-6" id="health-snapshots"></div>
+</div>
+
 
 
 
@@ -1111,5 +1123,157 @@ function renderWeblessSection() {
 document.addEventListener('DOMContentLoaded', renderWeblessSection);
 </script>
 
+
+<script>
+  const healthBrands = [
+    'MedVault', 'CleanCast', 'ScrollHealth', 'Hygienix', 'CareNode',
+    'VaultSan', 'TrackMeds', 'SteriMesh', 'MedLoop', 'PulseClean',
+    'HealthDrop', 'SanitiPath', 'VaultMeds', 'BioPulse', 'NurseFlow',
+    'AirHealth', 'ScanCare', 'PathogenTrace', 'CareYield', 'SoapGrid',
+    'MedTrace', 'SteriLoop', 'BioScan', 'CareLink', 'VaultWell',
+    'DoseSync', 'SanityTrack', 'CleanPulse', 'NurseGrid', 'ScanHealth',
+    'PureFlow', 'MedCert', 'SteriPack', 'AlertCare', 'VaultNurse',
+    'TrackVitals', 'HygieneCast', 'PatientSync', 'MedFuse', 'CleanChain',
+    'SoapNode', 'ScanDose', 'CareCast', 'HealthPing', 'PatientPath',
+    'PureVault', 'MedDrop', 'SanitiLoop', 'AlertDose', 'CleanLine',
+    'VaultVitals', 'MaskTrack', 'CarePrint', 'SteriBoard', 'NurseYield',
+    'BioTrack', 'VaultWellness', 'TouchClean', 'MedEcho', 'PatientCert',
+    'MedLogix', 'ScanSan', 'NurseCast', 'TouchScan', 'DoseVault',
+    'PathClean', 'SanitiID', 'RecordGrid', 'PureCare', 'MedClaim',
+    'QRVitals', 'HygieneNode', 'SoapDrop', 'NurseVault', 'BioClaim',
+    'ScanWell', 'SprayTrack', 'CarePath', 'VaultScript', 'PatientLink',
+    'SteriCheck', 'HealthCast', 'DoseLink', 'TouchProof', 'RecordVault',
+    'MedPortal', 'AlertVault', 'ClaimDose', 'CleanForm', 'ScanProof',
+    'NurseSignal', 'MedPathway', 'WellnessTrack'
+  ];
+
+  const healthSubNodes = [
+    ['ScanID', 'PatientDrop', 'RecordLink', 'VaultCare'],
+    ['SanitizeGrid', 'QRLabel', 'TouchLock', 'DropZone'],
+    ['ScrollID', 'TreatmentTrack', 'CareClaim', 'HealthEcho'],
+    ['WashCycle', 'QRNode', 'DisinfectLink', 'VaultTag'],
+    ['PatientSync', 'PayoutCare', 'NodeClaim', 'AlertScan'],
+    ['CleanTrace', 'HygieneCert', 'QRGrid', 'SecureDrop'],
+    ['DoseTrack', 'QRScript', 'VaultDrug', 'AlertLink'],
+    ['MeshDrop', 'CleanEcho', 'QRTrack', 'SteriNode'],
+    ['HealthPath', 'PatientCast', 'QRClaim', 'VaultID'],
+    ['PulseSync', 'ScanLink', 'SanitaryTag', 'VaultLock'],
+    ['DropPoint', 'TrackDose', 'QRTrace', 'MedNode'],
+    ['PathNode', 'CleanSync', 'HygieneRoute', 'QRClaim'],
+    ['MedID', 'TrackPill', 'DropChart', 'AlertLoop'],
+    ['QRNode', 'ScanVitals', 'VaultRecord', 'HealthPing'],
+    ['ShiftTrack', 'AlertGrid', 'VaultChart', 'PeerLink'],
+    ['VentFlow', 'PurifyNode', 'AirTrack', 'CleanEcho'],
+    ['CareID', 'QRChart', 'PatientGrid', 'RecordVault'],
+    ['PathNode', 'TraceMap', 'AlertDrop', 'VaultScan'],
+    ['PayoutClaim', 'CareNode', 'VaultPay', 'ScrollCert'],
+    ['WashSync', 'DispenserLink', 'QRNode', 'VaultDrop'],
+    ['TraceNode', 'QRMap', 'PatientPing', 'RecordFlow'],
+    ['LoopClean', 'VaultNode', 'DisinfectClaim', 'ScanPulse'],
+    ['BioNode', 'TestTrace', 'VaultLink', 'QRResult'],
+    ['PatientNode', 'ClaimGrid', 'ScrollAlert', 'VaultCare'],
+    ['WellnessID', 'QRPath', 'DropNode', 'HealthYield'],
+    ['QRTrack', 'PillGrid', 'TimerClaim', 'VaultDose'],
+    ['HygieneNode', 'ScanTouch', 'VaultDrop', 'QRLoop'],
+    ['CleanLink', 'QRSignal', 'VaultMesh', 'PathDrop'],
+    ['NurseID', 'RosterFlow', 'AlertRoute', 'CareTag'],
+    ['ScanLoop', 'QRVitals', 'VaultDrop', 'RecordTag'],
+    ['WaterPath', 'CleanYield', 'VaultPipe', 'QRDrop'],
+    ['CertID', 'RecordNode', 'QRVerify', 'ScrollCare'],
+    ['QRWrap', 'VaultClean', 'ScanShield', 'DropKit'],
+    ['SignalAlert', 'PatientLoop', 'QRNotify', 'VaultTrack'],
+    ['NurseClaim', 'QRPanel', 'NodeTag', 'ShiftProof'],
+    ['VitalID', 'ScanPulse', 'VaultTrack', 'QRClaim'],
+    ['QRPush', 'CleanNode', 'VaultDrop', 'SprayTrace'],
+    ['ScrollTrack', 'VaultChart', 'QRPath', 'IDNode'],
+    ['VaultJoin', 'QRClaim', 'ScrollDose', 'PatientLink'],
+    ['QRLoop', 'VaultMark', 'HygieneFlow', 'ScanProof'],
+    ['FoamClaim', 'VaultDispenser', 'QRWash', 'CleanTag'],
+    ['DoseTrace', 'QRScript', 'VaultTrigger', 'LabelNode'],
+    ['SignalDrop', 'QRAlert', 'NurseRoute', 'VaultLink'],
+    ['PingNode', 'QRVital', 'VaultTrack', 'AlertBeam'],
+    ['QRRoute', 'MedID', 'VaultDrop', 'CareSync'],
+    ['VaultFlow', 'QRDispenser', 'HygieneLog', 'ScanEcho'],
+    ['DropForm', 'ClaimScript', 'QRLoop', 'VaultNode'],
+    ['LoopClean', 'SprayNode', 'VaultClaim', 'HygieneGrid'],
+    ['QRSignal', 'VaultNotify', 'ScheduleClaim', 'DosePing'],
+    ['LinePath', 'QRCheck', 'VaultFlow', 'ScanProof'],
+    ['PulseID', 'ScanNode', 'QRTrack', 'VitalsClaim'],
+    ['QRWear', 'CleanFit', 'VaultSync', 'HygienePing'],
+    ['PrintLabel', 'QRScan', 'DropVault', 'CleanNode'],
+    ['BoardRoute', 'HygieneLink', 'VaultMap', 'QRPath'],
+    ['PayoutNode', 'VaultCert', 'NurseFlow', 'QRSignal'],
+    ['BioScan', 'QRProof', 'VaultClaim', 'PatientEcho'],
+    ['ScrollCare', 'QRDrop', 'MedMesh', 'RecordSync'],
+    ['QRScan', 'VaultTouch', 'HygieneLock', 'SignalNode'],
+    ['EchoID', 'VaultPanel', 'QRPing', 'RecordPath'],
+    ['ScrollCert', 'QRAccess', 'VaultLedger', 'ClaimLink'],
+    ['TrackVault', 'QRPanel', 'PatientTag', 'SyncChart'],
+    ['HygieneScan', 'QRRead', 'VaultIndex', 'CleanFlow'],
+    ['CastPath', 'QRBoard', 'CarePulse', 'VaultShift'],
+    ['ScanNode', 'TouchRead', 'VaultMark', 'QRTag'],
+    ['VaultClaim', 'QRDose', 'TimerPath', 'MedLabel'],
+    ['ScrollRoute', 'QRScan', 'VaultTrack', 'PathEcho'],
+    ['QRBadge', 'VaultName', 'ClaimID', 'CleanCheck'],
+    ['RecordLoop', 'VaultEntry', 'QRNode', 'ScanBook'],
+    ['QRFlow', 'SanitizePath', 'CareTouch', 'VaultSync'],
+    ['VaultSheet', 'QRProof', 'ScrollClaim', 'SignalTrack'],
+    ['VitalsTag', 'QRTrack', 'VaultPulse', 'HealthNode'],
+    ['CleanLabel', 'ScanEcho', 'VaultDrop', 'TagID'],
+    ['SoapPing', 'QRTrigger', 'DispenserLog', 'VaultTrack'],
+    ['VaultRoster', 'NurseTrack', 'ShiftID', 'QRLog'],
+    ['BioTrack', 'VaultCert', 'QRForm', 'DNAPath'],
+    ['QRClaim', 'ScrollDrop', 'VaultCare', 'CheckPulse'],
+    ['SprayNode', 'VaultStream', 'QRPath', 'HygieneFlow'],
+    ['QRTag', 'NurseRoute', 'VaultChart', 'ShiftEcho'],
+    ['ScriptID', 'QRConfirm', 'MedDrop', 'ClaimProof'],
+    ['QRBoard', 'VaultJoin', 'CarePass', 'RecordTrack'],
+    ['CheckPulse', 'VaultClean', 'QRNode', 'HygieneCert'],
+    ['CastAlert', 'QRSignal', 'NodeDrop', 'VaultClaim'],
+    ['QRLabel', 'VaultID', 'TrackMed', 'ScrollProof'],
+    ['VaultLink', 'CleanTrace', 'ScanNode', 'QRDrop'],
+    ['FilePath', 'QRPatient', 'VaultScan', 'ArchiveNode'],
+    ['QRGate', 'VaultOpen', 'PatientCert', 'NodePass'],
+    ['SignalPing', 'VaultEcho', 'ScanNotify', 'QRPath'],
+    ['DoseNode', 'VaultRoute', 'LabelScan', 'QRClaim'],
+    ['QRPanel', 'VaultPath', 'PrintTag', 'DisinfectProof'],
+    ['VaultDrop', 'QRNode', 'CertID', 'PulseRecord'],
+    ['SignalNode', 'QRChart', 'VaultEcho', 'RosterClaim'],
+    ['QRLog', 'PatientPath', 'ScrollLink', 'VaultMark'],
+    ['TrackChart', 'VaultPulse', 'QRNode', 'LoopScan']
+  ];
+
+
+  function renderHealthSection() {
+  const grid = document.getElementById('health-grid');
+  const snapContainer = document.getElementById('health-snapshots');
+
+  if (!grid || !snapContainer || healthBrands.length !== healthSubNodes.length) {
+    console.warn('[Health Grid] DOM elements missing or array mismatch');
+    return;
+  }
+
+  healthBrands.forEach((brand, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-green-100 hover:text-green-800 font-semibold cursor-pointer';
+    btn.innerHTML = `${brand}<sup>™</sup>`;
+    btn.onclick = () => toggleSnapshot(`health-snap-${i}`);
+    grid.appendChild(btn);
+
+    const subList = healthSubNodes[i].map(n => `<li>🔹 ${n}</li>`).join('');
+    const snap = document.createElement('div');
+    snap.id = `health-snap-${i}`;
+    snap.className = 'brand-snapshot hidden mt-6';
+    snap.innerHTML = `
+      <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+      <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+        ${subList}
+      </ul>`;
+    snapContainer.appendChild(snap);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', renderHealthSection);
+</script>
 
 
