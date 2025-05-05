@@ -62,8 +62,9 @@
   </a>
 
  <a href="#" onclick="showSectorPanel('embedded-creative-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block transition hover:-translate-y-1 hover:scale-105">🖋️ Creative Tech</a>
-  <!-- Remaining sectors link out to dedicated HTML pages -->
-  <a href="sector-logistics.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">📦 Distribution & Logistics</a>
+<a href="#" onclick="showSectorPanel('embedded-logistics-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">
+  📦 Logistics & Packaging
+</a>
   <a href="sector-education.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">📚 Education & IP</a>
   <a href="sector-fashion.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">✂ Fashion & Identity</a>
   <a href="sector-gaming.html" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🎮 Gaming & Simulation</a>
@@ -110,6 +111,15 @@
   <div class="text-2xl font-bold text-purple-800 mb-4">🖋️ FAA™ Creative Tech Core Brand Dashboard (10 Brands)</div>
   <div id="creative-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="creative-snapshots"></div>
+</div>
+
+  <!-- Embedded Logistics Panel -->
+<div id="embedded-logistics-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
+  <div class="text-2xl font-bold text-yellow-700 mb-4">
+    📦 FAA™ Logistics & Packaging Brand Dashboard (111 Brands)
+  </div>
+  <div id="logistics-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+  <div class="p-6" id="logistics-snapshots"></div>
 </div>
 
 
@@ -502,3 +512,143 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 </script>
 
+  
+<script>
+const logisticsBrands = [
+  'CrateLogic', 'PackChain', 'SortFleet', 'RouteMesh', 'LogiStack', 'DeliveryX', 'CargoVault', 'PalletPath', 'LabelFlow', 'DropLoop',
+  'ScrollRoute', 'ShipLedger', 'FreightCore', 'PackSphere', 'GridDrop', 'AutoTrack', 'ChainWrap', 'BinLogicX', 'PouchNode', 'ColdFleet',
+  'TrackStack', 'NodeRoute', 'PackOS', 'ZipCrate', 'TagLogic', 'ScrollTruck', 'FlowVault', 'SortStack', 'DockGrid', 'RollFleet',
+  'VendSort', 'GridCrate', 'LogiLift', 'CrateX', 'QuickLabel', 'DropLedger', 'FleetTrace', 'BoxSync', 'ChainGate', 'ColdRoute',
+  'PalletCore', 'FreightLine', 'PackSignal', 'ChainVault', 'CrateThread', 'ForkYield', 'DockLogic', 'LoadCast', 'TrayTrack', 'ScrollDrop',
+  'LoopXpress', 'PackSyncPro', 'VendorWrap', 'CrateLedger', 'BoxNodeX', 'AutoRoute', 'VaultBin', 'LabelTrack', 'PathLock', 'DispatchLoop',
+  'ChainPulse', 'FastTag', 'VendorFleet', 'ParcelSync', 'SmartCrate', 'AutoLabel', 'FreightGrid', 'DockFlow', 'CrateBox', 'ColdTrack',
+  'SecureMesh', 'LoopDispatch', 'AutoLift', 'ClaimBoard', 'ParcelChain', 'LabelMesh', 'BoxSignal', 'LoadFrame', 'VaultRoute', 'DockYield',
+  'CrateSecure', 'LabelFlowX', 'DockMaster', 'PackNet', 'RouteGuard', 'BinLogicPro', 'ColdChainX', 'AutoPack', 'ShipTrack', 'LoadManager',
+  'CrateManager', 'LabelSecure', 'DockFlowX', 'PackMaster', 'RouteManager', 'BinSecure', 'ColdManager', 'AutoLabelX', 'ShipManager', 'LoadSecure',
+  'CrateSecure', 'LabelFlowX', 'DockMaster', 'PackNet', 'RouteGuard', 'BinLogicPro', 'ColdChainX', 'AutoPack', 'ShipTrack', 'LoadManager',
+  'CrateManager'
+];
+
+const logisticsSubNodes = [
+  ['BoxNode™', 'CrateMap™', 'PackSync™', 'CrateSync™'],
+  ['VendorPack™', 'LabelTrace™', 'ShipGrid™', 'ScrollWrap™'],
+  ['SortPulse™', 'BinLogic™', 'FleetTrack™', 'ScrollSort™'],
+  ['NodeMap™', 'GeoSignal™', 'DropLink™', 'RouteFlow™'],
+  ['ScrollStack™', 'YieldSync™', 'PayoutRoute™', 'StackNode™'],
+  ['LastMile™', 'ScanDrop™', 'AgentTrack™', 'QuickChain™'],
+  ['VaultLink™', 'WeightTag™', 'CargoScan™', 'CargoClaim™'],
+  ['PathFinder™', 'RackTrace™', 'GridStore™', 'LoadMark™'],
+  ['PrintNode™', 'ScrollCode™', 'InkRoute™', 'LabelSync™'],
+  ['LoopID™', 'VendorDrop™', 'TimeGate™', 'LoopConfirm™'],
+  ['ChainStep™', 'ScanRoute™', 'RouteTrace™', 'FinalMile™'],
+  ['ManifestScroll™', 'LogiProof™', 'ShipCert™', 'DockNode™'],
+  ['FreightID™', 'CrateStamp™', 'CargoPulse™', 'StackSync™'],
+  ['SphereNode™', 'PackLoop™', 'SupplyCircle™', 'HubRelay™'],
+  ['DropTrace™', 'DropID™', 'GridYield™', 'NodeFlow™'],
+  ['GPSClaim™', 'RouteLog™', 'TrackPulse™', 'AutoLink™'],
+  ['WrapNode™', 'TieGlyph™', 'SealMark™', 'ScanProof™'],
+  ['LogicChip™', 'BinSync™', 'ScrollSnap™', 'BinWave™'],
+  ['PouchTag™', 'ScrollStick™', 'PackPush™', 'MicroWrap™'],
+  ['ChillRoute™', 'IceLedger™', 'ColdDrop™', 'VaultIce™'],
+  ['SignalTag', 'ScrollFleet', 'DockSync', 'TrackMap'],
+  ['HopLink', 'NodeShift', 'MeshGrid', 'RouteCert'],
+  ['ScrollOS', 'RouteWrap', 'ForkNode', 'PalletLogic'],
+  ['AutoFold', 'SpeedTag', 'CrateDrop', 'ZipSeal'],
+  ['ScrollTag', 'GeoTrack', 'TagFrame', 'AutoCert'],
+  ['ScrollDriver', 'YieldScan', 'CargoBoard', 'DockLink'],
+  ['VaultID', 'ScrollStream', 'BoxYield', 'FlowMap'],
+  ['BinRank', 'BinPulse', 'FastCrate', 'LogicDrop'],
+  ['DockFrame', 'PermitTrack', 'ScrollAccess', 'GateID'],
+  ['WheelNode', 'PalletSync', 'LoadProof', 'ScrollAxle'],
+  ['VendorSort', 'BoxPush', 'AutoTray', 'YieldLoop'],
+  ['CrateNode', 'GridWrap', 'VaultStack', 'ScrollRoute'],
+  ['LiftID', 'FreightPulse', 'ForkSync', 'LogiTag'],
+  ['CrateTrack', 'SmartLock', 'LabelLink', 'ScrollMap'],
+  ['ScanCode', 'SmartPrint', 'RouteLabel', 'LabelCast'],
+  ['LedgerPath', 'DropFlow', 'VaultDrop', 'QuickClaim'],
+  ['TruckPulse', 'ScrollRide', 'AutoPath', 'CrateEcho'],
+  ['ScrollSync', 'BoxFrame', 'ClaimID', 'TagSnap'],
+  ['GateLog', 'DockPush', 'YieldGate', 'EntryPulse'],
+  ['FreezePoint', 'ScanChill', 'ColdMesh', 'ChillPath'],
+  ['CoreLift', 'PalletID', 'PackForce', 'VaultRack'],
+  ['LineTrack', 'StackChain', 'DockGrid', 'RouteNode'],
+  ['SignalDrop', 'YieldBeacon', 'PackNode', 'PathSync'],
+  ['ClaimLink', 'ScrollCert', 'LockDrop', 'AssetTag'],
+  ['CrateLink', 'ThreadMark', 'GridLoop', 'FastTag'],
+  ['ForkView', 'YieldNode', 'RouteTrek', 'PalletWave'],
+  ['DockTag', 'GridScan', 'ZonePath', 'DockAccess'],
+  ['LoadSync', 'CrateWatch', 'NodePing', 'AutoConfirm'],
+  ['TrayID', 'PulseLift', 'VendorCrate', 'SyncScan'],
+  ['AutoYield', 'ScrollLift', 'DropFlag', 'TagNode'],
+  ['LoopSync', 'VendorPush', 'ScrollLoop', 'DropNext'],
+  ['ProTrack', 'QuickCrate', 'YieldStamp', 'CoreLoop'],
+  ['WrapID', 'VendorPath', 'SecureDrop', 'LabelGate'],
+  ['CrateLock', 'LedgerPath', 'PackTrace', 'AutoCert'],
+  ['NodeFlow', 'ClaimLock', 'ScanYield', 'FrameTag'],
+  ['AutoJump', 'PathCalc', 'GridRelay', 'VendorMap'],
+  ['BinTag', 'SecureBin', 'VaultSignal', 'TraceStore'],
+  ['TrackMark', 'LabelPath', 'QRDrop', 'LabelFlow'],
+  ['SecurePath', 'ScrollFence', 'LockGate', 'PathProof'],
+  ['LoopID', 'DispatchSync', 'TagRelease', 'VendorTrack'],
+  ['PulseLink', 'FlowTrack', 'CrateAlert', 'LockSync'],
+  ['TagFire', 'IDScan', 'QRClaim', 'RouteAlert'],
+  ['FleetMap', 'ScanRoute', 'YieldClaim', 'ChainAccess'],
+  ['SyncBox', 'DropScan', 'AutoLabel', 'ParcelID'],
+  ['SmartClaim', 'CrateGrid', 'LockTrack', 'RFIDNode'],
+  ['LabelSnap', 'PrintFlow', 'AutoScan', 'ConfirmPrint'],
+  ['GridPath', 'LoadBoard', 'VaultTag', 'ShipClaim'],
+  ['DockSignal', 'AccessNode', 'LabelCheck', 'LoadLink'],
+  ['BoxSync', 'SmartTag', 'FrameDrop', 'PalletLink'],
+  ['ChillLoop', 'IceNode', 'VaultChill', 'ScrollCold'],
+  ['MeshID', 'PathSecure', 'GateTrace', 'NodeFence'],
+  ['VendorLoop', 'DropTick', 'AutoYield', 'QRConfirm'],
+  ['LiftSync', 'TrayPush', 'ForkLoop', 'WeightGate'],
+  ['BoardCert', 'VendorPush', 'ScrollAttach', 'ProofLine'],
+  ['ChainTrack', 'QuickDrop', 'VendorClaim', 'FastLock'],
+  ['MeshLink', 'TagGrid', 'LabelView', 'ClaimLink'],
+  ['BoxAlert', 'SignalPulse', 'FrameCheck', 'DropYield'],
+  ['LoadDetect', 'CrateSignal', 'DropCheck', 'ScanLine'],
+  ['RouteClaim', 'SignalSync', 'LockMap', 'PathMark'],
+  ['DockCrate', 'YieldNode', 'SignalTrack', 'ClaimPulse'],
+  ['SecureTag', 'LockCrate', 'VaultProof', 'ChainLock'],
+  ['FlowTag', 'LabelSync', 'ScanRoute', 'PrintID'],
+  ['MasterDock', 'DockTrack', 'LoadSync', 'AccessNode'],
+  ['NetCrate', 'PackSync', 'NodeLink', 'ChainFlow'],
+  ['GuardRoute', 'PathSecure', 'SignalLock', 'TrackID'],
+  ['ProBin', 'LogicSync', 'BinTrack', 'NodeProof'],
+  ['ChillTrack', 'ColdSync', 'FreezeNode', 'IceFlow'],
+  ['PackAuto', 'SyncLabel', 'AutoCrate', 'FlowNode'],
+  ['TrackShip', 'ShipSync', 'RouteNode', 'DockFlow'],
+  ['ManageLoad', 'LoadTrack', 'SyncCrate', 'NodeLink'],
+  ['ManageCrate', 'CrateSync', 'VaultTrack', 'LockNode']
+];
+
+document.addEventListener('DOMContentLoaded', () => {
+  const grid = document.getElementById('logistics-grid');
+  const snapContainer = document.getElementById('logistics-snapshots');
+
+  if (!grid || !snapContainer || !Array.isArray(logisticsBrands) || !Array.isArray(logisticsSubNodes)) {
+    console.warn('[Logistics Grid] Missing DOM elements or data arrays.');
+    return;
+  }
+
+  logisticsBrands.forEach((brand, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-yellow-100 hover:text-yellow-800 font-semibold cursor-pointer';
+    btn.innerHTML = `${brand}<sup>™</sup>`;
+    btn.onclick = () => toggleSnapshot(`logistics-snap-${i}`);
+    grid.appendChild(btn);
+
+    const subList = logisticsSubNodes[i].map(n => `<li>🔹 ${n}</li>`).join('');
+    const snap = document.createElement('div');
+    snap.id = `logistics-snap-${i}`;
+    snap.className = 'brand-snapshot hidden mt-6';
+    snap.innerHTML = `
+      <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+      <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+        ${subList}
+      </ul>`;
+    snapContainer.appendChild(snap);
+  });
+});
+</script>
