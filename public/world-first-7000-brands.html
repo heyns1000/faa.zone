@@ -1912,31 +1912,21 @@ for (let key in sectorList) {
   sectorData[key] = { brands: [], nodes: [] };
 }
 
-// --- On Page Load
-document.addEventListener('DOMContentLoaded', () => {
-  renderAILogicSection();       // Optional if using existing AI logic grid
-  populateSectorDropdown();     // Critical for admin dropdown to work
-});
-
-// --- Populate sector dropdown
-function populateSectorDropdown() {
+// --- Step 2: Populate sector dropdown on DOM load
+window.addEventListener('DOMContentLoaded', () => {
   const select = document.getElementById("sectorSelect");
-  if (!select) return;
-
   for (let key in sectorList) {
     const option = document.createElement("option");
     option.value = key;
     option.textContent = sectorList[key];
     select.appendChild(option);
   }
-}
-
-// --- Add brand to sector
+});
 function addBrandToSector() {
   const sector = document.getElementById("sectorSelect").value;
   const brand = document.getElementById("brandInput").value.trim();
   const subnodes = document.getElementById("subnodesInput").value
-    .split(',').map(n => n.trim()).filter(Boolean);
+    .split(",").map(n => n.trim()).filter(Boolean);
 
   if (!brand || subnodes.length === 0) {
     document.getElementById("adminStatus").textContent = "⚠️ Please fill in both fields.";
@@ -1947,15 +1937,13 @@ function addBrandToSector() {
   sectorData[sector].nodes.push(subnodes);
 
   document.getElementById("adminStatus").textContent =
-    `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
+    ✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes);
 
   document.getElementById("brandInput").value = "";
   document.getElementById("subnodesInput").value = "";
 
   renderSectorOutput(sector);
 }
-
-// --- Render output by sector
 function renderSectorOutput(sectorKey) {
   let container = document.getElementById("output-section");
   if (!container) {
@@ -1966,34 +1954,37 @@ function renderSectorOutput(sectorKey) {
   }
 
   const data = sectorData[sectorKey];
-  const html = data.brands.map((brand, i) => `
+  const html = data.brands.map((brand, i) => 
     <div class="mb-6 border rounded shadow p-4">
       <h3 class="text-lg font-bold text-indigo-700 mb-2">${brand}<sup>™</sup></h3>
       <ul class="text-sm list-disc list-inside">
-        ${data.nodes[i].map(n => `<li>🔹 ${n}</li>`).join("")}
+        ${data.nodes[i].map(n => <li>🔹 ${n}</li>).join("")}
       </ul>
     </div>
-  `).join("");
+  ).join("");
 
-  const panelId = `render-${sectorKey}`;
+  const panelId = render-${sectorKey};
   const existing = document.getElementById(panelId);
   if (existing) existing.remove();
 
   const panel = document.createElement("div");
   panel.id = panelId;
   panel.className = "my-8";
-  panel.innerHTML = `<h2 class="text-xl font-bold mb-4">${sectorList[sectorKey]} Brands</h2>${html}`;
+  panel.innerHTML = <h2 class="text-xl font-bold mb-4">${sectorList[sectorKey]} Brands</h2>${html};
 
   container.appendChild(panel);
 }
+
+    
 </script>
+
 <section class="bg-white p-6 rounded shadow mt-16 mx-6" id="admin-panel">
   <h2 class="text-xl font-bold text-gray-800 mb-4">⚙️ Admin Panel — Add Brand & Subnodes</h2>
   <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
     <div>
       <label class="text-sm font-medium block mb-1">📂 Sector</label>
       <select id="sectorSelect" class="w-full border rounded p-2">
-        <!-- Populated dynamically -->
+        <!-- Filled dynamically -->
       </select>
     </div>
     <div>
@@ -2012,4 +2003,3 @@ function renderSectorOutput(sectorKey) {
   </div>
   <p id="adminStatus" class="text-sm mt-4 text-gray-500"></p>
 </section>
-
