@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>⚙️ Admin Portal</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 font-sans">
+
+  <!-- Hero Header -->
+  <header class="bg-indigo-700 text-white py-6 mb-8 shadow">
+    <div class="container mx-auto px-6">
+      <h1 class="text-3xl font-bold">🦁 Seedwave Admin Portal</h1>
+      <p class="text-sm opacity-80 mt-2">Corebrands management & AI logic deployment center</p>
+    </div>
+  </header>
+
+  <!-- Admin Panel Layout -->
+  <main class="max-w-6xl mx-auto px-6">
+
+    <!-- Panel Section 1 -->
+    <section class="bg-white rounded shadow p-6 mb-8">
+      <h2 class="text-xl font-bold mb-4">⚙️ Admin Panel — Add Brand & Subnodes</h2>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div>
+          <label class="text-sm block font-medium mb-1">📂 Sector</label>
+          <select id="sectorSelect" class="w-full border rounded p-2 bg-gray-50"></select>
+        </div>
+        <div>
+          <label class="text-sm block font-medium mb-1">🏷 Brand Name</label>
+          <input id="brandInput" class="w-full border rounded p-2" placeholder="e.g. OmniCastX">
+        </div>
+        <div>
+          <label class="text-sm block font-medium mb-1">📌 Subnodes</label>
+          <input id="subnodesInput" class="w-full border rounded p-2" placeholder="e.g. VaultDrop, QRClaim">
+        </div>
+        <div class="flex items-end">
+          <button onclick="addBrandToSector()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded shadow">
+            ➕ Add Brand
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Panel Section 2 -->
+    <section class="bg-white rounded shadow p-6 mb-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label class="text-sm block font-medium mb-1">🏷️ Sector Name</label>
+          <input id="sectorName" class="w-full border rounded p-2" placeholder="e.g. AI Logic">
+        </div>
+        <div>
+          <label class="text-sm block font-medium mb-1">📁 Sector File Path</label>
+          <input id="sectorPath" class="w-full border rounded p-2" placeholder="e.g. faa.zone/public/sectors/ai-logic/">
+        </div>
+        <div>
+          <label class="text-sm block font-medium mb-1">🚀 Deploy To</label>
+          <select id="deployTarget" class="w-full border rounded p-2 bg-gray-50">
+            <option>Cloudware Worker 1</option>
+            <option>Cloudware Worker 2</option>
+            <option>Cloudware Worker 3</option>
+            <option>OpenAI Assistant</option>
+            <option>Vector Store</option>
+            <option>Local Folders</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Admin Status -->
+    <section class="bg-white rounded shadow p-6 mb-16">
+      <h3 class="text-md font-semibold mb-2">ℹ️ Admin Status Feedback</h3>
+      <p id="adminStatus" class="text-sm text-gray-600 italic">Ready to receive input.</p>
+    </section>
+
+  </main>
+
+  <script>
+    // Sector list initialization
+    const sectorList = {
+      "ai-logic": "🧠 AI, Logic & Grid",
+      "creative": "🖋️ Creative Tech",
+      "logistics": "📦 Logistics & Packaging"
+      // Add more here...
+    };
+
+    const sectorData = {};
+    for (let key in sectorList) sectorData[key] = { brands: [], nodes: [] };
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const select = document.getElementById("sectorSelect");
+      for (let key in sectorList) {
+        const option = document.createElement("option");
+        option.value = key;
+        option.textContent = sectorList[key];
+        select.appendChild(option);
+      }
+    });
+
+    function addBrandToSector() {
+      const sector = document.getElementById("sectorSelect").value;
+      const brand = document.getElementById("brandInput").value.trim();
+      const subnodes = document.getElementById("subnodesInput").value
+        .split(",").map(n => n.trim()).filter(Boolean);
+
+      if (!brand || subnodes.length === 0) {
+        document.getElementById("adminStatus").textContent = "⚠️ Please fill in both fields.";
+        return;
+      }
+
+      sectorData[sector].brands.push(brand);
+      sectorData[sector].nodes.push(subnodes);
+      document.getElementById("adminStatus").textContent = `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
+    }
+  </script>
+
+</body>
+</html>
+<!-- 📊 FAA.ZONE INDEX — Expanded Table Structure -->
+<section class="bg-white rounded shadow p-6 mb-16">
+  <h2 class="text-xl font-bold mb-4">⦿ FAA.ZONE INDEX — Expanded Table Structure</h2>
+  <div class="overflow-x-auto">
+    <table class="min-w-full text-sm text-left border border-gray-200">
+      <thead class="bg-gray-100 text-gray-700 font-semibold">
+        <tr>
+          <th class="px-4 py-2">Glyph</th>
+          <th class="px-4 py-2">Sector</th>
+          <th class="px-4 py-2">Core Brands</th>
+          <th class="px-4 py-2">Total Nodes</th>
+          <th class="px-4 py-2">Monthly Fee</th>
+          <th class="px-4 py-2">Annual Fee</th>
+          <th class="px-4 py-2">Payout Tier</th>
+          <th class="px-4 py-2">Region</th>
+          <th class="px-4 py-2">Inspect</th>
+          <th class="px-4 py-2">Deploy</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-700">
+        <tr class="border-t">
+          <td class="px-4 py-2">🧺</td><td>Retail, Vendor & Trade</td><td>183</td><td>1,098</td><td>$88</td><td>$888</td><td>A+</td><td>Div A-F</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-4 py-2">🧠</td><td>AI, Logic & Grid Systems</td><td>188</td><td>752</td><td>$104</td><td>$1,050</td><td>A+</td><td>Global</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-4 py-2">🖋️</td><td>Creative & Design Systems</td><td>142</td><td>710</td><td>$67</td><td>$720</td><td>A</td><td>Div E</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-4 py-2">₿</td><td>Finance & Token Yield</td><td>136</td><td>680</td><td>$125</td><td>$1,250</td><td>A+</td><td>Div A-E</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-4 py-2">📴</td><td>Webless Tech & Nodes</td><td>103</td><td>515</td><td>$76</td><td>$770</td><td>A</td><td>Div D-G</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-4 py-2">📦</td><td>Logistics & Packaging</td><td>111</td><td>444</td><td>$58</td><td>$595</td><td>B+</td><td>Div B-F</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-4 py-2">✿</td><td>Food, Soil & Farming</td><td>83</td><td>332</td><td>$46</td><td>$480</td><td>B+</td><td>Rural</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-4 py-2">🧒</td><td>Youth & Education</td><td>66</td><td>330</td><td>$39</td><td>$420</td><td>A</td><td>Tribal</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-4 py-2">⚗</td><td>Health & Hygiene</td><td>93</td><td>372</td><td>$52</td><td>$550</td><td>B</td><td>Div F</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-4 py-2">☯</td><td>Aura, Ritual & Culture</td><td>74</td><td>296</td><td>$68</td><td>$725</td><td>A</td><td>Div C</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-4 py-2">🏗️</td><td>Housing & Infrastructure</td><td>91</td><td>364</td><td>$59</td><td>$610</td><td>B+</td><td>Div A-F</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-4 py-2">🔁</td><td>NFT, IP, Ownership Grid</td><td>58</td><td>232</td><td>$120</td><td>$1,200</td><td>A</td><td>FAA IP</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-4 py-2">🌀</td><td>Motion, Media, Sonic</td><td>78</td><td>312</td><td>$72</td><td>$740</td><td>A</td><td>Creative</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
