@@ -14,74 +14,66 @@
     <p class="text-gray-600 text-sm">Corebrands management & AI logic deployment center™</p>
   </header>
 
-  <!-- Role Access Grid -->
-  <section class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-3xl">
-    <a href="admin-portal.html?role=loyalty" class="bg-blue-100 hover:bg-blue-200 text-blue-800 p-6 rounded shadow text-center transition">
+  <!-- Buttons -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-3xl text-center">
+    <button onclick="showPanel('loyalty')" class="bg-blue-100 hover:bg-blue-200 text-blue-800 p-6 rounded shadow transition">
       <div class="text-3xl mb-2">🪙</div>
       <div class="text-xl font-semibold">Loyalty Access</div>
       <p class="text-sm mt-1">Brand partners, rewards & alliance view</p>
-    </a>
-    <a href="admin-portal.html?role=shareholder" class="bg-gray-100 hover:bg-gray-200 text-gray-800 p-6 rounded shadow text-center transition">
+    </button>
+    <button onclick="showPanel('shareholder')" class="bg-gray-100 hover:bg-gray-200 text-gray-800 p-6 rounded shadow transition">
       <div class="text-3xl mb-2">📊</div>
       <div class="text-xl font-semibold">Shareholder Access</div>
       <p class="text-sm mt-1">Governance & ecosystem metrics dashboard</p>
-    </a>
-    <a href="admin-portal.html?role=service" class="bg-green-100 hover:bg-green-200 text-green-800 p-6 rounded shadow text-center transition">
+    </button>
+    <button onclick="showPanel('service')" class="bg-green-100 hover:bg-green-200 text-green-800 p-6 rounded shadow transition">
       <div class="text-3xl mb-2">🤝</div>
       <div class="text-xl font-semibold">Service Provider</div>
       <p class="text-sm mt-1">Integration & deployment tools</p>
-    </a>
-    <a href="admin-portal.html?role=family" class="bg-purple-100 hover:bg-purple-200 text-purple-800 p-6 rounded shadow text-center transition">
+    </button>
+    <button onclick="showPanel('family')" class="bg-purple-100 hover:bg-purple-200 text-purple-800 p-6 rounded shadow transition">
       <div class="text-3xl mb-2">👨‍👩‍👧‍👦</div>
       <div class="text-xl font-semibold">Family Access</div>
       <p class="text-sm mt-1">Personal vaults, archive access & memory mesh</p>
-    </a>
-  </section>
+    </button>
+  </div>
 
-  <!-- Rendered Form Blocks -->
-  <section id="form-loyalty" class="hidden mt-10 bg-white p-8 rounded shadow max-w-xl w-full">
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">🪙 Loyalty Access Registration</h2>
-    <!-- Loyalty form fields here -->
-    <p class="text-sm text-gray-500">Form will go here…</p>
-  </section>
+  <!-- Role Panels -->
+  <div id="form-loyalty" class="hidden mt-12 bg-white p-8 rounded shadow max-w-xl w-full">
+    <h2 class="text-xl font-bold text-blue-800 mb-4">🪙 Loyalty Registration</h2>
+    <p class="text-sm text-gray-600">Form fields here…</p>
+  </div>
 
-  <section id="form-shareholder" class="hidden mt-10 bg-white p-8 rounded shadow max-w-xl w-full">
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">📊 Shareholder Access</h2>
-    <p class="text-gray-600 leading-relaxed">
-      Welcome to the Shareholder Gateway of Seedwave™.  
-      Governance tools, financial metrics, and voting interfaces  
-      will be available shortly.
-    </p>
-    <p class="mt-4 text-sm text-gray-400">
-      For early interest or stakeholder registry, contact  
-      <a href="mailto:shareholders@faa.zone" class="text-blue-600 underline">shareholders@faa.zone</a>
-    </p>
-  </section>
+  <div id="form-shareholder" class="hidden mt-12 bg-white p-8 rounded shadow max-w-xl w-full">
+    <h2 class="text-xl font-bold text-gray-800 mb-4">📊 Shareholder Welcome</h2>
+    <p class="text-sm text-gray-600">Welcome to Seedwave shareholder gateway.</p>
+  </div>
 
-  <section id="form-service" class="hidden mt-10 bg-white p-8 rounded shadow max-w-xl w-full">
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">🤝 Service Provider Registration</h2>
-    <!-- Service form fields here -->
-    <p class="text-sm text-gray-500">Form will go here…</p>
-  </section>
+  <div id="form-service" class="hidden mt-12 bg-white p-8 rounded shadow max-w-xl w-full">
+    <h2 class="text-xl font-bold text-green-800 mb-4">🤝 Service Provider Onboarding</h2>
+    <p class="text-sm text-gray-600">Form fields here…</p>
+  </div>
 
-  <section id="form-family" class="hidden mt-10 bg-white p-8 rounded shadow max-w-xl w-full">
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">👨‍👩‍👧‍👦 Family Access Registration</h2>
-    <!-- Family form fields here -->
-    <p class="text-sm text-gray-500">Form will go here…</p>
-  </section>
+  <div id="form-family" class="hidden mt-12 bg-white p-8 rounded shadow max-w-xl w-full">
+    <h2 class="text-xl font-bold text-purple-800 mb-4">👨‍👩‍👧‍👦 Family Vault Access</h2>
+    <p class="text-sm text-gray-600">Form fields here…</p>
+  </div>
 
   <!-- Footer -->
-  <footer class="mt-12 text-xs text-gray-500">
+  <footer class="mt-16 text-xs text-gray-500 text-center">
     FAA.Zone Mesh • TreatyMesh Certified • All roles encrypted & routed via ⛓️ SecureScroll✂
   </footer>
 
-  <!-- Script: Role Handler -->
+  <!-- Script: Show Panel -->
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const role = params.get("role");
-    if (role) {
-      const panel = document.getElementById(`form-${role}`);
-      if (panel) panel.classList.remove("hidden");
+    function showPanel(role) {
+      const panels = ['loyalty', 'shareholder', 'service', 'family'];
+      panels.forEach(p => {
+        const el = document.getElementById(`form-${p}`);
+        if (el) el.classList.add('hidden');
+      });
+      const target = document.getElementById(`form-${role}`);
+      if (target) target.classList.remove('hidden');
     }
   </script>
 
