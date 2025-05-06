@@ -2121,9 +2121,9 @@ const ailogicSubNodes = [
   ['ZoneClaim', 'VaultProof', 'QRTrace', 'GridEcho'],
   ['TraceLogic', 'VaultPath', 'QRBeam', 'OmniID'],
   ['MapClaim', 'VaultSync', 'QRSignal', 'LogicMesh'],
-];
+  ];
 
- function renderAILogicSection() {
+  function renderAILogicSection() {
     const grid = document.getElementById('ailogic-grid');
     const snapContainer = document.getElementById('ailogic-snapshots');
 
@@ -2138,376 +2138,153 @@ const ailogicSubNodes = [
 
       const btn = document.createElement('button');
       btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-indigo-100 hover:text-indigo-800 font-semibold cursor-pointer';
-      btn.innerHTML = ${brand}<sup>™</sup>;
-      btn.onclick = () => toggleSnapshot(ailogic-snap-${i});
+      btn.innerHTML = `${brand}<sup>™</sup>`;
+      btn.onclick = () => toggleSnapshot(`ailogic-snap-${i}`);
       grid.appendChild(btn);
 
-      const subList = (ailogicSubNodes[i] || []).map(n => <li>🔹 ${n}</li>).join('');
+      const subList = (ailogicSubNodes[i] || []).map(n => `<li>🔹 ${n}</li>`).join('');
       const snap = document.createElement('div');
-      snap.id = ailogic-snap-${i};
+      snap.id = `ailogic-snap-${i}`;
       snap.className = 'brand-snapshot hidden mt-6';
-      snap.innerHTML = 
+      snap.innerHTML = `
         <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
         <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
           ${subList}
-        </ul>;
-    snapContainer.appendChild(snap);
+        </ul>`;
+      snapContainer.appendChild(snap);
+    }
+  }
+
+  function toggleSnapshot(id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('hidden');
+  }
+
+  const sectorList = {
+    "ai-logic": "🧠 AI, Logic & Grid",
+    "creative": "🖋️ Creative Tech",
+    "logistics": "📦 Logistics & Packaging",
+    "education-ip": "📚 Education & IP",
+    "fashion": "✂ Fashion & Identity",
+    "gaming": "🎮 Gaming & Simulation",
+    "health": "🧠 Health & Hygiene",
+    "housing": "🏗️ Housing & Infrastructure",
+    "justice": "⚖ Justice & Ethics",
+    "knowledge": "🧠 Knowledge & Archives",
+    "micromesh": "☰ Micro-Mesh Logistics",
+    "media": "🎬 Motion, Media & Sonic",
+    "nutrition": "✿ Nutrition & Food Chain",
+    "packaging": "📦 Packaging & Materials",
+    "quantum": "✴️ Quantum Protocols",
+    "ritual": "☯ Ritual & Culture",
+    "saas": "🔑 SaaS & Licensing",
+    "trade": "🧺 Trade Systems",
+    "utilities": "🔋 Utilities & Energy",
+    "voice": "🎙️ Voice & Audio",
+    "webless": "📡 Webless Tech & Nodes",
+    "nft": "🔁 NFT & Ownership",
+    "education-youth": "🎓 Education & Youth",
+    "zerowaste": "♻️ Zero Waste"
+  };
+
+  const sectorData = {};
+  for (let key in sectorList) {
+    sectorData[key] = { brands: [], nodes: [] };
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const select = document.getElementById("sectorSelect");
+    if (select) {
+      for (let key in sectorList) {
+        const option = document.createElement("option");
+        option.value = key;
+        option.textContent = sectorList[key];
+        select.appendChild(option);
+      }
+    }
+
+    renderAILogicSection();
   });
-}
 
-document.addEventListener('DOMContentLoaded', renderMediaSection);
-</script>
+  function addBrandToSector() {
+    const sector = document.getElementById("sectorSelect").value;
+    const brand = document.getElementById("brandInput").value.trim();
+    const subnodes = document.getElementById("subnodesInput").value
+      .split(",").map(n => n.trim()).filter(Boolean);
 
-
-  <script>
-const professionalBrands = [
-  'LedgerNest™', 'OmniBooks™', 'QCalcX™', 'SiteProof™', 'LawTrace™',
-  'ContractCast™', 'Enginuity™', 'StructVault™', 'RegiSync™', 'ScrollAudit™',
-  'ClaimDocX™', 'PlanDrop™', 'SurveyGrid™', 'VaultJudge™', 'LoopInspect™',
-  'BuildNode™', 'ComplyTrack™', 'LegalSync™', 'BudgetCast™', 'VaultPlans™',
-  'FormCert™', 'ProofLayer™', 'ZoneMap™', 'TrackSeal™', 'DocLoop™',
-  'AuditCrate™', 'VerifyLine™', 'PlanMesh™', 'FrameBook™', 'LogicPermit™',
-  'OmniBrief™', 'ClauseCraft™', 'FormLogic™', 'CheckNode™', 'AssetTrace™',
-  'LawPathX™', 'LedgerFlow™', 'BudgetSync™', 'CrateJudge™', 'SpecAudit™',
-  'LoopCheck™', 'OmniTender™', 'SignalCompliance™', 'BuildCast™', 'NodeClause™',
-  'PermitDrop™', 'AuditMatrix™', 'StructPlan™', 'ClaimBoard™', 'FormDrop™'
-];
-const professionalSubNodes = [
-  ['LedgerCore', 'VaultTrack', 'QRInvoice', 'AuditSync', 'StatementFlow', 'TaxGrid'],
-  ['BooksPath', 'VaultEcho', 'QRPay', 'BudgetMesh', 'EntryLoop', 'PayrollCast'],
-  ['QuantZone', 'CostTrack', 'VaultEcho', 'GridEstimate', 'QRClaim', 'SiteYield'],
-  ['ProofMesh', 'ProjectVault', 'QRSync', 'SpecClaim', 'SurveyNode', 'BuildFlow'],
-  ['LawGrid', 'VaultLegal', 'QRCase', 'ClauseMap', 'SignalJudge', 'TrackClaim'],
-  ['CastPath', 'VaultContract', 'QRSign', 'FormDrop', 'LegalSync', 'NodeClause'],
-  ['EnginuityCore', 'VaultStruct', 'QREngine', 'ModelClaim', 'SpecLoop', 'PlanNode'],
-  ['VaultFrame', 'StructMap', 'QRDesign', 'BuildPath', 'EstimateLine', 'NodeSpec'],
-  ['RegCore', 'VaultRule', 'QRCompliance', 'GovTrack', 'DocNode', 'ProofSync'],
-  ['AuditTrail', 'VaultAudit', 'QRTrace', 'NodeForm', 'ControlClaim', 'VerifyRoute'],
-  ['DocClaim', 'VaultDocs', 'QRForm', 'FormCert', 'LegalDrop', 'TraceNode'],
-  ['DropSheet', 'VaultPlan', 'QRDesign', 'BudgetLine', 'MeshForm', 'CastApproval'],
-  ['GridScan', 'VaultSurvey', 'QRField', 'TrackDrop', 'PingZone', 'NodeMeasure'],
-  ['JudgeTag', 'VaultCourt', 'QRSign', 'RulingPath', 'CaseLoop', 'LegalCast'],
-  ['InspectMesh', 'VaultLoop', 'QRInspect', 'NodeClaim', 'SignalProof', 'FieldTag'],
-  ['NodeBuild', 'VaultPermit', 'QRStage', 'DropPanel', 'SiteCast', 'LabelForm'],
-  ['TrackComply', 'VaultReg', 'QRCertify', 'PathEcho', 'DocLock', 'ClausePanel'],
-  ['LegalForm', 'VaultBrief', 'QRFile', 'TrackJudge', 'LoopEcho', 'ScanClause'],
-  ['CastBudget', 'VaultBook', 'QRCost', 'PlanNode', 'DropMesh', 'ClaimNode'],
-  ['PlansFrame', 'VaultDraw', 'QRLoop', 'PathEcho', 'StageCast', 'LabelProof'],
-  ['CertForm', 'VaultPaper', 'QRStep', 'MeshAudit', 'DropClause', 'PingClaim'],
-  ['LayerProof', 'VaultTrace', 'QRGrid', 'ClauseEcho', 'FormYield', 'NodeTag'],
-  ['MapZone', 'VaultGPS', 'QRPlot', 'ScanClaim', 'FormTrace', 'AuditMark'],
-  ['SealLine', 'VaultPad', 'QRRoute', 'ClaimFlow', 'MeshLabel', 'LegalGrid'],
-  ['LoopForm', 'VaultDoc', 'QRClaim', 'DropBoard', 'ClauseFlow', 'TraceLink'],
-  ['CrateAudit', 'VaultSort', 'QRPanel', 'ScanCast', 'TraceBoard', 'FormNote'],
-  ['LineVerify', 'VaultMark', 'QRSignal', 'NodeDrop', 'ClauseCheck', 'FormSeal'],
-  ['PlanCast', 'VaultSheet', 'QRFrame', 'EchoGrid', 'SiteTag', 'NodeLoop'],
-  ['BookFrame', 'VaultPages', 'QRRef', 'BudgetDrop', 'FormNode', 'AssetGrid'],
-  ['PermitLine', 'VaultLogic', 'QRPermit', 'DropSignal', 'NodeProof', 'TagGrid'],
-  ['BriefCast', 'VaultJudge', 'QRPath', 'EchoPanel', 'DocGrid', 'PlanTrack'],
-  ['CraftClause', 'VaultSign', 'QRProof', 'EchoFile', 'LoopAudit', 'NodeYield'],
-  ['LogicFile', 'VaultEcho', 'QRForm', 'CheckPath', 'TraceLock', 'AuditStage'],
-  ['CheckFlow', 'VaultList', 'QRCheck', 'NodeMark', 'DropPermit', 'GridLine'],
-  ['TraceAsset', 'VaultHold', 'QRAsset', 'FileLine', 'PermitEcho', 'ClauseMap'],
-  ['LawWay', 'VaultJudge', 'QRLaw', 'TraceCast', 'PathCourt', 'CaseEcho'],
-  ['LedgerPath', 'VaultBooks', 'QRLedger', 'DropSync', 'ProofBoard', 'FormPulse'],
-  ['SyncBudget', 'VaultSpend', 'QRBalance', 'PathCheck', 'LoopForm', 'AuditMesh'],
-  ['JudgeCrate', 'VaultCase', 'QRReview', 'DropNode', 'ClauseRoute', 'SignalFile'],
-  ['AuditSpec', 'VaultGrid', 'QRSpec', 'NodeRoute', 'CaseMesh', 'LoopPanel'],
-  ['CheckLoop', 'VaultProof', 'QRTest', 'EchoCast', 'ClaimPanel', 'DocTrace'],
-  ['TenderPath', 'VaultBid', 'QRAward', 'MeshClause', 'PanelCheck', 'TrackPlan'],
-  ['CompliancePulse', 'VaultCheck', 'QRGov', 'RouteLaw', 'MeshJudge', 'NodeCast'],
-  ['BuildFlow', 'VaultDraft', 'QRBuild', 'PlanStage', 'EchoTrack', 'PermitNode'],
-  ['ClausePanel', 'VaultSection', 'QRDrop', 'SignalMesh', 'LawCast', 'PlanForm'],
-  ['DropPermit', 'VaultCourt', 'QRMark', 'CastEcho', 'ProofLine', 'GridCase'],
-  ['MatrixAudit', 'VaultData', 'QRMatrix', 'StageFlow', 'CheckLabel', 'FormGrid'],
-  ['PlanLine', 'VaultMap', 'QRStruct', 'EchoAudit', 'PermitFlow', 'ScanProof'],
-  ['BoardClaim', 'VaultRoll', 'QRClaim', 'LineNote', 'TagMesh', 'DropAudit'],
-  ['DropForm', 'VaultEntry', 'QRPath', 'ClauseNote', 'AuditMap', 'PingPlan']
-];
-
-function renderProfessionalSection() {
-  const grid = document.getElementById('professional-grid');
-  const snapContainer = document.getElementById('professional-snapshots');
-  if (!grid || !snapContainer) return;
-
-  professionalBrands.forEach((brand, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'brand-button ...';
-    btn.innerHTML = `${brand}`;
-    btn.onclick = () => toggleSnapshot(`professional-snap-${i}`);
-    grid.appendChild(btn);
-
-    const subList = (professionalSubNodes[i] || []).map(n => `<li>🔹 ${n}</li>`).join('');
-    const snap = document.createElement('div');
-    snap.id = `professional-snap-${i}`;
-    snap.className = 'brand-snapshot hidden';
-    snap.innerHTML = `<div class='text-xl font-semibold mb-2'>${brand}</div>
-      <ul class='...'>${subList}</ul>`;
-    snapContainer.appendChild(snap);
-  });
-}
-
-function toggleSnapshot(id) {
-  document.querySelectorAll('.brand-snapshot').forEach(el => el.classList.add('hidden'));
-  const el = document.getElementById(id);
-  if (el) el.classList.remove('hidden');
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-  renderSection('ailogic-grid', 'ailogic-snapshots', ailogicBrands, ailogicSubNodes, 'ailogic');
-  renderSection('professional-grid', 'professional-snapshots', professionalBrands, professionalSubNodes, 'professional');
-});
-</script>
-
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Admin Portal for FAA Zone">
-  <title>Admin Portal - FAA Zone</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-  <script>
-    // Sector list for dropdown and rendering
-    const sectorList = {
-      "ai-logic": "🧠 AI, Logic & Grid",
-      "creative": "🖋️ Creative Tech",
-      "logistics": "📦 Logistics & Packaging",
-      "education-ip": "📚 Education & IP",
-      "fashion": "✂ Fashion & Identity",
-      "gaming": "🎮 Gaming & Simulation",
-      "health": "🧠 Health & Hygiene",
-      "housing": "🏗️ Housing & Infrastructure",
-      "justice": "⚖ Justice & Ethics",
-      "knowledge": "🧠 Knowledge & Archives",
-      "micromesh": "☰ Micro-Mesh Logistics",
-      "media": "🎬 Motion, Media & Sonic",
-      "nutrition": "✿ Nutrition & Food Chain",
-      "packaging": "📦 Packaging & Materials",
-      "quantum": "✴️ Quantum Protocols",
-      "ritual": "☯ Ritual & Culture",
-      "saas": "🔑 SaaS & Licensing",
-      "trade": "🧺 Trade Systems",
-      "utilities": "🔋 Utilities & Energy",
-      "voice": "🎙️ Voice & Audio",
-      "webless": "📡 Webless Tech & Nodes",
-      "nft": "🔁 NFT & Ownership",
-      "education-youth": "🎓 Education & Youth",
-      "zerowaste": "♻️ Zero Waste",
-      "professional": "🧾 Professional Services"
-    };
-
-    // Initialize sector data
-    const sectorData = {};
-    for (const key in sectorList) {
-      sectorData[key] = { brands: [], nodes: [] };
+    if (!brand || subnodes.length === 0) {
+      document.getElementById("adminStatus").textContent = "⚠️ Please fill in both fields.";
+      return;
     }
 
-    // Add a brand to a sector
-    function addBrandToSector() {
-      const sector = document.getElementById("sectorSelect");
-      const brandInput = document.getElementById("brandInput");
-      const subnodesInput = document.getElementById("subnodesInput");
+    sectorData[sector].brands.push(brand);
+    sectorData[sector].nodes.push(subnodes);
 
-      if (!sector || !brandInput || !subnodesInput) {
-        console.error("Required input elements are missing.");
-        return;
-      }
+    document.getElementById("adminStatus").textContent =
+      `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
 
-      const brand = brandInput.value.trim();
-      const subnodes = subnodesInput.value.split(",").map((n) => n.trim()).filter(Boolean);
+    document.getElementById("brandInput").value = "";
+    document.getElementById("subnodesInput").value = "";
 
-      if (!brand || subnodes.length === 0) {
-        document.getElementById("adminStatus").textContent = "⚠️ Please fill in both fields.";
-        return;
-      }
+    renderSectorOutput(sector);
+  }
 
-      sectorData[sector.value].brands.push(brand);
-      sectorData[sector.value].nodes.push(subnodes);
-
-      document.getElementById(
-        "adminStatus"
-      ).textContent = `✅ Added ${brand} to ${sectorList[sector.value]} (${subnodes.length} nodes)`;
-
-      // Clear input fields
-      brandInput.value = "";
-      subnodesInput.value = "";
-
-      // Re-render the updated sector
-      renderSectorOutput(sector.value);
-
-      // Clear status message after 3 seconds
-      setTimeout(() => {
-        document.getElementById("adminStatus").textContent = "";
-      }, 3000);
+  function renderSectorOutput(sectorKey) {
+    let container = document.getElementById("output-section");
+    if (!container) {
+      container = document.createElement("section");
+      container.id = "output-section";
+      container.className = "p-8";
+      document.body.appendChild(container);
     }
 
-    // Render output for a specific sector
-    function renderSectorOutput(sectorKey) {
-      const container = document.getElementById("output-section");
-      if (!container) {
-        console.warn("Output section not found.");
-        return;
-      }
-
-      // Clear existing content for the sector
-      container.innerHTML = "";
-
-      const data = sectorData[sectorKey];
-      if (!data) {
-        console.warn(`No data found for sector: ${sectorKey}`);
-        return;
-      }
-
-      // Generate HTML for all brands and their subnodes
-      const html = data.brands
-        .map(
-          (brand, i) => `
-          <div class="mb-6 border rounded shadow p-4">
-            <h3 class="text-lg font-bold text-indigo-700 mb-2">${brand}<sup>™</sup></h3>
-            <ul class="text-sm list-disc list-inside">
-              ${data.nodes[i].map((n) => `<li>🔹 ${n}</li>`).join("")}
-            </ul>
-          </div>
-        `
-        )
-        .join("");
-
-      const panelId = `render-${sectorKey}`;
-      const existing = document.getElementById(panelId);
-      if (existing) existing.remove();
-
-      const panel = document.createElement("div");
-      panel.id = panelId;
-      panel.className = "my-8";
-      panel.innerHTML = `<h2 class="text-xl font-bold mb-4">${sectorList[sectorKey]} Brands</h2>${html}`;
-
-      container.appendChild(panel);
-    }
-
-    // Toggle snapshot visibility
-    function toggleSnapshot(id) {
-      const el = document.getElementById(id);
-      if (el) {
-        el.classList.toggle("hidden");
-        console.log(
-          `Snapshot with ID ${id} is now ${
-            el.classList.contains("hidden") ? "hidden" : "visible"
-          }.`
-        );
-      } else {
-        console.warn(`Snapshot with ID ${id} not found.`);
-      }
-    }
-
-    // Render the Professional Section
-    function renderProfessionalSection() {
-      const grid = document.getElementById("professional-grid");
-      const snapContainer = document.getElementById("professional-snapshots");
-
-      if (!grid || !snapContainer) {
-        console.error("Professional section elements not found.");
-        return;
-      }
-
-      grid.innerHTML = "";
-      snapContainer.innerHTML = "";
-
-      professionalBrands.forEach((brand, i) => {
-        const btn = document.createElement("button");
-        btn.className =
-          "bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-yellow-100 hover:text-yellow-800 font-semibold cursor-pointer";
-        btn.innerHTML = `${brand}<sup>™</sup>`;
-        btn.onclick = () => toggleSnapshot(`professional-snap-${i}`);
-        grid.appendChild(btn);
-
-        const subList = professionalSubNodes[i]
-          .map((n) => `<li>🔹 ${n}</li>`)
-          .join("");
-
-        const snap = document.createElement("div");
-        snap.id = `professional-snap-${i}`;
-        snap.className = "brand-snapshot hidden mt-6";
-        snap.innerHTML = `
-          <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
-          <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
-            ${subList}
-          </ul>`;
-        snapContainer.appendChild(snap);
-      });
-
-      console.log("Professional section rendered successfully.");
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      console.log("DOM fully loaded and parsed.");
-
-      // Populate dropdown
-      const select = document.getElementById("sectorSelect");
-      if (select) {
-        Object.keys(sectorList).forEach((key) => {
-          const option = document.createElement("option");
-          option.value = key;
-          option.textContent = sectorList[key];
-          select.appendChild(option);
-        });
-      }
-
-      // Render all sectors
-      Object.keys(sectorData).forEach(renderSectorOutput);
-
-      // Render the Professional Section
-      renderProfessionalSection();
-    });
-  </script>
-</head>
-
-<body class="bg-gray-100 text-gray-800">
-  <header class="bg-indigo-600 text-white p-4 shadow">
-    <h1 class="text-2xl font-bold">Admin Portal - FAA Zone</h1>
-  </header>
-
-  <main class="container mx-auto mt-6">
-    <!-- Admin Panel -->
-    <section class="bg-white p-6 rounded shadow mt-16 mx-6" id="admin-panel">
-      <h2 class="text-xl font-bold text-gray-800 mb-4">⚙️ Admin Panel — Add Brand & Subnodes</h2>
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div>
-          <label class="text-sm font-medium block mb-1">📂 Sector</label>
-          <select id="sectorSelect" class="w-full border rounded p-2"></select>
-        </div>
-        <div>
-          <label class="text-sm font-medium block mb-1">🏷 Brand Name</label>
-          <input id="brandInput" class="w-full border rounded p-2" placeholder="e.g. OmniCastX" />
-        </div>
-        <div>
-          <label class="text-sm font-medium block mb-1">📌 Subnodes (comma-separated)</label>
-          <input id="subnodesInput" class="w-full border rounded p-2" placeholder="e.g. VaultDrop, QRClaim" />
-        </div>
-        <div class="flex items-end">
-          <button onclick="addBrandToSector()" class="bg-indigo-600 text-white px-4 py-2 rounded shadow hover:bg-indigo-700">
-            ➕ Add Brand
-          </button>
-        </div>
+    const data = sectorData[sectorKey];
+    const html = data.brands.map((brand, i) => `
+      <div class="mb-6 border rounded shadow p-4">
+        <h3 class="text-lg font-bold text-indigo-700 mb-2">${brand}<sup>™</sup></h3>
+        <ul class="text-sm list-disc list-inside">
+          ${data.nodes[i].map(n => `<li>🔹 ${n}</li>`).join("")}
+        </ul>
       </div>
-      <p id="adminStatus" class="text-sm mt-4 text-gray-500"></p>
-    </section>
+    `).join("");
 
-    <!-- Professional Section -->
-    <section class="p-8" id="professional-section">
-      <div id="professional-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
-      <div id="professional-snapshots"></div>
-    </section>
+    const panelId = `render-${sectorKey}`;
+    const existing = document.getElementById(panelId);
+    if (existing) existing.remove();
 
-    <!-- Rendered Output Section -->
-    <section id="output-section" class="p-8"></section>
-  </main>
+    const panel = document.createElement("div");
+    panel.id = panelId;
+    panel.className = "my-8";
+    panel.innerHTML = `<h2 class="text-xl font-bold mb-4">${sectorList[sectorKey]} Brands</h2>${html}`;
 
-  <footer class="bg-gray-800 text-white p-4 mt-8 text-center">
-    <p>&copy; 2025 FAA Zone Admin Portal. All rights reserved.</p>
-  </footer>
+    container.appendChild(panel);
+  }
+</script>
+
+<!-- ✅ Now place Admin Panel JUST BEFORE </body> -->
+<section class="bg-white p-6 rounded shadow mt-16 mx-6" id="admin-panel">
+  <h2 class="text-xl font-bold text-gray-800 mb-4">⚙️ Admin Panel — Add Brand & Subnodes</h2>
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div>
+      <label class="text-sm font-medium block mb-1">📂 Sector</label>
+      <select id="sectorSelect" class="w-full border rounded p-2"></select>
+    </div>
+    <div>
+      <label class="text-sm font-medium block mb-1">🏷 Brand Name</label>
+      <input id="brandInput" class="w-full border rounded p-2" placeholder="e.g. OmniCastX" />
+    </div>
+    <div>
+      <label class="text-sm font-medium block mb-1">📌 Subnodes (comma-separated)</label>
+      <input id="subnodesInput" class="w-full border rounded p-2" placeholder="e.g. VaultDrop, QRClaim" />
+    </div>
+    <div class="flex items-end">
+      <button onclick="addBrandToSector()" class="bg-indigo-600 text-white px-4 py-2 rounded shadow hover:bg-indigo-700">
+        ➕ Add Brand
+      </button>
+    </div>
+  </div>
+  <p id="adminStatus" class="text-sm mt-4 text-gray-500"></p>
+</section>
+
 </body>
-
 </html>
