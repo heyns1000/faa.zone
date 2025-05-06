@@ -1916,122 +1916,108 @@ function toggleSnapshot(id) {
   if (active) active.classList.remove('hidden');
 }
 
-// 📂 Sector List
 const sectorList = {
-  "ai-logic": "🧠 AI, Logic & Grid",
-  "creative": "🖋️ Creative Tech",
-  "logistics": "📦 Logistics & Packaging",
-  "education-ip": "📚 Education & IP",
-  "fashion": "✂ Fashion & Identity",
-  "gaming": "🎮 Gaming & Simulation",
-  "health": "🧠 Health & Hygiene",
-  "housing": "🏗️ Housing & Infrastructure",
-  "justice": "⚖ Justice & Ethics",
-  "knowledge": "🧠 Knowledge & Archives",
-  "micromesh": "☰ Micro-Mesh Logistics",
-  "media": "🎬 Motion, Media & Sonic",
-  "nutrition": "✿ Nutrition & Food Chain",
-  "packaging": "📦 Packaging & Materials",
-  "quantum": "✴️ Quantum Protocols",
-  "ritual": "☯ Ritual & Culture",
-  "saas": "🔑 SaaS & Licensing",
-  "trade": "🧺 Trade Systems",
-  "utilities": "🔋 Utilities & Energy",
-  "voice": "🎙️ Voice & Audio",
-  "webless": "📡 Webless Tech & Nodes",
-  "nft": "🔁 NFT & Ownership",
-  "education-youth": "🎓 Education & Youth",
-  "zerowaste": "♻️ Zero Waste"
-};
+    "ai-logic": "🧠 AI, Logic & Grid",
+    "creative": "🖋️ Creative Tech",
+    "logistics": "📦 Logistics & Packaging",
+    "education-ip": "📚 Education & IP",
+    "fashion": "✂ Fashion & Identity",
+    "gaming": "🎮 Gaming & Simulation",
+    "health": "🧠 Health & Hygiene",
+    "housing": "🏗️ Housing & Infrastructure",
+    "justice": "⚖ Justice & Ethics",
+    "knowledge": "🧠 Knowledge & Archives",
+    "micromesh": "☰ Micro-Mesh Logistics",
+    "media": "🎬 Motion, Media & Sonic",
+    "nutrition": "✿ Nutrition & Food Chain",
+    "packaging": "📦 Packaging & Materials",
+    "quantum": "✴️ Quantum Protocols",
+    "ritual": "☯ Ritual & Culture",
+    "saas": "🔑 SaaS & Licensing",
+    "trade": "🧺 Trade Systems",
+    "utilities": "🔋 Utilities & Energy",
+    "voice": "🎙️ Voice & Audio",
+    "webless": "📡 Webless Tech & Nodes",
+    "nft": "🔁 NFT & Ownership",
+    "education-youth": "🎓 Education & Youth",
+    "zerowaste": "♻️ Zero Waste"
+  };
 
-const sectorData = {};
-for (let key in sectorList) {
-  sectorData[key] = { brands: [], nodes: [] };
-}
-
-// 🔽 Fill Admin Dropdown
-function populateAdminDropdown() {
-  const select = document.getElementById("sectorSelect");
-  if (select) {
-    for (let key in sectorList) {
-      const option = document.createElement("option");
-      option.value = key;
-      option.textContent = sectorList[key];
-      select.appendChild(option);
-    }
+  const sectorData = {};
+  for (let key in sectorList) {
+    sectorData[key] = { brands: [], nodes: [] };
   }
-}
 
-function loadSavedBrands() {
-  const saved = localStorage.getItem("sectorData");
-  if (saved) {
-    const parsed = JSON.parse(saved);
-    for (let key in parsed) {
-      if (sectorData[key]) {
-        sectorData[key].brands = parsed[key].brands || [];
-        sectorData[key].nodes = parsed[key].nodes || [];
+  window.addEventListener('DOMContentLoaded', () => {
+    const select = document.getElementById("sectorSelect");
+    if (select) {
+      for (let key in sectorList) {
+        const option = document.createElement("option");
+        option.value = key;
+        option.textContent = sectorList[key];
+        select.appendChild(option);
       }
     }
-  }
-}
 
-function addBrandToSector() {
-  const sector = document.getElementById("sectorSelect").value;
-  const brand = document.getElementById("brandInput").value.trim();
-  const subnodes = document.getElementById("subnodesInput").value
-    .split(",").map(n => n.trim()).filter(Boolean);
+    renderAILogicSection();
+  });
 
-  if (!brand || subnodes.length === 0) {
-    document.getElementById("adminStatus").textContent = "⚠️ Please fill in both fields.";
-    return;
-  }
+  function addBrandToSector() {
+    const sector = document.getElementById("sectorSelect").value;
+    const brand = document.getElementById("brandInput").value.trim();
+    const subnodes = document.getElementById("subnodesInput").value
+      .split(",").map(n => n.trim()).filter(Boolean);
 
-  sectorData[sector].brands.push(brand);
-  sectorData[sector].nodes.push(subnodes);
+    if (!brand || subnodes.length === 0) {
+      document.getElementById("adminStatus").textContent = "⚠️ Please fill in both fields.";
+      return;
+    }
 
-  localStorage.setItem("sectorData", JSON.stringify(sectorData));
+    sectorData[sector].brands.push(brand);
+    sectorData[sector].nodes.push(subnodes);
 
-  document.getElementById("adminStatus").textContent =
-    `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
+    document.getElementById("adminStatus").textContent =
+      ✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes);
 
-  document.getElementById("brandInput").value = "";
-  document.getElementById("subnodesInput").value = "";
+    document.getElementById("brandInput").value = "";
+    document.getElementById("subnodesInput").value = "";
 
-  renderSectorOutput(sector);
-}
-
-function renderSectorOutput(sectorKey) {
-  let container = document.getElementById("output-section");
-  if (!container) {
-    container = document.createElement("section");
-    container.id = "output-section";
-    container.className = "p-8";
-    document.body.appendChild(container);
+    renderSectorOutput(sector);
   }
 
-  const data = sectorData[sectorKey];
-  const html = data.brands.map((brand, i) => `
-    <div class="mb-6 border rounded shadow p-4">
-      <h3 class="text-lg font-bold text-indigo-700 mb-2">${brand}<sup>™</sup></h3>
-      <ul class="text-sm list-disc list-inside">
-        ${data.nodes[i].map(n => `<li>🔹 ${n}</li>`).join("")}
-      </ul>
-    </div>
-  `).join("");
+  function renderSectorOutput(sectorKey) {
+    let container = document.getElementById("output-section");
+    if (!container) {
+      container = document.createElement("section");
+      container.id = "output-section";
+      container.className = "p-8";
+      document.body.appendChild(container);
+    }
 
-  const panelId = `render-${sectorKey}`;
-  const existing = document.getElementById(panelId);
-  if (existing) existing.remove();
+    const data = sectorData[sectorKey];
+    const html = data.brands.map((brand, i) => 
+      <div class="mb-6 border rounded shadow p-4">
+        <h3 class="text-lg font-bold text-indigo-700 mb-2">${brand}<sup>™</sup></h3>
+        <ul class="text-sm list-disc list-inside">
+          ${data.nodes[i].map(n => <li>🔹 ${n}</li>).join("")}
+        </ul>
+      </div>
+    ).join("");
 
-  const panel = document.createElement("div");
-  panel.id = panelId;
-  panel.className = "my-8";
-  panel.innerHTML = `<h2 class="text-xl font-bold mb-4">${sectorList[sectorKey]} Brands</h2>${html}`;
+    const panelId = render-${sectorKey};
+    const existing = document.getElementById(panelId);
+    if (existing) existing.remove();
 
-  container.appendChild(panel);
-}
+    const panel = document.createElement("div");
+    panel.id = panelId;
+    panel.className = "my-8";
+    panel.innerHTML = <h2 class="text-xl font-bold mb-4">${sectorList[sectorKey]} Brands</h2>${html};
 
-<!-- ✅ Admin Panel Always Last -->
+    container.appendChild(panel);
+  }
+</script>
+
+<!-- ✅ Now place Admin Panel JUST BEFORE </body> -->
 <section class="bg-white p-6 rounded shadow mt-16 mx-6" id="admin-panel">
   <h2 class="text-xl font-bold text-gray-800 mb-4">⚙️ Admin Panel — Add Brand & Subnodes</h2>
   <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -2056,3 +2042,5 @@ function renderSectorOutput(sectorKey) {
   <p id="adminStatus" class="text-sm mt-4 text-gray-500"></p>
 </section>
 
+</body>
+</html>
