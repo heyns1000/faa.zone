@@ -1890,105 +1890,105 @@ function toggleSnapshot(id) {
 }
 
 document.addEventListener('DOMContentLoaded', renderAILogicSection);
+<script>
+const sectorList = {
+  "ai-logic": "🧠 AI, Logic & Grid",
+  "creative": "🖋️ Creative Tech",
+  "logistics": "📦 Logistics & Packaging",
+  "education-ip": "📚 Education & IP",
+  "fashion": "✂ Fashion & Identity",
+  "gaming": "🎮 Gaming & Simulation",
+  "health": "🧠 Health & Hygiene",
+  "housing": "🏗️ Housing & Infrastructure",
+  "justice": "⚖ Justice & Ethics",
+  "knowledge": "🧠 Knowledge & Archives",
+  "micromesh": "☰ Micro-Mesh Logistics",
+  "media": "🎬 Motion, Media & Sonic",
+  "nutrition": "✿ Nutrition & Food Chain",
+  "packaging": "📦 Packaging & Materials",
+  "quantum": "✴️ Quantum Protocols",
+  "ritual": "☯ Ritual & Culture",
+  "saas": "🔑 SaaS & Licensing",
+  "trade": "🧺 Trade Systems",
+  "utilities": "🔋 Utilities & Energy",
+  "voice": "🎙️ Voice & Audio",
+  "webless": "📡 Webless Tech & Nodes",
+  "nft": "🔁 NFT & Ownership",
+  "education-youth": "🎓 Education & Youth",
+  "zerowaste": "♻️ Zero Waste"
+};
 
-  const sectorList = {
-    "ai-logic": "🧠 AI, Logic & Grid",
-    "creative": "🖋️ Creative Tech",
-    "logistics": "📦 Logistics & Packaging",
-    "education-ip": "📚 Education & IP",
-    "fashion": "✂ Fashion & Identity",
-    "gaming": "🎮 Gaming & Simulation",
-    "health": "🧠 Health & Hygiene",
-    "housing": "🏗️ Housing & Infrastructure",
-    "justice": "⚖ Justice & Ethics",
-    "knowledge": "🧠 Knowledge & Archives",
-    "micromesh": "☰ Micro-Mesh Logistics",
-    "media": "🎬 Motion, Media & Sonic",
-    "nutrition": "✿ Nutrition & Food Chain",
-    "packaging": "📦 Packaging & Materials",
-    "quantum": "✴️ Quantum Protocols",
-    "ritual": "☯ Ritual & Culture",
-    "saas": "🔑 SaaS & Licensing",
-    "trade": "🧺 Trade Systems",
-    "utilities": "🔋 Utilities & Energy",
-    "voice": "🎙️ Voice & Audio",
-    "webless": "📡 Webless Tech & Nodes",
-    "nft": "🔁 NFT & Ownership",
-    "education-youth": "🎓 Education & Youth",
-    "zerowaste": "♻️ Zero Waste"
-  };
+let sectorData = JSON.parse(localStorage.getItem("faaSectorData")) || {};
+for (let key in sectorList) {
+  if (!sectorData[key]) sectorData[key] = { brands: [], nodes: [] };
+}
 
-  let sectorData = JSON.parse(localStorage.getItem("faaSectorData")) || {};
+window.addEventListener('DOMContentLoaded', () => {
+  const select = document.getElementById("sectorSelect");
   for (let key in sectorList) {
-    if (!sectorData[key]) {
-      sectorData[key] = { brands: [], nodes: [] };
-    }
+    const option = document.createElement("option");
+    option.value = key;
+    option.textContent = sectorList[key];
+    select.appendChild(option);
   }
 
-  window.addEventListener('DOMContentLoaded', () => {
-    const select = document.getElementById("sectorSelect");
-    for (let key in sectorList) {
-      const option = document.createElement("option");
-      option.value = key;
-      option.textContent = sectorList[key];
-      select.appendChild(option);
-    }
-  });
+  Object.keys(sectorData).forEach(renderSectorOutput);
+});
 
-  function addBrandToSector() {
-    const sector = document.getElementById("sectorSelect").value;
-    const brand = document.getElementById("brandInput").value.trim();
-    const subnodes = document.getElementById("subnodesInput").value
-      .split(",").map(n => n.trim()).filter(Boolean);
+function addBrandToSector() {
+  const sector = document.getElementById("sectorSelect").value;
+  const brand = document.getElementById("brandInput").value.trim();
+  const subnodes = document.getElementById("subnodesInput").value
+    .split(",").map(n => n.trim()).filter(Boolean);
 
-    if (!brand || subnodes.length === 0) {
-      document.getElementById("adminStatus").textContent = "⚠️ Please fill in both fields.";
-      return;
-    }
-
-    sectorData[sector].brands.push(brand);
-    sectorData[sector].nodes.push(subnodes);
-    localStorage.setItem("faaSectorData", JSON.stringify(sectorData));
-
-    document.getElementById("adminStatus").textContent =
-      `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
-
-    document.getElementById("brandInput").value = "";
-    document.getElementById("subnodesInput").value = "";
-
-    renderSectorOutput(sector);
+  if (!brand || subnodes.length === 0) {
+    document.getElementById("adminStatus").textContent = "⚠️ Please fill in both fields.";
+    return;
   }
 
-  function renderSectorOutput(sectorKey) {
-    let container = document.getElementById("output-section");
-    if (!container) {
-      container = document.createElement("section");
-      container.id = "output-section";
-      container.className = "p-8";
-      document.body.appendChild(container);
-    }
+  sectorData[sector].brands.push(brand);
+  sectorData[sector].nodes.push(subnodes);
+  localStorage.setItem("faaSectorData", JSON.stringify(sectorData));
 
-    const data = sectorData[sectorKey];
-    const html = data.brands.map((brand, i) => `
-      <div class="mb-6 border rounded shadow p-4">
-        <h3 class="text-lg font-bold text-indigo-700 mb-2">${brand}<sup>™</sup></h3>
-        <ul class="text-sm list-disc list-inside">
-          ${data.nodes[i].map(n => `<li>🔹 ${n}</li>`).join("")}
-        </ul>
-      </div>
-    `).join("");
+  document.getElementById("adminStatus").textContent =
+    `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
 
-    const panelId = `render-${sectorKey}`;
-    const existing = document.getElementById(panelId);
-    if (existing) existing.remove();
+  document.getElementById("brandInput").value = "";
+  document.getElementById("subnodesInput").value = "";
 
-    const panel = document.createElement("div");
-    panel.id = panelId;
-    panel.className = "my-8";
-    panel.innerHTML = `<h2 class="text-xl font-bold mb-4">${sectorList[sectorKey]} Brands</h2>${html}`;
+  renderSectorOutput(sector);
+}
 
-    container.appendChild(panel);
+function renderSectorOutput(sectorKey) {
+  let container = document.getElementById("output-section");
+  if (!container) {
+    container = document.createElement("section");
+    container.id = "output-section";
+    container.className = "p-8";
+    document.body.appendChild(container);
   }
+
+  const data = sectorData[sectorKey];
+  const html = data.brands.map((brand, i) => `
+    <div class="mb-6 border rounded shadow p-4">
+      <h3 class="text-lg font-bold text-indigo-700 mb-2">${brand}<sup>™</sup></h3>
+      <ul class="text-sm list-disc list-inside">
+        ${data.nodes[i].map(n => `<li>🔹 ${n}</li>`).join("")}
+      </ul>
+    </div>
+  `).join("");
+
+  const panelId = `render-${sectorKey}`;
+  const existing = document.getElementById(panelId);
+  if (existing) existing.remove();
+
+  const panel = document.createElement("div");
+  panel.id = panelId;
+  panel.className = "my-8";
+  panel.innerHTML = `<h2 class="text-xl font-bold mb-4">${sectorList[sectorKey]} Brands</h2>${html}`;
+
+  container.appendChild(panel);
+}
 </script>
 
 <section class="bg-white p-6 rounded shadow mt-16 mx-6" id="admin-panel">
