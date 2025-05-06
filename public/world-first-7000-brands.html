@@ -1910,7 +1910,8 @@ const ailogicSubNodes = [
   }
 
  <!-- ✅ Enhanced Admin Sector Manager with Persistent Storage -->
-
+   
+  <script>
   const sectorList = {
     "ai-logic": "🧠 AI, Logic & Grid",
     "creative": "🖋️ Creative Tech",
@@ -1938,26 +1939,31 @@ const ailogicSubNodes = [
     "zerowaste": "♻️ Zero Waste"
   };
 
-  let sectorData = {};
+  const sectorData = {};
 
-  function loadFromStorage() {
-    const data = localStorage.getItem("sectorData");
-    if (data) {
-      sectorData = JSON.parse(data);
-    } else {
-      for (let key in sectorList) {
-        sectorData[key] = { brands: [], nodes: [] };
+  function saveToLocal() {
+    localStorage.setItem('sectorData', JSON.stringify(sectorData));
+  }
+
+  function loadFromLocal() {
+    const stored = localStorage.getItem('sectorData');
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      for (let key in parsed) {
+        if (!sectorData[key]) {
+          sectorData[key] = { brands: [], nodes: [] };
+        }
+        sectorData[key].brands = parsed[key].brands || [];
+        sectorData[key].nodes = parsed[key].nodes || [];
       }
     }
   }
 
-  function saveToStorage() {
-    localStorage.setItem("sectorData", JSON.stringify(sectorData));
+  for (let key in sectorList) {
+    sectorData[key] = { brands: [], nodes: [] };
   }
 
   window.addEventListener('DOMContentLoaded', () => {
-    loadFromStorage();
-
     const select = document.getElementById("sectorSelect");
     if (select) {
       for (let key in sectorList) {
@@ -1968,7 +1974,9 @@ const ailogicSubNodes = [
       }
     }
 
-    Object.keys(sectorData).forEach(renderSectorOutput);
+    loadFromLocal();
+
+    Object.keys(sectorList).forEach(renderSectorOutput);
   });
 
   function addBrandToSector() {
@@ -1984,7 +1992,8 @@ const ailogicSubNodes = [
 
     sectorData[sector].brands.push(brand);
     sectorData[sector].nodes.push(subnodes);
-    saveToStorage();
+
+    saveToLocal();
 
     document.getElementById("adminStatus").textContent =
       `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
@@ -2022,11 +2031,11 @@ const ailogicSubNodes = [
     panel.id = panelId;
     panel.className = "my-8";
     panel.innerHTML = `<h2 class="text-xl font-bold mb-4">${sectorList[sectorKey]} Brands</h2>${html}`;
+
     container.appendChild(panel);
   }
 </script>
-
-<!-- ✅ Admin Panel UI -->
+<!-- ✅ Now place Admin Panel JUST BEFORE </body> -->
 <section class="bg-white p-6 rounded shadow mt-16 mx-6" id="admin-panel">
   <h2 class="text-xl font-bold text-gray-800 mb-4">⚙️ Admin Panel — Add Brand & Subnodes</h2>
   <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
