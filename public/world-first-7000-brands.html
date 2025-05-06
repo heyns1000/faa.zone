@@ -199,10 +199,7 @@
 
 
 
-
-
-
-  <!-- CHART PANEL -->
+<!-- CHART PANEL -->
 <section class="w-full px-6 py-8">
   <div class="bg-white p-6 rounded shadow">
     <h2 class="text-xl font-bold text-gray-700">📉 FAA Scroll Pulse Monitor</h2>
@@ -213,16 +210,22 @@
   </div>
 </section>
 
-<!-- CHART.JS SCRIPT -->
+
+<!-- CHART.JS + ADAPTER -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/luxon@3"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1"></script>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const ctx = document.getElementById('pulseChart').getContext('2d');
+  const ctx = document.getElementById('pulseChart')?.getContext('2d');
+  if (!ctx) return;
 
   const generateData = () => {
     const now = Date.now();
     return Array.from({ length: 10 }, (_, i) => ({
       x: new Date(now - (9 - i) * 1000),
-      y: 80 + Math.random() * 20 // simulate pulse around 80–100
+      y: 80 + Math.random() * 20
     }));
   };
 
@@ -244,38 +247,30 @@ document.addEventListener('DOMContentLoaded', () => {
     options: {
       responsive: true,
       animation: false,
-      plugins: {
-        legend: { display: false }
-      },
+      plugins: { legend: { display: false } },
       scales: {
         x: {
           type: 'time',
-          time: {
-            tooltipFormat: 'HH:mm:ss',
-            unit: 'second'
-          },
-          ticks: {
-            display: false
-          }
+          time: { tooltipFormat: 'HH:mm:ss', unit: 'second' },
+          ticks: { display: false }
         },
         y: {
           min: 60,
           max: 120,
-          ticks: {
-            stepSize: 10
-          }
+          ticks: { stepSize: 10 }
         }
       }
     }
   });
 
-  // Update pulse every 3 seconds
   setInterval(() => {
     chartData.datasets[0].data = generateData();
     pulseChart.update();
   }, 3000);
 });
 </script>
+
+
 
   <!-- METRICS SECTION -->
 <section class="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-7 gap-6 px-6 py-8">
