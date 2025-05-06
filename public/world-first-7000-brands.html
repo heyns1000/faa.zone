@@ -1872,45 +1872,48 @@ const ailogicSubNodes = [
   ['MapClaim', 'VaultSync', 'QRSignal', 'LogicMesh'],
   ];
 
-  function renderAILogicSection() {
-    const grid = document.getElementById('ailogic-grid');
-    const snapContainer = document.getElementById('ailogic-snapshots');
+ <script>
+document.addEventListener('DOMContentLoaded', () => {
+  renderAILogicSection(); // this call must exist
+  populateAdminDropdown(); // render select options
+  loadSavedBrands(); // restore output from memory
+});
 
-    if (!grid || !snapContainer) {
-      console.error('[FAA] Required DOM element(s) missing.');
-      return;
-    }
+function renderAILogicSection() {
+  const grid = document.getElementById('ailogic-grid');
+  const snapContainer = document.getElementById('ailogic-snapshots');
+  const logicBrands = ['NodeCast', 'GridMind', 'SynapseHub', 'MeshBrain'];
+  const logicSubNodes = ['Neural Gateway', 'Logic Mesh', 'Signal Bridge', 'Core Grid'];
 
-    const minLength = Math.min(ailogicBrands.length, ailogicSubNodes.length);
-    for (let i = 0; i < minLength; i++) {
-      const brand = ailogicBrands[i];
+  if (!grid || !snapContainer) return;
 
-      const btn = document.createElement('button');
-      btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-indigo-100 hover:text-indigo-800 font-semibold cursor-pointer';
-      btn.innerHTML = `${brand}<sup>™</sup>`;
-      btn.onclick = () => toggleSnapshot(`ailogic-snap-${i}`);
-      grid.appendChild(btn);
+  logicBrands.forEach((brand, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow hover:-translate-y-1 hover:scale-105 hover:bg-blue-100 hover:text-blue-800 font-semibold cursor-pointer';
+    btn.innerHTML = `${brand}<sup>™</sup>`;
+    btn.onclick = () => toggleSnapshot(`ailogic-snap-${i}`);
+    grid.appendChild(btn);
 
-      const subList = (ailogicSubNodes[i] || []).map(n => `<li>🔹 ${n}</li>`).join('');
-      const snap = document.createElement('div');
-      snap.id = `ailogic-snap-${i}`;
-      snap.className = 'brand-snapshot hidden mt-6';
-      snap.innerHTML = `
-        <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
-        <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
-          ${subList}
-        </ul>`;
-      snapContainer.appendChild(snap);
-    }
-  }
+    const snap = document.createElement('div');
+    snap.id = `ailogic-snap-${i}`;
+    snap.className = 'brand-snapshot hidden mt-6';
+    snap.innerHTML = `
+      <div class="text-xl font-semibold mb-2">${brand}<sup>™</sup> Snapshot</div>
+      <ul class="bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1">
+        <li>🔹 ${logicSubNodes[i]}</li>
+      </ul>
+    `;
+    snapContainer.appendChild(snap);
+  });
+}
 
-  function toggleSnapshot(id) {
-    const el = document.getElementById(id);
-    if (el) el.classList.toggle('hidden');
-  }
+function toggleSnapshot(id) {
+  document.querySelectorAll('.brand-snapshot').forEach(el => el.classList.add('hidden'));
+  const active = document.getElementById(id);
+  if (active) active.classList.remove('hidden');
+}
 
-<!-- 🧠 Admin Data Script + AI Sector -->
-<script>
+function populateAdminDropdown() {
   const sectorList = {
     "ai-logic": "🧠 AI, Logic & Grid",
     "creative": "🖋️ Creative Tech",
@@ -1938,55 +1941,6 @@ const ailogicSubNodes = [
     "zerowaste": "♻️ Zero Waste"
   };
 
-  const sectorData = {};
-  for (let key in sectorList) {
-    sectorData[key] = { brands: [], nodes: [] };
-  }
-
-  window.addEventListener('DOMContentLoaded', () => {
-    const select = document.getElementById("sectorSelect");
-    if (select) {
-      for (let key in sectorList) {
-        const option = document.createElement("option");
-        option.value = key;
-        option.textContent = sectorList[key];
-        select.appendChild(option);
-      }
-    }
-
-    renderAILogicSection();
-  });
-
- <script>
-function renderAILogicSection() {
-  const grid = document.getElementById("ailogic-grid");
-  const snapContainer = document.getElementById("ailogic-snapshots");
-  if (!grid || !snapContainer) return;
-
-  const logicBrands = ["NodeCast", "GridMind", "SynapseHub", "MeshBrain"];
-  const logicSubNodes = ["Neural Gateway", "Logic Mesh", "Signal Bridge", "Core Grid"];
-
-  logicBrands.forEach((brand, i) => {
-    const btn = document.createElement("button");
-    btn.className =
-      "bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-gray-100 hover:text-indigo-700 font-semibold cursor-pointer";
-    btn.innerHTML = `${brand}<sup>™</sup>`;
-    btn.onclick = () => toggleSnapshot(`ailogic-snap-${i}`);
-    grid.appendChild(btn);
-
-    const snap = document.createElement("div");
-    snap.id = `ailogic-snap-${i}`;
-    snap.className = "brand-snapshot hidden mt-6";
-    snap.innerHTML = `
-      <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
-      <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
-        <li>🔹 ${logicSubNodes[i]}</li>
-      </ul>`;
-    snapContainer.appendChild(snap);
-  });
-}
-</script>
-window.addEventListener('DOMContentLoaded', () => {
   const select = document.getElementById("sectorSelect");
   if (select) {
     for (let key in sectorList) {
@@ -1996,97 +1950,72 @@ window.addEventListener('DOMContentLoaded', () => {
       select.appendChild(option);
     }
   }
+}
 
-  renderAILogicSection(); // ✅ This call must be present
-});
+function addBrandToSector() {
+  const sector = document.getElementById("sectorSelect").value;
+  const brand = document.getElementById("brandInput").value.trim();
+  const subnodes = document.getElementById("subnodesInput").value.split(',').map(n => n.trim()).filter(Boolean);
 
-  function addBrandToSector() {
-    const sector = document.getElementById("sectorSelect").value;
-    const brand = document.getElementById("brandInput").value.trim();
-    const subnodes = document
-      .getElementById("subnodesInput")
-      .value.split(",")
-      .map((n) => n.trim())
-      .filter(Boolean);
+  if (!brand || subnodes.length === 0) {
+    document.getElementById("adminStatus").textContent = "⚠️ Please fill in both fields.";
+    return;
+  }
 
-    if (!brand || subnodes.length === 0) {
-      document.getElementById("adminStatus").textContent =
-        "⚠️ Please fill in both fields.";
-      return;
+  if (!sectorData[sector]) sectorData[sector] = { brands: [], nodes: [] };
+  sectorData[sector].brands.push(brand);
+  sectorData[sector].nodes.push(subnodes);
+
+  localStorage.setItem("sectorData", JSON.stringify(sectorData));
+
+  document.getElementById("adminStatus").textContent = `✅ Added ${brand} to ${sector} (${subnodes.length} nodes)`;
+  document.getElementById("brandInput").value = "";
+  document.getElementById("subnodesInput").value = "";
+  renderSectorOutput(sector);
+}
+
+function renderSectorOutput(sectorKey) {
+  const data = sectorData[sectorKey];
+  let container = document.getElementById("output-section");
+  if (!container) {
+    container = document.createElement("section");
+    container.id = "output-section";
+    container.className = "p-8";
+    document.body.appendChild(container);
+  }
+
+  const html = data.brands.map((brand, i) => `
+    <div class="mb-6 border rounded shadow p-4">
+      <h3 class="text-lg font-bold text-indigo-700 mb-2">${brand}<sup>™</sup></h3>
+      <ul class="text-sm list-disc list-inside">
+        ${data.nodes[i].map(n => `<li>🔹 ${n}</li>`).join("")}
+      </ul>
+    </div>
+  `).join("");
+
+  const panelId = `render-${sectorKey}`;
+  const existing = document.getElementById(panelId);
+  if (existing) existing.remove();
+
+  const panel = document.createElement("div");
+  panel.id = panelId;
+  panel.className = "my-8";
+  panel.innerHTML = `<h2 class="text-xl font-bold mb-4">${sectorKey} Brands</h2>${html}`;
+  container.appendChild(panel);
+}
+
+function loadSavedBrands() {
+  const saved = localStorage.getItem("sectorData");
+  if (saved) {
+    const parsed = JSON.parse(saved);
+    for (let key in parsed) {
+      if (!sectorData[key]) sectorData[key] = { brands: [], nodes: [] };
+      sectorData[key].brands = parsed[key].brands || [];
+      sectorData[key].nodes = parsed[key].nodes || [];
+      renderSectorOutput(key);
     }
-
-    sectorData[sector].brands.push(brand);
-    sectorData[sector].nodes.push(subnodes);
-
-    document.getElementById("adminStatus").textContent = `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
-
-    document.getElementById("brandInput").value = "";
-    document.getElementById("subnodesInput").value = "";
-
-    renderSectorOutput(sector);
   }
+}
 
-  function renderSectorOutput(sectorKey) {
-    let container = document.getElementById("output-section");
-    if (!container) {
-      container = document.createElement("section");
-      container.id = "output-section";
-      container.className = "p-8";
-      document.body.appendChild(container);
-    }
-
-    const data = sectorData[sectorKey];
-    const html = data.brands
-      .map(
-        (brand, i) => `
-      <div class="mb-6 border rounded shadow p-4">
-        <h3 class="text-lg font-bold text-indigo-700 mb-2">${brand}<sup>™</sup></h3>
-        <ul class="text-sm list-disc list-inside">
-          ${data.nodes[i].map((n) => `<li>🔹 ${n}</li>`).join("")}
-        </ul>
-      </div>`
-      )
-      .join("");
-
-    const panelId = `render-${sectorKey}`;
-    const existing = document.getElementById(panelId);
-    if (existing) existing.remove();
-
-    const panel = document.createElement("div");
-    panel.id = panelId;
-    panel.className = "my-8";
-    panel.innerHTML = `<h2 class="text-xl font-bold mb-4">${sectorList[sectorKey]} Brands</h2>${html}`;
-    container.appendChild(panel);
-  }
-
-  function toggleSnapshot(id) {
-    document.querySelectorAll(".brand-snapshot").forEach((el) => el.classList.add("hidden"));
-    const active = document.getElementById(id);
-    if (active) active.classList.remove("hidden");
-  }
+const sectorData = {};
 </script>
-
-<!-- ⚙️ Admin Panel for Dynamic Brands -->
-<section class="bg-white p-6 rounded shadow mt-16 mx-6" id="admin-panel">
-  <h2 class="text-xl font-bold text-gray-800 mb-4">⚙️ Admin Panel — Add Brand & Subnodes</h2>
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-    <div>
-      <label class="text-sm font-medium block mb-1">📂 Sector</label>
-      <select id="sectorSelect" class="w-full border rounded p-2"></select>
-    </div>
-    <div>
-      <label class="text-sm font-medium block mb-1">🏷 Brand Name</label>
-      <input id="brandInput" class="w-full border rounded p-2" placeholder="e.g. OmniCastX" />
-    </div>
-    <div>
-      <label class="text-sm font-medium block mb-1">📌 Subnodes (comma-separated)</label>
-      <input id="subnodesInput" class="w-full border rounded p-2" placeholder="e.g. VaultDrop, QRClaim" />
-    </div>
-    <div class="flex items-end">
-      <button onclick="addBrandToSector()" class="bg-indigo-600 text-white px-4 py-2 rounded shadow hover:bg-indigo-700">
-        ➕ Add Brand
-      </button>
-    </div>
-  </div>
-  <p id="adminStatus" class="text-sm mt-4 text-gray-500"></p>
-</section>
