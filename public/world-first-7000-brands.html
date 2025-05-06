@@ -1872,13 +1872,15 @@ const ailogicSubNodes = [
   ['MapClaim', 'VaultSync', 'QRSignal', 'LogicMesh'],
   ];
 
- <script>
+<script>
+// Ensure this runs once DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-  renderAILogicSection(); // this call must exist
-  populateAdminDropdown(); // render select options
-  loadSavedBrands(); // restore output from memory
+  renderAILogicSection();     // Renders AI Logic Grid
+  populateAdminDropdown();    // Loads sector list into <select>
+  loadSavedBrands();          // Loads previously saved brands/nodes from localStorage
 });
 
+// 🧠 Renders AI Logic Sector
 function renderAILogicSection() {
   const grid = document.getElementById('ailogic-grid');
   const snapContainer = document.getElementById('ailogic-snapshots');
@@ -1901,19 +1903,19 @@ function renderAILogicSection() {
       <div class="text-xl font-semibold mb-2">${brand}<sup>™</sup> Snapshot</div>
       <ul class="bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1">
         <li>🔹 ${logicSubNodes[i]}</li>
-      </ul>
-    `;
+      </ul>`;
     snapContainer.appendChild(snap);
   });
 }
 
+// 🔁 Snapshot Toggle
 function toggleSnapshot(id) {
   document.querySelectorAll('.brand-snapshot').forEach(el => el.classList.add('hidden'));
   const active = document.getElementById(id);
   if (active) active.classList.remove('hidden');
 }
 
-<script>
+// 📂 Sector List
 const sectorList = {
   "ai-logic": "🧠 AI, Logic & Grid",
   "creative": "🖋️ Creative Tech",
@@ -1946,52 +1948,20 @@ for (let key in sectorList) {
   sectorData[key] = { brands: [], nodes: [] };
 }
 
-// 🧠 Render AI Logic Grid
-function renderAILogicSection() {
-  const grid = document.getElementById('ailogic-grid');
-  const snapContainer = document.getElementById('ailogic-snapshots');
-
-  const logicBrands = ['NodeCast', 'GridMind', 'SynapseHub', 'MeshBrain'];
-  const logicSubNodes = ['Neural Gateway', 'Logic Mesh', 'Signal Bridge', 'Core Grid'];
-
-  if (!grid || !snapContainer) return;
-
-  logicBrands.forEach((brand, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-blue-100 hover:text-blue-800 font-semibold cursor-pointer';
-    btn.innerHTML = `${brand}<sup>™</sup>`;
-    btn.onclick = () => toggleSnapshot(`ailogic-snap-${i}`);
-    grid.appendChild(btn);
-
-    const snap = document.createElement('div');
-    snap.id = `ailogic-snap-${i}`;
-    snap.className = 'brand-snapshot hidden mt-6';
-    snap.innerHTML = `
-      <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
-      <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
-        <li>🔹 ${logicSubNodes[i]}</li>
-      </ul>
-    `;
-    snapContainer.appendChild(snap);
-  });
-}
-
-function toggleSnapshot(id) {
-  document.querySelectorAll('.brand-snapshot').forEach(el => el.classList.add('hidden'));
-  const active = document.getElementById(id);
-  if (active) active.classList.remove('hidden');
-}
-
+// 🔽 Fill Admin Dropdown
 function populateAdminDropdown() {
   const select = document.getElementById("sectorSelect");
-  for (let key in sectorList) {
-    const option = document.createElement("option");
-    option.value = key;
-    option.textContent = sectorList[key];
-    select.appendChild(option);
+  if (select) {
+    for (let key in sectorList) {
+      const option = document.createElement("option");
+      option.value = key;
+      option.textContent = sectorList[key];
+      select.appendChild(option);
+    }
   }
 }
 
+// 💾 Load Previous Brands
 function loadSavedBrands() {
   const saved = localStorage.getItem("sectorData");
   if (saved) {
@@ -2005,6 +1975,7 @@ function loadSavedBrands() {
   }
 }
 
+// ➕ Add Brand
 function addBrandToSector() {
   const sector = document.getElementById("sectorSelect").value;
   const brand = document.getElementById("brandInput").value.trim();
@@ -2018,6 +1989,7 @@ function addBrandToSector() {
 
   sectorData[sector].brands.push(brand);
   sectorData[sector].nodes.push(subnodes);
+
   localStorage.setItem("sectorData", JSON.stringify(sectorData));
 
   document.getElementById("adminStatus").textContent =
@@ -2029,6 +2001,7 @@ function addBrandToSector() {
   renderSectorOutput(sector);
 }
 
+// 🖥️ Render Added Brands Output
 function renderSectorOutput(sectorKey) {
   let container = document.getElementById("output-section");
   if (!container) {
@@ -2045,8 +2018,7 @@ function renderSectorOutput(sectorKey) {
       <ul class="text-sm list-disc list-inside">
         ${data.nodes[i].map(n => `<li>🔹 ${n}</li>`).join("")}
       </ul>
-    </div>
-  `).join("");
+    </div>`).join("");
 
   const panelId = `render-${sectorKey}`;
   const existing = document.getElementById(panelId);
@@ -2059,15 +2031,9 @@ function renderSectorOutput(sectorKey) {
 
   container.appendChild(panel);
 }
-
-window.addEventListener('DOMContentLoaded', () => {
-  renderAILogicSection(); // MUST be called
-  populateAdminDropdown();
-  loadSavedBrands();
-});
 </script>
 
-<!-- ✅ PLACE THIS PANEL AT END OF BODY -->
+<!-- ✅ FINAL PLACEMENT: ADMIN PANEL GOES LAST -->
 <section class="bg-white p-6 rounded shadow mt-16 mx-6" id="admin-panel">
   <h2 class="text-xl font-bold text-gray-800 mb-4">⚙️ Admin Panel — Add Brand & Subnodes</h2>
   <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -2091,6 +2057,3 @@ window.addEventListener('DOMContentLoaded', () => {
   </div>
   <p id="adminStatus" class="text-sm mt-4 text-gray-500"></p>
 </section>
-<section id="admin-panel" class="bg-white p-6 rounded shadow mt-16 mx-6"> ... </section>
-</body>
-</html>
