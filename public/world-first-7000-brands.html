@@ -1890,7 +1890,7 @@ function toggleSnapshot(id) {
 }
 
 document.addEventListener('DOMContentLoaded', renderAILogicSection);
-
+<script>
   const sectorList = {
     "ai-logic": "🧠 AI, Logic & Grid",
     "creative": "🖋️ Creative Tech",
@@ -1918,13 +1918,14 @@ document.addEventListener('DOMContentLoaded', renderAILogicSection);
     "zerowaste": "♻️ Zero Waste"
   };
 
-  const sectorData = {};
+  let sectorData = JSON.parse(localStorage.getItem("faaSectorData")) || {};
   for (let key in sectorList) {
-    sectorData[key] = { brands: [], nodes: [] };
+    if (!sectorData[key]) {
+      sectorData[key] = { brands: [], nodes: [] };
+    }
   }
 
   window.addEventListener('DOMContentLoaded', () => {
-    renderAILogicSection();
     const select = document.getElementById("sectorSelect");
     for (let key in sectorList) {
       const option = document.createElement("option");
@@ -1932,6 +1933,9 @@ document.addEventListener('DOMContentLoaded', renderAILogicSection);
       option.textContent = sectorList[key];
       select.appendChild(option);
     }
+
+    // Auto-render previously saved sectors
+    Object.keys(sectorData).forEach(renderSectorOutput);
   });
 
   function addBrandToSector() {
@@ -1947,6 +1951,7 @@ document.addEventListener('DOMContentLoaded', renderAILogicSection);
 
     sectorData[sector].brands.push(brand);
     sectorData[sector].nodes.push(subnodes);
+    localStorage.setItem("faaSectorData", JSON.stringify(sectorData));
 
     document.getElementById("adminStatus").textContent =
       `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
@@ -1967,6 +1972,12 @@ document.addEventListener('DOMContentLoaded', renderAILogicSection);
     }
 
     const data = sectorData[sectorKey];
+    if (!data || data.brands.length === 0) return;
+
+    const panelId = `render-${sectorKey}`;
+    const existing = document.getElementById(panelId);
+    if (existing) existing.remove();
+
     const html = data.brands.map((brand, i) => `
       <div class="mb-6 border rounded shadow p-4">
         <h3 class="text-lg font-bold text-indigo-700 mb-2">${brand}<sup>™</sup></h3>
@@ -1976,43 +1987,10 @@ document.addEventListener('DOMContentLoaded', renderAILogicSection);
       </div>
     `).join("");
 
-    const panelId = `render-${sectorKey}`;
-    const existing = document.getElementById(panelId);
-    if (existing) existing.remove();
-
     const panel = document.createElement("div");
     panel.id = panelId;
     panel.className = "my-8";
     panel.innerHTML = `<h2 class="text-xl font-bold mb-4">${sectorList[sectorKey]} Brands</h2>${html}`;
-
     container.appendChild(panel);
   }
 </script>
-<section class="bg-white p-6 rounded shadow mt-16 mx-6" id="admin-panel">
-  <h2 class="text-xl font-bold text-gray-800 mb-4">⚙️ Admin Panel — Add Brand & Subnodes</h2>
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-    <div>
-      <label class="text-sm font-medium block mb-1">📂 Sector</label>
-      <select id="sectorSelect" class="w-full border rounded p-2">
-        <!-- Filled dynamically -->
-      </select>
-    </div>
-    <div>
-      <label class="text-sm font-medium block mb-1">🏷 Brand Name</label>
-      <input id="brandInput" class="w-full border rounded p-2" placeholder="e.g. OmniCastX" />
-    </div>
-    <div>
-      <label class="text-sm font-medium block mb-1">📌 Subnodes (comma-separated)</label>
-      <input id="subnodesInput" class="w-full border rounded p-2" placeholder="e.g. VaultDrop, QRClaim" />
-    </div>
-    <div class="flex items-end">
-      <button onclick="addBrandToSector()" class="bg-indigo-600 text-white px-4 py-2 rounded shadow hover:bg-indigo-700">
-        ➕ Add Brand
-      </button>
-    </div>
-  </div>
-  <p id="adminStatus" class="text-sm mt-4 text-gray-500"></p>
-</section>
-
-</body>
-</html>
