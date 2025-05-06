@@ -276,6 +276,7 @@
   🎓 Education & Youth Sector
 </a>
   <a href="#" onclick="showSectorPanel('embedded-zerowaste-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">♻️ Zero Waste</a>
+  <a href="#" onclick="showSectorPanel('embedded-professional-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🧾 Professional Services</a>
 </nav>
 
 <!-- Embedded Agri Panel -->
@@ -484,6 +485,13 @@
   <div class="text-2xl font-bold text-lime-700 mb-4">♻️ FAA™ Zero Waste Dashboard</div>
   <div id="zerowaste-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="zerowaste-snapshots"></div>
+</div>
+
+<!-- Embedded Professional Services Panel -->
+<div id="embedded-professional-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
+  <div class="text-2xl font-bold text-indigo-800 mb-4">🧾 FAA™ Professional Services Dashboard</div>
+  <div id="professional-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+  <div class="p-6" id="professional-snapshots"></div>
 </div>
 
 <!-- 📉 FAA Scroll Pulse Monitor -->
@@ -2060,37 +2068,135 @@ const ailogicSubNodes = [
   ['MapClaim', 'VaultSync', 'QRSignal', 'LogicMesh'],
   ];
 
-  function renderAILogicSection() {
-    const grid = document.getElementById('ailogic-grid');
-    const snapContainer = document.getElementById('ailogic-snapshots');
+ function renderAILogicSection() {
+  const grid = document.getElementById('ailogic-grid');
+  const snapContainer = document.getElementById('ailogic-snapshots');
 
-    if (!grid || !snapContainer) {
-      console.error('[FAA] Required DOM element(s) missing.');
-      return;
-    }
+  if (!grid || !snapContainer) {
+    console.error('[FAA] Required DOM element(s) missing.');
+    return;
+  }
 
-    const minLength = Math.min(ailogicBrands.length, ailogicSubNodes.length);
+  const minLength = Math.min(ailogicBrands.length, ailogicSubNodes.length);
+  for (let i = 0; i < minLength; i++) {
+    const brand = ailogicBrands[i];
+
+    // Create button for each brand
+    const btn = document.createElement('button');
+    btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-indigo-100 hover:text-indigo-800 font-semibold cursor-pointer';
+    btn.innerHTML = `${brand}<sup>™</sup>`;
+    btn.onclick = () => toggleSnapshot(`ailogic-snap-${i}`);
+    grid.appendChild(btn);
+
+    // Create snapshot for each brand
+    const subList = (ailogicSubNodes[i] || []).map(n => `<li>🔹 ${n}</li>`).join('');
+    const snap = document.createElement('div');
+    snap.id = `ailogic-snap-${i}`;
+    snap.className = 'brand-snapshot hidden mt-6';
+    snap.innerHTML = `
+      <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+      <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+        ${subList}
+      </ul>`;
+    snapContainer.appendChild(snap);
+  });
+}
+
+    document.addEventListener('DOMContentLoaded', renderMediaSection);
+</script>
+
+
+  <script>
+const professionalBrands = [
+  'LedgerNest™', 'OmniBooks™', 'QCalcX™', 'SiteProof™', 'LawTrace™', 
+  'ContractCast™', 'Enginuity™', 'StructVault™', 'RegiSync™', 'ScrollAudit™',
+  'ClaimDocX™', 'PlanDrop™', 'SurveyGrid™', 'VaultJudge™', 'LoopInspect™',
+  'BuildNode™', 'ComplyTrack™', 'LegalSync™', 'BudgetCast™', 'VaultPlans™',
+  'FormCert™', 'ProofLayer™', 'ZoneMap™', 'TrackSeal™', 'DocLoop™',
+  'AuditCrate™', 'VerifyLine™', 'PlanMesh™', 'FrameBook™', 'LogicPermit™',
+  'OmniBrief™', 'ClauseCraft™', 'FormLogic™', 'CheckNode™', 'AssetTrace™',
+  'LawPathX™', 'LedgerFlow™', 'BudgetSync™', 'CrateJudge™', 'SpecAudit™',
+  'LoopCheck™', 'OmniTender™', 'SignalCompliance™', 'BuildCast™', 'NodeClause™',
+  'PermitDrop™', 'AuditMatrix™', 'StructPlan™', 'ClaimBoard™', 'FormDrop™'
+];
+
+const professionalSubNodes = [
+  ['LedgerCore', 'VaultTrack', 'QRInvoice', 'AuditSync', 'StatementFlow', 'TaxGrid'],
+  ['BooksPath', 'VaultEcho', 'QRPay', 'BudgetMesh', 'EntryLoop', 'PayrollCast'],
+  ['QuantZone', 'CostTrack', 'VaultEcho', 'GridEstimate', 'QRClaim', 'SiteYield'],
+  ['ProofMesh', 'ProjectVault', 'QRSync', 'SpecClaim', 'SurveyNode', 'BuildFlow'],
+  ['LawGrid', 'VaultLegal', 'QRCase', 'ClauseMap', 'SignalJudge', 'TrackClaim'],
+  ['CastPath', 'VaultContract', 'QRSign', 'FormDrop', 'LegalSync', 'NodeClause'],
+  ['EnginuityCore', 'VaultStruct', 'QREngine', 'ModelClaim', 'SpecLoop', 'PlanNode'],
+  ['VaultFrame', 'StructMap', 'QRDesign', 'BuildPath', 'EstimateLine', 'NodeSpec'],
+  ['RegCore', 'VaultRule', 'QRCompliance', 'GovTrack', 'DocNode', 'ProofSync'],
+  ['AuditTrail', 'VaultAudit', 'QRTrace', 'NodeForm', 'ControlClaim', 'VerifyRoute'],
+  ['DocClaim', 'VaultDocs', 'QRForm', 'FormCert', 'LegalDrop', 'TraceNode'],
+  ['DropSheet', 'VaultPlan', 'QRDesign', 'BudgetLine', 'MeshForm', 'CastApproval'],
+  ['GridScan', 'VaultSurvey', 'QRField', 'TrackDrop', 'PingZone', 'NodeMeasure'],
+  ['JudgeTag', 'VaultCourt', 'QRSign', 'RulingPath', 'CaseLoop', 'LegalCast'],
+  ['InspectMesh', 'VaultLoop', 'QRInspect', 'NodeClaim', 'SignalProof', 'FieldTag'],
+  ['NodeBuild', 'VaultPermit', 'QRStage', 'DropPanel', 'SiteCast', 'LabelForm'],
+  ['TrackComply', 'VaultReg', 'QRCertify', 'PathEcho', 'DocLock', 'ClausePanel'],
+  ['LegalForm', 'VaultBrief', 'QRFile', 'TrackJudge', 'LoopEcho', 'ScanClause'],
+  ['CastBudget', 'VaultBook', 'QRCost', 'PlanNode', 'DropMesh', 'ClaimNode'],
+  ['PlansFrame', 'VaultDraw', 'QRLoop', 'PathEcho', 'StageCast', 'LabelProof'],
+  ['CertForm', 'VaultPaper', 'QRStep', 'MeshAudit', 'DropClause', 'PingClaim'],
+  ['LayerProof', 'VaultTrace', 'QRGrid', 'ClauseEcho', 'FormYield', 'NodeTag'],
+  ['MapZone', 'VaultGPS', 'QRPlot', 'ScanClaim', 'FormTrace', 'AuditMark'],
+  ['SealLine', 'VaultPad', 'QRRoute', 'ClaimFlow', 'MeshLabel', 'LegalGrid'],
+  ['LoopForm', 'VaultDoc', 'QRClaim', 'DropBoard', 'ClauseFlow', 'TraceLink'],
+  ['CrateAudit', 'VaultSort', 'QRPanel', 'ScanCast', 'TraceBoard', 'FormNote'],
+  ['LineVerify', 'VaultMark', 'QRSignal', 'NodeDrop', 'ClauseCheck', 'FormSeal'],
+  ['PlanCast', 'VaultSheet', 'QRFrame', 'EchoGrid', 'SiteTag', 'NodeLoop'],
+  ['BookFrame', 'VaultPages', 'QRRef', 'BudgetDrop', 'FormNode', 'AssetGrid'],
+  ['PermitLine', 'VaultLogic', 'QRPermit', 'DropSignal', 'NodeProof', 'TagGrid'],
+  ['BriefCast', 'VaultJudge', 'QRPath', 'EchoPanel', 'DocGrid', 'PlanTrack'],
+  ['CraftClause', 'VaultSign', 'QRProof', 'EchoFile', 'LoopAudit', 'NodeYield'],
+  ['LogicFile', 'VaultEcho', 'QRForm', 'CheckPath', 'TraceLock', 'AuditStage'],
+  ['CheckFlow', 'VaultList', 'QRCheck', 'NodeMark', 'DropPermit', 'GridLine'],
+  ['TraceAsset', 'VaultHold', 'QRAsset', 'FileLine', 'PermitEcho', 'ClauseMap'],
+  ['LawWay', 'VaultJudge', 'QRLaw', 'TraceCast', 'PathCourt', 'CaseEcho'],
+  ['LedgerPath', 'VaultBooks', 'QRLedger', 'DropSync', 'ProofBoard', 'FormPulse'],
+  ['SyncBudget', 'VaultSpend', 'QRBalance', 'PathCheck', 'LoopForm', 'AuditMesh'],
+  ['JudgeCrate', 'VaultCase', 'QRReview', 'DropNode', 'ClauseRoute', 'SignalFile'],
+  ['AuditSpec', 'VaultGrid', 'QRSpec', 'NodeRoute', 'CaseMesh', 'LoopPanel'],
+  ['CheckLoop', 'VaultProof', 'QRTest', 'EchoCast', 'ClaimPanel', 'DocTrace'],
+  ['TenderPath', 'VaultBid', 'QRAward', 'MeshClause', 'PanelCheck', 'TrackPlan'],
+  ['CompliancePulse', 'VaultCheck', 'QRGov', 'RouteLaw', 'MeshJudge', 'NodeCast'],
+  ['BuildFlow', 'VaultDraft', 'QRBuild', 'PlanStage', 'EchoTrack', 'PermitNode'],
+  ['ClausePanel', 'VaultSection', 'QRDrop', 'SignalMesh', 'LawCast', 'PlanForm'],
+  ['DropPermit', 'VaultCourt', 'QRMark', 'CastEcho', 'ProofLine', 'GridCase'],
+  ['MatrixAudit', 'VaultData', 'QRMatrix', 'StageFlow', 'CheckLabel', 'FormGrid'],
+  ['PlanLine', 'VaultMap', 'QRStruct', 'EchoAudit', 'PermitFlow', 'ScanProof'],
+  ['BoardClaim', 'VaultRoll', 'QRClaim', 'LineNote', 'TagMesh', 'DropAudit'],
+  ['DropForm', 'VaultEntry', 'QRPath', 'ClauseNote', 'AuditMap', 'PingPlan']
+];
+
+    function renderProfessionalSection() {
+    const grid = document.getElementById('professional-grid');
+    const snapContainer = document.getElementById('professional-snapshots');
+    if (!grid || !snapContainer) return;
+
+    const minLength = Math.min(professionalBrands.length, professionalSubNodes.length);
     for (let i = 0; i < minLength; i++) {
-      const brand = ailogicBrands[i];
-
+      const brand = professionalBrands[i];
       const btn = document.createElement('button');
-      btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-indigo-100 hover:text-indigo-800 font-semibold cursor-pointer';
+      btn.className = 'brand-button ...';
       btn.innerHTML = `${brand}<sup>™</sup>`;
-      btn.onclick = () => toggleSnapshot(`ailogic-snap-${i}`);
+      btn.onclick = () => toggleSnapshot(`professional-snap-${i}`);
       grid.appendChild(btn);
 
-      const subList = (ailogicSubNodes[i] || []).map(n => `<li>🔹 ${n}</li>`).join('');
+      const subList = (professionalSubNodes[i] || []).map(n => `<li>🔹 ${n}</li>`).join('');
       const snap = document.createElement('div');
-      snap.id = `ailogic-snap-${i}`;
-      snap.className = 'brand-snapshot hidden mt-6';
-      snap.innerHTML = `
-        <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
-        <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
-          ${subList}
-        </ul>`;
+      snap.id = `professional-snap-${i}`;
+      snap.className = 'brand-snapshot hidden';
+      snap.innerHTML = `<div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+        <ul class='list-disc list-inside'>${subList}</ul>`;
       snapContainer.appendChild(snap);
     }
   }
+
 
   function toggleSnapshot(id) {
     const el = document.getElementById(id);
