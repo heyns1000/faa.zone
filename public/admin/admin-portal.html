@@ -2225,30 +2225,6 @@ const professionalSubNodes = [
   ['DropForm', 'VaultEntry', 'QRPath', 'ClauseNote', 'AuditMap', 'PingPlan']
 ];
 
-function renderAILogicSection() {
-  const grid = document.getElementById('ailogic-grid');
-  const snapContainer = document.getElementById('ailogic-snapshots');
-  if (!grid || !snapContainer) return;
-
-  const minLength = Math.min(ailogicBrands.length, ailogicSubNodes.length);
-  for (let i = 0; i < minLength; i++) {
-    const brand = ailogicBrands[i];
-    const btn = document.createElement('button');
-    btn.className = 'brand-button ...';
-    btn.innerHTML = `${brand}<sup>™</sup>`;
-    btn.onclick = () => toggleSnapshot(`ailogic-snap-${i}`);
-    grid.appendChild(btn);
-
-    const subList = (ailogicSubNodes[i] || []).map(n => `<li>🔹 ${n}</li>`).join('');
-    const snap = document.createElement('div');
-    snap.id = `ailogic-snap-${i}`;
-    snap.className = 'brand-snapshot hidden';
-    snap.innerHTML = `<div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
-      <ul class='...'>${subList}</ul>`;
-    snapContainer.appendChild(snap);
-  }
-}
-
 function renderProfessionalSection() {
   const grid = document.getElementById('professional-grid');
   const snapContainer = document.getElementById('professional-snapshots');
