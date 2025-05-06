@@ -2219,7 +2219,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
  <script>
 const professionalBrands = [
-  'LedgerNest™', 'OmniBooks™', 'QCalcX™', 'SiteProof™', 'LawTrace™', 
+  'LedgerNest™', 'OmniBooks™', 'QCalcX™', 'SiteProof™', 'LawTrace™',
   'ContractCast™', 'Enginuity™', 'StructVault™', 'RegiSync™', 'ScrollAudit™',
   'ClaimDocX™', 'PlanDrop™', 'SurveyGrid™', 'VaultJudge™', 'LoopInspect™',
   'BuildNode™', 'ComplyTrack™', 'LegalSync™', 'BudgetCast™', 'VaultPlans™',
@@ -2230,7 +2230,6 @@ const professionalBrands = [
   'LoopCheck™', 'OmniTender™', 'SignalCompliance™', 'BuildCast™', 'NodeClause™',
   'PermitDrop™', 'AuditMatrix™', 'StructPlan™', 'ClaimBoard™', 'FormDrop™'
 ];
-
 const professionalSubNodes = [
   ['LedgerCore', 'VaultTrack', 'QRInvoice', 'AuditSync', 'StatementFlow', 'TaxGrid'],
   ['BooksPath', 'VaultEcho', 'QRPay', 'BudgetMesh', 'EntryLoop', 'PayrollCast'],
@@ -2282,41 +2281,66 @@ const professionalSubNodes = [
   ['PlanLine', 'VaultMap', 'QRStruct', 'EchoAudit', 'PermitFlow', 'ScanProof'],
   ['BoardClaim', 'VaultRoll', 'QRClaim', 'LineNote', 'TagMesh', 'DropAudit'],
   ['DropForm', 'VaultEntry', 'QRPath', 'ClauseNote', 'AuditMap', 'PingPlan']
-  ];
+];
 
- // Render the Professional Section
+function renderAILogicSection() {
+  const grid = document.getElementById('ailogic-grid');
+  const snapContainer = document.getElementById('ailogic-snapshots');
+  if (!grid || !snapContainer) return;
+
+  const minLength = Math.min(ailogicBrands.length, ailogicSubNodes.length);
+  for (let i = 0; i < minLength; i++) {
+    const brand = ailogicBrands[i];
+    const btn = document.createElement('button');
+    btn.className = 'brand-button ...';
+    btn.innerHTML = `${brand}<sup>™</sup>`;
+    btn.onclick = () => toggleSnapshot(`ailogic-snap-${i}`);
+    grid.appendChild(btn);
+
+    const subList = (ailogicSubNodes[i] || []).map(n => `<li>🔹 ${n}</li>`).join('');
+    const snap = document.createElement('div');
+    snap.id = `ailogic-snap-${i}`;
+    snap.className = 'brand-snapshot hidden';
+    snap.innerHTML = `<div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+      <ul class='...'>${subList}</ul>`;
+    snapContainer.appendChild(snap);
+  }
+}
+
 function renderProfessionalSection() {
-  // Get required DOM elements
-  const grid = document.getElementById("professional-grid");
-  const snapContainer = document.getElementById("professional-snapshots");
+  const grid = document.getElementById('professional-grid');
+  const snapContainer = document.getElementById('professional-snapshots');
+  if (!grid || !snapContainer) return;
 
-  // Check if DOM elements exist
-  if (!grid) {
-    console.error(
-      '[Professional Grid] Element with id "professional-grid" not found in the DOM.'
-    );
-    return;
-  }
-  if (!snapContainer) {
-    console.error(
-      '[Professional Snapshots] Element with id "professional-snapshots" not found in the DOM.'
-    );
-    return;
-  }
+  professionalBrands.forEach((brand, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'brand-button ...';
+    btn.innerHTML = `${brand}`;
+    btn.onclick = () => toggleSnapshot(`professional-snap-${i}`);
+    grid.appendChild(btn);
 
-  // Check if data arrays are valid and matched
-  if (!Array.isArray(professionalBrands) || !Array.isArray(professionalSubNodes)) {
-    console.error(
-      "[Professional Grid] professionalBrands or professionalSubNodes is not an array."
-    );
-    return;
-  }
-  if (professionalBrands.length !== professionalSubNodes.length) {
-    console.error(
-      `[Professional Grid] Array length mismatch: professionalBrands (${professionalBrands.length}) and professionalSubNodes (${professionalSubNodes.length}).`
-    );
-    return;
-  }
+    const subList = (professionalSubNodes[i] || []).map(n => `<li>🔹 ${n}</li>`).join('');
+    const snap = document.createElement('div');
+    snap.id = `professional-snap-${i}`;
+    snap.className = 'brand-snapshot hidden';
+    snap.innerHTML = `<div class='text-xl font-semibold mb-2'>${brand}</div>
+      <ul class='...'>${subList}</ul>`;
+    snapContainer.appendChild(snap);
+  });
+}
+
+function toggleSnapshot(id) {
+  document.querySelectorAll('.brand-snapshot').forEach(el => el.classList.add('hidden'));
+  const el = document.getElementById(id);
+  if (el) el.classList.remove('hidden');
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  renderSection('ailogic-grid', 'ailogic-snapshots', ailogicBrands, ailogicSubNodes, 'ailogic');
+  renderSection('professional-grid', 'professional-snapshots', professionalBrands, professionalSubNodes, 'professional');
+});
+</script>
+
 
 <!DOCTYPE html>
 <html lang="en">
