@@ -430,13 +430,11 @@
   <div class="p-6" id="justice-snapshots"></div>
 </div>
 
-<!-- Embedded AI Logic Snapshot -->
-<div id="embedded-ailogic-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
-  <div class="text-2xl font-bold text-indigo-800 mb-4">
-    🧠 FAA™ AI, Logic & Grid Systems Dashboard
-  </div>
-  <div id="ailogic-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
-  <div class="p-6" id="ailogic-snapshots"></div>
+<!-- Embedded Professional Services Panel -->
+<div id="embedded-professional-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
+  <div class="text-2xl font-bold text-indigo-800 mb-4">🧾 FAA™ Professional Services Dashboard</div>
+  <div id="professional-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+  <div class="p-6" id="professional-snapshots"></div>
 </div>
 
 <!-- Embedded Knowledge Sector -->
@@ -2123,9 +2121,9 @@ const ailogicSubNodes = [
   ['ZoneClaim', 'VaultProof', 'QRTrace', 'GridEcho'],
   ['TraceLogic', 'VaultPath', 'QRBeam', 'OmniID'],
   ['MapClaim', 'VaultSync', 'QRSignal', 'LogicMesh'],
-  ];
+];
 
- function addBrandToSector() {
+function addBrandToSector() {
   const sector = document.getElementById("sectorSelect").value;
   const brand = document.getElementById("brandInput").value.trim();
   const subnodes = document.getElementById("subnodesInput").value
@@ -2136,30 +2134,34 @@ const ailogicSubNodes = [
     return;
   }
 
-  // Clear existing data if the selected sector is "ai-logic"
-  if (sector === "ai-logic") {
+  if (sector === "ai-logic" && sectorData["ai-logic"].brands.length > 0) {
+    if (!confirm("This will overwrite all data in AI Logic. Do you want to continue?")) {
+      return;
+    }
     sectorData["ai-logic"].brands = [];
     sectorData["ai-logic"].nodes = [];
   }
 
-  // Add data to the selected sector
   if (!sectorData[sector]) {
-    sectorData[sector] = { brands: [], nodes: [] }; // Initialize if sector doesn't exist
+    console.warn(`Sector ${sector} not found in sectorData. Initializing it.`);
+    sectorData[sector] = { brands: [], nodes: [] };
   }
+
   sectorData[sector].brands.push(brand);
   sectorData[sector].nodes.push(subnodes);
 
-  // Update the admin status
   document.getElementById("adminStatus").textContent =
     `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
 
-  // Re-render the UI for "ai-logic" if needed
-  if (sector === "ai-logic") {
-    renderSectorData("ai-logic");
-  }
+  renderSectorData(sector);
 }
 
 function renderSectorData(sector) {
+  if (!sectorData[sector]) {
+    console.warn(`No data found for sector: ${sector}`);
+    return;
+  }
+
   const grid = document.getElementById(`${sector}-grid`);
   const snapshots = document.getElementById(`${sector}-snapshots`);
 
@@ -2168,14 +2170,12 @@ function renderSectorData(sector) {
     return;
   }
 
-  // Clear existing data
   grid.innerHTML = "";
   snapshots.innerHTML = "";
 
-  // Populate new data
   sectorData[sector].brands.forEach((brand, index) => {
     const btn = document.createElement("button");
-    btn.className = "bg-white brand-button px-2 py-1 text-sm rounded shadow hover:-translate-y-1 hover:scale-105";
+    btn.className = "bg-white brand-button px-2 py-1 text-sm rounded shadow transition duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-blue-100 font-semibold";
     btn.textContent = `${brand}™`;
     btn.onclick = () => toggleSnapshot(`${sector}-snap-${index}`);
     grid.appendChild(btn);
@@ -2190,11 +2190,32 @@ function renderSectorData(sector) {
       </ul>`;
     snapshots.appendChild(snap);
   });
+
+  console.log(`✅ Rendered data for sector: ${sector}`);
+}
+
+function toggleSnapshot(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.classList.toggle('hidden');
+  } else {
+    console.warn(`Snapshot with ID ${id} not found.`);
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  renderSectorData("ai-logic");
+  Object.keys(sectorData).forEach(sector => {
+    const grid = document.getElementById(`${sector}-grid`);
+    const snapshots = document.getElementById(`${sector}-snapshots`);
+    if (!grid || !snapshots) {
+      console.warn(`Skipping sector ${sector}: Missing grid or snapshots element.`);
+      return;
+    }
+    renderSectorData(sector);
+  });
 });
+<script>
+    
 
  <script>
 const professionalBrands = [
@@ -2264,38 +2285,65 @@ const professionalSubNodes = [
   ];
 
   function renderProfessionalSection() {
-    const grid = document.getElementById('professional-grid');
-    const snapContainer = document.getElementById('professional-snapshots');
+  // Get required DOM elements
+  const grid = document.getElementById('professional-grid');
+  const snapContainer = document.getElementById('professional-snapshots');
 
-    if (!grid || !snapContainer || professionalBrands.length !== professionalSubNodes.length) {
-      console.warn('[Professional Grid] DOM elements missing or array mismatch');
-      return;
-    }
-
-    professionalBrands.forEach((brand, i) => {
-      const btn = document.createElement('button');
-      btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-yellow-100 hover:text-yellow-800 font-semibold cursor-pointer';
-      btn.innerHTML = `${brand}<sup>™</sup>`;
-      btn.onclick = () => toggleSnapshot(`professional-snap-${i}`);
-      grid.appendChild(btn);
-
-      const subList = professionalSubNodes[i].map(n => `<li>🔹 ${n}</li>`).join('');
-      const snap = document.createElement('div');
-      snap.id = `professional-snap-${i}`;
-      snap.className = 'brand-snapshot hidden mt-6';
-      snap.innerHTML = `
-        <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
-        <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
-          ${subList}
-        </ul>`;
-            snapContainer.appendChild(snap);
-    }
+  // Check if DOM elements exist
+  if (!grid) {
+    console.error('[Professional Grid] Element with id "professional-grid" not found in the DOM.');
+    return;
+  }
+  if (!snapContainer) {
+    console.error('[Professional Snapshots] Element with id "professional-snapshots" not found in the DOM.');
+    return;
   }
 
-  function toggleSnapshot(id) {
-    const el = document.getElementById(id);
-    if (el) el.classList.toggle('hidden');
+  // Check if data arrays are valid and matched
+  if (!Array.isArray(professionalBrands) || !Array.isArray(professionalSubNodes)) {
+    console.error('[Professional Grid] professionalBrands or professionalSubNodes is not an array.');
+    return;
   }
+  if (professionalBrands.length !== professionalSubNodes.length) {
+    console.error(
+      `[Professional Grid] Array length mismatch: professionalBrands (${professionalBrands.length}) and professionalSubNodes (${professionalSubNodes.length}).`
+    );
+    return;
+  }
+
+  // Clear existing content (to avoid duplication if the function is called multiple times)
+  grid.innerHTML = '';
+  snapContainer.innerHTML = '';
+
+  // Loop through brands and subnodes to render content
+  professionalBrands.forEach((brand, i) => {
+    // Create the brand button
+    const btn = document.createElement('button');
+    btn.className =
+      'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-yellow-100 hover:text-yellow-800 font-semibold cursor-pointer';
+    btn.innerHTML = `${brand}<sup>™</sup>`;
+    btn.onclick = () => toggleSnapshot(`professional-snap-${i}`);
+    grid.appendChild(btn);
+
+    // Generate subnodes list
+    const subList = professionalSubNodes[i]
+      .map((n) => `<li>🔹 ${n}</li>`)
+      .join('');
+
+    // Create the snapshot div
+    const snap = document.createElement('div');
+    snap.id = `professional-snap-${i}`;
+    snap.className = 'brand-snapshot hidden mt-6';
+    snap.innerHTML = `
+      <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+      <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+        ${subList}
+      </ul>`;
+    snapContainer.appendChild(snap);
+  });
+
+  console.log('[Professional Grid] Rendered successfully.');
+}
 
   const sectorList = {
     "ai-logic": "🧠 AI, Logic & Grid",
@@ -2423,5 +2471,4 @@ const professionalSubNodes = [
   <p id="adminStatus" class="text-sm mt-4 text-gray-500"></p>
 </section>
 
-</body>
-</html>
+
