@@ -467,8 +467,13 @@ const bankingSubNodes = [
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
-  const grid = document.getElementById('brand-grid');
-  const snapContainer = document.getElementById('brand-snapshots');
+  const grid = document.getElementById('banking-grid');
+  const snapContainer = document.getElementById('banking-snapshots');
+
+  if (!grid || !snapContainer) {
+    console.error('❌ Grid or Snapshot container not found for Banking. Check ID names.');
+    return;
+  }
 
   bankingBrands.forEach((brand, i) => {
     const btn = document.createElement('button');
@@ -480,28 +485,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const snap = document.createElement('div');
     snap.id = `bank-snap-${i}`;
     snap.className = 'brand-snapshot hidden mt-6';
-   snap.innerHTML = `
-  <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
-  <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
-    <li>🔹 ${bankingSubNodes[i]}</li>
-  </ul>`;
-
+    snap.innerHTML = `
+      <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+      <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+        <li>🔹 ${bankingSubNodes[i]}</li>
+      </ul>
+    `;
     snapContainer.appendChild(snap);
   });
 });
-</script>
 
-<script>
-// FINAL SNAPSHOT TOGGLE FUNCTION
 function toggleSnapshot(id) {
   document.querySelectorAll('.brand-snapshot').forEach(el => el.classList.add('hidden'));
   const active = document.getElementById(id);
   if (active) active.classList.remove('hidden');
 }
-<script>
-  function toggleSnapshot(id) {
-    ...
-  }
 </script>
 
 <!-- 🟢 AGRICULTURE BRANDS -->
