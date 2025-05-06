@@ -2176,28 +2176,24 @@ const professionalSubNodes = [
   ['DropForm', 'VaultEntry', 'QRPath', 'ClauseNote', 'AuditMap', 'PingPlan']
   ];
 
-    
+<script>
 function renderProfessionalSection() {
   const grid = document.getElementById('professional-grid');
   const snapContainer = document.getElementById('professional-snapshots');
 
-  // Check for necessary DOM elements and array length match
   if (!grid || !snapContainer || professionalBrands.length !== professionalSubNodes.length) {
     console.warn('[Professional Grid] DOM elements missing or array mismatch');
     return;
   }
 
-  // Loop through the professional brands and their subnodes
   professionalBrands.forEach((brand, i) => {
-    // Create the button for each brand
     const btn = document.createElement('button');
     btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-indigo-100 hover:text-indigo-800 font-semibold cursor-pointer';
     btn.innerHTML = `${brand}<sup>™</sup>`;
     btn.onclick = () => toggleSnapshot(`professional-snap-${i}`);
     grid.appendChild(btn);
 
-    // Create the snapshot content for each brand
-    const subList = (professionalSubNodes[i] || []).map(n => `<li>🔹 ${n}</li>`).join('');
+    const subList = professionalSubNodes[i].map(n => `<li>🔹 ${n}</li>`).join('');
     const snap = document.createElement('div');
     snap.id = `professional-snap-${i}`;
     snap.className = 'brand-snapshot hidden mt-6';
@@ -2210,10 +2206,11 @@ function renderProfessionalSection() {
   });
 }
 
-function toggleSnapshot(id) {
-  const el = document.getElementById(id);
-  if (el) el.classList.toggle('hidden');
-}
+// ✅ Ensure this triggers on load
+window.addEventListener('DOMContentLoaded', () => {
+  renderProfessionalSection();
+});
+</script>
 
   const sectorList = {
     "ai-logic": "🧠 AI, Logic & Grid",
