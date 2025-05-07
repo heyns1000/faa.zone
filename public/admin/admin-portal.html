@@ -2013,7 +2013,7 @@ function renderMediaSection() {
     if (scrollProfiles[brand]) {
       const p = scrollProfiles[brand];
       const scroll = document.createElement("div");
-      scroll.className = "mt-6 p-6 border rounded bg-white shadow text-sm space-y-4";
+      scroll.className = "min-w-[300px] max-w-md flex-shrink-0 bg-white p-6 border rounded shadow text-sm space-y-4";
 
       scroll.innerHTML = `
         <h4 class="text-xl font-bold text-indigo-700">🔊 ${p.title}</h4>
@@ -2042,7 +2042,10 @@ function renderMediaSection() {
           </ul>
         </div>
       `;
-      snap.appendChild(scroll);
+
+      // Append to a special scrollable container if it exists
+      const scrollArea = document.querySelector("#media-scroll-panel .scroll-cards");
+      if (scrollArea) scrollArea.appendChild(scroll);
     }
 
     snapContainer.appendChild(snap);
