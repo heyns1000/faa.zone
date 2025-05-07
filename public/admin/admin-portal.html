@@ -2420,45 +2420,7 @@ const professionalSubNodes = [
   document.addEventListener("DOMContentLoaded", renderProfessionalSection);
 </script>
 
-<script>
-  // ⚙️ FAA™ Admin & Manual Sync Panel
-  <div class="text-2xl font-bold text-indigo-700 mb-4">⚙️ FAA™ Admin & Manual Sync Panel</div>
-  <div id="embedded-admin-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
-    <div class="text-2xl font-bold text-indigo-700 mb-4">
-      ⚙️ FAA™ Admin & Manual Sync Panel
-    </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-      <div>
-        <label class="text-sm font-medium block mb-1">📂 Sector</label>
-        <select id="sectorSelect" class="w-full border rounded p-2"></select>
-      </div>
-      <div>
-        <label class="text-sm font-medium block mb-1">🏷 Brand Name</label>
-        <input id="brandInput" class="w-full border rounded p-2" placeholder="e.g. OmniCastX" />
-      </div>
-      <div>
-        <label class="text-sm font-medium block mb-1">📌 Subnodes (comma-separated)</label>
-        <input id="subnodesInput" class="w-full border rounded p-2" placeholder="e.g. VaultDrop, QRClaim" />
-      </div>
-      <div class="flex items-end">
-        <button onclick="addBrandToSector()" class="bg-indigo-600 text-white px-4 py-2 rounded shadow hover:bg-indigo-700 w-full">
-          ➕ Add Brand
-        </button>
-      </div>
-    </div>
-
-    <p id="adminStatus" class="text-sm text-gray-500 mb-4"></p>
-
-    <div class="mb-6">
-      <button onclick="clearSectorData()" class="text-sm text-red-600 underline">
-        🗑 Clear All Admin Data
-      </button>
-    </div>
-
-    <div id="output-section" class="pt-4"></div>
-  </div>
-</script>
 
 <script>
   // 🌐 All Sectors Available in Admin Panel
@@ -2571,6 +2533,17 @@ const professionalSubNodes = [
 
   // 🔄 Setup on Page Load
   document.addEventListener("DOMContentLoaded", () => {
+    // Render Professional Section first
+    renderProfessionalSection();
+
+    // Now, show the admin panel and append it to the bottom of the page
+    const adminPanel = document.getElementById("embedded-admin-snapshot");
+    if (adminPanel) {
+      adminPanel.classList.remove("hidden");
+      document.body.appendChild(adminPanel); // Moves it to the bottom of the page
+    }
+    
+    // Set up sector options dynamically
     const select = document.getElementById("sectorSelect");
     if (select) {
       Object.keys(sectorList).forEach((key) => {
@@ -2581,7 +2554,58 @@ const professionalSubNodes = [
       });
     }
 
+    // Render all saved sector data
     Object.keys(sectorData).forEach(renderSectorOutput);
   });
 </script>
 
+<!-- Admin Panel HTML -->
+<div class="text-2xl font-bold text-indigo-700 mb-4">⚙️ FAA™ Admin & Manual Sync Panel</div>
+<div id="embedded-admin-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
+  <!-- Close Button for Admin Panel -->
+  <button onclick="closeDiv('embedded-admin-snapshot')" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close</button>
+  
+  <div class="text-2xl font-bold text-indigo-700 mb-4">
+    ⚙️ FAA™ Admin & Manual Sync Panel
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+    <div>
+      <label class="text-sm font-medium block mb-1">📂 Sector</label>
+      <select id="sectorSelect" class="w-full border rounded p-2"></select>
+    </div>
+    <div>
+      <label class="text-sm font-medium block mb-1">🏷 Brand Name</label>
+      <input id="brandInput" class="w-full border rounded p-2" placeholder="e.g. OmniCastX" />
+    </div>
+    <div>
+      <label class="text-sm font-medium block mb-1">📌 Subnodes (comma-separated)</label>
+      <input id="subnodesInput" class="w-full border rounded p-2" placeholder="e.g. VaultDrop, QRClaim" />
+    </div>
+    <div class="flex items-end">
+      <button onclick="addBrandToSector()" class="bg-indigo-600 text-white px-4 py-2 rounded shadow hover:bg-indigo-700 w-full">
+        ➕ Add Brand
+      </button>
+    </div>
+  </div>
+
+  <p id="adminStatus" class="text-sm text-gray-500 mb-4"></p>
+
+  <div class="mb-6">
+    <button onclick="clearSectorData()" class="text-sm text-red-600 underline">
+      🗑 Clear All Admin Data
+    </button>
+  </div>
+
+  <div id="output-section" class="pt-4"></div>
+</div>
+
+<script>
+  // Function to close the div
+  function closeDiv(id) {
+    const div = document.getElementById(id);
+    if (div) {
+      div.style.display = 'none';  // Hides the div
+    }
+  }
+</script>
