@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-05-13 | faa.zone | history | `public/admin/admin-portal.html` | `016ff364` | ⚙️ Admin Portal | 141609 | 83 | 17 | 190.2 |
+| 2 | 2025-05-14 | faa.zone | history | `public/admin/admin-portal.html` | `ced759d8` | ⚙️ Admin Portal | 141906 | 83 | 17 | 190.2 |
