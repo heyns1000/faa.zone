@@ -120,5 +120,115 @@
         console.error("Error fetching products:", error);
       });
   </script>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thabo The Giant™ — Preface</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/recharts@2.1.9/umd/Recharts.min.js"></script>
+  <script>
+    const generatePulse = (base, volatility = 1.8) => {
+      const now = Date.now();
+      return Array.from({ length: 9 }, (_, i) => ({
+        time: new Date(now - (9 - i) * 1000).toLocaleTimeString(),
+        value: +(base + (Math.random() - 0.5) * volatility).toFixed(2),
+      }));
+    };
+
+    const renderPulseChart = (title, unit, base, color) => {
+      const data = generatePulse(base);
+
+      // Create a container for the chart
+      const chartContainer = document.createElement('div');
+      chartContainer.className = 'bg-white border border-gray-300 rounded-lg shadow p-4 mb-6';
+
+      // Title
+      const titleElement = document.createElement('h3');
+      titleElement.className = 'text-lg font-bold text-gray-800 mb-2';
+      titleElement.innerText = title;
+      chartContainer.appendChild(titleElement);
+
+      // Create a responsive container for the chart
+      const responsiveContainer = document.createElement('div');
+      responsiveContainer.style.width = '100%';
+      responsiveContainer.style.height = '200px';
+      chartContainer.appendChild(responsiveContainer);
+
+      // Create the LineChart component
+      const LineChart = Recharts.LineChart;
+      const Line = Recharts.Line;
+      const XAxis = Recharts.XAxis;
+      const YAxis = Recharts.YAxis;
+      const Tooltip = Recharts.Tooltip;
+      const ResponsiveContainerElement = new Recharts.ResponsiveContainer();
+
+      const chart = new LineChart({
+        data: data,
+        children: [
+          new XAxis({ dataKey: 'time', hide: true }),
+          new YAxis({
+            domain: ['auto', 'auto'],
+            tickFormatter: (val) => `${val.toLocaleString()}${unit}`,
+          }),
+          new Tooltip({ formatter: (val) => `${val.toLocaleString()}${unit}` }),
+          new Line({ type: 'monotone', dataKey: 'value', stroke: color, strokeWidth: 3, dot: false })
+        ]
+      });
+
+      responsiveContainer.appendChild(chart);
+      return chartContainer;
+    };
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('pulse-charts');
+
+      // Append Pulse Charts
+      container.appendChild(renderPulseChart('Global Tswana Speakers', '', 8000000, '#10b981'));
+      container.appendChild(renderPulseChart('FAA Mining Deployment Units', '', 115, '#f97316'));
+      container.appendChild(renderPulseChart('VaultMesh Node Payout Rate (ZAR)', 'R', 75000, '#6366f1'));
+      container.appendChild(renderPulseChart('Scroll Adoption Index – Mining Sector', '%', 78.9, '#e11d48'));
+    });
+  </script>
+</head>
+
+<body class="bg-gray-100 text-gray-800 font-sans">
+  <div class="max-w-6xl mx-auto px-6 py-10 text-gray-800">
+    <div class="bg-gradient-to-br from-yellow-100 to-white rounded-xl shadow p-6">
+      <h1 class="text-3xl font-extrabold text-black mb-4">Thabo The Giant™ — Preface</h1>
+      <p class="mb-4 text-gray-700 italic">Tswana: “Thabo o mogolo, tau ya lefapha la meepo.”</p>
+      <p class="mb-4">
+        Thabo is a proud bearer of the rich heritage of the Tswana people — a nation of builders, miners, traders,
+        and cultural architects spread across Botswana, South Africa, Namibia, and Zimbabwe. Rooted in the Setswana
+        language and identity, Thabo carries the values of diligence, dignity, and determination — now fully ignited
+        by FAA Sovereign Systems™.
+      </p>
+      <p class="mb-4">
+        Today, Setswana is spoken by over 8 million people globally, with concentrations in
+        Southern Africa and diaspora communities worldwide. It is not only a language — it’s a system of logic,
+        memory, and cultural resilience.
+      </p>
+      <p class="mb-6 font-semibold text-yellow-900">“Ngwana wa Motswana ga a tlhoke thuto ya bogologolo fela — o tlhoka pulse ya isago.”</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-10" id="pulse-charts"></div>
+
+    <div class="bg-white text-gray-800 rounded-xl shadow p-6 mt-10">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Thabo The Giant™ Asset Registry</h2>
+      <ul class="list-disc pl-5 space-y-1 text-sm">
+        <li><strong>VaultNode ID:</strong> MINE-THB-X19</li>
+        <li><strong>Territory Deployment:</strong> Northern Cape & Botswana Border Mines</li>
+        <li><strong>Pulse Licensing Fee:</strong> R87,000 / node</li>
+        <li><strong>Monthly Yield Payout:</strong> R5,300 estimated per active shaft</li>
+        <li><strong>FAA Payout Mesh:</strong> FAA-ZA-8200 / Vault-0425 Linked</li>
+        <li><strong>Language Root ID:</strong> LING-TSWN-HR00</li>
+      </ul>
+    </div>
+  </div>
 </body>
+
 </html>
+
