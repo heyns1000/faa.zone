@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FAA™ | PulseTrade Landing Grid</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
   <style>
     html {
       scroll-behavior: smooth;
@@ -69,6 +70,70 @@
     <a href="#" class="mt-4 inline-block bg-green-600 text-white px-4 py-2 rounded-full glow-btn">Activate Now</a>
   </div>
 </section>
+
+<!-- PulseTrade Graph Section -->
+<div class="mt-20">
+  <h2 class="text-center text-2xl font-bold text-cyan-400 mb-6">📈 Live PulseTrade™ Graph</h2>
+  <div class="bg-gray-900 p-6 rounded-xl shadow-inner max-w-6xl mx-auto">
+    <canvas id="pulseTradeChart" class="w-full h-96"></canvas>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const ctx = document.getElementById('pulseTradeChart').getContext('2d');
+    const pulseChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [{
+          label: 'PulseTrade Signal',
+          data: [],
+          borderColor: '#22d3ee',
+          borderWidth: 2,
+          fill: false,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { color: '#ffffff' },
+            grid: { color: '#374151' }
+          },
+          x: {
+            ticks: { color: '#ffffff' },
+            grid: { color: '#374151' }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: { color: '#ffffff' },
+            position: 'bottom'
+          }
+        }
+      }
+    });
+
+    function addPulseData() {
+      const now = new Date().toLocaleTimeString();
+      if (pulseChart.data.labels.length > 30) {
+        pulseChart.data.labels.shift();
+        pulseChart.data.datasets[0].data.shift();
+      }
+      pulseChart.data.labels.push(now);
+      pulseChart.data.datasets[0].data.push((80 + Math.random() * 10).toFixed(2));
+      pulseChart.update();
+    }
+
+    addPulseData();
+    setInterval(addPulseData, 3000);
+  });
+</script>
 
 <div class="mt-20 text-center">
   <h3 class="text-xl font-semibold text-white/80">🧿 CHAIRMAN NODE DIRECTIVES</h3>
