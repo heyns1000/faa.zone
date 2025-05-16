@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-05-16 | faa.zone | history | `public/cecil/rossouw/fire.html` | `b81d8788` | G.P. Smidt — The Guy Who Loves Black Women | 13747 | 25 | 0 | 47.2 |
+| 2 | 2025-05-16 | faa.zone | codex/create-regulatory-index-webpage-layout | `public/cecil/rossouw/fire.html` | `22dc03cf` | G.P. Smidt — The Guy Who Loves Black Women | 16365 | 32 | 0 | 47.0 |
