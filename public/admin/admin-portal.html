@@ -1,77 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>⚙️ Admin Portal</title>
+  <title>⚙️ Admin Panel</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <!-- Add the custom style block here -->
-  <style>
-    .sector-link {
-      background-color: #f3f4f6; /* Gray-100 */
-      padding: 0.75rem 0.5rem;
-      border-radius: 0.375rem; /* Rounded corners */
-      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-      text-align: center;
-      font-weight: 600; /* Semi-bold */
-      display: block;
-      transition: transform 0.2s ease-in-out, scale 0.2s ease-in-out;
-    }
-
-    .sector-link:hover {
-      transform: translateY(-0.25rem) scale(1.05);
-      background-color: #e5e7eb; /* Slightly darker gray */
-    }
-  </style>
 </head>
+
 <body class="bg-gray-50 font-sans">
 
-  <!-- Hero Header -->
-  <header class="bg-indigo-700 text-white py-6 mb-8 shadow">
-    <div class="container mx-auto px-6">
-      <h1 class="text-3xl font-bold">🦁 Seedwave™ Admin Portal</h1>
-      <p class="text-sm opacity-80 mt-2">✿Corebrands management & AI logic deployment center</p>
-    </div>
-  </header>
-
-  <!-- 🔐 Access Control Buttons (Fixed to go to admin-portal-approval) -->
-  <div class="flex space-x-2 absolute right-6 top-6">
-    <a href="/admin/admin-portal-approval">
-      <button class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-1 rounded shadow">
-        🪙 Loyalty Access
-      </button>
-    </a>
-    <a href="/admin/admin-portal-approval">
-      <button class="bg-gray-800 hover:bg-gray-900 text-white text-sm font-semibold px-4 py-1 rounded shadow">
-        📊 Shareholder Access
-      </button>
-    </a>
-    <a href="/admin/admin-portal-approval">
-      <button class="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold px-4 py-1 rounded shadow">
-        🤝 Service Provider
-      </button>
-    </a>
-    <a href="/admin/admin-portal-approval">
-      <button class="bg-purple-500 hover:bg-purple-600 text-white text-sm font-semibold px-4 py-1 rounded shadow">
-        👨‍👩‍👧‍👦 Family Access
-      </button>
-    </a>
-  </div>
-  
-</body>
-</html>
-
-
-  <!-- Admin Panel Layout -->
+  <!-- Admin Panel — Add Brand & Subnodes -->
   <main class="max-w-6xl mx-auto px-6">
-
-    <!-- Panel Section 1 -->
     <section class="bg-white rounded shadow p-6 mb-8">
       <h2 class="text-xl font-bold mb-4">⚙️ Admin Panel — Add Brand & Subnodes</h2>
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div>
           <label class="text-sm block font-medium mb-1">📂 Sector</label>
-          <select id="sectorSelect" class="w-full border rounded p-2 bg-gray-50"></select>
+          <select id="sectorSelect" class="w-full border rounded p-2 bg-gray-50">
+            <!-- Populate dynamically -->
+          </select>
         </div>
         <div>
           <label class="text-sm block font-medium mb-1">🏷 Brand Name</label>
@@ -88,119 +36,95 @@
         </div>
       </div>
     </section>
-
-    <!-- Panel Section 2 -->
-    <section class="bg-white rounded shadow p-6 mb-8">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div>
-          <label class="text-sm block font-medium mb-1">🏷️ Sector Name</label>
-          <input id="sectorName" class="w-full border rounded p-2" placeholder="e.g. AI Logic">
-        </div>
-        <div>
-          <label class="text-sm block font-medium mb-1">📁 Sector File Path</label>
-          <input id="sectorPath" class="w-full border rounded p-2" placeholder="e.g. faa.zone/public/sectors/ai-logic/">
-        </div>
-        <div>
-          <label class="text-sm block font-medium mb-1">🚀 Deploy To</label>
-          <select id="deployTarget" class="w-full border rounded p-2 bg-gray-50">
-            <option>Cloudware Worker 1</option>
-            <option>Cloudware Worker 2</option>
-            <option>Cloudware Worker 3</option>
-            <option>OpenAI Assistant</option>
-            <option>Vector Store</option>
-            <option>Local Folders</option>
-          </select>
-        </div>
-      </div>
-    </section>
-
-    <!-- Admin Status -->
-    <section class="bg-white rounded shadow p-6 mb-16">
-      <h3 class="text-md font-semibold mb-2">ℹ️ Admin Status Feedback</h3>
-      <p id="adminStatus" class="text-sm text-gray-600 italic">Ready to receive input.</p>
-    </section>
-
   </main>
 
-<script>
-  // Sector list initialization
-  const sectorList = {
-    "ai-logic": "🧠 AI, Logic & Grid",
-    "creative": "🖋️ Creative Tech",
-    "logistics": "📦 Logistics & Packaging",
-    "education-ip": "📚 Education & IP",
-    "fashion": "✂ Fashion & Identity",
-    "gaming": "🎮 Gaming & Simulation",
-    "health": "🧠 Health & Hygiene",
-    "housing": "🏗️ Housing & Infrastructure",
-    "justice": "⚖ Justice & Ethics",
-    "knowledge": "🧠 Knowledge & Archives",
-    "micromesh": "☰ Micro-Mesh Logistics",
-    "media": "🎬 Motion, Media & Sonic",
-    "nutrition": "✿ Nutrition & Food Chain",
-    "packaging": "📦 Packaging & Materials",
-    "quantum": "✴️ Quantum Protocols",
-    "ritual": "☯ Ritual & Culture",
-    "saas": "🔑 SaaS & Licensing",
-    "trade": "🧺 Trade Systems",
-    "utilities": "🔋 Utilities & Energy",
-    "voice": "🎙️ Voice & Audio",
-    "webless": "📡 Webless Tech & Nodes",
-    "nft": "🔁 NFT & Ownership",
-    "education-youth": "🎓 Education & Youth",
-    "zerowaste": "♻️ Zero Waste",
-    "professional": "🧾 Professional Services"
-  };
+  <!-- Admin Status -->
+  <section class="bg-white rounded shadow p-6 mb-16">
+    <h3 class="text-md font-semibold mb-2">ℹ️ Admin Status Feedback</h3>
+    <p id="adminStatus" class="text-sm text-gray-600 italic">Ready to receive input.</p>
+  </section>
 
-  // Initialize sectorData (storing brands and subnodes for each sector)
-  const sectorData = {};
-  for (let key in sectorList) {
-    sectorData[key] = { brands: [], nodes: [] };
-  }
+  <!-- Your Script Starts Here -->
+  <script>
+    // Sector list initialization
+    const sectorList = {
+      "ai-logic": "🧠 AI, Logic & Grid",
+      "creative": "🖋️ Creative Tech",
+      "logistics": "📦 Logistics & Packaging",
+      "education-ip": "📚 Education & IP",
+      "fashion": "✂ Fashion & Identity",
+      "gaming": "🎮 Gaming & Simulation",
+      "health": "🧠 Health & Hygiene",
+      "housing": "🏗️ Housing & Infrastructure",
+      "justice": "⚖ Justice & Ethics",
+      "knowledge": "🧠 Knowledge & Archives",
+      "micromesh": "☰ Micro-Mesh Logistics",
+      "media": "🎬 Motion, Media & Sonic",
+      "nutrition": "✿ Nutrition & Food Chain",
+      "packaging": "📦 Packaging & Materials",
+      "quantum": "✴️ Quantum Protocols",
+      "ritual": "☯ Ritual & Culture",
+      "saas": "🔑 SaaS & Licensing",
+      "trade": "🧺 Trade Systems",
+      "utilities": "🔋 Utilities & Energy",
+      "voice": "🎙️ Voice & Audio",
+      "webless": "📡 Webless Tech & Nodes",
+      "nft": "🔁 NFT & Ownership",
+      "education-youth": "🎓 Education & Youth",
+      "zerowaste": "♻️ Zero Waste",
+      "professional": "🧾 Professional Services"
+    };
 
-  // Populate sector dropdown when DOM content is loaded
-  window.addEventListener('DOMContentLoaded', () => {
-    const select = document.getElementById("sectorSelect");
+    // Initialize sectorData (storing brands and subnodes for each sector)
+    const sectorData = {};
     for (let key in sectorList) {
-      const option = document.createElement("option");
-      option.value = key;
-      option.textContent = sectorList[key];
-      select.appendChild(option);
-    }
-  });
-
-  // Add brand and subnodes to the selected sector
-  function addBrandToSector() {
-    const sector = document.getElementById("sectorSelect").value;
-    const brand = document.getElementById("brandInput").value.trim();
-    const subnodes = document.getElementById("subnodesInput").value
-      .split(",").map(n => n.trim()).filter(Boolean);
-
-    if (!brand || subnodes.length === 0) {
-      document.getElementById("adminStatus").textContent = "⚠️ Please fill in both fields.";
-      return;
+      sectorData[key] = { brands: [], nodes: [] };
     }
 
-    // Add the brand and subnodes to sectorData
-    sectorData[sector].brands.push(brand);
-    sectorData[sector].nodes.push(subnodes);
+    // Populate sector dropdown when DOM content is loaded
+    window.addEventListener('DOMContentLoaded', () => {
+      const select = document.getElementById("sectorSelect");
+      for (let key in sectorList) {
+        const option = document.createElement("option");
+        option.value = key;
+        option.textContent = sectorList[key];
+        select.appendChild(option);
+      }
+    });
 
-    // Update the admin status message
-    document.getElementById("adminStatus").textContent = `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
+    // Add brand and subnodes to the selected sector
+    function addBrandToSector() {
+      const sector = document.getElementById("sectorSelect").value;
+      const brand = document.getElementById("brandInput").value.trim();
+      const subnodes = document.getElementById("subnodesInput").value
+        .split(",").map(n => n.trim()).filter(Boolean);
 
-    // Optionally, send data to the backend for storage
-    fetch('/api/sectors', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(sectorData) // Send the updated sectorData
-    }).then(response => response.json())
-      .then(data => console.log("Data saved to backend:", data));
-  }
-</script>
+      if (!brand || subnodes.length === 0) {
+        document.getElementById("adminStatus").textContent = "⚠️ Please fill in both fields.";
+        return;
+      }
 
+      // Update sectorData with the new brand and subnodes
+      sectorData[sector].brands.push(brand);
+      sectorData[sector].nodes.push(subnodes);
+
+      // Update the admin status message
+      document.getElementById("adminStatus").textContent = `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
+
+      // Optionally, send data to the backend for storage
+      fetch('/api/sectors', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(sectorData) // Send the updated sectorData
+      }).then(response => response.json())
+        .then(data => console.log("Data saved to backend:", data));
+    }
+  </script>
 
 </body>
+
 </html>
+
 <!-- 📊 FAA.ZONE INDEX — Expanded Table Structure -->
 <section class="bg-white rounded shadow p-6 mb-16">
   <h2 class="text-xl font-bold mb-4">⦿ FAA.ZONE INDEX — Expanded Table Structure</h2>
