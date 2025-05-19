@@ -94,46 +94,43 @@
       sectorData[key] = { brands: [], nodes: [] };
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      const select = document.getElementById("sectorSelect");
-      for (let key in sectorList) {
-        const option = document.createElement("option");
-        option.value = key;
-        option.textContent = sectorList[key];
-        select.appendChild(option);
-      }
-    });
+   <script>
+  // ✅ Fetch existing data from backend on page load
+  window.addEventListener('DOMContentLoaded', () => {
+    fetch('http://localhost:5000/api/sectors')
+      .then(response => response.json())
+      .then(data => {
+        console.log("📦 Loaded saved data from backend:", data);
+        // Optional: Display it somewhere in your UI
+        // For example: populate a summary or history section
+      })
+      .catch(error => console.error("⚠️ Failed to load saved data:", error));
+  });
 
-    function addBrandToSector() {
-      const sector = document.getElementById("sectorSelect").value;
-      const brand = document.getElementById("brandInput").value.trim();
-      const subnodes = document.getElementById("subnodesInput").value
-        .split(",").map(n => n.trim()).filter(Boolean);
+  function addBrandToSector() {
+    const sector = document.getElementById("sectorSelect").value;
+    const brand = document.getElementById("brandInput").value.trim();
+    const subnodes = document.getElementById("subnodesInput").value
+      .split(",").map(n => n.trim()).filter(Boolean);
 
-      if (!brand || subnodes.length === 0) {
-        document.getElementById("adminStatus").textContent = "⚠️ Please fill in both fields.";
-        return;
-      }
-
-      sectorData[sector].brands.push(brand);
-      sectorData[sector].nodes.push(subnodes);
-
-document.getElementById("adminStatus").textContent = `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
-
-fetch('http://localhost:5000/api/sectors', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ sector, brand, subnodes }) // ✅ Correct data format
-})
-  .then(response => response.json())
-  .then(data => console.log("Data saved to backend:", data))
-  .catch(error => console.error("Error saving data:", error));
-
+    if (!brand || subnodes.length === 0) {
+      document.getElementById("adminStatus").textContent = "⚠️ Please fill in both fields.";
+      return;
     }
-  </script>
 
-</body>
-</html>
+    document.getElementById("adminStatus").textContent = `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
+
+    fetch('http://localhost:5000/api/sectors', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sector, brand, subnodes }) // ✅ Correct data format
+    })
+      .then(response => response.json())
+      .then(data => console.log("✅ Data saved to backend:", data))
+      .catch(error => console.error("❌ Error saving data:", error));
+  }
+</script>
+
 
 
 <!-- 📊 FAA.ZONE INDEX — Expanded Table Structure -->
