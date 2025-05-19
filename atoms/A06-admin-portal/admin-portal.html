@@ -122,9 +122,9 @@
 
   </main>
 
-  <script>
-    // Sector list initialization
-const sectorList = {
+<script>
+  // Sector list initialization
+  const sectorList = {
     "ai-logic": "🧠 AI, Logic & Grid",
     "creative": "🖋️ Creative Tech",
     "logistics": "📦 Logistics & Packaging",
@@ -152,36 +152,52 @@ const sectorList = {
     "professional": "🧾 Professional Services"
   };
 
+  // Initialize sectorData (storing brands and subnodes for each sector)
+  const sectorData = {};
+  for (let key in sectorList) {
+    sectorData[key] = { brands: [], nodes: [] };
+  }
 
-    const sectorData = {};
-    for (let key in sectorList) sectorData[key] = { brands: [], nodes: [] };
-
-    window.addEventListener('DOMContentLoaded', () => {
-      const select = document.getElementById("sectorSelect");
-      for (let key in sectorList) {
-        const option = document.createElement("option");
-        option.value = key;
-        option.textContent = sectorList[key];
-        select.appendChild(option);
-      }
-    });
-
-    function addBrandToSector() {
-      const sector = document.getElementById("sectorSelect").value;
-      const brand = document.getElementById("brandInput").value.trim();
-      const subnodes = document.getElementById("subnodesInput").value
-        .split(",").map(n => n.trim()).filter(Boolean);
-
-      if (!brand || subnodes.length === 0) {
-        document.getElementById("adminStatus").textContent = "⚠️ Please fill in both fields.";
-        return;
-      }
-
-      sectorData[sector].brands.push(brand);
-      sectorData[sector].nodes.push(subnodes);
-      document.getElementById("adminStatus").textContent = `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
+  // Populate sector dropdown when DOM content is loaded
+  window.addEventListener('DOMContentLoaded', () => {
+    const select = document.getElementById("sectorSelect");
+    for (let key in sectorList) {
+      const option = document.createElement("option");
+      option.value = key;
+      option.textContent = sectorList[key];
+      select.appendChild(option);
     }
-  </script>
+  });
+
+  // Add brand and subnodes to the selected sector
+  function addBrandToSector() {
+    const sector = document.getElementById("sectorSelect").value;
+    const brand = document.getElementById("brandInput").value.trim();
+    const subnodes = document.getElementById("subnodesInput").value
+      .split(",").map(n => n.trim()).filter(Boolean);
+
+    if (!brand || subnodes.length === 0) {
+      document.getElementById("adminStatus").textContent = "⚠️ Please fill in both fields.";
+      return;
+    }
+
+    // Add the brand and subnodes to sectorData
+    sectorData[sector].brands.push(brand);
+    sectorData[sector].nodes.push(subnodes);
+
+    // Update the admin status message
+    document.getElementById("adminStatus").textContent = `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
+
+    // Optionally, send data to the backend for storage
+    fetch('/api/sectors', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(sectorData) // Send the updated sectorData
+    }).then(response => response.json())
+      .then(data => console.log("Data saved to backend:", data));
+  }
+</script>
+
 
 </body>
 </html>
