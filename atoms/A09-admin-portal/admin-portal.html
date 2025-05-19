@@ -10,17 +10,34 @@
 
 <body class="bg-gray-50 font-sans">
 
-  <!-- Header -->
+  <!-- Header: Top navigation & access buttons -->
   <header class="bg-indigo-700 text-white py-6 mb-8 shadow">
     <div class="container mx-auto px-6">
       <h1 class="text-3xl font-bold">🦁 Seedwave™ Admin Portal</h1>
       <p class="text-sm opacity-80 mt-2">✿Corebrands management & AI logic deployment center</p>
     </div>
+    <!-- Access Control Buttons (Fixed to go to admin-portal-approval) -->
     <div class="flex space-x-2 absolute right-6 top-6">
-      <a href="/admin/admin-portal-approval"><button class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-1 rounded shadow">🪙 Loyalty Access</button></a>
-      <a href="/admin/admin-portal-approval"><button class="bg-gray-800 hover:bg-gray-900 text-white text-sm font-semibold px-4 py-1 rounded shadow">📊 Shareholder Access</button></a>
-      <a href="/admin/admin-portal-approval"><button class="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold px-4 py-1 rounded shadow">🤝 Service Provider</button></a>
-      <a href="/admin/admin-portal-approval"><button class="bg-purple-500 hover:bg-purple-600 text-white text-sm font-semibold px-4 py-1 rounded shadow">👨‍👩‍👧‍👦 Family Access</button></a>
+      <a href="/admin/admin-portal-approval">
+        <button class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-1 rounded shadow">
+          🪙 Loyalty Access
+        </button>
+      </a>
+      <a href="/admin/admin-portal-approval">
+        <button class="bg-gray-800 hover:bg-gray-900 text-white text-sm font-semibold px-4 py-1 rounded shadow">
+          📊 Shareholder Access
+        </button>
+      </a>
+      <a href="/admin/admin-portal-approval">
+        <button class="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold px-4 py-1 rounded shadow">
+          🤝 Service Provider
+        </button>
+      </a>
+      <a href="/admin/admin-portal-approval">
+        <button class="bg-purple-500 hover:bg-purple-600 text-white text-sm font-semibold px-4 py-1 rounded shadow">
+          👨‍👩‍👧‍👦 Family Access
+        </button>
+      </a>
     </div>
   </header>
 
@@ -33,7 +50,7 @@
         <div>
           <label class="text-sm block font-medium mb-1">📂 Sector</label>
           <select id="sectorSelect" class="w-full border rounded p-2 bg-gray-50">
-            <!-- Populated dynamically -->
+            <!-- Populate dynamically -->
           </select>
         </div>
         <div>
@@ -52,15 +69,15 @@
       </div>
     </section>
 
-    <!-- Admin Status -->
-    <section class="bg-white rounded shadow p-6 mb-16">
-      <h3 class="text-md font-semibold mb-2">ℹ️ Admin Status Feedback</h3>
-      <p id="adminStatus" class="text-sm text-gray-600 italic">Ready to receive input.</p>
-    </section>
-  </main>
+  <!-- Admin Status -->
+  <section class="bg-white rounded shadow p-6 mb-16">
+    <h3 class="text-md font-semibold mb-2">ℹ️ Admin Status Feedback</h3>
+    <p id="adminStatus" class="text-sm text-gray-600 italic">Ready to receive input.</p>
+  </section>
 
-  <!-- JavaScript -->
+  <!-- Your Script Starts Here -->
   <script>
+    // Sector list initialization
     const sectorList = {
       "ai-logic": "🧠 AI, Logic & Grid",
       "creative": "🖋️ Creative Tech",
@@ -89,49 +106,55 @@
       "professional": "🧾 Professional Services"
     };
 
+    // Initialize sectorData (storing brands and subnodes for each sector)
     const sectorData = {};
     for (let key in sectorList) {
       sectorData[key] = { brands: [], nodes: [] };
     }
 
-   <script>
-  // ✅ Fetch existing data from backend on page load
-  window.addEventListener('DOMContentLoaded', () => {
-    fetch('http://localhost:5000/api/sectors')
-      .then(response => response.json())
-      .then(data => {
-        console.log("📦 Loaded saved data from backend:", data);
-        // Optional: Display it somewhere in your UI
-        // For example: populate a summary or history section
-      })
-      .catch(error => console.error("⚠️ Failed to load saved data:", error));
-  });
+    // Populate sector dropdown when DOM content is loaded
+    window.addEventListener('DOMContentLoaded', () => {
+      const select = document.getElementById("sectorSelect");
+      for (let key in sectorList) {
+        const option = document.createElement("option");
+        option.value = key;
+        option.textContent = sectorList[key];
+        select.appendChild(option);
+      }
+    });
 
-  function addBrandToSector() {
-    const sector = document.getElementById("sectorSelect").value;
-    const brand = document.getElementById("brandInput").value.trim();
-    const subnodes = document.getElementById("subnodesInput").value
-      .split(",").map(n => n.trim()).filter(Boolean);
+    // Add brand and subnodes to the selected sector
+    function addBrandToSector() {
+      const sector = document.getElementById("sectorSelect").value;
+      const brand = document.getElementById("brandInput").value.trim();
+      const subnodes = document.getElementById("subnodesInput").value
+        .split(",").map(n => n.trim()).filter(Boolean);
 
-    if (!brand || subnodes.length === 0) {
-      document.getElementById("adminStatus").textContent = "⚠️ Please fill in both fields.";
-      return;
+      if (!brand || subnodes.length === 0) {
+        document.getElementById("adminStatus").textContent = "⚠️ Please fill in both fields.";
+        return;
+      }
+
+      // Update sectorData with the new brand and subnodes
+      sectorData[sector].brands.push(brand);
+      sectorData[sector].nodes.push(subnodes);
+
+      // Update the admin status message
+      document.getElementById("adminStatus").textContent = `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
+
+      // Optionally, send data to the backend for storage
+      fetch('/api/sectors', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(sectorData) // Send the updated sectorData
+      }).then(response => response.json())
+        .then(data => console.log("Data saved to backend:", data));
     }
+  </script>
 
-    document.getElementById("adminStatus").textContent = `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
+</body>
 
-    fetch('http://localhost:5000/api/sectors', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ sector, brand, subnodes }) // ✅ Correct data format
-    })
-      .then(response => response.json())
-      .then(data => console.log("✅ Data saved to backend:", data))
-      .catch(error => console.error("❌ Error saving data:", error));
-  }
-</script>
-
-
+</html>
 
 <!-- 📊 FAA.ZONE INDEX — Expanded Table Structure -->
 <section class="bg-white rounded shadow p-6 mb-16">
