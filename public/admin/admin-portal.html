@@ -118,15 +118,17 @@
       sectorData[sector].brands.push(brand);
       sectorData[sector].nodes.push(subnodes);
 
-      document.getElementById("adminStatus").textContent = `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
+document.getElementById("adminStatus").textContent = `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
 
-      fetch('http://localhost:5000/api/sectors', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(sectorData)
-      }).then(response => response.json())
-        .then(data => console.log("Data saved to backend:", data))
-        .catch(error => console.error("Error saving data:", error));
+fetch('http://localhost:5000/api/sectors', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ sector, brand, subnodes }) // ✅ Correct data format
+})
+  .then(response => response.json())
+  .then(data => console.log("Data saved to backend:", data))
+  .catch(error => console.error("Error saving data:", error));
+
     }
   </script>
 
