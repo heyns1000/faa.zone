@@ -2126,8 +2126,8 @@ const mediaSubNodes = [
   ['IndexNode', 'QRSound', 'VaultDrop', 'PingTrack'],
   ['PanelSync', 'QRTrack', 'VaultFrame', 'ClipClaim']
 ];
-
-  async function renderMediaSection() {
+    
+async function renderMediaSection() {
   const grid = document.getElementById('media-grid');
   const snapContainer = document.getElementById('media-snapshots');
 
@@ -2161,15 +2161,17 @@ const mediaSubNodes = [
         ${subList}
       </ul>`;
 
+    // 🧠 Match cleaned brand to JSON key
     const cleanKey = brand.replace(/™/g, "").trim();
     const p = scrollProfiles[cleanKey];
+
     if (p) {
       const scroll = document.createElement("div");
       scroll.className = "w-full flex justify-between gap-6 bg-white p-6 border rounded shadow text-sm";
 
       scroll.innerHTML = `
         <div class="w-1/2 space-y-4">
-          <h4 class="text-xl font-bold text-indigo-700">🔊 ${p.title}</h4>
+          <h4 class="text-xl font-bold text-indigo-700">${p.icon || '🔊'} ${p.title}</h4>
           <p>${p.intro}</p>
 
           <div>
@@ -2206,7 +2208,6 @@ const mediaSubNodes = [
 
 document.addEventListener('DOMContentLoaded', renderMediaSection);
 </script>
-
 
 
   <script>
