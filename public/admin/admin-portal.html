@@ -59,19 +59,18 @@
     </section>
   </main>
 
-  <!-- JavaScript -->
 <script>
   const sectorList = {
     "ai-logic": "🧠 AI, Logic & Grid",
     "creative": "🖋️ Creative Tech",
     "logistics": "📦 Logistics & Packaging",
-    "education-ip": "📚 Education & IP",
-    "fashion": "✂ Fashion & Identity",
+    "education-ip": "📘 Education & IP",
+    "fashion": "✂️ Fashion & Identity",
     "gaming": "🎮 Gaming & Simulation",
     "health": "🧠 Health & Hygiene",
     "housing": "🏗️ Housing & Infrastructure",
     "justice": "⚖ Justice & Ethics",
-    "knowledge": "🧠 Knowledge & Archives",
+    "knowledge": "📖 Knowledge & Archives",
     "micromesh": "☰ Micro-Mesh Logistics",
     "media": "🎬 Motion, Media & Sonic",
     "nutrition": "✿ Nutrition & Food Chain",
@@ -86,18 +85,28 @@
     "nft": "🔁 NFT & Ownership",
     "education-youth": "🎓 Education & Youth",
     "zerowaste": "♻️ Zero Waste",
-    "professional": "🧾 Professional Services"
+    "professional": "🧾 Professional Services",
+    "payroll-mining": "🪙 Payroll Mining & Accounting",
+    "wildlife": "🦁 Wildlife & Habitat"
   };
 
-  // ✅ Load saved sectors on page load
+  // ✅ Populate dropdown on page load
   window.addEventListener('DOMContentLoaded', () => {
+    const select = document.getElementById('sectorSelect');
+    Object.entries(sectorList).forEach(([key, label]) => {
+      const option = document.createElement('option');
+      option.value = key;
+      option.textContent = label;
+      select.appendChild(option);
+    });
+
+    // Load existing sector data
     fetch('http://localhost:5000/api/sectors')
-      .then(response => response.json())
+      .then(res => res.json())
       .then(data => {
         console.log("📦 Loaded saved data from backend:", data);
-        // Optional: populate dropdown or summary
       })
-      .catch(error => console.error("⚠️ Failed to load saved data:", error));
+      .catch(err => console.error("⚠️ Failed to fetch sectors:", err));
   });
 
   function addBrandToSector() {
@@ -111,18 +120,26 @@
       return;
     }
 
-    document.getElementById("adminStatus").textContent = `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
+    document.getElementById("adminStatus").textContent =
+      `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
 
     fetch('http://localhost:5000/api/sectors', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ sector, brand, subnodes })
     })
-      .then(response => response.json())
-      .then(data => console.log("✅ Data saved to backend:", data))
-      .catch(error => console.error("❌ Error saving data:", error));
+    .then(res => res.json())
+    .then(data => {
+      console.log("💾 Data saved to backend:", data);
+    })
+    .catch(err => {
+      console.error("❌ Error saving data:", err);
+      document.getElementById("adminStatus").textContent = "❌ Failed to save to backend.";
+    });
   }
 </script>
+
+
 
 
 
