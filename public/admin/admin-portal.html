@@ -2052,7 +2052,7 @@ const mediaSubNodes = [
   ['IndexNode', 'QRSound', 'VaultDrop', 'PingTrack'],
   ['PanelSync', 'QRTrack', 'VaultFrame', 'ClipClaim']
 ];
-
+    
 function renderMediaSection() {
   const grid = document.getElementById('media-grid');
   const snapContainer = document.getElementById('media-snapshots');
@@ -2180,29 +2180,31 @@ function renderMediaSection() {
     if (scrollProfiles[brand]) {
       const p = scrollProfiles[brand];
       const scroll = document.createElement("div");
-      scroll.className = "min-w-[300px] max-w-md flex-shrink-0 bg-white p-6 border rounded shadow text-sm space-y-4";
+      scroll.className = "w-full flex justify-between gap-6 bg-white p-6 border rounded shadow text-sm";
 
       scroll.innerHTML = `
-        <h4 class="text-xl font-bold text-indigo-700">🔊 ${p.title}</h4>
-        <p>${p.intro}</p>
+        <div class="w-1/2 space-y-4">
+          <h4 class="text-xl font-bold text-indigo-700">🔊 ${p.title}</h4>
+          <p>${p.intro}</p>
 
-        <div>
-          <h5 class="font-semibold">🎛️ Features</h5>
-          <ul class="list-disc list-inside ml-4 space-y-1">
-            ${p.features.map(f => `<li>${f}</li>`).join("")}
-          </ul>
+          <div>
+            <h5 class="font-semibold">🎛️ Features</h5>
+            <ul class="list-disc list-inside ml-4 space-y-1">
+              ${p.features.map(f => `<li>${f}</li>`).join("")}
+            </ul>
+          </div>
+
+          <div>
+            <h5 class="font-semibold">💳 Pricing</h5>
+            <ul class="list-disc list-inside ml-4 space-y-1">
+              ${p.pricing.map(f => `<li>${f}</li>`).join("")}
+            </ul>
+          </div>
         </div>
 
-        <div>
-          <h5 class="font-semibold">💳 Pricing</h5>
+        <div class="w-1/2 space-y-4">
+          <h5 class="text-lg font-semibold text-indigo-700">🔗 FAA Metadata</h5>
           <ul class="list-disc list-inside ml-4 space-y-1">
-            ${p.pricing.map(f => `<li>${f}</li>`).join("")}
-          </ul>
-        </div>
-
-        <div>
-          <h5 class="font-semibold">🔗 FAA Metadata</h5>
-          <ul class="list-disc list-inside ml-4">
             <li>Product ID: <code>${p.metadata.id}</code></li>
             <li>VaultID: <code>${p.metadata.vault}</code></li>
             <li>Signal Echo Layer: <code>${p.metadata.layer}</code></li>
@@ -2217,6 +2219,8 @@ function renderMediaSection() {
 }
 
 document.addEventListener('DOMContentLoaded', renderMediaSection);
+
+
 </script>
 
 
