@@ -6,7 +6,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>⚙️ Admin Portal</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⚙️ Admin Portal</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <!-- ✅ Custom Snapshot Box Style -->
+  <style>
+    .snapshot-box {
+      width: 2770px;
+      height: 700px;
+      overflow: auto;
+      background: white;
+      border: 1px solid #e2e8f0;
+      padding: 2rem;
+      border-radius: 0.5rem;
+      margin-top: 2rem;
+    }
+  </style>
 </head>
+
 
 <body class="bg-gray-50 font-sans">
 
@@ -146,38 +166,65 @@
 </section>
 
 <script>
-  window.addEventListener("DOMContentLoaded", () => {
-    fetch("http://localhost:5000/api/sectors")
-      .then(res => res.json())
-      .then(data => {
-        const dashboard = document.getElementById("brandDashboard");
-        if (!dashboard) return;
+window.addEventListener("DOMContentLoaded", () => {
+  fetch("http://localhost:5000/api/sectors")
+    .then(res => res.json())
+    .then(data => {
+      const dashboard = document.getElementById("brandDashboard");
+      if (!dashboard) return;
 
-        Object.entries(data).forEach(([key, val]) => {
-          const label = sectorList[key] || key;
-          const section = document.createElement("section");
+      Object.entries(data).forEach(([key, val]) => {
+        const label = sectorList[key] || key;
+        const section = document.createElement("section");
 
-          const title = document.createElement("h3");
-          title.className = "text-md font-semibold mb-2";
-          title.textContent = `📁 ${label}`;
-          section.appendChild(title);
+        const title = document.createElement("h3");
+        title.className = "text-md font-semibold mb-2";
+        title.textContent = `📁 ${label}`;
+        section.appendChild(title);
 
-          const grid = document.createElement("div");
-          grid.className = "grid grid-cols-2 md:grid-cols-6 gap-2";
+        const grid = document.createElement("div");
+        grid.className = "grid grid-cols-2 md:grid-cols-6 gap-2";
 
-          (val.brands || []).forEach(b => {
-            const tag = document.createElement("div");
-            tag.className = "bg-gray-100 px-2 py-1 rounded text-sm text-center shadow";
-            tag.textContent = b;
-            grid.appendChild(tag);
-          });
-
-          section.appendChild(grid);
-          dashboard.appendChild(section);
+        (val.brands || []).forEach(b => {
+          const tag = document.createElement("div");
+          tag.className = "bg-gray-100 px-2 py-1 rounded text-sm text-center shadow cursor-pointer";
+          tag.textContent = b;
+          tag.onclick = () => showSnapshot(b, val.nodes || []);
+          grid.appendChild(tag);
         });
-      })
-      .catch(err => console.error("❌ Could not load dashboard:", err));
+
+        section.appendChild(grid);
+        dashboard.appendChild(section);
+      });
+    })
+    .catch(err => console.error("❌ Could not load dashboard:", err));
+});
+
+function showSnapshot(brand, nodes) {
+  let existing = document.getElementById("brandSnapshotBox");
+  if (existing) existing.remove();
+
+  const box = document.createElement("div");
+  box.id = "brandSnapshotBox";
+  box.className = "snapshot-box";
+
+  const title = document.createElement("h4");
+  title.className = "text-lg font-bold mb-2";
+  title.textContent = `${brand}™ Snapshot`;
+  box.appendChild(title);
+
+  const list = document.createElement("ul");
+  list.className = "list-disc pl-6 space-y-1 text-sm";
+
+  nodes.forEach(node => {
+    const item = document.createElement("li");
+    item.textContent = node;
+    list.appendChild(item);
   });
+
+  box.appendChild(list);
+  document.getElementById("brandDashboard").appendChild(box);
+}
 </script>
 
 
