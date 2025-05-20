@@ -139,6 +139,47 @@
   }
 </script>
 
+  <!-- Brand Dashboard Section -->
+<section class="bg-white rounded shadow p-6 mb-20">
+  <h2 class="text-lg font-bold mb-4">📊 Saved Brand Overview</h2>
+  <div id="brandDashboard" class="space-y-10"></div>
+</section>
+
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    fetch("http://localhost:5000/api/sectors")
+      .then(res => res.json())
+      .then(data => {
+        const dashboard = document.getElementById("brandDashboard");
+        if (!dashboard) return;
+
+        Object.entries(data).forEach(([key, val]) => {
+          const label = sectorList[key] || key;
+          const section = document.createElement("section");
+
+          const title = document.createElement("h3");
+          title.className = "text-md font-semibold mb-2";
+          title.textContent = `📁 ${label}`;
+          section.appendChild(title);
+
+          const grid = document.createElement("div");
+          grid.className = "grid grid-cols-2 md:grid-cols-6 gap-2";
+
+          (val.brands || []).forEach(b => {
+            const tag = document.createElement("div");
+            tag.className = "bg-gray-100 px-2 py-1 rounded text-sm text-center shadow";
+            tag.textContent = b;
+            grid.appendChild(tag);
+          });
+
+          section.appendChild(grid);
+          dashboard.appendChild(section);
+        });
+      })
+      .catch(err => console.error("❌ Could not load dashboard:", err));
+  });
+</script>
+
 
 
 
