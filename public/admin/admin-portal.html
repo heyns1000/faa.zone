@@ -2127,7 +2127,7 @@ const mediaSubNodes = [
   ['PanelSync', 'QRTrack', 'VaultFrame', 'ClipClaim']
 ];
     
-function renderMediaSection() {
+async function renderMediaSection() {
   const grid = document.getElementById('media-grid');
   const snapContainer = document.getElementById('media-snapshots');
 
@@ -2136,48 +2136,13 @@ function renderMediaSection() {
     return;
   }
 
-  const scrollProfiles = {
-    "SonicGrid": {
-      title: "SonicGrid™ Product Scroll",
-      intro: "SonicGrid™ is a modular media routing protocol for dynamic audio environments. Built for creators, audio engineers, podcasters, and signal integrators.",
-      features: [
-        "Low-latency audio mesh processing",
-        "Vault-linked subnode chaining (e.g. AudioNode™, QRMix™)",
-        "WebAudio-ready deployment",
-        "FAA VaultTrace™ compatibility"
-      ],
-      pricing: [
-        "Starter – R99/mo (3 signal lanes)",
-        "Pro Studio – R299/mo (unlimited mesh lanes + batch export)",
-        "Enterprise SLA – Custom pricing (includes FAA compliance sync)"
-      ],
-      metadata: {
-        id: "SGRID-FAAZ-8492",
-        vault: "HM-0425",
-        layer: "ScrollMesh v2.4"
-      }
-    },
-    "VoiceLoop": {
-      title: "VoiceLoop™ Product Scroll",
-      intro: "VoiceLoop™ enables looped audio workflows for speech actors, voice apps, and smart device interactions.",
-      features: [
-        "Loop authoring in-browser",
-        "QRVoice triggers with FAA sync",
-        "ScrollPath routing and caption sync"
-      ],
-      pricing: [
-        "Creator Tier – R49",
-        "Pro VoiceKit – R149",
-        "Enterprise TTS Mesh – R499"
-      ],
-      metadata: {
-        id: "VLOOP-FAAV-4910",
-        vault: "HM-0425",
-        layer: "VoiceMesh v1.6"
-      }
-    }
-    // Add more brands as needed
-  };
+  let scrollProfiles = {};
+  try {
+    const res = await fetch('scroll-profiles/media/scroll.json');
+    scrollProfiles = await res.json();
+  } catch (err) {
+    console.error("❌ Failed to load scroll.json for media", err);
+  }
 
   mediaBrands.forEach((brand, i) => {
     const btn = document.createElement('button');
@@ -2199,7 +2164,7 @@ function renderMediaSection() {
     const p = scrollProfiles[brand];
     if (p) {
       const scroll = document.createElement("div");
-      scroll.className = "w-full flex justify-between gap-6 bg-white p-6 border rounded shadow text-sm";
+      scroll.className = "w-full flex justify-between gap-6 bg-white p-6 border rounded shadow text-sm mt-6";
 
       scroll.innerHTML = `
         <div class="w-1/2 space-y-4">
@@ -2239,7 +2204,9 @@ function renderMediaSection() {
 }
 
 document.addEventListener('DOMContentLoaded', renderMediaSection);
-</script>
+
+<script>
+
 
 
   <script>
