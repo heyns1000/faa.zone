@@ -201,7 +201,13 @@ window.addEventListener("DOMContentLoaded", () => {
           grid.appendChild(tag);
         });
 
-        section.appendChild(grid);
+       const scrollBox = document.createElement("div");
+scrollBox.id = "scroll-profile-container";
+scrollBox.className = "mt-12";
+section.appendChild(scrollBox);
+
+
+
 
         // ✅ Add this snapshot target per sector
         const snapshots = document.createElement("div");
@@ -294,6 +300,73 @@ window.addEventListener("DOMContentLoaded", () => {
     container.appendChild(box);
   }
 </script>
+
+<script>
+  async function loadScrollProfile(sector) {
+    try {
+      const res = await fetch(`/scroll-profiles/${sector}/scroll.json`);
+      const data = await res.json();
+
+      const container = document.getElementById("scroll-profile-container");
+      container.innerHTML = "";
+
+      Object.entries(data).forEach(([brand, profile]) => {
+        const wrapper = document.createElement("div");
+        wrapper.className = `w-full bg-white p-6 mb-10 shadow rounded ${profile.metadata.bg || ""}`;
+        wrapper.style.minHeight = profile.metadata.height || "700px";
+        wrapper.style.minWidth = profile.metadata.width || "2770px";
+
+        wrapper.innerHTML = `
+          <div class="flex justify-between gap-10">
+            <div class="w-1/2 space-y-4">
+              <h2 class="text-xl font-bold text-indigo-700">${profile.title}</h2>
+              <p class="text-sm">${profile.intro}</p>
+              <div>
+                <h4 class="font-semibold">🎛 Features</h4>
+                <ul class="list-disc list-inside ml-4 text-sm">
+                  ${profile.features.map(f => `<li>${f}</li>`).join("")}
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold">💳 Pricing</h4>
+                <ul class="list-disc list-inside ml-4 text-sm">
+                  ${profile.pricing.map(p => `<li>${p}</li>`).join("")}
+                </ul>
+              </div>
+            </div>
+            <div class="w-1/2 space-y-4">
+              <h4 class="font-semibold text-indigo-700">📎 FAA Metadata</h4>
+              <ul class="list-disc list-inside ml-4 text-sm">
+                <li><strong>ID:</strong> ${profile.metadata.id}</li>
+                <li><strong>Vault:</strong> ${profile.metadata.vault}</li>
+                <li><strong>Layer:</strong> ${profile.metadata.layer}</li>
+              </ul>
+            </div>
+          </div>
+        `;
+
+        container.appendChild(wrapper);
+      });
+    } catch (err) {
+      console.error("ScrollProfile load failed:", err);
+    }
+  }
+
+  // 🧠 Trigger on sector nav click
+  document.querySelectorAll(".sector-link").forEach(link => {
+    link.addEventListener("click", e => {
+      e.preventDefault();
+      const sector = link.getAttribute("data-sector");
+      loadScrollProfile(sector);
+    });
+  });
+
+  // ⏳ Optional default loader
+  window.addEventListener("DOMContentLoaded", () => {
+    loadScrollProfile("media");
+  });
+</script>
+
 
 
 
