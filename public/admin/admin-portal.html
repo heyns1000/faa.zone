@@ -121,13 +121,21 @@
     });
 
     // Load existing sector data
-    fetch('http://localhost:5000/api/sectors')
-      .then(res => res.json())
-      .then(data => {
-        console.log("📦 Loaded saved data from backend:", data);
-      })
-      .catch(err => console.error("⚠️ Failed to fetch sectors:", err));
-  });
+   fetch('http://localhost:5000/api/sectors', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ sector, brand, subnodes })
+})
+.then(res => res.json())
+.then(data => {
+  console.log("💾 Data saved to backend:", data);
+  updateSectorDashboard(sector, brand, subnodes);  // ✅ This updates the dashboard instantly
+})
+.catch(err => {
+  console.error("❌ Error saving data:", err);
+  document.getElementById("adminStatus").textContent = "❌ Failed to save to backend.";
+});
+
 
   function addBrandToSector() {
     const sector = document.getElementById("sectorSelect").value;
