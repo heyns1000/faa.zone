@@ -2126,14 +2126,13 @@ const mediaSubNodes = [
   ['IndexNode', 'QRSound', 'VaultDrop', 'PingTrack'],
   ['PanelSync', 'QRTrack', 'VaultFrame', 'ClipClaim']
 ];
-    
 
 async function renderMediaSection() {
   const grid = document.getElementById('media-grid');
   const snapContainer = document.getElementById('media-snapshots');
 
   if (!grid || !snapContainer || mediaBrands.length !== mediaSubNodes.length) {
-    console.warn('[Media Grid] DOM missing or mismatch');
+    console.warn('[Media Grid] DOM elements missing or array mismatch');
     return;
   }
 
@@ -2142,41 +2141,63 @@ async function renderMediaSection() {
     const res = await fetch('scroll-profiles/media/scroll.json');
     scrollProfiles = await res.json();
   } catch (err) {
-    console.error('❌ Failed to load scroll.json', err);
+    console.error("❌ Failed to load scroll.json for media", err);
   }
 
   mediaBrands.forEach((brand, i) => {
     const btn = document.createElement('button');
-    btn.className = 'brand-button';
-    btn.textContent = `${brand}™`;
+    btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-indigo-100 hover:text-indigo-800 font-semibold cursor-pointer';
+    btn.innerHTML = `${brand}<sup>™</sup>`;
     btn.onclick = () => toggleSnapshot(`media-snap-${i}`);
     grid.appendChild(btn);
 
+    const subList = mediaSubNodes[i].map(n => `<li>🔹 ${n}</li>`).join('');
     const snap = document.createElement('div');
     snap.id = `media-snap-${i}`;
-    snap.className = 'brand-snapshot hidden';
+    snap.className = 'brand-snapshot hidden mt-6';
     snap.innerHTML = `
-      <h3>${brand}™ Snapshot</h3>
-      <ul>${mediaSubNodes[i].map(n => `<li>${n}</li>`).join('')}</ul>
-    `;
+      <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+      <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+        ${subList}
+      </ul>`;
 
-    const p = scrollProfiles[brand];
+    const cleanKey = brand.replace(/™/g, "").trim();
+    const p = scrollProfiles[cleanKey];
     if (p) {
-      snap.innerHTML += `
-        <div class="scroll-card">
-          <h4>${p.title}</h4>
+      const scroll = document.createElement("div");
+      scroll.className = "w-full flex justify-between gap-6 bg-white p-6 border rounded shadow text-sm";
+
+      scroll.innerHTML = `
+        <div class="w-1/2 space-y-4">
+          <h4 class="text-xl font-bold text-indigo-700">🔊 ${p.title}</h4>
           <p>${p.intro}</p>
-          <h5>Features</h5>
-          <ul>${p.features.map(f => `<li>${f}</li>`).join('')}</ul>
-          <h5>Pricing</h5>
-          <ul>${p.pricing.map(f => `<li>${f}</li>`).join('')}</ul>
-          <h5>Metadata</h5>
-          <ul>
-            <li>ID: ${p.metadata.id}</li>
-            <li>Vault: ${p.metadata.vault}</li>
-            <li>Layer: ${p.metadata.layer}</li>
+
+          <div>
+            <h5 class="font-semibold">🎛️ Features</h5>
+            <ul class="list-disc list-inside ml-4 space-y-1">
+              ${p.features.map(f => `<li>${f}</li>`).join("")}
+            </ul>
+          </div>
+
+          <div>
+            <h5 class="font-semibold">💳 Pricing</h5>
+            <ul class="list-disc list-inside ml-4 space-y-1">
+              ${p.pricing.map(f => `<li>${f}</li>`).join("")}
+            </ul>
+          </div>
+        </div>
+
+        <div class="w-1/2 space-y-4">
+          <h5 class="text-lg font-semibold text-indigo-700">🔗 FAA Metadata</h5>
+          <ul class="list-disc list-inside ml-4 space-y-1">
+            <li>ID: <code>${p.metadata.id}</code></li>
+            <li>Vault: <code>${p.metadata.vault}</code></li>
+            <li>Layer: <code>${p.metadata.layer}</code></li>
           </ul>
-        </div>`;
+        </div>
+      `;
+
+      snap.appendChild(scroll);
     }
 
     snapContainer.appendChild(snap);
@@ -2185,6 +2206,7 @@ async function renderMediaSection() {
 
 document.addEventListener('DOMContentLoaded', renderMediaSection);
 </script>
+
 
 
   <script>
