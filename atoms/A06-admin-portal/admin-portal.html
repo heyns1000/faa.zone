@@ -201,14 +201,7 @@ window.addEventListener("DOMContentLoaded", () => {
           grid.appendChild(tag);
         });
 
-          const scrollBox = document.createElement("div");
-          scrollBox.id = "scroll-profile-container";
-          scrollBox.className = "mt-12";
-          section.appendChild(scrollBox);
-
-          loadScrollProfile(key); // ✅ Inject dynamic scroll block per sector
-
-
+        section.appendChild(grid);
 
         // ✅ Add this snapshot target per sector
         const snapshots = document.createElement("div");
@@ -301,73 +294,6 @@ window.addEventListener("DOMContentLoaded", () => {
     container.appendChild(box);
   }
 </script>
-
-<script>
-  async function loadScrollProfile(sector) {
-    try {
-      const res = await fetch(`/scroll-profiles/${sector}/scroll.json`);
-      const data = await res.json();
-
-      const container = document.getElementById("scroll-profile-container");
-      container.innerHTML = "";
-
-      Object.entries(data).forEach(([brand, profile]) => {
-        const wrapper = document.createElement("div");
-        wrapper.className = `w-full bg-white p-6 mb-10 shadow rounded ${profile.metadata.bg || ""}`;
-        wrapper.style.minHeight = profile.metadata.height || "700px";
-        wrapper.style.minWidth = profile.metadata.width || "2770px";
-
-        wrapper.innerHTML = `
-          <div class="flex justify-between gap-10">
-            <div class="w-1/2 space-y-4">
-              <h2 class="text-xl font-bold text-indigo-700">${profile.title}</h2>
-              <p class="text-sm">${profile.intro}</p>
-              <div>
-                <h4 class="font-semibold">🎛 Features</h4>
-                <ul class="list-disc list-inside ml-4 text-sm">
-                  ${profile.features.map(f => `<li>${f}</li>`).join("")}
-                </ul>
-              </div>
-              <div>
-                <h4 class="font-semibold">💳 Pricing</h4>
-                <ul class="list-disc list-inside ml-4 text-sm">
-                  ${profile.pricing.map(p => `<li>${p}</li>`).join("")}
-                </ul>
-              </div>
-            </div>
-            <div class="w-1/2 space-y-4">
-              <h4 class="font-semibold text-indigo-700">📎 FAA Metadata</h4>
-              <ul class="list-disc list-inside ml-4 text-sm">
-                <li><strong>ID:</strong> ${profile.metadata.id}</li>
-                <li><strong>Vault:</strong> ${profile.metadata.vault}</li>
-                <li><strong>Layer:</strong> ${profile.metadata.layer}</li>
-              </ul>
-            </div>
-          </div>
-        `;
-
-        container.appendChild(wrapper);
-      });
-    } catch (err) {
-      console.error("ScrollProfile load failed:", err);
-    }
-  }
-
-  // 🧠 Trigger on sector nav click
-  document.querySelectorAll(".sector-link").forEach(link => {
-    link.addEventListener("click", e => {
-      e.preventDefault();
-      const sector = link.getAttribute("data-sector");
-      loadScrollProfile(sector);
-    });
-  });
-
-  // ⏳ Optional default loader
-  window.addEventListener("DOMContentLoaded", () => {
-    loadScrollProfile("media");
-  });
-</script>
-
 
 
 
@@ -511,8 +437,8 @@ window.addEventListener("DOMContentLoaded", () => {
   <a href="#" onclick="showSectorPanel('embedded-micromesh-snapshot')" class="sector-link">
     ☰ Micro-Mesh Logistics
   </a>
-  <a href="#" onclick="showSectorPanel('embedded-media-snapshot')" class="sector-link" data-sector="media">
-  🎬 Motion, Media & Sonic
+  <a href="#" onclick="showSectorPanel('embedded-media-snapshot')" class="sector-link">
+    🎬 Motion, Media & Sonic
   </a>
   <a href="#" onclick="showSectorPanel('embedded-nutrition-snapshot')" class="sector-link">
     ✿ Nutrition & Food Chain
@@ -2128,44 +2054,173 @@ const mediaSubNodes = [
 ];
     
 function renderMediaSection() {
-    const grid = document.getElementById('media-grid');
-    const snapContainer = document.getElementById('media-snapshots');
+  const grid = document.getElementById('media-grid');
+  const snapContainer = document.getElementById('media-snapshots');
 
-    if (!grid || !snapContainer || mediaBrands.length !== mediaSubNodes.length) {
-      console.warn('[Media Grid] DOM elements missing or array mismatch');
-      return;
-    }
-
-    const scrollProfiles = {
-      "SonicGrid": {...},
-      "VoiceLoop": {...},
-      "MediaMesh": {...},
-      "StreamNode": {...},
-      "MotionID": {...}
-    };
-
-    mediaBrands.forEach((brand, i) => {
-      const btn = document.createElement('button');
-      btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-indigo-100 hover:text-indigo-800 font-semibold cursor-pointer';
-      btn.innerHTML = `${brand}<sup>™</sup>`;
-      btn.onclick = () => toggleSnapshot(`media-snap-${i}`);
-      grid.appendChild(btn);
-
-      const subList = mediaSubNodes[i].map(n => `<li>🔹 ${n}</li>`).join('');
-      const snap = document.createElement('div');
-      snap.id = `media-snap-${i}`;
-      snap.className = 'brand-snapshot hidden mt-6';
-      snap.innerHTML = `
-        <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
-        <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
-          ${subList}
-        </ul>`;
-
-      snapContainer.appendChild(snap);
-    });
+  if (!grid || !snapContainer || mediaBrands.length !== mediaSubNodes.length) {
+    console.warn('[Media Grid] DOM elements missing or array mismatch');
+    return;
   }
 
-  document.addEventListener('DOMContentLoaded', renderMediaSection);
+  const scrollProfiles = {
+    "SonicGrid": {
+      title: "SonicGrid™ Product Scroll",
+      intro: "SonicGrid™ is a modular media routing protocol for dynamic audio environments. Built for creators, audio engineers, podcasters, and signal integrators.",
+      features: [
+        "Low-latency audio mesh processing",
+        "Vault-linked subnode chaining (e.g. AudioNode™, QRMix™)",
+        "WebAudio-ready deployment",
+        "FAA VaultTrace™ compatibility"
+      ],
+      pricing: [
+        "Starter – R99/mo (3 signal lanes)",
+        "Pro Studio – R299/mo (unlimited mesh lanes + batch export)",
+        "Enterprise SLA – Custom pricing (includes FAA compliance sync)"
+      ],
+      metadata: {
+        id: "SGRID-FAAZ-8492",
+        vault: "HM-0425",
+        layer: "ScrollMesh v2.4"
+      }
+    },
+    "VoiceLoop": {
+      title: "VoiceLoop™ Product Scroll",
+      intro: "VoiceLoop™ enables looped audio workflows for speech actors, voice apps, and smart device interactions.",
+      features: [
+        "Loop authoring in-browser",
+        "QRVoice triggers with FAA sync",
+        "ScrollPath routing and caption sync"
+      ],
+      pricing: [
+        "Creator Tier – R49",
+        "Pro VoiceKit – R149",
+        "Enterprise TTS Mesh – R499"
+      ],
+      metadata: {
+        id: "VLOOP-FAAV-4910",
+        vault: "HM-0425",
+        layer: "VoiceMesh v1.6"
+      }
+    },
+    "MediaMesh": {
+      title: "MediaMesh™ Overview",
+      intro: "MediaMesh™ connects distributed media nodes with lightweight FAA-verified logic layers.",
+      features: [
+        "Connects WebRTC, RTMP, and static media endpoints",
+        "VaultPing™ logs every stream state",
+        "Works inside Notion embeds & LMS platforms"
+      ],
+      pricing: [
+        "Lite – Free",
+        "Studio Sync – R249/mo",
+        "API Mesh Mode – R499+"
+      ],
+      metadata: {
+        id: "MMESH-FAAC-1092",
+        vault: "HM-0425",
+        layer: "ScrollMesh v3.0"
+      }
+    },
+    "StreamNode": {
+      title: "StreamNode™ FAA Integration",
+      intro: "StreamNode™ deploys embeddable video & audio nodes with built-in vault linkage and edge buffering.",
+      features: [
+        "FAA SignalToken™ ready",
+        "Supports HLS, WebRTC & FAA NFT Proofs",
+        "Zero-lag audio fallback chain"
+      ],
+      pricing: [
+        "Free Node – R0",
+        "Premium Bundle – R149/mo",
+        "Vault-Claimed Hosting – R299"
+      ],
+      metadata: {
+        id: "SNODE-FAAE-4482",
+        vault: "HM-0425",
+        layer: "EchoStack v2.2"
+      }
+    },
+    "MotionID": {
+      title: "MotionID™ Scroll Layer",
+      intro: "MotionID™ provides traceable video labeling for creative and forensic use.",
+      features: [
+        "Auto-claim NFT for every upload",
+        "ScrollSync™ Layering",
+        "Vaulted Timestamp Chain"
+      ],
+      pricing: [
+        "R99 flat",
+        "R399 w/ IP Sync + FAA Archive Lock"
+      ],
+      metadata: {
+        id: "MOTID-FAAL-5293",
+        vault: "HM-0425",
+        layer: "VideoMesh v1.1"
+      }
+    }
+  };
+
+  mediaBrands.forEach((brand, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-indigo-100 hover:text-indigo-800 font-semibold cursor-pointer';
+    btn.innerHTML = `${brand}<sup>™</sup>`;
+    btn.onclick = () => toggleSnapshot(`media-snap-${i}`);
+    grid.appendChild(btn);
+
+    const subList = mediaSubNodes[i].map(n => `<li>🔹 ${n}</li>`).join('');
+    const snap = document.createElement('div');
+    snap.id = `media-snap-${i}`;
+    snap.className = 'brand-snapshot hidden mt-6';
+    snap.innerHTML = `
+      <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+      <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+        ${subList}
+      </ul>`;
+
+    if (scrollProfiles[brand]) {
+      const p = scrollProfiles[brand];
+      const scroll = document.createElement("div");
+      scroll.className = "w-full flex justify-between gap-6 bg-white p-6 border rounded shadow text-sm";
+
+      scroll.innerHTML = `
+        <div class="w-1/2 space-y-4">
+          <h4 class="text-xl font-bold text-indigo-700">🔊 ${p.title}</h4>
+          <p>${p.intro}</p>
+
+          <div>
+            <h5 class="font-semibold">🎛️ Features</h5>
+            <ul class="list-disc list-inside ml-4 space-y-1">
+              ${p.features.map(f => `<li>${f}</li>`).join("")}
+            </ul>
+          </div>
+
+          <div>
+            <h5 class="font-semibold">💳 Pricing</h5>
+            <ul class="list-disc list-inside ml-4 space-y-1">
+              ${p.pricing.map(f => `<li>${f}</li>`).join("")}
+            </ul>
+          </div>
+        </div>
+
+        <div class="w-1/2 space-y-4">
+          <h5 class="text-lg font-semibold text-indigo-700">🔗 FAA Metadata</h5>
+          <ul class="list-disc list-inside ml-4 space-y-1">
+            <li>Product ID: <code>${p.metadata.id}</code></li>
+            <li>VaultID: <code>${p.metadata.vault}</code></li>
+            <li>Signal Echo Layer: <code>${p.metadata.layer}</code></li>
+          </ul>
+        </div>
+      `;
+      snap.appendChild(scroll);
+    }
+
+    snapContainer.appendChild(snap);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', renderMediaSection);
+
+
 </script>
 
 
