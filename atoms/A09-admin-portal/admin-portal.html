@@ -2131,94 +2131,68 @@ async function renderMediaSection() {
   const grid = document.getElementById('media-grid');
   const snapContainer = document.getElementById('media-snapshots');
 
-  if (!grid || !snapContainer || mediaBrands.length !== mediaSubNodes.length) {
-    console.warn('[Media Grid] DOM elements missing or array mismatch');
-    return;
-  }
-
+  // Fetch scroll.json file
   let scrollProfiles = {};
   try {
     const res = await fetch('/scroll-profiles/media/scroll.json');
-    if (!res.ok) throw new Error('Failed to load scroll.json');
     scrollProfiles = await res.json();
   } catch (err) {
-    console.error("❌ Failed to load scroll.json for media:", err);
+    console.error("❌ Failed to load scroll.json for media", err);
     return;
   }
 
-  // Normalize JSON keys
-  const normalizedProfiles = {};
-  Object.keys(scrollProfiles).forEach(k => {
-    normalizedProfiles[k.toLowerCase()] = scrollProfiles[k];
-  });
-
-  mediaBrands.forEach((brand, i) => {
+  // Loop through brands
+  Object.entries(scrollProfiles).forEach(([brandKey, profileData]) => {
+    // Create button for each brand
     const btn = document.createElement('button');
     btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow';
-    btn.innerHTML = `${brand}<sup>™</sup>`;
-    btn.onclick = () => toggleSnapshot(`media-snap-${i}`);
+    btn.innerHTML = `${profileData.title}<sup>™</sup>`;
+    btn.onclick = () => toggleSnapshot(`media-snap-${brandKey}`);
     grid.appendChild(btn);
 
-    const subList = mediaSubNodes[i].map(n => `<li>🔹 ${n}</li>`).join('');
+    // Create snapshot
     const snap = document.createElement('div');
-    snap.id = `media-snap-${i}`;
+    snap.id = `media-snap-${brandKey}`;
     snap.className = 'brand-snapshot hidden mt-6';
     snap.innerHTML = `
-      <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
-      <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
-        ${subList}
-      </ul>`;
+      <div class='text-xl font-semibold mb-2'>${profileData.title}<sup>™</sup> Snapshot</div>
+      <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside'>
+        ${profileData.subnodes?.map(n => `<li>🔹 ${n}</li>`).join('')}
+      </ul>
+    `;
 
-    const cleanKey = brand.replace(/™/g, '').replace(/[^\w]/g, '').trim().toLowerCase();
-    const p = normalizedProfiles[cleanKey];
-
-    if (p) {
-      const scroll = document.createElement("div");
-      scroll.className = "w-full flex justify-between gap-6 bg-white p-6 border rounded shadow text-sm mt-6";
-
-      scroll.innerHTML = `
-        <div class="w-1/2 space-y-4">
-          <h4 class="text-xl font-bold text-indigo-700">${p.title}</h4>
-          <p>${p.intro}</p>
-          <div>
-            <h5 class="font-semibold">🎛️ Features</h5>
-            <ul class="list-disc list-inside ml-4 space-y-1">
-              ${p.features.map(f => `<li>${f}</li>`).join("")}
-            </ul>
-          </div>
-          <div>
-            <h5 class="font-semibold">💳 Pricing</h5>
-            <ul class="list-disc list-inside ml-4 space-y-1">
-              ${p.pricing.map(f => `<li>${f}</li>`).join("")}
-            </ul>
-          </div>
-        </div>
-        <div class="w-1/2 space-y-4">
-          <h5 class="text-lg font-semibold text-indigo-700">🔗 FAA Metadata</h5>
-          <ul class="list-disc list-inside ml-4 space-y-1">
-            <li>ID: <code>${p.metadata.id}</code></li>
-            <li>Vault: <code>${p.metadata.vault}</code></li>
-            <li>Layer: <code>${p.metadata.layer}</code></li>
-          </ul>
-        </div>
-      `;
-      snap.appendChild(scroll);
-    } else {
-      snap.innerHTML = `<div class="text-gray-500 italic">No scroll profile found for <strong>${brand}</strong>. This module is pending.</div>`;
-    }
+    // Add Features, Pricing, Metadata
+    const featuresList = (profileData.features || []).map(f => `<li>${f}</li>`).join('');
+    const pricingList = (profileData.pricing || []).map(p => `<li>${p}</li>`).join('');
+    snap.innerHTML += `
+      <div class="w-1/2 space-y-4">
+        <h5 class="font-semibold">🎛️ Features</h5>
+        <ul class="list-disc list-inside ml-4">${featuresList}</ul>
+        <h5 class="font-semibold">💳 Pricing</h5>
+        <ul class="list-disc list-inside ml-4">${pricingList}</ul>
+      </div>
+      <div class="w-1/2 space-y-4">
+        <h5 class="font-semibold">🔗 FAA Metadata</h5>
+        <ul class="list-disc list-inside ml-4">
+          <li>ID: <code>${profileData.metadata.id}</code></li>
+          <li>Vault: <code>${profileData.metadata.vault}</code></li>
+          <li>Layer: <code>${profileData.metadata.layer}</code></li>
+        </ul>
+      </div>
+    `;
 
     snapContainer.appendChild(snap);
   });
 }
 
+// Toggle visibility of snapshots
 function toggleSnapshot(id) {
   document.querySelectorAll('.brand-snapshot').forEach(el => el.classList.add('hidden'));
-  const target = document.getElementById(id);
-  if (target) target.classList.remove('hidden');
+  document.getElementById(id)?.classList.remove('hidden');
 }
 
 document.addEventListener('DOMContentLoaded', renderMediaSection);
-</script>
+  <script>
 
 
 
