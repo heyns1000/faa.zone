@@ -6,7 +6,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>⚙️ Admin Portal</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⚙️ Admin Portal</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <!-- ✅ Custom Snapshot Box Style -->
+  <style>
+    .snapshot-box {
+      width: 2770px;
+      height: 700px;
+      overflow: auto;
+      background: white;
+      border: 1px solid #e2e8f0;
+      padding: 2rem;
+      border-radius: 0.5rem;
+      margin-top: 2rem;
+    }
+  </style>
 </head>
+
 
 <body class="bg-gray-50 font-sans">
 
@@ -59,19 +79,18 @@
     </section>
   </main>
 
-  <!-- JavaScript -->
 <script>
   const sectorList = {
     "ai-logic": "🧠 AI, Logic & Grid",
     "creative": "🖋️ Creative Tech",
     "logistics": "📦 Logistics & Packaging",
-    "education-ip": "📚 Education & IP",
-    "fashion": "✂ Fashion & Identity",
+    "education-ip": "📘 Education & IP",
+    "fashion": "✂️ Fashion & Identity",
     "gaming": "🎮 Gaming & Simulation",
     "health": "🧠 Health & Hygiene",
     "housing": "🏗️ Housing & Infrastructure",
     "justice": "⚖ Justice & Ethics",
-    "knowledge": "🧠 Knowledge & Archives",
+    "knowledge": "📖 Knowledge & Archives",
     "micromesh": "☰ Micro-Mesh Logistics",
     "media": "🎬 Motion, Media & Sonic",
     "nutrition": "✿ Nutrition & Food Chain",
@@ -86,19 +105,37 @@
     "nft": "🔁 NFT & Ownership",
     "education-youth": "🎓 Education & Youth",
     "zerowaste": "♻️ Zero Waste",
-    "professional": "🧾 Professional Services"
+    "professional": "🧾 Professional Services",
+    "payroll-mining": "🪙 Payroll Mining & Accounting",
+    "wildlife": "🦁 Wildlife & Habitat"
   };
 
-  // ✅ Load saved sectors on page load
+  // ✅ Populate dropdown on page load
   window.addEventListener('DOMContentLoaded', () => {
-    fetch('http://localhost:5000/api/sectors')
-      .then(response => response.json())
-      .then(data => {
-        console.log("📦 Loaded saved data from backend:", data);
-        // Optional: populate dropdown or summary
-      })
-      .catch(error => console.error("⚠️ Failed to load saved data:", error));
-  });
+    const select = document.getElementById('sectorSelect');
+    Object.entries(sectorList).forEach(([key, label]) => {
+      const option = document.createElement('option');
+      option.value = key;
+      option.textContent = label;
+      select.appendChild(option);
+    });
+
+    // Load existing sector data
+   fetch('http://localhost:5000/api/sectors', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ sector, brand, subnodes })
+})
+.then(res => res.json())
+.then(data => {
+  console.log("💾 Data saved to backend:", data);
+  updateSectorDashboard(sector, brand, subnodes);  // ✅ This updates the dashboard instantly
+})
+.catch(err => {
+  console.error("❌ Error saving data:", err);
+  document.getElementById("adminStatus").textContent = "❌ Failed to save to backend.";
+});
+
 
   function addBrandToSector() {
     const sector = document.getElementById("sectorSelect").value;
@@ -111,18 +148,229 @@
       return;
     }
 
-    document.getElementById("adminStatus").textContent = `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
+    document.getElementById("adminStatus").textContent =
+      `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
 
     fetch('http://localhost:5000/api/sectors', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ sector, brand, subnodes })
     })
-      .then(response => response.json())
-      .then(data => console.log("✅ Data saved to backend:", data))
-      .catch(error => console.error("❌ Error saving data:", error));
+    .then(res => res.json())
+    .then(data => {
+      console.log("💾 Data saved to backend:", data);
+    })
+    .catch(err => {
+      console.error("❌ Error saving data:", err);
+      document.getElementById("adminStatus").textContent = "❌ Failed to save to backend.";
+    });
   }
 </script>
+
+<!-- Brand Dashboard Section -->
+<section class="bg-white rounded shadow p-6 mb-20">
+  <h2 class="text-lg font-bold mb-4">📊 Saved Brand Overview</h2>
+  <div id="brandDashboard" class="space-y-10"></div>
+</section>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  fetch("http://localhost:5000/api/sectors")
+    .then(res => res.json())
+    .then(data => {
+      const dashboard = document.getElementById("brandDashboard");
+      if (!dashboard) return;
+
+      Object.entries(data).forEach(([key, val]) => {
+        const label = sectorList[key] || key;
+        const section = document.createElement("section");
+
+        const title = document.createElement("h3");
+        title.className = "text-md font-semibold mb-2";
+        title.textContent = `📁 ${label}`;
+        section.appendChild(title);
+
+        const grid = document.createElement("div");
+        grid.className = "grid grid-cols-2 md:grid-cols-6 gap-2";
+        grid.id = `${key}-grid`; // ✅ enables post-submit insertion
+        (val.brands || []).forEach(b => {
+          const tag = document.createElement("div");
+          tag.className = "bg-gray-100 px-2 py-1 rounded text-sm text-center shadow cursor-pointer";
+          tag.textContent = b;
+          tag.onclick = () => showSmartSnapshot(key, b, val.nodes || []);
+          grid.appendChild(tag);
+        });
+
+          const scrollBox = document.createElement("div");
+          scrollBox.id = "scroll-profile-container";
+          scrollBox.className = "mt-12";
+          section.appendChild(scrollBox);
+
+          loadScrollProfile(key); // ✅ Inject dynamic scroll block per sector
+
+
+
+        // ✅ Add this snapshot target per sector
+        const snapshots = document.createElement("div");
+        snapshots.id = `${key}-snapshots`;
+        snapshots.className = "mt-4";
+        section.appendChild(snapshots);
+
+        dashboard.appendChild(section);
+      });
+    })
+    .catch(err => console.error("❌ Could not load dashboard:", err));
+});
+
+
+  // ✅ Existing Snapshot Renderer
+  function showSnapshot(brand, nodes) {
+    let existing = document.getElementById("brandSnapshotBox");
+    if (existing) existing.remove();
+
+    const box = document.createElement("div");
+    box.id = "brandSnapshotBox";
+    box.className = "snapshot-box";
+
+    const title = document.createElement("h4");
+    title.className = "text-lg font-bold mb-2";
+    title.textContent = `${brand}™ Snapshot`;
+    box.appendChild(title);
+
+    const list = document.createElement("ul");
+    list.className = "list-disc pl-6 space-y-1 text-sm";
+
+    nodes.forEach(node => {
+      const item = document.createElement("li");
+      item.textContent = node;
+      list.appendChild(item);
+    });
+
+    box.appendChild(list);
+    document.getElementById("brandDashboard").appendChild(box);
+  }
+
+  // ✅ Add-on: updateSectorDashboard – safely adds new brand post-submit
+  function updateSectorDashboard(sectorKey, brand, subnodes) {
+    const grid = document.getElementById(`${sectorKey}-grid`);
+    const snapshotContainer = document.getElementById(`${sectorKey}-snapshots`);
+
+    if (!grid || !snapshotContainer) {
+      console.warn(`⚠️ Missing grid or snapshot area for sector "${sectorKey}"`);
+      return;
+    }
+
+    // Prevent duplicate
+    if ([...grid.children].some(el => el.textContent === brand)) return;
+
+    // Create brand tag
+    const tag = document.createElement("div");
+    tag.className = "bg-gray-100 px-2 py-1 rounded text-sm text-center shadow cursor-pointer";
+    tag.textContent = brand;
+    tag.onclick = () => showSmartSnapshot(sectorKey, brand, subnodes);
+    grid.appendChild(tag);
+  }
+
+  // ✅ Smart snapshot into the correct sector container
+  function showSmartSnapshot(sectorKey, brand, nodes) {
+    const container = document.getElementById(`${sectorKey}-snapshots`);
+    if (!container) return;
+
+    let existing = document.getElementById("brandSnapshotBox");
+    if (existing) existing.remove();
+
+    const box = document.createElement("div");
+    box.id = "brandSnapshotBox";
+    box.className = "snapshot-box";
+
+    const title = document.createElement("h4");
+    title.className = "text-lg font-bold mb-2";
+    title.textContent = `${brand}™ Snapshot`;
+    box.appendChild(title);
+
+    const list = document.createElement("ul");
+    list.className = "list-disc pl-6 space-y-1 text-sm";
+
+    nodes.forEach(node => {
+      const item = document.createElement("li");
+      item.textContent = node;
+      list.appendChild(item);
+    });
+
+    box.appendChild(list);
+    container.appendChild(box);
+  }
+</script>
+
+<script>
+  async function loadScrollProfile(sector) {
+    try {
+      const res = await fetch(`/scroll-profiles/${sector}/scroll.json`);
+      const data = await res.json();
+
+      const container = document.getElementById("scroll-profile-container");
+      container.innerHTML = "";
+
+      Object.entries(data).forEach(([brand, profile]) => {
+        const wrapper = document.createElement("div");
+        wrapper.className = `w-full bg-white p-6 mb-10 shadow rounded ${profile.metadata.bg || ""}`;
+        wrapper.style.minHeight = profile.metadata.height || "700px";
+        wrapper.style.minWidth = profile.metadata.width || "2770px";
+
+        wrapper.innerHTML = `
+          <div class="flex justify-between gap-10">
+            <div class="w-1/2 space-y-4">
+              <h2 class="text-xl font-bold text-indigo-700">${profile.title}</h2>
+              <p class="text-sm">${profile.intro}</p>
+              <div>
+                <h4 class="font-semibold">🎛 Features</h4>
+                <ul class="list-disc list-inside ml-4 text-sm">
+                  ${profile.features.map(f => `<li>${f}</li>`).join("")}
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold">💳 Pricing</h4>
+                <ul class="list-disc list-inside ml-4 text-sm">
+                  ${profile.pricing.map(p => `<li>${p}</li>`).join("")}
+                </ul>
+              </div>
+            </div>
+            <div class="w-1/2 space-y-4">
+              <h4 class="font-semibold text-indigo-700">📎 FAA Metadata</h4>
+              <ul class="list-disc list-inside ml-4 text-sm">
+                <li><strong>ID:</strong> ${profile.metadata.id}</li>
+                <li><strong>Vault:</strong> ${profile.metadata.vault}</li>
+                <li><strong>Layer:</strong> ${profile.metadata.layer}</li>
+              </ul>
+            </div>
+          </div>
+        `;
+
+        container.appendChild(wrapper);
+      });
+    } catch (err) {
+      console.error("ScrollProfile load failed:", err);
+    }
+  }
+
+  // 🧠 Trigger on sector nav click
+  document.querySelectorAll(".sector-link").forEach(link => {
+    link.addEventListener("click", e => {
+      e.preventDefault();
+      const sector = link.getAttribute("data-sector");
+      loadScrollProfile(sector);
+    });
+  });
+
+  // ⏳ Optional default loader
+  window.addEventListener("DOMContentLoaded", () => {
+    loadScrollProfile("media");
+  });
+</script>
+
+
+
+
 
 
 
@@ -263,8 +511,8 @@
   <a href="#" onclick="showSectorPanel('embedded-micromesh-snapshot')" class="sector-link">
     ☰ Micro-Mesh Logistics
   </a>
-  <a href="#" onclick="showSectorPanel('embedded-media-snapshot')" class="sector-link">
-    🎬 Motion, Media & Sonic
+  <a href="#" onclick="showSectorPanel('embedded-media-snapshot')" class="sector-link" data-sector="media">
+  🎬 Motion, Media & Sonic
   </a>
   <a href="#" onclick="showSectorPanel('embedded-nutrition-snapshot')" class="sector-link">
     ✿ Nutrition & Food Chain
@@ -310,6 +558,16 @@
     ⚙️ Admin & Manual Sync Panel
   </a>
 
+<!-- 🔧 Global Snapshot Dimensions -->
+<style>
+  .brand-snapshot {
+    width: 2770px !important;
+    height: 700px !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-bottom: 2rem;
+  }
+</style>
 
 
 <!-- Embedded Agri Panel -->
@@ -1868,7 +2126,7 @@ const mediaSubNodes = [
   ['IndexNode', 'QRSound', 'VaultDrop', 'PingTrack'],
   ['PanelSync', 'QRTrack', 'VaultFrame', 'ClipClaim']
 ];
-
+    
 function renderMediaSection() {
   const grid = document.getElementById('media-grid');
   const snapContainer = document.getElementById('media-snapshots');
@@ -1917,63 +2175,8 @@ function renderMediaSection() {
         vault: "HM-0425",
         layer: "VoiceMesh v1.6"
       }
-    },
-    "MediaMesh": {
-      title: "MediaMesh™ Overview",
-      intro: "MediaMesh™ connects distributed media nodes with lightweight FAA-verified logic layers.",
-      features: [
-        "Connects WebRTC, RTMP, and static media endpoints",
-        "VaultPing™ logs every stream state",
-        "Works inside Notion embeds & LMS platforms"
-      ],
-      pricing: [
-        "Lite – Free",
-        "Studio Sync – R249/mo",
-        "API Mesh Mode – R499+"
-      ],
-      metadata: {
-        id: "MMESH-FAAC-1092",
-        vault: "HM-0425",
-        layer: "ScrollMesh v3.0"
-      }
-    },
-    "StreamNode": {
-      title: "StreamNode™ FAA Integration",
-      intro: "StreamNode™ deploys embeddable video & audio nodes with built-in vault linkage and edge buffering.",
-      features: [
-        "FAA SignalToken™ ready",
-        "Supports HLS, WebRTC & FAA NFT Proofs",
-        "Zero-lag audio fallback chain"
-      ],
-      pricing: [
-        "Free Node – R0",
-        "Premium Bundle – R149/mo",
-        "Vault-Claimed Hosting – R299"
-      ],
-      metadata: {
-        id: "SNODE-FAAE-4482",
-        vault: "HM-0425",
-        layer: "EchoStack v2.2"
-      }
-    },
-    "MotionID": {
-      title: "MotionID™ Scroll Layer",
-      intro: "MotionID™ provides traceable video labeling for creative and forensic use.",
-      features: [
-        "Auto-claim NFT for every upload",
-        "ScrollSync™ Layering",
-        "Vaulted Timestamp Chain"
-      ],
-      pricing: [
-        "R99 flat",
-        "R399 w/ IP Sync + FAA Archive Lock"
-      ],
-      metadata: {
-        id: "MOTID-FAAL-5293",
-        vault: "HM-0425",
-        layer: "VideoMesh v1.1"
-      }
     }
+    // Add more brands as needed
   };
 
   mediaBrands.forEach((brand, i) => {
@@ -1993,38 +2196,41 @@ function renderMediaSection() {
         ${subList}
       </ul>`;
 
-    if (scrollProfiles[brand]) {
-      const p = scrollProfiles[brand];
+    const p = scrollProfiles[brand];
+    if (p) {
       const scroll = document.createElement("div");
-      scroll.className = "min-w-[300px] max-w-md flex-shrink-0 bg-white p-6 border rounded shadow text-sm space-y-4";
+      scroll.className = "w-full flex justify-between gap-6 bg-white p-6 border rounded shadow text-sm";
 
       scroll.innerHTML = `
-        <h4 class="text-xl font-bold text-indigo-700">🔊 ${p.title}</h4>
-        <p>${p.intro}</p>
+        <div class="w-1/2 space-y-4">
+          <h4 class="text-xl font-bold text-indigo-700">🔊 ${p.title}</h4>
+          <p>${p.intro}</p>
 
-        <div>
-          <h5 class="font-semibold">🎛️ Features</h5>
-          <ul class="list-disc list-inside ml-4 space-y-1">
-            ${p.features.map(f => `<li>${f}</li>`).join("")}
-          </ul>
+          <div>
+            <h5 class="font-semibold">🎛️ Features</h5>
+            <ul class="list-disc list-inside ml-4 space-y-1">
+              ${p.features.map(f => `<li>${f}</li>`).join("")}
+            </ul>
+          </div>
+
+          <div>
+            <h5 class="font-semibold">💳 Pricing</h5>
+            <ul class="list-disc list-inside ml-4 space-y-1">
+              ${p.pricing.map(f => `<li>${f}</li>`).join("")}
+            </ul>
+          </div>
         </div>
 
-        <div>
-          <h5 class="font-semibold">💳 Pricing</h5>
+        <div class="w-1/2 space-y-4">
+          <h5 class="text-lg font-semibold text-indigo-700">🔗 FAA Metadata</h5>
           <ul class="list-disc list-inside ml-4 space-y-1">
-            ${p.pricing.map(f => `<li>${f}</li>`).join("")}
-          </ul>
-        </div>
-
-        <div>
-          <h5 class="font-semibold">🔗 FAA Metadata</h5>
-          <ul class="list-disc list-inside ml-4">
             <li>Product ID: <code>${p.metadata.id}</code></li>
             <li>VaultID: <code>${p.metadata.vault}</code></li>
             <li>Signal Echo Layer: <code>${p.metadata.layer}</code></li>
           </ul>
         </div>
       `;
+
       snap.appendChild(scroll);
     }
 
@@ -2034,6 +2240,8 @@ function renderMediaSection() {
 
 document.addEventListener('DOMContentLoaded', renderMediaSection);
 </script>
+
+
 
 
   <script>
