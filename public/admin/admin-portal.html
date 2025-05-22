@@ -1094,37 +1094,46 @@ const agriSubNodes = [
   ['MarketSoilX Index™', 'MarketSoilX Ledger™'],
   ['AgriOmni Node™', 'AgriOmni Relay™']
 ];
-
-// 🔧 DOM Injection Script
+  
 document.addEventListener('DOMContentLoaded', () => {
+  const sector = "agri";
   const grid = document.getElementById('agri-grid');
   const snapContainer = document.getElementById('agri-snapshots');
 
-  if (!grid || !snapContainer || !Array.isArray(agriBrands) || !Array.isArray(agriSubNodes)) {
-    console.warn('[Agri Grid] Required DOM elements or data missing.');
+  if (!grid || !snapContainer) {
+    console.warn('[Agri Grid] DOM elements missing.');
     return;
   }
 
-  agriBrands.forEach((brand, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-green-100 hover:text-green-800 font-semibold cursor-pointer';
-    btn.innerHTML = `${brand}<sup>™</sup>`;
-    btn.onclick = () => toggleSnapshot(`agri-snap-${i}`);
-    grid.appendChild(btn);
+  fetch(`https://sector-worker.heynsschoeman.workers.dev/?sector=${sector}`)
+    .then(res => res.json())
+    .then(scrollArray => {
+      scrollArray.forEach(({ brand, subnodes }, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-green-100 hover:text-green-800 font-semibold cursor-pointer';
+        btn.innerHTML = `${brand}<sup>™</sup>`;
+        btn.onclick = () => toggleSnapshot(`agri-snap-${i}`);
+        grid.appendChild(btn);
 
-    const subList = agriSubNodes[i].map(n => `<li>🔹 ${n}</li>`).join('');
-    const snap = document.createElement('div');
-    snap.id = `agri-snap-${i}`;
-    snap.className = 'brand-snapshot hidden mt-6';
-    snap.innerHTML = `
-      <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
-      <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
-        ${subList}
-      </ul>`;
-    snapContainer.appendChild(snap);
-  });
+        const subList = subnodes.map(n => `<li>🔹 ${n}</li>`).join('');
+        const snap = document.createElement('div');
+        snap.id = `agri-snap-${i}`;
+        snap.className = 'brand-snapshot hidden mt-6';
+        snap.innerHTML = `
+          <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+          <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+            ${subList}
+          </ul>`;
+        snapContainer.appendChild(snap);
+      });
+    })
+    .catch(err => {
+      grid.innerHTML = `<p class="text-red-500">⚠ Failed to load agri scroll data</p>`;
+      console.error('[Agri Scroll Error]', err);
+    });
 });
 </script>
+
 
 
 
