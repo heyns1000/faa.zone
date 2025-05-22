@@ -1,0 +1,7 @@
+# B05 Banimal: every version, oldest first
+
+24 distinct versions in FGP--banimal-global-loop, banimal, codenest, faa.zone, fruitful-superagent, legal, seedwave. Grouped by system_map.py: a version joins only when visible text (shingle Jaccard ≥ 0.30) AND structure (ids/functions/labels ≥ 0.45) both match. `banimal.html` holds each version's exact bytes per commit.
+
+| # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | 2025-05-22 | faa.zone | history | `public/admin/test/snapshot.html` | `3197667f` | Banimal™ - Kind Creatures | 3704 | 9 | 0 | 40.4 |
