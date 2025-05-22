@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>FAA Snapshot Viewer</title>
+  <title>FAA Snapshot Test</title>
 </head>
-<body style="font-family: sans-serif; padding: 40px; background: #f9fafb;">
+<body style="font-family: sans-serif; background: #f9fafb; padding: 40px;">
 
-  <h1 style="font-size: 28px; font-weight: bold; margin-bottom: 24px;">🧠 FAA Brand Snapshot Viewer</h1>
+  <h1 style="font-size: 26px; font-weight: bold; margin-bottom: 24px;">🧠 FAA Brand Snapshot Viewer</h1>
 
-  <div id="media-grid" style="display: flex; flex-wrap: wrap; gap: 12px;"></div>
-  <div id="media-snapshots" style="margin-top: 40px;"></div>
+  <div id="media-grid" style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;"></div>
+  <div id="media-snapshots"></div>
 
   <script>
     const mediaBrands = ["SonicGrid", "MediaMesh"];
@@ -23,11 +23,6 @@
     function renderMediaSection() {
       const grid = document.getElementById('media-grid');
       const snapContainer = document.getElementById('media-snapshots');
-
-      if (!grid || !snapContainer || mediaBrands.length !== mediaSubNodes.length) {
-        console.warn('[Media Grid] DOM elements missing or array mismatch');
-        return;
-      }
 
       const scrollProfiles = {
         "SonicGrid": {
@@ -94,9 +89,11 @@
           border: 1px solid #e5e7eb;
         `);
         btn.onclick = () => {
+          document.querySelectorAll('.brand-snapshot').forEach(el => el.style.display = 'none');
+          document.getElementById(`media-snap-${i}`).style.display = 'block';
+
           document.querySelectorAll('.brand-button').forEach(b => b.style.background = 'white');
           btn.style.background = '#e0e7ff';
-          toggleSnapshot(`media-snap-${i}`);
         };
         grid.appendChild(btn);
 
@@ -112,8 +109,6 @@
         snap.style.borderRadius = '8px';
         snap.style.boxShadow = '0 2px 4px rgba(0,0,0,0.05)';
         snap.style.padding = '24px';
-        if (p?.metadata?.height) snap.style.height = p.metadata.height;
-        if (p?.metadata?.width) snap.style.width = p.metadata.width;
 
         snap.innerHTML = `
           <div style="font-size: 20px; font-weight: 600; margin-bottom: 12px;">
@@ -130,11 +125,15 @@
             gap: 48px;
             font-size: 14px;
             padding-top: 12px;
+            height: ${p.metadata && p.metadata.height ? p.metadata.height : 'auto'};
+            width: ${p.metadata && p.metadata.width ? p.metadata.width : '100%'};
+            overflow: auto;
+            box-sizing: border-box;
           `);
 
           scroll.innerHTML = `
             <div style="flex: 1; display: flex; flex-direction: column; gap: 16px;">
-              <h4 style="font-size: 20px; font-weight: bold; color: #4f46e5;">${p.metadata.icon || '🔊'} ${p.title}</h4>
+              <h4 style="font-size: 20px; font-weight: bold; color: #4f46e5;">🔊 ${p.title}</h4>
               <p>${p.intro}</p>
               <div>
                 <h5 style="font-weight: 600;">🎛️ Features</h5>
@@ -161,14 +160,8 @@
           snap.appendChild(scroll);
         }
 
-        snapContainer.appendChild(snap);
+        document.getElementById('media-snapshots').appendChild(snap);
       });
-    }
-
-    function toggleSnapshot(id) {
-      document.querySelectorAll('.brand-snapshot').forEach(el => el.style.display = 'none');
-      const target = document.getElementById(id);
-      if (target) target.style.display = 'block';
     }
 
     document.addEventListener('DOMContentLoaded', renderMediaSection);
@@ -176,3 +169,4 @@
 
 </body>
 </html>
+
