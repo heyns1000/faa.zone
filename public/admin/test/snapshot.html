@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>FAA Snapshot Test</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FAA Snapshot Styled</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body style="font-family: sans-serif; background: #f9fafb; padding: 40px;">
+<body class="bg-gray-100 text-gray-800 font-sans p-6">
 
-  <h1 style="font-size: 26px; font-weight: bold; margin-bottom: 24px;">🧠 FAA Brand Snapshot Viewer</h1>
+  <div class="max-w-screen-xl mx-auto">
+    <h1 class="text-3xl font-bold text-indigo-700 mb-6 flex items-center gap-2">
+      🧠 FAA Brand Snapshot Viewer
+    </h1>
 
-  <div id="media-grid" style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;"></div>
-  <div id="media-snapshots"></div>
+    <div id="media-grid" class="flex flex-wrap gap-4 mb-8"></div>
+    <div id="media-snapshots" class="space-y-8"></div>
+  </div>
 
   <script>
     const mediaBrands = ["SonicGrid", "MediaMesh"];
@@ -17,150 +23,117 @@
       ["SignalSync", "AudioNode", "VaultTrace", "QRMix"],
       ["StreamMux", "NotionSync", "VaultPing", "FallbackNet"]
     ];
-  </script>
 
-  <script>
+    const scrollProfiles = {
+      "SonicGrid": {
+        title: "SonicGrid™ Audio Control Layer",
+        intro: "SonicGrid™ is a dynamic, FAA-certified mesh engine for audio routing, studio-grade sync, and real-time media signal orchestration. Built for immersive sound pipelines, production hubs, and virtual soundstage engineering.",
+        features: [
+          "🎚️ Modular signal lanes with node-level control and latency-free chaining",
+          "🎙 FAA-integrated AudioNode™, VaultTrace™, and QRMix™ pathways",
+          "🌐 WebAudio and DAW-native compatibility — deployable in any browser",
+          "🛡️ Continuous compliance tracing with FAA media verification",
+          "🔁 Batch waveform export, waveform memory caching, loopback diagnostics",
+          "🔊 Pre-configured for podcast grids, broadcast routing & livestream splits"
+        ],
+        pricing: [
+          "🎧 Starter Node — R99/mo (Includes 3 routing lanes, 1 vault sync)",
+          "🔊 Studio Sync — R299/mo (Unlimited routing lanes + waveform export)",
+          "🏢 Enterprise SLA — Custom (Audit-ready + FAA orchestration sync)"
+        ],
+        metadata: {
+          id: "SGRID-FAAZ-8492",
+          vault: "HM-0425",
+          layer: "ScrollMesh v2.4",
+          height: "700px",
+          width: "2770px"
+        }
+      },
+      "MediaMesh": {
+        title: "MediaMesh™ FAA Stream Router",
+        intro: "MediaMesh™ connects static and live streams into one secure FAA-monitored infrastructure layer — across WebRTC, HLS, and embedded deployments. Ideal for LMS, digital broadcast, and creator monetization flows.",
+        features: [
+          "🖥 WebRTC, RTMP, and static media endpoint mesh mapping",
+          "📊 VaultPing™ audit trails for every stream state, live or archived",
+          "🔌 LMS & Notion-ready embed protocols, no-code deployment options",
+          "🧠 Adaptive stream fallback, lossless handover, and mute tunnel shielding",
+          "📂 Metadata-persistent vaults with FAA-anchored sync logs",
+          "📡 Use for remote learning, hybrid streaming, and proof-of-sync NFT drops"
+        ],
+        pricing: [
+          "🌱 Lite — Free forever (Includes up to 2 concurrent routes)",
+          "📽 Studio Sync — R249/mo (Multinode mesh, auto-recovery)",
+          "🏛 API Mesh Mode — R499+/mo (Advanced vault sync and webhook control)"
+        ],
+        metadata: {
+          id: "MMESH-FAAC-1092",
+          vault: "HM-0425",
+          layer: "ScrollMesh v3.0",
+          height: "700px",
+          width: "2770px"
+        }
+      }
+    };
+
     function renderMediaSection() {
       const grid = document.getElementById('media-grid');
       const snapContainer = document.getElementById('media-snapshots');
 
-      const scrollProfiles = {
-        "SonicGrid": {
-          title: "SonicGrid™ Audio Control Layer",
-          intro: "SonicGrid™ is a dynamic, FAA-certified mesh engine for audio routing, studio-grade sync, and real-time media signal orchestration. Built for immersive sound pipelines, production hubs, and virtual soundstage engineering.",
-          features: [
-            "🎚️ Modular signal lanes with node-level control and latency-free chaining",
-            "🎙 FAA-integrated AudioNode™, VaultTrace™, and QRMix™ pathways",
-            "🌐 WebAudio and DAW-native compatibility — deployable in any browser",
-            "🛡️ Continuous compliance tracing with FAA media verification",
-            "🔁 Batch waveform export, waveform memory caching, loopback diagnostics",
-            "🔊 Pre-configured for podcast grids, broadcast routing & livestream splits"
-          ],
-          pricing: [
-            "🎧 Starter Node — R99/mo (Includes 3 routing lanes, 1 vault sync)",
-            "🔊 Studio Sync — R299/mo (Unlimited routing lanes + waveform export)",
-            "🏢 Enterprise SLA — Custom (Audit-ready + FAA orchestration sync)"
-          ],
-          metadata: {
-            id: "SGRID-FAAZ-8492",
-            vault: "HM-0425",
-            layer: "ScrollMesh v2.4",
-            height: "700px",
-            width: "2770px"
-          }
-        },
-        "MediaMesh": {
-          title: "MediaMesh™ FAA Stream Router",
-          intro: "MediaMesh™ connects static and live streams into one secure FAA-monitored infrastructure layer — across WebRTC, HLS, and embedded deployments. Ideal for LMS, digital broadcast, and creator monetization flows.",
-          features: [
-            "🖥 WebRTC, RTMP, and static media endpoint mesh mapping",
-            "📊 VaultPing™ audit trails for every stream state, live or archived",
-            "🔌 LMS & Notion-ready embed protocols, no-code deployment options",
-            "🧠 Adaptive stream fallback, lossless handover, and mute tunnel shielding",
-            "📂 Metadata-persistent vaults with FAA-anchored sync logs",
-            "📡 Use for remote learning, hybrid streaming, and proof-of-sync NFT drops"
-          ],
-          pricing: [
-            "🌱 Lite — Free forever (Includes up to 2 concurrent routes)",
-            "📽 Studio Sync — R249/mo (Multinode mesh, auto-recovery)",
-            "🏛 API Mesh Mode — R499+/mo (Advanced vault sync and webhook control)"
-          ],
-          metadata: {
-            id: "MMESH-FAAC-1092",
-            vault: "HM-0425",
-            layer: "ScrollMesh v3.0",
-            height: "700px",
-            width: "2770px"
-          }
-        }
-      };
-
       mediaBrands.forEach((brand, i) => {
         const btn = document.createElement('button');
-        btn.className = 'brand-button';
-        btn.innerHTML = `${brand}<sup>™</sup>`;
-        btn.setAttribute('style', `
-          padding: 6px 12px;
-          font-size: 14px;
-          font-weight: 600;
-          border-radius: 6px;
-          cursor: pointer;
-          background: white;
-          border: 1px solid #e5e7eb;
-        `);
+        btn.className = 'bg-white px-4 py-2 text-sm rounded shadow hover:bg-indigo-100 hover:text-indigo-800 font-semibold';
+        btn.textContent = `${brand}™`;
         btn.onclick = () => {
-          document.querySelectorAll('.brand-snapshot').forEach(el => el.style.display = 'none');
-          document.getElementById(`media-snap-${i}`).style.display = 'block';
-
-          document.querySelectorAll('.brand-button').forEach(b => b.style.background = 'white');
-          btn.style.background = '#e0e7ff';
+          document.querySelectorAll('.brand-snapshot').forEach(el => el.classList.add('hidden'));
+          document.getElementById(`media-snap-${i}`).classList.remove('hidden');
         };
         grid.appendChild(btn);
 
         const p = scrollProfiles[brand];
-        const subList = mediaSubNodes[i].map(n => `<li>🔹 ${n}</li>`).join('');
+        const subList = mediaSubNodes[i].map(n => `<li>${n}</li>`).join('');
         const snap = document.createElement('div');
         snap.id = `media-snap-${i}`;
-        snap.className = 'brand-snapshot';
-        snap.style.display = 'none';
-        snap.style.marginTop = '28px';
-        snap.style.background = '#fff';
-        snap.style.border = '1px solid #e5e7eb';
-        snap.style.borderRadius = '8px';
-        snap.style.boxShadow = '0 2px 4px rgba(0,0,0,0.05)';
-        snap.style.padding = '24px';
+        snap.className = 'brand-snapshot hidden';
 
         snap.innerHTML = `
-          <div style="font-size: 20px; font-weight: 600; margin-bottom: 12px;">
-            ${brand}<sup>™</sup> Snapshot
-          </div>
-          <ul style="font-size: 14px; padding-left: 20px; list-style: disc; margin-bottom: 24px;">
-            ${subList}
-          </ul>`;
+          <section class="bg-white rounded-lg shadow-md p-6 transition-all duration-200 hover:shadow-lg"
+                   style="height: ${p.metadata.height}; width: ${p.metadata.width}; overflow: auto;">
+            <h2 class="text-xl font-bold text-indigo-700 mb-1">${brand}™ Snapshot</h2>
+            <ul class="list-disc list-inside text-sm text-gray-800 mb-4 ml-4">${subList}</ul>
 
-        if (p) {
-          const scroll = document.createElement('div');
-          scroll.setAttribute('style', `
-            display: flex;
-            gap: 48px;
-            font-size: 14px;
-            padding-top: 12px;
-            height: ${p.metadata && p.metadata.height ? p.metadata.height : 'auto'};
-            width: ${p.metadata && p.metadata.width ? p.metadata.width : '100%'};
-            overflow: auto;
-            box-sizing: border-box;
-          `);
+            <div class="flex flex-wrap gap-8">
+              <div class="flex-1 min-w-[300px] space-y-4">
+                <h3 class="text-lg font-semibold text-indigo-600">${p.title}</h3>
+                <p class="text-sm text-gray-700">${p.intro}</p>
 
-          scroll.innerHTML = `
-            <div style="flex: 1; display: flex; flex-direction: column; gap: 16px;">
-              <h4 style="font-size: 20px; font-weight: bold; color: #4f46e5;">🔊 ${p.title}</h4>
-              <p>${p.intro}</p>
-              <div>
-                <h5 style="font-weight: 600;">🎛️ Features</h5>
-                <ul style="list-style: disc; padding-left: 20px;">
-                  ${p.features.map(f => `<li>${f}</li>`).join('')}
-                </ul>
+                <div>
+                  <h4 class="font-semibold text-sm text-gray-800 mb-1">🎛️ Features</h4>
+                  <ul class="list-disc list-inside text-sm text-gray-700 ml-4 space-y-1">
+                    ${p.features.map(f => `<li>${f}</li>`).join("")}
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 class="font-semibold text-sm text-gray-800 mb-1">💳 Pricing</h4>
+                  <ul class="list-disc list-inside text-sm text-gray-700 ml-4 space-y-1">
+                    ${p.pricing.map(f => `<li>${f}</li>`).join("")}
+                  </ul>
+                </div>
               </div>
-              <div>
-                <h5 style="font-weight: 600;">💳 Pricing</h5>
-                <ul style="list-style: disc; padding-left: 20px;">
-                  ${p.pricing.map(f => `<li>${f}</li>`).join('')}
+
+              <div class="flex-1 min-w-[300px] space-y-4">
+                <h4 class="font-semibold text-sm text-indigo-600">🔗 FAA Metadata</h4>
+                <ul class="list-disc list-inside text-sm text-gray-800 ml-4">
+                  <li><span class="font-mono">Product ID:</span> ${p.metadata.id}</li>
+                  <li><span class="font-mono">Vault:</span> ${p.metadata.vault}</li>
+                  <li><span class="font-mono">Layer:</span> ${p.metadata.layer}</li>
                 </ul>
               </div>
             </div>
-            <div style="flex: 1; display: flex; flex-direction: column; gap: 16px;">
-              <h5 style="font-size: 16px; font-weight: 600; color: #4f46e5;">🔗 FAA Metadata</h5>
-              <ul style="list-style: disc; padding-left: 20px;">
-                <li>Product ID: <code>${p.metadata.id}</code></li>
-                <li>VaultID: <code>${p.metadata.vault}</code></li>
-                <li>Signal Echo Layer: <code>${p.metadata.layer}</code></li>
-              </ul>
-            </div>
-          `;
-          snap.appendChild(scroll);
-        }
+          </section>
+        `;
 
-        document.getElementById('media-snapshots').appendChild(snap);
+        snapContainer.appendChild(snap);
       });
     }
 
@@ -169,4 +142,5 @@
 
 </body>
 </html>
+
 
