@@ -1094,37 +1094,46 @@ const agriSubNodes = [
   ['MarketSoilX Index™', 'MarketSoilX Ledger™'],
   ['AgriOmni Node™', 'AgriOmni Relay™']
 ];
-
-// 🔧 DOM Injection Script
+  
 document.addEventListener('DOMContentLoaded', () => {
+  const sector = "agri";
   const grid = document.getElementById('agri-grid');
   const snapContainer = document.getElementById('agri-snapshots');
 
-  if (!grid || !snapContainer || !Array.isArray(agriBrands) || !Array.isArray(agriSubNodes)) {
-    console.warn('[Agri Grid] Required DOM elements or data missing.');
+  if (!grid || !snapContainer) {
+    console.warn('[Agri Grid] DOM elements missing.');
     return;
   }
 
-  agriBrands.forEach((brand, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-green-100 hover:text-green-800 font-semibold cursor-pointer';
-    btn.innerHTML = `${brand}<sup>™</sup>`;
-    btn.onclick = () => toggleSnapshot(`agri-snap-${i}`);
-    grid.appendChild(btn);
+  fetch(`https://sector-worker.heynsschoeman.workers.dev/?sector=${sector}`)
+    .then(res => res.json())
+    .then(scrollArray => {
+      scrollArray.forEach(({ brand, subnodes }, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-green-100 hover:text-green-800 font-semibold cursor-pointer';
+        btn.innerHTML = `${brand}<sup>™</sup>`;
+        btn.onclick = () => toggleSnapshot(`agri-snap-${i}`);
+        grid.appendChild(btn);
 
-    const subList = agriSubNodes[i].map(n => `<li>🔹 ${n}</li>`).join('');
-    const snap = document.createElement('div');
-    snap.id = `agri-snap-${i}`;
-    snap.className = 'brand-snapshot hidden mt-6';
-    snap.innerHTML = `
-      <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
-      <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
-        ${subList}
-      </ul>`;
-    snapContainer.appendChild(snap);
-  });
+        const subList = subnodes.map(n => `<li>🔹 ${n}</li>`).join('');
+        const snap = document.createElement('div');
+        snap.id = `agri-snap-${i}`;
+        snap.className = 'brand-snapshot hidden mt-6';
+        snap.innerHTML = `
+          <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+          <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+            ${subList}
+          </ul>`;
+        snapContainer.appendChild(snap);
+      });
+    })
+    .catch(err => {
+      grid.innerHTML = `<p class="text-red-500">⚠ Failed to load agri scroll data</p>`;
+      console.error('[Agri Scroll Error]', err);
+    });
 });
 </script>
+
 
 
 
@@ -2127,95 +2136,120 @@ const mediaSubNodes = [
   ['PanelSync', 'QRTrack', 'VaultFrame', 'ClipClaim']
 ];
     
-async function renderMediaSection() {
-  const res = await fetch("/scroll-profiles/media/scroll.json");
-  const scrollProfiles = await res.json();
+function renderMediaSection() {
+  const grid = document.getElementById('media-grid');
+  const snapContainer = document.getElementById('media-snapshots');
 
-  const grid = document.getElementById("media-grid");
-  const snap = document.getElementById("media-snapshots");
-  const scroll = document.querySelector(".scroll-cards");
+  if (!grid || !snapContainer || mediaBrands.length !== mediaSubNodes.length) {
+    console.warn('[Media Grid] DOM elements missing or array mismatch');
+    return;
+  }
 
-  const brands = Object.keys(scrollProfiles);
-
-  grid.innerHTML = brands
-    .map(
-      (b) =>
-        `<button class="bg-white border px-4 py-2 rounded shadow hover:bg-indigo-50" data-brand="${b}">${b}</button>`
-    )
-    .join("");
-
-  grid.querySelectorAll("button").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const brand = btn.getAttribute("data-brand");
-
-      // Normalize the brand name to match JSON keys
-      const cleanKey = brand.replace(/™/g, "").replace(/[^\w]/g, "").trim();
-      const p = scrollProfiles[cleanKey];
-
-      if (!p) {
-        console.warn(`⚠️ No scroll profile found for brand: "${brand}" using key "${cleanKey}"`);
-        return;
+  const scrollProfiles = {
+    "SonicGrid": {
+      title: "SonicGrid™ Product Scroll",
+      intro: "SonicGrid™ is a modular media routing protocol for dynamic audio environments. Built for creators, audio engineers, podcasters, and signal integrators.",
+      features: [
+        "Low-latency audio mesh processing",
+        "Vault-linked subnode chaining (e.g. AudioNode™, QRMix™)",
+        "WebAudio-ready deployment",
+        "FAA VaultTrace™ compatibility"
+      ],
+      pricing: [
+        "Starter – R99/mo (3 signal lanes)",
+        "Pro Studio – R299/mo (unlimited mesh lanes + batch export)",
+        "Enterprise SLA – Custom pricing (includes FAA compliance sync)"
+      ],
+      metadata: {
+        id: "SGRID-FAAZ-8492",
+        vault: "HM-0425",
+        layer: "ScrollMesh v2.4"
       }
+    },
+    "VoiceLoop": {
+      title: "VoiceLoop™ Product Scroll",
+      intro: "VoiceLoop™ enables looped audio workflows for speech actors, voice apps, and smart device interactions.",
+      features: [
+        "Loop authoring in-browser",
+        "QRVoice triggers with FAA sync",
+        "ScrollPath routing and caption sync"
+      ],
+      pricing: [
+        "Creator Tier – R49",
+        "Pro VoiceKit – R149",
+        "Enterprise TTS Mesh – R499"
+      ],
+      metadata: {
+        id: "VLOOP-FAAV-4910",
+        vault: "HM-0425",
+        layer: "VoiceMesh v1.6"
+      }
+    }
+    // Add more brands as needed
+  };
 
-      snap.innerHTML = `
-        <div class="text-2xl font-bold text-gray-700 mb-4">${p.title}</div>
-        <p class="mb-4">${p.intro}</p>
-        <div class="mb-4">
-          <h5 class="font-semibold">🎛️ Features</h5>
-          <ul class="list-disc list-inside ml-4 space-y-1">
-            ${p.features.map((f) => `<li>${f}</li>`).join("")}
-          </ul>
-        </div>
-        <div class="mb-4">
-          <h5 class="font-semibold">💳 Pricing</h5>
-          <ul class="list-disc list-inside ml-4 space-y-1">
-            ${p.pricing.map((f) => `<li>${f}</li>`).join("")}
-          </ul>
-        </div>
-        <div class="mb-4">
-          <h5 class="font-semibold">🔗 FAA Metadata</h5>
-          <ul class="list-disc list-inside ml-4 space-y-1">
-            <li>ID: <code>${p.metadata.id}</code></li>
-            <li>Vault: <code>${p.metadata.vault}</code></li>
-            <li>Layer: <code>${p.metadata.layer}</code></li>
-          </ul>
-        </div>
-      `;
+  mediaBrands.forEach((brand, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-indigo-100 hover:text-indigo-800 font-semibold cursor-pointer';
+    btn.innerHTML = `${brand}<sup>™</sup>`;
+    btn.onclick = () => toggleSnapshot(`media-snap-${i}`);
+    grid.appendChild(btn);
+
+    const subList = mediaSubNodes[i].map(n => `<li>🔹 ${n}</li>`).join('');
+    const snap = document.createElement('div');
+    snap.id = `media-snap-${i}`;
+    snap.className = 'brand-snapshot hidden mt-6';
+    snap.innerHTML = `
+      <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+      <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+        ${subList}
+      </ul>`;
+
+    const p = scrollProfiles[brand];
+    if (p) {
+      const scroll = document.createElement("div");
+      scroll.className = "w-full flex justify-between gap-6 bg-white p-6 border rounded shadow text-sm";
 
       scroll.innerHTML = `
-        <div class="w-full flex justify-between gap-6 bg-white p-6 border rounded shadow text-sm">
-          <div class="w-1/2 space-y-4">
-            <h4 class="text-xl font-bold text-indigo-700">🔊 ${p.title}</h4>
-            <p>${p.intro}</p>
-            <div>
-              <h5 class="font-semibold">🎛️ Features</h5>
-              <ul class="list-disc list-inside ml-4 space-y-1">
-                ${p.features.map((f) => `<li>${f}</li>`).join("")}
-              </ul>
-            </div>
-            <div>
-              <h5 class="font-semibold">💳 Pricing</h5>
-              <ul class="list-disc list-inside ml-4 space-y-1">
-                ${p.pricing.map((f) => `<li>${f}</li>`).join("")}
-              </ul>
-            </div>
-          </div>
-          <div class="w-1/2 space-y-4">
-            <h5 class="text-lg font-semibold text-indigo-700">🔗 FAA Metadata</h5>
+        <div class="w-1/2 space-y-4">
+          <h4 class="text-xl font-bold text-indigo-700">🔊 ${p.title}</h4>
+          <p>${p.intro}</p>
+
+          <div>
+            <h5 class="font-semibold">🎛️ Features</h5>
             <ul class="list-disc list-inside ml-4 space-y-1">
-              <li>ID: <code>${p.metadata.id}</code></li>
-              <li>Vault: <code>${p.metadata.vault}</code></li>
-              <li>Layer: <code>${p.metadata.layer}</code></li>
+              ${p.features.map(f => `<li>${f}</li>`).join("")}
+            </ul>
+          </div>
+
+          <div>
+            <h5 class="font-semibold">💳 Pricing</h5>
+            <ul class="list-disc list-inside ml-4 space-y-1">
+              ${p.pricing.map(f => `<li>${f}</li>`).join("")}
             </ul>
           </div>
         </div>
+
+        <div class="w-1/2 space-y-4">
+          <h5 class="text-lg font-semibold text-indigo-700">🔗 FAA Metadata</h5>
+          <ul class="list-disc list-inside ml-4 space-y-1">
+            <li>Product ID: <code>${p.metadata.id}</code></li>
+            <li>VaultID: <code>${p.metadata.vault}</code></li>
+            <li>Signal Echo Layer: <code>${p.metadata.layer}</code></li>
+          </ul>
+        </div>
       `;
-    });
+
+      snap.appendChild(scroll);
+    }
+
+    snapContainer.appendChild(snap);
   });
 }
 
 document.addEventListener('DOMContentLoaded', renderMediaSection);
 </script>
+
 
 
 
