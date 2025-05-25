@@ -1,0 +1,2334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruitful Innovations - Unified Portal</title>
+    <link rel="icon" href="/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" xintegrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEbMoHwXTz6cFaAUwfjC5fxYvJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Base Styles - Apple inspired cleanliness */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f7; /* Very light gray, almost white */
+            color: #1d1d1f; /* Near black for primary text */
+            line-height: 1.4; /* Tighter line height for Apple feel */
+            -webkit-font-smoothing: antialiased; /* Smoother font rendering */
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* Custom Scrollbar Styling (Apple-like subtle) */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e0e0e4; /* Light track */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #a0a0a5; /* Muted gray thumb */
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #808085; /* Darker on hover */
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Global Header - Minimalist and clean */
+        header {
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+            backdrop-filter: blur(10px); /* Frosted glass effect */
+            border-bottom: 1px solid #e8e8ed; /* Subtle bottom border */
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.05); /* Very subtle shadow */
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        header h1 {
+            color: #1d1d1f; /* Dark text for logo */
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+        header nav a {
+            color: #424245; /* Muted gray for nav links */
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            transition: all 0.2s ease-in-out;
+            position: relative;
+        }
+        header nav a:hover {
+            color: #0071e3; /* Apple blue on hover */
+            background-color: rgba(0, 0, 0, 0.03); /* Very subtle background on hover */
+        }
+        header nav a.main-cta-button { /* Sign Up button */
+            background-color: #0071e3; /* Apple blue */
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        header nav a.main-cta-button:hover {
+            background-color: #0077ed;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        /* Hero Section - Clean, bold, and inviting */
+        .hero-section {
+            background: #f5f5f7; /* Matching body background */
+            min-height: 70vh;
+            padding: 6rem 1.5rem;
+            box-shadow: none;
+            color: #1d1d1f;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-section::before { /* Remove animated background pattern */
+            content: none;
+        }
+        .hero-section h2 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: #1d1d1f;
+            line-height: 1.1;
+            animation: none;
+        }
+        .hero-section h2 span {
+            color: #0071e3; /* Apple blue accent */
+        }
+        .hero-section p {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #424245;
+            margin-top: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .cta-button { /* Re-style CTA button for Apple look */
+            background: #0071e3; /* Apple blue */
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .cta-button:hover {
+            background-color: #0077ed;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+        .cta-button span { /* Remove emoji for Apple style */
+            display: none;
+        }
+
+        /* Sections - Clean, defined blocks */
+        section {
+            padding: 8rem 2rem;
+            background-color: #ffffff; /* White background for sections */
+            box-shadow: none;
+            border-bottom: 1px solid #e8e8ed; /* Subtle separator */
+            color: #1d1d1f;
+        }
+        section:last-of-type {
+            border-bottom: none;
+        }
+        section h2, section h3 {
+            color: #1d1d1f;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 2rem;
+            font-size: 2.2rem;
+        }
+        section p {
+            color: #424245;
+            font-size: 1.1rem;
+        }
+
+        /* Feature Cards - Minimalist and informative */
+        .feature-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            border: 1px solid #e8e8ed;
+        }
+        .feature-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+        }
+        .feature-card div:first-child { /* Icon */
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #0071e3; /* Apple blue for icons */
+        }
+        .feature-card h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .feature-card p {
+            font-size: 0.95rem;
+            color: #6e6e73;
+        }
+
+        /* Share Signal Section - Clean data display */
+        #shareprice {
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            padding: 4rem 1.5rem;
+            border-bottom: 1px solid #e8e8ed;
+        }
+        #shareprice h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        #price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #0071e3;
+            letter-spacing: -0.02em;
+            animation: none; /* Remove pulse animation */
+        }
+        #timestamp {
+            color: #6e6e73;
+            font-size: 0.85rem;
+        }
+
+        /* Seedwave Growth - Integrated chart */
+        #seedwave {
+            background-color: #ffffff;
+            padding: 6rem 1.5rem;
+            border-bottom: 1px solid #e8e8ed;
+        }
+        #seedwave h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #1d1d1f;
+        }
+        #seedwave .w-full.max-w-4xl {
+            background-color: #fcfcfc;
+            border: 1px solid #e8e8ed;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* Founder's Note - Elegant text block */
+        section.bg-gray-700 { /* Founder's Note */
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            padding: 6rem 2rem;
+            border-bottom: 1px solid #e8e8ed;
+        }
+        section.bg-gray-700 h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            animation: none;
+        }
+        section.bg-gray-700 p {
+            font-size: 1.1rem;
+            color: #424245;
+            max-width: 700px;
+        }
+        section.bg-gray-700 p.italic {
+            color: #6e6e73;
+            font-style: italic;
+        }
+        section.bg-gray-700 p.font-semibold {
+            color: #0071e3;
+            font-weight: 600;
+            margin-top: 2rem;
+        }
+
+        /* Vault Terminal Access - Clean buttons */
+        #vault-access {
+            background-color: #ffffff;
+            padding: 6rem 2rem;
+            border-bottom: 1px solid #e8e8ed;
+        }
+        #vault-access h3 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 2.5rem;
+        }
+        #vault-access .w-full.h-\[800px\] { /* Iframe container */
+            background-color: #f0f0f0;
+            border: 1px solid #dcdcdc;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        .terminal-btn {
+            background-color: #f0f0f0;
+            color: #424245;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #dcdcdc;
+        }
+        .terminal-btn:hover {
+            background-color: #e8e8ed;
+            color: #1d1d1f;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .terminal-btn.ring {
+            border-color: #0071e3;
+            box-shadow: 0 0 0 2px #0071e3;
+        }
+
+        /* Sector Scrolls - Clean link grid */
+        section.bg-gray-800.text-center { /* Sector Scrolls */
+            background-color: #f5f5f7;
+            padding: 6rem 2rem;
+            border-bottom: 1px solid #e8e8ed;
+        }
+        section.bg-gray-800.text-center h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 2.5rem;
+        }
+        .glyph {
+            background-color: #ffffff;
+            color: #424245;
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #e8e8ed;
+        }
+        .glyph:hover {
+            background-color: #f0f0f0;
+            color: #1d1d1f;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Treaty Section - Elegant quote */
+        #treaty {
+            background-color: #ffffff;
+            padding: 6rem 2rem;
+            border-bottom: 1px solid #e8e8ed;
+        }
+        #treaty h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 1.5rem;
+        }
+        #treaty p {
+            font-size: 1.1rem;
+            color: #424245;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 2rem;
+        }
+        #treaty blockquote {
+            font-size: 1.5rem;
+            color: #1d1d1f;
+            font-weight: 600;
+            line-height: 1.4;
+            max-width: 700px;
+        }
+        #treaty blockquote::before, #treaty blockquote::after {
+            content: '“';
+            font-size: 2.5em;
+            line-height: 0.1;
+            vertical-align: -0.4em;
+            color: #dcdcdc;
+            margin-right: 0.1em;
+        }
+        #treaty blockquote::after {
+            content: '”';
+            margin-left: 0.05em;
+        }
+
+        /* Signal Packet - Developer focused, clean code block */
+        section.py-10.text-xs.text-center { /* Signal Packet */
+            background-color: #2a2a2a; /* Darker background for code */
+            color: #00e393;
+            padding: 4rem 1.5rem;
+            border-bottom: 1px solid #333;
+        }
+        section.py-10.text-xs.text-center pre {
+            background-color: #1d1d1f; /* Even darker code block */
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+            white-space: pre-wrap;
+            word-break: break-all;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+            font-size: 0.9rem;
+        }
+
+        /* VaultMesh Executive Summary - Structured and readable */
+        #vaultmesh {
+            background-color: #f5f5f7;
+            padding: 6rem 2rem;
+            color: #1d1d1f;
+            border-bottom: 1px solid #e8e8ed;
+        }
+        #vaultmesh h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 1.5rem;
+        }
+        #vaultmesh h2.text-purple-400 {
+            color: #0071e3; /* Apple blue for main heading */
+        }
+        #vaultmesh h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        #vaultmesh p {
+            font-size: 1.05rem;
+            color: #424245;
+        }
+        #vaultmesh ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            color: #424245;
+        }
+        #vaultmesh ul li {
+            font-size: 1.05rem;
+            margin-bottom: 0.5rem;
+        }
+        #vaultmesh ul.list-decimal {
+            list-style-type: decimal;
+        }
+        #vaultmesh code {
+            background-color: #e8e8ed;
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+            color: #1d1d1f;
+        }
+
+        /* About Section - Simple and clear */
+        #about {
+            background-color: #ffffff;
+            padding: 6rem 2rem;
+            color: #1d1d1f;
+            border-bottom: 1px solid #e8e8ed;
+        }
+        #about h3 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 1.5rem;
+        }
+        #about p {
+            font-size: 1.1rem;
+            color: #424245;
+            max-width: 800px;
+        }
+
+        /* Call to Action Section - Prominent and inviting */
+        #cta {
+            background: #f5f5f7;
+            padding: 6rem 2rem;
+            color: #1d1d1f;
+            text-align: center;
+        }
+        #cta h3 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 1.5rem;
+        }
+        #cta p {
+            font-size: 1.2rem;
+            color: #424245;
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+        }
+
+        /* Footer - Minimalist */
+        footer {
+            background-color: #f5f5f7;
+            color: #6e6e73;
+            padding: 2rem;
+            font-size: 0.85rem;
+            border-top: 1px solid #e8e8ed;
+        }
+        footer a {
+            color: #6e6e73;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        footer a:hover {
+            color: #1d1d1f;
+        }
+
+        /* Admin Portal Specific Styles (Integrated into Apple.com style) */
+        .admin-portal-container {
+            padding: 4rem 2rem; /* Add consistent padding for the whole section */
+            background-color: #ffffff; /* White background for the entire admin section */
+            border-bottom: 1px solid #e8e8ed;
+        }
+        .admin-portal-container h1 {
+            color: #1d1d1f; /* Dark text for admin header title */
+        }
+        .admin-portal-container .admin-header {
+            background: #f5f5f7; /* Very light background for admin header bar */
+            color: #1d1d1f; /* Dark text */
+            padding: 1.5rem 2rem;
+            box-shadow: none; /* No shadow on this inner header */
+            border-bottom: 1px solid #e8e8ed;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            margin-bottom: 2rem; /* Spacing below header */
+        }
+        .admin-portal-container .admin-header .access-button {
+            background-color: #0071e3; /* Apple blue button */
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: none;
+        }
+        .admin-portal-container .admin-header .access-button:hover {
+            background-color: #0077ed;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        .admin-portal-container main { /* Main content area within admin portal */
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            margin-top: 0; /* Remove top margin from original main */
+            border: 1px solid #e8e8ed;
+        }
+        .admin-portal-container main section {
+            background-color: #fcfcfc; /* Very light background for sections */
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.05); /* Softer shadow */
+            border: 1px solid #e8e8ed;
+        }
+        .admin-portal-container main input, .admin-portal-container main select {
+            background-color: #ffffff;
+            border-color: #d1d1d6; /* Lighter border */
+            color: #1d1d1f;
+            border-radius: 6px;
+            padding: 0.6rem 0.8rem;
+        }
+        .admin-portal-container main input:focus, .admin-portal-container main select:focus {
+            border-color: #0071e3; /* Apple blue focus */
+            box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.3);
+        }
+        .admin-portal-container main button {
+            background: #0071e3; /* Apple blue */
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .admin-portal-container main button:hover {
+            background-color: #0077ed;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        .admin-portal-container .snapshot-box { /* Adjusted for light theme */
+            background: #fcfcfc;
+            border: 1px solid #e8e8ed;
+            color: #1d1d1f;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+        }
+        .admin-portal-container .brand-snapshot {
+            background-color: #ffffff;
+            border: 1px solid #e8e8ed;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        /* FAA.ZONE INDEX Table Styling */
+        .admin-portal-container .admin-table {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .admin-portal-container .admin-table thead {
+            background-color: #f5f5f7;
+            color: #424245;
+        }
+        .admin-portal-container .admin-table th, .admin-portal-container .admin-table td {
+            border-bottom: 1px solid #e8e8ed;
+            border-right: 1px solid #e8e8ed;
+        }
+        .admin-portal-container .admin-table tbody tr {
+            background-color: #ffffff;
+        }
+        .admin-portal-container .admin-table tbody tr:hover {
+            background-color: #f0f0f5; /* Light hover */
+        }
+        .admin-portal-container .admin-table tbody tr:nth-child(odd) {
+            background-color: #fcfcfc; /* Alternate row color */
+        }
+        .admin-portal-container .admin-table button.text-blue-400 { color: #0071e3; }
+        .admin-portal-container .admin-table button.text-blue-400:hover { background-color: rgba(0, 113, 227, 0.1); }
+        .admin-portal-container .admin-table button.text-green-400 { color: #30d158; } /* Apple Green */
+        .admin-portal-container .admin-table button.text-green-400:hover { background-color: rgba(48, 209, 88, 0.1); }
+
+        /* Top Navigation (Admin) */
+        .admin-portal-container .top-nav {
+            background-color: #f5f5f7;
+            border-bottom: 1px solid #e8e8ed;
+            box-shadow: none;
+            border-radius: 0;
+            margin-bottom: 2rem;
+        }
+        .admin-portal-container .top-nav a {
+            color: #424245;
+            padding-bottom: 0.4rem;
+        }
+        .admin-portal-container .top-nav a:hover {
+            color: #1d1d1f;
+            transform: none; /* Remove lift */
+        }
+        .admin-portal-container .top-nav a::after {
+            background: #0071e3; /* Apple blue underline */
+        }
+        .admin-portal-container .top-nav a.active {
+            color: #0071e3;
+        }
+        .admin-portal-container .top-nav a.active::after {
+            background: #0071e3;
+        }
+        .admin-portal-container .top-nav .glow-btn {
+            background: #0071e3;
+            color: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .admin-portal-container .top-nav .glow-btn:hover {
+            background-color: #0077ed;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        /* Sector Grid Navigation (Admin) */
+        .admin-portal-container .sector-grid-nav {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e8e8ed;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            padding: 1rem 1.5rem;
+        }
+        .admin-portal-container .sector-grid-nav .sector-link {
+            background-color: #f5f5f7;
+            color: #424245;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #e8e8ed;
+        }
+        .admin-portal-container .sector-grid-nav .sector-link:hover {
+            background-color: #e8e8ed;
+            color: #1d1d1f;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .admin-portal-container .sector-grid-nav .sector-link.active {
+            background: #0071e3;
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 113, 227, 0.3);
+            border-color: #0071e3;
+            transform: translateY(0); /* No lift for active */
+        }
+
+        /* Metrics Section (Admin) */
+        .admin-portal-container .metrics-grid a {
+            background-color: #ffffff;
+            color: #1d1d1f;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border: 1px solid #e8e8ed;
+        }
+        .admin-portal-container .metrics-grid a:hover {
+            background-color: #f0f0f5;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .admin-portal-container .metrics-grid h3 {
+            color: #6e6e73;
+        }
+        .admin-portal-container .metrics-grid p {
+            color: #0071e3; /* Apple blue for numbers */
+        }
+
+        /* Sidebar Specific Styles */
+        #sidebar {
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+            backdrop-filter: blur(10px); /* Frosted glass effect */
+            border-right: 1px solid #e8e8ed; /* Subtle border */
+            box-shadow: 2px 0 5px rgba(0,0,0,0.05); /* Subtle shadow */
+        }
+        #sidebar .logo-container {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #sidebar .logo-full {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+        }
+        #sidebar .logo-collapsed {
+            height: 40px;
+            width: 40px;
+            object-fit: contain;
+        }
+        #sidebar h2 {
+            color: #6e6e73; /* Muted gray for menu group titles */
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding-left: 1rem;
+            padding-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        #sidebar .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem; /* Adjusted gap */
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            font-weight: 500;
+            color: #424245; /* Muted gray for menu items */
+            transition: all 0.2s ease-in-out;
+            position: relative;
+            cursor: pointer;
+        }
+        #sidebar .menu-item:hover {
+            background-color: rgba(0, 0, 0, 0.03);
+            color: #0071e3;
+        }
+        #sidebar .menu-item-active {
+            background-color: rgba(0, 113, 227, 0.1); /* Subtle blue background for active */
+            color: #0071e3; /* Apple blue for active text */
+            font-weight: 600;
+        }
+        #sidebar .menu-item-active .menu-item-icon-inactive {
+            color: #0071e3; /* Active icon color */
+        }
+        #sidebar .menu-item-icon-inactive {
+            color: #6e6e73; /* Muted icon color */
+        }
+        #sidebar .menu-dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: #424245;
+            background-color: transparent; /* Ensure transparent background */
+            transition: all 0.2s ease-in-out;
+        }
+        #sidebar .menu-dropdown-item:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+            color: #0071e3;
+        }
+        #sidebar .menu-dropdown-item-active {
+            background-color: rgba(0, 113, 227, 0.05);
+            color: #0071e3;
+            font-weight: 500;
+        }
+        #sidebar .menu-dropdown-badge {
+            background-color: #e8e8ed;
+            color: #6e6e73;
+            font-size: 0.7rem;
+            padding: 0.2em 0.5em;
+            border-radius: 10px;
+        }
+        /* Submenu arrow specific styling */
+        .submenu-arrow {
+            color: #6e6e73; /* Muted gray for inactive state */
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+        .menu-item-active .submenu-arrow,
+        .submenu-content.open + .menu-item .submenu-arrow {
+            color: #0071e3; /* Apple blue for active state */
+            transform: rotate(180deg);
+        }
+        /* Submenu content transition */
+        .submenu-content {
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            padding-left: 1.5rem; /* Indent submenu items */
+        }
+        .submenu-content.open {
+            max-height: 500px; /* Sufficiently large value */
+            opacity: 1;
+        }
+
+        /* Dashboard Pulse Animation */
+        @keyframes dashboardPulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 rgba(0, 113, 227, 0);
+            }
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 0 15px rgba(0, 113, 227, 0.4); /* Subtle blue glow */
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 rgba(0, 113, 227, 0);
+            }
+        }
+
+        .dashboard-pulse {
+            animation: dashboardPulse 2s ease-in-out infinite; /* Apply the animation */
+        }
+
+        /* Main content wrapper adjustment for mobile sidebar open */
+        @media (max-width: 1023px) {
+            .sidebar-open-mobile-shift {
+                padding-left: 290px;
+            }
+        }
+
+        /* Sidebar Logo Sizing and Alignment */
+        #sidebar .logo-container {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #sidebar .logo-full {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+        }
+        #sidebar .logo-collapsed {
+            height: 40px;
+            width: 40px;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+
+    <aside id="sidebar" class="fixed flex flex-col top-0 left-0 h-screen transition-all duration-300 ease-in-out z-50
+        w-[290px] -translate-x-full lg:translate-x-0 lg:w-[290px]">
+        <div class="py-8 flex" id="sidebar-logo-section">
+            <a href="/" class="block w-full">
+                <div class="logo-container" id="sidebar-logo-inner">
+                    <img class="dark:hidden logo-full" src="https://placehold.co/150x40/f5f5f7/1d1d1f?text=Fruitful" alt="Fruitful Logo" id="logo-full-light">
+                    <img class="hidden dark:block logo-full" src="https://placehold.co/150x40/1d1d1f/f5f5f7?text=Fruitful" alt="Fruitful Logo" id="logo-full-dark">
+                    <img class="logo-collapsed hidden" src="https://placehold.co/40x40/f5f5f7/1d1d1f?text=F" alt="Fruitful Icon" id="logo-collapsed-light">
+                    <img class="logo-collapsed hidden dark:block" src="https://placehold.co/40x40/1d1d1f/f5f5f7?text=F" alt="Fruitful Icon" id="logo-collapsed-dark">
+                </div>
+            </a>
+        </div>
+
+        <div class="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
+            <nav class="mb-6">
+                <div class="flex flex-col gap-1">
+                    <h2 class="mb-2 text-xs uppercase flex leading-[20px] text-gray-500 justify-start pl-4 pt-4">Menu</h2>
+                    <ul class="flex flex-col gap-1">
+                        <li>
+                            <button class="menu-item group w-full flex justify-start dashboard-pulse" data-submenu-toggle="dashboard">
+                                <span class="menu-item-icon-inactive">💡</span>
+                                <span class="menu-item-text">Dashboard</span>
+                                <svg class="ml-auto w-5 h-5 transition-transform duration-200 submenu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="submenu-content">
+                                <ul class="mt-1 space-y-1">
+                                    <li><a href="#" class="menu-dropdown-item">Ecommerce</a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Analytics <span class="menu-dropdown-badge">pro</span></a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Marketing <span class="menu-dropdown-badge">pro</span></a></li>
+                                    <li><a href="#" class="menu-dropdown-item">CRM <span class="menu-dropdown-badge">pro</span></a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Stocks <span class="menu-dropdown-badge">new</span><span class="menu-dropdown-badge">pro</span></a></li>
+                                    <li><a href="#" class="menu-dropdown-item">SaaS <span class="menu-dropdown-badge">new</span><span class="menu-dropdown-badge">pro</span></a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a href="#" class="menu-item group flex justify-start"><span class="menu-item-icon-inactive">🗓️</span><span class="menu-item-text">Calendar</span></a></li>
+                        <li><a href="#" class="menu-item group flex justify-start"><span class="menu-item-icon-inactive">👤</span><span class="menu-item-text">User Profile</span></a></li>
+                        <li>
+                            <button class="menu-item group w-full flex justify-start" data-submenu-toggle="task">
+                                <span class="menu-item-icon-inactive">✅</span>
+                                <span class="menu-item-text">Task</span>
+                                <svg class="ml-auto w-5 h-5 transition-transform duration-200 submenu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="submenu-content">
+                                <ul class="mt-1 space-y-1">
+                                    <li><a href="#" class="menu-dropdown-item">List <span class="menu-dropdown-badge">pro</span></a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Kanban <span class="menu-dropdown-badge">pro</span></a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <h2 class="mb-2 text-xs uppercase flex leading-[20px] text-gray-500 justify-start pl-4 pt-4">FAA Wildlife UI</h2>
+                    <ul class="flex flex-col gap-1">
+                        <li>
+                            <button class="menu-item group w-full flex justify-start" data-submenu-toggle="map-view">
+                                <span class="menu-item-icon-inactive">🗺️</span>
+                                <span class="menu-item-text">Map View</span>
+                                <svg class="ml-auto w-5 h-5 transition-transform duration-200 submenu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="submenu-content">
+                                <ul class="mt-1 space-y-1">
+                                    <li><a href="#" class="menu-dropdown-item">Toggle Layers</a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Auto Zoom</a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Center to Region</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <button class="menu-item group w-full flex justify-start" data-submenu-toggle="drone-feed">
+                                <span class="menu-item-icon-inactive">🚁</span>
+                                <span class="menu-item-text">Drone Feed</span>
+                                <svg class="ml-auto w-5 h-5 transition-transform duration-200 submenu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="submenu-content">
+                                <ul class="mt-1 space-y-1">
+                                    <li><a href="#" class="menu-dropdown-item">Open Live Feed</a></li>
+                                    <li><a href="#" class="menu-dropdown-item">View Drone Scroll License</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <button class="menu-item group w-full flex justify-start" data-submenu-toggle="tracker-view">
+                                <span class="menu-item-icon-inactive">🐾</span>
+                                <span class="menu-item-text">Tracker View</span>
+                                <svg class="ml-auto w-5 h-5 transition-transform duration-200 submenu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="submenu-content">
+                                <ul class="mt-1 space-y-1">
+                                    <li><a href="#" class="menu-dropdown-item">View Animal Health</a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Identify Animal</a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Sync Tracker Data</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <button class="menu-item group w-full flex justify-start" data-submenu-toggle="environment">
+                                <span class="menu-item-icon-inactive">🌳</span>
+                                <span class="menu-item-text">Environment</span>
+                                <svg class="ml-auto w-5 h-5 transition-transform duration-200 submenu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="submenu-content">
+                                <ul class="mt-1 space-y-1">
+                                    <li><a href="#" class="menu-dropdown-item">Soil Moisture Levels</a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Infrasound Pulse Scan</a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Weather Reading</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <button class="menu-item group w-full flex justify-start" data-submenu-toggle="alerts">
+                                <span class="menu-item-icon-inactive">🚨</span>
+                                <span class="menu-item-text">Alerts</span>
+                                <svg class="ml-auto w-5 h-5 transition-transform duration-200 submenu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="submenu-content">
+                                <ul class="mt-1 space-y-1">
+                                    <li><a href="#" class="menu-dropdown-item">Lock Region</a></li>
+                                    <li><a href="#" class="menu-dropdown-item">View Incident Log</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <button class="menu-item group w-full flex justify-start" data-submenu-toggle="risk-alerts">
+                                <span class="menu-item-icon-inactive">⚠️</span>
+                                <span class="menu-item-text">Risk Alerts</span>
+                                <svg class="ml-auto w-5 h-5 transition-transform duration-200 submenu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="submenu-content">
+                                <ul class="mt-1 space-y-1">
+                                    <li><a href="#" class="menu-dropdown-item">Unauthorized Scroll Access</a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Zone Entry Violation</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <button class="menu-item group w-full flex justify-start" data-submenu-toggle="timeline-tracker">
+                                <span class="menu-item-icon-inactive">⏳</span>
+                                <span class="menu-item-text">Timeline Tracker</span>
+                                <svg class="ml-auto w-5 h-5 transition-transform duration-200 submenu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="submenu-content">
+                                <ul class="mt-1 space-y-1">
+                                    <li><a href="#" class="menu-dropdown-item">View Scroll Lifetime</a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Scroll Event Log</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <button class="menu-item group w-full flex justify-start" data-submenu-toggle="deployment-calculator">
+                                <span class="menu-item-icon-inactive">🧮</span>
+                                <span class="menu-item-text">Deployment Calculator</span>
+                                <svg class="ml-auto w-5 h-5 transition-transform duration-200 submenu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="submenu-content">
+                                <ul class="mt-1 space-y-1">
+                                    <li><a href="#" class="menu-dropdown-item">Launch Calculator</a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Output Recommendation</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <button class="menu-item group w-full flex justify-start" data-submenu-toggle="ai-recommender">
+                                <span class="menu-item-icon-inactive">🤖</span>
+                                <span class="menu-item-text">AI Recommender</span>
+                                <svg class="ml-auto w-5 h-5 transition-transform duration-200 submenu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="submenu-content">
+                                <ul class="mt-1 space-y-1">
+                                    <li><a href="#" class="menu-dropdown-item">Suggest Scroll/Hardware</a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Autofill by GPS</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <button class="menu-item group w-full flex justify-start" data-submenu-toggle="qr-generator">
+                                <span class="menu-item-icon-inactive">📱</span>
+                                <span class="menu-item-text">QR Generator</span>
+                                <svg class="ml-auto w-5 h-5 transition-transform duration-200 submenu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="submenu-content">
+                                <ul class="mt-1 space-y-1">
+                                    <li><a href="#" class="menu-dropdown-item">Generate QR Code</a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Bind Scroll to Product</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <button class="menu-item group w-full flex justify-start" data-submenu-toggle="product-detail-page">
+                                <span class="menu-item-icon-inactive">📄</span>
+                                <span class="menu-item-text">Product Detail Page</span>
+                                <svg class="ml-auto w-5 h-5 transition-transform duration-200 submenu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="submenu-content">
+                                <ul class="mt-1 space-y-1">
+                                    <li><a href="#" class="menu-dropdown-item">View Scrolls</a></li>
+                                    <li><a href="#" class="menu-dropdown-item">View Warranty PDF</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <button class="menu-item group w-full flex justify-start" data-submenu-toggle="compare-products">
+                                <span class="menu-item-icon-inactive">⚖️</span>
+                                <span class="menu-item-text">Compare Products</span>
+                                <svg class="ml-auto w-5 h-5 transition-transform duration-200 submenu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="submenu-content">
+                                <ul class="mt-1 space-y-1">
+                                    <li><a href="#" class="menu-dropdown-item">Add to Compare</a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Compare Specs</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a href="#" class="menu-item group flex justify-start"><span class="menu-item-icon-inactive">📊</span><span class="menu-item-text">Scroll Dashboard</span></a></li>
+                        <li>
+                            <button class="menu-item group w-full flex justify-start" data-submenu-toggle="scroll-issue">
+                                <span class="menu-item-icon-inactive">📜</span>
+                                <span class="menu-item-text">Scroll Issue</span>
+                                <svg class="ml-auto w-5 h-5 transition-transform duration-200 submenu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="submenu-content">
+                                <ul class="mt-1 space-y-1">
+                                    <li><a href="#" class="menu-dropdown-item">Issue New Scroll</a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Assign Region</a></li>
+                                    <li><a href="#" class="menu-dropdown-item">View Log</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a href="#" class="menu-item group flex justify-start"><span class="menu-item-icon-inactive">📝</span><span class="menu-item-text">Generate PDF</span></a></li>
+                        <li>
+                            <button class="menu-item group w-full flex justify-start" data-submenu-toggle="vault-logs">
+                                <span class="menu-item-icon-inactive">🔐</span>
+                                <span class="menu-item-text">Vault Logs</span>
+                                <svg class="ml-auto w-5 h-5 transition-transform duration-200 submenu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="submenu-content">
+                                <ul class="mt-1 space-y-1">
+                                    <li><a href="#" class="menu-dropdown-item">View All Logs</a></li>
+                                    <li><a href="#" class="menu-dropdown-item">View Sync Timeline</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a href="#" class="menu-item group flex justify-start"><span class="menu-item-icon-inactive">🔍</span><span class="menu-item-text">Audit Bot</span></a></li>
+                        <li><a href="#" class="menu-item group flex justify-start"><span class="menu-item-icon-inactive">📤</span><span class="menu-item-text">Export Reports</span></a></li>
+                    </ul>
+
+                    <h2 class="mb-2 text-xs uppercase flex leading-[20px] text-gray-500 justify-start pl-4 pt-4">Support</h2>
+                    <ul class="flex flex-col gap-1">
+                        <li><a href="#" class="menu-item group flex justify-start"><span class="menu-item-icon-inactive">💬</span><span class="menu-item-text">Chat</span></a></li>
+                        <li>
+                            <button class="menu-item group w-full flex justify-start" data-submenu-toggle="email">
+                                <span class="menu-item-icon-inactive">📧</span>
+                                <span class="menu-item-text">Email</span>
+                                <svg class="ml-auto w-5 h-5 transition-transform duration-200 submenu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="submenu-content">
+                                <ul class="mt-1 space-y-1">
+                                    <li><a href="#" class="menu-dropdown-item">Inbox <span class="menu-dropdown-badge">pro</span></a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Details <span class="menu-dropdown-badge">pro</span></a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a href="#" class="menu-item group flex justify-start"><span class="menu-item-icon-inactive">🧾</span><span class="menu-item-text">Invoice</span></a></li>
+                    </ul>
+
+                    <h2 class="mb-2 text-xs uppercase flex leading-[20px] text-gray-500 justify-start pl-4 pt-4">Others</h2>
+                    <ul class="flex flex-col gap-1">
+                        <li>
+                            <button class="menu-item group w-full flex justify-start" data-submenu-toggle="charts">
+                                <span class="menu-item-icon-inactive">📈</span>
+                                <span class="menu-item-text">Charts</span>
+                                <svg class="ml-auto w-5 h-5 transition-transform duration-200 submenu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="submenu-content">
+                                <ul class="mt-1 space-y-1">
+                                    <li><a href="#" class="menu-dropdown-item">Line Chart <span class="menu-dropdown-badge">pro</span></a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Bar Chart <span class="menu-dropdown-badge">pro</span></a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Doughnut Chart <span class="menu-dropdown-badge">pro</span></a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <button class="menu-item group w-full flex justify-start" data-submenu-toggle="ui-elements">
+                                <span class="menu-item-icon-inactive">📦</span>
+                                <span class="menu-item-text">Ui Elements</span>
+                                <svg class="ml-auto w-5 h-5 transition-transform duration-200 submenu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="submenu-content">
+                                <ul class="mt-1 space-y-1">
+                                    <li><a href="#" class="menu-dropdown-item">Alerts</a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Avatars</a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Badge</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <button class="menu-item group w-full flex justify-start" data-submenu-toggle="authentication">
+                                <span class="menu-item-icon-inactive">🔑</span>
+                                <span class="menu-item-text">Authentication</span>
+                                <svg class="ml-auto w-5 h-5 transition-transform duration-200 submenu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="submenu-content">
+                                <ul class="mt-1 space-y-1">
+                                    <li><a href="#" class="menu-dropdown-item">Signin</a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Signup</a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Reset Password <span class="menu-dropdown-badge">pro</span></a></li>
+                                    <li><a href="#" class="menu-dropdown-item">Two Step Verification <span class="menu-dropdown-badge">pro</span></a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </aside>
+
+    <div id="main-content-wrapper" class="transition-all duration-300 ease-in-out lg:ml-[290px]">
+        <header class="py-4 px-6 md:px-12 flex justify-between items-center text-white">
+            <div class="flex items-center">
+                <button id="hamburger-btn" class="lg:hidden mr-4 p-2 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                    <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+                <h1 class="text-2xl font-extrabold tracking-tight">Fruitful™</h1>
+            </div>
+            <nav class="flex items-center space-x-4">
+                <a href="#features" class="transition-colors duration-200">Features</a>
+                <a href="#shareprice" class="transition-colors duration-200">Signal</a>
+                <a href="#vault-access" class="transition-colors duration-200">Vault</a>
+                <a href="#treaty" class="transition-colors duration-200">Treaty</a>
+                <a href="#vaultmesh" class="transition-colors duration-200">VaultMesh</a>
+                <a href="#admin-portal-section" class="transition-colors duration-200">Admin</a>
+                <a href="#about" class="transition-colors duration-200">About</a>
+                <a href="#cta" class="main-cta-button">Sign Up</a>
+            </nav>
+        </header>
+
+        <section class="hero-section">
+            <div class="hero-content">
+                <h2 class="text-5xl md:text-6xl font-extrabold mb-6 leading-tight">
+                    Innovate. Connect. <span class="text-yellow-300">Thrive.</span>
+                </h2>
+                <p class="text-xl md:text-2xl mb-10 max-w-2xl mx-auto">
+                    Discover a new era of collaboration and sustainable growth with Fruitful's cutting-edge platform.
+                </p>
+                <a href="#cta" class="cta-button">
+                    Get Started Today <span>🚀</span>
+                </a>
+            </div>
+        </section>
+
+        <section id="features" class="py-16 md:py-24 px-6 md:px-12">
+            <div class="max-w-6xl mx-auto">
+                <h3 class="text-4xl font-bold text-center mb-16">
+                    Unlock Your Potential with Our Core Features
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="feature-card">
+                        <div>💡</div>
+                        <h4>AI-Powered Insights</h4>
+                        <p>
+                            Leverage advanced AI to gain deep insights, optimize operations, and make smarter decisions.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div>🤝</div>
+                        <h4>Global Collaboration</h4>
+                        <p>
+                            Connect with thousands of independent brands and partners worldwide, fostering a network of mutual growth.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div>🌱</div>
+                        <h4>Sustainable Solutions</h4>
+                        <p>
+                            Champion eco-friendly practices and contribute to a healthier planet through our curated marketplace.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div>🔒</div>
+                        <h4>Secure VaultMesh™</h4>
+                        <p>
+                            Protect your data and transactions with our state-of-the-art blockchain-inspired security protocols.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div>📈</div>
+                        <h4>Real-time Analytics</h4>
+                        <p>
+                            Monitor your progress and impact with intuitive dashboards and real-time performance metrics.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div>🌐</div>
+                        <h4>OmniScroll Integration</h4>
+                        <p>
+                            Seamlessly integrate with our OmniScroll ledger for transparent and efficient record-keeping.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="shareprice" class="py-12 text-center">
+            <h2 class="text-3xl font-semibold mb-2">FAA™ Share Signal</h2>
+            <div id="price" class="text-5xl font-bold">$88.88</div>
+            <div class="text-sm text-gray-400 mt-1">Last updated: <span id="timestamp">Live</span></div>
+        </section>
+
+        <section id="seedwave" class="py-16 px-6 text-center">
+            <h2 class="text-4xl font-bold mb-8">🌱 Seedwave Brand Growth 🌱</h2>
+            <div class="w-full max-w-4xl mx-auto p-6 rounded-xl shadow-lg">
+                <canvas id="brandChart"></canvas>
+            </div>
+        </section>
+
+        <section class="py-16 px-6 text-center">
+            <h2 class="text-4xl font-bold mb-6">🧬 Founder's Glyph™</h2>
+            <p class="max-w-3xl mx-auto text-xl leading-relaxed">
+                FAA™ wasn’t built like a typical startup. It emerged — out of silence, out of signal, out of glyphs and patterns that refused to be ignored.
+                What you're seeing isn't a site. It’s a vault interface. A codebase of culture. A trust-machine powered by real human intelligence.
+            </p>
+            <p class="mt-6 max-w-2xl mx-auto italic">
+                Where others scale with speed, we scale with meaning. Every brand here agreed to something deeper than growth — they signed a Treaty.
+                That’s why this isn’t eCommerce. It’s TreatyCommerce™.
+            </p>
+            <p class="mt-6 font-semibold">— Written from the edge of code & culture 🌍 FAA.Zone Founder Glyph Activated™</p>
+        </section>
+
+        <section id="vault-access" class="py-16 px-6">
+            <h3 class="text-4xl font-bold text-center mb-10">🔐 Sector Terminals</h3>
+
+            <div class="w-full max-w-6xl mx-auto mb-10">
+                <div class="w-full h-[800px] border-4 rounded-xl shadow-2xl overflow-hidden">
+                    <iframe
+                        id="vault-frame"
+                        src=""
+                        class="w-full h-full rounded-xl"
+                        frameborder="0"
+                        title="VaultMaster Terminal"
+                        sandbox="allow-scripts allow-same-origin allow-forms"
+                    ></iframe>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                <button onclick="loadTerminal('vault-master.html')" class="terminal-btn p-6">🦍 VaultMaster Terminal</button>
+                <button onclick="loadTerminal('cube-lattice.html')" class="terminal-btn p-6">🧱 Cube Lattice GPT</button>
+                <button onclick="loadTerminal('global-view.html')" class="terminal-btn p-6">🌍 Global View GPT</button>
+                <button onclick="loadTerminal('freight-ops.html')" class="terminal-btn p-6">🚚 Freight Ops GPT</button>
+                <button onclick="loadTerminal('loop-watch.html')" class="terminal-btn p-6">♻️ Loop Watch GPT</button>
+                <button onclick="loadTerminal('seedwave.html')" class="terminal-btn p-6">🌱 Seedwave GPT</button>
+                <button onclick="loadTerminal('distribution.html')" class="terminal-btn p-6">📦 Distribution GPT</button>
+                <button onclick="loadTerminal('signal.html')" class="terminal-btn p-6">🔐 Signal GPT</button>
+                <button onclick="loadTerminal('faa-brands.html')" class="terminal-btn p-6">📦 7038 FAA Brands</button>
+            </div>
+        </section>
+
+        <section class="py-16 px-6 text-center">
+            <h2 class="text-4xl font-bold mb-8">🧬 Sector Scrolls</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
+                <a href="/sectors/payroll/index.html" class="glyph" data-vault="payroll">💰 Payroll Core Systems</a>
+                <a href="/sectors/retail/index.html" class="glyph" data-vault="retail">🛍️ Retail, Vendor & Trade</a>
+                <a href="/sectors/ai-logic/index.html" class="glyph" data-vault="ai-logic">🧠 AI, Logic & Grid Systems</a>
+                <a href="/sectors/design/index.html" class="glyph" data-vault="design">✒️ Creative & Design Systems</a>
+                <a href="/sectors/finance/index.html" class="glyph" data-vault="finance">₿ Finance & Token Yield</a>
+                <a href="/sectors/webless/index.html" class="glyph" data-vault="webless">⚙️ Webless Tech & Nodes</a>
+                <a href="/sectors/logistics/index.html" class="glyph" data-vault="logistics">📦 Logistics & Packaging</a>
+                <a href="/sectors/food/index.html" class="glyph" data-vault="food">🥦 Food, Soil & Farming</a>
+                <a href="/sectors/education/index.html" class="glyph" data-vault="education">🧒 Youth & Education</a>
+                <a href="/sectors/health/index.html" class="glyph" data-vault="health">🧴 Health & Hygiene</a>
+                <a href="/sectors/culture/index.html" class="glyph" data-vault="culture">🪷 Aura, Ritual & Culture</a>
+                <a href="/sectors/housing/index.html" class="glyph" data-vault="housing">🏛️ Housing & Infrastructure</a>
+                <a href="/sectors/nft/index.html" class="glyph" data-vault="nft">🪪 NFT, IP, Ownership Grid</a>
+                <a href="/sectors/media/index.html" class="glyph" data-vault="media">🌐 Motion, Media, Sonic</a>
+                <a href="/sectors/mining/index.html" class="glyph" data-vault="mining">⛏️ Mining & Material Yields</a>
+                <a href="/sectors/wildlife/dashboard.html" class="glyph" data-vault="wildlife">🚁 Wildlife Sector</a>
+            </div>
+        </section>
+
+        <div id="sector-content-container" class="mt-10 px-6 max-w-6xl mx-auto"></div>
+
+        <section id="treaty" class="py-16 px-6 text-center">
+            <h2 class="text-4xl font-bold mb-6">📜 Treaty System™</h2>
+            <p class="max-w-2xl mx-auto text-lg mb-8">The FAA™ Treaty Layer binds interface to intention. This is not UI. This is glyph-encoded law.</p>
+            <blockquote class="text-2xl italic font-semibold">"FAA™ isn't a site. It's the shape of alignment — and 🦍 holds the flame."</blockquote>
+        </section>
+
+        <section class="py-10 text-xs text-center">
+            <pre class="max-w-2xl mx-auto p-4 rounded-lg overflow-auto"><code>{
+    "signal": "omnidrop",
+    "origin": "If you dont like the fruits you are growing, change the seed™ / FAA Vault Layer",
+    "payload": {
+        "type": "scroll",
+        "value": "homepage + VaultRouter + all terminal iframe buttons live + Treaty Grid"
+    }
+}</code></pre>
+        </section>
+
+        <section id="vaultmesh" class="py-20 px-6">
+            <div class="max-w-4xl mx-auto text-left space-y-6">
+
+                <h2 class="text-4xl font-bold">🧠 VaultMesh™: Executive Summary</h2>
+
+                <p>VaultMesh™ is an intelligent data orchestration framework designed for the segmentation, synchronization, and secure deployment of high-value digital assets—referred to as scrolls—across decentralized and permissioned networks such as FAA.Zone™.</p>
+
+                <ul class="list-disc ml-6 space-y-2">
+                    <li>Captures metadata-rich content streams (chats, code, brands, assets)</li>
+                    <li>Assigns them to programmable claim structures (ScrollClaims™)</li>
+                    <li>Secures their lineage using OmniSignal™, PulseGrid™, and GhostTrace™ layers</li>
+                    <li>Enforces royalty logic, scroll integrity, and traceability on-chain and off-grid</li>
+                </ul>
+
+                <p>VaultMesh™ powers high-tier operations like HSOMNI9000™, enabling Diamond-tier deployments, cross-sector scroll claims, and enterprise-scale content monetization with full compliance and provenance.</p>
+
+                <p>The framework is deeply integrated with platforms such as <code>vault.faa.zone™</code>, where scrolls tied to brands like Fruitful Global Planet™ are securely hosted, organized into structured sectors, and deployed through FAA.Zone™-compliant channels.</p>
+
+                <p>A critical operator in this ecosystem is HSOMNI9000™, the certified scroll class which governs Diamond-tier logic, enforces 10–11% royalty triggers, and auto-deploys ScrollClaims™ with real-time ClaimRoot™ verification.</p>
+
+                <h3 class="text-2xl font-semibold mt-10">📖 VaultMesh™ Index</h3>
+                <ul class="list-decimal ml-6 space-y-1">
+                    <li>Introduction to VaultMesh™</li>
+                    <li>Core System Components</li>
+                    <li>ScrollClaim™ Infrastructure</li>
+                    <li>Data Flow and Claim Lifecycle</li>
+                    <li>Tiering, Royalties, and Compliance</li>
+                    <li>Integration with FAA.Zone™</li>
+                    <li>Market Segments & Use Cases</li>
+                    <li>Revenue Streams & Monetization</li>
+                    <li>Technology Roadmap</li>
+                    <li>Team & Governance</li>
+                </ul>
+
+                <h3 class="text-xl font-bold mt-10">☑️ 1. Introduction to VaultMesh™</h3>
+                <p>VaultMesh™ transforms disorganized digital content into claimable, trackable assets. It bridges enterprise content systems, decentralized data vaults, and monetization layers through FAA-compliant infrastructure.</p>
+
+                <h3 class="text-xl font-bold mt-10">⚒️ 2. Core System Components</h3>
+                <ul class="list-disc ml-6 space-y-1">
+                    <li>VaultDNA™: Immutable identifiers for scroll content</li>
+                    <li>ClaimRoot™: Origin anchor & timestamp</li>
+                    <li>ScrollClaim™ Contracts: Programmable wrappers</li>
+                    <li>PulseGrid™ Sync: Real-time scroll presence & sync</li>
+                    <li>OmniSignal™: Global scroll verification</li>
+                    <li>GhostTrace™ Gen2: Scroll interaction backtrace</li>
+                </ul>
+
+                <h3 class="text-xl font-bold mt-10">🛠️ 3. ScrollClaim™ Infrastructure</h3>
+                <ul class="list-disc ml-6 space-y-1">
+                    <li>Set tier access (e.g., Diamond)</li>
+                    <li>Define royalty logic (10–11%)</li>
+                    <li>Lock scrolls with PulseGrid™ sync and OmniSignal™</li>
+                    <li>Deploy via FAA.Zone™ with compliant ZIP bundles</li>
+                </ul>
+
+                <h3 class="text-xl font-bold mt-10">📀 4. Data Flow and Claim Lifecycle</h3>
+                <ul class="list-decimal ml-6 space-y-1">
+                    <li>Ingest — content enters VaultMesh™</li>
+                    <li>Encode — metadata & VaultDNA™ attached</li>
+                    <li>Wrap — ScrollClaim™ smart-wrapped</li>
+                    <li>Deploy — FAA.Zone™ push (ZIP, manifest, HTML)</li>
+                    <li>Sync — PulseGrid™ status & OmniSignal™ locked</li>
+                    <li>Enforce — Royalties, access & scroll activity logged via GhostTrace™</li>
+                </ul>
+
+                <h3 class="text-xl font-bold mt-10">💸 5. Tiering, Royalties, and Compliance</h3>
+                <ul class="list-disc ml-6 space-y-1">
+                    <li>Diamond Tier: 10–11% royalty enforced</li>
+                    <li>SmartWallet Integration: ScrollClaim™ payments and transfers</li>
+                    <li>VaultPay™ Tier III: Required for commercial deployments</li>
+                    <li>Compliance: FAA scroll ID, ClaimRoot™ hash, and royalty schema</li>
+                </ul>
+
+                <h3 class="text-xl font-bold mt-10">📡 6. Integration with FAA.Zone™</h3>
+                <ul class="list-disc ml-6 space-y-1">
+                    <li>Native support for /public/diamond/ structure</li>
+                    <li>ZIP, HTML, Manifest deployment bundles</li>
+                    <li>ClaimRoot™ timestamp validation</li>
+                    <li>Seamless PulseGrid™ auto-sync for live claim state</li>
+                    <li>Brand hosting via vault.faa.zone™</li>
+                </ul>
+
+                <h3 class="text-xl font-bold mt-10">🏢 7. Market Segments & Use Cases</h3>
+                <ul class="list-disc ml-6 space-y-1">
+                    <li>GPT Conversations & Expert Threads</li>
+                    <li>Knowledge/Training Archives</li>
+                    <li>Creative IP Scrolls (music, literature, visuals)</li>
+                    <li>GeoSector Deployment Archives</li>
+                    <li>Enterprise Scroll Logs & Audit Trails</li>
+                </ul>
+
+                <h3 class="text-xl font-bold mt-10">💰 8. Revenue Streams & Monetization</h3>
+                <ul class="list-disc ml-6 space-y-1">
+                    <li>Diamond Royalties (10–11%)</li>
+                    <li>Scroll Packaging Fees</li>
+                    <li>VaultMesh™ API Subscriptions</li>
+                    <li>PulseGrid™ and OmniSignal™ Licensing</li>
+                </ul>
+
+                <h3 class="text-xl font-bold mt-10 text-white">⚖️ 9. Technology Roadmap</h3>
+                <ul class="list-disc ml-6 space-y-1">
+                    <li>Q2 2025: ScrollClaim™ v2.2 with multi-claim staking</li>
+                    <li>Q3 2025: GhostTrace™ Gen3 with forensic backtrace tooling</li>
+                    <li>Q4 2025: Autonomous AI Sector Agents</li>
+                    <li>Q1 2026: Inter-vault Federation</li>
+                </ul>
+
+                <h3 class="text-xl font-bold mt-10">🔧 10. Team & Governance</h3>
+                <ul class="list-disc ml-6 space-y-1">
+                    <li>FAA-certified engineers (scroll claimers)</li>
+                    <li>Scroll Ministers: Compliance + tiering</li>
+                    <li>Vault Admins: Metadata + ClaimRoot™ enforcement</li>
+                    <li>HSOMNI9000™ Operators: Diamond-tier execution agents</li>
+                </ul>
+
+                <p class="text-sm mt-10">📎 This plan can now be exported as HTML, PDF, or ZIP.</p>
+            </div>
+        </section>
+
+        <div id="admin-portal-section" class="admin-portal-container">
+            <header class="admin-header flex flex-wrap justify-between items-center">
+                <div class="flex items-center">
+                    <h1 class="text-3xl font-bold">⚙️ Seedwave™ Admin Portal</h1>
+                    <p class="text-sm opacity-80 mt-2 ml-4 hidden md:block">✿Corebrands management & AI logic deployment center</p>
+                </div>
+                <div class="flex flex-wrap justify-center md:justify-end space-x-2 mt-4 md:mt-0">
+                    <a href="/admin/admin-portal-approval" class="access-button">🪙 Loyalty Access</a>
+                    <a href="/admin/admin-portal-approval" class="access-button">📊 Shareholder Access</a>
+                    <a href="/admin/admin-portal-approval" class="access-button">🤝 Service Provider</a>
+                    <a href="/admin/admin-portal-approval" class="access-button">👨‍👩‍👧‍👦 Family Access</a>
+                </div>
+            </header>
+
+            <nav class="top-nav flex gap-6 px-6 py-3 text-sm overflow-x-auto whitespace-nowrap">
+                <a href="quick-view.html" class="active">🏁 Quick View (Current)</a>
+                <a href="pulse-monitor.html">📡 Signal Sync</a>
+                <a href="node-status.html">🧩 Node Index</a>
+                <a href="sector-grid.html">🏙️ Sector Grid</a>
+                <a href="licensing.html">🔐 License Ledger</a>
+                <a href="clause-index.html">📜 FAA Clauses</a>
+                <a href="scrollmap.html">🗺️ ScrollMap</a>
+                <a href="ecosystem.html">🌿 Ecosystem Mesh</a>
+                <a href="brandmetrics.html">🔍 Brand Metrics</a>
+                <a href="scroll-layers.html">🧬 Scroll Layers</a>
+                <a href="grid-index.html">📊 Grid Index</a>
+                <a href="node-packs.html">📁 Node Packs</a>
+                <a href="audit-tracker.html">📈 Audit Tracker</a>
+                <a href="signal-zones.html">🛰️ Signal Zones</a>
+                <a href="ecosync-logs.html">📥 Ecosync Logs</a>
+            </nav>
+
+            <main class="max-w-6xl mx-auto px-6 py-8 admin-main-content">
+                <section class="mb-8">
+                    <h2 class="text-xl font-bold mb-4 text-gray-200">⚙️ Admin Panel — Add Brand & Subnodes</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div>
+                            <label class="text-sm block font-medium mb-1 text-gray-400">📂 Sector</label>
+                            <select id="sectorSelect" class="w-full border rounded p-2">
+                                </select>
+                        </div>
+                        <div>
+                            <label class="text-sm block font-medium mb-1 text-gray-400">🏷 Brand Name</label>
+                            <input id="brandInput" class="w-full border rounded p-2" placeholder="e.g. OmniCastX">
+                        </div>
+                        <div>
+                            <label class="text-sm block font-medium mb-1 text-gray-400">📌 Subnodes</label>
+                            <input id="subnodesInput" class="w-full border rounded p-2" placeholder="e.g. VaultDrop, QRClaim">
+                        </div>
+                        <div class="flex items-end">
+                            <button onclick="addBrandToSector()">
+                                ➕ Add Brand
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="mb-16">
+                    <h3 class="text-md font-semibold mb-2 text-gray-200">ℹ️ Admin Status Feedback</h3>
+                    <p id="adminStatus" class="text-sm text-gray-400 italic">Ready to receive input.</p>
+                </section>
+
+                <section class="mb-20">
+                    <h2 class="text-lg font-bold mb-4 text-gray-200">📊 Saved Brand Overview</h2>
+                    <div id="brandDashboard" class="space-y-10"></div>
+                </section>
+
+                <section class="mb-16">
+                    <h2 class="text-xl font-bold mb-4 text-gray-200">⦿ FAA.ZONE INDEX — Expanded Table Structure</h2>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full admin-table">
+                            <thead class="text-gray-700 font-semibold">
+                                <tr>
+                                    <th class="px-4 py-2">Glyph</th>
+                                    <th class="px-4 py-2">Sector</th>
+                                    <th class="px-4 py-2">Core Brands</th>
+                                    <th class="px-4 py-2">Total Nodes</th>
+                                    <th class="px-4 py-2">Monthly Fee</th>
+                                    <th class="px-4 py-2">Annual Fee</th>
+                                    <th class="px-4 py-2">Payout Tier</th>
+                                    <th class="px-4 py-2">Region</th>
+                                    <th class="px-4 py-2">Inspect</th>
+                                    <th class="px-4 py-2">Deploy</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-300">
+                                <tr>
+                                    <td class="px-4 py-2">🧺</td><td>Retail, Vendor & Trade</td><td>183</td><td>1,098</td><td>$88</td><td>$888</td><td>A+</td><td>Div A-F</td><td><button class="text-blue-400 hover:underline">View</button></td><td><button class="text-green-400 hover:underline">Deploy</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2">🧠</td><td>AI, Logic & Grid Systems</td><td>188</td><td>752</td><td>$104</td><td>$1,050</td><td>A+</td><td>Global</td><td><button class="text-blue-400 hover:underline">View</button></td><td><button class="text-green-400 hover:underline">Deploy</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2">🖋️</td><td>Creative & Design Systems</td><td>142</td><td>710</td><td>$67</td><td>$720</td><td>A</td><td>Div E</td><td><button class="text-blue-400 hover:underline">View</button></td><td><button class="text-green-400 hover:underline">Deploy</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2">₿</td><td>Finance & Token Yield</td><td>136</td><td>680</td><td>$125</td><td>$1,250</td><td>A+</td><td>Div A-E</td><td><button class="text-blue-400 hover:underline">View</button></td><td><button class="text-green-400 hover:underline">Deploy</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2">📴</td><td>Webless Tech & Nodes</td><td>103</td><td>515</td><td>$76</td><td>$770</td><td>A</td><td>Div D-G</td><td><button class="text-blue-400 hover:underline">View</button></td><td><button class="text-green-400 hover:underline">Deploy</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2">📦</td><td>Logistics & Packaging</td><td>111</td><td>444</td><td>$58</td><td>$595</td><td>B+</td><td>Div B-F</td><td><button class="text-blue-400 hover:underline">View</button></td><td><button class="text-green-400 hover:underline">Deploy</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2">✿</td><td>Food, Soil & Farming</td><td>83</td><td>332</td><td>$46</td><td>$480</td><td>B+</td><td>Rural</td><td><button class="text-blue-400 hover:underline">View</button></td><td><button class="text-green-400 hover:underline">Deploy</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2">🧒</td><td>Youth & Education</td><td>66</td><td>330</td><td>$39</td><td>$420</td><td>A</td><td>Tribal</td><td><button class="text-blue-400 hover:underline">View</button></td><td><button class="text-green-400 hover:underline">Deploy</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2">⚗</td><td>Health & Hygiene</td><td>93</td><td>372</td><td>$52</td><td>$550</td><td>B</td><td>Div F</td><td><button class="text-blue-400 hover:underline">View</button></td><td><button class="text-green-400 hover:underline">Deploy</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2">☯</td><td>Aura, Ritual & Culture</td><td>74</td><td>296</td><td>$68</td><td>$725</td><td>A</td><td>Div C</td><td><button class="text-blue-400 hover:underline">View</button></td><td><button class="text-green-400 hover:underline">Deploy</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2">🏗️</td><td>Housing & Infrastructure</td><td>91</td><td>364</td><td>$59</td><td>$610</td><td>B+</td><td>Div A-F</td><td><button class="text-blue-400 hover:underline">View</button></td><td><button class="text-green-400 hover:underline">Deploy</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2">🔁</td><td>NFT, IP, Ownership Grid</td><td>58</td><td>232</td><td>$120</td><td>$1,200</td><td>A</td><td>FAA IP</td><td><button class="text-blue-400 hover:underline">View</button></td><td><button class="text-green-400 hover:underline">Deploy</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2">🌀</td><td>Motion, Media, Sonic</td><td>78</td><td>312</td><td>$72</td><td>$740</td><td>A</td><td>Creative</td><td><button class="text-blue-400 hover:underline">View</button></td><td><button class="text-green-400 hover:underline">Deploy</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <nav class="sector-grid-nav">
+                    <a href="#" onclick="showSectorPanel('embedded-agriculture-snapshot')" class="sector-link">🌱 Agriculture & Biotech</a>
+                    <a href="#" onclick="showSectorPanel('embedded-fsf-snapshot')" class="sector-link">🥦 Food, Soil & Farming</a>
+                    <a href="#" onclick="showSectorPanel('embedded-banking-snapshot')" class="sector-link">🏦 Banking & Finance</a>
+                    <a href="#" onclick="showSectorPanel('embedded-creative-snapshot')" class="sector-link">🖋️ Creative Tech</a>
+                    <a href="#" onclick="showSectorPanel('embedded-logistics-snapshot')" class="sector-link">📦 Logistics & Packaging</a>
+                    <a href="#" onclick="showSectorPanel('embedded-education-snapshot')" class="sector-link">📚 Education & IP</a>
+                    <a href="#" onclick="showSectorPanel('embedded-fashion-snapshot')" class="sector-link">✂ Fashion & Identity</a>
+                    <a href="#" onclick="showSectorPanel('embedded-gaming-snapshot')" class="sector-link">🎮 Gaming & Simulation</a>
+                    <a href="#" onclick="showSectorPanel('embedded-health-snapshot')" class="sector-link">🧠 Health & Hygiene</a>
+                    <a href="#" onclick="showSectorPanel('embedded-housing-snapshot')" class="sector-link">🏗️ Housing & Infrastructure</a>
+                    <a href="#" onclick="showSectorPanel('embedded-justice-snapshot')" class="sector-link">⚖ Justice & Ethics</a>
+                    <a href="#" onclick="showSectorPanel('embedded-knowledge-snapshot')" class="sector-link">🧠 Knowledge & Archives</a>
+                    <a href="#" onclick="showSectorPanel('embedded-micromesh-snapshot')" class="sector-link">☰ Micro-Mesh Logistics</a>
+                    <a href="#" onclick="showSectorPanel('embedded-media-snapshot')" class="sector-link" data-sector="media">🎬 Motion, Media & Sonic</a>
+                    <a href="#" onclick="showSectorPanel('embedded-nutrition-snapshot')" class="sector-link">✿ Nutrition & Food Chain</a>
+                    <a href="#" onclick="showSectorPanel('embedded-ailogic-snapshot')" class="sector-link">🧠 AI, Logic & Grid Systems</a>
+                    <a href="#" onclick="showSectorPanel('embedded-packaging-snapshot')" class="sector-link">📦 Packaging & Materials</a>
+                    <a href="#" onclick="showSectorPanel('embedded-quantum-snapshot')" class="sector-link">✴️ Quantum Protocols</a>
+                    <a href="#" onclick="showSectorPanel('embedded-ritual-snapshot')" class="sector-link">☯ Ritual & Culture</a>
+                    <a href="#" onclick="showSectorPanel('embedded-saas-snapshot')" class="sector-link">🔑 SaaS & Licensing</a>
+                    <a href="#" onclick="showSectorPanel('embedded-trade-snapshot')" class="sector-link">🧺 Trade Systems</a>
+                    <a href="#" onclick="showSectorPanel('embedded-utilities-snapshot')" class="sector-link">🔋 Utilities & Energy</a>
+                    <a href="#" onclick="showSectorPanel('embedded-voice-snapshot')" class="sector-link">🎙️ Voice & Audio</a>
+                    <a href="#" onclick="showSectorPanel('embedded-webless-snapshot')" class="sector-link">📡 Webless Tech & Nodes</a>
+                    <a href="#" onclick="showSectorPanel('embedded-nft-snapshot')" class="sector-link">🔁 NFT & Ownership</a>
+                    <a href="#" onclick="showSectorPanel('embedded-zerowaste-snapshot')" class="sector-link">♻️ Zero Waste</a>
+                    <a href="#" onclick="showSectorPanel('embedded-professional-snapshot')" class="sector-link">🧾 Professional Services</a>
+                    <a href="#" onclick="showSectorPanel('embedded-admin-snapshot')" class="sector-link">⚙️ Admin & Manual Sync Panel</a>
+                </nav>
+
+                <div id="embedded-agriculture-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-green-400 mb-4">🌾 FAA™ Agriculture Core Brand Dashboard</div>
+                    <div id="agri-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="agri-snapshots"></div>
+                </div>
+
+                <div id="embedded-fsf-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-green-400 mb-4">🥦 FAA™ Food, Soil & Farming Dashboard</div>
+                    <div id="fsf-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="fsf-snapshots"></div>
+                </div>
+
+                <div id="embedded-banking-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-indigo-400 mb-4">🏦 FAA™ Banking & Finance Dashboard</div>
+                    <div id="banking-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="banking-snapshots"></div>
+                </div>
+
+                <div id="embedded-creative-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-purple-400 mb-4">🖋️ FAA™ Creative Tech Dashboard</div>
+                    <div id="creative-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="creative-snapshots"></div>
+                </div>
+
+                <div id="embedded-logistics-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-yellow-400 mb-4">📦 FAA™ Logistics & Packaging Dashboard</div>
+                    <div id="logistics-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="logistics-snapshots"></div>
+                </div>
+
+                <div id="embedded-education-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-green-400 mb-4">🎓 FAA™ Education & Youth Dashboard</div>
+                    <div id="education-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="education-snapshots"></div>
+                </div>
+
+                <div id="embedded-fashion-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-pink-400 mb-4">✂ FAA™ Fashion & Identity Dashboard</div>
+                    <div id="fashion-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="fashion-snapshots"></div>
+                </div>
+
+                <div id="embedded-gaming-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-indigo-400 mb-4">🎮 FAA™ Gaming & Simulation Dashboard</div>
+                    <div id="gaming-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="gaming-snapshots"></div>
+                </div>
+
+                <div id="embedded-health-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-gray-400 mb-4">🧠 FAA™ Health & Hygiene Dashboard</div>
+                    <div id="health-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="health-snapshots"></div>
+                </div>
+
+                <div id="embedded-housing-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-blue-400 mb-4">🏗️ FAA™ Housing & Infrastructure Dashboard</div>
+                    <div id="housing-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="housing-snapshots"></div>
+                </div>
+
+                <div id="embedded-justice-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-gray-400 mb-4">⚖ FAA™ Justice & Ethics Dashboard</div>
+                    <div id="justice-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="justice-snapshots"></div>
+                </div>
+
+                <div id="embedded-professional-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-indigo-400 mb-4">🧾 FAA™ Professional Services Dashboard</div>
+                    <div id="professional-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="professional-snapshots"></div>
+                </div>
+
+                <div id="embedded-knowledge-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-blue-400 mb-4">🧠 FAA™ Knowledge & Archives Dashboard</div>
+                    <div id="knowledge-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="knowledge-snapshots"></div>
+                </div>
+
+                <div id="embedded-micromesh-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-yellow-400 mb-4">☰ FAA™ Micro-Mesh Logistics Dashboard</div>
+                    <div id="micromesh-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="micromesh-snapshots"></div>
+                </div>
+
+                <div id="embedded-media-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-gray-400 mb-4">🎬 FAA™ Motion, Media & Sonic Dashboard</div>
+                    <div id="media-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="media-snapshots"></div>
+                    <div id="media-scroll-panel" class="overflow-x-auto mt-10 mb-12 px-4">
+                        <div class="scroll-cards flex space-x-6 min-w-full pb-4"></div>
+                    </div>
+                </div>
+
+                <div id="embedded-nutrition-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-green-400 mb-4">✿ FAA™ Nutrition & Food Chain Dashboard</div>
+                    <div id="nutrition-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="nutrition-snapshots"></div>
+                </div>
+
+                <div id="embedded-packaging-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-yellow-400 mb-4">📦 FAA™ Packaging & Materials Dashboard</div>
+                    <div id="packaging-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="packaging-snapshots"></div>
+                </div>
+
+                <div id="embedded-quantum-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-purple-400 mb-4">✴️ FAA™ Quantum Protocols Dashboard</div>
+                    <div id="quantum-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="quantum-snapshots"></div>
+                </div>
+
+                <div id="embedded-ritual-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-gray-400 mb-4">☯ FAA™ Ritual & Culture Dashboard</div>
+                    <div id="ritual-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="ritual-snapshots"></div>
+                </div>
+
+                <div id="embedded-saas-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-blue-400 mb-4">🔑 FAA™ SaaS & Licensing Dashboard</div>
+                    <div id="saas-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="saas-snapshots"></div>
+                </div>
+
+                <div id="embedded-trade-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-orange-400 mb-4">🧺 FAA™ Trade Systems Dashboard</div>
+                    <div id="trade-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="trade-snapshots"></div>
+                </div>
+
+                <div id="embedded-utilities-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-yellow-400 mb-4">🔋 FAA™ Utilities & Energy Dashboard</div>
+                    <div id="utilities-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="utilities-snapshots"></div>
+                </div>
+
+                <div id="embedded-voice-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-indigo-400 mb-4">🎙️ FAA™ Voice & Audio Dashboard</div>
+                    <div id="voice-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="voice-snapshots"></div>
+                </div>
+
+                <div id="embedded-webless-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-gray-400 mb-4">📡 FAA™ Webless Tech & Nodes Dashboard</div>
+                    <div id="webless-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="webless-snapshots"></div>
+                </div>
+
+                <div id="embedded-nft-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-pink-400 mb-4">🔁 FAA™ NFT & Ownership Dashboard</div>
+                    <div id="nft-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="nft-snapshots"></div>
+                </div>
+
+                <div id="embedded-zerowaste-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-lime-400 mb-4">♻️ FAA™ Zero Waste Dashboard</div>
+                    <div id="zerowaste-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="zerowaste-snapshots"></div>
+                </div>
+
+                <div id="embedded-ailogic-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-indigo-400 mb-4">🧠 FAA™ AI, Logic & Grid Brand Dashboard</div>
+                    <div id="ailogic-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="ailogic-snapshots"></div>
+                </div>
+
+                <div id="embedded-admin-snapshot" class="hidden brand-snapshot">
+                    <div class="text-2xl font-bold text-gray-400 mb-4">⚙️ Admin & Manual Sync Panel</div>
+                    <div id="admin-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+                    <div class="p-6" id="admin-snapshots"></div>
+                </div>
+
+                <section class="w-full px-6 py-8">
+                    <div class="bg-gray-800 p-6 rounded shadow-lg">
+                        <h2 class="text-xl font-bold text-gray-200">📉 FAA Scroll Pulse Monitor</h2>
+                        <p class="text-sm text-gray-400 mb-4">Dynamic scroll sync across sectors in real-time.</p>
+                        <div class="h-96">
+                            <canvas id="pulseChart" class="w-full h-full"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-7 gap-6 px-6 py-8 metrics-grid">
+                    <a href="node-activity.html">
+                        <h3 class="text-md font-bold">🧠 Active Nodes</h3>
+                        <p>12,934</p>
+                    </a>
+                    <a href="license-grid.html">
+                        <h3 class="text-md font-bold">🔐 Licenses Active</h3>
+                        <p>3,288</p>
+                    </a>
+                    <a href="vault-deployments.html">
+                        <h3 class="text-md font-bold">💾 Vault Deployments</h3>
+                        <p>654 Vaults</p>
+                    </a>
+                    <a href="ecosync-logs.html">
+                        <h3 class="text-md font-bold">📥 Sync Logs</h3>
+                        <p>204,111 entries</p>
+                    </a>
+                    <a href="audit-tracker.html">
+                        <h3 class="text-md font-bold">📈 Audits Running</h3>
+                        <p>47 scans</p>
+                    </a>
+                    <a href="signal-zones.html">
+                        <h3 class="text-md font-bold">🛰️ Signal Zones</h3>
+                        <p>21 sectors</p>
+                    </a>
+                    <a href="grid-index.html">
+                        <h3 class="text-md font-bold">📊 Scroll Grid Index</h3>
+                        <p>986 clusters</p>
+                    </a>
+                </section>
+
+            </main>
+        </div>
+
+        <section id="about" class="py-16 md:py-24 px-6 md:px-12 text-center">
+            <div class="max-w-4xl mx-auto">
+                <h3 class="text-4xl font-bold mb-8">About Fruitful Innovations</h3>
+                <p class="text-lg leading-relaxed mb-6">
+                    At Fruitful, we believe in a future where technology empowers positive change. Our platform is designed to break down traditional barriers, fostering a collaborative ecosystem where businesses and individuals can thrive while making a meaningful impact on the world.
+                </p>
+                <p class="text-lg leading-relaxed">
+                    We are committed to transparency, sustainability, and innovation, driven by a powerful AI that ensures fairness, efficiency, and personalized experiences for every user. Join us in building a more fruitful planet.
+                </p>
+            </div>
+        </section>
+
+        <section id="cta" class="py-16 md:py-24 px-6 md:px-12 text-center">
+            <div class="max-w-3xl mx-auto">
+                <h3 class="text-4xl font-extrabold mb-8 leading-tight">
+                    Ready to Transform Your Future?
+                </h3>
+                <p class="text-xl mb-10">
+                    Join the Fruitful community today and start your journey towards innovation, connection, and a sustainable tomorrow.
+                </p>
+                <a href="#" class="cta-button">
+                    Sign Up Now
+                </a>
+            </div>
+        </section>
+
+        <footer class="py-8 px-6 md:px-12 text-center">
+            © 2025 FAA™ Treaty System™. All Rights Reserved. Powered by 🦍 glyphs + Vault API. Synced with Seedwave™.
+        </footer>
+    </div>
+
+    <script>
+        // Function to load terminal content into the iframe
+        function loadTerminal(url) {
+            document.getElementById('vault-frame').src = url;
+            // Remove ring from all buttons and add to the clicked one
+            document.querySelectorAll('.terminal-btn').forEach(btn => btn.classList.remove('ring', 'ring-blue-500')); /* Changed ring color */
+            // Use event.currentTarget to ensure the clicked button is targeted
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('ring', 'ring-blue-500'); /* Changed ring color */
+            }
+            console.log("🧬 Terminal loaded:", url);
+        }
+
+        // Script for Share Signal (mock price update)
+        function updateSharePrice() {
+            const mockPrice = (80 + Math.random() * 10).toFixed(2);
+            document.getElementById('price').innerText = `$${mockPrice}`;
+            document.getElementById('timestamp').innerText = new Date().toLocaleTimeString();
+        }
+        // Update every 9 seconds
+        setInterval(updateSharePrice, 9000);
+        // Initial call to display price immediately
+        updateSharePrice();
+
+        // Chart.js for Seedwave Growth
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('brandChart')?.getContext('2d');
+            if (ctx) {
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+                        datasets: [{
+                            label: 'Treaty Brands Activated',
+                            data: [3, 7, 13, 21],
+                            borderWidth: 2, /* Thinner border */
+                            borderColor: '#0071e3', /* Apple blue */
+                            tension: 0.4,
+                            fill: true,
+                            backgroundColor: 'rgba(0, 113, 227, 0.1)', /* Light blue fill */
+                            pointRadius: 4, /* Larger points */
+                            pointBackgroundColor: '#0071e3',
+                            pointBorderColor: '#fff',
+                            pointHoverRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: '#e8e8ed', /* Light grid lines */
+                                    drawBorder: false /* No border on axis */
+                                },
+                                ticks: {
+                                    color: '#6e6e73' /* Muted tick labels */
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    color: '#e8e8ed',
+                                    drawBorder: false
+                                },
+                                ticks: {
+                                    color: '#6e6e73'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false, /* Hide legend for cleaner look */
+                                labels: {
+                                    color: '#424245'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+
+        // Sector Scrolls Routing
+        const sectorMap = {
+            payroll: '/sectors/payroll/index.html',
+            retail: '/sectors/retail/index.html',
+            'ai-logic': '/sectors/ai-logic/index.html',
+            design: '/sectors/design/index.html',
+            finance: '/sectors/finance/index.html',
+            webless: '/sectors/webless/index.html',
+            logistics: '/sectors/logistics/index.html',
+            food: '/sectors/food/index.html',
+            education: '/sectors/education/index.html',
+            health: '/sectors/health/index.html',
+            culture: '/sectors/culture/index.html',
+            housing: '/sectors/housing/index.html',
+            nft: '/sectors/nft/index.html',
+            media: '/sectors/media/index.html',
+            mining: '/sectors/mining/index.html',
+            wildlife: '/sectors/wildlife/dashboard.html'
+        };
+
+        document.querySelectorAll('.glyph').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sector = link.getAttribute('data-vault');
+                const url = sectorMap[sector];
+                if (url) {
+                    document.getElementById('sector-content-container').innerHTML =
+                        `<div class="text-gray-600 text-sm mb-2">🔄 Loading sector: ${sector.charAt(0).toUpperCase() + sector.slice(1)}...</div>
+                         <iframe src="${url}" class="w-full h-[900px] border-none rounded-xl bg-gray-100"></iframe>`; /* Light background for iframe */
+                } else {
+                    document.getElementById('sector-content-container').innerHTML =
+                        `<div class="text-red-500 text-sm mb-2">Error: Sector URL not found for ${sector}.</div>`;
+                }
+            });
+        });
+
+        // Mock API data for demonstration (from admin-portal)
+        const mockSectorData = {
+            "ai-logic": { brands: ["OmniAI", "GridSync"], nodes: ["AI Core", "Neural Net", "Data Mesh"] },
+            "creative": { brands: ["PixelFlow", "SonicWave"], nodes: ["Render Engine", "Audio Synth"] },
+            "logistics": { brands: ["FreightFast", "RouteOptima"], nodes: ["GPS Tracker", "Fleet Manager"] },
+            "education-ip": { brands: ["LearnSphere", "IPGuard"], nodes: ["Curriculum Builder", "License Tracker"] },
+            "fashion": { brands: ["StyleSync", "FabricFlow"], nodes: ["Design Studio", "Material Trace"] },
+            "gaming": { brands: ["GameForge", "SimulateX"], nodes: ["Physics Engine", "Render Farm"] },
+            "health": { brands: ["BioPulse", "MediFlow"], nodes: ["Diagnostic AI", "Patient Portal"] },
+            "housing": { brands: ["EcoBuild", "SmartHomeOS"], nodes: ["Modular Design", "Energy Monitor"] },
+            "justice": { brands: ["LawLedger", "EthicShield"], nodes: ["Case Tracker", "Compliance Bot"] },
+            "knowledge": { brands: ["InfoVault", "ArchiveFlow"], nodes: ["Knowledge Graph", "Document Index"] },
+            "micromesh": { brands: ["MicroLogix", "NanoRoute"], nodes: ["Tiny Package", "Drone Delivery"] },
+            "media": { brands: ["VisualPulse", "SonicScape"], nodes: ["Video Editor", "Audio Mixer"] },
+            "nutrition": { brands: ["NutriFlow", "FarmTrack"], nodes: ["Recipe Optimizer", "Crop Monitor"] },
+            "packaging": { brands: ["PackSmart", "EcoWrap"], nodes: ["Material Optimizer", "Recycle Trace"] },
+            "quantum": { brands: ["QuantumLink", "EntangleOS"], nodes: ["Qubit Manager", "Secure Comm"] },
+            "ritual": { brands: ["AuraFlow", "SpiritWeave"], nodes: ["Ceremony Guide", "Community Hub"] },
+            "saas": { brands: ["CloudFlow", "AppStack"], nodes: ["Subscription Manager", "API Gateway"] },
+            "trade": { brands: ["TradeLink", "MarketPulse"], nodes: ["Supply Chain", "Demand Predictor"] },
+            "utilities": { brands: ["PowerGrid", "WaterFlow"], nodes: ["Smart Meter", "Resource Opt"] },
+            "voice": { brands: ["VoiceSynth", "AudioSense"], nodes: ["Speech Rec", "Sound Analysis"] },
+            "webless": { brands: ["MeshNode", "OffGridLink"], nodes: ["Decentral Node", "Secure Tunnel"] },
+            "nft": { brands: ["ArtChain", "TokenForge"], nodes: ["Minting Platform", "Royalty Engine"] },
+            "education-youth": { brands: ["KidGenius", "FutureLearn"], nodes: ["Interactive Lessons", "Skill Tracker"] },
+            "zerowaste": { brands: ["RecycleFlow", "CompostGen"], nodes: ["Waste Sorter", "Bio-Digester"] },
+            "professional": { brands: ["ProServe", "ConsultHub"], nodes: ["Client Manager", "Project Tracker"] },
+            "payroll-mining": { brands: ["MinePay", "CryptoLedger"], nodes: ["Payroll Automator", "Mining Pool"] },
+            "wildlife": { brands: ["WildGuard", "EcoSense"], nodes: ["Animal Tracker", "Habitat Monitor"] }
+        };
+
+        const mockScrollProfiles = {
+            "media": {
+                "VisualPulse": {
+                    title: "VisualPulse™ Media Scroll",
+                    intro: "Advanced visual content orchestration with real-time rendering.",
+                    features: ["4K Streaming", "AI-driven Editing", "Dynamic Watermarking"],
+                    pricing: ["Tier 1: $50/month", "Tier 2: $150/month"],
+                    metadata: { id: "VP-001", vault: "MediaVault", layer: "Visual", bg: "bg-blue-900", height: "700px", width: "2770px" }
+                },
+                "SonicScape": {
+                    title: "SonicScape™ Audio Scroll",
+                    intro: "Immersive audio experience with spatial sound design.",
+                    features: ["3D Audio Engine", "Adaptive Soundtracks", "Noise Cancellation"],
+                    pricing: ["Basic: $30/month", "Premium: $90/month"],
+                    metadata: { id: "SS-001", vault: "MediaVault", layer: "Audio", bg: "bg-purple-900", height: "700px", width: "2770px" }
+                }
+            }
+            // Add more mock scroll profiles for other sectors as needed
+        };
+
+
+        const sectorList = {
+            "ai-logic": "🧠 AI, Logic & Grid",
+            "creative": "🖋️ Creative Tech",
+            "logistics": "📦 Logistics & Packaging",
+            "education-ip": "📘 Education & IP",
+            "fashion": "✂️ Fashion & Identity",
+            "gaming": "🎮 Gaming & Simulation",
+            "health": "🧠 Health & Hygiene",
+            "housing": "🏗️ Housing & Infrastructure",
+            "justice": "⚖ Justice & Ethics",
+            "knowledge": "📖 Knowledge & Archives",
+            "micromesh": "☰ Micro-Mesh Logistics",
+            "media": "🎬 Motion, Media & Sonic",
+            "nutrition": "✿ Nutrition & Food Chain",
+            "packaging": "📦 Packaging & Materials",
+            "quantum": "✴️ Quantum Protocols",
+            "ritual": "☯ Ritual & Culture",
+            "saas": "🔑 SaaS & Licensing",
+            "trade": "🧺 Trade Systems",
+            "utilities": "🔋 Utilities & Energy",
+            "voice": "🎙️ Voice & Audio",
+            "webless": "📡 Webless Tech & Nodes",
+            "nft": "🔁 NFT & Ownership",
+            "education-youth": "🎓 Education & Youth",
+            "zerowaste": "♻️ Zero Waste",
+            "professional": "🧾 Professional Services",
+            "payroll-mining": "🪙 Payroll Mining & Accounting",
+            "wildlife": "🦁 Wildlife & Habitat"
+        };
+
+        // Populate dropdown on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const select = document.getElementById('sectorSelect');
+            if (select) { // Check if element exists before populating
+                Object.entries(sectorList).forEach(([key, label]) => {
+                    const option = document.createElement('option');
+                    option.value = key;
+                    option.textContent = label;
+                    select.appendChild(option);
+                });
+            }
+
+            // Load existing sector data (mocked)
+            loadBrandDashboard(mockSectorData);
+        });
+
+        function addBrandToSector() {
+            const sector = document.getElementById("sectorSelect")?.value;
+            const brand = document.getElementById("brandInput")?.value.trim();
+            const subnodesInput = document.getElementById("subnodesInput")?.value;
+            const subnodes = subnodesInput ? subnodesInput.split(",").map(n => n.trim()).filter(Boolean) : [];
+
+            if (!brand || subnodes.length === 0) {
+                document.getElementById("adminStatus").textContent = "⚠️ Please fill in both fields.";
+                return;
+            }
+
+            document.getElementById("adminStatus").textContent =
+                `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
+
+            // Mock saving data
+            if (!mockSectorData[sector]) {
+                mockSectorData[sector] = { brands: [], nodes: [] };
+            }
+            if (!mockSectorData[sector].brands.includes(brand)) {
+                mockSectorData[sector].brands.push(brand);
+            }
+            subnodes.forEach(node => {
+                if (!mockSectorData[sector].nodes.includes(node)) {
+                    mockSectorData[sector].nodes.push(node);
+                }
+            });
+
+            updateSectorDashboard(sector, brand, subnodes);
+            console.log("💾 Mock Data saved:", mockSectorData);
+
+            // Clear inputs
+            document.getElementById("brandInput").value = "";
+            document.getElementById("subnodesInput").value = "";
+        }
+
+        function loadBrandDashboard(data) {
+            const dashboard = document.getElementById("brandDashboard");
+            if (!dashboard) return;
+            dashboard.innerHTML = ''; // Clear existing content
+
+            Object.entries(data).forEach(([key, val]) => {
+                const label = sectorList[key] || key;
+                const section = document.createElement("section");
+                section.className = "mb-8"; // Add margin bottom for spacing
+
+                const title = document.createElement("h3");
+                title.className = "text-md font-semibold mb-2 text-gray-200";
+                title.textContent = `📁 ${label}`;
+                section.appendChild(title);
+
+                const grid = document.createElement("div");
+                grid.className = "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4";
+                grid.id = `${key}-grid`;
+                (val.brands || []).forEach(b => {
+                    const tag = document.createElement("div");
+                    tag.className = "bg-gray-700 text-gray-200 px-3 py-1 rounded text-sm text-center shadow cursor-pointer hover:bg-gray-600 transition-colors";
+                    tag.textContent = b;
+                    tag.onclick = () => showSmartSnapshot(key, b, val.nodes || []);
+                    grid.appendChild(tag);
+                });
+                section.appendChild(grid);
+
+                // Add this snapshot target per sector
+                const snapshots = document.createElement("div");
+                snapshots.id = `${key}-snapshots`;
+                snapshots.className = "mt-4";
+                section.appendChild(snapshots);
+
+                dashboard.appendChild(section);
+            });
+        }
+
+        // Existing Snapshot Renderer
+        function showSnapshot(brand, nodes) {
+            let existing = document.getElementById("brandSnapshotBox");
+            if (existing) existing.remove();
+
+            const box = document.createElement("div");
+            box.id = "brandSnapshotBox";
+            box.className = "snapshot-box";
+
+            const title = document.createElement("h4");
+            title.className = "text-lg font-bold mb-2 text-white";
+            title.textContent = `${brand}™ Snapshot`;
+            box.appendChild(title);
+
+            const list = document.createElement("ul");
+            list.className = "list-disc pl-6 space-y-1 text-sm text-gray-300";
+
+            nodes.forEach(node => {
+                const item = document.createElement("li");
+                item.textContent = node;
+                list.appendChild(item);
+            });
+
+            box.appendChild(list);
+            document.getElementById("brandDashboard").appendChild(box);
+        }
+
+        // Add-on: updateSectorDashboard – safely adds new brand post-submit
+        function updateSectorDashboard(sectorKey, brand, subnodes) {
+            const grid = document.getElementById(`${sectorKey}-grid`);
+            const snapshotContainer = document.getElementById(`${sectorKey}-snapshots`);
+
+            if (!grid || !snapshotContainer) {
+                console.warn(`⚠️ Missing grid or snapshot area for sector "${sectorKey}"`);
+                return;
+            }
+
+            // Prevent duplicate
+            if ([...grid.children].some(el => el.textContent === brand)) return;
+
+            // Create brand tag
+            const tag = document.createElement("div");
+            tag.className = "bg-gray-700 text-gray-200 px-3 py-1 rounded text-sm text-center shadow cursor-pointer hover:bg-gray-600 transition-colors";
+            tag.textContent = brand;
+            tag.onclick = () => showSmartSnapshot(sectorKey, brand, subnodes);
+            grid.appendChild(tag);
+        }
+
+        // Smart snapshot into the correct sector container
+        function showSmartSnapshot(sectorKey, brand, nodes) {
+            // Hide all existing snapshots
+            document.querySelectorAll('.snapshot-box').forEach(box => box.remove());
+
+            const container = document.getElementById(`${sectorKey}-snapshots`);
+            if (!container) return;
+
+            const box = document.createElement("div");
+            box.id = "brandSnapshotBox"; // Keep a common ID for easy removal
+            box.className = "snapshot-box";
+
+            const title = document.createElement("h4");
+            title.className = "text-lg font-bold mb-2 text-white";
+            title.textContent = `${brand}™ Snapshot`;
+            box.appendChild(title);
+
+            const list = document.createElement("ul");
+            list.className = "list-disc pl-6 space-y-1 text-sm text-gray-300";
+
+            nodes.forEach(node => {
+                const item = document.createElement("li");
+                item.textContent = node;
+                list.appendChild(item);
+            });
+
+            box.appendChild(list);
+            container.appendChild(box);
+        }
+
+        async function loadScrollProfile(sector) {
+            try {
+                // Mock fetching scroll profile data
+                const data = mockScrollProfiles[sector] || {};
+
+                const container = document.getElementById(`${sector}-scroll-panel`)?.querySelector('.scroll-cards');
+                if (!container) {
+                    console.warn(`Scroll profile container not found for sector: ${sector}`);
+                    return;
+                }
+                container.innerHTML = ""; // Clear existing content
+
+                if (Object.keys(data).length === 0) {
+                    container.innerHTML = `<p class="text-gray-400">No scroll profiles available for this sector.</p>`;
+                    return;
+                }
+
+                Object.entries(data).forEach(([brand, profile]) => {
+                    const wrapper = document.createElement("div");
+                    wrapper.className = `w-full flex-shrink-0 bg-gray-700 p-6 shadow rounded-lg text-white ${profile.metadata.bg || ""}`;
+                    wrapper.style.minHeight = profile.metadata.height || "300px"; /* Adjusted default height */
+                    wrapper.style.minWidth = profile.metadata.width || "400px"; /* Adjusted default width */
+
+                    wrapper.innerHTML = `
+                        <div class="flex flex-col md:flex-row justify-between gap-6 h-full">
+                            <div class="w-full md:w-1/2 space-y-3">
+                                <h2 class="text-xl font-bold text-purple-300">${profile.title}</h2>
+                                <p class="text-sm text-gray-300">${profile.intro}</p>
+                                <div>
+                                    <h4 class="font-semibold text-gray-200">🎛 Features</h4>
+                                    <ul class="list-disc list-inside ml-4 text-sm text-gray-300">
+                                        ${profile.features.map(f => `<li>${f}</li>`).join("")}
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-200">💳 Pricing</h4>
+                                    <ul class="list-disc list-inside ml-4 text-sm text-gray-300">
+                                        ${profile.pricing.map(p => `<li>${p}</li>`).join("")}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="w-full md:w-1/2 space-y-3">
+                                <h4 class="font-semibold text-purple-300">📎 FAA Metadata</h4>
+                                <ul class="list-disc list-inside ml-4 text-sm text-gray-300">
+                                    <li><strong>ID:</strong> ${profile.metadata.id}</li>
+                                    <li><strong>Vault:</strong> ${profile.metadata.vault}</li>
+                                    <li><strong>Layer:</strong> ${profile.metadata.layer}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(wrapper);
+                });
+            } catch (err) {
+                console.error("ScrollProfile load failed:", err);
+            }
+        }
+
+        // UNIVERSAL PANEL TOGGLER SCRIPT
+        function showSectorPanel(panelId) {
+            // Hide all sector and embedded panels
+            document.querySelectorAll('[id^="embedded-"]').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.brand-snapshot').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.sector-link').forEach(link => link.classList.remove('active')); // Remove active class from all links
+
+            const el = document.getElementById(panelId);
+            if (el) {
+                el.classList.remove('hidden');
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // Add active class to the clicked link
+                const clickedLink = document.querySelector(`.sector-link[onclick*="${panelId}"]`);
+                if (clickedLink) {
+                    clickedLink.classList.add('active');
+                }
+                // If it's the media sector, load its scroll profiles
+                if (panelId === 'embedded-media-snapshot') {
+                    loadScrollProfile('media');
+                }
+            } else {
+                console.warn('[FAA] Panel not found:', panelId);
+            }
+        }
+
+        function toggleSnapshot(id) {
+            document.querySelectorAll('.brand-snapshot').forEach(el => el.classList.add('hidden'));
+            const active = document.getElementById(id);
+            if (active) active.classList.remove('hidden');
+        }
+    </script>
+
+</body>
+</html>
