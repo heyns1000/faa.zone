@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,187 +9,556 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        /* Base Styles - Apple inspired cleanliness */
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f172a; /* Dark blue-gray for background */
-            color: #e2e8f0; /* Light gray for text */
+            font-family: 'Inter', sans-serif; /* Closest free alternative to San Francisco */
+            background-color: #f5f5f7; /* Very light gray, almost white */
+            color: #1d1d1f; /* Near black for primary text */
+            line-height: 1.4; /* Tighter line height for Apple feel */
+            -webkit-font-smoothing: antialiased; /* Smoother font rendering */
+            -moz-osx-font-smoothing: grayscale;
         }
+
+        /* Header - Minimalist and clean */
+        header {
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+            backdrop-filter: blur(10px); /* Frosted glass effect */
+            border-bottom: 1px solid #e8e8ed; /* Subtle bottom border */
+            padding-top: 1rem; /* Adjust padding */
+            padding-bottom: 1rem;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.05); /* Very subtle shadow */
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        header h1 {
+            color: #1d1d1f; /* Dark text for logo */
+            font-weight: 700; /* Bolder logo */
+            font-size: 1.5rem; /* Slightly smaller logo */
+            letter-spacing: -0.02em; /* Tighter letter spacing */
+        }
+        header nav a {
+            color: #424245; /* Muted gray for nav links */
+            font-size: 0.9rem; /* Smaller nav links */
+            font-weight: 500;
+            padding: 0.5rem 0.8rem; /* Adjusted padding */
+            border-radius: 6px; /* Subtle rounding */
+            transition: all 0.2s ease-in-out;
+            position: relative; /* For potential future underline/indicator */
+        }
+        header nav a:hover {
+            color: #0071e3; /* Apple blue on hover */
+            background-color: rgba(0, 0, 0, 0.03); /* Very subtle background on hover */
+        }
+        header nav a.bg-purple-600 { /* Sign Up button */
+            background-color: #0071e3; /* Apple blue */
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px; /* More rounded button */
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        header nav a.bg-purple-600:hover {
+            background-color: #0077ed; /* Slightly lighter blue on hover */
+            transform: translateY(-1px); /* Subtle lift */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        /* Hero Section - Clean, bold, and inviting */
         .hero-section {
-            background: linear-gradient(135deg, #4c51bf, #6b46c1); /* Purple-blue gradient */
-            min-height: 80vh; /* Make hero section tall */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 4rem 1.5rem;
-            position: relative;
+            background: #f5f5f7; /* Matching body background */
+            min-height: 70vh; /* Shorter hero */
+            padding: 6rem 1.5rem;
+            border-bottom-left-radius: 0; /* No rounded corners here for Apple look */
+            border-bottom-right-radius: 0;
+            box-shadow: none; /* No shadow */
+            color: #1d1d1f; /* Dark text */
+            position: relative; /* For potential background image/video */
             overflow: hidden;
-            border-bottom-left-radius: 50px; /* Rounded bottom corners */
-            border-bottom-right-radius: 50px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .hero-section::before { /* Remove subtle background animation */
+            content: none;
         }
         .hero-content {
-            max-width: 900px;
-            z-index: 10;
+            max-width: 800px; /* Narrower content for focus */
         }
-        .feature-card {
-            background-color: #1a202c; /* Darker background for cards */
-            border-radius: 1.5rem; /* More rounded corners */
-            padding: 2rem;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.1);
+        .hero-section h2 {
+            font-size: 3.5rem; /* Larger, bolder headline */
+            font-weight: 800;
+            letter-spacing: -0.03em; /* Tighter letter spacing */
+            color: #1d1d1f;
+            line-height: 1.1;
+            animation: none; /* Remove pulse animation */
         }
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.5);
+        .hero-section h2 span {
+            color: #0071e3; /* Apple blue accent */
         }
-        .cta-button {
-            background: linear-gradient(90deg, #6366f1, #a855f7); /* Vibrant button gradient */
+        .hero-section p {
+            font-size: 1.2rem; /* Slightly smaller body text */
+            font-weight: 400;
+            color: #424245; /* Muted text */
+            margin-top: 1.5rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.5;
+        }
+        .cta-button { /* Re-style CTA button for Apple look */
+            background: #0071e3; /* Apple blue */
             color: white;
-            padding: 1rem 2.5rem;
-            border-radius: 9999px; /* Pill shape */
-            font-weight: 700;
-            font-size: 1.125rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
         }
         .cta-button:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-            filter: brightness(1.1);
+            background-color: #0077ed;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
         }
-        /* Subtle background animation for hero */
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 70%);
-            animation: rotateBackground 20s linear infinite;
-            opacity: 0.3;
-        }
-        @keyframes rotateBackground {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        .cta-button span { /* Remove emoji for Apple style */
+            display: none;
         }
 
-        /* Styles for new sections */
+        /* Sections - Clean, defined blocks */
+        section {
+            padding: 8rem 2rem; /* Generous padding */
+            background-color: #ffffff; /* White background for sections */
+            box-shadow: none; /* No shadows */
+            border-bottom: 1px solid #e8e8ed; /* Subtle separator */
+        }
+        section:last-of-type {
+            border-bottom: none; /* No border on the last section */
+        }
+        section h2, section h3 {
+            color: #1d1d1f;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 2rem;
+            font-size: 2.2rem; /* Consistent heading size */
+        }
+        section p {
+            color: #424245;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        /* Feature Cards - Minimalist and informative */
+        .feature-card {
+            background-color: #ffffff; /* White background */
+            border-radius: 12px; /* Softer rounded corners */
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08); /* Softer, subtle shadow */
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            border: 1px solid #e8e8ed; /* Light border */
+        }
+        .feature-card:hover {
+            transform: translateY(-3px); /* Subtle lift */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.12); /* Slightly more pronounced shadow */
+        }
+        .feature-card div:first-child { /* Icon */
+            font-size: 2.5rem; /* Smaller icons */
+            margin-bottom: 1rem;
+            color: #0071e3; /* Apple blue for icons */
+        }
+        .feature-card h4 {
+            font-size: 1.2rem; /* Smaller feature titles */
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .feature-card p {
+            font-size: 0.95rem; /* Smaller feature description text */
+            color: #6e6e73; /* Even more muted text */
+        }
+
+        /* Share Signal Section - Clean data display */
+        #shareprice {
+            background-color: #f5f5f7; /* Light background */
+            color: #1d1d1f;
+            padding: 4rem 1.5rem;
+            border-bottom: 1px solid #e8e8ed;
+        }
+        #shareprice h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        #price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #0071e3; /* Apple blue for price */
+            letter-spacing: -0.02em;
+        }
+        #timestamp {
+            color: #6e6e73;
+            font-size: 0.85rem;
+        }
+
+        /* Seedwave Growth - Integrated chart */
+        #seedwave {
+            background-color: #ffffff;
+            padding: 6rem 1.5rem;
+            border-bottom: 1px solid #e8e8ed;
+        }
+        #seedwave h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #1d1d1f;
+        }
+        #seedwave .w-full {
+            background-color: #fcfcfc; /* Very light background for chart container */
+            border: 1px solid #e8e8ed;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* Founder's Note - Elegant text block */
+        section.bg-gray-700 { /* Founder's Note */
+            background-color: #f5f5f7; /* Light background */
+            color: #1d1d1f;
+            padding: 6rem 2rem;
+            border-bottom: 1px solid #e8e8ed;
+        }
+        section.bg-gray-700 h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            animation: none; /* Remove pulse */
+        }
+        section.bg-gray-700 p {
+            font-size: 1.1rem;
+            color: #424245;
+            max-width: 700px; /* Narrower for readability */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        section.bg-gray-700 p.italic {
+            color: #6e6e73;
+            font-style: italic;
+        }
+        section.bg-gray-700 p.font-semibold {
+            color: #0071e3; /* Apple blue for signature */
+            font-weight: 600;
+            margin-top: 2rem;
+        }
+
+        /* Vault Terminal Access - Clean buttons */
+        #vault-access {
+            background-color: #ffffff;
+            padding: 6rem 2rem;
+            border-bottom: 1px solid #e8e8ed;
+        }
+        #vault-access h3 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 2.5rem;
+        }
+        #vault-access .w-full.h-\[800px\] { /* Iframe container */
+            background-color: #f0f0f0; /* Light gray background for iframe */
+            border: 1px solid #dcdcdc; /* Light border */
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
         .terminal-btn {
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            background-color: #f0f0f0; /* Light gray button */
+            color: #424245;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #dcdcdc;
         }
         .terminal-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+            background-color: #e8e8ed; /* Slightly darker on hover */
+            color: #1d1d1f;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        .glyph {
-            background-color: #2d3748; /* Darker gray for glyph links */
-            color: #a0aec0; /* Lighter gray text */
-            padding: 0.75rem 1.25rem;
-            border-radius: 0.75rem;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: block;
-            font-weight: 500;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-        .glyph:hover {
-            background-color: #4a5568;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        .terminal-btn.ring { /* Active state */
+            border-color: #0071e3;
+            box-shadow: 0 0 0 2px #0071e3;
         }
 
-        /* Animation for Founder's Glyph */
-        .animate-pulse {
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        /* Sector Scrolls - Clean link grid */
+        section.bg-gray-800.text-center { /* Sector Scrolls */
+            background-color: #f5f5f7;
+            padding: 6rem 2rem;
+            border-bottom: 1px solid #e8e8ed;
         }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: .5; }
+        section.bg-gray-800.text-center h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 2.5rem;
+        }
+        .glyph {
+            background-color: #ffffff; /* White background */
+            color: #424245;
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #e8e8ed;
+        }
+        .glyph:hover {
+            background-color: #f0f0f0;
+            color: #1d1d1f;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Treaty Section - Elegant quote */
+        #treaty {
+            background-color: #ffffff;
+            padding: 6rem 2rem;
+            border-bottom: 1px solid #e8e8ed;
+        }
+        #treaty h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 1.5rem;
+        }
+        #treaty p {
+            font-size: 1.1rem;
+            color: #424245;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 2rem;
+        }
+        #treaty blockquote {
+            font-size: 1.5rem;
+            color: #1d1d1f;
+            font-weight: 600;
+            line-height: 1.4;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #treaty blockquote::before, #treaty blockquote::after {
+            content: '“'; /* Apple-style quotes */
+            font-size: 2.5em;
+            line-height: 0.1;
+            vertical-align: -0.4em;
+            color: #dcdcdc; /* Muted quote color */
+            margin-right: 0.1em;
+        }
+        #treaty blockquote::after {
+            content: '”';
+            margin-left: 0.05em;
+        }
+
+        /* Signal Packet - Developer focused, clean code block */
+        section.bg-gray-900.text-green-400 { /* Signal Packet */
+            background-color: #1d1d1f; /* Dark background for code */
+            color: #00e393; /* Greenish text for code */
+            padding: 4rem 1.5rem;
+            border-bottom: 1px solid #333;
+        }
+        section.bg-gray-900.text-green-400 pre {
+            background-color: #0a0a0a; /* Even darker code block */
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+            white-space: pre-wrap; /* Allow wrapping for long lines */
+            word-break: break-all;
+        }
+
+        /* VaultMesh Executive Summary - Structured and readable */
+        #vaultmesh {
+            background-color: #f5f5f7;
+            padding: 6rem 2rem;
+            color: #1d1d1f;
+            border-bottom: 1px solid #e8e8ed;
+        }
+        #vaultmesh h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 1.5rem;
+        }
+        #vaultmesh h2.text-purple-400 {
+            color: #0071e3; /* Apple blue for main heading */
+        }
+        #vaultmesh h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        #vaultmesh p {
+            font-size: 1.05rem;
+            color: #424245;
+            line-height: 1.5;
+        }
+        #vaultmesh ul {
+            list-style-type: disc; /* Default disc */
+            margin-left: 1.5rem;
+            color: #424245;
+        }
+        #vaultmesh ul li {
+            font-size: 1.05rem;
+            margin-bottom: 0.5rem;
+        }
+        #vaultmesh ul.list-decimal {
+            list-style-type: decimal;
+        }
+        #vaultmesh code {
+            background-color: #e8e8ed;
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+            color: #1d1d1f;
+        }
+
+        /* About Section - Simple and clear */
+        #about {
+            background-color: #ffffff;
+            padding: 6rem 2rem;
+            color: #1d1d1f;
+            border-bottom: 1px solid #e8e8ed;
+        }
+        #about h3 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 1.5rem;
+        }
+        #about p {
+            font-size: 1.1rem;
+            color: #424245;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Call to Action Section - Prominent and inviting */
+        #cta {
+            background: #f5f5f7; /* Light background */
+            padding: 6rem 2rem;
+            color: #1d1d1f;
+            text-align: center;
+        }
+        #cta h3 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 1.5rem;
+        }
+        #cta p {
+            font-size: 1.2rem;
+            color: #424245;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 2.5rem;
+        }
+
+        /* Footer - Minimalist */
+        footer {
+            background-color: #f5f5f7; /* Matching body background */
+            color: #6e6e73;
+            padding: 2rem;
+            font-size: 0.85rem;
+            border-top: 1px solid #e8e8ed;
+        }
+        footer a {
+            color: #6e6e73;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        footer a:hover {
+            color: #1d1d1f;
         }
     </style>
 </head>
 <body>
 
-    <header class="py-4 px-6 md:px-12 flex justify-between items-center bg-gray-900 text-white shadow-lg">
+    <header class="py-4 px-6 md:px-12 flex justify-between items-center text-white">
         <h1 class="text-2xl font-extrabold tracking-tight">Fruitful™</h1>
         <nav class="flex items-center space-x-4">
-            <a href="#features" class="text-gray-300 hover:text-white transition-colors duration-200">Features</a>
-            <a href="#shareprice" class="text-gray-300 hover:text-white transition-colors duration-200">Signal</a>
-            <a href="#vault-access" class="text-gray-300 hover:text-white transition-colors duration-200">Vault</a>
-            <a href="#treaty" class="text-gray-300 hover:text-white transition-colors duration-200">Treaty</a>
-            <a href="#vaultmesh" class="text-gray-300 hover:text-white transition-colors duration-200">VaultMesh</a>
-            <a href="#about" class="text-gray-300 hover:text-white transition-colors duration-200">About</a>
-            <a href="#cta" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-full font-semibold transition-colors duration-200">Sign Up</a>
+            <a href="#features" class="transition-colors duration-200">Features</a>
+            <a href="#shareprice" class="transition-colors duration-200">Signal</a>
+            <a href="#vault-access" class="transition-colors duration-200">Vault</a>
+            <a href="#treaty" class="transition-colors duration-200">Treaty</a>
+            <a href="#vaultmesh" class="transition-colors duration-200">VaultMesh</a>
+            <a href="#about" class="transition-colors duration-200">About</a>
+            <a href="#cta" class="px-4 py-2 rounded-full font-semibold transition-colors duration-200">Sign Up</a>
         </nav>
     </header>
 
     <section class="hero-section">
         <div class="hero-content">
-            <h2 class="text-5xl md:text-6xl font-extrabold text-white mb-6 leading-tight">
+            <h2 class="text-5xl md:text-6xl font-extrabold mb-6 leading-tight">
                 Innovate. Connect. <span class="text-yellow-300">Thrive.</span>
             </h2>
-            <p class="text-xl md:text-2xl text-white/90 mb-10 max-w-2xl mx-auto">
+            <p class="text-xl md:text-2xl mb-10 max-w-2xl mx-auto">
                 Discover a new era of collaboration and sustainable growth with Fruitful's cutting-edge platform.
             </p>
             <a href="#cta" class="cta-button">
-                Get Started Today <span class="ml-2 text-2xl">🚀</span>
+                Get Started Today
             </a>
         </div>
     </section>
 
-    <section id="features" class="py-16 md:py-24 px-6 md:px-12 bg-gray-900">
+    <section id="features" class="py-16 md:py-24 px-6 md:px-12">
         <div class="max-w-6xl mx-auto">
-            <h3 class="text-4xl font-bold text-center text-white mb-16">
+            <h3 class="text-4xl font-bold text-center mb-16">
                 Unlock Your Potential with Our Core Features
             </h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="feature-card">
-                    <div class="text-5xl mb-4">💡</div>
-                    <h4 class="text-2xl font-semibold text-white mb-3">AI-Powered Insights</h4>
-                    <p class="text-gray-400">
+                    <div>💡</div>
+                    <h4>AI-Powered Insights</h4>
+                    <p>
                         Leverage advanced AI to gain deep insights, optimize operations, and make smarter decisions.
                     </p>
                 </div>
                 <div class="feature-card">
-                    <div class="text-5xl mb-4">🤝</div>
-                    <h4 class="text-2xl font-semibold text-white mb-3">Global Collaboration</h4>
-                    <p class="text-gray-400">
+                    <div>🤝</div>
+                    <h4>Global Collaboration</h4>
+                    <p>
                         Connect with thousands of independent brands and partners worldwide, fostering a network of mutual growth.
                     </p>
                 </div>
                 <div class="feature-card">
-                    <div class="text-5xl mb-4">🌱</div>
-                    <h4 class="text-2xl font-semibold text-white mb-3">Sustainable Solutions</h4>
-                    <p class="text-gray-400">
+                    <div>🌱</div>
+                    <h4>Sustainable Solutions</h4>
+                    <p>
                         Champion eco-friendly practices and contribute to a healthier planet through our curated marketplace.
                     </p>
                 </div>
                 <div class="feature-card">
-                    <div class="text-5xl mb-4">🔒</div>
-                    <h4 class="text-2xl font-semibold text-white mb-3">Secure VaultMesh™</h4>
-                    <p class="text-gray-400">
+                    <div>🔒</div>
+                    <h4>Secure VaultMesh™</h4>
+                    <p>
                         Protect your data and transactions with our state-of-the-art blockchain-inspired security protocols.
                     </p>
                 </div>
                 <div class="feature-card">
-                    <div class="text-5xl mb-4">📈</div>
-                    <h4 class="text-2xl font-semibold text-white mb-3">Real-time Analytics</h4>
-                    <p class="text-gray-400">
+                    <div>📈</div>
+                    <h4>Real-time Analytics</h4>
+                    <p>
                         Monitor your progress and impact with intuitive dashboards and real-time performance metrics.
                     </p>
                 </div>
                 <div class="feature-card">
-                    <div class="text-5xl mb-4">🌐</div>
-                    <h4 class="text-2xl font-semibold text-white mb-3">OmniScroll Integration</h4>
-                    <p class="text-gray-400">
+                    <div>🌐</div>
+                    <h4>OmniScroll Integration</h4>
+                    <p>
                         Seamlessly integrate with our OmniScroll ledger for transparent and efficient record-keeping.
                     </p>
                 </div>
@@ -197,37 +566,37 @@
         </div>
     </section>
 
-    <section id="shareprice" class="py-12 bg-gray-800 text-center">
-        <h2 class="text-3xl font-semibold mb-2 text-white">FAA™ Share Signal</h2>
-        <div id="price" class="text-5xl font-bold text-green-500">$88.88</div>
+    <section id="shareprice" class="py-12 text-center">
+        <h2 class="text-3xl font-semibold mb-2">FAA™ Share Signal</h2>
+        <div id="price" class="text-5xl font-bold">$88.88</div>
         <div class="text-sm text-gray-400 mt-1">Last updated: <span id="timestamp">Live</span></div>
     </section>
 
-    <section id="seedwave" class="py-16 px-6 bg-gray-900 text-center">
-        <h2 class="text-4xl font-bold mb-8 text-white">🌱 Seedwave Brand Growth 🌱</h2>
-        <div class="w-full max-w-4xl mx-auto bg-gray-800 p-6 rounded-xl shadow-lg">
+    <section id="seedwave" class="py-16 px-6 text-center">
+        <h2 class="text-4xl font-bold mb-8">🌱 Seedwave Brand Growth 🌱</h2>
+        <div class="w-full max-w-4xl mx-auto p-6 rounded-xl shadow-lg">
             <canvas id="brandChart"></canvas>
         </div>
     </section>
 
-    <section class="py-16 px-6 bg-gray-700 text-center">
-        <h2 class="text-4xl font-bold mb-6 animate-pulse text-white">🧬 Founder's Glyph™</h2>
-        <p class="max-w-3xl mx-auto text-xl text-gray-200 leading-relaxed">
+    <section class="py-16 px-6 text-center">
+        <h2 class="text-4xl font-bold mb-6">🧬 Founder's Glyph™</h2>
+        <p class="max-w-3xl mx-auto text-xl leading-relaxed">
             FAA™ wasn’t built like a typical startup. It emerged — out of silence, out of signal, out of glyphs and patterns that refused to be ignored.
             What you're seeing isn't a site. It’s a vault interface. A codebase of culture. A trust-machine powered by real human intelligence.
         </p>
-        <p class="mt-6 max-w-2xl mx-auto text-gray-300 italic">
+        <p class="mt-6 max-w-2xl mx-auto italic">
             Where others scale with speed, we scale with meaning. Every brand here agreed to something deeper than growth — they signed a Treaty.
             That’s why this isn’t eCommerce. It’s TreatyCommerce™.
         </p>
-        <p class="mt-6 font-semibold text-purple-400">— Written from the edge of code & culture 🌍 FAA.Zone Founder Glyph Activated™</p>
+        <p class="mt-6 font-semibold">— Written from the edge of code & culture 🌍 FAA.Zone Founder Glyph Activated™</p>
     </section>
 
-    <section id="vault-access" class="py-16 px-6 bg-gray-900">
-        <h3 class="text-4xl font-bold text-center mb-10 text-white">🔐 Sector Terminals</h3>
+    <section id="vault-access" class="py-16 px-6">
+        <h3 class="text-4xl font-bold text-center mb-10">🔐 Sector Terminals</h3>
 
         <div class="w-full max-w-6xl mx-auto mb-10">
-            <div class="w-full h-[800px] border-4 border-yellow-400 rounded-xl shadow-2xl bg-black overflow-hidden">
+            <div class="w-full h-[800px] border-4 rounded-xl shadow-2xl overflow-hidden">
                 <iframe
                     id="vault-frame"
                     src=""
@@ -240,20 +609,20 @@
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            <button onclick="loadTerminal('vault-master.html')" class="terminal-btn p-6 bg-gray-900 text-white rounded-xl border border-yellow-400 hover:border-yellow-200">🦍 VaultMaster Terminal</button>
-            <button onclick="loadTerminal('cube-lattice.html')" class="terminal-btn p-6 bg-gray-900 text-white rounded-xl border border-orange-600 hover:border-orange-400">🧱 Cube Lattice GPT</button>
-            <button onclick="loadTerminal('global-view.html')" class="terminal-btn p-6 bg-gray-900 text-white rounded-xl border border-blue-600 hover:border-blue-400">🌍 Global View GPT</button>
-            <button onclick="loadTerminal('freight-ops.html')" class="terminal-btn p-6 bg-gray-900 text-white rounded-xl border border-yellow-600 hover:border-yellow-400">🚚 Freight Ops GPT</button>
-            <button onclick="loadTerminal('loop-watch.html')" class="terminal-btn p-6 bg-gray-900 text-white rounded-xl border border-green-600 hover:border-green-400">♻️ Loop Watch GPT</button>
-            <button onclick="loadTerminal('seedwave.html')" class="terminal-btn p-6 bg-gray-900 text-white rounded-xl border border-lime-500 hover:border-lime-300">🌱 Seedwave GPT</button>
-            <button onclick="loadTerminal('distribution.html')" class="terminal-btn p-6 bg-gray-900 text-white rounded-xl border border-pink-500 hover:border-pink-300">📦 Distribution GPT</button>
-            <button onclick="loadTerminal('signal.html')" class="terminal-btn p-6 bg-gray-900 text-white rounded-xl border border-cyan-500 hover:border-cyan-300">🔐 Signal GPT</button>
-            <button onclick="loadTerminal('faa-brands.html')" class="terminal-btn p-6 bg-gray-900 text-white rounded-xl border border-purple-400 hover:border-purple-200">📦 7038 FAA Brands</button>
+            <button onclick="loadTerminal('vault-master.html')" class="terminal-btn p-6">🦍 VaultMaster Terminal</button>
+            <button onclick="loadTerminal('cube-lattice.html')" class="terminal-btn p-6">🧱 Cube Lattice GPT</button>
+            <button onclick="loadTerminal('global-view.html')" class="terminal-btn p-6">🌍 Global View GPT</button>
+            <button onclick="loadTerminal('freight-ops.html')" class="terminal-btn p-6">🚚 Freight Ops GPT</button>
+            <button onclick="loadTerminal('loop-watch.html')" class="terminal-btn p-6">♻️ Loop Watch GPT</button>
+            <button onclick="loadTerminal('seedwave.html')" class="terminal-btn p-6">🌱 Seedwave GPT</button>
+            <button onclick="loadTerminal('distribution.html')" class="terminal-btn p-6">📦 Distribution GPT</button>
+            <button onclick="loadTerminal('signal.html')" class="terminal-btn p-6">🔐 Signal GPT</button>
+            <button onclick="loadTerminal('faa-brands.html')" class="terminal-btn p-6">📦 7038 FAA Brands</button>
         </div>
     </section>
 
-    <section class="py-16 px-6 bg-gray-800 text-center">
-        <h2 class="text-4xl font-bold mb-8 text-white">🧬 Sector Scrolls</h2>
+    <section class="py-16 px-6 text-center">
+        <h2 class="text-4xl font-bold mb-8">🧬 Sector Scrolls</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
             <a href="/sectors/payroll/index.html" class="glyph" data-vault="payroll">💰 Payroll Core Systems</a>
             <a href="/sectors/retail/index.html" class="glyph" data-vault="retail">🛍️ Retail, Vendor & Trade</a>
@@ -276,14 +645,14 @@
 
     <div id="sector-content-container" class="mt-10 px-6 max-w-6xl mx-auto"></div>
 
-    <section id="treaty" class="py-16 px-6 text-center bg-gray-700">
-        <h2 class="text-4xl font-bold mb-6 text-white">📜 Treaty System™</h2>
-        <p class="max-w-2xl mx-auto text-lg text-gray-200 mb-8">The FAA™ Treaty Layer binds interface to intention. This is not UI. This is glyph-encoded law.</p>
-        <blockquote class="text-2xl italic font-semibold text-white/90">"FAA™ isn't a site. It's the shape of alignment — and 🦍 holds the flame."</blockquote>
+    <section id="treaty" class="py-16 px-6 text-center">
+        <h2 class="text-4xl font-bold mb-6">📜 Treaty System™</h2>
+        <p class="max-w-2xl mx-auto text-lg mb-8">The FAA™ Treaty Layer binds interface to intention. This is not UI. This is glyph-encoded law.</p>
+        <blockquote class="text-2xl italic font-semibold">"FAA™ isn't a site. It's the shape of alignment — and 🦍 holds the flame."</blockquote>
     </section>
 
-    <section class="bg-gray-900 text-green-400 py-10 text-xs text-center">
-        <pre class="max-w-2xl mx-auto p-4 rounded-lg bg-black/50 overflow-auto"><code>{
+    <section class="py-10 text-xs text-center">
+        <pre class="max-w-2xl mx-auto p-4 rounded-lg overflow-auto"><code>{
     "signal": "omnidrop",
     "origin": "If you dont like the fruits you are growing, change the seed™ / FAA Vault Layer",
     "payload": {
@@ -293,10 +662,10 @@
 }</code></pre>
     </section>
 
-    <section id="vaultmesh" class="py-20 px-6 bg-gray-800 text-gray-200">
+    <section id="vaultmesh" class="py-20 px-6">
         <div class="max-w-4xl mx-auto text-left space-y-6">
 
-            <h2 class="text-4xl font-bold text-purple-400">🧠 VaultMesh™: Executive Summary</h2>
+            <h2 class="text-4xl font-bold">🧠 VaultMesh™: Executive Summary</h2>
 
             <p>VaultMesh™ is an intelligent data orchestration framework designed for the segmentation, synchronization, and secure deployment of high-value digital assets—referred to as scrolls—across decentralized and permissioned networks such as FAA.Zone™.</p>
 
@@ -313,7 +682,7 @@
 
             <p>A critical operator in this ecosystem is HSOMNI9000™, the certified scroll class which governs Diamond-tier logic, enforces 10–11% royalty triggers, and auto-deploys ScrollClaims™ with real-time ClaimRoot™ verification.</p>
 
-            <h3 class="text-2xl font-semibold mt-10 text-white">📖 VaultMesh™ Index</h3>
+            <h3 class="text-2xl font-semibold mt-10">📖 VaultMesh™ Index</h3>
             <ul class="list-decimal ml-6 space-y-1">
                 <li>Introduction to VaultMesh™</li>
                 <li>Core System Components</li>
@@ -327,10 +696,10 @@
                 <li>Team & Governance</li>
             </ul>
 
-            <h3 class="text-xl font-bold mt-10 text-white">☑️ 1. Introduction to VaultMesh™</h3>
+            <h3 class="text-xl font-bold mt-10">☑️ 1. Introduction to VaultMesh™</h3>
             <p>VaultMesh™ transforms disorganized digital content into claimable, trackable assets. It bridges enterprise content systems, decentralized data vaults, and monetization layers through FAA-compliant infrastructure.</p>
 
-            <h3 class="text-xl font-bold mt-10 text-white">⚒️ 2. Core System Components</h3>
+            <h3 class="text-xl font-bold mt-10">⚒️ 2. Core System Components</h3>
             <ul class="list-disc ml-6 space-y-1">
                 <li>VaultDNA™: Immutable identifiers for scroll content</li>
                 <li>ClaimRoot™: Origin anchor & timestamp</li>
@@ -340,7 +709,7 @@
                 <li>GhostTrace™ Gen2: Scroll interaction backtrace</li>
             </ul>
 
-            <h3 class="text-xl font-bold mt-10 text-white">🛠️ 3. ScrollClaim™ Infrastructure</h3>
+            <h3 class="text-xl font-bold mt-10">🛠️ 3. ScrollClaim™ Infrastructure</h3>
             <ul class="list-disc ml-6 space-y-1">
                 <li>Set tier access (e.g., Diamond)</li>
                 <li>Define royalty logic (10–11%)</li>
@@ -348,7 +717,7 @@
                 <li>Deploy via FAA.Zone™ with compliant ZIP bundles</li>
             </ul>
 
-            <h3 class="text-xl font-bold mt-10 text-white">📀 4. Data Flow and Claim Lifecycle</h3>
+            <h3 class="text-xl font-bold mt-10">📀 4. Data Flow and Claim Lifecycle</h3>
             <ul class="list-decimal ml-6 space-y-1">
                 <li>Ingest — content enters VaultMesh™</li>
                 <li>Encode — metadata & VaultDNA™ attached</li>
@@ -358,7 +727,7 @@
                 <li>Enforce — Royalties, access & scroll activity logged via GhostTrace™</li>
             </ul>
 
-            <h3 class="text-xl font-bold mt-10 text-white">💸 5. Tiering, Royalties, and Compliance</h3>
+            <h3 class="text-xl font-bold mt-10">💸 5. Tiering, Royalties, and Compliance</h3>
             <ul class="list-disc ml-6 space-y-1">
                 <li>Diamond Tier: 10–11% royalty enforced</li>
                 <li>SmartWallet Integration: ScrollClaim™ payments and transfers</li>
@@ -366,7 +735,7 @@
                 <li>Compliance: FAA scroll ID, ClaimRoot™ hash, and royalty schema</li>
             </ul>
 
-            <h3 class="text-xl font-bold mt-10 text-white">📡 6. Integration with FAA.Zone™</h3>
+            <h3 class="text-xl font-bold mt-10">📡 6. Integration with FAA.Zone™</h3>
             <ul class="list-disc ml-6 space-y-1">
                 <li>Native support for /public/diamond/ structure</li>
                 <li>ZIP, HTML, Manifest deployment bundles</li>
@@ -375,7 +744,7 @@
                 <li>Brand hosting via vault.faa.zone™</li>
             </ul>
 
-            <h3 class="text-xl font-bold mt-10 text-white">🏢 7. Market Segments & Use Cases</h3>
+            <h3 class="text-xl font-bold mt-10">🏢 7. Market Segments & Use Cases</h3>
             <ul class="list-disc ml-6 space-y-1">
                 <li>GPT Conversations & Expert Threads</li>
                 <li>Knowledge/Training Archives</li>
@@ -384,7 +753,7 @@
                 <li>Enterprise Scroll Logs & Audit Trails</li>
             </ul>
 
-            <h3 class="text-xl font-bold mt-10 text-white">💰 8. Revenue Streams & Monetization</h3>
+            <h3 class="text-xl font-bold mt-10">💰 8. Revenue Streams & Monetization</h3>
             <ul class="list-disc ml-6 space-y-1">
                 <li>Diamond Royalties (10–11%)</li>
                 <li>Scroll Packaging Fees</li>
@@ -400,7 +769,7 @@
                 <li>Q1 2026: Inter-vault Federation</li>
             </ul>
 
-            <h3 class="text-xl font-bold mt-10 text-white">🔧 10. Team & Governance</h3>
+            <h3 class="text-xl font-bold mt-10">🔧 10. Team & Governance</h3>
             <ul class="list-disc ml-6 space-y-1">
                 <li>FAA-certified engineers (scroll claimers)</li>
                 <li>Scroll Ministers: Compliance + tiering</li>
@@ -408,37 +777,37 @@
                 <li>HSOMNI9000™ Operators: Diamond-tier execution agents</li>
             </ul>
 
-            <p class="text-sm text-gray-400 mt-10">📎 This plan can now be exported as HTML, PDF, or ZIP.</p>
+            <p class="text-sm mt-10">📎 This plan can now be exported as HTML, PDF, or ZIP.</p>
         </div>
     </section>
 
-    <section id="about" class="py-16 md:py-24 px-6 md:px-12 bg-gray-800 text-center">
+    <section id="about" class="py-16 md:py-24 px-6 md:px-12 text-center">
         <div class="max-w-4xl mx-auto">
-            <h3 class="text-4xl font-bold text-white mb-8">About Fruitful Innovations</h3>
-            <p class="text-lg text-gray-300 leading-relaxed mb-6">
+            <h3 class="text-4xl font-bold mb-8">About Fruitful Innovations</h3>
+            <p class="text-lg leading-relaxed mb-6">
                 At Fruitful, we believe in a future where technology empowers positive change. Our platform is designed to break down traditional barriers, fostering a collaborative ecosystem where businesses and individuals can thrive while making a meaningful impact on the world.
             </p>
-            <p class="text-lg text-gray-300 leading-relaxed">
+            <p class="text-lg leading-relaxed">
                 We are committed to transparency, sustainability, and innovation, driven by a powerful AI that ensures fairness, efficiency, and personalized experiences for every user. Join us in building a more fruitful planet.
             </p>
         </div>
     </section>
 
-    <section id="cta" class="py-16 md:py-24 px-6 md:px-12 bg-gradient-to-r from-purple-700 to-indigo-700 text-center">
+    <section id="cta" class="py-16 md:py-24 px-6 md:px-12 text-center">
         <div class="max-w-3xl mx-auto">
-            <h3 class="text-4xl font-extrabold text-white mb-8 leading-tight">
+            <h3 class="text-4xl font-extrabold mb-8 leading-tight">
                 Ready to Transform Your Future?
             </h3>
-            <p class="text-xl text-white/90 mb-10">
+            <p class="text-xl mb-10">
                 Join the Fruitful community today and start your journey towards innovation, connection, and a sustainable tomorrow.
             </p>
             <a href="#" class="cta-button">
-                Sign Up Now <span class="ml-2 text-2xl">✨</span>
+                Sign Up Now
             </a>
         </div>
     </section>
 
-    <footer class="py-8 px-6 md:px-12 bg-gray-900 text-center text-gray-500 text-sm">
+    <footer class="py-8 px-6 md:px-12 text-center">
         © 2025 FAA™ Treaty System™. All Rights Reserved. Powered by 🦍 glyphs + Vault API. Synced with Seedwave™.
     </footer>
 
@@ -447,10 +816,10 @@
         function loadTerminal(url) {
             document.getElementById('vault-frame').src = url;
             // Remove ring from all buttons and add to the clicked one
-            document.querySelectorAll('.terminal-btn').forEach(btn => btn.classList.remove('ring', 'ring-yellow-400'));
+            document.querySelectorAll('.terminal-btn').forEach(btn => btn.classList.remove('ring', 'ring-blue-500')); /* Changed ring color */
             // Use event.currentTarget to ensure the clicked button is targeted
             if (event && event.currentTarget) {
-                event.currentTarget.classList.add('ring', 'ring-yellow-400');
+                event.currentTarget.classList.add('ring', 'ring-blue-500'); /* Changed ring color */
             }
             console.log("🧬 Terminal loaded:", url);
         }
@@ -477,11 +846,15 @@
                         datasets: [{
                             label: 'Treaty Brands Activated',
                             data: [3, 7, 13, 21],
-                            borderWidth: 3,
-                            borderColor: '#4ade80',
+                            borderWidth: 2, /* Thinner border */
+                            borderColor: '#0071e3', /* Apple blue */
                             tension: 0.4,
                             fill: true,
-                            backgroundColor: 'rgba(74, 222, 128, 0.2)' // Tailwind green-400 with transparency
+                            backgroundColor: 'rgba(0, 113, 227, 0.1)', /* Light blue fill */
+                            pointRadius: 4, /* Larger points */
+                            pointBackgroundColor: '#0071e3',
+                            pointBorderColor: '#fff',
+                            pointHoverRadius: 6
                         }]
                     },
                     options: {
@@ -491,25 +864,28 @@
                             y: {
                                 beginAtZero: true,
                                 grid: {
-                                    color: 'rgba(255, 255, 255, 0.1)'
+                                    color: '#e8e8ed', /* Light grid lines */
+                                    drawBorder: false /* No border on axis */
                                 },
                                 ticks: {
-                                    color: '#e2e8f0'
+                                    color: '#6e6e73' /* Muted tick labels */
                                 }
                             },
                             x: {
                                 grid: {
-                                    color: 'rgba(255, 255, 255, 0.1)'
+                                    color: '#e8e8ed',
+                                    drawBorder: false
                                 },
                                 ticks: {
-                                    color: '#e2e8f0'
+                                    color: '#6e6e73'
                                 }
                             }
                         },
                         plugins: {
                             legend: {
+                                display: false, /* Hide legend for cleaner look */
                                 labels: {
-                                    color: '#e2e8f0'
+                                    color: '#424245'
                                 }
                             }
                         }
@@ -545,11 +921,11 @@
                 const url = sectorMap[sector];
                 if (url) {
                     document.getElementById('sector-content-container').innerHTML =
-                        `<div class="text-white text-sm mb-2">🔄 Loading sector: ${sector.charAt(0).toUpperCase() + sector.slice(1)}...</div>
-                         <iframe src="${url}" class="w-full h-[900px] border-none rounded-xl bg-gray-900"></iframe>`;
+                        `<div class="text-gray-600 text-sm mb-2">🔄 Loading sector: ${sector.charAt(0).toUpperCase() + sector.slice(1)}...</div>
+                         <iframe src="${url}" class="w-full h-[900px] border-none rounded-xl bg-gray-100"></iframe>`; /* Light background for iframe */
                 } else {
                     document.getElementById('sector-content-container').innerHTML =
-                        `<div class="text-red-400 text-sm mb-2">Error: Sector URL not found for ${sector}.</div>`;
+                        `<div class="text-red-500 text-sm mb-2">Error: Sector URL not found for ${sector}.</div>`;
                 }
             });
         });
@@ -557,3 +933,4 @@
 
 </body>
 </html>
+
