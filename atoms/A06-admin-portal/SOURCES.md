@@ -60,3 +60,4 @@
 | 54 | 2025-05-27 | faa.zone | security/repo-cleanup | `public/admin-portal-7.html` | `4b423dcf` | ⚙️ Seedwave™ Admin Portal | 178682 | 86 | 16 | 195.7 |
 | 55 | 2025-05-27 | faa.zone | history | `public/admin-portal-7.html` | `a9a5ca08` | ⚙️ Seedwave™ Admin Portal | 178355 | 86 | 16 | 195.6 |
 | 56 | 2025-05-27 | faa.zone | security/repo-cleanup | `public/admin/console.html` | `8bbe0811` | ⚙️ Seedwave™ Admin Portal | 143362 | 78 | 8 | 193.3 |
+| 57 | 2025-05-27 | faa.zone | security/repo-cleanup | `public/global-index.html` | `02aff397` | ⚙️ Seedwave™ Admin Portal | 149958 | 82 | 10 | 203.0 |
