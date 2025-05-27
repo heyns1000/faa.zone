@@ -509,7 +509,7 @@
             ['Zeno Mesh', 'Crux Bridge', 'Hive Monitor', 'Wire Reconciler', 'Bit Locker', 'Credit Splice', 'Score Vector', 'Zentry Core', 'Drift Trace', 'Alpha Ledger'],
             ['Lumen Pulse', 'Delta Secure', 'Fractal Trace', 'Torus Signal', 'Mint Bridge', 'Tally Stream', 'Bank Depth', 'Kite Path', 'Bond Engine', 'Echo Stack'],
             ['Ark Model', 'Node Gate', 'Veritas Sync', 'Cage Mapper', 'Core Trace', 'Sky Sweep', 'Mint Grid', 'Orbit Channel', 'Hash Clear', 'Micro Chain'],
-            ['Anchor Lock', 'Fleet Sync', 'Zoom Channel', 'Beacon Path', 'Crate Vault', 'Numen Index', 'Spark Flow', 'Meta Signal', 'Aether Drift', 'Custody Map'],
+            ['Anchor Lock', 'Fleet Sync', 'Zoom Ledge', 'Beacon Path', 'Crate Vault', 'Numen Index', 'Spark Flow', 'Meta Signal', 'Aether Drift', 'Custody Map'], // Fixed typo: 'ZoomLedge'
             ['Neutron Signal', 'Cash Stream', 'Jet Grid', 'Pulse Map', 'Sync Grid', 'Tangent Vector', 'Nova Route', 'Glide Core', 'Trace Engine', 'Root Node'],
             ['Bank Shift', 'Pillar Core', 'Axon Thread', 'Monet Route', 'Layer Core', 'Verge Node', 'Stack Tally', 'Crown Core', 'Prism Gate', 'Halo Grid'],
             ['Clearance Vector', 'Forge Sync', 'Bank Mesh', 'Nano Token', 'Lattice Path', 'Noble Curve', 'Chain Vector', 'Mint Grid', 'Bridge Path', 'Chrono Index'],
@@ -1756,6 +1756,7 @@
             // Re-render relevant panels and metrics
             const activePanelId = document.querySelector('.sector-panel:not(.hidden)')?.id;
             if (activePanelId === `embedded-${sector}-snapshot` || activePanelId === `embedded-admin-snapshot` || activePanelId === `embedded-global-index-snapshot`) {
+                // If the target sector panel is open, or admin panel is open, or global index is open, re-render it
                 renderSectorPanel(sector); // Re-render the specific sector to include new brand if visible
                 renderGlobalIndexPanel(); // Re-render global index as it includes new brands
             } else {
@@ -2180,13 +2181,72 @@
                     <td class="px-4 py-2">${summaryData.payoutTier}</td>
                     <td class="px-4 py-2">${summaryData.region}</td>
                     <td class="px-4 py-2"><button onclick="showSectorPanel('embedded-${sectorKey}-snapshot', this)" class="text-blue-600 hover:underline">View</button></td>
-                    <td class="px-4 py-2"><button onclick="alert('Initiating deployment for ${displayName} now! (Simulated)')" class="text-green-600 hover:underline">Deploy</button></td>
+                    <td class="px-4 py-2"><button data-sector-key="${sectorKey}" class="deploy-btn text-green-600 hover:underline">Deploy</button></td>
                 `;
                 tableBody.appendChild(row);
             });
+
+            // Attach event listeners to newly created deploy buttons
+            document.querySelectorAll('.deploy-btn').forEach(button => {
+                button.onclick = (event) => {
+                    const sectorKey = event.target.dataset.sectorKey;
+                    const displayName = sectorList[sectorKey] || sectorKey;
+                    initiateDeployment(sectorKey, displayName, event.target); // Pass the button element
+                };
+            });
         }
 
-        // --- NEW: Calculate and display all Global Metrics ---
+        // --- NEW: Initiate Deployment Function ---
+        function initiateDeployment(sectorKey, sectorDisplayName, buttonElement) {
+            console.log(`🚀 Initiating deployment for ${sectorDisplayName} (${sectorKey})...`);
+
+            if (buttonElement) {
+                buttonElement.disabled = true;
+                buttonElement.innerText = 'Deploying...';
+                buttonElement.classList.remove('text-green-600', 'hover:underline');
+                buttonElement.classList.add('text-gray-500', 'cursor-not-allowed');
+            }
+
+            // Simulate deployment steps
+            const deploymentSteps = [
+                `Phase 1: Validating ${sectorDisplayName} contracts.`,
+                `Phase 2: Syncing with VaultMesh for ${sectorKey} assets.`,
+                `Phase 3: Allocating PulseGrid resources for ${sectorKey} deployment.`,
+                `Phase 4: Executing immutable ledger entry for deployment.`,
+                `Phase 5: Broadcasting ${sectorDisplayName} activation signal across FAA.ZONE.`,
+                `Deployment complete for ${sectorDisplayName}. Omni-flow established.`
+            ];
+
+            let stepIndex = 0;
+            const deployInterval = setInterval(() => {
+                if (stepIndex < deploymentSteps.length) {
+                    const stepMessage = deploymentSteps[stepIndex];
+                    console.log(`[DEPLOYMENT LOG]: ${stepMessage}`);
+                    // Simulate emitting a signal to the main OmniDrop Canvas (if it were loaded)
+                    if (window.emitScrollDrop) { // If the global emitScrollDrop is available
+                        window.emitScrollDrop(`⚡ DEPLOY: ${sectorDisplayName} - ${stepMessage}`);
+                    } else {
+                        // If not, just log a conceptual signal for this portal's context
+                        console.log(`[CONCEPTUAL SIGNAL EMIT]: ⚡ DEPLOY: ${sectorDisplayName} - ${stepMessage}`);
+                    }
+                    stepIndex++;
+                } else {
+                    clearInterval(deployInterval);
+                    console.log(`✅ Deployment for ${sectorDisplayName} completed successfully at ${new Date().toLocaleTimeString()}.`);
+                    if (buttonElement) {
+                        buttonElement.disabled = false;
+                        buttonElement.innerText = 'Deploy';
+                        buttonElement.classList.remove('text-gray-500', 'cursor-not-allowed');
+                        buttonElement.classList.add('text-green-600', 'hover:underline');
+                    }
+                    // Trigger a metric update after deployment
+                    calculateGlobalMetrics();
+                }
+            }, 1500); // Simulate a step every 1.5 seconds
+        }
+
+
+        // --- Calculate and display all Global Metrics ---
         function calculateGlobalMetrics() {
             let totalUniqueBrands = 0;
             let totalSubnodesAcrossAllBrands = 0;
