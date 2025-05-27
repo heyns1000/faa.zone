@@ -9,31 +9,26 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        /* Custom Styles beyond Tailwind Defaults */
         body {
             background-color: #f3f4f6; /* bg-gray-100 */
         }
         .snapshot-box {
             width: 100%; /* Adjusted for responsiveness */
-            height: 700px; /* Max height for scrollable tables */
+            height: 700px;
             overflow: auto;
             background: white;
             border: 1px solid #e2e8f0;
             padding: 2rem;
             border-radius: 0.5rem;
-            margin-top: 1rem;
+            margin-top: 1rem; /* Adjusted margin */
         }
         /* Specific brand snapshot styling */
         .brand-snapshot {
-            width: 100%;
-            min-height: 500px; /* Ensure sufficient height for content */
+            width: 100% !important; /* Override inline style */
+            height: 700px !important;
             overflow-y: auto;
             overflow-x: hidden; /* Prevent horizontal scroll */
             margin-bottom: 2rem;
-            background-color: #ffffff; /* Explicit white background for snapshots */
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            padding: 1.5rem;
         }
         .sector-link {
             @apply flex items-center justify-center p-2 rounded-md transition-colors duration-200;
@@ -50,48 +45,17 @@
         .glow-btn:hover {
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(99, 102, 241, 0.5), 0 0 30px rgba(99, 102, 241, 0.3);
         }
-
-        /* Global Header Specific Styles (FAA.ZONE™) */
-        .global-header-bg {
-            background: linear-gradient(to right, #4c51bf, #6b46c1); /* Indigo to Purple gradient */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-        .global-header-title {
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Enhanced Footer Specific Styles */
-        .enhanced-footer {
-            background: linear-gradient(to right, #2d3748, #1a202c); /* Darker gradient */
-            color: #a0aec0; /* Light gray text */
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
-            border-top: 1px solid #4a5568;
-        }
-        .footer-logo-text {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Example font */
-            font-weight: bold;
-            color: #ffffff; /* White */
-            text-shadow: 0 1px 3px rgba(0,0,0,0.4);
-        }
     </style>
 </head>
 
 <body class="bg-gray-50 font-sans">
-
-    <header class="global-header-bg text-white py-8 mb-8 shadow-xl">
-        <div class="container mx-auto px-6 text-center">
-            <h1 class="text-4xl font-extrabold global-header-title">FAA.ZONE™</h1>
-            <p class="text-lg opacity-90 mt-2">The Earth's Financial Allocation Architecture</p>
-            <p class="text-xs opacity-70 mt-1">Live Omni-View Pulse Grid</p>
-        </div>
-    </header>
 
     <header class="bg-indigo-700 text-white py-6 mb-8 shadow relative">
         <div class="container mx-auto px-6">
             <h1 class="text-3xl font-bold">🦁 Seedwave™ Admin Portal</h1>
             <p class="text-sm opacity-80 mt-2">✿Corebrands management & AI logic deployment center</p>
         </div>
-        <div class="container mx-auto px-6 mt-4 md:mt-0 md:absolute md:right-6 md:top-6 flex flex-wrap justify-center gap-2">
+        <div class="flex space-x-2 absolute right-6 top-6">
             <a href="/admin/admin-portal-approval.html"><button class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-1 rounded shadow glow-btn">🪙 Loyalty Access</button></a>
             <a href="/admin/admin-portal-approval.html"><button class="bg-gray-800 hover:bg-gray-900 text-white text-sm font-semibold px-4 py-1 rounded shadow glow-btn">📊 Shareholder Access</button></a>
             <a href="/admin/admin-portal-approval.html"><button class="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold px-4 py-1 rounded shadow glow-btn">🤝 Service Provider</button></a>
@@ -159,14 +123,12 @@
             <a href="#" onclick="showSectorPanel('embedded-nft-snapshot', this)" class="sector-link" data-sector="nft">🔁 NFT & Ownership</a>
             <a href="#" onclick="showSectorPanel('embedded-zerowaste-snapshot', this)" class="sector-link" data-sector="zerowaste">♻️ Zero Waste</a>
             <a href="#" onclick="showSectorPanel('embedded-professional-snapshot', this)" class="sector-link" data-sector="professional">🧾 Professional Services</a>
-            <a href="#" onclick="showSectorPanel('embedded-mining-snapshot', this)" class="sector-link" data-sector="mining">⛏️ Mining & Resources</a>
             <a href="#" onclick="showSectorPanel('embedded-admin-snapshot', this)" class="sector-link" data-sector="admin">⚙️ Admin & Manual Sync Panel</a>
-            <a href="#" onclick="showSectorPanel('embedded-global-index-snapshot', this)" class="sector-link" data-sector="global-index">🌐 Global Brand Index</a> 
         </nav>
 
 
         <main>
-            <div id="embedded-admin-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-admin-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-indigo-700 mb-4">⚙️ FAA™ Admin & Manual Sync Panel</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
@@ -200,105 +162,105 @@
                 </div>
             </div>
 
-            <div id="embedded-agriculture-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-agriculture-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-green-800 mb-4">🌾 FAA™ Agriculture Core Brand Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="agri-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="agri-snapshots"></div>
             </div>
 
-            <div id="embedded-fsf-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-fsf-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-green-700 mb-4">🥦 FAA™ Food, Soil & Farming Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="fsf-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="fsf-snapshots"></div>
             </div>
 
-            <div id="embedded-banking-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-banking-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-indigo-800 mb-4">🏦 FAA™ Banking & Finance Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="banking-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="banking-snapshots"></div>
             </div>
 
-            <div id="embedded-creative-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-creative-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-purple-800 mb-4">🖋️ FAA™ Creative Tech Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="creative-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="creative-snapshots"></div>
             </div>
 
-            <div id="embedded-logistics-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-logistics-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-yellow-700 mb-4">📦 FAA™ Logistics & Packaging Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="logistics-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="logistics-snapshots"></div>
             </div>
 
-            <div id="embedded-education-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-education-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-green-700 mb-4">🎓 FAA™ Education & Youth Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="education-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="education-snapshots"></div>
             </div>
 
-            <div id="embedded-fashion-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-fashion-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-pink-700 mb-4">✂ FAA™ Fashion & Identity Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="fashion-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="fashion-snapshots"></div>
             </div>
 
-            <div id="embedded-gaming-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-gaming-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-indigo-700 mb-4">🎮 FAA™ Gaming & Simulation Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="gaming-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="gaming-snapshots"></div>
             </div>
 
-            <div id="embedded-health-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-health-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-gray-700 mb-4">🧠 FAA™ Health & Hygiene Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="health-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="health-snapshots"></div>
             </div>
 
-            <div id="embedded-housing-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-housing-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-blue-800 mb-4">🏗️ FAA™ Housing & Infrastructure Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="housing-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="housing-snapshots"></div>
             </div>
 
-            <div id="embedded-justice-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-justice-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-gray-700 mb-4">⚖ FAA™ Justice & Ethics Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="justice-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="justice-snapshots"></div>
             </div>
 
-            <div id="embedded-professional-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-professional-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-indigo-800 mb-4">🧾 FAA™ Professional Services Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="professional-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="professional-snapshots"></div>
             </div>
 
-            <div id="embedded-knowledge-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-knowledge-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-blue-700 mb-4">🧠 FAA™ Knowledge & Archives Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="knowledge-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="knowledge-snapshots"></div>
             </div>
 
-            <div id="embedded-micromesh-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-micromesh-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-yellow-800 mb-4">☰ FAA™ Micro-Mesh Logistics Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="micromesh-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="micromesh-snapshots"></div>
             </div>
 
-            <div id="embedded-media-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-media-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-gray-700 mb-4">🎬 FAA™ Motion, Media & Sonic Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="media-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
@@ -308,119 +270,89 @@
                 </div>
             </div>
 
-            <div id="embedded-nutrition-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-nutrition-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-green-800 mb-4">✿ FAA™ Nutrition & Food Chain Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="nutrition-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="nutrition-snapshots"></div>
             </div>
 
-            <div id="embedded-packaging-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-packaging-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-yellow-600 mb-4">📦 FAA™ Packaging & Materials Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="packaging-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="packaging-snapshots"></div>
             </div>
 
-            <div id="embedded-quantum-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-quantum-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-purple-700 mb-4">✴️ FAA™ Quantum Protocols Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="quantum-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="quantum-snapshots"></div>
             </div>
 
-            <div id="embedded-ritual-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-ritual-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-gray-800 mb-4">☯ FAA™ Ritual & Culture Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="ritual-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="ritual-snapshots"></div>
             </div>
 
-            <div id="embedded-saas-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-saas-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-blue-700 mb-4">🔑 FAA™ SaaS & Licensing Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="saas-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="saas-snapshots"></div>
             </div>
 
-            <div id="embedded-trade-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-trade-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-orange-700 mb-4">🧺 FAA™ Trade Systems Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="trade-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="trade-snapshots"></div>
             </div>
 
-            <div id="embedded-utilities-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-utilities-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-yellow-800 mb-4">🔋 FAA™ Utilities & Energy Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="utilities-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="utilities-snapshots"></div>
             </div>
 
-            <div id="embedded-voice-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-voice-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-indigo-600 mb-4">🎙️ FAA™ Voice & Audio Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="voice-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="voice-snapshots"></div>
             </div>
 
-            <div id="embedded-webless-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-webless-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-gray-700 mb-4">📡 FAA™ Webless Tech & Nodes Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="webless-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="webless-snapshots"></div>
             </div>
 
-            <div id="embedded-nft-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-nft-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-pink-600 mb-4">🔁 FAA™ NFT & Ownership Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="nft-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="nft-snapshots"></div>
             </div>
 
-            <div id="embedded-zerowaste-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-zerowaste-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-lime-700 mb-4">♻️ FAA™ Zero Waste Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="zerowaste-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="zerowaste-snapshots"></div>
             </div>
 
-            <div id="embedded-ailogic-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+            <div id="embedded-ailogic-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative">
                 <div class="text-2xl font-bold text-indigo-700 mb-4">🧠 FAA™ AI, Logic & Grid Brand Dashboard</div>
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="ailogic-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="ailogic-snapshots"></div>
             </div>
-
-            <div id="embedded-mining-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
-                <div class="text-2xl font-bold text-orange-700 mb-4">⛏️ FAA™ Mining & Resources Dashboard</div>
-                <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
-                <div id="mining-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
-                <div class="p-6" id="mining-snapshots"></div>
-            </div>
-
-            <div id="embedded-global-index-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
-                <div class="text-2xl font-bold text-blue-700 mb-4">🌐 Global FAA.ZONE Brand Index</div>
-                <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
-                
-                <input type="text" id="globalBrandSearch" placeholder="🔍 Search all brands & subnodes..." class="w-full p-2 border rounded mb-4">
-                
-                <div class="overflow-x-auto snapshot-box h-[500px]">
-                    <table id="globalBrandTable" class="min-w-full text-sm text-left border border-gray-200">
-                        <thead class="bg-gray-100 text-gray-700 font-semibold sticky top-0 z-10">
-                            <tr>
-                                <th class="px-4 py-2">Sector</th>
-                                <th class="px-4 py-2">Brand Name</th>
-                                <th class="px-4 py-2">Subnodes</th>
-                                <th class="px-4 py-2">Source</th>
-                            </tr>
-                        </thead>
-                        <tbody id="globalBrandTableBody" class="text-gray-700">
-                            </tbody>
-                    </table>
-                </div>
-            </div>
-
 
             <section class="bg-white rounded shadow p-6 mb-8">
                 <h2 class="text-xl font-bold mb-4">⦿ FAA.ZONE INDEX — Expanded Table Structure</h2>
@@ -440,8 +372,47 @@
                                 <th class="px-4 py-2">Deploy</th>
                             </tr>
                         </thead>
-                        <tbody id="faaZoneIndexTableBody" class="text-gray-700">
-                            </tbody>
+                        <tbody class="text-gray-700">
+                            <tr class="border-t">
+                                <td class="px-4 py-2">🧺</td><td>Retail, Vendor & Trade</td><td>183</td><td>1,098</td><td>$88</td><td>$888</td><td>A+</td><td>Div A-F</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+                            </tr>
+                            <tr class="border-t">
+                                <td class="px-4 py-2">🧠</td><td>AI, Logic & Grid Systems</td><td>188</td><td>752</td><td>$104</td><td>$1,050</td><td>A+</td><td>Global</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+                            </tr>
+                            <tr class="border-t">
+                                <td class="px-4 py-2">🖋️</td><td>Creative & Design Systems</td><td>142</td><td>710</td><td>$67</td><td>$720</td><td>A</td><td>Div E</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+                            </tr>
+                            <tr class="border-t">
+                                <td class="px-4 py-2">₿</td><td>Finance & Token Yield</td><td>136</td><td>680</td><td>$125</td><td>$1,250</td><td>A+</td><td>Div A-E</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+                            </tr>
+                            <tr class="border-t">
+                                <td class="px-4 py-2">📴</td><td>Webless Tech & Nodes</td><td>103</td><td>515</td><td>$76</td><td>$770</td><td>A</td><td>Div D-G</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+                            </tr>
+                            <tr class="border-t">
+                                <td class="px-4 py-2">📦</td><td>Logistics & Packaging</td><td>111</td><td>444</td><td>$58</td><td>$595</td><td>B+</td><td>Div B-F</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+                            </tr>
+                            <tr class="border-t">
+                                <td class="px-4 py-2">✿</td><td>Food, Soil & Farming</td><td>83</td><td>332</td><td>$46</td><td>$480</td><td>B+</td><td>Rural</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+                            </tr>
+                            <tr class="border-t">
+                                <td class="px-4 py-2">🧒</td><td>Youth & Education</td><td>66</td><td>330</td><td>$39</td><td>$420</td><td>A</td><td>Tribal</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+                            </tr>
+                            <tr class="border-t">
+                                <td class="px-4 py-2">⚗</td><td>Health & Hygiene</td><td>93</td><td>372</td><td>$52</td><td>$550</td><td>B</td><td>Div F</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+                            </tr>
+                            <tr class="border-t">
+                                <td class="px-4 py-2">☯</td><td>Aura, Ritual & Culture</td><td>74</td><td>296</td><td>$68</td><td>$725</td><td>A</td><td>Div C</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+                            </tr>
+                            <tr class="border-t">
+                                <td class="px-4 py-2">🏗️</td><td>Housing & Infrastructure</td><td>91</td><td>364</td><td>$59</td><td>$610</td><td>B+</td><td>Div A-F</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+                            </tr>
+                            <tr class="border-t">
+                                <td class="px-4 py-2">🔁</td><td>NFT, IP, Ownership Grid</td><td>58</td><td>232</td><td>$120</td><td>$1,200</td><td>A</td><td>FAA IP</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+                            </tr>
+                            <tr class="border-t">
+                                <td class="px-4 py-2">🌀</td><td>Motion, Media, Sonic</td><td>78</td><td>312</td><td>$72</td><td>$740</td><td>A</td><td>Creative</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </section>
@@ -449,31 +420,31 @@
             <section class="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-7 gap-6 px-6 py-8">
                 <a href="node-activity.html" class="bg-white p-5 rounded shadow text-center hover:bg-yellow-50 transition-transform hover:-translate-y-1 hover:scale-105">
                     <h3 class="text-md font-bold text-gray-700">🧠 Active Nodes</h3>
-                    <p id="activeNodesCount">0</p>
+                    <p>12,934</p>
                 </a>
                 <a href="license-grid.html" class="bg-white p-5 rounded shadow text-center hover:bg-yellow-50 transition-transform hover:-translate-y-1 hover:scale-105">
                     <h3 class="text-md font-bold text-gray-700">🔐 Licenses Active</h3>
-                    <p id="licensesActiveCount">0</p>
+                    <p>3,288</p>
                 </a>
                 <a href="vault-deployments.html" class="bg-white p-5 rounded shadow text-center hover:bg-yellow-50 transition-transform hover:-translate-y-1 hover:scale-105">
                     <h3 class="text-md font-bold text-gray-700">💾 Vault Deployments</h3>
-                    <p id="vaultDeploymentsCount">0</p>
+                    <p>654 Vaults</p>
                 </a>
                 <a href="ecosync-logs.html" class="bg-white p-5 rounded shadow text-center hover:bg-yellow-50 transition-transform hover:-translate-y-1 hover:scale-105">
                     <h3 class="text-md font-bold text-gray-700">📥 Sync Logs</h3>
-                    <p id="syncLogsCount">0</p>
+                    <p>204,111 entries</p>
                 </a>
                 <a href="audit-tracker.html" class="bg-white p-5 rounded shadow text-center hover:bg-yellow-50 transition-transform hover:-translate-y-1 hover:scale-105">
                     <h3 class="text-md font-bold text-gray-700">📈 Audits Running</h3>
-                    <p id="auditsRunningCount">0</p>
+                    <p>47 scans</p>
                 </a>
                 <a href="signal-zones.html" class="bg-white p-5 rounded shadow text-center hover:bg-yellow-50 transition-transform hover:-translate-y-1 hover:scale-105">
                     <h3 class="text-md font-bold text-gray-700">🛰️ Signal Zones</h3>
-                    <p id="signalZonesCount">0</p>
+                    <p>21 sectors</p>
                 </a>
                 <a href="grid-index.html" class="bg-white p-5 rounded shadow text-center hover:bg-yellow-50 transition-transform hover:-translate-y-1 hover:scale-105">
                     <h3 class="text-md font-bold text-gray-700">📊 Scroll Grid Index</h3>
-                    <p id="scrollGridIndexCount">0</p>
+                    <p>986 clusters</p>
                 </a>
             </section>
 
@@ -490,28 +461,13 @@
         </main>
     </div>
 
-    <footer class="enhanced-footer text-center py-8">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
-                <div class="text-lg footer-logo-text">FAA.ZONE™</div>
-                <p class="text-sm">ScrollGrid · PulseTrade Certified · TreatyMesh Validated</p>
-                <div class="flex space-x-4">
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Terms</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Contact</a>
-                </div>
-            </div>
-            <p class="text-xs text-gray-500 mt-6">© 2025 Fruitful Holdings (Pty) Ltd. All rights reserved.</p>
-        </div>
+    <footer class="text-center text-xs text-gray-400 mt-16 py-6 border-t bg-gray-50">
+        FAA.Zone ScrollGrid · PulseTrade Certified · TreatyMesh Validated
     </footer>
 
     <script>
-        // ===============================================
-        // PASTE YOUR JAVASCRIPT DATA ARRAYS HERE
-        // (sectorList, *Brands, *SubNodes, ALL_SECTOR_DATA, FAA_ZONE_INDEX_SUMMARY_DATA, adminSectorData)
-        // ===============================================
-
-        // Example placeholder for sectorList. You will replace this with your actual, complete data.
+        // --- SECTOR BRAND DATA DEFINITIONS ---
+        // These are hardcoded for client-side demo. In production, these would come from an API.
         const sectorList = {
             "agriculture": "🌱 Agriculture & Biotech",
             "fsf": "🥦 Food, Soil & Farming",
@@ -519,7 +475,7 @@
             "creative": "🖋️ Creative Tech",
             "logistics": "📦 Logistics & Packaging",
             "education": "📚 Education & IP",
-            "fashion": "✂ Fashion & Identity", 
+            "fashion": "✂ Fashion & Identity",
             "gaming": "🎮 Gaming & Simulation",
             "health": "🧠 Health & Hygiene",
             "housing": "🏗️ Housing & Infrastructure",
@@ -537,56 +493,12 @@
             "voice": "🎙️ Voice & Audio",
             "webless": "📡 Webless Tech & Nodes",
             "nft": "🔁 NFT & Ownership",
+            "education-youth": "🎓 Education & Youth", // Duplicate from "education", consolidate if needed
             "zerowaste": "♻️ Zero Waste",
             "professional": "🧾 Professional Services",
             "ai-logic": "🧠 AI, Logic & Grid Systems",
-            "mining": "⛏️ Mining & Resources", 
-            "admin": "⚙️ Admin & Manual Sync Panel",
-            "global-index": "🌐 Global Brand Index" 
+            "admin": "⚙️ Admin & Manual Sync Panel"
         };
-
-        const miningBrands = [
-            'MineNest', 'DrillCoreX', 'OreSync', 'VaultRock', 'ClaimMine',
-            'TrackShaft', 'PulseMine', 'CoreBeam', 'DigEcho', 'RockPath',
-            'YieldDrill', 'MineProof', 'OreLine', 'DrillLink', 'VaultTunnel',
-            'GeoGrid', 'SeamSync', 'ClaimOre', 'PulseBlast', 'OreEcho',
-            'DeepCrate', 'RockLogic', 'CoreDrill', 'MineCast', 'DrillMark',
-            'SignalOre', 'YieldTrack', 'VaultSeam', 'ShaftDrop', 'GeoNode'
-        ];
-
-        const miningSubNodes = [
-            ['NestTrack', 'VaultShaft', 'QRMine', 'ClaimGrid'],
-            ['CoreDrop', 'PulsePath', 'OreTrace', 'DrillYield'],
-            ['SyncRock', 'VaultEcho', 'QRDrill', 'ClaimTag'],
-            ['RockBeam', 'MineLoop', 'SignalTrace', 'QRClaim'],
-            ['ClaimOre', 'VaultPath', 'OrePing', 'MineSignal'],
-            ['ShaftMesh', 'DropMine', 'TrackSeam', 'QRTrack'],
-            ['PulseCrate', 'MineEcho', 'YieldDrill', 'GridTag'],
-            ['BeamPath', 'ClaimRock', 'VaultLoop', 'SeamDrop'],
-            ['EchoMine', 'RockPing', 'VaultTrace', 'ClaimBeam'],
-            ['PathDrop', 'GridMine', 'QRNode', 'YieldOre'],
-            ['DrillGrid', 'ClaimYield', 'SyncTunnel', 'OreEcho'],
-            ['ProofMine', 'SeamCast', 'VaultGrid', 'DropCrate'],
-            ['OreLineX', 'VaultDrill', 'MineForm', 'TagTrace'],
-            ['LinkMine', 'PulseEcho', 'GridSeam', 'YieldCast'],
-            ['TunnelSync', 'ClaimLoop', 'QRDrillX', 'OreBeam'],
-            ['GridGeo', 'VaultMap', 'RockForm', 'ClaimTunnel'],
-            ['SeamSyncX', 'OreDrop', 'QRMineX', 'DrillMark'],
-            ['ClaimOreX', 'TrackGrid', 'VaultDrop', 'PingEcho'],
-            ['BlastMine', 'PulsePing', 'QRPath', 'SeamMark'],
-            ['EchoRock', 'YieldTrack', 'VaultBeam', 'ClaimSync'],
-            ['CrateDrop', 'SyncClaim', 'DrillForm', 'TunnelMap'],
-            ['RockLogicX', 'VaultOre', 'YieldLoop', 'PingDrill'],
-            ['CoreMine', 'OreTag', 'VaultPing', 'GridTrack'],
-            ['MineCastX', 'ClaimNest', 'QRTrace', 'YieldEcho'],
-            ['DrillMarkX', 'OreSignal', 'VaultCrate', 'PingTag'],
-            ['OreSignalX', 'GridEcho', 'ClaimDrop', 'TrackTunnel'],
-            ['TrackYield', 'MineFrame', 'SignalGrid', 'EchoDrill'],
-            ['VaultSeamX', 'QRClaimX', 'GridOre', 'TunnelEcho'],
-            ['DropShaft', 'ClaimTunnelX', 'YieldDrillX', 'VaultGrid'],
-            ['GeoNodeX', 'SignalPing', 'DropEcho', 'MineLink']
-        ];
-
 
         const bankingBrands = [
             'FinGrid', 'TradeAmp', 'LoopPay', 'TaxNova', 'VaultMaster', 'Gridwise', 'CrateDance', 'CashGlyph', 'Foresync', 'OmniRank',
@@ -609,7 +521,7 @@
             ['Zeno Mesh', 'Crux Bridge', 'Hive Monitor', 'Wire Reconciler', 'Bit Locker', 'Credit Splice', 'Score Vector', 'Zentry Core', 'Drift Trace', 'Alpha Ledger'],
             ['Lumen Pulse', 'Delta Secure', 'Fractal Trace', 'Torus Signal', 'Mint Bridge', 'Tally Stream', 'Bank Depth', 'Kite Path', 'Bond Engine', 'Echo Stack'],
             ['Ark Model', 'Node Gate', 'Veritas Sync', 'Cage Mapper', 'Core Trace', 'Sky Sweep', 'Mint Grid', 'Orbit Channel', 'Hash Clear', 'Micro Chain'],
-            ['Anchor Lock', 'Fleet Sync', 'Zoom Ledge', 'Beacon Path', 'Crate Vault', 'Numen Index', 'Spark Flow', 'Meta Signal', 'Aether Drift', 'Custody Map'], 
+            ['Anchor Lock', 'Fleet Sync', 'Zoom Channel', 'Beacon Path', 'Crate Vault', 'Numen Index', 'Spark Flow', 'Meta Signal', 'Aether Drift', 'Custody Map'],
             ['Neutron Signal', 'Cash Stream', 'Jet Grid', 'Pulse Map', 'Sync Grid', 'Tangent Vector', 'Nova Route', 'Glide Core', 'Trace Engine', 'Root Node'],
             ['Bank Shift', 'Pillar Core', 'Axon Thread', 'Monet Route', 'Layer Core', 'Verge Node', 'Stack Tally', 'Crown Core', 'Prism Gate', 'Halo Grid'],
             ['Clearance Vector', 'Forge Sync', 'Bank Mesh', 'Nano Token', 'Lattice Path', 'Noble Curve', 'Chain Vector', 'Mint Grid', 'Bridge Path', 'Chrono Index'],
@@ -1782,38 +1694,8 @@
             "media": { brands: mediaBrands, subNodes: mediaSubNodes, scrollProfiles: mediaScrollProfiles },
             "ai-logic": { brands: ailogicBrands, subNodes: ailogicSubNodes },
             "professional": { brands: professionalBrands, subNodes: professionalSubNodes },
-            "mining": { brands: miningBrands, subNodes: miningSubNodes }, 
             // Add other sectors here as they are defined: fashion, gaming, justice, knowledge, micromesh, nutrition, packaging, quantum, ritual, saas, trade, utilities, voice, nft, zerowaste, education-youth (if distinct)
         };
-
-        // --- NEW: Summary data for the FAA.ZONE INDEX table (for static columns) ---
-        // The glyphs, monthly/annual fees, payout tiers, and regions.
-        const FAA_ZONE_INDEX_SUMMARY_DATA = {
-            "trade": { glyph: "🧺", monthlyFee: "$88", annualFee: "$888", payoutTier: "A+", region: "Div A-F" },
-            "ai-logic": { glyph: "🧠", monthlyFee: "$104", annualFee: "$1,050", payoutTier: "A+", region: "Global" },
-            "creative": { glyph: "🖋️", monthlyFee: "$67", annualFee: "$720", payoutTier: "A", region: "Div E" },
-            "banking": { glyph: "🏦", monthlyFee: "$125", annualFee: "$1,250", payoutTier: "A+", region: "Div A-E" }, 
-            "webless": { glyph: "📡", monthlyFee: "$76", annualFee: "$770", payoutTier: "A", region: "Div D-G" },
-            "logistics": { glyph: "📦", monthlyFee: "$58", annualFee: "$595", payoutTier: "B+", region: "Div B-F" },
-            "fsf": { glyph: "🥦", monthlyFee: "$46", annualFee: "$480", payoutTier: "B+", region: "Rural" }, 
-            "education": { glyph: "📚", monthlyFee: "$39", annualFee: "$420", payoutTier: "A", region: "Tribal" }, 
-            "health": { glyph: "🧠", monthlyFee: "$52", annualFee: "$550", payoutTier: "B", region: "Div F" }, 
-            "ritual": { glyph: "☯", monthlyFee: "$68", annualFee: "$725", payoutTier: "A", region: "Div C" },
-            "housing": { glyph: "🏗️", monthlyFee: "$59", annualFee: "$610", payoutTier: "B+", region: "Div A-F" },
-            "nft": { glyph: "🔁", monthlyFee: "$120", annualFee: "$1,200", payoutTier: "A", region: "FAA IP" },
-            "media": { glyph: "🎬", monthlyFee: "$72", annualFee: "$740", payoutTier: "A", region: "Creative" }, 
-            "nutrition": { glyph: "✿", monthlyFee: "$48", annualFee: "$500", payoutTier: "B+", region: "Global" },
-            "packaging": { glyph: "📦", monthlyFee: "$65", annualFee: "$680", payoutTier: "B", region: "Div B" },
-            "quantum": { glyph: "✴️", monthlyFee: "$130", annualFee: "$1,300", payoutTier: "A+", region: "Global" },
-            "saas": { glyph: "🔑", monthlyFee: "$95", annualFee: "$980", payoutTier: "A", region: "Global" },
-            "utilities": { glyph: "🔋", monthlyFee: "$70", annualFee: "$710", payoutTier: "B+", region: "Div A-Z" },
-            "voice": { glyph: "🎙️", monthlyFee: "$60", annualFee: "$630", payoutTier: "B", region: "Global" },
-            "zerowaste": { glyph: "♻️", monthlyFee: "$40", annualFee: "$450", payoutTier: "B", region: "Global" },
-            "professional": { glyph: "🧾", monthlyFee: "$110", annualFee: "$1,100", payoutTier: "A", region: "Global" },
-            "mining": { glyph: "⛏️", monthlyFee: "$150", annualFee: "$1,800", payoutTier: "A+", region: "Global" }, 
-            // If education-youth is a separate entry in the screenshot and needs different summary, add it here.
-        };
-
 
         // 🧠 Persistent Sector Data via localStorage - for brands added through Admin Panel
         let adminSectorData = JSON.parse(localStorage.getItem("adminSectorData")) || {};
@@ -1822,12 +1704,6 @@
                 adminSectorData[key] = { brands: [], nodes: [] };
             }
         }
-
-
-        // ===============================================
-        // END OF DATA ARRAYS - DO NOT PASTE BELOW THIS LINE
-        // ===============================================
-
 
         // --- CORE ADMIN PANEL FUNCTIONS ---
 
@@ -1861,17 +1737,15 @@
             brandInput.value = "";
             subnodesInput.value = "";
             
-            // Re-render relevant panels and metrics
+            // Re-render the specific sector panel if it's currently active
             const activePanelId = document.querySelector('.sector-panel:not(.hidden)')?.id;
-            if (activePanelId === `embedded-${sector}-snapshot` || activePanelId === `embedded-admin-snapshot` || activePanelId === `embedded-global-index-snapshot`) {
-                // If the target sector panel is open, or admin panel is open, or global index is open, re-render it
-                renderSectorPanel(sector); // Re-render the specific sector to include new brand if visible
-                renderGlobalIndexPanel(); // Re-render global index as it includes new brands
+            if (activePanelId === `embedded-${sector}-snapshot` || activePanelId === `embedded-admin-snapshot`) {
+                // If the target sector panel is open, or admin panel is open, re-render it
+                renderSectorPanel(sector);
             } else {
-                renderAdminOutputSection();
+                 // Or just re-render the admin output section if the admin panel is the active one
+                 renderAdminOutputSection();
             }
-            renderFaaZoneIndexTable(); // Update the main summary table
-            calculateGlobalMetrics(); // Update all global metrics
 
             setTimeout(() => {
                 adminStatus.textContent = "";
@@ -1886,47 +1760,10 @@
                 for (const key in sectorList) { // Re-initialize empty structure
                     adminSectorData[key] = { brands: [], nodes: [] };
                 }
-                renderAllSectorPanels(); // Re-render all to clear old data from brand grids
+                renderAllSectorPanels(); // Re-render all to clear old data
                 renderAdminOutputSection(); // Clear admin output
-                renderGlobalIndexPanel(); // Clear global index
-                renderFaaZoneIndexTable(); // Update the main summary table
-                calculateGlobalMetrics(); // Update all global metrics
                 document.getElementById("adminStatus").textContent = "🗑️ All admin data cleared.";
             }
-        }
-
-        // --- DEPLOYMENT FUNCTIONALITY ---
-        function deployBrand(sectorKey, sectorDisplayName, coreBrandsCount, totalNodesCount) {
-            const brandName = sectorList[sectorKey] || sectorDisplayName; 
-            
-            // Simulate a deployment path based on sector and a generic file structure
-            const deploymentPath = `faa.zone/${sectorKey.toLowerCase().replace(/ /g, '-')}/deployments/node_${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}.fzone`;
-            
-            // Create a temporary status message element
-            const statusMessageId = `deploy-status-${sectorKey}`;
-            let statusDiv = document.getElementById(statusMessageId);
-            if (!statusDiv) {
-                statusDiv = document.createElement('div');
-                statusDiv.id = statusMessageId;
-                // Add fixed positioning and styling for the message
-                statusDiv.className = 'fixed bottom-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-sm py-2 px-4 rounded-lg shadow-xl z-50 whitespace-nowrap opacity-0 transition-opacity duration-300 transform scale-95';
-                document.body.appendChild(statusDiv);
-            }
-
-            statusDiv.innerHTML = `🚀 Deploying ${brandName} to <code>${deploymentPath}</code>...`;
-            statusDiv.classList.remove('opacity-0', 'scale-95');
-            statusDiv.classList.add('opacity-100', 'scale-100');
-
-            setTimeout(() => {
-                statusDiv.innerHTML = `✅ ${brandName} deployed successfully! Path: <code>${deploymentPath}</code>`;
-                // No need to call calculateGlobalMetrics() here as it's not a real deployment
-            }, 1500);
-
-            setTimeout(() => {
-                statusDiv.classList.remove('opacity-100', 'scale-100');
-                statusDiv.classList.add('opacity-0', 'scale-95');
-                setTimeout(() => statusDiv.remove(), 500); // Remove after fade out
-            }, 4500);
         }
 
         // --- DASHBOARD RENDERING FUNCTIONS ---
@@ -1946,9 +1783,7 @@
             const active = document.getElementById(id);
             if (active) {
                 active.classList.toggle('hidden');
-                if (!active.classList.contains('hidden')) { // Only scroll if it's being revealed
-                    active.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }
+                active.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
 
@@ -1957,7 +1792,7 @@
 
         function showSectorPanel(panelId, clickedLink) {
             // Hide all sector panels first
-            document.querySelectorAll('.sector-panel').forEach(el => {
+            document.querySelectorAll('[id^="embedded-"][id$="-snapshot"]').forEach(el => {
                 el.classList.add('hidden');
             });
             // Remove active class from all sector links
@@ -1971,21 +1806,11 @@
                 panel.classList.remove('hidden');
                 panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 currentActivePanelId = panelId; // Set current active panel
-                if (clickedLink) { // Ensure clickedLink exists before adding class
-                    clickedLink.classList.add('active'); 
-                }
-                
+                clickedLink.classList.add('active'); // Add active class to clicked link
+
                 // Get the sector key from the panelId (e.g., 'embedded-agriculture-snapshot' -> 'agriculture')
                 const sectorKey = panelId.replace('embedded-', '').replace('-snapshot', '');
-                
-                // Render/re-render content for this sector
-                if (sectorKey === 'global-index') {
-                    renderGlobalIndexPanel();
-                } else if (sectorKey === 'admin') {
-                    renderAdminOutputSection(); // Ensure admin output is fresh
-                } else {
-                    renderSectorPanelContent(sectorKey); // Use a new function to render content
-                }
+                renderSectorPanel(sectorKey); // Render/re-render content for this sector
             } else {
                 console.warn('[FAA] Panel not found:', panelId);
             }
@@ -2000,170 +1825,19 @@
             }
         }
 
-        // --- ENHANCED generateGenericBrandSnapshotContent FUNCTION ---
-        function generateGenericBrandSnapshotContent(sectorKey, brandName, subnodes) {
-            const sectorDisplayName = sectorList[sectorKey] || sectorKey.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
-
-            const introVariations = [
-                `a cutting-edge FAA.ZONE solution designed for the ${sectorDisplayName} sector. It seamlessly integrates with the global PulseGrid to deliver unparalleled performance and data integrity.`,
-                `the premier FAA.ZONE platform, revolutionizing ${sectorDisplayName} operations. Leveraging the global PulseGrid, it offers robust data synchronization and superior efficiency.`,
-                `an innovative FAA.ZONE protocol, specifically engineered for the demands of the ${sectorDisplayName} industry. Its deep integration with the PulseGrid ensures secure, real-time data flows and enhanced decision-making.`,
-                `a powerful FAA.ZONE framework empowering the ${sectorDisplayName} sector with advanced automation and data management. It connects effortlessly to the PulseGrid for optimized workflow and compliance.`
-            ];
-            const randomIntro = introVariations[Math.floor(Math.random() * introVariations.length)];
-
-            const coreFeatures = [
-                `Direct integration with FAA 🧾 Professional Services Mesh.`,
-                `Advanced data sync with ${subnodes.length > 0 ? subnodes[0] : 'core nodes'}.`,
-                `Real-time compliance validation via VaultLink™ (${sectorKey} specific).`,
-                `Scalable architecture for x${Math.ceil(Math.random() * 50) + 10} node expansion.`,
-                `Predictive analytics module for ${brandName} performance.`,
-                `API access for seamless interoperability.`
-            ];
-
-            const additionalFeatures = [
-                `Cross-sector data interoperability.`,
-                `AI-driven anomaly detection and fraud prevention.`,
-                `Self-optimizing node distribution for peak efficiency.`,
-                `One-click regulatory reporting and audit trails.`,
-                `Customizable dashboard and alert systems.`,
-                `Secure multi-party computation support.`,
-                `Dynamic resource allocation for fluctuating demands.`,
-                `Blockchain-secured data provenance.`
-            ];
-
-            // Select 3-5 additional features randomly
-            const selectedAdditionalFeatures = [];
-            const tempAdditionalFeatures = [...additionalFeatures]; // Clone to safely remove items
-            for (let i = 0; i < Math.floor(Math.random() * 3) + 3; i++) { // Select 3 to 5
-                if (tempAdditionalFeatures.length > 0) {
-                    const randomIndex = Math.floor(Math.random() * tempAdditionalFeatures.length);
-                    selectedAdditionalFeatures.push(tempAdditionalFeatures.splice(randomIndex, 1)[0]); // Remove to prevent duplicates
-                }
-            }
-            const allFeatures = [...coreFeatures, ...subnodes.map(n => `Subnode: ${n}`), ...selectedAdditionalFeatures];
-
-            const baseFCU = Math.round(Math.random() * 50 + 50);
-            const proFCU = Math.round(baseFCU * (Math.random() * 2 + 2)); // 2x to 4x starter
-            const enterpriseFCU = 'Custom pricing';
-
-            const pricingTiers = [
-                {
-                    name: "Starter Node",
-                    cost: `FCU ${baseFCU}/mo`,
-                    description: "Ideal for small teams and pilot projects. Access essential features and secure basic data synchronization.",
-                    benefits: ["Essential features", "Basic data sync", "Community support"]
-                },
-                {
-                    name: "Pro Grid",
-                    cost: `FCU ${proFCU}/mo`,
-                    description: `Designed for growing firms needing advanced capabilities. Includes ${Math.ceil(Math.random() * 5 + 3)} core features and enhanced performance.`,
-                    benefits: ["Advanced features", "High-volume data processing", "Priority support", "Expanded analytics"]
-                },
-                {
-                    name: "Enterprise Omni-Sync",
-                    cost: enterpriseFCU,
-                    description: "For large organizations requiring full VaultMesh access, custom integrations, and dedicated resources.",
-                    benefits: ["Full VaultMesh access", "Dedicated account management", "Custom integrations", "24/7 Premium Support"]
-                }
-            ];
-
-            const metadata = {
-                id: `${brandName.slice(0, 3).toUpperCase()}-${sectorKey.slice(0, 3).toUpperCase()}-${Math.floor(Math.random() * 9000) + 1000}`,
-                vault: `VAULT-${Math.random().toString(36).substr(2, 4).toUpperCase()}`,
-                layer: `Layer ${Math.random() < 0.5 ? 'Alpha' : 'Beta'} v${(Math.random() * 2 + 1).toFixed(1)}`,
-                deploymentZone: `Zone ${String.fromCharCode(65 + Math.floor(Math.random() * 5))} ${Math.floor(Math.random() * 10) + 1}`, // e.g., Zone A 5
-                securityRating: `FAA-SEC ${['A+', 'A', 'B+'][Math.floor(Math.random() * 3)]}`,
-                activeNodes: Math.floor(Math.random() * 5000) + 100 // Example: 100 to 5100 nodes
-            };
-
-            const recentActivity = [
-                `#${Math.floor(Math.random() * 9999)} - ${brandName.slice(0,5).toUpperCase()} Pulse Tx - ${Math.random() > 0.5 ? 'Confirmed' : 'Pending'}`,
-                `#${Math.floor(Math.random() * 9999)} - ${sectorKey.slice(0,5).toUpperCase()} Data Sync - ${Math.random() > 0.5 ? 'Completed' : 'Error'}`,
-                `#${Math.floor(Math.random() * 9999)} - Node Actuation Confirm - ${Math.random() > 0.5 ? 'Active' : 'Offline'}`,
-                `#${Math.floor(Math.random() * 9999)} - VaultTrace Audit - ${Math.random() > 0.5 ? 'Passed' : 'Review'}`
-            ];
-
-
-            return `
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="space-y-6">
-                        <h4 class="text-2xl font-extrabold text-indigo-700">🚀 ${brandName}™ Core Protocol Overview</h4>
-                        <p class="text-md text-gray-700 leading-relaxed">
-                            ${brandName}™ is ${randomIntro}
-                        </p>
-
-                        <div>
-                            <h5 class="text-xl font-semibold text-gray-800 border-b pb-2 mb-3">🎛️ Key Features</h5>
-                            <ul class="list-disc list-inside ml-4 space-y-2 text-sm text-gray-700">
-                                ${allFeatures.map(f => `<li>${f}</li>`).join("")}
-                            </ul>
-                        </div>
-
-                        <div>
-                            <h5 class="text-xl font-semibold text-gray-800 border-b pb-2 mb-3">💳 Pricing Structure</h5>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                                ${pricingTiers.map(tier => `
-                                    <div class="p-4 border rounded-lg shadow-sm bg-gray-50 flex flex-col justify-between">
-                                        <h6 class="font-bold text-indigo-600 text-lg">${tier.name}</h6>
-                                        <p class="text-gray-900 text-xl font-bold my-2">${tier.cost}</p>
-                                        <p class="text-xs text-gray-600 mb-2">${tier.description}</p>
-                                        <ul class="text-xs text-gray-500 list-disc list-inside ml-3">
-                                            ${tier.benefits.map(b => `<li>${b}</li>`).join('')}
-                                        </ul>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="space-y-6">
-                        <h5 class="text-xl font-semibold text-indigo-700 border-b pb-2 mb-3">🔗 FAA Metadata & Compliance</h5>
-                        <ul class="list-disc list-inside ml-4 space-y-2 text-sm text-gray-700">
-                            <li><strong>Product ID:</strong> <code>${metadata.id}</code></li>
-                            <li><strong>VaultID:</strong> <code>${metadata.vault}</code></li>
-                            <li><strong>Signal Echo Layer:</strong> <code>${metadata.layer}</code></li>
-                            <li><strong>Deployment Zone:</strong> <code>${metadata.deploymentZone}</code></li>
-                            <li><strong>Security Rating:</strong> <span class="font-bold text-green-600">${metadata.securityRating}</span></li>
-                            <li><strong>Active Nodes:</strong> <code>${metadata.activeNodes.toLocaleString()}</code></li>
-                            <li><strong>Last Audit:</strong> <code>${new Date(Date.now() - Math.floor(Math.random() * 30 * 24 * 60 * 60 * 1000)).toISOString().slice(0, 10)}</code></li>
-                            <li><strong>Compliance Status:</strong> <span class="font-bold text-green-600">Active & Certified</span></li>
-                        </ul>
-
-                        <div class="mt-6 p-4 bg-gray-50 border border-gray-200 rounded-md text-sm text-gray-700 shadow-inner">
-                            <h6 class="font-bold mb-2 text-gray-800">📊 Real-Time Metrics Overview:</h6>
-                            <p><strong>Current Pulse Activity:</strong> ${Math.floor(Math.random() * 100000).toLocaleString()} pulses/sec</p>
-                            <p><strong>Data Volume Processed (24h):</strong> ${(Math.random() * 100).toFixed(2)} TB</p>
-                            <p><strong>Latency Average:</strong> ${Math.floor(Math.random() * 100) + 10} ms</p>
-                        </div>
-
-                        <div class="mt-6 p-4 bg-gray-50 border border-gray-200 rounded-md text-sm text-gray-700 shadow-inner">
-                            <h6 class="font-bold mb-2 text-gray-800">VaultTrace™ Ledger Entries:</h6>
-                            <ul class="list-none space-y-1">
-                                ${recentActivity.map(log => `<li><code class="text-gray-600">${log}</code></li>`).join('')}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
 
         // Universal function to render brands and snapshots for a given sector
-        // Renamed from renderSectorPanel to renderSectorPanelContent to clarify its role
-        // since showSectorPanel now handles overall panel visibility.
-        function renderSectorPanelContent(sectorKey) {
+        function renderSectorPanel(sectorKey) {
             const brandsData = ALL_SECTOR_DATA[sectorKey]?.brands || [];
             const subNodesData = ALL_SECTOR_DATA[sectorKey]?.subNodes || [];
-            const scrollProfiles = ALL_SECTOR_DATA[sectorKey]?.scrollProfiles || {}; // Only for Media section
+            const scrollProfiles = ALL_SECTOR_DATA[sectorKey]?.scrollProfiles || {}; // For Media section
 
             const grid = document.getElementById(`${sectorKey}-grid`);
             const snapContainer = document.getElementById(`${sectorKey}-snapshots`);
             const scrollPanel = document.getElementById(`${sectorKey}-scroll-panel`); // For Media
 
             if (!grid || !snapContainer) {
-                // This warning can fire for panels that don't have these elements (like admin or global-index)
-                // console.warn(`[${sectorKey} Grid] Required DOM elements missing.`);
+                console.warn(`[${sectorKey} Grid] Required DOM elements missing.`);
                 return;
             }
 
@@ -2189,10 +1863,10 @@
 
                 // Add specific hover colors based on sector
                 if (sectorKey === 'banking') btn.classList.add('hover:bg-blue-100', 'hover:text-blue-800');
-                else if (sectorKey === 'agriculture' || sectorKey === 'fsf' || sectorKey === 'education' || sectorKey === 'health' || sectorKey === 'zerowaste' || sectorKey === 'nutrition') btn.classList.add('hover:bg-green-100', 'hover:text-green-800');
-                else if (sectorKey === 'creative' || sectorKey === 'gaming' || sectorKey === 'quantum' || sectorKey === 'voice' || sectorKey === 'nft' || sectorKey === 'ritual') btn.classList.add('hover:bg-purple-100', 'hover:text-purple-800');
-                else if (sectorKey === 'logistics' || sectorKey === 'housing' || sectorKey === 'packaging' || sectorKey === 'utilities' || sectorKey === 'trade' || sectorKey === 'mining' || sectorKey === 'micromesh') btn.classList.add('hover:bg-yellow-100', 'hover:text-yellow-800'); 
-                else if (sectorKey === 'webless' || sectorKey === 'ai-logic' || sectorKey === 'justice' || sectorKey === 'knowledge' || sectorKey === 'media' || sectorKey === 'saas' || sectorKey === 'professional' || sectorKey === 'admin' || sectorKey === 'global-index') btn.classList.add('hover:bg-indigo-100', 'hover:text-indigo-800');
+                else if (sectorKey === 'agriculture' || sectorKey === 'fsf' || sectorKey === 'education' || sectorKey === 'health') btn.classList.add('hover:bg-green-100', 'hover:text-green-800');
+                else if (sectorKey === 'creative' || sectorKey === 'gaming' || sectorKey === 'quantum' || sectorKey === 'voice') btn.classList.add('hover:bg-purple-100', 'hover:text-purple-800');
+                else if (sectorKey === 'logistics' || sectorKey === 'housing' || sectorKey === 'packaging' || sectorKey === 'utilities') btn.classList.add('hover:bg-yellow-100', 'hover:text-yellow-800');
+                else if (sectorKey === 'webless' || sectorKey === 'ailogic' || sectorKey === 'justice' || sectorKey === 'knowledge' || sectorKey === 'micromesh' || sectorKey === 'media' || sectorKey === 'ritual' || sectorKey === 'saas' || sectorKey === 'trade' || sectorKey === 'nft' || sectorKey === 'zerowaste' || sectorKey === 'professional') btn.classList.add('hover:bg-indigo-100', 'hover:text-indigo-800');
                 else btn.classList.add('hover:bg-gray-100', 'hover:text-gray-800'); // Default hover
 
                 btn.innerHTML = `${brand}<sup>™</sup>`;
@@ -2200,66 +1874,54 @@
                 grid.appendChild(btn);
 
                 const currentSubNodes = combinedSubNodes[i] || []; // Get the correct subnodes
-                
+                const subListHtml = currentSubNodes.map(n => `<li>🔹 ${n}</li>`).join('');
+
                 const snap = document.createElement('div');
                 snap.id = `${sectorKey}-snap-${i}`;
                 snap.className = 'brand-snapshot hidden mt-6'; // Always hidden initially
+                snap.innerHTML = `
+                    <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+                    <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+                        ${subListHtml}
+                    </ul>`;
+                snapContainer.appendChild(snap);
 
-                // --- Determine snapshot content: specific or generic ---
+                // --- Render Scroll Profile for Media Section if applicable ---
                 if (sectorKey === 'media' && scrollProfiles[brand]) {
-                    // Use specific scroll profile data for Media brands if available
                     const p = scrollProfiles[brand];
-                    snap.innerHTML = `
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div class="space-y-6">
-                                <h4 class="text-2xl font-extrabold text-indigo-700">🔊 ${p.title}</h4>
-                                <p class="text-md text-gray-700 leading-relaxed">${p.intro}</p>
-                                <div>
-                                    <h5 class="text-xl font-semibold text-gray-800 border-b pb-2 mb-3">🎛️ Key Features</h5>
-                                    <ul class="list-disc list-inside ml-4 space-y-2 text-sm text-gray-700">
-                                        ${p.features.map(f => `<li>${f}</li>`).join("")}
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h5 class="text-xl font-semibold text-gray-800 border-b pb-2 mb-3">💳 Pricing</h5>
-                                    <ul class="list-disc list-inside ml-4 space-y-2 text-sm text-gray-700">
-                                        ${p.pricing.map(f => `<li>${f}</li>`).join("")}
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="space-y-6">
-                                <h5 class="text-xl font-semibold text-indigo-700 border-b pb-2 mb-3">🔗 FAA Metadata</h5>
-                                <ul class="list-disc list-inside ml-4 space-y-2 text-sm text-gray-700">
-                                    <li><strong>Product ID:</strong> <code>${p.metadata.id}</code></li>
-                                    <li><strong>VaultID:</strong> <code>${p.metadata.vault}</code></li>
-                                    <li><strong>Signal Echo Layer:</strong> <code>${p.metadata.layer}</code></li>
-                                    <li><strong>Last Audit:</strong> <code>${new Date(Date.now() - Math.floor(Math.random() * 30 * 24 * 60 * 60 * 1000)).toISOString().slice(0, 10)}</code></li>
-                                    <li><strong>Compliance Status:</strong> <span class="font-bold text-green-600">Active & Certified</span></li>
+                    const scroll = document.createElement("div");
+                    scroll.className = "w-full flex flex-col md:flex-row justify-between gap-6 bg-white p-6 border rounded shadow text-sm";
+                    scroll.innerHTML = `
+                        <div class="w-full md:w-1/2 space-y-4">
+                            <h4 class="text-xl font-bold text-indigo-700">🔊 ${p.title}</h4>
+                            <p>${p.intro}</p>
+                            <div>
+                                <h5 class="font-semibold">🎛️ Features</h5>
+                                <ul class="list-disc list-inside ml-4 space-y-1">
+                                    ${p.features.map(f => `<li>${f}</li>`).join("")}
                                 </ul>
-                                <div class="mt-6 p-4 bg-gray-50 border border-gray-200 rounded-md text-sm text-gray-700 shadow-inner">
-                                    <h6 class="font-bold mb-2 text-gray-800">📊 Real-Time Metrics Overview:</h6>
-                                    <p><strong>Current Pulse Activity:</strong> ${Math.floor(Math.random() * 100000).toLocaleString()} pulses/sec</p>
-                                    <p><strong>Data Volume Processed (24h):</strong> ${(Math.random() * 100).toFixed(2)} TB</p>
-                                    <p><strong>Latency Average:</strong> ${Math.floor(Math.random() * 100) + 10} ms</p>
-                                </div>
-                                <div class="mt-6 p-4 bg-gray-50 border border-gray-200 rounded-md text-sm text-gray-700 shadow-inner">
-                                    <h6 class="font-bold mb-2 text-gray-800">VaultTrace™ Ledger Entries:</h6>
-                                    <ul class="list-none space-y-1">
-                                        <li><code class="text-gray-600">#${Math.floor(Math.random() * 9999)} - ${p.title.slice(0,5).toUpperCase().replace(/™/g, '')} Pulse Tx - ${Math.random() > 0.5 ? 'Confirmed' : 'Pending'}</code></li>
-                                        <li><code class="text-gray-600">#${Math.floor(Math.random() * 9999)} - MEDIA Data Sync - ${Math.random() > 0.5 ? 'Completed' : 'Error'}</code></li>
-                                        <li><code class="text-gray-600">#${Math.floor(Math.random() * 9999)} - Node Actuation Confirm - ${Math.random() > 0.5 ? 'Active' : 'Offline'}</code></li>
-                                        <li><code class="text-gray-600">#${Math.floor(Math.random() * 9999)} - VaultTrace Audit - ${Math.random() > 0.5 ? 'Passed' : 'Review'}</code></li>
-                                    </ul>
-                                </div>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold">💳 Pricing</h5>
+                                <ul class="list-disc list-inside ml-4 space-y-1">
+                                    ${p.pricing.map(f => `<li>${f}</li>`).join("")}
+                                </ul>
                             </div>
                         </div>
+                        <div class="w-full md:w-1/2 space-y-4">
+                            <h5 class="text-lg font-semibold text-indigo-700">🔗 FAA Metadata</h5>
+                            <ul class="list-disc list-inside ml-4 space-y-1">
+                                <li>Product ID: <code>${p.metadata.id}</code></li>
+                                <li>VaultID: <code>${p.metadata.vault}</code></li>
+                                <li>Signal Echo Layer: <code>${p.metadata.layer}</code></li>
+                            </ul>
+                        </div>
                     `;
-                } else {
-                    // Generate generic content for all other brands
-                    snap.innerHTML = generateGenericBrandSnapshotContent(sectorKey, brand, currentSubNodes);
+                    const mediaScrollCards = document.querySelector('#media-scroll-panel .scroll-cards');
+                    if (mediaScrollCards) {
+                        mediaScrollCards.appendChild(scroll);
+                    }
                 }
-                
-                snapContainer.appendChild(snap);
             });
         }
 
@@ -2293,348 +1955,93 @@
             }
         }
 
-        // --- Global Brand Index Panel Renderer ---
-        function renderGlobalIndexPanel() {
-            const tableBody = document.getElementById("globalBrandTableBody");
-            if (!tableBody) {
-                console.error("Global brand table body not found.");
-                return;
-            }
-            tableBody.innerHTML = ''; // Clear previous content
 
-            const allBrands = [];
-
-            // Add hardcoded brands
+        // Function to render all sector panels on initial load (hidden)
+        function renderAllSectorPanels() {
             for (const sectorKey in ALL_SECTOR_DATA) {
-                const sectorDisplayName = sectorList[sectorKey] || sectorKey;
-                const data = ALL_SECTOR_DATA[sectorKey];
-                if (data.brands && data.subNodes) {
-                    data.brands.forEach((brand, i) => {
-                        allBrands.push({
-                            sector: sectorDisplayName,
-                            brand: brand,
-                            subnodes: (data.subNodes[i] || []).join(', '),
-                            source: 'System'
-                        });
-                    });
-                }
-            }
-
-            // Add admin-added brands
-            for (const sectorKey in adminSectorData) {
-                const sectorDisplayName = sectorList[sectorKey] || sectorKey;
-                const data = adminSectorData[sectorKey];
-                if (data.brands && data.nodes) {
-                    data.brands.forEach((brand, i) => {
-                        allBrands.push({
-                            sector: sectorDisplayName,
-                            brand: brand,
-                            subnodes: (data.nodes[i] || []).join(', '),
-                            source: 'Admin'
-                        });
-                    });
-                }
-            }
-            
-            // Sort brands alphabetically
-            allBrands.sort((a, b) => a.brand.localeCompare(b.brand));
-
-            // Render table rows
-            allBrands.forEach(brandData => {
-                const row = tableBody.insertRow();
-                row.className = 'border-b border-gray-200 hover:bg-gray-50 transition-colors';
-                row.innerHTML = `
-                    <td class="px-4 py-2">${brandData.sector}</td>
-                    <td class="px-4 py-2 font-semibold">${brandData.brand}™</td>
-                    <td class="px-4 py-2 text-gray-600 text-xs">${brandData.subnodes}</td>
-                    <td class="px-4 py-2">
-                        <span class="px-2 py-0.5 rounded-full text-xs font-medium 
-                            ${brandData.source === 'Admin' ? 'bg-indigo-100 text-indigo-700' : 'bg-green-100 text-green-700'}">
-                            ${brandData.source}
-                        </span>
-                    </td>
-                `;
-            });
-
-            // Implement search functionality
-            const globalBrandSearch = document.getElementById('globalBrandSearch');
-            globalBrandSearch.onkeyup = () => {
-                const filter = globalBrandSearch.value.toLowerCase();
-                const rows = tableBody.getElementsByTagName('tr');
-                for (let i = 0; i < rows.length; i++) {
-                    const cells = rows[i].getElementsByTagName('td');
-                    let rowText = '';
-                    for (let j = 0; j < cells.length; j++) {
-                        rowText += cells[j].textContent || cells[j].innerText;
-                    }
-                    if (rowText.toLowerCase().indexOf(filter) > -1) {
-                        rows[i].style.display = "";
-                    } else {
-                        rows[i].style.display = "none";
-                    }
-                }
-            };
-        }
-
-
-        // --- FAA.ZONE INDEX Table Renderer ---
-        function renderFaaZoneIndexTable() {
-            const tableBody = document.getElementById("faaZoneIndexTableBody");
-            if (!tableBody) return;
-            tableBody.innerHTML = ''; // Clear existing content
-
-            const sectorsWithSummary = Object.keys(FAA_ZONE_INDEX_SUMMARY_DATA);
-            
-            // Sort sectors alphabetically by display name for consistent table order
-            sectorsWithSummary.sort((a, b) => {
-                const nameA = sectorList[a] || a;
-                const nameB = sectorList[b] || b;
-                return nameA.localeCompare(nameB);
-            });
-
-            sectorsWithSummary.forEach(sectorKey => {
-                const summary = FAA_ZONE_INDEX_SUMMARY_DATA[sectorKey];
-                const displayName = sectorList[sectorKey] || sectorKey.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
-
-                // Calculate total brands and nodes for this sector, including admin-added ones
-                const staticBrandsCount = ALL_SECTOR_DATA[sectorKey]?.brands?.length || 0;
-                const staticNodesCount = (ALL_SECTOR_DATA[sectorKey]?.subNodes || []).flat().length;
-                
-                const adminAddedBrandsCount = adminSectorData[sectorKey]?.brands?.length || 0;
-                const adminAddedNodesCount = (adminSectorData[sectorKey]?.nodes || []).flat().length;
-
-                const totalCoreBrands = staticBrandsCount + adminAddedBrandsCount;
-                const totalNodes = staticNodesCount + adminAddedNodesCount;
-
-
-                const row = tableBody.insertRow();
-                row.className = 'border-b border-gray-200 hover:bg-gray-50 transition-colors';
-                row.innerHTML = `
-                    <td class="px-4 py-2 text-xl">${summary.glyph}</td>
-                    <td class="px-4 py-2 font-semibold">${displayName}</td>
-                    <td class="px-4 py-2">${totalCoreBrands}</td>
-                    <td class="px-4 py-2">${totalNodes}</td>
-                    <td class="px-4 py-2">${summary.monthlyFee}</td>
-                    <td class="px-4 py-2">${summary.annualFee}</td>
-                    <td class="px-4 py-2">${summary.payoutTier}</td>
-                    <td class="px-4 py-2">${summary.region}</td>
-                    <td class="px-4 py-2">
-                        <button onclick="showSectorPanel('embedded-${sectorKey}-snapshot', this.closest('tr').previousElementSibling.querySelector('.sector-link[data-sector=\\'${sectorKey}\\']'))"
-                                class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs">
-                            Inspect
-                        </button>
-                    </td>
-                    <td class="px-4 py-2">
-                        <button onclick="deployBrand('${sectorKey}', '${displayName}', '${totalCoreBrands}', '${totalNodes}')" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-xs">
-                            Deploy
-                        </button>
-                    </td>
-                `;
-            });
-        }
-
-
-        // --- GLOBAL METRICS CALCULATION ---
-        function calculateGlobalMetrics() {
-            let totalActiveNodes = 0;
-            let totalLicensesActive = 0;
-            let totalVaultDeployments = 0;
-            let totalSyncLogs = 0;
-            let totalAuditsRunning = 0;
-            let totalSignalZones = 0;
-            let totalScrollGridIndex = 0;
-
-            for (const sectorKey in ALL_SECTOR_DATA) {
-                const brandsData = ALL_SECTOR_DATA[sectorKey].brands;
-                const subNodesData = ALL_SECTOR_DATA[sectorKey].subNodes;
-                
-                // Add static data
-                totalActiveNodes += brandsData.length; // Each brand is an active node
-                totalLicensesActive += brandsData.length * 2; // Arbitrary: 2 licenses per brand
-                totalVaultDeployments += brandsData.length * 1.5; // Arbitrary: 1.5 deployments per brand
-                totalSyncLogs += brandsData.length * 5; // Arbitrary: 5 sync logs per brand
-                totalAuditsRunning += Math.ceil(brandsData.length / 10); // Arbitrary: 1 audit per 10 brands
-                totalSignalZones += Math.floor(brandsData.length / 3); // Arbitrary: 1 signal zone per 3 brands
-                totalScrollGridIndex += (brandsData.length + (subNodesData.flat()?.length || 0)); // Brands + all subnodes
-
-                // Add admin-added data
-                if (adminSectorData[sectorKey]) {
-                    totalActiveNodes += adminSectorData[sectorKey].brands.length;
-                    totalLicensesActive += adminSectorData[sectorData].brands.length * 2;
-                    totalVaultDeployments += adminSectorData[sectorKey].brands.length * 1.5;
-                    totalSyncLogs += adminSectorData[sectorKey].brands.length * 5;
-                    totalAuditsRunning += Math.ceil(adminSectorData[sectorKey].brands.length / 10);
-                    totalSignalZones += Math.floor(adminSectorData[sectorKey].brands.length / 3);
-                    totalScrollGridIndex += (adminSectorData[sectorKey].brands.length + (adminSectorData[sectorKey].nodes.flat()?.length || 0));
-                }
-            }
-            
-            // Update the display elements
-            document.getElementById("activeNodesCount").textContent = totalActiveNodes.toLocaleString();
-            document.getElementById("licensesActiveCount").textContent = totalLicensesActive.toLocaleString();
-            document.getElementById("vaultDeploymentsCount").textContent = Math.round(totalVaultDeployments).toLocaleString();
-            document.getElementById("syncLogsCount").textContent = totalSyncLogs.toLocaleString();
-            document.getElementById("auditsRunningCount").textContent = totalAuditsRunning.toLocaleString();
-            document.getElementById("signalZonesCount").textContent = totalSignalZones.toLocaleString();
-            document.getElementById("scrollGridIndexCount").textContent = totalScrollGridIndex.toLocaleString();
-        }
-
-
-        // --- CHART.JS PULSE MONITOR ---
-        let pulseChart; // Declare chart variable globally
-        let pulseData = Array.from({ length: 30 }, () => Math.floor(Math.random() * 100));
-        let syncData = Array.from({ length: 30 }, () => Math.floor(Math.random() * 50)); 
-        let nodeHealthData = Array.from({ length: 30 }, () => Math.floor(Math.random() * 20) + 80); // New: Node Health (80-100)
-
-        function renderPulseChart() {
-            const ctx = document.getElementById('pulseChart').getContext('2d');
-            const labels = Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`);
-            
-            if (pulseData.length === 0) pulseData = labels.map(() => Math.floor(Math.random() * 100));
-            if (syncData.length === 0) syncData = labels.map(() => Math.floor(Math.random() * 50));
-            if (nodeHealthData.length === 0) nodeHealthData = labels.map(() => Math.floor(Math.random() * 20) + 80);
-
-            const data = {
-                labels: labels,
-                datasets: [
-                    {
-                        label: 'Pulse Activity (Units)',
-                        backgroundColor: 'rgba(99, 102, 241, 0.2)', 
-                        borderColor: '#6366f1', 
-                        data: pulseData, 
-                        fill: true,
-                        tension: 0.4,
-                        pointRadius: 3,
-                        pointHoverRadius: 5
-                    },
-                    {
-                        label: 'Data Sync Volume (GB)', 
-                        backgroundColor: 'rgba(40, 167, 69, 0.2)', 
-                        borderColor: '#28a745', 
-                        data: syncData, 
-                        fill: true,
-                        tension: 0.4,
-                        pointRadius: 3,
-                        pointHoverRadius: 5
-                    },
-                    {
-                        label: 'Node Health Score (Avg)', // New: Node Health
-                        backgroundColor: 'rgba(255, 193, 7, 0.2)', // Yellow with opacity
-                        borderColor: '#ffc107', // Yellow
-                        data: nodeHealthData, 
-                        fill: false, // No fill for this line
-                        tension: 0.4,
-                        pointRadius: 3,
-                        pointHoverRadius: 5
-                    }
-                ]
-            };
-
-            if (pulseChart) {
-                pulseChart.destroy(); // Destroy existing chart before creating a new one
-            }
-
-            pulseChart = new Chart(ctx, {
-                type: 'line',
-                data: data,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Metrics' 
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Time'
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top',
-                        },
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false,
-                        }
-                    }
-                }
-            });
-        }
-
-        // Function to update chart with new data point every 9 seconds
-        function updatePulseChart() {
-            // Remove the oldest data point
-            pulseData.shift();
-            syncData.shift();
-            nodeHealthData.shift(); // Remove oldest for new dataset
-
-            // Add a new random data point
-            pulseData.push(Math.floor(Math.random() * 100));
-            syncData.push(Math.floor(Math.random() * 50));
-            nodeHealthData.push(Math.floor(Math.random() * 20) + 80); // New random data for health
-
-            // Update the chart
-            if (pulseChart) {
-                pulseChart.data.datasets[0].data = pulseData;
-                pulseChart.data.datasets[1].data = syncData; 
-                pulseChart.data.datasets[2].data = nodeHealthData; // Update new dataset
-                
-                // Update labels to simulate scrolling time
-                const latestDay = parseInt(pulseChart.data.labels[pulseChart.data.labels.length - 1].replace('Day ', ''));
-                pulseChart.data.labels.shift();
-                pulseChart.data.labels.push(`Day ${latestDay + 1}`); // Increment the day number
-
-                pulseChart.update();
+                renderSectorPanel(sectorKey); // Render content, but panel div is hidden by default
             }
         }
 
-        // Call updatePulseChart every 9 seconds
-        setInterval(updatePulseChart, 9000); // 9000 milliseconds = 9 seconds
 
-
-        // --- INITIALIZATION ---
-
-        // Function to populate the sector select dropdown in the admin panel
-        function populateSectorSelect() {
-            const selectElement = document.getElementById("sectorSelect");
-            // Clear existing options first if re-populating
-            selectElement.innerHTML = ''; 
-            for (const key in sectorList) {
-                if (key !== 'admin' && key !== 'global-index') { // Exclude admin and global-index from brand addition
+        // --- MAIN DOMContentLoaded Listener ---
+        document.addEventListener("DOMContentLoaded", () => {
+            // Populate sector dropdown in Admin Panel
+            const sectorSelect = document.getElementById("sectorSelect");
+            if (sectorSelect) {
+                Object.keys(sectorList).forEach((key) => {
                     const option = document.createElement("option");
                     option.value = key;
                     option.textContent = sectorList[key];
-                    selectElement.appendChild(option);
-                }
+                    sectorSelect.appendChild(option);
+                });
             }
-        }
 
-        // Render all sector panels initially (hidden by default)
-        function renderAllSectorPanels() {
-            for (const sectorKey in ALL_SECTOR_DATA) {
-                if (sectorKey !== 'admin' && sectorKey !== 'global-index') { // Exclude admin and global-index panels
-                    renderSectorPanelContent(sectorKey); // Call the specific content rendering function
-                }
+            renderAllSectorPanels(); // Render all brand lists (grids and snapshots) but keep panels hidden
+
+            // Render admin-added brands in the Admin Panel's output section
+            renderAdminOutputSection();
+
+            // Set default active panel on load (e.g., banking or admin panel)
+            // showSectorPanel('embedded-banking-snapshot', document.querySelector('[data-sector="banking"]')); // Uncomment to show banking on load
+            // showSectorPanel('embedded-admin-snapshot', document.querySelector('[data-sector="admin"]')); // Uncomment to show admin on load
+            // For now, let's keep all hidden on load and let user click
+        });
+
+        // --- FAA Scroll Pulse Monitor Chart ---
+        document.addEventListener("DOMContentLoaded", () => {
+            const ctx = document.getElementById("pulseChart")?.getContext("2d");
+
+            if (ctx) {
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: [
+                            "AI Logic", "Creative", "Logistics", "Housing", "Media",
+                            "Nutrition", "Education", "Gaming", "Health", "Utilities"
+                        ],
+                        datasets: [{
+                            label: "Sync Pulse",
+                            data: [92, 134, 108, 95, 204, 77, 88, 142, 126, 101],
+                            borderColor: "rgba(99,102,241,1)",
+                            backgroundColor: "rgba(99,102,241,0.1)",
+                            borderWidth: 2,
+                            tension: 0.3,
+                            fill: true,
+                            pointRadius: 3,
+                            pointHoverRadius: 5
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                labels: {
+                                    color: "#4B5563"
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    color: "#6B7280"
+                                }
+                            },
+                            x: {
+                                ticks: {
+                                    color: "#6B7280"
+                                }
+                            }
+                        }
+                    }
+                });
+            } else {
+                console.warn("Chart canvas element not found or context not available.");
             }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            populateSectorSelect();
-            renderAllSectorPanels(); // Render all individual sector panels (hidden by default)
-            renderAdminOutputSection(); // Render content for the Admin panel if it's the default active panel
-            renderGlobalIndexPanel(); // Render the Global Index table
-            renderFaaZoneIndexTable(); // Render the main FAA.ZONE INDEX table
-            calculateGlobalMetrics(); // Calculate and display global metrics
-            renderPulseChart(); // Render the pulse activity chart
         });
     </script>
 </body>
+
 </html>
