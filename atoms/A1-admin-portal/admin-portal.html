@@ -25,10 +25,14 @@
         /* Specific brand snapshot styling */
         .brand-snapshot {
             width: 100% !important; /* Override inline style */
-            height: 700px !important;
+            min-height: 500px; /* Ensure sufficient height for content */
             overflow-y: auto;
             overflow-x: hidden; /* Prevent horizontal scroll */
             margin-bottom: 2rem;
+            background-color: #ffffff; /* Explicit white background for snapshots */
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
         }
         .sector-link {
             @apply flex items-center justify-center p-2 rounded-md transition-colors duration-200;
@@ -1809,7 +1813,7 @@
             if (active) {
                 active.classList.toggle('hidden');
                 if (!active.classList.contains('hidden')) { // Only scroll if it's being revealed
-                    active.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    active.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); // Changed to 'nearest' for better UX
                 }
             }
         }
@@ -1861,12 +1865,84 @@
             }
         }
 
+        // --- NEW: Universal function to generate rich snapshot content for ANY brand ---
+        function generateGenericBrandSnapshotContent(sectorKey, brandName, subnodes) {
+            const sectorDisplayName = sectorList[sectorKey] || sectorKey.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
+            const features = [
+                `Direct integration with FAA ${sectorDisplayName} Mesh.`,
+                `Advanced data sync with ${subnodes.length > 0 ? subnodes[0] : 'core nodes'}.`,
+                `Real-time compliance validation via VaultLink™ (${sectorKey} specific).`,
+                `Scalable architecture for x${Math.ceil(Math.random() * 50) + 10} node expansion.`,
+                `Predictive analytics module for ${brandName} performance.`,
+                `API access for seamless interoperability.`
+            ];
+
+            const pricingTiers = [
+                `Starter Node – FCU ${Math.round(Math.random() * 50 + 50)}/mo`,
+                `Pro Grid – FCU ${Math.round(Math.random() * 200 + 150)}/mo (includes ${Math.ceil(Math.random() * 5 + 3)} core features)`,
+                `Enterprise Omni-Sync – Custom pricing (full VaultMesh access)`
+            ];
+
+            const metadata = {
+                id: `${brandName.slice(0, 3).toUpperCase()}-${sectorKey.slice(0, 3).toUpperCase()}-${Math.floor(Math.random() * 9000) + 1000}`,
+                vault: `VAULT-${Math.random().toString(36).substr(2, 4).toUpperCase()}`,
+                layer: `Layer ${Math.random() < 0.5 ? 'Alpha' : 'Beta'} v${(Math.random() * 2 + 1).toFixed(1)}`
+            };
+
+            return `
+                <div class="flex flex-col md:flex-row justify-between gap-6">
+                    <div class="w-full md:w-1/2 space-y-4">
+                        <h4 class="text-xl font-bold text-indigo-700">🚀 ${brandName}™ Core Protocol Overview</h4>
+                        <p class="text-sm text-gray-700">
+                            ${brandName}™ is a cutting-edge FAA.ZONE solution designed for the ${sectorDisplayName} sector.
+                            It seamlessly integrates with the global PulseGrid to deliver unparalleled performance and data integrity.
+                        </p>
+
+                        <div>
+                            <h5 class="font-semibold text-gray-800">🎛️ Key Features</h5>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-sm text-gray-700">
+                                ${subnodes.map(f => `<li>${f}</li>`).join("")}
+                                ${features.map(f => `<li>${f}</li>`).join("")}
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h5 class="font-semibold text-gray-800">💳 Pricing Structure</h5>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-sm text-gray-700">
+                                ${pricingTiers.map(p => `<li>${p}</li>`).join("")}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-1/2 space-y-4">
+                        <h5 class="text-lg font-semibold text-indigo-700">🔗 FAA Metadata & Compliance</h5>
+                        <ul class="list-disc list-inside ml-4 space-y-1 text-sm text-gray-700">
+                            <li>Product ID: <code>${metadata.id}</code></li>
+                            <li>VaultID: <code>${metadata.vault}</code></li>
+                            <li>Signal Echo Layer: <code>${metadata.layer}</code></li>
+                            <li>Last Audit: <code>${new Date(Date.now() - Math.floor(Math.random() * 30 * 24 * 60 * 60 * 1000)).toISOString().slice(0, 10)}</code></li>
+                            <li>Compliance Status: <span class="font-bold text-green-600">Active & Certified</span></li>
+                        </ul>
+                        <div class="mt-4 p-3 bg-gray-50 border border-gray-200 rounded-md text-sm text-gray-700">
+                            <h6 class="font-semibold mb-1">VaultTrace™ Ledger Entries:</h6>
+                            <p class="text-xs italic">
+                                Last 3 pulses: <br>
+                                #${Math.floor(Math.random() * 9999)} - ${brandName.slice(0,5).toUpperCase()} Pulse Tx <br>
+                                #${Math.floor(Math.random() * 9999)} - ${sectorKey.slice(0,5).toUpperCase()} Data Sync <br>
+                                #${Math.floor(Math.random() * 9999)} - Node Actuation Confirm
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
 
         // Universal function to render brands and snapshots for a given sector
         function renderSectorPanel(sectorKey) {
             const brandsData = ALL_SECTOR_DATA[sectorKey]?.brands || [];
             const subNodesData = ALL_SECTOR_DATA[sectorKey]?.subNodes || [];
-            const scrollProfiles = ALL_SECTOR_DATA[sectorKey]?.scrollProfiles || {}; // For Media section
+            const scrollProfiles = ALL_SECTOR_DATA[sectorKey]?.scrollProfiles || {}; // Only for Media section
 
             const grid = document.getElementById(`${sectorKey}-grid`);
             const snapContainer = document.getElementById(`${sectorKey}-snapshots`);
@@ -1903,7 +1979,7 @@
                 else if (sectorKey === 'agriculture' || sectorKey === 'fsf' || sectorKey === 'education' || sectorKey === 'health' || sectorKey === 'zerowaste') btn.classList.add('hover:bg-green-100', 'hover:text-green-800');
                 else if (sectorKey === 'creative' || sectorKey === 'gaming' || sectorKey === 'quantum' || sectorKey === 'voice' || sectorKey === 'nft') btn.classList.add('hover:bg-purple-100', 'hover:text-purple-800');
                 else if (sectorKey === 'logistics' || sectorKey === 'housing' || sectorKey === 'packaging' || sectorKey === 'utilities' || sectorKey === 'trade') btn.classList.add('hover:bg-yellow-100', 'hover:text-yellow-800');
-                else if (sectorKey === 'webless' || sectorKey === 'ai-logic' || sectorKey === 'justice' || sectorKey === 'knowledge' || sectorKey === 'micromesh' || sectorKey === 'media' || sectorKey === 'ritual' || sectorKey === 'saas' || sectorKey === 'professional') btn.classList.add('hover:bg-indigo-100', 'hover:text-indigo-800');
+                else if (sectorKey === 'webless' || sectorKey === 'ai-logic' || sectorKey === 'justice' || sectorKey === 'knowledge' || sectorKey === 'micromesh' || sectorKey === 'media' || sectorKey === 'ritual' || sectorKey === 'saas' || sectorKey === 'professional' || sectorKey === 'admin' || sectorKey === 'global-index') btn.classList.add('hover:bg-indigo-100', 'hover:text-indigo-800');
                 else btn.classList.add('hover:bg-gray-100', 'hover:text-gray-800'); // Default hover
 
                 btn.innerHTML = `${brand}<sup>™</sup>`;
@@ -1911,54 +1987,49 @@
                 grid.appendChild(btn);
 
                 const currentSubNodes = combinedSubNodes[i] || []; // Get the correct subnodes
-                const subListHtml = currentSubNodes.map(n => `<li>🔹 ${n}</li>`).join('');
-
+                
                 const snap = document.createElement('div');
                 snap.id = `${sectorKey}-snap-${i}`;
                 snap.className = 'brand-snapshot hidden mt-6'; // Always hidden initially
-                snap.innerHTML = `
-                    <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
-                    <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
-                        ${subListHtml}
-                    </ul>`;
-                snapContainer.appendChild(snap);
 
-                // --- Render Scroll Profile for Media Section if applicable ---
+                // --- Determine snapshot content: specific or generic ---
                 if (sectorKey === 'media' && scrollProfiles[brand]) {
+                    // Use specific scroll profile data for Media brands if available
                     const p = scrollProfiles[brand];
-                    const scroll = document.createElement("div");
-                    scroll.className = "w-full flex flex-col md:flex-row justify-between gap-6 bg-white p-6 border rounded shadow text-sm";
-                    scroll.innerHTML = `
-                        <div class="w-full md:w-1/2 space-y-4">
-                            <h4 class="text-xl font-bold text-indigo-700">🔊 ${p.title}</h4>
-                            <p>${p.intro}</p>
-                            <div>
-                                <h5 class="font-semibold">🎛️ Features</h5>
-                                <ul class="list-disc list-inside ml-4 space-y-1">
-                                    ${p.features.map(f => `<li>${f}</li>`).join("")}
+                    snap.innerHTML = `
+                        <div class="flex flex-col md:flex-row justify-between gap-6">
+                            <div class="w-full md:w-1/2 space-y-4">
+                                <h4 class="text-xl font-bold text-indigo-700">🔊 ${p.title}</h4>
+                                <p class="text-sm text-gray-700">${p.intro}</p>
+                                <div>
+                                    <h5 class="font-semibold text-gray-800">🎛️ Features</h5>
+                                    <ul class="list-disc list-inside ml-4 space-y-1 text-sm text-gray-700">
+                                        ${p.features.map(f => `<li>${f}</li>`).join("")}
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold text-gray-800">💳 Pricing</h5>
+                                    <ul class="list-disc list-inside ml-4 space-y-1 text-sm text-gray-700">
+                                        ${p.pricing.map(f => `<li>${f}</li>`).join("")}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="w-full md:w-1/2 space-y-4">
+                                <h5 class="text-lg font-semibold text-indigo-700">🔗 FAA Metadata</h5>
+                                <ul class="list-disc list-inside ml-4 space-y-1 text-sm text-gray-700">
+                                    <li>Product ID: <code>${p.metadata.id}</code></li>
+                                    <li>VaultID: <code>${p.metadata.vault}</code></li>
+                                    <li>Signal Echo Layer: <code>${p.metadata.layer}</code></li>
                                 </ul>
                             </div>
-                            <div>
-                                <h5 class="font-semibold">💳 Pricing</h5>
-                                <ul class="list-disc list-inside ml-4 space-y-1">
-                                    ${p.pricing.map(f => `<li>${f}</li>`).join("")}
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="w-full md:w-1/2 space-y-4">
-                            <h5 class="text-lg font-semibold text-indigo-700">🔗 FAA Metadata</h5>
-                            <ul class="list-disc list-inside ml-4 space-y-1">
-                                <li>Product ID: <code>${p.metadata.id}</code></li>
-                                <li>VaultID: <code>${p.metadata.vault}</code></li>
-                                <li>Signal Echo Layer: <code>${p.metadata.layer}</code></li>
-                            </ul>
                         </div>
                     `;
-                    const mediaScrollCards = document.querySelector('#media-scroll-panel .scroll-cards');
-                    if (mediaScrollCards) {
-                        mediaScrollCards.appendChild(scroll);
-                    }
+                } else {
+                    // Generate generic content for all other brands
+                    snap.innerHTML = generateGenericBrandSnapshotContent(sectorKey, brand, currentSubNodes);
                 }
+                
+                snapContainer.appendChild(snap);
             });
         }
 
@@ -2062,7 +2133,8 @@
             for (let i = 0; i < rows.length; i++) {
                 const cells = rows[i].getElementsByTagName("td");
                 let rowVisible = false;
-                for (let j = 0; j < cells.length; j++) {
+                // Check all cells for the filter text, except the last one (Source)
+                for (let j = 0; j < cells.length - 1; j++) { 
                     const cellText = cells[j].textContent || cells[j].innerText;
                     if (cellText.toLowerCase().indexOf(filter) > -1) {
                         rowVisible = true;
@@ -2083,6 +2155,14 @@
                     renderSectorPanel(sectorKey); // Render content, but panel div is hidden by default
                 }
             }
+            // Also render the admin panel content, but keep it hidden
+            if (document.getElementById('embedded-admin-snapshot')) {
+                 renderAdminOutputSection();
+            }
+            // Also render the global index, but keep it hidden
+            if (document.getElementById('embedded-global-index-snapshot')) {
+                renderGlobalIndexPanel();
+            }
         }
 
 
@@ -2101,17 +2181,14 @@
 
             renderAllSectorPanels(); // Render all brand lists (grids and snapshots) but keep panels hidden
 
-            // Render admin-added brands in the Admin Panel's output section
-            renderAdminOutputSection();
-
             // Attach search listener to the new global brand search input
             const globalSearchInput = document.getElementById("globalBrandSearch");
             if (globalSearchInput) {
                 globalSearchInput.addEventListener('keyup', filterGlobalBrandTable);
             }
             
-            // Initial render of the global index when the page loads, but it will be hidden
-            renderGlobalIndexPanel(); 
+            // Set default active panel on load if desired (e.g., admin panel)
+            // showSectorPanel('embedded-admin-snapshot', document.querySelector('[data-sector="admin"]')); 
         });
 
         // --- FAA Scroll Pulse Monitor Chart ---
