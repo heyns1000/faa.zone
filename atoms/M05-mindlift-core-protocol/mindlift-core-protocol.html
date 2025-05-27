@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindLift™ Core Protocol – FAA.zone</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Base Styles - Consistent with FAA.zone theme, optimized for product page */
+        :root {
+            --text-color-light: #1d1d1f;
+            --text-color-dark: #f5f5f7;
+            --bg-color-light: #f5f5f7;
+            --bg-color-dark: #1a1a1c;
+            --card-bg-light: #ffffff;
+            --card-bg-dark: #2a2a2e;
+            --border-color-light: #e8e8ed;
+            --border-color-dark: #3a3a3e;
+            --primary-color: #0071e3; /* Apple Blue */
+            --mindlift-color: #7B68EE; /* MediumPurple for MindLift theme */
+            --mindlift-accent-color: #9370DB; /* Brighter purple */
+            --muted-text-light: #6e6e73;
+            --muted-text-dark: #a0a0a5;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .light-mode {
+            background-color: var(--bg-color-light);
+            color: var(--text-color-light);
+        }
+
+        .dark-mode {
+            background-color: var(--bg-color-dark);
+            color: var(--text-color-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .main-header {
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color-light);
+            box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        .dark-mode .main-header {
+            background-color: var(--card-bg-dark);
+            border-bottom-color: var(--border-color-dark);
+            box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--text-color-light);
+            transition: color 0.3s ease;
+        }
+        .dark-mode .logo {
+            color: var(--text-color-dark);
+        }
+        .logo-faa {
+            color: var(--primary-color);
+        }
+        .logo-buildnest {
+            color: var(--text-color-light);
+        }
+        .dark-mode .logo-buildnest {
+            color: var(--text-color-dark);
+        }
+
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 25px;
+        }
+
+        .nav-list a {
+            text-decoration: none;
+            color: var(--muted-text-light);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+        .nav-list a:hover {
+            color: var(--primary-color);
+        }
+        .dark-mode .nav-list a {
+            color: var(--muted-text-dark);
+        }
+        .dark-mode .nav-list a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .cta-button:hover {
+            background-color: #0066cc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .hamburger-menu {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color-light);
+            transition: color 0.3s ease;
+        }
+        .dark-mode .hamburger-menu {
+            color: var(--text-color-dark);
+        }
+
+        /* Section Styling */
+        .section-padding {
+            padding: 80px 20px;
+            background-color: var(--card-bg-light);
+            border-bottom: 1px solid var(--border-color-light);
+            border-top: 1px solid var(--border-color-light);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .dark-mode .section-padding {
+            background-color: var(--card-bg-dark);
+            border-bottom-color: var(--border-color-dark);
+            border-top-color: var(--border-color-dark);
+        }
+        .section-padding:last-of-type {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--text-color-light);
+            transition: color 0.3s ease;
+        }
+        .dark-mode .section-title {
+            color: var(--text-color-dark);
+        }
+
+        /* MindLift Specific Styles */
+        .mindlift-hero {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(135deg, var(--mindlift-color) 0%, var(--mindlift-accent-color) 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            margin: 20px;
+            box-shadow: 0 10px 30px rgba(123, 104, 238, 0.4);
+        }
+        .mindlift-hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -0.05em;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        }
+        .mindlift-hero p {
+            font-size: 1.5rem;
+            max-width: 900px;
+            margin: 0 auto 40px;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        .mindlift-hero .cta-button {
+            background-color: white;
+            color: var(--mindlift-color);
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .mindlift-hero .cta-button:hover {
+            background-color: #f0f0f0;
+            color: var(--mindlift-accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .feature-card {
+            background-color: var(--card-bg-light);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border: 1px solid var(--border-color-light);
+            text-align: left;
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .dark-mode .feature-card {
+            background-color: var(--card-bg-dark);
+            border-color: var(--border-color-dark);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .feature-card .icon {
+            font-size: 2.5rem;
+            color: var(--mindlift-color);
+            margin-bottom: 15px;
+        }
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-color-light);
+        }
+        .dark-mode .feature-card h3 {
+            color: var(--text-color-dark);
+        }
+        .feature-card p {
+            font-size: 1rem;
+            color: var(--muted-text-light);
+            line-height: 1.6;
+        }
+        .dark-mode .feature-card p {
+            color: var(--muted-text-dark);
+        }
+        .feature-card ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+        .feature-card ul li {
+            font-size: 0.95rem;
+            color: var(--muted-text-light);
+            margin-bottom: 5px;
+        }
+        .dark-mode .feature-card ul li {
+            color: var(--muted-text-dark);
+        }
+        .feature-card ul li strong {
+            color: var(--text-color-light);
+        }
+        .dark-mode .feature-card ul li strong {
+            color: var(--text-color-dark);
+        }
+
+
+        .pricing-section {
+            background-color: var(--bg-color-light);
+            padding: 80px 20px;
+            text-align: center;
+        }
+        .dark-mode .pricing-section {
+            background-color: var(--bg-color-dark);
+        }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .pricing-card {
+            background-color: var(--card-bg-light);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color-light);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+        }
+        .dark-mode .pricing-card {
+            background-color: var(--card-bg-dark);
+            border-color: var(--border-color-dark);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        .dark-mode .pricing-card:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+        .pricing-card.highlight {
+            border-color: var(--mindlift-color);
+            box-shadow: 0 8px 25px rgba(123, 104, 238, 0.3);
+            transform: translateY(-8px);
+        }
+        .pricing-card.highlight .price-button {
+            background-color: var(--mindlift-color);
+        }
+        .pricing-card.highlight .price-button:hover {
+            background-color: var(--mindlift-accent-color);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-color-light);
+        }
+        .dark-mode .pricing-card h3 {
+            color: var(--text-color-dark);
+        }
+        .pricing-card .price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--mindlift-color);
+            margin-bottom: 15px;
+        }
+        .pricing-card .price-description {
+            font-size: 0.95rem;
+            color: var(--muted-text-light);
+            margin-bottom: 20px;
+        }
+        .dark-mode .pricing-card .price-description {
+            color: var(--muted-text-dark);
+        }
+        .pricing-card ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 30px;
+            flex-grow: 1;
+        }
+        .pricing-card ul li {
+            font-size: 1rem;
+            color: var(--muted-text-light);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .dark-mode .pricing-card ul li {
+            color: var(--muted-text-dark);
+        }
+        .pricing-card ul li i {
+            color: var(--mindlift-color);
+            margin-right: 10px;
+        }
+        .pricing-card .price-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .pricing-card .price-button:hover {
+            background-color: #0066cc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .metadata-metrics-section {
+            background-color: var(--card-bg-light);
+            padding: 80px 20px;
+            text-align: center;
+        }
+        .dark-mode .metadata-metrics-section {
+            background-color: var(--card-bg-dark);
+        }
+        .metadata-metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .metadata-card {
+            background-color: var(--bg-color-light);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color-light);
+            text-align: left;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+        }
+        .dark-mode .metadata-card {
+            background-color: var(--bg-color-dark);
+            border-color: var(--border-color-dark);
+            box-shadow: 0 1px 5px rgba(0,0,0,0.15);
+        }
+        .metadata-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: var(--text-color-light);
+        }
+        .dark-mode .metadata-card h3 {
+            color: var(--text-color-dark);
+        }
+        .metadata-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .metadata-card ul li {
+            font-size: 0.95rem;
+            color: var(--muted-text-light);
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        .dark-mode .metadata-card ul li {
+            color: var(--muted-text-dark);
+        }
+        .metadata-card ul li strong {
+            color: var(--text-color-light);
+        }
+        .dark-mode .metadata-card ul li strong {
+            color: var(--text-color-dark);
+        }
+
+        /* Footer */
+        .main-footer {
+            background-color: var(--card-bg-light);
+            border-top: 1px solid var(--border-color-light);
+            padding: 40px 0;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            margin-top: auto;
+        }
+        .dark-mode .main-footer {
+            background-color: var(--card-bg-dark);
+            border-top-color: var(--border-color-dark);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .footer-brand {
+            flex: 1 1 300px;
+        }
+
+        .footer-brand .logo {
+            margin-bottom: 15px;
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+            color: var(--muted-text-light);
+            line-height: 1.4;
+            transition: color 0.3s ease;
+        }
+        .dark-mode .copyright {
+            color: var(--muted-text-dark);
+        }
+
+        .footer-links {
+            display: flex;
+            flex: 2 1 500px;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-column {
+            flex: 1 1 150px;
+        }
+
+        .footer-column h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-color-light);
+            transition: color 0.3s ease;
+        }
+        .dark-mode .footer-column h4 {
+            color: var(--text-color-dark);
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-column a {
+            text-decoration: none;
+            font-size: 0.9rem;
+            color: var(--muted-text-light);
+            margin-bottom: 8px;
+            display: block;
+            transition: color 0.3s ease;
+        }
+        .footer-column a:hover {
+            color: var(--primary-color);
+        }
+        .dark-mode .footer-column a {
+            color: var(--muted-text-dark);
+        }
+        .dark-mode .footer-column a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .main-nav {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--card-bg-light);
+                border-bottom: 1px solid var(--border-color-light);
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                padding: 20px 0;
+                z-index: 999;
+            }
+            .dark-mode .main-nav {
+                background-color: var(--card-bg-dark);
+                border-bottom-color: var(--border-color-dark);
+            }
+            .main-nav.active {
+                display: flex;
+            }
+            .nav-list {
+                flex-direction: column;
+                text-align: center;
+                width: 100%;
+            }
+            .nav-list li {
+                width: 100%;
+            }
+            .nav-list a {
+                display: block;
+                padding: 10px 0;
+            }
+            .nav-actions {
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+                padding-top: 10px;
+                border-top: 1px solid var(--border-color-light);
+            }
+            .dark-mode .nav-actions {
+                border-top-color: var(--border-color-dark);
+            }
+            .nav-actions .cta-button {
+                width: calc(100% - 40px);
+                margin: 0 20px;
+                text-align: center;
+            }
+
+            .hamburger-menu {
+                display: block;
+            }
+
+            .mindlift-hero h1 {
+                font-size: 3rem;
+            }
+            .mindlift-hero p {
+                font-size: 1.2rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <span class="logo-faa">FAA.zone</span> / <span class="logo-buildnest">MindLift™</span>
+            </a>
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a href="#overview">Overview</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#contact">Contact Sales</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="connect-to-omni-grid.html" class="cta-button nav-cta">Get Started</a>
+                </div>
+            </nav>
+            <button class="hamburger-menu" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section id="overview" class="mindlift-hero">
+            <div class="container">
+                <h1>MindLift™ Core Protocol</h1>
+                <p>An innovative FAA.ZONE protocol, specifically engineered for the demands of the 📚 Education & IP industry. Its deep integration with the PulseGrid ensures secure, real-time data flows and enhanced decision-making.</p>
+                <a href="#pricing" class="cta-button">View Pricing &rarr;</a>
+            </div>
+        </section>
+
+        <section id="features" class="section-padding">
+            <div class="container">
+                <h2 class="section-title">Unlock Your Education & IP Potential</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-link icon"></i>
+                        <h3>Seamless Integration</h3>
+                        <p>Direct integration with FAA 🧾 Professional Services Mesh, ensuring all your core educational and IP services work in harmony.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-sync-alt icon"></i>
+                        <h3>Advanced Data Synchronization</h3>
+                        <p>Real-time data flows with BoostTrack for up-to-the-minute information and decision-making.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-shield-alt icon"></i>
+                        <h3>Real-time Compliance Validation</h3>
+                        <p>Ensure regulatory adherence with VaultLink™ (education specific) for continuous compliance monitoring.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-expand-arrows-alt icon"></i>
+                        <h3>Massive Scalability</h3>
+                        <p>Scalable architecture for x38 node expansion, ready to grow with your institution's demands.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-chart-line icon"></i>
+                        <h3>Predictive Analytics</h3>
+                        <p>Leverage our predictive analytics module for MindLift performance, anticipating trends and optimizing outcomes.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-puzzle-piece icon"></i>
+                        <h3>Open API Access</h3>
+                        <p>Full API access for seamless interoperability, allowing custom integrations and extending functionality.</p>
+                    </div>
+                </div>
+
+                <h2 class="section-title" style="margin-top: 80px;">MindLift™ Subnodes</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-rocket icon"></i>
+                        <h3>BoostTrack</h3>
+                        <p>Accelerate data processing and tracking for enhanced operational efficiency.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-lightbulb icon"></i>
+                        <h3>LearnSignal</h3>
+                        <p>Intelligent signal processing for educational content delivery and engagement analysis.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-arrow-alt-circle-up icon"></i>
+                        <h3>LevelUp</h3>
+                        <p>Gamified learning pathways and progress tracking for student and professional development.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-crosshairs icon"></i>
+                        <h3>FocusPath</h3>
+                        <p>Personalized learning paths and content recommendations based on individual progress.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-vault icon"></i>
+                        <h3>VaultPace</h3>
+                        <p>Secure, high-speed data vaulting and retrieval for critical educational and IP assets.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-brain icon"></i>
+                        <h3>Self-Optimizing Node Distribution</h3>
+                        <p>Achieve peak efficiency with intelligent node distribution that adapts to demand.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-network-wired icon"></i>
+                        <h3>Secure Multi-Party Computation</h3>
+                        <p>Enable collaborative data analysis while preserving privacy and security.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-file-invoice icon"></i>
+                        <h3>One-Click Regulatory Reporting</h3>
+                        <p>Generate audit trails and compliance reports effortlessly for regulatory needs.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-fingerprint icon"></i>
+                        <h3>AI-Driven Anomaly Detection</h3>
+                        <p>Proactive fraud prevention and security threat detection with intelligent AI.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="pricing-section section-padding">
+            <div class="container">
+                <h2 class="section-title">Flexible Pricing for Every Need</h2>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <h3>Starter Node</h3>
+                        <p class="price">FCU 75/mo</p>
+                        <p class="price-description">Ideal for small teams and pilot projects. Access essential features and secure basic data synchronization.</p>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Essential features</li>
+                            <li><i class="fas fa-check-circle"></i> Basic data sync</li>
+                            <li><i class="fas fa-check-circle"></i> Community support</li>
+                            <li><i class="fas fa-times-circle" style="color: var(--muted-text-light);"></i> High-volume data processing</li>
+                            <li><i class="fas fa-times-circle" style="color: var(--muted-text-light);"></i> Priority support</li>
+                            <li><i class="fas fa-times-circle" style="color: var(--muted-text-light);"></i> Expanded analytics</li>
+                            <li><i class="fas fa-times-circle" style="color: var(--muted-text-light);"></i> Full VaultMesh access</li>
+                            <li><i class="fas fa-times-circle" style="color: var(--muted-text-light);"></i> Dedicated account management</li>
+                            <li><i class="fas fa-times-circle" style="color: var(--muted-text-light);"></i> Custom integrations</li>
+                            <li><i class="fas fa-times-circle" style="color: var(--muted-text-light);"></i> 24/7 Premium Support</li>
+                        </ul>
+                        <a href="contact-support.html?subject=MindLift Starter Node Inquiry" class="price-button">Get Started</a>
+                    </div>
+                    <div class="pricing-card highlight">
+                        <h3>Pro Grid</h3>
+                        <p class="price">FCU 205/mo</p>
+                        <p class="price-description">Designed for growing firms needing advanced capabilities. Includes 4 core features and enhanced performance.</p>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Advanced features</li>
+                            <li><i class="fas fa-check-circle"></i> High-volume data processing</li>
+                            <li><i class="fas fa-check-circle"></i> Priority support</li>
+                            <li><i class="fas fa-check-circle"></i> Expanded analytics</li>
+                            <li><i class="fas fa-times-circle" style="color: var(--muted-text-light);"></i> Full VaultMesh access</li>
+                            <li><i class="fas fa-times-circle" style="color: var(--muted-text-light);"></i> Dedicated account management</li>
+                            <li><i class="fas fa-times-circle" style="color: var(--muted-text-light);"></i> Custom integrations</li>
+                            <li><i class="fas fa-times-circle" style="color: var(--muted-text-light);"></i> 24/7 Premium Support</li>
+                        </ul>
+                        <a href="contact-support.html?subject=MindLift Pro Grid Inquiry" class="price-button">Choose Pro Grid</a>
+                    </div>
+                    <div class="pricing-card">
+                        <h3>Enterprise Omni-Sync</h3>
+                        <p class="price">Custom pricing</p>
+                        <p class="price-description">For large organizations requiring full VaultMesh access, custom integrations, and dedicated resources.</p>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Full VaultMesh access</li>
+                            <li><i class="fas fa-check-circle"></i> Dedicated account management</li>
+                            <li><i class="fas fa-check-circle"></i> Custom integrations</li>
+                            <li><i class="fas fa-check-circle"></i> 24/7 Premium Support</li>
+                        </ul>
+                        <a href="contact-support.html?subject=MindLift Enterprise Inquiry" class="price-button">Contact Sales</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="metadata-metrics-section section-padding">
+            <div class="container">
+                <h2 class="section-title">FAA Metadata & Real-Time Metrics</h2>
+                <div class="metadata-metrics-grid">
+                    <div class="metadata-card">
+                        <h3>FAA Metadata & Compliance</h3>
+                        <ul>
+                            <li><strong>Product ID:</strong> MIN-EDU-5075</li>
+                            <li><strong>VaultID:</strong> VAULT-E7SA</li>
+                            <li><strong>Signal Echo Layer:</strong> Layer Beta v2.0</li>
+                            <li><strong>Deployment Zone:</strong> Zone C 2</li>
+                            <li><strong>Security Rating:</strong> FAA-SEC B+</li>
+                            <li><strong>Active Nodes:</strong> 3,258</li>
+                            <li><strong>Last Audit:</strong> 2025-05-15</li>
+                            <li><strong>Compliance Status:</strong> Active & Certified</li>
+                        </ul>
+                    </div>
+                    <div class="metadata-card">
+                        <h3>Real-Time Metrics Overview</h3>
+                        <ul>
+                            <li><strong>Current Pulse Activity:</strong> 88,940 pulses/sec</li>
+                            <li><strong>Data Volume Processed (24h):</strong> 71.69 TB</li>
+                            <li><strong>Latency Average:</strong> 105 ms</li>
+                        </ul>
+                        <h4 style="margin-top: 20px; font-size: 1.2rem; color: var(--text-color-light);">VaultTrace™ Ledger Entries:</h4>
+                        <ul>
+                            <li>#1331 - MINDL Pulse Tx - Pending</li>
+                            <li>#2994 - EDUCA Data Sync - Completed</li>
+                            <li>#6903 - Node Actuation Confirm - Active</li>
+                            <li>#5020 - VaultTrace Audit - Passed</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <div class="logo">
+                    <span class="logo-faa">FAA.zone</span> / <span class="logo-buildnest">MindLift™</span>
+                </div>
+                <p class="copyright">&copy; 2025 FAA.zone. All systems, symbols, and brand echoes protected by the Omni Present Copyright™.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>BuildNest™</h4>
+                    <ul>
+                        <li><a href="index.html#overview">Features</a></li>
+                        <li><a href="index.html#architecture">Use Cases</a></li>
+                        <li><a href="index.html#connectivity">Pricing</a></li>
+                        <li><a href="plotvault.html">Modules</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>FAA.zone</h4>
+                    <ul>
+                        <li><a href="about-faa.html">About FAA Systems™</a></li>
+                        <li><a href="index.html">Omni Grid™</a></li>
+                        <li><a href="baobab-archive.html">Baobab Archive™</a></li>
+                        <li><a href="compliance.html">Compliance</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="contact-support.html">Contact Support</a></li>
+                        <li><a href="partner-program.html">Partner Program</a></li>
+                        <li><a href="developer-api.html">Developer API</a></li>
+                        <li><a href="legal-privacy.html">Legal & Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const body = document.body;
+            const mainNav = document.querySelector('.main-nav');
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+
+            const savedMode = localStorage.getItem('themeMode');
+            if (savedMode) {
+                body.classList.add(savedMode);
+            } else {
+                body.classList.add('light-mode');
+            }
+
+            if (hamburgerMenu) {
+                hamburgerMenu.addEventListener('click', () => {
+                    if (mainNav) {
+                        mainNav.classList.toggle('active');
+                    }
+                });
+            }
+
+            document.querySelectorAll('.nav-list a').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    if (mainNav && mainNav.classList.contains('active')) {
+                        mainNav.classList.remove('active');
+                    }
+                    const href = this.getAttribute('href');
+                    if (href.startsWith('#') && href.length > 1) {
+                        e.preventDefault();
+                        const targetElement = document.querySelector(href);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
