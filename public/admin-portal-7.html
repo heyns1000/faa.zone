@@ -747,7 +747,6 @@
             'SecureMesh', 'LoopDispatch', 'AutoLift', 'ClaimBoard', 'ParcelChain', 'LabelMesh', 'BoxSignal', 'LoadFrame', 'VaultRoute', 'DockYield',
             'CrateSecure', 'LabelFlowX', 'DockMaster', 'PackNet', 'RouteGuard', 'BinLogicPro', 'ColdChainX', 'AutoPack', 'ShipTrack', 'LoadManager',
             'CrateManager', 'LabelSecure', 'DockFlowX', 'PackMaster', 'RouteManager', 'BinSecure', 'ColdManager', 'AutoLabelX', 'ShipManager', 'LoadSecure',
-            'CrateSecure', 'LabelFlowX', 'DockMaster', 'PackNet', 'RouteGuard', 'BinLogicPro', 'ColdChainX', 'AutoPack', 'ShipTrack', 'LoadManager',
             'CrateManager'
         ];
         const logisticsSubNodes = [
@@ -1864,8 +1863,7 @@
             // Re-render relevant panels and metrics
             const activePanelId = document.querySelector('.sector-panel:not(.hidden)')?.id;
             if (activePanelId === `embedded-${sector}-snapshot` || activePanelId === `embedded-admin-snapshot` || activePanelId === `embedded-global-index-snapshot`) {
-                // If the target sector panel is open, or admin panel is open, or global index is open, re-render it
-                renderSectorPanel(sector); // Re-render the specific sector to include new brand if visible
+                renderSectorPanelContent(sector); // Re-render the specific sector to include new brand if visible
                 renderGlobalIndexPanel(); // Re-render global index as it includes new brands
             } else {
                 renderAdminOutputSection();
@@ -1919,7 +1917,6 @@
 
             setTimeout(() => {
                 statusDiv.innerHTML = `✅ ${brandName} deployed successfully! Path: <code>${deploymentPath}</code>`;
-                // No need to call calculateGlobalMetrics() here as it's not a real deployment
             }, 1500);
 
             setTimeout(() => {
@@ -1984,7 +1981,7 @@
                 } else if (sectorKey === 'admin') {
                     renderAdminOutputSection(); // Ensure admin output is fresh
                 } else {
-                    renderSectorPanelContent(sectorKey); // Use a new function to render content
+                    renderSectorPanelContent(sectorKey); // Use the function to render specific sector content
                 }
             } else {
                 console.warn('[FAA] Panel not found:', panelId);
@@ -2150,8 +2147,6 @@
 
 
         // Universal function to render brands and snapshots for a given sector
-        // Renamed from renderSectorPanel to renderSectorPanelContent to clarify its role
-        // since showSectorPanel now handles overall panel visibility.
         function renderSectorPanelContent(sectorKey) {
             const brandsData = ALL_SECTOR_DATA[sectorKey]?.brands || [];
             const subNodesData = ALL_SECTOR_DATA[sectorKey]?.subNodes || [];
@@ -2162,15 +2157,13 @@
             const scrollPanel = document.getElementById(`${sectorKey}-scroll-panel`); // For Media
 
             if (!grid || !snapContainer) {
-                // This warning can fire for panels that don't have these elements (like admin or global-index)
-                // console.warn(`[${sectorKey} Grid] Required DOM elements missing.`);
                 return;
             }
 
             // Clear existing content to prevent duplicates on re-render
             grid.innerHTML = '';
             snapContainer.innerHTML = '';
-            if (scrollPanel) { // Clear scroll panel content if it exists
+            if (scrollPanel) { 
                 scrollPanel.querySelector('.scroll-cards').innerHTML = '';
             }
 
@@ -2199,15 +2192,14 @@
                 btn.onclick = () => toggleSnapshot(`${sectorKey}-snap-${i}`);
                 grid.appendChild(btn);
 
-                const currentSubNodes = combinedSubNodes[i] || []; // Get the correct subnodes
+                const currentSubNodes = combinedSubNodes[i] || []; 
                 
                 const snap = document.createElement('div');
                 snap.id = `${sectorKey}-snap-${i}`;
-                snap.className = 'brand-snapshot hidden mt-6'; // Always hidden initially
+                snap.className = 'brand-snapshot hidden mt-6'; 
 
                 // --- Determine snapshot content: specific or generic ---
                 if (sectorKey === 'media' && scrollProfiles[brand]) {
-                    // Use specific scroll profile data for Media brands if available
                     const p = scrollProfiles[brand];
                     snap.innerHTML = `
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -2434,66 +2426,86 @@
         }
 
 
-        // --- GLOBAL METRICS CALCULATION ---
+        // --- GLOBAL METRICS CALCULATION (Ensures Growth) ---
+        // Store current metrics globally to ensure they only grow or stay stable
+        let currentGlobalMetrics = {
+            activeNodes: 0,
+            licensesActive: 0,
+            vaultDeployments: 0,
+            syncLogs: 0,
+            auditsRunning: 0,
+            signalZones: 0,
+            scrollGridIndex: 0
+        };
+
         function calculateGlobalMetrics() {
-            let totalActiveNodes = 0;
-            let totalLicensesActive = 0;
-            let totalVaultDeployments = 0;
-            let totalSyncLogs = 0;
-            let totalAuditsRunning = 0;
-            let totalSignalZones = 0;
-            let totalScrollGridIndex = 0;
+            let tempActiveNodes = 0;
+            let tempLicensesActive = 0;
+            let tempVaultDeployments = 0;
+            let tempSyncLogs = 0;
+            let tempAuditsRunning = 0;
+            let tempSignalZones = 0;
+            let tempScrollGridIndex = 0;
 
             for (const sectorKey in ALL_SECTOR_DATA) {
                 const brandsData = ALL_SECTOR_DATA[sectorKey].brands;
                 const subNodesData = ALL_SECTOR_DATA[sectorKey].subNodes;
                 
-                // Add static data
-                totalActiveNodes += brandsData.length; // Each brand is an active node
-                totalLicensesActive += brandsData.length * 2; // Arbitrary: 2 licenses per brand
-                totalVaultDeployments += brandsData.length * 1.5; // Arbitrary: 1.5 deployments per brand
-                totalSyncLogs += brandsData.length * 5; // Arbitrary: 5 sync logs per brand
-                totalAuditsRunning += Math.ceil(brandsData.length / 10); // Arbitrary: 1 audit per 10 brands
-                totalSignalZones += Math.floor(brandsData.length / 3); // Arbitrary: 1 signal zone per 3 brands
-                totalScrollGridIndex += (brandsData.length + (subNodesData.flat()?.length || 0)); // Brands + all subnodes
+                tempActiveNodes += brandsData.length; 
+                tempLicensesActive += brandsData.length * 2; 
+                tempVaultDeployments += brandsData.length * 1.5; 
+                tempSyncLogs += brandsData.length * 5; 
+                tempAuditsRunning += Math.ceil(brandsData.length / 10); 
+                tempSignalZones += Math.floor(brandsData.length / 3); 
+                tempScrollGridIndex += (brandsData.length + (subNodesData.flat()?.length || 0)); 
 
-                // Add admin-added data
                 if (adminSectorData[sectorKey]) {
-                    totalActiveNodes += adminSectorData[sectorKey].brands.length;
-                    totalLicensesActive += adminSectorData[sectorData].brands.length * 2;
-                    totalVaultDeployments += adminSectorData[sectorKey].brands.length * 1.5;
-                    totalSyncLogs += adminSectorData[sectorKey].brands.length * 5;
-                    totalAuditsRunning += Math.ceil(adminSectorData[sectorKey].brands.length / 10);
-                    totalSignalZones += Math.floor(adminSectorData[sectorKey].brands.length / 3);
-                    totalScrollGridIndex += (adminSectorData[sectorKey].brands.length + (adminSectorData[sectorKey].nodes.flat()?.length || 0));
+                    tempActiveNodes += adminSectorData[sectorKey].brands.length;
+                    tempLicensesActive += adminSectorData[sectorKey].brands.length * 2;
+                    tempVaultDeployments += adminSectorData[sectorKey].brands.length * 1.5;
+                    tempSyncLogs += adminSectorData[sectorKey].brands.length * 5;
+                    tempAuditsRunning += Math.ceil(adminSectorData[sectorKey].brands.length / 10);
+                    tempSignalZones += Math.floor(adminSectorData[sectorKey].brands.length / 3);
+                    tempScrollGridIndex += (adminSectorData[sectorKey].brands.length + (adminSectorData[sectorKey].nodes.flat()?.length || 0));
                 }
             }
             
+            // Ensure metrics only grow or stay stable
+            currentGlobalMetrics.activeNodes = Math.max(currentGlobalMetrics.activeNodes, tempActiveNodes);
+            currentGlobalMetrics.licensesActive = Math.max(currentGlobalMetrics.licensesActive, tempLicensesActive);
+            currentGlobalMetrics.vaultDeployments = Math.max(currentGlobalMetrics.vaultDeployments, tempVaultDeployments);
+            currentGlobalMetrics.syncLogs = Math.max(currentGlobalMetrics.syncLogs, tempSyncLogs);
+            currentGlobalMetrics.auditsRunning = Math.max(currentGlobalMetrics.auditsRunning, tempAuditsRunning);
+            currentGlobalMetrics.signalZones = Math.max(currentGlobalMetrics.signalZones, tempSignalZones);
+            currentGlobalMetrics.scrollGridIndex = Math.max(currentGlobalMetrics.scrollGridIndex, tempScrollGridIndex);
+
             // Update the display elements
-            document.getElementById("activeNodesCount").textContent = totalActiveNodes.toLocaleString();
-            document.getElementById("licensesActiveCount").textContent = totalLicensesActive.toLocaleString();
-            document.getElementById("vaultDeploymentsCount").textContent = Math.round(totalVaultDeployments).toLocaleString();
-            document.getElementById("syncLogsCount").textContent = totalSyncLogs.toLocaleString();
-            document.getElementById("auditsRunningCount").textContent = totalAuditsRunning.toLocaleString();
-            document.getElementById("signalZonesCount").textContent = totalSignalZones.toLocaleString();
-            document.getElementById("scrollGridIndexCount").textContent = totalScrollGridIndex.toLocaleString();
+            document.getElementById("activeNodesCount").textContent = currentGlobalMetrics.activeNodes.toLocaleString();
+            document.getElementById("licensesActiveCount").textContent = currentGlobalMetrics.licensesActive.toLocaleString();
+            document.getElementById("vaultDeploymentsCount").textContent = Math.round(currentGlobalMetrics.vaultDeployments).toLocaleString();
+            document.getElementById("syncLogsCount").textContent = currentGlobalMetrics.syncLogs.toLocaleString();
+            document.getElementById("auditsRunningCount").textContent = currentGlobalMetrics.auditsRunning.toLocaleString();
+            document.getElementById("signalZonesCount").textContent = currentGlobalMetrics.signalZones.toLocaleString();
+            document.getElementById("scrollGridIndexCount").textContent = currentGlobalMetrics.scrollGridIndex.toLocaleString();
         }
 
 
         // --- CHART.JS PULSE MONITOR ---
-        let pulseChart; // Declare chart variable globally
+        let pulseChart = null; // Initialize to null
         let pulseData = Array.from({ length: 30 }, () => Math.floor(Math.random() * 100));
         let syncData = Array.from({ length: 30 }, () => Math.floor(Math.random() * 50)); 
-        let nodeHealthData = Array.from({ length: 30 }, () => Math.floor(Math.random() * 20) + 80); // New: Node Health (80-100)
+        let nodeHealthData = Array.from({ length: 30 }, () => Math.floor(Math.random() * 20) + 80); 
 
         function renderPulseChart() {
-            const ctx = document.getElementById('pulseChart').getContext('2d');
+            const ctx = document.getElementById('pulseChart');
+            if (!ctx) {
+                console.error("Canvas element for pulseChart not found!");
+                return; // Exit if canvas is not found
+            }
+            const context = ctx.getContext('2d');
+
             const labels = Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`);
             
-            if (pulseData.length === 0) pulseData = labels.map(() => Math.floor(Math.random() * 100));
-            if (syncData.length === 0) syncData = labels.map(() => Math.floor(Math.random() * 50));
-            if (nodeHealthData.length === 0) nodeHealthData = labels.map(() => Math.floor(Math.random() * 20) + 80);
-
             const data = {
                 labels: labels,
                 datasets: [
@@ -2518,11 +2530,11 @@
                         pointHoverRadius: 5
                     },
                     {
-                        label: 'Node Health Score (Avg)', // New: Node Health
-                        backgroundColor: 'rgba(255, 193, 7, 0.2)', // Yellow with opacity
-                        borderColor: '#ffc107', // Yellow
+                        label: 'Node Health Score (Avg)', 
+                        backgroundColor: 'rgba(255, 193, 7, 0.2)', 
+                        borderColor: '#ffc107', 
                         data: nodeHealthData, 
-                        fill: false, // No fill for this line
+                        fill: false, 
                         tension: 0.4,
                         pointRadius: 3,
                         pointHoverRadius: 5
@@ -2531,10 +2543,10 @@
             };
 
             if (pulseChart) {
-                pulseChart.destroy(); // Destroy existing chart before creating a new one
+                pulseChart.destroy(); 
             }
 
-            pulseChart = new Chart(ctx, {
+            pulseChart = new Chart(context, { // Use context here
                 type: 'line',
                 data: data,
                 options: {
@@ -2571,33 +2583,38 @@
 
         // Function to update chart with new data point every 9 seconds
         function updatePulseChart() {
+            // Check if chart instance exists before trying to update
+            if (!pulseChart) {
+                renderPulseChart(); // Try to render if it's somehow missing
+                return;
+            }
+
             // Remove the oldest data point
             pulseData.shift();
             syncData.shift();
-            nodeHealthData.shift(); // Remove oldest for new dataset
+            nodeHealthData.shift(); 
 
             // Add a new random data point
             pulseData.push(Math.floor(Math.random() * 100));
             syncData.push(Math.floor(Math.random() * 50));
-            nodeHealthData.push(Math.floor(Math.random() * 20) + 80); // New random data for health
+            nodeHealthData.push(Math.floor(Math.random() * 20) + 80); 
 
             // Update the chart
-            if (pulseChart) {
-                pulseChart.data.datasets[0].data = pulseData;
-                pulseChart.data.datasets[1].data = syncData; 
-                pulseChart.data.datasets[2].data = nodeHealthData; // Update new dataset
-                
-                // Update labels to simulate scrolling time
-                const latestDay = parseInt(pulseChart.data.labels[pulseChart.data.labels.length - 1].replace('Day ', ''));
-                pulseChart.data.labels.shift();
-                pulseChart.data.labels.push(`Day ${latestDay + 1}`); // Increment the day number
+            pulseChart.data.datasets[0].data = pulseData;
+            pulseChart.data.datasets[1].data = syncData; 
+            pulseChart.data.datasets[2].data = nodeHealthData; 
+            
+            // Update labels to simulate scrolling time
+            const latestDay = parseInt(pulseChart.data.labels[pulseChart.data.labels.length - 1].replace('Day ', ''));
+            pulseChart.data.labels.shift();
+            pulseChart.data.labels.push(`Day ${latestDay + 1}`); // Increment the day number
 
-                pulseChart.update();
-            }
+            pulseChart.update();
         }
 
         // Call updatePulseChart every 9 seconds
-        setInterval(updatePulseChart, 9000); // 9000 milliseconds = 9 seconds
+        // Ensure this interval starts AFTER the DOM is loaded and chart is rendered.
+        let pulseChartInterval = null;
 
 
         // --- INITIALIZATION ---
@@ -2605,10 +2622,9 @@
         // Function to populate the sector select dropdown in the admin panel
         function populateSectorSelect() {
             const selectElement = document.getElementById("sectorSelect");
-            // Clear existing options first if re-populating
             selectElement.innerHTML = ''; 
             for (const key in sectorList) {
-                if (key !== 'admin' && key !== 'global-index') { // Exclude admin and global-index from brand addition
+                if (key !== 'admin' && key !== 'global-index') { 
                     const option = document.createElement("option");
                     option.value = key;
                     option.textContent = sectorList[key];
@@ -2620,8 +2636,8 @@
         // Render all sector panels initially (hidden by default)
         function renderAllSectorPanels() {
             for (const sectorKey in ALL_SECTOR_DATA) {
-                if (sectorKey !== 'admin' && sectorKey !== 'global-index') { // Exclude admin and global-index panels
-                    renderSectorPanelContent(sectorKey); // Call the specific content rendering function
+                if (sectorKey !== 'admin' && sectorKey !== 'global-index') { 
+                    renderSectorPanelContent(sectorKey); 
                 }
             }
         }
@@ -2632,8 +2648,24 @@
             renderAdminOutputSection(); // Render content for the Admin panel if it's the default active panel
             renderGlobalIndexPanel(); // Render the Global Index table
             renderFaaZoneIndexTable(); // Render the main FAA.ZONE INDEX table
-            calculateGlobalMetrics(); // Calculate and display global metrics
-            renderPulseChart(); // Render the pulse activity chart
+            calculateGlobalMetrics(); // Calculate and display global metrics (first time)
+            
+            // Initial render of the chart
+            renderPulseChart(); 
+            // Start the interval only after the chart is rendered successfully
+            if (pulseChart) {
+                pulseChartInterval = setInterval(updatePulseChart, 9000); 
+            }
+        });
+
+        // Optional: Clear interval if leaving the page to prevent memory leaks in long sessions
+        window.addEventListener('beforeunload', () => {
+            if (pulseChartInterval) {
+                clearInterval(pulseChartInterval);
+            }
+            if (pulseChart) {
+                pulseChart.destroy();
+            }
         });
     </script>
 </body>
