@@ -407,31 +407,31 @@
             <section class="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-7 gap-6 px-6 py-8">
                 <a href="node-activity.html" class="bg-white p-5 rounded shadow text-center hover:bg-yellow-50 transition-transform hover:-translate-y-1 hover:scale-105">
                     <h3 class="text-md font-bold text-gray-700">🧠 Active Nodes</h3>
-                    <p>12,934</p>
+                    <p id="activeNodesCount">0</p>
                 </a>
                 <a href="license-grid.html" class="bg-white p-5 rounded shadow text-center hover:bg-yellow-50 transition-transform hover:-translate-y-1 hover:scale-105">
                     <h3 class="text-md font-bold text-gray-700">🔐 Licenses Active</h3>
-                    <p>3,288</p>
+                    <p id="licensesActiveCount">0</p>
                 </a>
                 <a href="vault-deployments.html" class="bg-white p-5 rounded shadow text-center hover:bg-yellow-50 transition-transform hover:-translate-y-1 hover:scale-105">
                     <h3 class="text-md font-bold text-gray-700">💾 Vault Deployments</h3>
-                    <p>654 Vaults</p>
+                    <p id="vaultDeploymentsCount">0</p>
                 </a>
                 <a href="ecosync-logs.html" class="bg-white p-5 rounded shadow text-center hover:bg-yellow-50 transition-transform hover:-translate-y-1 hover:scale-105">
                     <h3 class="text-md font-bold text-gray-700">📥 Sync Logs</h3>
-                    <p>204,111 entries</p>
+                    <p id="syncLogsCount">0</p>
                 </a>
                 <a href="audit-tracker.html" class="bg-white p-5 rounded shadow text-center hover:bg-yellow-50 transition-transform hover:-translate-y-1 hover:scale-105">
                     <h3 class="text-md font-bold text-gray-700">📈 Audits Running</h3>
-                    <p>47 scans</p>
+                    <p id="auditsRunningCount">0</p>
                 </a>
                 <a href="signal-zones.html" class="bg-white p-5 rounded shadow text-center hover:bg-yellow-50 transition-transform hover:-translate-y-1 hover:scale-105">
                     <h3 class="text-md font-bold text-gray-700">🛰️ Signal Zones</h3>
-                    <p>21 sectors</p>
+                    <p id="signalZonesCount">0</p>
                 </a>
                 <a href="grid-index.html" class="bg-white p-5 rounded shadow text-center hover:bg-yellow-50 transition-transform hover:-translate-y-1 hover:scale-105">
                     <h3 class="text-md font-bold text-gray-700">📊 Scroll Grid Index</h3>
-                    <p>986 clusters</p>
+                    <p id="scrollGridIndexCount">0</p>
                 </a>
             </section>
 
@@ -1691,16 +1691,16 @@
             "trade": { glyph: "🧺", monthlyFee: "$88", annualFee: "$888", payoutTier: "A+", region: "Div A-F" },
             "ai-logic": { glyph: "🧠", monthlyFee: "$104", annualFee: "$1,050", payoutTier: "A+", region: "Global" },
             "creative": { glyph: "🖋️", monthlyFee: "$67", annualFee: "$720", payoutTier: "A", region: "Div E" },
-            "banking": { glyph: "₿", monthlyFee: "$125", annualFee: "$1,250", payoutTier: "A+", region: "Div A-E" },
-            "webless": { glyph: "📡", monthlyFee: "$76", annualFee: "$770", payoutTier: "A", region: "Div D-G" }, // Corrected glyph from original
+            "banking": { glyph: "🏦", monthlyFee: "$125", annualFee: "$1,250", payoutTier: "A+", region: "Div A-E" }, // Corrected glyph
+            "webless": { glyph: "📡", monthlyFee: "$76", annualFee: "$770", payoutTier: "A", region: "Div D-G" },
             "logistics": { glyph: "📦", monthlyFee: "$58", annualFee: "$595", payoutTier: "B+", region: "Div B-F" },
-            "fsf": { glyph: "✿", monthlyFee: "$46", annualFee: "$480", payoutTier: "B+", region: "Rural" },
+            "fsf": { glyph: "🥦", monthlyFee: "$46", annualFee: "$480", payoutTier: "B+", region: "Rural" }, // Corrected glyph
             "education": { glyph: "📚", monthlyFee: "$39", annualFee: "$420", payoutTier: "A", region: "Tribal" }, // Using "education" key
-            "health": { glyph: "🧠", monthlyFee: "$52", annualFee: "$550", payoutTier: "B", region: "Div F" },
+            "health": { glyph: "🧠", monthlyFee: "$52", annualFee: "$550", payoutTier: "B", region: "Div F" }, // Using AI glyph for health
             "ritual": { glyph: "☯", monthlyFee: "$68", annualFee: "$725", payoutTier: "A", region: "Div C" },
             "housing": { glyph: "🏗️", monthlyFee: "$59", annualFee: "$610", payoutTier: "B+", region: "Div A-F" },
             "nft": { glyph: "🔁", monthlyFee: "$120", annualFee: "$1,200", payoutTier: "A", region: "FAA IP" },
-            "media": { glyph: "🌀", monthlyFee: "$72", annualFee: "$740", payoutTier: "A", region: "Creative" },
+            "media": { glyph: "🎬", monthlyFee: "$72", annualFee: "$740", payoutTier: "A", region: "Creative" }, // Corrected glyph
             "nutrition": { glyph: "✿", monthlyFee: "$48", annualFee: "$500", payoutTier: "B+", region: "Global" },
             "packaging": { glyph: "📦", monthlyFee: "$65", annualFee: "$680", payoutTier: "B", region: "Div B" },
             "quantum": { glyph: "✴️", monthlyFee: "$130", annualFee: "$1,300", payoutTier: "A+", region: "Global" },
@@ -1753,17 +1753,16 @@
             brandInput.value = "";
             subnodesInput.value = "";
             
-            // Re-render the specific sector panel if it's currently active
+            // Re-render relevant panels and metrics
             const activePanelId = document.querySelector('.sector-panel:not(.hidden)')?.id;
             if (activePanelId === `embedded-${sector}-snapshot` || activePanelId === `embedded-admin-snapshot` || activePanelId === `embedded-global-index-snapshot`) {
-                // If the target sector panel is open, or admin panel is open, or global index is open, re-render it
                 renderSectorPanel(sector); // Re-render the specific sector to include new brand if visible
                 renderGlobalIndexPanel(); // Re-render global index as it includes new brands
             } else {
-                 // Or just re-render the admin output section if the admin panel is the active one
                  renderAdminOutputSection();
             }
             renderFaaZoneIndexTable(); // Update the main summary table
+            calculateGlobalMetrics(); // Update all global metrics
 
             setTimeout(() => {
                 adminStatus.textContent = "";
@@ -1782,6 +1781,7 @@
                 renderAdminOutputSection(); // Clear admin output
                 renderGlobalIndexPanel(); // Clear global index
                 renderFaaZoneIndexTable(); // Update the main summary table
+                calculateGlobalMetrics(); // Update all global metrics
                 document.getElementById("adminStatus").textContent = "🗑️ All admin data cleared.";
             }
         }
@@ -1856,7 +1856,7 @@
             }
         }
 
-        // --- NEW: Universal function to generate rich snapshot content for ANY brand ---
+        // --- Universal function to generate rich snapshot content for ANY brand ---
         function generateGenericBrandSnapshotContent(sectorKey, brandName, subnodes) {
             const sectorDisplayName = sectorList[sectorKey] || sectorKey.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
             const features = [
@@ -2054,7 +2054,7 @@
             }
         }
 
-        // --- NEW: Global Brand Index Panel Renderer ---
+        // --- Global Brand Index Panel Renderer ---
         function renderGlobalIndexPanel() {
             const tableBody = document.getElementById("globalBrandTableBody");
             if (!tableBody) {
@@ -2136,7 +2136,7 @@
             }
         }
 
-        // --- NEW: Function to render the FAA.ZONE INDEX summary table dynamically ---
+        // --- Function to render the FAA.ZONE INDEX summary table dynamically ---
         function renderFaaZoneIndexTable() {
             const tableBody = document.getElementById("faaZoneIndexTableBody");
             if (!tableBody) {
@@ -2180,12 +2180,62 @@
                     <td class="px-4 py-2">${summaryData.payoutTier}</td>
                     <td class="px-4 py-2">${summaryData.region}</td>
                     <td class="px-4 py-2"><button onclick="showSectorPanel('embedded-${sectorKey}-snapshot', this)" class="text-blue-600 hover:underline">View</button></td>
-                    <td class="px-4 py-2"><button onclick="alert('Deploying ${displayName} now! (Simulated)')" class="text-green-600 hover:underline">Deploy</button></td>
+                    <td class="px-4 py-2"><button onclick="alert('Initiating deployment for ${displayName} now! (Simulated)')" class="text-green-600 hover:underline">Deploy</button></td>
                 `;
                 tableBody.appendChild(row);
             });
         }
 
+        // --- NEW: Calculate and display all Global Metrics ---
+        function calculateGlobalMetrics() {
+            let totalUniqueBrands = 0;
+            let totalSubnodesAcrossAllBrands = 0;
+            let distinctSectorsCount = Object.keys(sectorList).length - 2; // Exclude 'admin' and 'global-index'
+
+            // Sum static brands/nodes
+            for (const sectorKey in ALL_SECTOR_DATA) {
+                const data = ALL_SECTOR_DATA[sectorKey];
+                if (data.brands) {
+                    totalUniqueBrands += data.brands.length;
+                }
+                if (data.subNodes) {
+                    data.subNodes.forEach(subArray => {
+                        totalSubnodesAcrossAllBrands += subArray.length;
+                    });
+                }
+            }
+
+            // Sum admin-added brands/nodes
+            for (const sectorKey in adminSectorData) {
+                const data = adminSectorData[sectorKey];
+                if (data.brands) {
+                    totalUniqueBrands += data.brands.length;
+                }
+                if (data.nodes) { // 'nodes' in adminSectorData
+                    data.nodes.forEach(subArray => {
+                        totalSubnodesAcrossAllBrands += subArray.length;
+                    });
+                }
+            }
+
+            // Derive other metrics based on total brands/nodes
+            const licensesActive = Math.round(totalUniqueBrands * 1.5 + (Math.random() * 50 - 25)); // Brands * 1.5 +/- 25
+            const vaultDeployments = Math.round(totalUniqueBrands * 0.5 + (Math.random() * 10 - 5)); // Brands * 0.5 +/- 5
+            const scrollGridIndex = Math.round(totalUniqueBrands * 0.1 + (Math.random() * 2 - 1)); // Brands * 0.1 +/- 1
+
+            // Simulate fluctuating live metrics
+            const currentSyncLogs = 200000 + Math.floor(Math.random() * 50000 - 25000); // Base 200k +/- 25k
+            const currentAuditsRunning = 40 + Math.floor(Math.random() * 10 - 5); // Base 40 +/- 5
+
+            // Update DOM elements
+            document.getElementById("activeNodesCount").innerText = totalSubnodesAcrossAllBrands.toLocaleString();
+            document.getElementById("licensesActiveCount").innerText = licensesActive.toLocaleString();
+            document.getElementById("vaultDeploymentsCount").innerText = vaultDeployments.toLocaleString();
+            document.getElementById("syncLogsCount").innerText = currentSyncLogs.toLocaleString();
+            document.getElementById("auditsRunningCount").innerText = currentAuditsRunning.toLocaleString();
+            document.getElementById("signalZonesCount").innerText = distinctSectorsCount.toLocaleString();
+            document.getElementById("scrollGridIndexCount").innerText = scrollGridIndex.toLocaleString();
+        }
 
         // Function to render all sector panels on initial load (hidden)
         function renderAllSectorPanels() {
@@ -2206,6 +2256,8 @@
             }
             // Render the FAA.ZONE INDEX summary table
             renderFaaZoneIndexTable();
+            // Calculate and display all global metrics
+            calculateGlobalMetrics();
         }
 
 
@@ -2222,7 +2274,7 @@
                 });
             }
 
-            renderAllSectorPanels(); // Render all brand lists (grids and snapshots) but keep panels hidden
+            renderAllSectorPanels(); // Render all initial data
 
             // Attach search listener to the new global brand search input
             const globalSearchInput = document.getElementById("globalBrandSearch");
@@ -2232,6 +2284,9 @@
             
             // Set default active panel on load if desired (e.g., admin panel)
             // showSectorPanel('embedded-admin-snapshot', document.querySelector('[data-sector="admin"]')); 
+
+            // Set up interval for live metrics update
+            setInterval(calculateGlobalMetrics, 5000); // Update every 5 seconds for "live" feel
         });
 
         // --- FAA Scroll Pulse Monitor Chart ---
