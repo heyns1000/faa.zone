@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-05-27 | faa.zone | security/repo-cleanup | `public/admin/admin-login.html` | `fe9c9ca1` | Admin Login - FAA.ZONE | 9099 | 8 | 0 | 34.9 |
+| 2 | 2025-05-28 | faa.zone | security/repo-cleanup | `public/admin-portal.html` | `e9acc275` | Admin Login - FAA.ZONE | 10667 | 8 | 0 | 35.1 |
