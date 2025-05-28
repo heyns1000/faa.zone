@@ -1003,7 +1003,7 @@
             "saas": "🔑 SaaS & Licensing",
             "trade": "🧺 Trade Systems",
             "utilities": "🔋 Utilities & Energy",
-            "voice": "🎙️ Voice & Audio",
+            "voice": "🎙️️ Voice & Audio",
             "webless": "📡 Webless Tech & Nodes",
             "nft": "🔁 NFT & Ownership",
             "zerowaste": "♻️ Zero Waste",
@@ -1088,17 +1088,17 @@
         // Array to hold all particles
         const particles = [];
         // Number of particles - Significantly increased for much denser web
-        const numParticles = 750; // Increased from 250 to 750
+        const numParticles = 1200; // Increased from 750 to 1200 for higher density
         // Maximum distance for lines to be drawn between particles
-        const maxDistance = 80; // Slightly reduced for tighter connections with more particles
+        const maxDistance = 70; // Reduced for tighter connections with more particles
         // Maximum distance for lines to be drawn to the mouse
-        const mouseDistance = 180; // Adjusted for hero section size
+        const mouseDistance = 160; // Adjusted for hero section size
 
         // Mouse object to track its position relative to the hero section
         const mouse = {
             x: null,
             y: null,
-            radius: 140 // Radius around the mouse for interaction
+            radius: 130 // Adjusted radius around the mouse for interaction
         };
 
         // Function to update canvas dimensions based on hero section size
@@ -1150,8 +1150,8 @@
                 this.baseSize = size; // Store original size
                 this.size = size;
                 this.color = color;
-                this.baseOpacity = 0.8; // Base opacity for particles
-                this.opacity = 0.8;
+                this.baseOpacity = 0.7; // Base opacity for particles, slightly reduced for more particles
+                this.opacity = 0.7;
                 this.pulseOffset = Math.random() * Math.PI * 2; // For subtle pulsing
             }
 
@@ -1178,14 +1178,14 @@
                 }
 
                 // Move particle - even faster movement
-                this.x += this.directionX * 3.5; // Multiplied by 3.5 for even faster movement
-                this.y += this.directionY * 3.5; // Multiplied by 3.5 for even faster movement
+                this.x += this.directionX * 4; // Multiplied by 4 for very fast movement
+                this.y += this.directionY * 4; // Multiplied by 4 for very fast movement
 
                 // Apply subtle pulsing to particles even without mouse interaction
-                const pulseSpeed = 0.05;
-                const pulseMagnitude = 0.1;
+                const pulseSpeed = 0.06; // Slightly faster pulse
+                const pulseMagnitude = 0.15; // More pronounced pulse
                 this.opacity = this.baseOpacity + Math.sin(Date.now() * pulseSpeed + this.pulseOffset) * pulseMagnitude;
-                this.opacity = Math.max(0.5, Math.min(1, this.opacity)); // Keep opacity within reasonable bounds
+                this.opacity = Math.max(0.4, Math.min(1, this.opacity)); // Keep opacity within reasonable bounds
 
                 // Handle mouse interaction (attraction/repulsion and visual feedback)
                 if (mouse.x !== null && mouse.y !== null) {
@@ -1198,7 +1198,7 @@
                         let forceDirectionX = dx / distance;
                         let forceDirectionY = dy / distance;
                         let force = (mouse.radius + this.size - distance) / (mouse.radius + this.size);
-                        let repulsionStrength = 7; // Significantly increased repulsion strength
+                        let repulsionStrength = 8; // Significantly increased repulsion strength
                         let directionX = forceDirectionX * force * repulsionStrength;
                         let directionY = forceDirectionY * force * repulsionStrength;
 
@@ -1206,14 +1206,14 @@
                         this.y -= directionY;
 
                         // Dynamic size and opacity based on proximity to mouse - more dramatic
-                        let scaleFactor = 1 + (1 - (distance / (mouse.radius + this.size))) * 1.2; // Grow up to 120% larger
+                        let scaleFactor = 1 + (1 - (distance / (mouse.radius + this.size))) * 1.5; // Grow up to 150% larger
                         this.size = this.baseSize * scaleFactor;
-                        this.opacity = this.baseOpacity + (1 - (distance / (mouse.radius + this.size))) * 0.9; // Become more opaque
+                        this.opacity = this.baseOpacity + (1 - (distance / (mouse.radius + this.size))) * 1.0; // Become fully opaque
                         this.opacity = Math.min(1, this.opacity); // Cap opacity at 1
                     } else {
                         // Slowly return to base size and opacity when mouse is far
                         if (this.size > this.baseSize) {
-                            this.size -= 0.12; // Faster return
+                            this.size -= 0.15; // Faster return
                             if (this.size < this.baseSize) this.size = this.baseSize;
                         }
                         // Opacity will naturally return due to the pulsing logic
@@ -1221,7 +1221,7 @@
                 } else {
                     // Slowly return to base size when mouse is not active
                     if (this.size > this.baseSize) {
-                        this.size -= 0.12; // Faster return
+                        this.size -= 0.15; // Faster return
                         if (this.size < this.baseSize) this.size = this.baseSize;
                     }
                     // Opacity will naturally return due to the pulsing logic
@@ -1238,12 +1238,12 @@
         function initParticles() {
             particles.length = 0; // Clear existing particles
             for (let i = 0; i < numParticles; i++) {
-                let size = (Math.random() * 1.5) + 0.5; // Particle size between 0.5 and 2
+                let size = (Math.random() * 1.2) + 0.3; // Particle size between 0.3 and 1.5 (smaller average)
                 let x = (Math.random() * ((heroSectionWidth - size * 2) - (size * 2)) + size * 2);
                 let y = (Math.random() * ((heroSectionHeight - size * 2) - (size * 2)) + size * 2);
-                let directionX = (Math.random() * 2.5) - 1.25; // Even wider speed range
-                let directionY = (Math.random() * 2.5) - 1.25; // Even wider speed range
-                let color = 'rgba(0, 0, 0, 0.8)'; // Particles are darker for contrast
+                let directionX = (Math.random() * 3) - 1.5; // Even wider speed range
+                let directionY = (Math.random() * 3) - 1.5; // Even wider speed range
+                let color = 'rgba(0, 0, 0, 0.7)'; // Particles are darker for contrast
                 particles.push(new Particle(x, y, directionX, directionY, size, color));
             }
         }
@@ -1258,7 +1258,7 @@
         function connectParticles() {
             let opacity = 1;
             // Update hue for dynamic color - significantly faster cycle for more dynamism
-            hue = (hue + 3.5) % 360; // Cycle through hues much, much faster
+            hue = (hue + 4.5) % 360; // Cycle through hues much, much faster
 
             for (let a = 0; a < particles.length; a++) {
                 for (let b = a; b < particles.length; b++) {
@@ -1269,8 +1269,8 @@
                     if (distance < maxDistance) {
                         opacity = 1 - (distance / maxDistance);
                         // Dynamic line color based on hue - higher saturation and lightness
-                        ctx.strokeStyle = `hsla(${hue}, 85%, 45%, ${opacity})`; // Slightly darker, vibrant lines for contrast
-                        ctx.lineWidth = 1.5; // Slightly thicker default lines
+                        ctx.strokeStyle = `hsla(${hue}, 90%, 50%, ${opacity})`; // Vibrant lines, slightly brighter for visibility
+                        ctx.lineWidth = 1.8; // Slightly thicker default lines
                         ctx.beginPath();
                         ctx.moveTo(particles[a].x, particles[a].y);
                         ctx.lineTo(particles[b].x, particles[b].y);
@@ -1289,8 +1289,8 @@
                     if (distanceToMouse < mouseDistance) {
                         opacity = 1 - (distanceToMouse / mouseDistance);
                         // Dynamic line color for mouse interaction - even more vibrant and contrasting
-                        ctx.strokeStyle = `hsla(${(hue + 180) % 360}, 95%, 40%, ${opacity})`; // Distinct, highly vibrant color for mouse lines
-                        ctx.lineWidth = 5; // Much thicker lines to mouse for strong visual cue
+                        ctx.strokeStyle = `hsla(${(hue + 150) % 360}, 100%, 45%, ${opacity})`; // Distinct, highly vibrant color for mouse lines
+                        ctx.lineWidth = 6; // Much thicker lines to mouse for strong visual cue
                         ctx.beginPath();
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(mouse.x, mouse.y);
