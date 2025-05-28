@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en" class="min-h-screen bg-black text-white overflow-x-hidden">
+<head>
+    <meta charset="UTF-8" />
+    <title>FAA.ZONE™ | Contact Careers</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117; /* Main page dark background */
+        }
+        /* Custom styles for the dark form section */
+        .form-section-dark {
+            @apply bg-gray-900 rounded-3xl shadow-2xl mt-12 mb-12 text-center;
+            padding: 4rem 5rem; /* Generous padding */
+            color: white; /* Default text color for this section */
+            border: 1px solid #374151; /* Subtle border for definition */
+        }
+        /* Styles for inputs within the dark form */
+        .form-input-dark,
+        .form-textarea-dark,
+        .form-select-dark {
+            @apply block w-full px-4 py-3 rounded-lg border border-gray-700 text-white placeholder-gray-500
+                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200;
+            background-color: #1f2937; /* Slightly lighter dark for inputs */
+        }
+        .file-input-dark {
+            @apply block w-full text-sm text-gray-200
+                   file:mr-4 file:py-2 file:px-5 file:rounded-full file:border-0
+                   file:text-sm file:font-semibold file:bg-blue-600 file:text-white
+                   hover:file:bg-blue-700 cursor-pointer transition-colors duration-200;
+        }
+        /* Style for icons on dark background */
+        .icon-light {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+            width: 20px;
+            height: 20px;
+            fill: currentColor; /* Inherit color from parent text (white/light) */
+        }
+        .submit-button-dark {
+            @apply px-10 py-4 bg-blue-600 text-white font-bold rounded-xl shadow-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105;
+        }
+        /* Canvas styling for the main body graph */
+        #pulseGraphCanvas {
+            background-color: transparent;
+            display: block;
+            width: 100%;
+            height: 400px; /* Portrait-like height */
+            border-radius: 0.5rem;
+        }
+        /* Footer Pulse Graph Canvas styling */
+        #footerGraphCanvas {
+            display: block;
+            background-color: #0d1117;
+            width: 100%;
+            height: 300px;
+        }
+        /* Footer container for positioning elements on top of canvas */
+        .footer-container {
+            position: relative;
+            width: 100%;
+            min-height: 300px;
+            background-color: #0d1117;
+        }
+        /* Content overlaying the canvas */
+        .footer-content-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            color: white;
+            padding: 2rem 1rem;
+        }
+        .footer-content-overlay a {
+            color: #60a5fa;
+            transition: color 0.2s ease-in-out;
+        }
+        .footer-content-overlay a:hover {
+            color: #3b82f6;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen flex flex-col justify-between items-center p-0 md:p-8">
+
+    <main class="flex flex-col items-center flex-grow w-full max-w-screen-2xl p-4 md:p-10">
+        <section class="form-section-dark w-full max-w-3xl mx-auto">
+            <h1 class="text-3xl md:text-4xl font-bold text-emerald-400 mb-8 drop-shadow-sm flex items-center justify-center">
+                <svg class="icon-light mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                Contact FAA.ZONE™ Careers
+            </h1>
+            <p class="text-lg text-gray-300 mb-12">
+                For general career inquiries or to submit your CV for consideration, please fill out the form below. Your application will be sent directly to our careers team. We're excited to hear from you!
+            </p>
+
+            <form id="careerContactForm" class="space-y-8 text-left">
+                <div>
+                    <label for="fullName" class="block text-gray-200 text-sm font-bold mb-2 pl-4">
+                        <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Full Name
+                    </label>
+                    <input type="text" id="fullName" name="fullName" class="form-input-dark" placeholder="John Doe" required>
+                </div>
+                <div>
+                    <label for="email" class="block text-gray-200 text-sm font-bold mb-2 pl-4">
+                        <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        Your Email Address
+                    </label>
+                    <input type="email" id="email" name="email" class="form-input-dark" placeholder="you@example.com" required>
+                </div>
+                <div>
+                    <label for="phone" class="block text-gray-200 text-sm font-bold mb-2 pl-4">
+                        <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2H7c.5 0 .9.34 1 .85l.72 2.87a2 2 0 0 0-.7 2.87l-2.17 2.17a12.5 12.5 0 0 0 5.57 5.57l2.17-2.17a2 2 0 0 0 2.87-.7l2.87.72c.5.1.85.5.85 1z"></path>
+                        </svg>
+                        Phone Number (Optional)
+                    </label>
+                    <input type="tel" id="phone" name="phone" class="form-input-dark" placeholder="+123 456 7890">
+                </div>
+                <div>
+                    <label for="positionInterest" class="block text-gray-200 text-sm font-bold mb-2 pl-4">
+                        <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                        </svg>
+                        Position of Interest (Optional)
+                    </label>
+                    <select id="positionInterest" name="positionInterest" class="form-select-dark">
+                        <option value="">Select a position (or general inquiry)</option>
+                        <option value="Junior Developer">Junior Developer</option>
+                        <option value="Senior AI Engineer">Senior AI Engineer</option>
+                        <option value="Product Manager, OmniDrop">Product Manager, OmniDrop</option>
+                        <option value="UI/UX Designer">UI/UX Designer</option>
+                        <option value="Internship/Graduate Program">Internship/Graduate Program</option>
+                        <option value="General Inquiry">General Inquiry</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="experienceLevel" class="block text-gray-200 text-sm font-bold mb-2 pl-4">
+                        <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        Years of Experience (Optional)
+                    </label>
+                    <select id="experienceLevel" name="experienceLevel" class="form-select-dark">
+                        <option value="">Select experience level</option>
+                        <option value="0-1">0-1 Years</option>
+                        <option value="1-3">1-3 Years</option>
+                        <option value="3-5">3-5 Years</option>
+                        <option value="5+">5+ Years</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="message" class="block text-gray-200 text-sm font-bold mb-2 pl-4">
+                        <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L2 22l1.5-4.5A8.38 8.38 0 0 1 2 11.5a8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8.5 8.5z"></path>
+                        </svg>
+                        Your Message / General Questions
+                    </label>
+                    <textarea id="message" name="message" rows="7" class="form-textarea-dark" placeholder="Tell us more about your inquiry or ask your questions here..."></textarea>
+                </div>
+                <div>
+                    <label for="cvUpload" class="block text-gray-200 text-sm font-bold mb-2 pl-4">
+                        <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                        Upload CV/Resume (PDF/DOCX preferred)
+                    </label>
+                    <input type="file" id="cvUpload" name="cvUpload" accept=".pdf,.doc,.docx" class="file-input-dark">
+                    <p class="mt-2 text-xs text-gray-400">Please note: File attachments via this form will require manual attachment in your email client after clicking 'Send Email'.</p>
+                </div>
+                <div class="flex items-center justify-center mt-10">
+                    <button type="submit" class="submit-button-dark">
+                        Send Email to Careers Team
+                    </button>
+                </div>
+            </form>
+            <div class="mt-16 pt-8 border-t border-gray-700 w-full">
+                <h2 class="text-2xl md:text-3xl font-bold text-emerald-400 mb-8 text-center">
+                    ✨ The Rhythmic Pulse of Your Aspirations ✨
+                </h2>
+                <p class="text-lg text-gray-300 mb-8">
+                    This "Rhythmic Pulse Graph" visualizes the dynamic energy of your unique journey, illustrating how your aspirations and inquiries create a vibrant, spiraling connection with our team.
+                </p>
+                <canvas id="pulseGraphCanvas"></canvas>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer-container">
+        <canvas id="footerGraphCanvas"></canvas>
+        <div class="footer-content-overlay">
+            <div class="max-w-screen-2xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center text-sm md:text-xs lg:text-sm w-full">
+                <div class="mb-6 md:mb-0 md:w-1/3">
+                    <div class="text-xl md:text-2xl font-bold mb-2 text-blue-600">FAA.zone <span class="text-gray-200">/ BuildNest™</span></div>
+                    <p class="text-gray-400">© 2025 FAA.zone. All systems, symbols, and brand echoes <br> protected by the Omni Present Copyright™.</p>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-y-4 gap-x-8 md:gap-x-12 lg:gap-x-16">
+                    <div>
+                        <h3 class="font-bold text-gray-200 mb-2">BuildNest™</h3>
+                        <ul class="space-y-1 text-gray-400">
+                            <li><a href="https://faa.zone/buildnest/features" class="hover:text-blue-400 transition-colors">Features</a></li>
+                            <li><a href="https://faa.zone/buildnest/use-cases" class="hover:text-blue-400 transition-colors">Use Cases</a></li>
+                            <li><a href="https://faa.zone/buildnest/pricing" class="hover:text-blue-400 transition-colors">Pricing</a></li>
+                            <li><a href="https://faa.zone/buildnest/modules" class="hover:text-blue-400 transition-colors">Modules</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-200 mb-2">FAA.zone</h3>
+                        <ul class="space-y-1 text-gray-400">
+                            <li><a href="https://faa.zone/about" class="hover:text-blue-400 transition-colors">About FAA Systems™</a></li>
+                            <li><a href="https://faa.zone/omni-grid" class="hover:text-blue-400 transition-colors">Omni Grid™</a></li>
+                            <li><a href="https://faa.zone/baobab-archive" class="hover:text-blue-400 transition-colors">Compliance</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-200 mb-2">Careers</h3>
+                        <ul class="space-y-1 text-gray-400">
+                            <li><a href="https://faa.zone/careers" class="hover:text-blue-400 transition-colors">Open Roles</a></li>
+                            <li><a href="https://faa.zone/careers/culture" class="hover:text-blue-400 transition-colors">Our Culture</a></li>
+                            <li><a href="https://faa.zone/careers/benefits" class="hover:text-blue-400 transition-colors">Benefits</a></li>
+                            <li><a href="https://faa.zone/careers/faq" class="hover:text-blue-400 transition-colors">FAQ</a></li>
+                            <li><a href="https://faa.zone/careers/team" class="hover:text-blue-400 transition-colors">Meet the Team</a></li>
+                            <li><a href="https://faa.zone/careers/life-at-faa" class="hover:text-blue-400 transition-colors">Life at FAA.ZONE™</a></li>
+                            <li><a href="https://faa.zone/careers/internships" class="hover:text-blue-400 transition-colors">Internships</a></li>
+                            <li><a href="https://faa.zone/careers/diversity" class="hover:text-blue-400 transition-colors">Diversity & Inclusion</a></li>
+                            <li><a href="https://faa.zone/careers/contact-us" class="hover:text-blue-400 transition-colors">Contact Careers</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        window.onload = function() {
+            // --- Main Pulse Graph Canvas (Weird Portrait Sausage) ---
+            const mainCanvas = document.getElementById('pulseGraphCanvas');
+            const mainCtx = mainCanvas.getContext('2d');
+            const mainNumLines = 250; // More lines for density
+            const mainPulseDuration = 4000; // Slightly slower, more deliberate pulse
+            const mainPulseAmplitude = 0.7; // Stronger amplitude for "weirdness"
+
+            const mainLineData = [];
+            for (let i = 0; i < mainNumLines; i++) {
+                mainLineData.push({
+                    // Randomize starting position more for a scattered feel
+                    startX: Math.random() * mainCanvas.width,
+                    startY: Math.random() * mainCanvas.height,
+                    // Amplitude and frequency for vertical movement
+                    amplitudeY: Math.random() * 0.3 + 0.1,
+                    frequencyY: Math.random() * 0.02 + 0.005,
+                    // Amplitude and frequency for horizontal movement (spiral)
+                    amplitudeX: Math.random() * 0.1 + 0.01,
+                    frequencyX: Math.random() * 0.01 + 0.001,
+                    // Random vibrant and slightly unusual colors
+                    color: `hsla(${Math.random() * 360}, 100%, ${Math.random() * 50 + 50}%, ${Math.random() * 0.7 + 0.3})`,
+                    thickness: Math.random() * 3 + 1, // Varied thickness
+                    phaseOffset: Math.random() * Math.PI * 2 // Individual phase offset
+                });
+            }
+
+            function resizeMainCanvas() {
+                mainCanvas.width = mainCanvas.offsetWidth;
+                mainCanvas.height = mainCanvas.offsetHeight;
+            }
+            resizeMainCanvas();
+            window.addEventListener('resize', resizeMainCanvas);
+
+            let mainStartTime = Date.now();
+
+            function animateMainGraph() {
+                requestAnimationFrame(animateMainGraph);
+                mainCtx.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
+                const currentTime = Date.now();
+                const elapsedTime = currentTime - mainStartTime;
+                const pulseProgress = (elapsedTime % mainPulseDuration) / mainPulseDuration;
+                const pulseEffect = Math.sin(pulseProgress * Math.PI * 2) * mainPulseAmplitude; // Declared here
+
+                for (let i = 0; i < mainNumLines; i++) {
+                    const line = mainLineData[i];
+                    mainCtx.beginPath();
+                    mainCtx.strokeStyle = line.color;
+                    mainCtx.lineWidth = line.thickness;
+                    mainCtx.lineCap = 'round';
+
+                    // Draw a segment of the "sausage"
+                    const numSegments = 50; // Increased segments for smoother spiral
+
+                    for (let j = 0; j <= numSegments; j++) {
+                        const t = j / numSegments; // Progress along the segment
+
+                        // Calculate position with vertical bias and spiral effect
+                        const x = mainCanvas.width / 2 +
+                                  Math.sin(t * line.frequencyX * 20 + line.phaseOffset + pulseEffect * 2) * (line.amplitudeX * mainCanvas.width / 2) +
+                                  Math.cos(t * Math.PI * 4 + pulseProgress * Math.PI * 8) * (mainCanvas.width / 8 * (1 - t)); // More pronounced spiral
+
+                        const y = mainCanvas.height * t +
+                                  Math.sin(t * line.frequencyY * 20 + line.phaseOffset + pulseEffect * 3) * (line.amplitudeY * mainCanvas.height / 4);
+
+                        if (j === 0) {
+                            mainCtx.moveTo(x, y);
+                        } else {
+                            mainCtx.lineTo(x, y);
+                        }
+                    }
+                    mainCtx.stroke();
+                }
+            }
+            animateMainGraph();
+
+            // --- Footer Pulse Graph Canvas ---
+            const footerCanvas = document.getElementById('footerGraphCanvas');
+            const footerCtx = footerCanvas.getContext('2d');
+            const footerNumLines = 1000;
+            const footerLineData = [];
+            const footerPulseDuration = 3000;
+            const footerPulseAmplitude = 0.8;
+
+            for (let i = 0; i < footerNumLines; i++) {
+                footerLineData.push({
+                    offset: Math.random() * Math.PI * 2,
+                    amplitude: Math.random() * 0.1 + 0.01,
+                    frequency: Math.random() * 0.1 + 0.005,
+                    color: `rgba(${Math.floor(Math.random() * 50) + 10}, ${Math.floor(Math.random() * 150) + 100}, ${Math.floor(Math.random() * 50) + 200}, ${Math.random() * 0.5 + 0.1})`,
+                    thickness: Math.random() * 0.8 + 0.1
+                });
+            }
+
+            function resizeFooterCanvas() {
+                footerCanvas.width = footerCanvas.offsetWidth;
+                footerCanvas.height = footerCanvas.offsetHeight;
+            }
+            resizeFooterCanvas();
+            window.addEventListener('resize', resizeFooterCanvas);
+
+            let footerStartTime = Date.now();
+
+            function animateFooterGraph() {
+                requestAnimationFrame(animateFooterGraph);
+                footerCtx.clearRect(0, 0, footerCanvas.width, footerCanvas.height);
+                const currentTime = Date.now();
+                const elapsedTime = currentTime - footerStartTime;
+                const pulseProgress = (elapsedTime % footerPulseDuration) / footerPulseDuration;
+
+                for (let i = 0; i < footerNumLines; i++) {
+                    const line = footerLineData[i];
+                    footerCtx.beginPath();
+                    footerCtx.strokeStyle = line.color;
+                    footerCtx.lineWidth = line.thickness;
+                    footerCtx.lineCap = 'round';
+
+                    const pulseEffect = Math.sin(pulseProgress * Math.PI * 2) * footerPulseAmplitude;
+
+                    for (let x = 0; x <= footerCanvas.width; x += 10) {
+                        const y = footerCanvas.height / 2 +
+                                  Math.sin(x * line.frequency + line.offset + pulseEffect * 5) * (line.amplitude * footerCanvas.height / 2) +
+                                  Math.sin(pulseProgress * Math.PI * 2 + i * 0.1) * (footerCanvas.height / 10);
+
+                        if (x === 0) {
+                            footerCtx.moveTo(x, y);
+                        } else {
+                            footerCtx.lineTo(x, y);
+                        }
+                    }
+                    footerCtx.stroke();
+                }
+            }
+            animateFooterGraph();
+        };
+    </script>
+</body>
+</html>
