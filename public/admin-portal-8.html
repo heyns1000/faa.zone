@@ -322,6 +322,7 @@
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="nutrition-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="nutrition-snapshots"></div>
+                <p id="nutrition-no-brands-message" class="hidden text-center text-gray-500 mt-4">No Nutrition & Food Chain brands found to display.</p>
             </div>
 
             <div id="embedded-packaging-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
@@ -430,7 +431,6 @@
                     </table>
                 </div>
             </div>
-
 
             <section class="bg-white rounded shadow p-6 mb-8">
                 <h2 class="text-xl font-bold mb-4">⦿ FAA.ZONE INDEX — Expanded Table Structure</h2>
@@ -1883,6 +1883,39 @@
         ];
 
 
+        // FAA NUTRITION & FOOD CHAIN SCROLLS
+
+        const foodChainBrands = [
+            'AgriNest™', 'FreshSync™', 'CropLoop™', 'SoilGrid™', 'FarmDrop™',
+            'GrainVault™', 'HarvestClaim™', 'PulseCrop™', 'YieldField™', 'RootMap™',
+            'FoodProof™', 'AquaNest™', 'SeedCycle™', 'PlantTrack™', 'CropVault™',
+            'SoilEcho™', 'NutritionClaim™', 'LoopFarm™', 'PulseGrain™', 'FieldNest™'
+        ];
+
+        const foodChainSubNodes = [
+            ['CropTag', 'SoilPath', 'YieldSync', 'VaultHarvest'],
+            ['NestGrain', 'PulseField', 'FarmTrack', 'ClaimRoot'],
+            ['CycleGrain', 'VaultCrop', 'YieldClaim', 'FieldDrop'],
+            ['SoilBeam', 'FarmYield', 'VaultNest', 'TagField'],
+            ['DropCrop', 'HarvestTrack', 'ClaimEcho', 'PulseSoil'],
+            ['GrainTrack', 'YieldNest', 'VaultMap', 'SoilNode'],
+            ['ClaimCrop', 'PulseHarvest', 'RootVault', 'NestLoop'],
+            ['PulseSoilX', 'VaultGrain', 'FieldClaim', 'TrackEcho'],
+            ['SoilDrop', 'PlantClaim', 'YieldProof', 'VaultRoot'],
+            ['FarmGrid', 'VaultPath', 'CropPanel', 'EchoHarvest'],
+            ['FoodYield', 'TrackSeed', 'SoilNodeX', 'PulseNest'],
+            ['AquaTrack', 'GrainClaim', 'VaultSync', 'HarvestEcho'],
+            ['SeedRoot', 'ClaimPanel', 'DropVault', 'CropSync'],
+            ['TrackCrop', 'VaultField', 'EchoGrain', 'YieldPath'],
+            ['VaultFarm', 'PulseNestX', 'ClaimGrain', 'SoilEchoX'],
+            ['FieldCycle', 'HarvestPanel', 'VaultProof', 'GrainLoop'],
+            ['NutritionDrop', 'ClaimVault', 'SeedTrack', 'EchoField'],
+            ['FarmSync', 'LoopNest', 'VaultRootX', 'SoilPanel'],
+            ['GrainYield', 'ClaimDropX', 'EchoNest', 'VaultFieldX'],
+            ['NestHarvest', 'PulseCropX', 'TrackSoil', 'VaultClaim']
+        ];
+
+
         // This object maps sector keys to their respective brand and subnode arrays
         const ALL_SECTOR_DATA = {
             "banking": { brands: bankingBrands, subNodes: bankingSubNodes },
@@ -1899,7 +1932,8 @@
             "ai-logic": { brands: ailogicBrands, subNodes: ailogicSubNodes },
             "professional": { brands: professionalBrands, subNodes: professionalSubNodes },
             "mining": { brands: miningBrands, subNodes: miningSubNodes },
-            "zerowaste": { brands: zeroWasteBrands, subNodes: zeroWasteSubNodes }, /* Added Zero Waste */
+            "zerowaste": { brands: zeroWasteBrands, subNodes: zeroWasteSubNodes },
+            "nutrition": { brands: foodChainBrands, subNodes: foodChainSubNodes }, /* Added Nutrition & Food Chain */
             // Add other sectors here as they are defined: fashion, gaming, justice, knowledge, micromesh, nutrition, packaging, quantum, ritual, saas, trade, utilities, voice, nft, zerowaste, education-youth (if distinct)
         };
 
@@ -1920,13 +1954,13 @@
             "housing": { glyph: "🏗️", monthlyFee: "$59", annualFee: "$610", payoutTier: "B+", region: "Div A-F" },
             "nft": { glyph: "🔁", monthlyFee: "$120", annualFee: "$1,200", payoutTier: "A", region: "FAA IP" },
             "media": { glyph: "🎬", monthlyFee: "$72", annualFee: "$740", payoutTier: "A", region: "Creative" },
-            "nutrition": { glyph: "✿", monthlyFee: "$48", annualFee: "$500", payoutTier: "B+", region: "Global" },
+            "nutrition": { glyph: "✿", monthlyFee: "$48", annualFee: "$500", payoutTier: "B+", region: "Global" }, /* Added Nutrition & Food Chain summary */
             "packaging": { glyph: "📦", monthlyFee: "$65", annualFee: "$680", payoutTier: "B", region: "Div B" },
             "quantum": { glyph: "✴️", monthlyFee: "$130", annualFee: "$1,300", payoutTier: "A+", region: "Global" },
             "saas": { glyph: "🔑", monthlyFee: "$95", annualFee: "$980", payoutTier: "A", region: "Global" },
             "utilities": { glyph: "🔋", monthlyFee: "$70", annualFee: "$710", payoutTier: "B+", region: "Div A-Z" },
             "voice": { glyph: "🎙️", monthlyFee: "$60", annualFee: "$630", payoutTier: "B", region: "Global" },
-            "zerowaste": { glyph: "♻️", monthlyFee: "$40", annualFee: "$450", payoutTier: "B", region: "Global" }, /* Added Zero Waste summary */
+            "zerowaste": { glyph: "♻️", monthlyFee: "$40", annualFee: "$450", payoutTier: "B", region: "Global" },
             "professional": { glyph: "🧾", monthlyFee: "$110", annualFee: "$1,100", payoutTier: "A", region: "Global" },
             "mining": { glyph: "⛏️", monthlyFee: "$150", annualFee: "$1,800", payoutTier: "A+", region: "Global" },
             // If education-youth is a separate entry in the screenshot and needs different summary, add it here.
