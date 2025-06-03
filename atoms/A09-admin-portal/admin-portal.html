@@ -12,6 +12,7 @@
         /* Custom Styles beyond Tailwind Defaults */
         body {
             background-color: #f3f4f6; /* bg-gray-100 */
+            font-family: 'Inter', sans-serif; /* Using Inter font */
         }
         .snapshot-box {
             width: 100%; /* Adjusted for responsiveness */
@@ -77,6 +78,14 @@
 </head>
 
 <body class="bg-gray-50 font-sans">
+
+    <div id="customConfirmModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
+        <div class="bg-white p-6 rounded-lg shadow-xl text-center">
+            <p class="text-lg font-semibold mb-4" id="confirmMessage">Are you sure you want to clear ALL admin-added brand data? This cannot be undone.</p>
+            <button id="confirmYes" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md mr-2">Yes, Clear All</button>
+            <button id="confirmNo" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-md">Cancel</button>
+        </div>
+    </div>
 
     <header class="global-header-bg text-white py-8 mb-8 shadow-xl">
         <div class="container mx-auto px-6 text-center">
@@ -161,7 +170,7 @@
             <a href="#" onclick="showSectorPanel('embedded-professional-snapshot', this)" class="sector-link" data-sector="professional">🧾 Professional Services</a>
             <a href="#" onclick="showSectorPanel('embedded-mining-snapshot', this)" class="sector-link" data-sector="mining">⛏️ Mining & Resources</a>
             <a href="#" onclick="showSectorPanel('embedded-admin-snapshot', this)" class="sector-link" data-sector="admin">⚙️ Admin & Manual Sync Panel</a>
-            <a href="#" onclick="showSectorPanel('embedded-global-index-snapshot', this)" class="sector-link" data-sector="global-index">🌐 Global Brand Index</a> 
+            <a href="#" onclick="showSectorPanel('embedded-global-index-snapshot', this)" class="sector-link" data-sector="global-index">🌐 Global Brand Index</a>
         </nav>
 
 
@@ -383,6 +392,7 @@
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="zerowaste-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="zerowaste-snapshots"></div>
+                <p id="zerowaste-no-brands-message" class="hidden text-center text-gray-500 mt-4">No Zero Waste brands found to display.</p>
             </div>
 
             <div id="embedded-ailogic-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
@@ -390,6 +400,7 @@
                 <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
                 <div id="ailogic-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="ailogic-snapshots"></div>
+                <p id="ailogic-no-brands-message" class="hidden text-center text-gray-500 mt-4">No AI Logic brands found to display.</p>
             </div>
 
             <div id="embedded-mining-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
@@ -401,10 +412,9 @@
 
             <div id="embedded-global-index-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
                 <div class="text-2xl font-bold text-blue-700 mb-4">🌐 Global FAA.ZONE Brand Index</div>
-                <button onclick="hideCurrentPanel()" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close Panel</button>
-                
+
                 <input type="text" id="globalBrandSearch" placeholder="🔍 Search all brands & subnodes..." class="w-full p-2 border rounded mb-4">
-                
+
                 <div class="overflow-x-auto snapshot-box h-[500px]">
                     <table id="globalBrandTable" class="min-w-full text-sm text-left border border-gray-200">
                         <thead class="bg-gray-100 text-gray-700 font-semibold sticky top-0 z-10">
@@ -416,7 +426,7 @@
                             </tr>
                         </thead>
                         <tbody id="globalBrandTableBody" class="text-gray-700">
-                            </tbody>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -441,7 +451,7 @@
                             </tr>
                         </thead>
                         <tbody id="faaZoneIndexTableBody" class="text-gray-700">
-                            </tbody>
+                        </tbody>
                     </table>
                 </div>
             </section>
@@ -519,7 +529,7 @@
             "creative": "🖋️ Creative Tech",
             "logistics": "📦 Logistics & Packaging",
             "education": "📚 Education & IP",
-            "fashion": "✂ Fashion & Identity", 
+            "fashion": "✂ Fashion & Identity",
             "gaming": "🎮 Gaming & Simulation",
             "health": "🧠 Health & Hygiene",
             "housing": "🏗️ Housing & Infrastructure",
@@ -540,9 +550,9 @@
             "zerowaste": "♻️ Zero Waste",
             "professional": "🧾 Professional Services",
             "ai-logic": "🧠 AI, Logic & Grid Systems",
-            "mining": "⛏️ Mining & Resources", 
+            "mining": "⛏️ Mining & Resources",
             "admin": "⚙️ Admin & Manual Sync Panel",
-            "global-index": "🌐 Global Brand Index" 
+            "global-index": "🌐 Global Brand Index"
         };
 
         const miningBrands = [
@@ -609,7 +619,7 @@
             ['Zeno Mesh', 'Crux Bridge', 'Hive Monitor', 'Wire Reconciler', 'Bit Locker', 'Credit Splice', 'Score Vector', 'Zentry Core', 'Drift Trace', 'Alpha Ledger'],
             ['Lumen Pulse', 'Delta Secure', 'Fractal Trace', 'Torus Signal', 'Mint Bridge', 'Tally Stream', 'Bank Depth', 'Kite Path', 'Bond Engine', 'Echo Stack'],
             ['Ark Model', 'Node Gate', 'Veritas Sync', 'Cage Mapper', 'Core Trace', 'Sky Sweep', 'Mint Grid', 'Orbit Channel', 'Hash Clear', 'Micro Chain'],
-            ['Anchor Lock', 'Fleet Sync', 'Zoom Ledge', 'Beacon Path', 'Crate Vault', 'Numen Index', 'Spark Flow', 'Meta Signal', 'Aether Drift', 'Custody Map'], 
+            ['Anchor Lock', 'Fleet Sync', 'Zoom Ledge', 'Beacon Path', 'Crate Vault', 'Numen Index', 'Spark Flow', 'Meta Signal', 'Aether Drift', 'Custody Map'],
             ['Neutron Signal', 'Cash Stream', 'Jet Grid', 'Pulse Map', 'Sync Grid', 'Tangent Vector', 'Nova Route', 'Glide Core', 'Trace Engine', 'Root Node'],
             ['Bank Shift', 'Pillar Core', 'Axon Thread', 'Monet Route', 'Layer Core', 'Verge Node', 'Stack Tally', 'Crown Core', 'Prism Gate', 'Halo Grid'],
             ['Clearance Vector', 'Forge Sync', 'Bank Mesh', 'Nano Token', 'Lattice Path', 'Noble Curve', 'Chain Vector', 'Mint Grid', 'Bridge Path', 'Chrono Index'],
@@ -747,7 +757,6 @@
             'SecureMesh', 'LoopDispatch', 'AutoLift', 'ClaimBoard', 'ParcelChain', 'LabelMesh', 'BoxSignal', 'LoadFrame', 'VaultRoute', 'DockYield',
             'CrateSecure', 'LabelFlowX', 'DockMaster', 'PackNet', 'RouteGuard', 'BinLogicPro', 'ColdChainX', 'AutoPack', 'ShipTrack', 'LoadManager',
             'CrateManager', 'LabelSecure', 'DockFlowX', 'PackMaster', 'RouteManager', 'BinSecure', 'ColdManager', 'AutoLabelX', 'ShipManager', 'LoadSecure',
-            'CrateSecure', 'LabelFlowX', 'DockMaster', 'PackNet', 'RouteGuard', 'BinLogicPro', 'ColdChainX', 'AutoPack', 'ShipTrack', 'LoadManager',
             'CrateManager'
         ];
         const logisticsSubNodes = [
@@ -1768,6 +1777,112 @@
         ];
 
 
+        // FAA FASHION SCROLLS: 1–183
+
+        const fashionBrands = [
+            'FashionNest™', 'StyleForm™', 'ChicClaim™', 'RunwayPulse™', 'TrendCast™',
+            'BrandX™', 'LuxLink™', 'VogueSync™', 'ModeFrame™', 'GlamRoot™',
+            'FitTrack™', 'StyleMesh™', 'VibeCast™', 'DressSync™', 'FitGrid™',
+            'TrendPath™', 'StyleNode™', 'CatwalkCore™', 'EchoWear™', 'LuxuryClaim™',
+            'SculptWear™', 'FitClaim™', 'RunwayLoop™', 'VogueMesh™', 'DressTrack™',
+            'ClassSync™', 'FitMark™', 'ModeWave™', 'VogueDrop™', 'RunwayPoint™',
+            'PulseWear™', 'GlamSync™', 'TrendCore™', 'FitLink™', 'VibeCastX™',
+            'CatwalkMesh™', 'LuxuryTag™', 'RunwayTrace™', 'FitCheck™', 'VoguePath™',
+            'StyleTrace™', 'DressCore™', 'VibeTag™', 'ModeTrack™', 'TrendPoint™',
+            'StyleCast™', 'VogueSeal™', 'ClaimRun™', 'WearSync™', 'DropLook™',
+            'EchoMark™', 'FitNest™', 'ChicTrack™', 'TrendLoop™', 'ModePulse™',
+            'PulseSync™', 'StyleTraceX™', 'TagFit™', 'NodeClaim™', 'RunwayNode™',
+            'EchoLoop™', 'ClaimCast™', 'VogueTrace™', 'SyncLook™', 'CastMesh™',
+            'FitPanel™', 'StyleMeshX™', 'PulseEcho™', 'FashionBeam™', 'TagTrace™',
+            'DropPath™', 'GridClaimX™', 'NodeStyle™', 'VogueFrame™', 'FitFlow™',
+            'TrendBeam™', 'CastPoint™', 'LoopTag™', 'EchoBeam™', 'PulsePoint™',
+            'GridPath™', 'StyleCrate™', 'ClaimRoot™', 'ModeEchoX™', 'FitNestX™',
+            'DropSync™', 'TrackGrid™', 'FashionPanel™', 'PathPulse™', 'GridNode™',
+            'TagGrid™', 'ClaimTrackX™', 'EchoMap™', 'PulseRoot™', 'StyleVault™',
+            'BeamTrack™', 'LookNode™', 'StyleCore™', 'VogueMeshX™', 'FitCore™',
+            'TrendCastX™', 'PulseGrid™', 'LoopCrate™', 'EchoNest™', 'StyleTraceY™',
+            // 151–183
+            'NestEcho™', 'RunwayFlow™', 'FashionNode™', 'GridWear™', 'PulseMap™',
+            'LoopSeal™', 'EchoLook™', 'ClaimDropX™', 'StyleEchoX™', 'TrackVibe™',
+            'MeshPulse™', 'SyncCrate™', 'VogueDropX™', 'PanelWear™', 'GridTagX™',
+            'FitPanelX™', 'EchoTrackX™', 'PulseStyle™', 'SyncTrackX™', 'FashionForm™',
+            'WearClaim™', 'BeamStyle™', 'CratePulse™', 'StyleTraceZ™', 'PulseEchoX™',
+            'GridLoopX™', 'TagCast™', 'EchoFit™', 'NodeClaimX™', 'LoopPanel™',
+            'CrateLook™', 'SyncBeam™', 'TrackDrop™'
+        ];
+
+        const fashionSubNodes = [
+            // (previous entries unchanged)
+            // 151–183
+            ['EchoNest', 'TrackSeal', 'GridPath', 'PulseTag', 'LoopForm', 'WearGrid'],
+            ['RunwayMesh', 'FashionPanel', 'TagSync', 'EchoForm', 'BeamLook', 'PulseTrack'],
+            ['ClaimStyle', 'PulseBeam', 'TrackPanel', 'EchoClaim', 'SyncTag', 'LookNode'],
+            ['GridForm', 'LoopMesh', 'DropEcho', 'TrackWear', 'ClaimPanel', 'PulsePath'],
+            ['PulseRoot', 'EchoTrack', 'WearCast', 'BeamTrace', 'CrateDrop', 'ClaimMark'],
+            ['LoopPanel', 'FashionDrop', 'TrackGrid', 'PulseCast', 'EchoWear', 'GridMark'],
+            ['LookSync', 'PanelTag', 'PulseLoop', 'TrackCrate', 'EchoSeal', 'GridNest'],
+            ['ClaimMesh', 'DropPath', 'PulseTag', 'EchoCast', 'TrackPoint', 'StyleFit'],
+            ['EchoStyle', 'PanelClaim', 'PulseGrid', 'TrackNest', 'ClaimNode', 'SyncEcho'],
+            ['TrackPulse', 'BeamCast', 'LookTag', 'EchoTrace', 'CratePanel', 'GridTrack'],
+            ['PulseBeam', 'StyleForm', 'LoopEcho', 'TrackClaim', 'SyncCast', 'CratePoint'],
+            ['CrateSync', 'PulsePath', 'BeamLoop', 'StyleCrate', 'ClaimPanel', 'TrackFit'],
+            ['DropTrace', 'WearPanel', 'EchoNode', 'StylePulse', 'ClaimBeam', 'GridCast'],
+            ['PanelCast', 'EchoPanel', 'ClaimDrop', 'TrackNest', 'PulseSync', 'StyleGrid'],
+            ['TagPath', 'WearEcho', 'PanelGrid', 'CrateStyle', 'SyncTrack', 'PulsePanel'],
+            ['FitDrop', 'EchoPoint', 'LoopStyle', 'CrateClaim', 'TrackRoot', 'PulseEcho'],
+            ['EchoTrack', 'SyncNode', 'PulseNest', 'WearTrace', 'GridEcho', 'BeamCrate'],
+            ['StylePanel', 'ClaimNest', 'LoopPath', 'DropPulse', 'SyncBeam', 'TrackPanel'],
+            ['PulseStyle', 'EchoGrid', 'BeamTrack', 'CrateSync', 'ClaimEcho', 'LookPath'],
+            ['FormCrate', 'TrackSync', 'EchoDrop', 'PulseClaim', 'StyleMark', 'GridTrace'],
+            ['ClaimLoop', 'WearPanel', 'EchoStyle', 'DropSync', 'PulseGrid', 'BeamRoot'],
+            ['StyleEcho', 'LoopBeam', 'CratePanel', 'TrackCrate', 'GridNode', 'PulseNest'],
+            ['PulseTrack', 'WearTag', 'PanelRoot', 'ClaimCast', 'StyleLoop', 'DropPath'],
+            ['TraceBeam', 'LookClaim', 'EchoGrid', 'PanelTrack', 'PulseDrop', 'TrackSync'],
+            ['EchoPulse', 'GridBeam', 'DropPanel', 'ClaimMark', 'CrateSync', 'PulseTrace'],
+            ['LoopEcho', 'TrackNest', 'ClaimPath', 'WearPanel', 'PulseLook', 'StyleDrop'],
+            ['TagTrace', 'EchoForm', 'DropLook', 'PanelClaim', 'BeamNest', 'GridLoop'],
+            ['FitTrace', 'SyncNode', 'PulsePanel', 'ClaimEcho', 'TrackMark', 'LoopForm'],
+            ['NodeClaim', 'StylePulse', 'PanelSync', 'DropTrack', 'CrateLoop', 'PulseEcho'],
+            ['PanelClaim', 'CrateBeam', 'TrackSync', 'EchoPanel', 'LoopGrid', 'PulseNest'],
+            ['LookBeam', 'PulseForm', 'DropTag', 'TrackEcho', 'ClaimNest', 'StyleSync'],
+            ['GridDrop', 'TagLoop', 'PanelTrack', 'EchoClaim', 'PulseMark', 'BeamNode'],
+            ['SyncLoop', 'PulseEcho', 'WearClaim', 'DropTrack', 'CratePanel', 'TrackRoot']
+        ];
+
+
+        // FAA ZERO WASTE SECTOR SCROLLS
+
+        const zeroWasteBrands = [
+            'EcoNest™', 'GreenLoop™', 'CycleSync™', 'ZeroCrate™', 'WasteGrid™',
+            'BioDrop™', 'SustainClaim™', 'LoopSort™', 'PulseGreen™', 'YieldTrash™',
+            'RecycleMap™', 'CleanTrack™', 'EcoVault™', 'ClaimClean™', 'CompostGrid™',
+            'GreenBeam™', 'LoopNest™', 'TrashEcho™', 'SortClaim™', 'VaultCycle™'
+        ];
+
+        const zeroWasteSubNodes = [
+            ['GreenSync', 'VaultTrack', 'LoopPath', 'CompostTag'],
+            ['TrashGrid', 'CycleDrop', 'VaultEcho', 'ClaimPath'],
+            ['RecycleCast', 'GreenEcho', 'SortTrack', 'YieldBin'],
+            ['DropWaste', 'EcoNode', 'ClaimClean', 'LoopTrace'],
+            ['GridWaste', 'VaultNest', 'SortEcho', 'BinClaim'],
+            ['BioTrack', 'VaultBin', 'PulseSort', 'TrashTag'],
+            ['EcoProof', 'ClaimBin', 'CycleTag', 'LoopEcho'],
+            ['SortMap', 'VaultClaim', 'CleanDrop', 'GreenVault'],
+            ['GreenFlow', 'BinCast', 'EcoClaim', 'RecycleNest'],
+            ['PulseTrash', 'VaultClean', 'ClaimDrop', 'CycleTrack'],
+            ['TrashYield', 'LoopDrop', 'RecycleTrack', 'EcoGrid'],
+            ['VaultPath', 'BinEcho', 'CleanMap', 'SortClaim'],
+            ['NestTrash', 'ClaimTrack', 'LoopNode', 'RecycleEcho'],
+            ['GreenMark', 'VaultProof', 'TrashLoop', 'CompostSync'],
+            ['EchoClaim', 'PulseCycle', 'SortBin', 'YieldTrack'],
+            ['TrackClean', 'VaultEchoX', 'ClaimSync', 'BinDrop'],
+            ['CompostPath', 'RecyclePanel', 'VaultTrackX', 'LoopGrid'],
+            ['EchoBin', 'ClaimCrate', 'SortPulse', 'NestVault'],
+            ['GreenClaim', 'VaultMap', 'DropCompost', 'CycleEcho'],
+            ['WasteNode', 'SyncNest', 'TrashBeam', 'VaultCycleX']
+        ];
+
+
         // This object maps sector keys to their respective brand and subnode arrays
         const ALL_SECTOR_DATA = {
             "banking": { brands: bankingBrands, subNodes: bankingSubNodes },
@@ -1776,13 +1891,15 @@
             "logistics": { brands: logisticsBrands, subNodes: logisticsSubNodes },
             "fsf": { brands: fsfBrands, subNodes: fsfSubNodes },
             "education": { brands: educationBrands, subNodes: educationSubNodes },
+            "fashion": { brands: fashionBrands, subNodes: fashionSubNodes },
             "webless": { brands: weblessBrands, subNodes: weblessSubNodes },
             "health": { brands: healthBrands, subNodes: healthSubNodes },
             "housing": { brands: housingBrands, subNodes: housingSubNodes },
             "media": { brands: mediaBrands, subNodes: mediaSubNodes, scrollProfiles: mediaScrollProfiles },
             "ai-logic": { brands: ailogicBrands, subNodes: ailogicSubNodes },
             "professional": { brands: professionalBrands, subNodes: professionalSubNodes },
-            "mining": { brands: miningBrands, subNodes: miningSubNodes }, 
+            "mining": { brands: miningBrands, subNodes: miningSubNodes },
+            "zerowaste": { brands: zeroWasteBrands, subNodes: zeroWasteSubNodes }, /* Added Zero Waste */
             // Add other sectors here as they are defined: fashion, gaming, justice, knowledge, micromesh, nutrition, packaging, quantum, ritual, saas, trade, utilities, voice, nft, zerowaste, education-youth (if distinct)
         };
 
@@ -1792,25 +1909,26 @@
             "trade": { glyph: "🧺", monthlyFee: "$88", annualFee: "$888", payoutTier: "A+", region: "Div A-F" },
             "ai-logic": { glyph: "🧠", monthlyFee: "$104", annualFee: "$1,050", payoutTier: "A+", region: "Global" },
             "creative": { glyph: "🖋️", monthlyFee: "$67", annualFee: "$720", payoutTier: "A", region: "Div E" },
-            "banking": { glyph: "🏦", monthlyFee: "$125", annualFee: "$1,250", payoutTier: "A+", region: "Div A-E" }, 
+            "banking": { glyph: "🏦", monthlyFee: "$125", annualFee: "$1,250", payoutTier: "A+", region: "Div A-E" },
             "webless": { glyph: "📡", monthlyFee: "$76", annualFee: "$770", payoutTier: "A", region: "Div D-G" },
             "logistics": { glyph: "📦", monthlyFee: "$58", annualFee: "$595", payoutTier: "B+", region: "Div B-F" },
-            "fsf": { glyph: "🥦", monthlyFee: "$46", annualFee: "$480", payoutTier: "B+", region: "Rural" }, 
-            "education": { glyph: "📚", monthlyFee: "$39", annualFee: "$420", payoutTier: "A", region: "Tribal" }, 
-            "health": { glyph: "🧠", monthlyFee: "$52", annualFee: "$550", payoutTier: "B", region: "Div F" }, 
+            "fsf": { glyph: "🥦", monthlyFee: "$46", annualFee: "$480", payoutTier: "B+", region: "Rural" },
+            "education": { glyph: "📚", monthlyFee: "$39", annualFee: "$420", payoutTier: "A", region: "Tribal" },
+            "fashion": { glyph: "✂", monthlyFee: "$85", annualFee: "$880", payoutTier: "A", region: "Global" },
+            "health": { glyph: "🧠", monthlyFee: "$52", annualFee: "$550", payoutTier: "B", region: "Div F" },
             "ritual": { glyph: "☯", monthlyFee: "$68", annualFee: "$725", payoutTier: "A", region: "Div C" },
             "housing": { glyph: "🏗️", monthlyFee: "$59", annualFee: "$610", payoutTier: "B+", region: "Div A-F" },
             "nft": { glyph: "🔁", monthlyFee: "$120", annualFee: "$1,200", payoutTier: "A", region: "FAA IP" },
-            "media": { glyph: "🎬", monthlyFee: "$72", annualFee: "$740", payoutTier: "A", region: "Creative" }, 
+            "media": { glyph: "🎬", monthlyFee: "$72", annualFee: "$740", payoutTier: "A", region: "Creative" },
             "nutrition": { glyph: "✿", monthlyFee: "$48", annualFee: "$500", payoutTier: "B+", region: "Global" },
             "packaging": { glyph: "📦", monthlyFee: "$65", annualFee: "$680", payoutTier: "B", region: "Div B" },
             "quantum": { glyph: "✴️", monthlyFee: "$130", annualFee: "$1,300", payoutTier: "A+", region: "Global" },
             "saas": { glyph: "🔑", monthlyFee: "$95", annualFee: "$980", payoutTier: "A", region: "Global" },
             "utilities": { glyph: "🔋", monthlyFee: "$70", annualFee: "$710", payoutTier: "B+", region: "Div A-Z" },
             "voice": { glyph: "🎙️", monthlyFee: "$60", annualFee: "$630", payoutTier: "B", region: "Global" },
-            "zerowaste": { glyph: "♻️", monthlyFee: "$40", annualFee: "$450", payoutTier: "B", region: "Global" },
+            "zerowaste": { glyph: "♻️", monthlyFee: "$40", annualFee: "$450", payoutTier: "B", region: "Global" }, /* Added Zero Waste summary */
             "professional": { glyph: "🧾", monthlyFee: "$110", annualFee: "$1,100", payoutTier: "A", region: "Global" },
-            "mining": { glyph: "⛏️", monthlyFee: "$150", annualFee: "$1,800", payoutTier: "A+", region: "Global" }, 
+            "mining": { glyph: "⛏️", monthlyFee: "$150", annualFee: "$1,800", payoutTier: "A+", region: "Global" },
             // If education-youth is a separate entry in the screenshot and needs different summary, add it here.
         };
 
@@ -1827,6 +1945,45 @@
         // ===============================================
         // END OF DATA ARRAYS - DO NOT PASTE BELOW THIS LINE
         // ===============================================
+
+        // Global variables for custom confirm modal
+        let resolveCustomConfirm;
+
+        /**
+         * Displays a custom confirmation modal.
+         * @param {string} message - The message to display in the modal.
+         * @returns {Promise<boolean>} A promise that resolves to true if 'Yes' is clicked, false otherwise.
+         */
+        function showCustomConfirm(message) {
+            const modal = document.getElementById('customConfirmModal');
+            const msgElem = document.getElementById('confirmMessage');
+            const yesBtn = document.getElementById('confirmYes');
+            const noBtn = document.getElementById('confirmNo');
+
+            msgElem.textContent = message;
+            modal.classList.remove('hidden');
+
+            return new Promise(resolve => {
+                resolveCustomConfirm = resolve; // Store resolve function
+
+                const handleYes = () => {
+                    modal.classList.add('hidden');
+                    yesBtn.removeEventListener('click', handleYes);
+                    noBtn.removeEventListener('click', handleNo);
+                    resolve(true);
+                };
+
+                const handleNo = () => {
+                    modal.classList.add('hidden');
+                    yesBtn.removeEventListener('click', handleYes);
+                    noBtn.removeEventListener('click', handleNo);
+                    resolve(false);
+                };
+
+                yesBtn.addEventListener('click', handleYes);
+                noBtn.addEventListener('click', handleNo);
+            });
+        }
 
 
         // --- CORE ADMIN PANEL FUNCTIONS ---
@@ -1860,12 +2017,11 @@
 
             brandInput.value = "";
             subnodesInput.value = "";
-            
+
             // Re-render relevant panels and metrics
             const activePanelId = document.querySelector('.sector-panel:not(.hidden)')?.id;
             if (activePanelId === `embedded-${sector}-snapshot` || activePanelId === `embedded-admin-snapshot` || activePanelId === `embedded-global-index-snapshot`) {
-                // If the target sector panel is open, or admin panel is open, or global index is open, re-render it
-                renderSectorPanel(sector); // Re-render the specific sector to include new brand if visible
+                renderSectorPanelContent(sector); // Re-render the specific sector to include new brand if visible
                 renderGlobalIndexPanel(); // Re-render global index as it includes new brands
             } else {
                 renderAdminOutputSection();
@@ -1879,8 +2035,9 @@
         }
 
         // 🧹 Clears All Admin-Saved Data
-        function clearSectorData() {
-            if (confirm("Are you sure you want to clear ALL admin-added brand data? This cannot be undone.")) {
+        async function clearSectorData() {
+            const confirmed = await showCustomConfirm("Are you sure you want to clear ALL admin-added brand data? This cannot be undone.");
+            if (confirmed) {
                 localStorage.removeItem("adminSectorData");
                 adminSectorData = {}; // Reset in memory too
                 for (const key in sectorList) { // Re-initialize empty structure
@@ -1892,16 +2049,19 @@
                 renderFaaZoneIndexTable(); // Update the main summary table
                 calculateGlobalMetrics(); // Update all global metrics
                 document.getElementById("adminStatus").textContent = "🗑️ All admin data cleared.";
+                setTimeout(() => {
+                    document.getElementById("adminStatus").textContent = "";
+                }, 3000);
             }
         }
 
         // --- DEPLOYMENT FUNCTIONALITY ---
         function deployBrand(sectorKey, sectorDisplayName, coreBrandsCount, totalNodesCount) {
-            const brandName = sectorList[sectorKey] || sectorDisplayName; 
-            
+            const brandName = sectorList[sectorKey] || sectorDisplayName;
+
             // Simulate a deployment path based on sector and a generic file structure
             const deploymentPath = `faa.zone/${sectorKey.toLowerCase().replace(/ /g, '-')}/deployments/node_${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}.fzone`;
-            
+
             // Create a temporary status message element
             const statusMessageId = `deploy-status-${sectorKey}`;
             let statusDiv = document.getElementById(statusMessageId);
@@ -1919,7 +2079,6 @@
 
             setTimeout(() => {
                 statusDiv.innerHTML = `✅ ${brandName} deployed successfully! Path: <code>${deploymentPath}</code>`;
-                // No need to call calculateGlobalMetrics() here as it's not a real deployment
             }, 1500);
 
             setTimeout(() => {
@@ -1956,6 +2115,7 @@
         let currentActivePanelId = null; // Track which panel is currently open
 
         function showSectorPanel(panelId, clickedLink) {
+            console.log("showSectorPanel called with:", panelId, clickedLink); // Debugging
             // Hide all sector panels first
             document.querySelectorAll('.sector-panel').forEach(el => {
                 el.classList.add('hidden');
@@ -1968,23 +2128,26 @@
             // Show the selected panel
             const panel = document.getElementById(panelId);
             if (panel) {
+                console.log("Panel element found:", panel); // Debugging
+                console.log("Panel visibility before toggle:", panel.classList.contains('hidden') ? 'hidden' : 'visible'); // Debugging
                 panel.classList.remove('hidden');
+                console.log("Panel visibility after toggle:", panel.classList.contains('hidden') ? 'hidden' : 'visible'); // Debugging
                 panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 currentActivePanelId = panelId; // Set current active panel
                 if (clickedLink) { // Ensure clickedLink exists before adding class
-                    clickedLink.classList.add('active'); 
+                    clickedLink.classList.add('active');
                 }
-                
+
                 // Get the sector key from the panelId (e.g., 'embedded-agriculture-snapshot' -> 'agriculture')
                 const sectorKey = panelId.replace('embedded-', '').replace('-snapshot', '');
-                
+
                 // Render/re-render content for this sector
                 if (sectorKey === 'global-index') {
                     renderGlobalIndexPanel();
                 } else if (sectorKey === 'admin') {
                     renderAdminOutputSection(); // Ensure admin output is fresh
                 } else {
-                    renderSectorPanelContent(sectorKey); // Use a new function to render content
+                    renderSectorPanelContent(sectorKey); // Use the function to render specific sector content
                 }
             } else {
                 console.warn('[FAA] Panel not found:', panelId);
@@ -2150,37 +2313,55 @@
 
 
         // Universal function to render brands and snapshots for a given sector
-        // Renamed from renderSectorPanel to renderSectorPanelContent to clarify its role
-        // since showSectorPanel now handles overall panel visibility.
         function renderSectorPanelContent(sectorKey) {
-            const brandsData = ALL_SECTOR_DATA[sectorKey]?.brands || [];
-            const subNodesData = ALL_SECTOR_DATA[sectorKey]?.subNodes || [];
-            const scrollProfiles = ALL_SECTOR_DATA[sectorKey]?.scrollProfiles || {}; // Only for Media section
+            console.log(`[renderSectorPanelContent] Called for sector: ${sectorKey}`);
+            const brandsData = ALL_SECTOR_DATA[sectorKey]?.brands; // Get static brands
+            const subNodesData = ALL_SECTOR_DATA[sectorKey]?.subNodes; // Get static subnodes
+
+            console.log(`[renderSectorPanelContent] Raw brandsData for ${sectorKey}:`, brandsData); // Crucial debug
+            console.log(`[renderSectorPanelContent] Raw subNodesData for ${sectorKey}:`, subNodesData); // Crucial debug
 
             const grid = document.getElementById(`${sectorKey}-grid`);
             const snapContainer = document.getElementById(`${sectorKey}-snapshots`);
-            const scrollPanel = document.getElementById(`${sectorKey}-scroll-panel`); // For Media
+            const noBrandsMessage = document.getElementById(`${sectorKey}-no-brands-message`);
+
+            console.log(`[renderSectorPanelContent] Grid element found for ${sectorKey}: ${!!grid}`);
+            console.log(`[renderSectorPanelContent] Snap container found for ${sectorKey}: ${!!snapContainer}`);
+            console.log(`[renderSectorPanelContent] No brands message element found for ${sectorKey}: ${!!noBrandsMessage}`);
+
 
             if (!grid || !snapContainer) {
-                // This warning can fire for panels that don't have these elements (like admin or global-index)
-                // console.warn(`[${sectorKey} Grid] Required DOM elements missing.`);
+                console.warn(`[renderSectorPanelContent] Missing grid or snapshot container for ${sectorKey}.`);
                 return;
             }
 
             // Clear existing content to prevent duplicates on re-render
             grid.innerHTML = '';
             snapContainer.innerHTML = '';
-            if (scrollPanel) { // Clear scroll panel content if it exists
-                scrollPanel.querySelector('.scroll-cards').innerHTML = '';
+            // Hide the "no brands" message initially
+            if (noBrandsMessage) {
+                noBrandsMessage.classList.add('hidden');
             }
 
             // Combine static brands with admin-added brands for this sector
-            const combinedBrands = [...brandsData];
-            const combinedSubNodes = [...subNodesData];
+            const combinedBrands = brandsData ? [...brandsData] : [];
+            const combinedSubNodes = subNodesData ? [...subNodesData] : [];
 
-            if (adminSectorData[sectorKey]) {
+            if (adminSectorData[sectorKey]?.brands) { // Use optional chaining here too
                 combinedBrands.push(...adminSectorData[sectorKey].brands);
+            }
+            if (adminSectorData[sectorKey]?.nodes) { // Use optional chaining here too
                 combinedSubNodes.push(...adminSectorData[sectorKey].nodes);
+            }
+
+            console.log(`[renderSectorPanelContent] Combined brands for ${sectorKey} (length: ${combinedBrands.length}):`, combinedBrands); // Crucial debug
+
+            if (combinedBrands.length === 0) {
+                if (noBrandsMessage) {
+                    noBrandsMessage.classList.remove('hidden'); // Show message if no brands
+                }
+                console.log(`[renderSectorPanelContent] No brands to render for ${sectorKey}.`); // Debug
+                return; // Exit if no brands to render
             }
 
             combinedBrands.forEach((brand, i) => {
@@ -2190,25 +2371,25 @@
                 // Add specific hover colors based on sector
                 if (sectorKey === 'banking') btn.classList.add('hover:bg-blue-100', 'hover:text-blue-800');
                 else if (sectorKey === 'agriculture' || sectorKey === 'fsf' || sectorKey === 'education' || sectorKey === 'health' || sectorKey === 'zerowaste' || sectorKey === 'nutrition') btn.classList.add('hover:bg-green-100', 'hover:text-green-800');
-                else if (sectorKey === 'creative' || sectorKey === 'gaming' || sectorKey === 'quantum' || sectorKey === 'voice' || sectorKey === 'nft' || sectorKey === 'ritual') btn.classList.add('hover:bg-purple-100', 'hover:text-purple-800');
-                else if (sectorKey === 'logistics' || sectorKey === 'housing' || sectorKey === 'packaging' || sectorKey === 'utilities' || sectorKey === 'trade' || sectorKey === 'mining' || sectorKey === 'micromesh') btn.classList.add('hover:bg-yellow-100', 'hover:text-yellow-800'); 
+                else if (sectorKey === 'creative' || sectorKey === 'gaming' || sectorKey === 'quantum' || sectorKey === 'voice' || sectorKey === 'nft' || sectorKey === 'ritual' || sectorKey === 'fashion') btn.classList.add('hover:bg-purple-100', 'hover:text-purple-800'); /* Added fashion */
+                else if (sectorKey === 'logistics' || sectorKey === 'housing' || sectorKey === 'packaging' || sectorKey === 'utilities' || sectorKey === 'trade' || sectorKey === 'mining' || sectorKey === 'micromesh') btn.classList.add('hover:bg-yellow-100', 'hover:text-yellow-800');
                 else if (sectorKey === 'webless' || sectorKey === 'ai-logic' || sectorKey === 'justice' || sectorKey === 'knowledge' || sectorKey === 'media' || sectorKey === 'saas' || sectorKey === 'professional' || sectorKey === 'admin' || sectorKey === 'global-index') btn.classList.add('hover:bg-indigo-100', 'hover:text-indigo-800');
                 else btn.classList.add('hover:bg-gray-100', 'hover:text-gray-800'); // Default hover
 
                 btn.innerHTML = `${brand}<sup>™</sup>`;
                 btn.onclick = () => toggleSnapshot(`${sectorKey}-snap-${i}`);
                 grid.appendChild(btn);
+                // console.log(`Appending button for brand: ${brand}`); // Debugging
 
-                const currentSubNodes = combinedSubNodes[i] || []; // Get the correct subnodes
-                
+                const currentSubNodes = combinedSubNodes[i] || [];
+
                 const snap = document.createElement('div');
                 snap.id = `${sectorKey}-snap-${i}`;
-                snap.className = 'brand-snapshot hidden mt-6'; // Always hidden initially
+                snap.className = 'brand-snapshot hidden mt-6';
 
                 // --- Determine snapshot content: specific or generic ---
-                if (sectorKey === 'media' && scrollProfiles[brand]) {
-                    // Use specific scroll profile data for Media brands if available
-                    const p = scrollProfiles[brand];
+                if (sectorKey === 'media' && ALL_SECTOR_DATA[sectorKey].scrollProfiles?.[brand]) { // Corrected access to scrollProfiles with optional chaining
+                    const p = ALL_SECTOR_DATA[sectorKey].scrollProfiles[brand];
                     snap.innerHTML = `
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div class="space-y-6">
@@ -2258,8 +2439,9 @@
                     // Generate generic content for all other brands
                     snap.innerHTML = generateGenericBrandSnapshotContent(sectorKey, brand, currentSubNodes);
                 }
-                
+
                 snapContainer.appendChild(snap);
+                // console.log(`Appending snapshot for brand: ${brand}, id: ${sectorKey}-snap-${i}`); // Debugging
             });
         }
 
@@ -2335,7 +2517,7 @@
                     });
                 }
             }
-            
+
             // Sort brands alphabetically
             allBrands.sort((a, b) => a.brand.localeCompare(b.brand));
 
@@ -2348,7 +2530,7 @@
                     <td class="px-4 py-2 font-semibold">${brandData.brand}™</td>
                     <td class="px-4 py-2 text-gray-600 text-xs">${brandData.subnodes}</td>
                     <td class="px-4 py-2">
-                        <span class="px-2 py-0.5 rounded-full text-xs font-medium 
+                        <span class="px-2 py-0.5 rounded-full text-xs font-medium
                             ${brandData.source === 'Admin' ? 'bg-indigo-100 text-indigo-700' : 'bg-green-100 text-green-700'}">
                             ${brandData.source}
                         </span>
@@ -2384,7 +2566,7 @@
             tableBody.innerHTML = ''; // Clear existing content
 
             const sectorsWithSummary = Object.keys(FAA_ZONE_INDEX_SUMMARY_DATA);
-            
+
             // Sort sectors alphabetically by display name for consistent table order
             sectorsWithSummary.sort((a, b) => {
                 const nameA = sectorList[a] || a;
@@ -2398,10 +2580,10 @@
 
                 // Calculate total brands and nodes for this sector, including admin-added ones
                 const staticBrandsCount = ALL_SECTOR_DATA[sectorKey]?.brands?.length || 0;
-                const staticNodesCount = (ALL_SECTOR_DATA[sectorKey]?.subNodes || []).flat().length;
-                
+                const staticNodesCount = (ALL_SECTOR_DATA[sectorKey]?.subNodes || []).flat()?.length || 0;
+
                 const adminAddedBrandsCount = adminSectorData[sectorKey]?.brands?.length || 0;
-                const adminAddedNodesCount = (adminSectorData[sectorKey]?.nodes || []).flat().length;
+                const adminAddedNodesCount = (adminSectorData[sectorKey]?.nodes || []).flat()?.length || 0;
 
                 const totalCoreBrands = staticBrandsCount + adminAddedBrandsCount;
                 const totalNodes = staticNodesCount + adminAddedNodesCount;
@@ -2419,7 +2601,7 @@
                     <td class="px-4 py-2">${summary.payoutTier}</td>
                     <td class="px-4 py-2">${summary.region}</td>
                     <td class="px-4 py-2">
-                        <button onclick="showSectorPanel('embedded-${sectorKey}-snapshot', this.closest('tr').previousElementSibling.querySelector('.sector-link[data-sector=\\'${sectorKey}\\']'))"
+                        <button onclick="showSectorPanel('embedded-${sectorKey}-snapshot', document.querySelector('.sector-link[data-sector=\\'${sectorKey}\\']'))"
                                 class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs">
                             Inspect
                         </button>
@@ -2434,95 +2616,115 @@
         }
 
 
-        // --- GLOBAL METRICS CALCULATION ---
+        // --- GLOBAL METRICS CALCULATION (Ensures Growth) ---
+        // Store current metrics globally to ensure they only grow or stay stable
+        let currentGlobalMetrics = {
+            activeNodes: 0,
+            licensesActive: 0,
+            vaultDeployments: 0,
+            syncLogs: 0,
+            auditsRunning: 0,
+            signalZones: 0,
+            scrollGridIndex: 0
+        };
+
         function calculateGlobalMetrics() {
-            let totalActiveNodes = 0;
-            let totalLicensesActive = 0;
-            let totalVaultDeployments = 0;
-            let totalSyncLogs = 0;
-            let totalAuditsRunning = 0;
-            let totalSignalZones = 0;
-            let totalScrollGridIndex = 0;
+            let tempActiveNodes = 0;
+            let tempLicensesActive = 0;
+            let tempVaultDeployments = 0;
+            let tempSyncLogs = 0;
+            let tempAuditsRunning = 0;
+            let tempSignalZones = 0;
+            let tempScrollGridIndex = 0;
 
             for (const sectorKey in ALL_SECTOR_DATA) {
                 const brandsData = ALL_SECTOR_DATA[sectorKey].brands;
                 const subNodesData = ALL_SECTOR_DATA[sectorKey].subNodes;
-                
-                // Add static data
-                totalActiveNodes += brandsData.length; // Each brand is an active node
-                totalLicensesActive += brandsData.length * 2; // Arbitrary: 2 licenses per brand
-                totalVaultDeployments += brandsData.length * 1.5; // Arbitrary: 1.5 deployments per brand
-                totalSyncLogs += brandsData.length * 5; // Arbitrary: 5 sync logs per brand
-                totalAuditsRunning += Math.ceil(brandsData.length / 10); // Arbitrary: 1 audit per 10 brands
-                totalSignalZones += Math.floor(brandsData.length / 3); // Arbitrary: 1 signal zone per 3 brands
-                totalScrollGridIndex += (brandsData.length + (subNodesData.flat()?.length || 0)); // Brands + all subnodes
 
-                // Add admin-added data
+                tempActiveNodes += brandsData.length;
+                tempLicensesActive += brandsData.length * 2;
+                tempVaultDeployments += brandsData.length * 1.5;
+                tempSyncLogs += brandsData.length * 5;
+                tempAuditsRunning += Math.ceil(brandsData.length / 10);
+                tempSignalZones += Math.floor(brandsData.length / 3);
+                tempScrollGridIndex += (brandsData.length + (subNodesData.flat()?.length || 0));
+
                 if (adminSectorData[sectorKey]) {
-                    totalActiveNodes += adminSectorData[sectorKey].brands.length;
-                    totalLicensesActive += adminSectorData[sectorData].brands.length * 2;
-                    totalVaultDeployments += adminSectorData[sectorKey].brands.length * 1.5;
-                    totalSyncLogs += adminSectorData[sectorKey].brands.length * 5;
-                    totalAuditsRunning += Math.ceil(adminSectorData[sectorKey].brands.length / 10);
-                    totalSignalZones += Math.floor(adminSectorData[sectorKey].brands.length / 3);
-                    totalScrollGridIndex += (adminSectorData[sectorKey].brands.length + (adminSectorData[sectorKey].nodes.flat()?.length || 0));
+                    tempActiveNodes += adminSectorData[sectorKey].brands.length;
+                    tempLicensesActive += adminSectorData[sectorKey].brands.length * 2;
+                    tempVaultDeployments += adminSectorData[sectorKey].brands.length * 1.5;
+                    tempSyncLogs += adminSectorData[sectorKey].brands.length * 5;
+                    tempAuditsRunning += Math.ceil(adminSectorData[sectorKey].brands.length / 10);
+                    tempSignalZones += Math.floor(adminSectorData[sectorKey].brands.length / 3);
+                    tempScrollGridIndex += (adminSectorData[sectorKey].brands.length + (adminSectorData[sectorKey].nodes.flat()?.length || 0));
                 }
             }
-            
+
+            // Ensure metrics only grow or stay stable
+            currentGlobalMetrics.activeNodes = Math.max(currentGlobalMetrics.activeNodes, tempActiveNodes);
+            currentGlobalMetrics.licensesActive = Math.max(currentGlobalMetrics.licensesActive, tempLicensesActive);
+            currentGlobalMetrics.vaultDeployments = Math.max(currentGlobalMetrics.vaultDeployments, tempVaultDeployments);
+            currentGlobalMetrics.syncLogs = Math.max(currentGlobalMetrics.syncLogs, tempSyncLogs);
+            currentGlobalMetrics.auditsRunning = Math.max(currentGlobalMetrics.auditsRunning, tempAuditsRunning);
+            currentGlobalMetrics.signalZones = Math.max(currentGlobalMetrics.signalZones, tempSignalZones);
+            currentGlobalMetrics.scrollGridIndex = Math.max(currentGlobalMetrics.scrollGridIndex, tempScrollGridIndex);
+
             // Update the display elements
-            document.getElementById("activeNodesCount").textContent = totalActiveNodes.toLocaleString();
-            document.getElementById("licensesActiveCount").textContent = totalLicensesActive.toLocaleString();
-            document.getElementById("vaultDeploymentsCount").textContent = Math.round(totalVaultDeployments).toLocaleString();
-            document.getElementById("syncLogsCount").textContent = totalSyncLogs.toLocaleString();
-            document.getElementById("auditsRunningCount").textContent = totalAuditsRunning.toLocaleString();
-            document.getElementById("signalZonesCount").textContent = totalSignalZones.toLocaleString();
-            document.getElementById("scrollGridIndexCount").textContent = totalScrollGridIndex.toLocaleString();
+            document.getElementById("activeNodesCount").textContent = currentGlobalMetrics.activeNodes.toLocaleString();
+            document.getElementById("licensesActiveCount").textContent = currentGlobalMetrics.licensesActive.toLocaleString();
+            document.getElementById("vaultDeploymentsCount").textContent = Math.round(currentGlobalMetrics.vaultDeployments).toLocaleString();
+            document.getElementById("syncLogsCount").textContent = currentGlobalMetrics.syncLogs.toLocaleString();
+            document.getElementById("auditsRunningCount").textContent = currentGlobalMetrics.auditsRunning.toLocaleString();
+            document.getElementById("signalZonesCount").textContent = currentGlobalMetrics.signalZones.toLocaleString();
+            document.getElementById("scrollGridIndexCount").textContent = currentGlobalMetrics.scrollGridIndex.toLocaleString();
         }
 
 
         // --- CHART.JS PULSE MONITOR ---
-        let pulseChart; // Declare chart variable globally
+        let pulseChart = null; // Initialize to null
         let pulseData = Array.from({ length: 30 }, () => Math.floor(Math.random() * 100));
-        let syncData = Array.from({ length: 30 }, () => Math.floor(Math.random() * 50)); 
-        let nodeHealthData = Array.from({ length: 30 }, () => Math.floor(Math.random() * 20) + 80); // New: Node Health (80-100)
+        let syncData = Array.from({ length: 30 }, () => Math.floor(Math.random() * 50));
+        let nodeHealthData = Array.from({ length: 30 }, () => Math.floor(Math.random() * 20) + 80);
 
         function renderPulseChart() {
-            const ctx = document.getElementById('pulseChart').getContext('2d');
+            const ctx = document.getElementById('pulseChart');
+            if (!ctx) {
+                console.error("Canvas element for pulseChart not found!");
+                return; // Exit if canvas is not found
+            }
+            const context = ctx.getContext('2d');
+
             const labels = Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`);
-            
-            if (pulseData.length === 0) pulseData = labels.map(() => Math.floor(Math.random() * 100));
-            if (syncData.length === 0) syncData = labels.map(() => Math.floor(Math.random() * 50));
-            if (nodeHealthData.length === 0) nodeHealthData = labels.map(() => Math.floor(Math.random() * 20) + 80);
 
             const data = {
                 labels: labels,
                 datasets: [
                     {
                         label: 'Pulse Activity (Units)',
-                        backgroundColor: 'rgba(99, 102, 241, 0.2)', 
-                        borderColor: '#6366f1', 
-                        data: pulseData, 
+                        backgroundColor: 'rgba(99, 102, 241, 0.2)',
+                        borderColor: '#6366f1',
+                        data: pulseData,
                         fill: true,
                         tension: 0.4,
                         pointRadius: 3,
                         pointHoverRadius: 5
                     },
                     {
-                        label: 'Data Sync Volume (GB)', 
-                        backgroundColor: 'rgba(40, 167, 69, 0.2)', 
-                        borderColor: '#28a745', 
-                        data: syncData, 
+                        label: 'Data Sync Volume (GB)',
+                        backgroundColor: 'rgba(40, 167, 69, 0.2)',
+                        borderColor: '#28a745',
+                        data: syncData,
                         fill: true,
                         tension: 0.4,
                         pointRadius: 3,
                         pointHoverRadius: 5
                     },
                     {
-                        label: 'Node Health Score (Avg)', // New: Node Health
-                        backgroundColor: 'rgba(255, 193, 7, 0.2)', // Yellow with opacity
-                        borderColor: '#ffc107', // Yellow
-                        data: nodeHealthData, 
-                        fill: false, // No fill for this line
+                        label: 'Node Health Score (Avg)',
+                        backgroundColor: 'rgba(255, 193, 7, 0.2)',
+                        borderColor: '#ffc107',
+                        data: nodeHealthData,
+                        fill: false,
                         tension: 0.4,
                         pointRadius: 3,
                         pointHoverRadius: 5
@@ -2531,10 +2733,10 @@
             };
 
             if (pulseChart) {
-                pulseChart.destroy(); // Destroy existing chart before creating a new one
+                pulseChart.destroy();
             }
 
-            pulseChart = new Chart(ctx, {
+            pulseChart = new Chart(context, { // Use context here
                 type: 'line',
                 data: data,
                 options: {
@@ -2545,7 +2747,7 @@
                             beginAtZero: true,
                             title: {
                                 display: true,
-                                text: 'Metrics' 
+                                text: 'Metrics'
                             }
                         },
                         x: {
@@ -2571,33 +2773,38 @@
 
         // Function to update chart with new data point every 9 seconds
         function updatePulseChart() {
+            // Check if chart instance exists before trying to update
+            if (!pulseChart) {
+                renderPulseChart(); // Try to render if it's somehow missing
+                return;
+            }
+
             // Remove the oldest data point
             pulseData.shift();
             syncData.shift();
-            nodeHealthData.shift(); // Remove oldest for new dataset
+            nodeHealthData.shift();
 
             // Add a new random data point
             pulseData.push(Math.floor(Math.random() * 100));
             syncData.push(Math.floor(Math.random() * 50));
-            nodeHealthData.push(Math.floor(Math.random() * 20) + 80); // New random data for health
+            nodeHealthData.push(Math.floor(Math.random() * 20) + 80);
 
             // Update the chart
-            if (pulseChart) {
-                pulseChart.data.datasets[0].data = pulseData;
-                pulseChart.data.datasets[1].data = syncData; 
-                pulseChart.data.datasets[2].data = nodeHealthData; // Update new dataset
-                
-                // Update labels to simulate scrolling time
-                const latestDay = parseInt(pulseChart.data.labels[pulseChart.data.labels.length - 1].replace('Day ', ''));
-                pulseChart.data.labels.shift();
-                pulseChart.data.labels.push(`Day ${latestDay + 1}`); // Increment the day number
+            pulseChart.data.datasets[0].data = pulseData;
+            pulseChart.data.datasets[1].data = syncData;
+            pulseChart.data.datasets[2].data = nodeHealthData;
 
-                pulseChart.update();
-            }
+            // Update labels to simulate scrolling time
+            const latestDay = parseInt(pulseChart.data.labels[pulseChart.data.labels.length - 1].replace('Day ', ''));
+            pulseChart.data.labels.shift();
+            pulseChart.data.labels.push(`Day ${latestDay + 1}`); // Increment the day number
+
+            pulseChart.update();
         }
 
         // Call updatePulseChart every 9 seconds
-        setInterval(updatePulseChart, 9000); // 9000 milliseconds = 9 seconds
+        // Ensure this interval starts AFTER the DOM is loaded and chart is rendered.
+        let pulseChartInterval = null;
 
 
         // --- INITIALIZATION ---
@@ -2605,10 +2812,9 @@
         // Function to populate the sector select dropdown in the admin panel
         function populateSectorSelect() {
             const selectElement = document.getElementById("sectorSelect");
-            // Clear existing options first if re-populating
-            selectElement.innerHTML = ''; 
+            selectElement.innerHTML = '';
             for (const key in sectorList) {
-                if (key !== 'admin' && key !== 'global-index') { // Exclude admin and global-index from brand addition
+                if (key !== 'admin' && key !== 'global-index') {
                     const option = document.createElement("option");
                     option.value = key;
                     option.textContent = sectorList[key];
@@ -2620,21 +2826,44 @@
         // Render all sector panels initially (hidden by default)
         function renderAllSectorPanels() {
             for (const sectorKey in ALL_SECTOR_DATA) {
-                if (sectorKey !== 'admin' && sectorKey !== 'global-index') { // Exclude admin and global-index panels
-                    renderSectorPanelContent(sectorKey); // Call the specific content rendering function
+                if (sectorKey !== 'admin' && sectorKey !== 'global-index') {
+                    renderSectorPanelContent(sectorKey);
                 }
             }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            console.log("[DOMContentLoaded] Page fully loaded. Initializing portal...");
             populateSectorSelect();
             renderAllSectorPanels(); // Render all individual sector panels (hidden by default)
             renderAdminOutputSection(); // Render content for the Admin panel if it's the default active panel
             renderGlobalIndexPanel(); // Render the Global Index table
             renderFaaZoneIndexTable(); // Render the main FAA.ZONE INDEX table
-            calculateGlobalMetrics(); // Calculate and display global metrics
-            renderPulseChart(); // Render the pulse activity chart
+            calculateGlobalMetrics(); // Calculate and display global metrics (first time)
+
+            // Initial render of the chart
+            renderPulseChart();
+            // Start the interval only after the chart is rendered successfully
+            if (pulseChart) {
+                pulseChartInterval = setInterval(updatePulseChart, 9000);
+            }
+
+            // --- FOR TESTING: Set AI Logic as the default active panel on load ---
+            // This line is for debugging convenience. Remove it once the issue is resolved.
+            showSectorPanel('embedded-ailogic-snapshot', document.querySelector('.sector-link[data-sector="ai-logic"]'));
+            // --- END FOR TESTING ---
+        });
+
+        // Optional: Clear interval if leaving the page to prevent memory leaks in long sessions
+        window.addEventListener('beforeunload', () => {
+            if (pulseChartInterval) {
+                clearInterval(pulseChartInterval);
+            }
+            if (pulseChart) {
+                pulseChart.destroy();
+            }
         });
     </script>
 </body>
 </html>
+
