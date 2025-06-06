@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-06-06 | faa.zone | history | `public/legal/securesign.html` | `659d437e` | FAA SecureSign™ NDA Portal | 27681 | 35 | 2 | 68.8 |
+| 2 | 2025-06-06 | faa.zone | history | `public/legal/securesign.html` | `b68fba07` | FAA SecureSign™ NDA Portal | 19547 | 33 | 2 | 66.0 |
