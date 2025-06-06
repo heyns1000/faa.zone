@@ -47,6 +47,29 @@
     .modal-overlay.show .modal-content {
       transform: translateY(0);
     }
+
+    /* Styling for the file input containers to suggest drag-and-drop */
+    .file-input-container {
+      border: 2px dashed #cbd5e0; /* gray-300 */
+      border-radius: 0.5rem; /* rounded-lg */
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+    .file-input-container:hover {
+      border-color: #a78bfa; /* purple-400 */
+      background-color: #f5f3ff; /* purple-50 */
+    }
+    .file-input-container input[type="file"] {
+      opacity: 0; /* Hide the default file input button */
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body class="bg-gray-100 text-gray-800 antialiased flex flex-col min-h-screen">
@@ -214,35 +237,69 @@
           </div>
         </div>
 
+        <!-- Section: Sector Selection -->
+        <div class="p-6 bg-gray-50 rounded-lg shadow-inner">
+          <h3 class="text-2xl font-semibold mb-6 text-gray-800 border-b pb-3">5. Sector Selection</h3>
+          <p class="text-sm text-gray-600 mb-4">Please select **up to 5** sectors that are most relevant to your activities.</p>
+          <div>
+            <label for="sectors" class="block text-gray-700 text-sm font-semibold mb-2">Relevant Sectors</label>
+            <select id="sectors" name="sectors" multiple required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200 h-48 overflow-y-auto">
+              <!-- Options will be populated by JavaScript -->
+            </select>
+            <p id="sectorHelpText" class="text-xs text-red-500 mt-1 hidden">You can select a maximum of 5 sectors.</p>
+          </div>
+        </div>
+
         <!-- Section: Supporting Legal Documentation -->
         <div class="p-6 bg-gray-50 rounded-lg shadow-inner">
-          <h3 class="text-2xl font-semibold mb-6 text-gray-800 border-b pb-3">5. Supporting Legal Documentation (Uploads)</h3>
-          <p class="text-sm text-gray-600 mb-6">Please upload the required documents. Accepted formats: PDF, JPG, PNG.</p>
+          <h3 class="text-2xl font-semibold mb-6 text-gray-800 border-b pb-3">7. Supporting Legal Documentation (Uploads)</h3>
+          <p class="text-sm text-gray-600 mb-6">Please upload the required documents by clicking or dragging files into the designated areas. Accepted formats: PDF, JPG, PNG.</p>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Signed NDA Document -->
             <div>
               <label for="ndaFile" class="block text-gray-700 text-sm font-semibold mb-2">Signed NDA Document (PDF)</label>
-              <input type="file" id="ndaFile" name="ndaFile" accept="application/pdf" required
-                     class="w-full px-4 py-2 border border-gray-300 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100 transition-all duration-200 cursor-pointer">
+              <div class="file-input-container relative">
+                <p class="text-gray-500 text-sm">Drag & drop your file here, or click to browse</p>
+                <input type="file" id="ndaFile" name="ndaFile" accept="application/pdf" required>
+              </div>
+              <p id="ndaFileName" class="text-xs text-gray-500 mt-1"></p>
             </div>
+            <!-- CIPRO Documents -->
             <div>
               <label for="ciproDocs" class="block text-gray-700 text-sm font-semibold mb-2">CIPRO Documents (e.g., Company Registration Certificate)</label>
-              <input type="file" id="ciproDocs" name="ciproDocs" accept="application/pdf,image/*" required
-                     class="w-full px-4 py-2 border border-gray-300 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100 transition-all duration-200 cursor-pointer">
+              <div class="file-input-container relative">
+                <p class="text-gray-500 text-sm">Drag & drop your file here, or click to browse</p>
+                <input type="file" id="ciproDocs" name="ciproDocs" accept="application/pdf,image/*" required>
+              </div>
+              <p id="ciproDocsName" class="text-xs text-gray-500 mt-1"></p>
             </div>
+            <!-- Directors ID -->
             <div>
               <label for="directorsId" class="block text-gray-700 text-sm font-semibold mb-2">Directors ID (if applicable)</label>
-              <input type="file" id="directorsId" name="directorsId" accept="application/pdf,image/*"
-                     class="w-full px-4 py-2 border border-gray-300 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100 transition-all duration-200 cursor-pointer">
+              <div class="file-input-container relative">
+                <p class="text-gray-500 text-sm">Drag & drop your file here, or click to browse</p>
+                <input type="file" id="directorsId" name="directorsId" accept="application/pdf,image/*">
+              </div>
+              <p id="directorsIdName" class="text-xs text-gray-500 mt-1"></p>
             </div>
+            <!-- VCAT -->
             <div>
               <label for="vcat" class="block text-gray-700 text-sm font-semibold mb-2">VCAT (Verification of Company Address/Taxation)</label>
-              <input type="file" id="vcat" name="vcat" accept="application/pdf,image/*" required
-                     class="w-full px-4 py-2 border border-gray-300 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100 transition-all duration-200 cursor-pointer">
+              <div class="file-input-container relative">
+                <p class="text-gray-500 text-sm">Drag & drop your file here, or click to browse</p>
+                <input type="file" id="vcat" name="vcat" accept="application/pdf,image/*" required>
+              </div>
+              <p id="vcatName" class="text-xs text-gray-500 mt-1"></p>
             </div>
+            <!-- COMASPNYT Docs -->
             <div>
               <label for="comaspnytDocs" class="block text-gray-700 text-sm font-semibold mb-2">COMASPNYT Docs (Company Articles, Shareholder Register, Financials, Tax etc.)</label>
-              <input type="file" id="comaspnytDocs" name="comaspnytDocs" accept="application/pdf,image/*" required
-                     class="w-full px-4 py-2 border border-gray-300 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100 transition-all duration-200 cursor-pointer">
+              <div class="file-input-container relative">
+                <p class="text-gray-500 text-sm">Drag & drop your file here, or click to browse</p>
+                <input type="file" id="comaspnytDocs" name="comaspnytDocs" accept="application/pdf,image/*" required>
+              </div>
+              <p id="comaspnytDocsName" class="text-xs text-gray-500 mt-1"></p>
             </div>
           </div>
         </div>
@@ -282,6 +339,45 @@
   </div>
 
   <script>
+    // --- Global Data Definitions ---
+    const sectorList = {
+        "careers": "💼 Careers",
+        "vendor": "🤝 Vendor",
+        "service-provider": "🛠️ Service Provider",
+        "agriculture": "🌱 Agriculture & Biotech",
+        "fsf": "🥦 Food, Soil & Farming",
+        "banking": "🏦 Banking & Finance",
+        "creative": "🖋️ Creative Tech",
+        "logistics": "📦 Logistics & Packaging",
+        "education-ip": "📚 Education & IP",
+        "fashion": "✂ Fashion & Identity",
+        "gaming": "🎮 Gaming & Simulation",
+        "health": "🧠 Health & Hygiene",
+        "housing": "🏗️ Housing & Infrastructure",
+        "justice": "⚖ Justice & Ethics",
+        "knowledge": "📖 Knowledge & Archives",
+        "micromesh": "☰ Micro-Mesh Logistics",
+        "media": "🎬 Motion, Media & Sonic",
+        "nutrition": "✿ Nutrition & Food Chain",
+        "ai-logic": "🧠 AI, Logic & Grid",
+        "packaging": "📦 Packaging & Materials",
+        "quantum": "✴️ Quantum Protocols",
+        "ritual": "☯ Ritual & Culture",
+        "saas": "🔑 SaaS & Licensing",
+        "trade": "🧺 Trade Systems",
+        "utilities": "🔋 Utilities & Energy",
+        "voice": "🎙️ Voice & Audio",
+        "webless": "📡 Webless Tech & Nodes",
+        "nft": "🔁 NFT & Ownership",
+        "education-youth": "🎓 Education & Youth",
+        "zerowaste": "♻️ Zero Waste",
+        "professional": "🧾 Professional Services",
+        "payroll-mining": "🪙 Payroll Mining & Accounting",
+        "mining": "⛏️ Mining & Resources",
+        "wildlife": "🦁 Wildlife & Habitat",
+        "admin-panel": "⚙️ Admin Panel"
+    };
+
     // JavaScript for Modal/Popup functionality
     const successModal = document.getElementById('successModal');
     const modalMessage = document.getElementById('modalMessage');
@@ -295,6 +391,49 @@
       successModal.classList.remove('show');
     }
 
+    // Populate Sectors Dropdown and enforce selection limit
+    const sectorsSelect = document.getElementById('sectors');
+    const sectorHelpText = document.getElementById('sectorHelpText');
+    const maxSectors = 5;
+
+    // Add initial options for Career, Vendor, Service Provider
+    const initialSectors = {
+        "careers": "💼 Careers",
+        "vendor": "🤝 Vendor",
+        "service-provider": "🛠️ Service Provider"
+    };
+
+    // Populate initial options
+    for (const key in initialSectors) {
+        const option = document.createElement('option');
+        option.value = key;
+        option.textContent = initialSectors[key];
+        sectorsSelect.appendChild(option);
+    }
+
+    // Populate other sectors
+    for (const key in sectorList) {
+        // Skip initial sectors to avoid duplication if they are also in sectorList
+        if (!initialSectors[key]) {
+            const option = document.createElement('option');
+            option.value = key;
+            option.textContent = sectorList[key];
+            sectorsSelect.appendChild(option);
+        }
+    }
+
+
+    sectorsSelect.addEventListener('change', function() {
+      if (this.selectedOptions.length > maxSectors) {
+        sectorHelpText.classList.remove('hidden');
+        // Deselect the last selected option to enforce the limit
+        const lastSelected = this.selectedOptions[this.selectedOptions.length - 1];
+        lastSelected.selected = false;
+      } else {
+        sectorHelpText.classList.add('hidden');
+      }
+    });
+
     // Handle NDA Document Download success
     document.getElementById('requestNdaBtn').addEventListener('click', function(event) {
       // Small delay to allow download to initiate before showing popup
@@ -303,12 +442,70 @@
       }, 500); // Adjust delay if needed
     });
 
+    // Handle File Input display name and visual feedback
+    document.querySelectorAll('.file-input-container input[type="file"]').forEach(input => {
+      const fileNameDisplay = document.getElementById(input.id + 'Name');
+      input.addEventListener('change', function() {
+        if (this.files.length > 0) {
+          fileNameDisplay.textContent = `Selected: ${this.files[0].name}`;
+          input.closest('.file-input-container').style.borderColor = '#4CAF50'; /* Green on file selected */
+          input.closest('.file-input-container').style.backgroundColor = '#e6ffe6'; /* Light green */
+        } else {
+          fileNameDisplay.textContent = '';
+          input.closest('.file-input-container').style.borderColor = '#cbd5e0';
+          input.closest('.file-input-container').style.backgroundColor = '';
+        }
+      });
+      // Basic drag-and-drop visual feedback (does not handle actual file drop here)
+      const container = input.closest('.file-input-container');
+      container.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        container.style.borderColor = '#a78bfa'; /* purple-400 */
+        container.style.backgroundColor = '#f5f3ff'; /* purple-50 */
+      });
+      container.addEventListener('dragleave', () => {
+        if (input.files.length === 0) { // Only revert if no file is selected
+          container.style.borderColor = '#cbd5e0';
+          container.style.backgroundColor = '';
+        }
+      });
+      // To implement full drag-and-drop, you would add a 'drop' listener here:
+      // container.addEventListener('drop', (e) => {
+      //   e.preventDefault();
+      //   const files = e.dataTransfer.files;
+      //   if (files.length > 0) {
+      //     input.files = files; // Assign the dropped files to the input
+      //     const event = new Event('change'); // Trigger change event
+      //     input.dispatchEvent(event);
+      //   }
+      // });
+    });
+
+
     // Handle Form Submission success
     document.getElementById('ndaForm').addEventListener('submit', async function(event) {
       event.preventDefault(); // Prevent default form submission
 
+      // Validate sector selection before submission
+      if (sectorsSelect.selectedOptions.length === 0) {
+        showModal('Please select at least one sector.');
+        sectorsSelect.focus();
+        return; // Stop submission
+      }
+      if (sectorsSelect.selectedOptions.length > maxSectors) {
+          showModal(`You can select a maximum of ${maxSectors} sectors. Please adjust your selection.`);
+          sectorsSelect.focus();
+          return;
+      }
+
+
       const form = event.target;
       const formData = new FormData(form);
+
+      // Append all selected sectors to formData as an array
+      const selectedSectors = Array.from(sectorsSelect.selectedOptions).map(option => option.value);
+      formData.append('sectors', JSON.stringify(selectedSectors)); // Send as JSON string
+
 
       try {
         const response = await fetch(form.action, {
@@ -319,6 +516,13 @@
         if (response.ok) {
           showModal('Your comprehensive NDA application has been successfully received!');
           form.reset(); // Clear the form after successful submission
+          // Reset file input displays
+          document.querySelectorAll('.file-input-container input[type="file"]').forEach(input => {
+            document.getElementById(input.id + 'Name').textContent = '';
+            input.closest('.file-input-container').style.borderColor = '#cbd5e0';
+            input.closest('.file-input-container').style.backgroundColor = '';
+          });
+          sectorHelpText.classList.add('hidden'); // Hide sector error if form reset
         } else {
           // Handle server-side errors
           const errorText = await response.text();
