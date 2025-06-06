@@ -36,6 +36,9 @@
             position: sticky;
             top: 0;
             z-index: 100; /* High z-index */
+            display: flex; /* Ensure flexbox for alignment */
+            justify-content: space-between; /* Space out logo and menu icon */
+            align-items: center;
         }
         header h1 {
             color: #1d1d1f; /* Dark text for logo */
@@ -43,20 +46,27 @@
             font-size: 1.75rem; /* More prominent logo */
             letter-spacing: -0.03em;
         }
+        /* Desktop Navigation Styles */
+        header nav {
+            display: flex; /* Ensure desktop nav is flex */
+            align-items: center;
+            gap: 0.75rem; /* Reduced gap slightly for more items */
+        }
         header nav a {
             color: #424245; /* Muted gray for nav links */
             font-size: 1rem; /* Slightly larger nav links */
             font-weight: 500;
-            padding: 0.7rem 1.4rem; /* Adjusted padding for more space */
+            padding: 0.7rem 1.2rem; /* Adjusted padding for more space */
             border-radius: 10px; /* Softer rounding */
             transition: all 0.25s ease-in-out; /* Smoother transitions */
             position: relative;
+            white-space: nowrap; /* Prevent wrapping of nav items */
         }
         header nav a:hover {
             color: #0071e3; /* Apple blue on hover */
             background-color: rgba(0, 0, 0, 0.05); /* Slightly more visible background on hover */
         }
-        header nav a.px-4 { /* Sign Up button */
+        header nav a.cta-btn-header { /* Sign Up button specific styling */
             background-color: #0071e3; /* Apple blue */
             color: white;
             padding: 0.8rem 1.8rem; /* More prominent padding */
@@ -65,10 +75,80 @@
             font-size: 1.05rem; /* Slightly larger font */
             box-shadow: 0 3px 8px rgba(0,0,0,0.15); /* More pronounced shadow */
         }
-        header nav a.px-4:hover {
+        header nav a.cta-btn-header:hover {
             background-color: #0077ed; /* Slightly lighter blue on hover */
             transform: translateY(-3px); /* Subtle lift */
             box-shadow: 0 6px 12px rgba(0,0,0,0.25); /* Stronger shadow on hover */
+        }
+
+        /* Mobile Menu Specific Styles */
+        .hamburger-icon {
+            display: none; /* Hidden by default, shown on mobile */
+            cursor: pointer;
+            z-index: 101; /* Above header content */
+        }
+        .hamburger-icon svg {
+            width: 32px;
+            height: 32px;
+            color: #1d1d1f; /* Dark color for icon */
+        }
+
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.98); /* Near opaque white */
+            backdrop-filter: blur(20px); /* Stronger blur for full overlay */
+            z-index: 99; /* Below header, above content */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            transform: translateX(100%); /* Start off-screen to the right */
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+        }
+
+        .mobile-menu-overlay.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0); /* Slide in */
+        }
+
+        .mobile-menu-overlay .close-icon {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            cursor: pointer;
+            z-index: 100;
+        }
+        .mobile-menu-overlay .close-icon svg {
+            width: 32px;
+            height: 32px;
+            color: #1d1d1f;
+        }
+
+        .mobile-menu-overlay nav {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem; /* Spacing between links */
+            text-align: center;
+        }
+        .mobile-menu-overlay nav a {
+            color: #1d1d1f;
+            font-size: 1.8rem; /* Large links for easy tapping */
+            font-weight: 700;
+            padding: 0.75rem 0;
+            width: fit-content;
+            margin: 0 auto; /* Center links */
+        }
+        .mobile-menu-overlay nav a.cta-btn-header {
+            margin-top: 1.5rem; /* Space above Sign Up button */
+            width: auto;
         }
 
         /* Hero Section - Designed for a generic page title */
@@ -117,7 +197,7 @@
             box-sizing: border-box;
         }
         section:first-of-type { /* Adjust margin for first section after hero */
-            margin-top: -4rem; /* Reduced to avoid hitting nav, leaving sufficient space */
+            margin-top: -4rem; /* Adjusted to overlap with header */
             position: relative;
             z-index: 20;
         }
@@ -335,17 +415,13 @@
         }
 
         /* Responsive adjustments */
-        @media (max-width: 1280px) { /* Adjust for large desktop screens */
-            section {
-                max-width: 1200px;
-                padding: 8rem 3rem;
-            }
-            .content-block {
-                max-width: 900px;
-            }
-        }
-
         @media (max-width: 1024px) { /* Adjust for medium screens (tablets) */
+            header nav {
+                display: none; /* Hide desktop nav on smaller screens */
+            }
+            .hamburger-icon {
+                display: block; /* Show hamburger icon */
+            }
             .hero-page-section {
                 padding: 8rem 2rem;
             }
@@ -431,7 +507,7 @@
                 margin-bottom: 3rem;
             }
             section:first-of-type {
-                margin-top: -4rem; /* Adjusted for mobile */
+                margin-top: -4rem; /* Adjusted for mobile to overlap with header */
             }
             section h2 {
                 font-size: 2.5rem;
@@ -488,21 +564,21 @@
                 font-size: 0.85rem;
                 margin-top: 2.5rem;
             }
-            header nav {
-                flex-direction: column;
-                align-items: center;
-                gap: 0.75rem;
-                margin-top: 1.5rem;
+            header nav { /* Hide nav on mobile */
+                display: none;
             }
-            header nav a {
-                padding: 0.5rem 1rem;
-                font-size: 0.9rem;
-                width: fit-content;
+            .hamburger-icon { /* Show hamburger on mobile */
+                display: block;
             }
-            header nav a.px-4 {
-                padding: 0.6rem 1.2rem;
-                font-size: 0.95rem;
-                width: auto;
+            .mobile-menu-overlay nav {
+                gap: 1rem; /* Adjust gap for mobile menu links */
+            }
+            .mobile-menu-overlay nav a {
+                font-size: 1.5rem; /* Adjust font size for mobile menu links */
+            }
+            .mobile-menu-overlay nav a.cta-btn-header {
+                padding: 0.7rem 1.4rem;
+                font-size: 1rem;
             }
         }
     </style>
@@ -510,9 +586,11 @@
 <body class="antialiased">
 
     <!-- Header - Consistent with Fruitful landing page -->
-    <header class="py-4 px-6 md:px-12 flex flex-col sm:flex-row justify-between items-center text-white">
-        <h1 class="mb-4 sm:mb-0">Fruitful™</h1>
-        <nav class="flex flex-wrap justify-center sm:justify-end items-center space-x-2 sm:space-x-4">
+    <header class="py-4 px-6 md:px-12 flex items-center justify-between">
+        <h1 class="text-white">Fruitful™</h1>
+        
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex flex-wrap items-center space-x-2 sm:space-x-4">
             <a href="#thabo-md" class="transition-colors duration-200">Thabo</a>
             <a href="#core-pillars" class="transition-colors duration-200">Pillars</a>
             <a href="#impact-value" class="transition-colors duration-200">Impact</a>
@@ -524,9 +602,39 @@
             <a href="#economic-impact" class="transition-colors duration-200">Economics</a>
             <a href="#mining-brands-ecosystem" class="transition-colors duration-200">Mining Brands</a>
             <a href="https://faa.zone/careers/hiring-homepage.html" class="transition-colors duration-200">Careers</a>
-            <a href="https://faa.zone/signup.html" class="px-4 py-2 rounded-full font-semibold transition-colors duration-200">Sign Up</a>
+            <a href="https://faa.zone/signup.html" class="px-4 py-2 rounded-full font-semibold cta-btn-header">Sign Up</a>
         </nav>
+
+        <!-- Hamburger Icon for Mobile -->
+        <div id="hamburger-icon" class="hamburger-icon md:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </div>
     </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="mobile-menu-overlay">
+        <div id="close-icon" class="close-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </div>
+        <nav class="flex flex-col items-center">
+            <a href="#thabo-md" class="transition-colors duration-200">Thabo</a>
+            <a href="#core-pillars" class="transition-colors duration-200">Pillars</a>
+            <a href="#impact-value" class="transition-colors duration-200">Impact</a>
+            <a href="#our-approach" class="transition-colors duration-200">Approach</a>
+            <a href="#strategic-engagements" class="transition-colors duration-200">Engage</a>
+            <a href="#timeline" class="transition-colors duration-200">Timeline</a>
+            <a href="#tangible-impact" class="transition-colors duration-200">Metrics</a>
+            <a href="#pathways-partnership" class="transition-colors duration-200">Partnership</a>
+            <a href="#economic-impact" class="transition-colors duration-200">Economics</a>
+            <a href="#mining-brands-ecosystem" class="transition-colors duration-200">Mining Brands</a>
+            <a href="https://faa.zone/careers/hiring-homepage.html" class="transition-colors duration-200">Careers</a>
+            <a href="https://faa.zone/signup.html" class="px-4 py-2 rounded-full font-semibold cta-btn-header">Sign Up</a>
+        </nav>
+    </div>
 
     <!-- Hero Section for Fruitful Mining (Pty) Ltd -->
     <section class="hero-page-section">
