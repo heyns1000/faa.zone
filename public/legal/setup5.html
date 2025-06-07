@@ -30,15 +30,28 @@
             border-radius: 0.25rem;
             font-family: 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
         }
+        /* Custom adjustment for smaller screens if needed, overriding Tailwind defaults carefully */
+        @media (max-width: 640px) {
+            .responsive-h1 {
+                font-size: 3rem; /* Adjust Fruitful™ size for small screens */
+            }
+            .responsive-h2 {
+                font-size: 2rem; /* Adjust FAA.ZONE™ size for small screens */
+            }
+            .responsive-p {
+                font-size: 1.125rem; /* Adjust handbook title size for small screens */
+            }
+        }
     </style>
 </head>
 <body class="antialiased text-gray-800">
     <div class="min-h-screen flex flex-col items-center py-10 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-7xl w-full bg-white shadow-lg rounded-xl overflow-hidden mb-10">
+        <div class="max-w-7xl w-full mx-auto bg-white shadow-lg rounded-xl overflow-hidden mb-10">
             <!-- Header Section -->
-            <div class="px-8 py-6 sm:px-10 sm:py-8 bg-gradient-to-r from-blue-600 to-indigo-700 text-white flex flex-col items-center text-center rounded-t-xl">
-                <h1 class="text-4xl sm:text-5xl font-extrabold mb-2">FAA.ZONE Ecosystem and Gorilla 🦍</h1>
-                <p class="text-xl sm:text-2xl font-semibold opacity-90">Comprehensive GitHub Developer Handbook and Staff Training Manual</p>
+            <div class="px-4 py-6 sm:px-10 sm:py-8 bg-gradient-to-r from-blue-600 to-indigo-700 text-white flex flex-col items-center text-center rounded-t-xl">
+                <p class="text-5xl sm:text-7xl font-extrabold mb-2 responsive-h1">Fruitful™</p>
+                <h1 class="text-3xl sm:text-5xl font-bold mb-2 responsive-h2">FAA.ZONE™ Ecosystem 🦍</h1>
+                <p class="text-lg sm:text-2xl font-semibold opacity-90 responsive-p">GitHub Developer Handbook and Staff Training Manual</p>
                 <p class="text-sm mt-4 opacity-80 italic">Your A-Z Guide to Version Control and Collaboration</p>
             </div>
 
@@ -405,13 +418,6 @@ git push origin main</code></pre>
                     <pre><code>git pull origin &lt;your-branch-name&gt;
 # Resolve any conflicts if they arise
 git push origin &lt;your-branch-name&gt;</code></pre>
-
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-3">7.3 Authentication Issues (<code>Permission denied (publickey)</code> or password prompts)</h3>
-                    <ul class="list-disc list-inside ml-4 space-y-2 mb-4">
-                        <li><strong>SSH Key Issues:</strong>
-                            <p class="text-sm text-gray-600">Ensure your SSH agent is running and your key is added (see section 2.4). Also, verify the SSH URL is used for your remote (<code>git remote -v</code>).</p>
-                            <pre><code>ssh-add ~/.ssh/id_ed25519
-ssh -T git@github.com # Test SSH connection</code></pre>
                         </li>
                         <li><strong>HTTPS Token Issues:</strong> If you're using HTTPS and constantly prompted for a password, your credential manager might not be set up correctly, or your Personal Access Token (PAT) might have expired or be invalid.
                             <p class="text-sm text-gray-600">GitHub recommends using PATs instead of passwords for HTTPS. Generate a new PAT from GitHub Settings -> Developer settings -> Personal access tokens. Give it appropriate scopes (e.g., <code>repo</code>). When prompted for a password, use the PAT.</p>
@@ -433,9 +439,100 @@ git push --force origin &lt;branch-name&gt; # DANGEROUS! Overwrites remote histo
                     </ul>
                 </section>
 
+                <!-- All Git Bash Prompts Section -->
+                <section class="mb-8">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">8. Advanced Git Commands: Expanding Your Toolkit</h2>
+                    <p class="mb-4">This section provides a comprehensive list of Git commands beyond the daily essentials, offering more powerful ways to manage your codebase and history. Each command includes a brief description of its primary function.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Branching & Merging</h3>
+                            <ul class="list-none space-y-3">
+                                <li><strong><code>git switch &lt;branch-name&gt;</code>:</strong> A newer, safer alternative to `git checkout` for switching branches.</li>
+                                <li><strong><code>git switch -c &lt;new-branch-name&gt;</code>:</strong> Creates and switches to a new branch.</li>
+                                <li><strong><code>git branch -m &lt;old-name&gt; &lt;new-name&gt;</code>:</strong> Renames a local branch.</li>
+                                <li><strong><code>git merge --abort</code>:</strong> Stops a merge process if conflicts are too complex or you change your mind.</li>
+                                <li><strong><code>git rebase &lt;base-branch&gt;</code>:</strong> Rewrites commit history by moving a series of commits to a new base. Use with caution on shared branches.</li>
+                                <li><strong><code>git rebase --continue</code>:</strong> Continues a rebase after resolving conflicts.</li>
+                                <li><strong><code>git rebase --abort</code>:</strong> Aborts an ongoing rebase operation.</li>
+                                <li><strong><code>git cherry-pick &lt;commit-hash&gt;</code>:</strong> Applies changes from a specific commit from one branch onto another.</li>
+                                <li><strong><code>git stash</code>:</strong> Temporarily saves changes that are not ready to be committed, cleaning up the working directory.</li>
+                                <li><strong><code>git stash pop</code>:</strong> Applies the most recently stashed changes and removes them from the stash list.</li>
+                                <li><strong><code>git tag &lt;tag-name&gt;</code>:</strong> Creates a lightweight tag (e.g., for release versions).</li>
+                                <li><strong><code>git tag -a &lt;tag-name&gt; -m "Message"</code>:</strong> Creates an annotated tag (recommended for releases, includes metadata).</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Inspecting & Debugging</h3>
+                            <ul class="list-none space-y-3">
+                                <li><strong><code>git diff</code>:</strong> Shows changes between the working tree and the index, or between two commits/branches.</li>
+                                <li><strong><code>git diff --staged</code>:</strong> Shows changes between the index and the last commit.</li>
+                                <li><strong><code>git blame &lt;file-name&gt;</code>:</strong> Shows what revision and author last modified each line of a file.</li>
+                                <li><strong><code>git reflog</code>:</strong> Displays a log of all actions performed in your local repository, including checkouts and resets. Useful for recovering lost commits.</li>
+                                <li><strong><code>git shortlog</code>:</strong> Summarizes `git log` output, grouped by author.</li>
+                                <li><strong><code>git show &lt;commit-hash&gt;</code>:</strong> Displays metadata and content changes of a single commit, tag, or tree object.</li>
+                            </ul>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2 mt-6">Remote & Configuration</h3>
+                            <ul class="list-none space-y-3">
+                                <li><strong><code>git remote -v</code>:</strong> Lists all configured remote repositories and their URLs.</li>
+                                <li><strong><code>git remote add &lt;name&gt; &lt;url&gt;</code>:</strong> Adds a new remote repository.</li>
+                                <li><strong><code>git remote rm &lt;name&gt;</code>:</strong> Removes a remote.</li>
+                                <li><strong><code>git fetch</code>:</strong> Downloads objects and refs from another repository (e.g., origin), but does not merge them.</li>
+                                <li><strong><code>git config --list</code>:</strong> Lists all Git configurations.</li>
+                                <li><strong><code>git config --global core.editor "code --wait"</code>:</strong> Sets VS Code as the default Git editor (example).</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="mt-6 text-gray-600 text-sm italic">This list is a starting point; Git has many more commands and options. Use <code>git help &lt;command&gt;</code> for detailed documentation on any specific command (e.g., <code>git help rebase</code>).</p>
+                </section>
+
+                <!-- Using Git Desktop Applications Section -->
+                <section class="mb-8">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">9. Using Git Desktop Applications</h2>
+                    <p class="mb-4">While the command line provides full control over Git, desktop applications offer a visual interface that can simplify many common operations, especially for those who prefer graphical tools. Popular Git desktop apps include GitHub Desktop, GitKraken, Sourcetree, and VS Code's integrated Git features.</p>
+                    <p class="mb-4">The core concepts and workflows (cloning, committing, pushing, pulling, branching, creating Pull Requests) remain the same, but the method of execution changes from typing commands to clicking buttons and interacting with visual elements.</p>
+
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-3">9.1 Common Operations in a Git Desktop App</h3>
+                    <ul class="list-disc list-inside ml-4 space-y-3 mb-4">
+                        <li><strong>Cloning a Repository:</strong>
+                            <p>Typically found under "File" or "Repository" menu as "Clone Repository". You'll provide the repository URL (HTTPS or SSH) and choose a local directory.</p>
+                            <p class="text-sm text-gray-600"><em>Equivalent to:</em> <code>git clone &lt;repository-url&gt;</code></p>
+                        </li>
+                        <li><strong>Staging Changes:</strong>
+                            <p>Desktop apps usually show a list of modified files. You can select individual files or all changed files to stage them for the next commit. This might involve checking a box next to the file name or dragging it to a "Staged Changes" area.</p>
+                            <p class="text-sm text-gray-600"><em>Equivalent to:</em> <code>git add &lt;file-name&gt;</code> or <code>git add .</code></p>
+                        </li>
+                        <li><strong>Committing Changes:</strong>
+                            <p>After staging, there's usually a dedicated area to write your commit message (subject and optional description) and a "Commit" button. The app will automatically include your configured Git user name/email.</p>
+                            <p class="text-sm text-gray-600"><em>Equivalent to:</em> <code>git commit -m "Your message"</code></p>
+                        </li>
+                        <li><strong>Pulling Latest Changes:</strong>
+                            <p>A "Pull" or "Fetch origin" button (often with a down arrow icon) will retrieve and integrate changes from the remote repository to your current local branch. It's crucial to do this frequently.</p>
+                            <p class="text-sm text-gray-600"><em>Equivalent to:</em> <code>git pull</code></p>
+                        </li>
+                        <li><strong>Pushing Local Changes:</strong>
+                            <p>A "Push" or "Push origin" button (often with an up arrow icon) sends your committed local changes to the remote repository.</p>
+                            <p class="text-sm text-gray-600"><em>Equivalent to:</em> <code>git push</code></p>
+                        </li>
+                        <li><strong>Creating and Switching Branches:</strong>
+                            <p>Most apps have a branch selector dropdown where you can see existing branches and an option to "New Branch" or "Create Branch". Switching is as simple as selecting a different branch from the list.</p>
+                            <p class="text-sm text-gray-600"><em>Equivalent to:</em> <code>git branch &lt;new-branch&gt;</code> and <code>git checkout &lt;branch-name&gt;</code> (or <code>git switch</code>)</p>
+                        </li>
+                        <li><strong>Creating a Pull Request:</strong>
+                            <p>After pushing a new branch to GitHub, many desktop apps will provide a direct link or a button like "Create Pull Request" that takes you directly to GitHub's PR creation page, pre-filling much of the information.</p>
+                            <p class="text-sm text-gray-600"><em>Equivalent to:</em> Pushing a new branch and then navigating to GitHub.com to create the PR.</p>
+                        </li>
+                        <li><strong>Resolving Merge Conflicts:</strong>
+                            <p>When a pull or merge results in conflicts, desktop apps often highlight the conflicting files and provide a visual interface to help you manually resolve them, showing "incoming" and "current" changes side-by-side or inline. After editing, you'll mark the conflict as resolved within the app.</p>
+                            <p class="text-sm text-gray-600"><em>Equivalent to:</em> Manual file editing, then <code>git add</code> and <code>git commit</code> for the merge.</p>
+                        </li>
+                    </ul>
+                    <p class="mt-4 text-gray-600">While the visual tools simplify the *execution*, understanding the underlying Git concepts from the command-line sections (e.g., staging area, commit history, branching) will make you a more effective user of any Git desktop application. They are two different interfaces to the same powerful system.</p>
+                </section>
+
                 <!-- Conclusion -->
                 <section>
-                    <h2 class="text-3xl font-bold text-gray-900 mb-4">8. Conclusion</h2>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">10. Conclusion</h2>
                     <p class="mb-4">This handbook provides a comprehensive foundation for using Git and GitHub effectively within the FAA.ZONE Ecosystem. Mastering these tools is crucial for our collaborative success and the efficient management of our codebase.</p>
                     <p>Remember to practice regularly, utilize GitHub's documentation for deeper dives, and always communicate changes through Pull Requests. Your consistent adherence to these guidelines ensures a smooth and productive development experience for everyone.</p>
                     <p class="mt-4 text-gray-600 text-sm italic">Should you encounter issues not covered here, consult official Git and GitHub documentation, or refer to common online resources. This manual is designed to empower you to resolve issues independently and contribute confidently.</p>
