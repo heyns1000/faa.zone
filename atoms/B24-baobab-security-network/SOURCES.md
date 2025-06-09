@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-06-09 | baobab | history | `baobab_spa_dashboard.html` | `1693dca0` | Baobab Security Network - Global Dashboard | 46033 | 19 | 27 | 104.6 |
+| 2 | 2025-06-09 | baobab | history | `baobab_spa_dashboard.html` | `9390621a` | Baobab Security Network - Global Dashboard | 45477 | 19 | 27 | 104.5 |
