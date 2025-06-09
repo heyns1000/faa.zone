@@ -6,3 +6,4 @@
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-06-09 | baobab | history | `index.html` | `c31fc4c4` | 🌳 The Baobab Security Network™ - Global Prote | 19084 | 24 | 0 | 49.6 |
 | 2 | 2025-06-09 | baobab | history | `index.html` | `5e4c5412` | 🌳 The Baobab Security Network™ - Global Prote | 17087 | 24 | 0 | 49.4 |
+| 3 | 2025-06-09 | baobab | history | `landing_page.html` | `8356d05b` | 🌳 The Baobab Security Network™ - Global Prote | 17417 | 24 | 0 | 49.5 |
