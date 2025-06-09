@@ -7,8 +7,8 @@
 
     <!-- Placeholder Comments as per requirements -->
     <!-- Chosen Palette: Warm Earth (Tones of Beige, Brown, Green, and Blue) -->
-    <!-- Application Structure Plan: A Single-Page Application (SPA) with a fixed sidebar for navigation between 11 thematic global dashboards. The main content area dynamically displays the selected dashboard, which contains interactive charts and KPIs. A global filter allows users to segment relevant data by continent, demonstrating the platform's ability to provide both a macro and micro view of global issues. A separate, dedicated link directs users to the standalone Eskom Crisis dashboard. This structure maintains a fluid SPA experience for global data while allowing deep dives into specific regional crises via dedicated external pages. -->
-    <!-- Visualization & Content Choices: Data from the report's conceptual themes are presented through various Chart.js canvas-based visualizations. GOAL: Compare -> VIZ: Bar charts for country/regional comparisons (e.g., Deforestation Hotspots). GOAL: Change -> VIZ: Line charts for trends over time (e.g., Global Forest Cover). GOAL: Inform/Proportions -> VIZ: Doughnut/Pie charts for breakdowns (e.g., Sources of Pollution). INTERACTION: A dropdown filters all data by continent for global dashboards. This approach makes the abstract concepts of the report tangible and interactive for the user. Library: Chart.js on Canvas. -->
+    <!-- Application Structure Plan: A Single-Page Application (SPA) with a fixed sidebar for navigation between 11 thematic dashboards. The main content area dynamically displays the selected dashboard, which contains interactive charts and KPIs. A global filter allows users to segment all data by continent, demonstrating the platform's ability to provide both a macro and micro view of global issues. This structure was chosen to make the vast, interconnected data streams described in the source report feel manageable, explorable, and coherent within a single, fluid user experience. -->
+    <!-- Visualization & Content Choices: Data from the report's conceptual themes is presented through various Chart.js canvas-based visualizations. GOAL: Compare -> VIZ: Bar charts for country/regional comparisons (e.g., Deforestation Hotspots). GOAL: Change -> VIZ: Line charts for trends over time (e.g., Global Forest Cover). GOAL: Inform/Proportions -> VIZ: Doughnut/Pie charts for breakdowns (e.g., Sources of Pollution). INTERACTION: A dropdown filters all data by continent, dynamically updating charts. This approach makes the abstract concepts of the report tangible and interactive for the user. Library: Chart.js on Canvas. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -92,7 +92,7 @@
                     <p id="dashboard-subtitle" class="text-gray-600 mt-1">A summary of the Baobab Security Network's mission.</p>
                 </div>
                 <!-- Global Filter -->
-                <div id="global-filter-container" class="flex items-center space-x-4">
+                <div class="flex items-center space-x-4">
                     <select id="continent-filter" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         <option value="All" selected>All Continents</option>
                         <option value="Africa">Africa</option>
@@ -137,12 +137,12 @@
                             This platform provides a conceptual demonstration of The Baobab Security Network's vision: a world where data-driven insights empower us to protect our planet and uplift communities. By integrating AI, geospatial mapping, and real-time analytics, we can address critical global challenges.
                         </p>
                         <p class="mt-4 text-gray-600 leading-relaxed">
-                            Use the navigation on the left to explore the various thematic dashboards, focusing on global issues. For a deep dive into the **Eskom Crisis in South Africa**, please navigate to its dedicated page via the link in the sidebar. Each dashboard contains interactive visualizations representing key global metrics or specific crisis data. You can use the "Continent" filter at the top right to drill down into regional data and see how the insights change. This interactive experience is designed to showcase the power of a unified, intelligent approach to global sustainability and security.
+                            Use the navigation on the left to explore the various thematic dashboards. Each dashboard contains interactive visualizations representing key global metrics. You can use the "Continent" filter at the top right to drill down into regional data and see how the insights change. This interactive experience is designed to showcase the power of a unified, intelligent approach to global sustainability and security.
                         </p>
                     </div>
                 </div>
 
-                <!-- Panels for each dashboard theme will be dynamically inserted here by JS -->
+                <!-- Panels for each dashboard theme will be dynamically inserted here -->
             </div>
         </main>
     </div>
@@ -270,20 +270,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebarNav = document.getElementById('sidebar-nav');
     const mobileSidebarNav = document.getElementById('mobile-sidebar-nav');
     const dashboardPanels = document.getElementById('dashboard-panels');
-    const globalFilterContainer = document.getElementById('global-filter-container');
     
     // --- 1. Populate Navigation and Dashboard Panels ---
-    // Add Overview link first explicitly
-    sidebarNav.innerHTML += `<a href="#" data-dashboard="overview" class="sidebar-link flex items-center px-3 py-3 text-sm">${dashboards.overview.icon} <span class="ml-3">${dashboards.overview.title}</span></a>`;
-    mobileSidebarNav.innerHTML += `<a href="#" data-dashboard="overview" class="sidebar-link flex items-center px-3 py-3 text-sm">${dashboards.overview.icon} <span class="ml-3">${dashboards.overview.title}</span></a>`;
-
-
     Object.keys(dashboards).forEach(key => {
-        if (key === 'overview') return; // Skip overview, already added
-
+        if (key === 'overview') return; // Skip overview, it's already there
         const dash = dashboards[key];
 
-        // Create sidebar links for global dashboards
+        // Create sidebar links
         const linkHTML = `<a href="#" data-dashboard="${key}" class="sidebar-link flex items-center px-3 py-3 text-sm">${dash.icon} <span class="ml-3">${dash.title}</span></a>`;
         sidebarNav.innerHTML += linkHTML;
         mobileSidebarNav.innerHTML += linkHTML;
@@ -291,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Create dashboard panel structure
         const panel = document.createElement('div');
         panel.id = `${key}-dashboard`;
-        panel.className = 'dashboard-content hidden'; // Start hidden
+        panel.className = 'dashboard-content hidden';
         panel.innerHTML = `
             <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                 <!-- Cards for ${dash.title} will be inserted here -->
@@ -299,31 +292,15 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         dashboardPanels.appendChild(panel);
     });
-
-    // Add explicit link to Eskom Crisis Dashboard (separate page)
-    // IMPORTANT: This link will NOT have a data-dashboard attribute so it's not handled by the SPA logic
-    // It will cause a full page reload to the standalone HTML file.
-    const eskomLinkHTML = `<a href="eskom_crisis_dashboard.html" class="sidebar-link flex items-center px-3 py-3 text-sm">🔌 <span class="ml-3">Eskom Crisis (SA)</span></a>`;
-    sidebarNav.innerHTML += eskomLinkHTML;
-    mobileSidebarNav.innerHTML += eskomLinkHTML;
-
+    
     // Set initial active link
-    document.querySelector('.sidebar-link[data-dashboard="overview"]')?.classList.add('active');
+    document.querySelector('.sidebar-link[data-dashboard="deforestation"]')?.classList.add('active');
 
 
-    // Create all chart canvases for global dashboards
-    // This loop now runs for all dashboards defined in chartConfigs
+    // Create all chart canvases
     Object.keys(chartConfigs).forEach(dashboardKey => {
         const configs = chartConfigs[dashboardKey];
-        const panel = document.getElementById(`${dashboardKey}-dashboard`)?.querySelector('.grid');
-        
-        // Only proceed if the panel exists in the DOM. This guards against errors
-        // if a dashboard is defined in chartConfigs but its corresponding panel is not in HTML.
-        if (!panel) {
-            console.warn(`Panel for dashboard key "${dashboardKey}" not found. Skipping chart creation.`);
-            return; 
-        }
-
+        const panel = document.getElementById(`${dashboardKey}-dashboard`).querySelector('.grid');
         configs.forEach(config => {
             const card = document.createElement('div');
             card.className = 'widget-card p-4 md:p-6 flex flex-col';
@@ -334,8 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
             panel.appendChild(card);
-            // Initialize chart with empty data; data will be loaded when the dashboard becomes active.
-            createChart(config.id, config.type); 
+            createChart(config.id, config.type, config.dataFn);
         });
     });
 
@@ -343,10 +319,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 3. Event Listeners ---
     document.body.addEventListener('click', (e) => {
         const link = e.target.closest('.sidebar-link');
-        // IMPORTANT CHANGE: Only process links with data-dashboard attribute AND explicitly check if it's NOT the Eskom link
-        // The Eskom link will not have a data-dashboard attribute, so this condition prevents preventDefault() for it.
-        if (link && link.dataset.dashboard) { // Only process if data-dashboard exists
-            e.preventDefault(); // Prevent default for internal SPA links
+        if (link) {
+            e.preventDefault();
             const dashboardId = link.dataset.dashboard;
             showDashboard(dashboardId);
             
@@ -356,7 +330,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 mobileMenu.classList.add('hidden');
             }
         }
-        // If it's the Eskom link (which now has no data-dashboard), or any other external link, let the browser handle the navigation naturally.
     });
 
     document.getElementById('continent-filter').addEventListener('change', (e) => {
@@ -382,7 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Initialize with Overview dashboard
+    // Initialize with first dashboard
     showDashboard('overview');
 });
 
@@ -407,25 +380,16 @@ function showDashboard(dashboardId) {
 
     // Update active link in sidebar
     document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
-    // Select sidebar link by data-dashboard attribute (for internal SPA links)
     document.querySelectorAll(`.sidebar-link[data-dashboard="${dashboardId}"]`).forEach(l => l.classList.add('active'));
-
-    // Toggle global filter visibility - always visible for global dashboards
-    const globalFilterContainer = document.getElementById('global-filter-container');
-    globalFilterContainer.classList.remove('hidden'); // Always show for global dashboards
 
     // Update charts for the current dashboard
     updateAllCharts();
 }
 
-function createChart(canvasId, type) { 
-    const ctx = document.getElementById(canvasId);
-    if (!ctx) {
-        console.error(`Canvas element with ID "${canvasId}" not found.`);
-        return; 
-    }
+function createChart(canvasId, type, dataFn) {
+    const ctx = document.getElementById(canvasId).getContext('2d');
+    const chartData = dataFn(getFilteredData());
     
-    // Initialize chart with empty data initially.
     const chartOptions = {
         responsive: true,
         maintainAspectRatio: false,
@@ -460,7 +424,7 @@ function createChart(canvasId, type) {
 
     chartInstances[canvasId] = new Chart(ctx, {
         type: type,
-        data: { labels: [], datasets: [] }, // Start with empty data
+        data: chartData,
         options: chartOptions
     });
 }
@@ -469,38 +433,19 @@ function updateAllCharts() {
     const filteredData = getFilteredData();
     Object.keys(chartInstances).forEach(id => {
         const chart = chartInstances[id];
-        // Find the dashboard key this chart belongs to
-        let chartDashboardKey = null;
-        for (const dashKey in chartConfigs) {
-            if (chartConfigs[dashKey].some(config => config.id === id)) {
-                chartDashboardKey = dashKey;
-                break;
-            }
-        }
-
-        if (chartDashboardKey === currentDashboard) {
-            // Get the config for the current chart
-            const config = chartConfigs[currentDashboard].find(c => c.id === id);
-            if (config && config.dataFn) {
+        // Find the data function associated with this chart
+        for (const key in chartConfigs) {
+            const config = chartConfigs[key].find(c => c.id === id);
+            if(config) {
                 chart.data = config.dataFn(filteredData);
                 chart.update();
-            } else {
-                console.warn(`Data function not found for chart ID: ${id} in dashboard: ${currentDashboard}`);
-            }
-        } else {
-            // Clear data for charts not on the active dashboard to prevent stale data display
-            // This is primarily for global dashboards, so they don't load data for non-active themes.
-            if (chart.data.labels.length > 0) {
-                 chart.data = { labels: [], datasets: [] };
-                 chart.update();
+                break;
             }
         }
     });
 }
 
-
 function getFilteredData() {
-    // This SPA only handles global data now
     if (currentFilter === "All") {
         return globalData;
     }
@@ -508,8 +453,8 @@ function getFilteredData() {
 }
 
 
-// --- DATA TRANSFORMATION FUNCTIONS FOR CHARTS (GLOBAL) ---
-// These functions now robustly handle filtering for "All" or a specific continent
+// --- DATA TRANSFORMATION FUNCTIONS FOR CHARTS ---
+// These functions take filtered data and prepare it for Chart.js
 
 function getForestCoverData(data) {
     const sortedData = [...data].sort((a, b) => a.forestCover - b.forestCover).slice(0, 10);
@@ -553,7 +498,6 @@ function getPlasticWasteData(data) {
 }
 
 function getRecyclingRateDistributionData(data) {
-    // This function inherently works on the provided 'data' whether it's global or filtered
     const bins = { '0-20%': 0, '21-40%': 0, '41-60%': 0, '>60%': 0 };
     data.forEach(d => {
         if (d.recyclingRate <= 20) bins['0-20%']++;
@@ -585,19 +529,22 @@ function getThreatenedSpeciesData(data) {
 }
 
 function getPoachingIncidentsByContinentData(data) {
-    const continentCounts = continents.reduce((acc, c) => {
-        acc[c] = data.filter(d => d.continent === c).reduce((sum, item) => sum + item.poachingIncidents, 0);
-        return acc;
-    }, {});
-
-    // Filter out continents with 0 incidents if not 'All' view, or keep all for comparison
-    const labels = Object.keys(continentCounts).filter(c => currentFilter === 'All' || continentCounts[c] > 0);
-    const chartData = labels.map(c => continentCounts[c]);
-
+    if (currentFilter !== 'All') { // If filtered, this chart is less meaningful
+        const singleContinentData = continents.reduce((acc, c) => ({ ...acc, [c]: 0 }), {});
+        singleContinentData[currentFilter] = data.reduce((sum, d) => sum + d.poachingIncidents, 0);
+        return {
+            labels: [currentFilter],
+            datasets: [{ data: [singleContinentData[currentFilter]], backgroundColor: ['#8B5CF6'] }]
+        };
+    }
+    const continentData = continents.reduce((acc, c) => ({ ...acc, [c]: 0 }), {});
+    globalData.forEach(d => {
+        continentData[d.continent] += d.poachingIncidents;
+    });
     return {
-        labels: labels,
+        labels: Object.keys(continentData),
         datasets: [{
-            data: chartData,
+            data: Object.values(continentData),
             backgroundColor: ['#8B5CF6', '#EC4899', '#10B981', '#FBBF24', '#3B82F6', '#6366F1'],
         }]
     };
@@ -701,20 +648,19 @@ function getDisasterRiskData(data) {
 }
 
 function getCommunityPreparednessByContinentData(data) {
-    const continentAverages = continents.reduce((acc, c) => {
-        const relevantData = data.filter(d => d.continent === c);
-        const avg = relevantData.length > 0 ? relevantData.reduce((sum, item) => sum + item.communityPreparedness, 0) / relevantData.length : 0;
-        acc[c] = avg;
-        return acc;
-    }, {});
-
-    const labels = Object.keys(continentAverages).filter(c => currentFilter === 'All' || continentAverages[c] > 0);
-    const chartData = labels.map(c => continentAverages[c]);
-
+     if (currentFilter !== 'All') {
+        return { labels: [], datasets: [{ data: [] }] };
+    }
+    const continentData = {};
+    continents.forEach(c => {
+        const continentCountries = globalData.filter(d => d.continent === c);
+        const avg = continentCountries.reduce((sum, d) => sum + d.communityPreparedness, 0) / continentCountries.length;
+        continentData[c] = avg.toFixed(2);
+    });
     return {
-        labels: labels,
+        labels: Object.keys(continentData),
         datasets: [{
-            data: chartData,
+            data: Object.values(continentData),
             backgroundColor: ['#8B5CF6', '#EC4899', '#10B981', '#FBBF24', '#3B82F6', '#6366F1'],
         }]
     };
@@ -791,20 +737,19 @@ function getLifeExpectancyData(data) {
 }
 
 function getHealthSpendingByContinentData(data) {
-    const continentAverages = continents.reduce((acc, c) => {
-        const relevantData = data.filter(d => d.continent === c);
-        const avg = relevantData.length > 0 ? relevantData.reduce((sum, item) => sum + parseFloat(item.healthSpending), 0) / relevantData.length : 0;
-        acc[c] = avg;
-        return acc;
-    }, {});
-
-    const labels = Object.keys(continentAverages).filter(c => currentFilter === 'All' || continentAverages[c] > 0);
-    const chartData = labels.map(c => continentAverages[c]);
-
+    if (currentFilter !== 'All') {
+        return { labels: [], datasets: [{ data: [] }] };
+    }
+    const continentData = {};
+    continents.forEach(c => {
+        const continentCountries = globalData.filter(d => d.continent === c);
+        const avg = continentCountries.reduce((sum, d) => sum + parseFloat(d.healthSpending), 0) / continentCountries.length;
+        continentData[c] = avg.toFixed(2);
+    });
     return {
-        labels: labels,
+        labels: Object.keys(continentData),
         datasets: [{
-            data: chartData,
+            data: Object.values(continentData),
             backgroundColor: ['#8B5CF6', '#EC4899', '#10B981', '#FBBF24', '#3B82F6', '#6366F1'],
         }]
     };
