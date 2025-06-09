@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-06-09 | baobab | history | `index.html` | `c31fc4c4` | 🌳 The Baobab Security Network™ - Global Prote | 19084 | 24 | 0 | 49.6 |
+| 2 | 2025-06-09 | baobab | history | `index.html` | `5e4c5412` | 🌳 The Baobab Security Network™ - Global Prote | 17087 | 24 | 0 | 49.4 |
