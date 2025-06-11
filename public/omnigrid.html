@@ -72,24 +72,34 @@
             box-shadow: 0 1px 0 rgba(0,0,0,0.2);
         }
 
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 600;
-            text-decoration: none;
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%; /* Ensure content spans full width of container */
+        }
+
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Space between Fruitful and FAA.zone */
             color: var(--text-color-light);
             transition: color 0.3s ease;
         }
-        .dark-mode .logo {
+        .dark-mode .logo-group {
             color: var(--text-color-dark);
         }
-        .logo-faa {
+        .logo-group .logo-link { /* New class for the anchor tag holding the logo */
+            text-decoration: none; /* Ensure no underline on the logo link */
+            color: inherit; /* Inherit color from parent if needed, or set explicitly */
+            display: flex; /* Make it a flex container to align inner spans */
+            align-items: center;
+            gap: 5px; /* Space between textual parts of the logo */
+        }
+        .logo-fruitful {
             color: var(--primary-color);
-        }
-        .logo-buildnest {
-            color: var(--text-color-light);
-        }
-        .dark-mode .logo-buildnest {
-            color: var(--text-color-dark);
+            font-size: 1.6rem; /* Slightly larger for Fruitful */
+            font-weight: 800; /* More bold for Fruitful */
         }
 
         .main-nav {
@@ -107,7 +117,7 @@
         }
 
         .nav-list a {
-            text-decoration: none;
+            text-decoration: none; /* No underline for nav links */
             color: var(--muted-text-light);
             font-weight: 500;
             font-size: 0.95rem;
@@ -159,6 +169,58 @@
         .dark-mode .hamburger-menu {
             color: var(--text-color-dark);
         }
+
+        /* Pulse Grid Noodle Rope Styling */
+        .pulse-grid-noodle-rope {
+            display: flex;
+            align-items: center;
+            height: 2px; /* Height of the line */
+            width: 40px; /* Length of the line */
+            background-color: var(--muted-text-light); /* Base color of the line */
+            border-radius: 1px;
+            position: relative;
+            margin: 0 15px; /* Space around the noodle rope */
+            opacity: 0.7;
+        }
+        .dark-mode .pulse-grid-noodle-rope {
+            background-color: var(--muted-text-dark);
+        }
+
+        .pulse-grid-noodle-rope::before,
+        .pulse-grid-noodle-rope::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        .pulse-grid-noodle-rope::before {
+            left: -3px;
+        }
+
+        .pulse-grid-noodle-rope::after {
+            right: -3px;
+            animation-delay: 0.75s; /* Stagger the pulse effect */
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+        }
+
 
         /* Section Styling */
         .section-padding {
@@ -400,22 +462,42 @@
 
         /* Responsive Adjustments */
         @media (max-width: 768px) {
+            .main-header {
+                flex-direction: column;
+                padding-bottom: 10px; /* Reduce padding when stacked */
+                align-items: flex-start; /* Align logo to left on top */
+            }
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .logo-group {
+                margin-bottom: 15px; /* Space below logo before nav appears */
+            }
+            .logo-group .logo-link {
+                gap: 5px; /* Adjust gap for mobile */
+            }
+            .logo-fruitful {
+                font-size: 1.4rem; /* Adjust for mobile */
+            }
+            .pulse-grid-noodle-rope {
+                display: none; /* Hide on small screens if it clutters */
+            }
+
+
             .main-nav {
                 display: none; /* Hidden by default on mobile */
                 flex-direction: column;
-                position: absolute;
-                top: 70px; /* Below header */
-                left: 0;
+                position: static; /* No absolute positioning needed for hamburger menu toggle */
                 width: 100%;
-                background-color: var(--card-bg-light);
-                border-bottom: 1px solid var(--border-color-light);
-                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-                padding: 20px 0;
-                z-index: 999;
+                background-color: var(--card-bg-light); /* Inherit from current mode */
+                border-top: 1px solid var(--border-color-light);
+                padding: 10px 0;
+                box-shadow: none; /* Remove shadow when opened inline */
             }
             .dark-mode .main-nav {
                 background-color: var(--card-bg-dark);
-                border-bottom-color: var(--border-color-dark);
+                border-top-color: var(--border-color-dark);
             }
             .main-nav.active {
                 display: flex;
@@ -424,13 +506,14 @@
                 flex-direction: column;
                 text-align: center;
                 width: 100%;
+                gap: 10px; /* Smaller gap for stacked items */
             }
             .nav-list li {
                 width: 100%;
             }
             .nav-list a {
                 display: block;
-                padding: 10px 0;
+                padding: 8px 0; /* Smaller padding for stacked items */
             }
             .nav-actions {
                 flex-direction: column;
@@ -438,6 +521,7 @@
                 width: 100%;
                 padding-top: 10px;
                 border-top: 1px solid var(--border-color-light);
+                margin-top: 10px; /* Space between nav list and actions */
             }
             .dark-mode .nav-actions {
                 border-top-color: var(--border-color-dark);
@@ -450,18 +534,22 @@
 
             .hamburger-menu {
                 display: block;
+                position: absolute; /* Position relative to header for top-right placement */
+                top: 15px; /* Align with header content vertically */
+                right: 20px; /* Align with padding */
+                z-index: 1001; /* Ensure it's above other elements */
             }
 
-            .hero-content h1 {
+            .module-hero h1 {
                 font-size: 2.5rem;
             }
-            .hero-content .tagline {
+            .module-hero p {
                 font-size: 1.1rem;
             }
             .section-title {
                 font-size: 1.8rem;
             }
-            .feature-item, .use-case-item, .pricing-card {
+            .module-feature-item, .use-case-item, .pricing-card {
                 padding: 20px;
             }
             .pricing-card .price {
@@ -492,12 +580,19 @@
         }
     </style>
 </head>
-<body>
+<body class="light-mode">
     <header class="main-header">
         <div class="container header-content">
-            <a href="index.html" class="logo">
-                <span class="logo-faa">FAA.zone™</span> / <span class="logo-buildnest">Omni Grid™</span>
-            </a>
+            <div class="logo-group">
+                <a href="index.html" class="logo-link"> <!-- Use a new class for styling the logo group link -->
+                    <span class="logo-fruitful">Fruitful™</span>
+                </a>
+                <button class="hamburger-menu" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <!-- Pulse Grid Noodle Rope -->
+            <div class="pulse-grid-noodle-rope"></div>
             <nav class="main-nav">
                 <ul class="nav-list">
                     <li><a href="#overview">Overview</a></li>
@@ -509,9 +604,6 @@
                     <a href="connect-to-omni-grid.html" class="cta-button nav-cta">Explore Grid</a>
                 </div>
             </nav>
-            <button class="hamburger-menu" aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
         </div>
     </header>
 
@@ -659,11 +751,11 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const modeToggle = document.getElementById('mode-toggle');
-            const body = document.body;
             const mainNav = document.querySelector('.main-nav');
             const hamburgerMenu = document.querySelector('.hamburger-menu');
+            const body = document.body;
 
+            /* Light/Dark Mode (Keep as is if functionality required) */
             const savedMode = localStorage.getItem('themeMode');
             if (savedMode) {
                 body.classList.add(savedMode);
@@ -671,22 +763,22 @@
                 body.classList.add('light-mode');
             }
 
-            if (hamburgerMenu) {
+            /* Hamburger Menu Toggle */
+            if (hamburgerMenu && mainNav) {
                 hamburgerMenu.addEventListener('click', () => {
-                    if (mainNav) {
-                        mainNav.classList.toggle('active');
-                    }
+                    mainNav.classList.toggle('active');
                 });
             }
 
+            /* Close Mobile Nav on Link Click */
             document.querySelectorAll('.nav-list a').forEach(link => {
                 link.addEventListener('click', function (e) {
                     if (mainNav && mainNav.classList.contains('active')) {
                         mainNav.classList.remove('active');
                     }
-                    // Only prevent default and scroll for internal section links
+                    /* Smooth Scrolling for internal links */
                     const href = this.getAttribute('href');
-                    if (href.startsWith('#') && href.length > 1) {
+                    if (href && href.startsWith('#') && href.length > 1) {
                         e.preventDefault();
                         const targetElement = document.querySelector(href);
                         if (targetElement) {
@@ -695,17 +787,17 @@
                             });
                         }
                     } else if (href === '#' || href === '') {
-                        e.preventDefault(); // Prevent default for empty or '#' hrefs
+                        e.preventDefault(); /* Prevent default for empty or '#' hrefs */
                     }
                 });
             });
 
-            // This part handles smooth scrolling for links that are NOT buttons and have '#' hrefs
+            /* Smooth Scrolling for other hash links (outside nav-list) */
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     const href = this.getAttribute('href');
-                    // Ensure this only applies to actual section links, not buttons that were re-rooted
-                    if (href.startsWith('#') && href.length > 1 && !this.classList.contains('cta-button')) {
+                    /* Ensure this only applies to actual section links, not buttons that were re-rooted */
+                    if (href && href.startsWith('#') && href.length > 1 && !this.classList.contains('cta-button')) {
                         e.preventDefault();
                         const targetElement = document.querySelector(href);
                         if (targetElement) {
@@ -720,3 +812,4 @@
     </script>
 </body>
 </html>
+
