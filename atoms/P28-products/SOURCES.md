@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-06-11 | FGP--samfox | history | `public/index.html` | `e6e4b03b` | Products - FAA.ZONE | 18952 | 7 | 4 | 44.9 |
+| 2 | 2025-06-11 | FGP--samfox | history | `public/index.html` | `34994828` | Products - FAA.ZONE | 13784 | 6 | 3 | 40.4 |
