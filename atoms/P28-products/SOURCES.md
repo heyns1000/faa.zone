@@ -9,3 +9,4 @@
 | 3 | 2025-06-11 | FGP--samfox | history | `public/index.html` | `218f21d0` | Products - FAA.ZONE | 13369 | 6 | 3 | 40.3 |
 | 4 | 2025-06-11 | FGP--samfox | history | `public/index.html` | `18ab1611` | Products - FAA.ZONE | 7802 | 5 | 0 | 32.8 |
 | 5 | 2025-06-11 | faa.zone | history | `public/legal/pricing.html` | `21f33445` | Products - FAA.ZONE™ | 23450 | 7 | 6 | 49.3 |
+| 6 | 2025-06-12 | faa.zone | history | `public/legal/pricing.html` | `6cf7acc4` | Products - FAA.ZONE™Products - FAA.ZONE™ | 62495 | 18 | 8 | 62.9 |
