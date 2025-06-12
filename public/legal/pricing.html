@@ -107,6 +107,9 @@
             background-color: #f8fafc; /* slate-50 */
             border: 1px solid #e2e8f0; /* slate-200 */
             color: #334155; /* slate-700 */
+            max-width: 20rem; /* Adjusted for compactness */
+            padding: 1rem; /* Adjusted padding */
+            margin: 2rem auto; /* Adjusted margin */
         }
         .light-theme-section .currency-selector-container select {
             background-color: #ffffff; /* bg-white */
@@ -160,6 +163,9 @@
             background-color: rgba(45, 45, 70, 0.8);
             border: 1px solid rgba(80, 80, 100, 0.6);
             color: #D0D0D0;
+            max-width: 20rem; /* Adjusted for compactness */
+            padding: 1rem; /* Adjusted padding */
+            margin: 2rem auto; /* Adjusted margin */
         }
         .dark-theme-section .currency-selector-container select {
             background-color: rgba(60, 60, 90, 0.9);
@@ -206,6 +212,7 @@
             flex-direction: column; /* Changed to column to stack elements */
             justify-content: space-between; /* Distributes space, pushing last item (button) to bottom */
             height: auto; /* Allow height to adjust based on content */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transition for hover */
         }
         /* New wrapper for top content inside product card */
         .product-card-top-content {
@@ -268,6 +275,46 @@
             transform: translate(-50%, -50%) scale(1);
             opacity: 1;
         }
+
+        /* Hover effects for product cards */
+        /* Common bounce animation for all cards on hover */
+        .product-card:hover {
+            animation: bounce 0.6s ease-in-out;
+            transform: translateY(-5px); /* Ensure a slight lift with bounce */
+        }
+
+        /* Specific text color changes on hover based on theme */
+        .light-theme-section .product-card:hover h3,
+        .light-theme-section .product-card:hover p,
+        .light-theme-section .product-card:hover ul li,
+        .light-theme-section .product-card:hover .price-display,
+        .light-theme-section .product-card:hover .price-display span {
+            /* Keep original dark text color for light theme cards on hover */
+            color: inherit !important; /* Explicitly inherit to prevent white text */
+            /* Or define specific dark colors if 'inherit' doesn't work as expected for all elements */
+            /* Example: color: #2d3748 !important; */
+        }
+
+        .dark-theme-section .product-card:hover h3,
+        .dark-theme-section .product-card:hover p,
+        .dark-theme-section .product-card:hover ul li,
+        .dark-theme-section .product-card:hover .price-display,
+        .dark-theme-section .product-card:hover .price-display span {
+            color: #FFFFFF !important; /* White text on hover for dark theme cards */
+            transition: color 0.3s ease;
+        }
+
+
+        /* Bounce animation keyframes */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px); /* Slight upward bounce */
+            }
+        }
+
 
         /* PayPal Error/Success Message Display */
         .paypal-message {
@@ -351,7 +398,7 @@
                 </p>
 
                 <!-- Currency Selector for Light Version -->
-                <div class="currency-selector-container mx-auto max-w-xs text-left flex items-center justify-between">
+                <div class="currency-selector-container mx-auto text-left flex items-center justify-between">
                     <label for="currency-select-light" class="font-medium">Display prices in:</label>
                     <select id="currency-select-light" class="ml-4 p-2 border rounded-md text-sm">
                         <option value="ZAR">ZAR (R)</option>
@@ -445,7 +492,7 @@
                 </p>
 
                 <!-- Currency Selector for Dark Version -->
-                <div class="currency-selector-container mx-auto max-w-xs text-left flex items-center justify-between">
+                <div class="currency-selector-container mx-auto text-left flex items-center justify-between">
                     <label for="currency-select-dark" class="font-medium">Display prices in:</label>
                     <select id="currency-select-dark" class="ml-4 p-2 border rounded-md text-sm">
                         <option value="ZAR">ZAR (R)</option>
