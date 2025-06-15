@@ -16,3 +16,4 @@
 | 10 | 2025-06-15 | seedwave | history | `public/admin-panel.html` | `1f71aed7` | ⚙️ Admin Portal - FAA.ZONE™ | 104008 | 43 | 24 | 114.9 |
 | 11 | 2025-06-15 | seedwave | history | `public/admin-panel.html` | `e007a33c` | ⚙️ Admin Portal - FAA.ZONE™ | 102860 | 43 | 24 | 114.8 |
 | 12 | 2025-06-15 | seedwave | history | `public/admin-panel.html` | `7559d518` | ⚙️ Heyns Admin Portal - FAA.ZONE™ | 167495 | 43 | 17 | 107.3 |
+| 13 | 2025-06-15 | seedwave | history | `public/heyns_admin_panel_paypal.html` | `0a261bd7` | ⚙️ Heyns Admin Portal - FAA.ZONE™ | 196256 | 40 | 14 | 101.2 |
