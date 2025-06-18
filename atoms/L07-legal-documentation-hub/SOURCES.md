@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-06-18 | faa.zone | history | `public/legal/index.html` | `debc1912` | FAA.ZONE Legal & Documentation Hub | 19592 | 23 | 0 | 50.0 |
+| 2 | 2025-06-18 | faa.zone | history | `public/legal/index.html` | `0ac8f11c` | FAA.ZONE Legal & Documentation Hub | 18907 | 23 | 0 | 49.9 |
