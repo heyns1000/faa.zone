@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-06-18 | faa.zone | history | `public/legal/paypal.html` | `ab2681ee` | FAA.ZONE™ PayPal Integration Manual | 39273 | 32 | 2 | 60.2 |
+| 2 | 2025-06-18 | faa.zone | history | `public/legal/paypal.html` | `d6bb218d` | FAA.ZONE™ PayPal Integration Manual | 39572 | 32 | 2 | 59.6 |
