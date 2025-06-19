@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-06-19 | faa.zone | history | `public/legal/vaultmesh-agri-checkout.html` | `842cfb48` | 🌐 VaultMesh™ | AgroChain™ Core Protocol Overv | 41237 | 29 | 7 | 72.1 |
+| 2 | 2025-06-19 | vaultmesh | history | `checkout.html` | `6aeb77cb` | 🌐 VaultMesh™ | AgroChain™ Core Protocol Overv | 42344 | 43 | 0 | 72.2 |

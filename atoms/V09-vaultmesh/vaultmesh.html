@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌐 VaultMesh™ | AgroChain™ Core Protocol Overview - MindLift™ Theme</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Inter Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Base Styles - Consistent with FAA.zone theme, optimized for product page */
@@ -53,8 +50,11 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background-color: var(--bg-color-light); /* Consistent body background */
-            color: var(--text-color-light); /* Consistent body text color */
+        }
+
+        .light-mode {
+            background-color: var(--bg-color-light);
+            color: var(--text-color-light);
         }
 
         .dark-mode {
@@ -65,189 +65,441 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 40px; /* More padding consistent with pricing cards */
-            background-color: var(--card-bg-light); /* Card background for content area */
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1); /* Consistent shadow */
-            margin-top: 40px; /* More margin from top */
-            margin-bottom: 40px;
-            border: 1px solid var(--border-color-light); /* Consistent border */
+            padding: 0 20px;
         }
-        .dark-mode .container {
+
+        /* Header styles removed as the header element is removed */
+
+        /* Section Styling */
+        .section-padding {
+            padding: 80px 20px;
+            background-color: var(--card-bg-light);
+            border-bottom: 1px solid var(--border-color-light);
+            border-top: 1px solid var(--border-color-light);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .dark-mode .section-padding {
+            background-color: var(--card-bg-dark);
+            border-bottom-color: var(--border-color-dark);
+            border-top-color: var(--border-color-dark);
+        }
+        .section-padding:last-of-type {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--text-color-light);
+            transition: color 0.3s ease;
+        }
+        .dark-mode .section-title {
+            color: var(--text-color-dark);
+        }
+
+        /* MindLift Specific Styles for Hero */
+        .mindlift-hero {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(135deg, var(--mindlift-color) 0%, var(--mindlift-accent-color) 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            margin: 20px auto; /* Centered with margin */
+            max-width: 1200px; /* Constrain width like container */
+            box-shadow: 0 10px 30px rgba(123, 104, 238, 0.4);
+        }
+        .mindlift-hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -0.05em;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        }
+        .mindlift-hero p {
+            font-size: 1.5rem;
+            max-width: 900px;
+            margin: 0 auto 40px;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        .mindlift-hero .cta-button {
+            background-color: white;
+            color: var(--mindlift-color);
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .mindlift-hero .cta-button:hover {
+            background-color: #f0f0f0;
+            color: var(--mindlift-accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Feature Grid Layout */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .feature-card {
+            background-color: var(--card-bg-light);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border: 1px solid var(--border-color-light);
+            text-align: left;
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .dark-mode .feature-card {
+            background-color: var(--card-bg-dark);
+            border-color: var(--border-color-dark);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .feature-card .icon {
+            font-size: 2.5rem;
+            color: var(--mindlift-color);
+            margin-bottom: 15px;
+        }
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-color-light);
+        }
+        .dark-mode .feature-card h3 {
+            color: var(--text-color-dark);
+        }
+        .feature-card p {
+            font-size: 1rem;
+            color: var(--muted-text-light);
+            line-height: 1.6;
+        }
+        .dark-mode .feature-card p {
+            color: var(--muted-text-dark);
+        }
+        .feature-card ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+        .feature-card ul li {
+            font-size: 0.95rem;
+            color: var(--muted-text-light);
+            margin-bottom: 5px;
+        }
+        .dark-mode .feature-card ul li {
+            color: var(--muted-text-dark);
+        }
+        .feature-card ul li strong {
+            color: var(--text-color-light);
+        }
+        .dark-mode .feature-card ul li strong {
+            color: var(--text-color-dark);
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            padding: 80px 20px;
+            text-align: center;
+        }
+        .dark-mode .pricing-section {
+            background-color: var(--bg-color-dark);
+        }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Wider cards */
+            gap: 30px;
+            margin-top: 50px;
+            align-items: start;
+            justify-content: center; /* Center the grid items */
+        }
+        .pricing-card {
+            background-color: var(--card-bg-light);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color-light);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+            height: 100%; /* Ensure cards fill their grid cell height */
+            text-align: left; /* Align content to the left within the card */
+            max-width: 450px; /* Cap max width for very large screens */
+            margin: 0 auto; /* Center individual cards within their grid cells */
+        }
+        .dark-mode .pricing-card {
             background-color: var(--card-bg-dark);
             border-color: var(--border-color-dark);
             box-shadow: 0 5px 20px rgba(0,0,0,0.3);
         }
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        .dark-mode .pricing-card:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+        .pricing-card.highlight {
+            border-color: var(--mindlift-color);
+            box-shadow: 0 8px 25px rgba(123, 104, 238, 0.3);
+            transform: translateY(-8px);
+        }
+        .pricing-card.highlight .price-button {
+            background-color: var(--mindlift-color);
+        }
+        .pricing-card.highlight .price-button:hover {
+            background-color: var(--mindlift-accent-color);
+        }
 
-        h1, h2, h3, h4, h5, h6 {
-            color: var(--text-color-light);
-            transition: color 0.3s ease;
-            text-align: left; /* Default for manual headings */
+        /* Specific styles for Pro Card */
+        .pricing-card.pro-card {
+            background-color: var(--pro-card-bg-light);
+            border-color: var(--pro-border-light);
         }
-        .dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4, .dark-mode h5, .dark-mode h6 {
-            color: var(--text-color-dark);
+        .dark-mode .pricing-card.pro-card {
+            background-color: var(--pro-card-bg-dark);
+            border-color: var(--pro-border-dark);
+        }
+        .pricing-card.pro-card .price-button {
+            background-color: var(--pro-button-color);
+        }
+        .pricing-card.pro-card .price-button:hover {
+            background-color: var(--pro-button-hover-color);
+        }
+        .pricing-card.pro-card .price {
+             color: var(--pro-button-color); /* Match price color to button for consistency */
+        }
+        .dark-mode .pricing-card.pro-card .price {
+             color: var(--pro-button-color);
         }
 
-        h1 {
-            font-size: 2.8rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            text-align: center; /* Center main title for impact */
-            color: var(--mindlift-color); /* MindLift theme color for primary titles */
-            letter-spacing: -0.02em; /* Tighter letter spacing */
+        /* Specific styles for Enterprise Card */
+        .pricing-card.enterprise-card {
+            background-color: var(--enterprise-card-bg-light);
+            border-color: var(--enterprise-border-light);
         }
-        h2 {
-            font-size: 2.2rem;
+        .dark-mode .pricing-card.enterprise-card {
+            background-color: var(--enterprise-card-bg-dark);
+            border-color: var(--enterprise-border-dark);
+        }
+        .pricing-card.enterprise-card .price-button {
+            background-color: var(--enterprise-button-color);
+        }
+        .pricing-card.enterprise-card .price-button:hover {
+            background-color: var(--enterprise-button-hover-color);
+        }
+        .pricing-card.enterprise-card .price {
+             color: var(--enterprise-button-color); /* Match price color to button for consistency */
+        }
+        .dark-mode .pricing-card.enterprise-card .price {
+             color: var(--enterprise-button-color);
+        }
+
+
+        .pricing-card h3 {
+            font-size: 1.8rem;
             font-weight: 700;
-            margin-top: 50px; /* More vertical spacing */
-            margin-bottom: 25px;
-            border-bottom: 2px solid var(--border-color-light);
-            padding-bottom: 15px; /* More padding under border */
-            color: var(--text-color-light);
-        }
-        .dark-mode h2 {
-            border-bottom-color: var(--border-color-dark);
-            color: var(--text-color-dark);
-        }
-        h3 {
-            font-size: 1.8rem; /* Larger for section sub-titles */
-            font-weight: 700;
-            margin-top: 35px;
-            margin-bottom: 15px;
-            color: var(--mindlift-accent-color); /* Accent color for sub-sections */
-        }
-        h4 {
-            font-size: 1.3rem; /* Slightly larger for sub-sub-titles */
-            font-weight: 600;
-            margin-top: 25px;
             margin-bottom: 10px;
+            color: var(--text-color-light);
+            text-align: center; /* Center heading within the card */
         }
-
-        p {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 15px;
-            color: var(--muted-text-light); /* Consistent muted text color */
-        }
-        .dark-mode p {
-            color: var(--muted-text-dark);
-        }
-        strong {
-            color: var(--text-color-light); /* Bold text stands out */
-        }
-        .dark-mode strong {
+        .dark-mode .pricing-card h3 {
             color: var(--text-color-dark);
         }
-
-        ul {
-            list-style: none;
-            padding-left: 25px; /* Consistent padding */
+        .pricing-card .price {
+            font-size: 2.5rem;
+            font-weight: 800;
             margin-bottom: 15px;
+            text-align: center; /* Center price within the card */
+            /* Removed fixed color to use custom card colors */
         }
-        ul li {
-            position: relative;
-            margin-bottom: 10px; /* More spacing for list items */
-            font-size: 0.98rem; /* Slightly larger list font size */
-            line-height: 1.5;
+        .dark-mode .pricing-card .price {
+            /* Removed fixed color to use custom card colors */
+        }
+        .pricing-card .price-description {
+            font-size: 0.95rem;
             color: var(--muted-text-light);
+            margin-bottom: 15px;
+            text-align: center; /* Center description within the card */
         }
-        .dark-mode ul li {
+        .dark-mode .pricing-card .price-description {
             color: var(--muted-text-dark);
         }
-        ul li:before {
-            content: '•'; /* Simple bullet */
-            position: absolute;
-            left: -20px; /* Adjust position */
-            color: var(--mindlift-color); /* MindLift color for bullets */
-            font-size: 1.2em; /* Slightly larger bullet */
-            line-height: 1;
+        .pricing-card ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+            text-align: left; /* Keep list items left-aligned */
+            width: 100%;
+            flex-grow: 1; /* Allow list to take available space */
         }
-        /* Style for icons within list items, from pricing page */
-        ul li i.fas.fa-check-circle { 
-            color: var(--mindlift-color); /* Use MindLift color for checkmarks */
+        .pricing-card ul li {
+            font-size: 0.95rem;
+            color: var(--muted-text-light);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        .dark-mode .pricing-card ul li {
+            color: var(--muted-text-dark);
+        }
+        .pricing-card ul li i {
+            color: var(--mindlift-color);
             margin-right: 10px;
         }
-        .dark-mode ul li i.fas.fa-check-circle {
-            color: var(--mindlift-accent-color); /* Ensure visibility in dark mode */
+        .dark-mode .pricing-card ul li i {
+            color: var(--mindlift-accent-color); /* Ensure icons are visible in dark mode */
+        }
+        /* Override checkmark icon color for Pro/Enterprise cards */
+        .pricing-card.pro-card ul li i {
+            color: var(--pro-button-color);
+        }
+        .pricing-card.enterprise-card ul li i {
+            color: var(--enterprise-button-color);
         }
 
-
-        pre {
-            background-color: var(--card-bg-dark); /* Dark background for code snippets in light mode, consistent with dark mode overall elements */
-            border: 1px solid var(--border-color-dark);
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-            overflow-x: auto;
-            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        .pricing-card .price-button {
+            display: inline-block;
+            padding: 12px 30px;
+            /* background-color: var(--mindlift-color); -- This is now overridden by specific card styles */
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: 100%; /* Make buttons full width */
+            margin-top: auto; /* Push button to the bottom */
+        }
+        .pricing-card .price-button:hover {
+            /* background-color: var(--mindlift-accent-color); -- This is now overridden by specific card styles */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        /* Styles for the quantity selector */
+        .pricing-card .quantity-selector {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center quantity selector components */
+            gap: 5px;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        .pricing-card .quantity-selector label {
             font-size: 0.9rem;
-            line-height: 1.4;
-            color: var(--text-color-dark); /* Light text for dark code background */
+            color: var(--text-color-light);
+            margin-bottom: 0;
         }
-        .dark-mode pre {
-            background-color: #0e0e0f; /* Even darker for code snippets in dark mode */
-            border-color: #3a3a3e;
+        .dark-mode .pricing-card .quantity-selector label {
             color: var(--text-color-dark);
         }
-        code {
-            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        .pricing-card .quantity-selector select {
+            width: 80px;
+            padding: 8px 10px;
+            border: 1px solid var(--border-color-light);
+            border-radius: 6px;
+            background-color: var(--bg-color-light);
+            color: var(--text-color-light);
             font-size: 0.9rem;
-            color: inherit; /* Inherit color from pre/body */
+            text-align: center;
         }
-        
-        .highlight-code {
-            background-color: var(--card-bg-dark); /* Use card-bg-dark for code blocks as per pricing page */
-            border-left: 4px solid var(--mindlift-color);
-            padding: 15px 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-        }
-        .dark-mode .highlight-code {
-            background-color: #0e0e0f; /* Even darker for code snippets in dark mode */
-            border-left-color: var(--mindlift-accent-color);
-        }
-        .highlight-code code {
-            color: var(--text-color-dark); /* Light text for code block in both modes */
-            display: block;
-        }
-        .dark-mode .highlight-code code {
+        .dark-mode .pricing-card .quantity-selector select {
+            background-color: var(--bg-color-dark);
+            border-color: var(--border-color-dark);
             color: var(--text-color-dark);
         }
 
-        .section-divider {
-            border-bottom: 1px solid var(--border-color-light);
-            margin: 50px 0; /* More prominent dividers */
+
+        /* Disclaimer Section */
+        .disclaimer-section {
+            background-color: var(--bg-color-light);
+            padding: 40px 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #cc0000;
+            border-top: 1px solid var(--border-color-light);
+            margin-top: 40px;
         }
-        .dark-mode .section-divider {
-            border-bottom-color: var(--border-color-dark);
+        .dark-mode .disclaimer-section {
+            background-color: var(--bg-color-dark);
+            border-top-color: var(--border-color-dark);
+        }
+        .disclaimer-section p strong {
+            font-weight: 700;
         }
 
-        .note-important {
-            background-color: #fff3cd; /* Light yellow background */
-            border-left: 5px solid #ffc107; /* Orange border */
-            padding: 20px; /* More padding */
-            margin-bottom: 25px;
-            border-radius: 8px;
-            color: #664d03; /* Dark brown text */
-            font-size: 0.95rem; /* Slightly larger font */
+
+        /* Metadata Metrics Section */
+        .metadata-metrics-section {
+            background-color: var(--card-bg-light);
+            padding: 80px 20px;
+            text-align: center;
+        }
+        .dark-mode .metadata-metrics-section {
+            background-color: var(--card-bg-dark);
+        }
+        .metadata-metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .metadata-card {
+            background-color: var(--bg-color-light);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color-light);
+            text-align: left;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+        }
+        .dark-mode .metadata-card {
+            background-color: var(--bg-color-dark);
+            border-color: var(--border-color-dark);
+            box-shadow: 0 1px 5px rgba(0,0,0,0.15);
+        }
+        .metadata-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: var(--text-color-light);
+        }
+        .dark-mode .metadata-card h3 {
+            color: var(--text-color-dark);
+        }
+        .metadata-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .metadata-card ul li {
+            font-size: 0.95rem;
+            color: var(--muted-text-light);
+            margin-bottom: 8px;
             line-height: 1.5;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Subtle shadow */
         }
-        .dark-mode .note-important {
-            background-color: #5c4e00; /* Darker yellow background */
-            border-left-color: #fabc00; /* Brighter orange border */
-            color: #ffe000; /* Lighter text for warning */
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        .dark-mode .metadata-card ul li {
+            color: var(--muted-text-dark);
         }
-        .note-important strong {
-            color: #664d03; /* Maintain contrast for bold text */
+        .metadata-card ul li strong {
+            color: var(--text-color-light);
         }
-        .dark-mode .note-important strong {
-            color: #ffe000; /* Maintain contrast for bold text in dark mode */
+        .dark-mode .metadata-card ul li strong {
+            color: var(--text-color-dark);
         }
 
+        /* Footer */
         .main-footer {
             background-color: var(--card-bg-light);
             border-top: 1px solid var(--border-color-light);
@@ -262,61 +514,35 @@
 
         .footer-content {
             display: flex;
-            flex-direction: column; 
-            align-items: center; 
-            padding: 30px; /* More padding */
-            border-top: 1px solid var(--border-color-light); /* Ensure consistency if part of a parent structure */
-            margin-top: 60px; /* More margin from content */
-            background-color: var(--card-bg-light); /* Match body/container for now, could be specific */
-            text-align: center; 
-            border-radius: 12px; /* Rounded footer corners */
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.05); /* Subtle shadow from bottom */
-            max-width: 1200px; /* Match container width */
-            margin-left: auto;
-            margin-right: auto;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
         }
-        .dark-mode .footer-content {
-            border-top-color: var(--border-color-dark);
-            background-color: var(--card-bg-dark);
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.15);
+
+        .footer-brand {
+            flex: 1 1 300px;
         }
+
+        .footer-brand .logo {
+            margin-bottom: 15px;
+        }
+
         .copyright {
             font-size: 0.8rem;
             color: var(--muted-text-light);
-            margin-top: 15px;
+            line-height: 1.4;
+            transition: color 0.3s ease;
         }
         .dark-mode .copyright {
             color: var(--muted-text-dark);
         }
 
-        /* Footer specific logo styling (from pricing page) */
-        .footer-brand .logo {
-            font-size: 1.2rem; /* Slightly smaller for footer */
-            font-weight: 600;
-            text-decoration: none;
-            color: var(--text-color-light);
-            transition: color 0.3s ease;
-            margin-bottom: 15px;
-        }
-        .dark-mode .footer-brand .logo {
-            color: var(--text-color-dark);
-        }
-        .footer-brand .logo .logo-faa {
-            color: var(--primary-color);
-        }
-        .footer-brand .logo .logo-buildnest {
-            color: var(--text-color-light);
-        }
-        .dark-mode .footer-brand .logo .logo-buildnest {
-            color: var(--text-color-dark);
-        }
         .footer-links {
             display: flex;
             flex: 2 1 500px;
             justify-content: space-around;
             flex-wrap: wrap;
             gap: 20px;
-            margin-top: 30px; /* Space between brand and links */
         }
 
         .footer-column {
@@ -358,31 +584,68 @@
             color: var(--primary-color);
         }
 
-
+        /* Responsive Adjustments */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-            h2 {
-                font-size: 1.8rem;
-            }
-            h3 {
-                font-size: 1.4rem;
-            }
-            .container {
-                padding: 15px;
-                margin-left: 10px;
-                margin-right: 10px;
-            }
-            .footer-content {
-                margin-left: 10px;
-                margin-right: 10px;
-                padding: 20px;
-            }
-            .footer-links {
+            .main-nav {
+                display: none;
                 flex-direction: column;
-                align-items: center;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--card-bg-light);
+                border-bottom: 1px solid var(--border-color-light);
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                padding: 20px 0;
+                z-index: 999;
+            }
+            .dark-mode .main-nav {
+                background-color: var(--card-bg-dark);
+                border-bottom-color: var(--border-color-dark);
+            }
+            .main-nav.active {
+                display: flex;
+            }
+            .nav-list {
+                flex-direction: column;
                 text-align: center;
+                width: 100%;
+            }
+            .nav-list li {
+                width: 100%;
+            }
+            .nav-list a {
+                display: block;
+                padding: 10px 0;
+            }
+            .nav-actions {
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+                padding-top: 10px;
+                border-top: 1px solid var(--border-color-light);
+            }
+            .dark-mode .nav-actions {
+                border-top-color: var(--border-color-dark);
+            }
+            .nav-actions .cta-button {
+                width: calc(100% - 40px);
+                margin: 0 20px;
+                text-align: center;
+            }
+
+            .hamburger-menu {
+                display: block;
+            }
+
+            .mindlift-hero h1 {
+                font-size: 3rem;
+            }
+            .mindlift-hero p {
+                font-size: 1.2rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
             }
             .pricing-grid {
                 /* On smaller screens, allow all cards to be full width */
@@ -397,410 +660,334 @@
 <body class="light-mode antialiased leading-normal">
 
     <main>
-        <div class="container">
-            <h1>FAA.ZONE™ AgroChain™ & VaultMesh™ Legal Manual and Setup</h1>
-            <h2>Minutes of Meeting: PayPal Subscriptions Integration</h2>
-            <p><strong>Date:</strong> June 19, 2025</p>
-            <p><strong>Project:</strong> FAA™ Seedwave Admin Portal</p>
-            <p><strong>Topic:</strong> Integration of PayPal Subscription Payments</p>
-
-            <p>This document provides a comprehensive guide for the setup, deployment, and management of PayPal subscription payments within the FAA™ Seedwave Admin Portal and associated product pages. It serves as an installation manual for staff, detailing code, configuration, and critical steps for live activation.</p>
-
-            <hr class="section-divider">
-
-            <h2>Key Architectural Decisions</h2>
-            <ul>
-                <li><strong>Backend:</strong> Vercel Serverless Functions (Node.js) in <code>api/paypal/index.js</code> for all PayPal API interactions.</li>
-                <li><strong>Frontend:</strong> Custom HTML/JavaScript pages (<code>admin-portal.html</code>, <code>products.html</code>) for user interface and interaction.</li>
-                <li><strong>Payment Gateway:</strong> PayPal Subscriptions API (for recurring billing) and associated Webhooks (for reliable transaction updates).</li>
-                <li><strong>Currency:</strong> All PayPal plans and transactions will be configured in <strong>South African Rand (ZAR)</strong>.</li>
-                <li><strong>Deployment Platform:</strong> Vercel.</li>
-            </ul>
-
-            <div class="note-important">
-                <strong>Important Note on Currency:</strong><br>
-                All PayPal plans created via this integration are assumed to be in <strong>ZAR</strong>. Ensure your PayPal Business Account is set up to receive ZAR payments. If you intend to use another currency (e.g., USD), you <strong>must</strong> update the `currency` parameter in the PayPal SDK script (`currency=ZAR`) and the `currencyCode` in your backend's `create-plan` endpoint (`currencyCode: 'ZAR'`).
+        <section id="overview" class="mindlift-hero">
+            <div class="container">
+                <h1>VaultMesh™ | AgroChain™ Core Protocol</h1>
+                <p>AgroChain™ is a powerful FAA.zone™ framework empowering the Agriculture & Biotech sector with advanced automation and data management. It connects effortlessly to the PulseGrid™ for optimized workflow and compliance.</p>
+                <a href="#pricing" class="cta-button">View Pricing &rarr;</a>
             </div>
+        </section>
 
-            <hr class="section-divider">
+        <section id="features" class="section-padding">
+            <div class="container">
+                <h2 class="section-title">Key Features</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-link icon"></i>
+                        <h3>Direct Integration</h3>
+                        <p>Direct integration with FAA 🧾 Professional Services Mesh™.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-sync-alt icon"></i>
+                        <h3>Advanced Data Sync</h3>
+                        <p>Real-time data synchronization with YieldNode™ for up-to-the-minute insights into your agricultural operations.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-shield-alt icon"></i>
+                        <h3>Real-time Compliance</h3>
+                        <p>Ensure robust regulatory adherence with VaultLink™ (agriculture specific) for continuous monitoring and effortless reporting.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-expand-arrows-alt icon"></i>
+                        <h3>Scalable Architecture</h3>
+                        <p>Unleash massive scalability for x21 power expansion, ensuring your system grows seamlessly with your agricultural demands.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-chart-line icon"></i>
+                        <h3>Predictive Analytics</h3>
+                        <p>Leverage our advanced predictive analytics module for AgroChain™ performance, anticipating harvest trends and optimizing resource allocation.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-puzzle-piece icon"></i>
+                        <h3>Open API Access</h3>
+                        <p>Gain full API access for seamless interoperability, allowing custom integrations and extending functionality to fit your unique needs.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-lock icon"></i>
+                        <h3>Blockchain Security</h3>
+                        <p>Benefit from immutable, blockchain-secured data provenance, ensuring transparency and trust across your entire supply chain from farm to market.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-file-invoice icon"></i>
+                        <h3>One-click Reporting</h3>
+                        <p>Generate comprehensive regulatory reports and detailed audit trails effortlessly, ensuring compliance with local and international agricultural standards.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-network-wired icon"></i>
+                        <h3>Self-optimizing Nodes</h3>
+                        <p>Achieve peak operational efficiency with intelligent, self-optimizing node distribution that dynamically adapts to demand across your agricultural network.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-brain icon"></i>
+                        <h3>Secure Multi-party Computation</h3>
+                        <p>Enable secure, collaborative data analysis with multiple stakeholders while preserving privacy and protecting sensitive agricultural data assets.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            <h2>Prerequisites for Staff</h2>
-            <p>Before proceeding with any steps, ensure the following are installed and accessible:</p>
-            <ul>
-                <li><strong>Node.js &amp; npm:</strong> Installed on your development machine.</li>
-                <li><strong>Vercel CLI:</strong> Installed globally (<code>npm install -g vercel</code>).</li>
-                <li><strong>Git:</strong> Installed and configured.</li>
-                <li><strong>PayPal Business Account (Live):</strong> Fully set up and verified.</li>
-                <li><strong>PayPal Developer Account:</strong> Access to the Live environment for API credentials and webhook setup.</li>
-                <li><strong>Vercel Project Access:</strong> Permissions to manage environment variables and deploy the project.</li>
-                <li><strong>Project Repository Access:</strong> Read/write access to the <code>seedwave</code> GitHub repository.</li>
-            </ul>
+        <section class="section-padding">
+            <div class="container">
+                <h2 class="section-title">Why Trust 🌐 VaultMesh™?</h2>
+                <p class="text-lg mb-4 max-w-2xl mx-auto" style="color: var(--muted-text-light);">
+                    At <strong>VaultMesh™</strong>, we are the architects of the core infrastructure that powers the entire FAA.zone™ ecosystem. Our purpose is to provide a <strong>robust, immutable, and universally accessible fabric</strong> for critical information and distributed processes, enabling global compliance, efficiency, and innovation across heavily regulated sectors.
+                </p>
+                <p class="text-lg mb-4 max-w-2xl mx-auto" style="color: var(--muted-text-light);">
+                    We specialize in <strong>Decentralized Data Integrity</strong>, <strong>Secure Data Orchestration</strong>, and building <strong>Scalable & Resilient Infrastructure</strong>. Our solutions offer <strong>Verifiable Trust & Identity</strong> and comprehensive <strong>Compliance & Audit Trails</strong>.
+                </p>
+                <div class="text-center mt-6">
+                    <p class="text-lg font-semibold" style="color: var(--text-color-light);">Built on principles by:</p>
+                    <p class="text-xl font-bold mt-1" style="color: var(--mindlift-color);">Heyns Schoeman™</p>
+                    <p class="text-md" style="color: var(--muted-text-light);">Founder | FAA Global™ | FAA.zone™ 🌍<br>"Sustain. Protect. Empower."</p>
+                    <a href="vaultmesh-about-us-page.html" class="cta-button">Learn More About Us</a>
+                </div>
+            </div>
+        </section>
 
-            <hr class="section-divider">
+        <section class="section-padding">
+            <div class="container">
+                <h2 class="section-title">VaultMesh™ Subnodes</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-seedling icon"></i>
+                        <h3>YieldNode™</h3>
+                        <p>Specialized nodes for optimizing agricultural yield data processing, ensuring maximum productivity and resource utilization.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-search-location icon"></i>
+                        <h3>SoilScan™</h3>
+                        <p>Advanced subnode for granular soil analysis and real-time environmental data collection, enabling precision agriculture.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-bug icon"></i>
+                        <h3>PestDetect™</h3>
+                        <p>Intelligent detection and tracking of agricultural pests with AI-driven insights, minimizing crop damage and chemical use.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-barcode icon"></i>
+                        <h3>CropTrace™</h3>
+                        <p>Comprehensive traceability for crop origin and lifecycle management, providing transparent, farm-to-fork insights for consumers and regulators.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            <h2>Installation &amp; Setup Guide</h2>
-            <p>Follow these detailed steps to set up and deploy the PayPal subscription integration.</p>
+        <section class="metadata-metrics-section section-padding">
+            <div class="container">
+                <h2 class="section-title">FAA Metadata & Real-Time Metrics</h2>
+                <div class="metadata-metrics-grid">
+                    <div class="metadata-card">
+                        <h3>FAA Metadata & Compliance</h3>
+                        <ul>
+                            <li><strong>Product ID:</strong> AGROC-2537</li>
+                            <li><strong>VaultID:</strong> VAULT-9869</li>
+                            <li><strong>Signal Echo Layer:</strong> Layer Beta v4.3</li>
+                            <li><strong>Deployment Zone:</strong> Zone E 8</li>
+                            <li><strong>Security Rating:</strong> FAA-SEC B+</li>
+                            <li><strong>Active Nodes:</strong> 493</li>
+                            <li><strong>Last Audit:</strong> 2025-08-04</li>
+                            <li><strong>Compliance Status:</strong> Active & Certified</li>
+                        </ul>
+                    </div>
+                    <div class="metadata-card">
+                        <h3>Real-Time Metrics Overview</h3>
+                        <ul>
+                            <li><strong>Current Pulse Activity:</strong> 65.08 pulses/sec</li>
+                            <li><strong>Data Volume Processed (24h):</strong> 108.02 TB</li>
+                            <li><strong>Latency Average:</strong> 40.82 ms</li>
+                        </ul>
+                        <h4 style="margin-top: 20px; font-size: 1.2rem; color: var(--text-color-light);">VaultTrace™ Ledger Entries:</h4>
+                        <ul>
+                            <li>#7756 - AGROC Pulse Tx - Confirmed</li>
+                            <li>#6954 - AGRIC Data Sync - Completed</li>
+                            <li>#7848 - Node Activation Confirm - Offline</li>
+                            <li>#3206 - VaultTrace™ Audit - Passed</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            <h3>I. Project Setup &amp; Dependencies</h3>
-            <ul>
-                <li><strong>Clone the Repository (if new staff):</strong>
-                    <pre class="highlight-code"><code>git clone [YOUR_GITHUB_REPOSITORY_URL]
-cd seedwave</code></pre>
-                </li>
-                <li><strong>Navigate to Project Root:</strong> Ensure your terminal is in the <code>seedwave</code> directory (where <code>package.json</code> resides).
-                    <pre class="highlight-code"><code>samantha@Samanthas-iMac my_payfast_app % cd ..
-samantha@Samanthas-iMac seedwave % pwd
-# Expected output: /Users/samantha/seedwave (or similar path to your project root)</code></pre>
-                </li>
-                <li><strong>Install Node.js Dependencies:</strong>
-                    <pre class="highlight-code"><code>samantha@Samanthas-iMac seedwave % npm install node-fetch</code></pre>
-                    <p>Note: <code>node-fetch</code> is for Node.js versions older than 18. If using Node.js 18+ (where <code>fetch</code> is built-in), this step is optional but harmless.</p>
-                </li>
-            </ul>
+        <section id="pricing" class="pricing-section section-padding">
+            <div class="container">
+                <h2 class="section-title">Flexible Pricing for Every Operation</h2>
+                <div class="pricing-grid">
+                    <div class="pricing-card" style="grid-column: 1 / -1;">
+                        <h3>🌱 Agriculture & Biotech Starter Package</h3>
+                        <p class="price">$30.52</p>
+                        <p class="price-description">
+                            Unlock powerful features for Starter success.
+                        </p>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Basic API Access</li>
+                            <li><i class="fas fa-check-circle"></i> Standard Analytics Dashboard</li>
+                            <li><i class="fas fa-check-circle"></i> Community Support</li>
+                            <li><i class="fas fa-check-circle"></i> Up to 5 Users</li>
+                            <li><i class="fas fa-check-circle"></i> 50 GB Data Storage</li>
+                        </ul>
+                        <div class="quantity-selector">
+                            <label for="starter-quantity">Quantity:</label>
+                            <select id="starter-quantity">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                        <div id="paypal-container-STARTER"></div>
+                    </div>
 
-            <h3>II. PayPal Live API Credentials &amp; Vercel Environment Variables</h3>
-            <h4>Action: Obtain your <strong>LIVE PayPal Client ID</strong> and <strong>LIVE PayPal Client Secret</strong> from the PayPal Developer Dashboard.</h4>
-            <ul>
-                <li><strong>Go to:</strong> <a href="https://developer.paypal.com/" target="_blank" rel="noopener noreferrer">https://developer.paypal.com/</a> and log in to your <strong>Live PayPal Business Account</strong>.</li>
-                <li><strong>Navigate to:</strong> "My Apps &amp; Credentials" → "Live".</li>
-                <li><strong>Locate:</strong> Your REST API app (e.g., "MyApp_Zoho" or the one you designated for live transactions).</li>
-                <li><strong>Copy:</strong> The <strong>full, untruncated Client ID</strong> and <strong>Secret</strong>.</li>
-            </ul>
-            <h4>Action: Set these as Environment Variables in Vercel. These variables will be securely accessed by your backend functions.</h4>
-            <ul>
-                <li><strong>Go to:</strong> Your Vercel project dashboard.</li>
-                <li><strong>Navigate to:</strong> "Settings" → "Environment Variables".</li>
-                <li><strong>Add New Variables:</strong>
-                    <ul>
-                        <li><strong>Name:</strong> <code>PAYPAL_LIVE_CLIENT_ID</code></li>
-                        <li><strong>Value:</strong> <code>[PASTE_YOUR_FULL_LIVE_PAYPAL_CLIENT_ID_HERE]</code></li>
-                        <li><strong>Environments:</strong> Select <code>Production</code>, <code>Preview</code>, <code>Development</code>.</li>
-                        <li><strong>Name:</strong> <code>PAYPAL_LIVE_CLIENT_SECRET</code></li>
-                        <li><strong>Value:</strong> <code>[PASTE_YOUR_FULL_LIVE_PAYPAL_CLIENT_SECRET_HERE]</code></li>
-                        <li><strong>Environments:</strong> Select <code>Production</code>, <code>Preview</code>, <code>Development</code>.</li>
-                    </ul>
-                </li>
-            </ul>
+                    <div class="pricing-card highlight pro-card">
+                        <h3>🌱 Agriculture & Biotech Pro Package</h3>
+                        <p class="price">$76.30</p>
+                        <p class="price-description">
+                            Unlock powerful features for Pro success.
+                        </p>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Advanced API Access</li>
+                            <li><i class="fas fa-check-circle"></i> Premium Analytics & Reporting</li>
+                            <li><i class="fas fa-check-circle"></i> Dedicated Priority Support</li>
+                            <li><i class="fas fa-check-circle"></i> Unlimited Users</li>
+                            <li><i class="fas fa-check-circle"></i> Custom Data Integrations</li>
+                        </ul>
+                        <div class="quantity-selector">
+                            <label for="pro-quantity">Quantity:</label>
+                            <select id="pro-quantity">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                        <div id="paypal-container-PRO"></div>
+                    </div>
 
-            <h3>III. Backend API Code Setup (<code>api/paypal/index.js</code>)</h3>
-            <p>This serverless function handles all secure communication with PayPal's API.</p>
-            <ul>
-                <li><strong>File Path:</strong> <code>seedwave/api/paypal/index.js</code></li>
-                <li><strong>Content Confirmation:</strong> Ensure this file contains the following structure and settings:
-                    <pre class="highlight-code"><code>// api/paypal/index.js
+                    <div class="pricing-card enterprise-card">
+                        <h3>🌱 Agriculture & Biotech Enterprise Package</h3>
+                        <p class="price">$152.60</p>
+                        <p class="price-description">
+                            Unlock powerful features for Enterprise success.
+                        </p>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> All Business Package Features</li>
+                            <li><i class="fas fa-check-circle"></i> Dedicated Account Manager</li>
+                            <li><i class="fas fa-check-circle"></i> 24/7 Phone Support</li>
+                            <li><i class="fas fa-check-circle"></i> Enhanced Custom Integrations</li>
+                            <li><i class="fas fa-check-circle"></i> On-site Training & Setup</li>
+                        </ul>
+                        <div class="quantity-selector">
+                            <label for="enterprise-quantity">Quantity:</label>
+                            <select id="enterprise-quantity">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                        <div id="paypal-container-ENTERPRISE"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-const fetch = require('node-fetch'); // Remove if Node.js &gt;= 18
+        <section class="disclaimer-section">
+            <div class="container">
+                <p><strong>Disclaimer:</strong> This page is a static HTML demonstration. It does NOT process any real financial transactions, exchange real currency, or interact with live payment gateways or cryptocurrency networks. All displayed prices, rates, and transaction statuses are simulated for illustrative purposes only. Do NOT enter any real personal or financial information. For actual FAA.zone™ services and transactions, please refer to our official and secure platforms.</p>
+            </div>
+        </section>
+    </main>
 
-async function generateAccessToken() {
-    const clientId = process.env.PAYPAL_LIVE_CLIENT_ID;
-    const clientSecret = process.env.PAYPAL_LIVE_CLIENT_SECRET;
-    const auth = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
-    const tokenUrl = 'https://api-m.paypal.com/v1/oauth2/token'; // LIVE endpoint
-    // ... (rest of function logic) ...
-}
-
-module.exports = async (req, res) =&gt; {
-    const PAYPAL_API_BASE_URL = 'https://api-m.paypal.com'; // LIVE API Base URL
-    const { action } = req.query;
-
-    if (req.method === 'POST') {
-        try {
-            const accessToken = await generateAccessToken();
-            switch (action) {
-                case 'create-product': {
-                    // ... (logic for creating product) ...
-                    // currencyCode for create-plan: Ensure this is 'ZAR'
-                }
-                case 'create-plan': {
-                    // ... (logic for creating plan) ...
-                    // Ensure currencyCode in planBody is 'ZAR'
-                }
-                case 'create-subscription': {
-                    // ... (logic for creating subscription) ...
-                }
-                case 'webhook': {
-                    // ... (logic for handling webhooks) ...
-                    // CRITICAL: Implement robust Webhook Signature Verification for LIVE!
-                }
-                // ... (default/error handling) ...
-            }
-        } catch (error) { /* ... */ }
-    } else { /* ... */ }
-};</code></pre>
-                </li>
-            </ul>
-
-            <h3>IV. Frontend HTML &amp; JavaScript Integration</h3>
-            <p>These files manage the user interface and interact with your backend API.</p>
-
-            <h4>A. <code>public/admin-portal.html</code> (Admin Plan Deployment UI)</h4>
-            <p>This file allows you to programmatically create (or log the IDs of manually created) PayPal Products and Plans in your LIVE PayPal account.</p>
-            <ul>
-                <li><strong>File Path:</strong> <code>seedwave/public/admin-portal.html</code></li>
-                <li><strong>PayPal SDK Script Tag:</strong> Located just before the <code>&lt;/body&gt;</code> tag.
-                    <pre class="highlight-code"><code>&lt;!-- PayPal JavaScript SDK - REQUIRED FOR SUBSCRIPTIONS --&gt;
-&lt;!-- NOW USING LIVE PAYPAL CLIENT ID --&gt;
-&lt;script src="https://www.paypal.com/sdk/js?client-id=BAAThS_oBJJ22PM5R1nVJ...&amp;currency=ZAR&amp;vault=true&amp;intent=subscription"&gt;&lt;/script&gt;
-&lt;!-- IMPORTANT: Replace 'BAAThS_oBJJ22PM5R1nVJ...' with the FULL, untruncated LIVE Client ID for 'MyApp_Zoho' or your primary live app. --&gt;
-&lt;!-- The 'currency' parameter MUST match the currency of your LIVE PayPal Plans (which we've set to ZAR). --&gt;</code></pre>
-                </li>
-                <li><strong>JavaScript Block:</strong> Within the main <code>&lt;script&gt;</code> tag, ensure the following constants and functions are present:
-                    <pre class="highlight-code"><code>// IMPORTANT: Replace this placeholder with your actual LIVE PayPal Product ID.
-const YOUR_PAYPAL_PRODUCT_ID = 'PROD-YOUR_LIVE_PRODUCT_ID_HERE'; // &lt;--- !!! REPLACE THIS WITH YOUR ACTUAL LIVE PRODUCT ID !!! ---&gt;
-
-async function deploySectorPlanToPayPal(sectorKey) {
-    // ... (function logic as provided in previous response) ...
-    // Note: currencyCode for create-plan call is 'ZAR'
-}
-
-async function initiateSubscription(tierName, rawAmount, sectorKey) {
-    // ... (function logic as provided in previous response) ...
-    // IMPORTANT: Plan IDs here must be your LIVE Plan IDs.
-    // Example: planId = 'P-YOUR_AGRICULTURE_MONTHLY_LIVE_PLAN_ID';
-}</code></pre>
-                </li>
-            </ul>
-
-            <h4>B. <code>public/products.html</code> (User Subscription UI)</h4>
-            <p>This is the main user-facing page where customers select and subscribe to SAAS plans.</p>
-            <ul>
-                <li><strong>File Path:</strong> <code>seedwave/public/products.html</code></li>
-                <li><strong>PayPal SDK Script Tag:</strong> Located just before the <code>&lt;/body&gt;</code> tag.
-                    <pre class="highlight-code"><code>&lt;!-- PayPal JavaScript SDK - REQUIRED FOR SUBSCRIPTIONS --&gt;
-&lt;!-- NOW USING LIVE PAYPAL CLIENT ID --&gt;
-&lt;script src="https://www.paypal.com/sdk/js?client-id=BAAGdPecRsf6dw_nIrWqUen0GdW0UsBZapp1Gn62xkPdD-Vqc-4lqWAidKK8LOObXux8pHJGjXknZoar6Q&components=hosted-buttons&amp;disable-funding=venmo&amp;currency=USD"&gt;&lt;/script&gt;
-&lt;!-- IMPORTANT: Replace 'BAAThS_oBJJ22PM5R1nVJ...' with the FULL, untruncated LIVE Client ID for 'MyApp_Zoho' or your primary live app. --&gt;
-&lt;!-- The 'currency' parameter MUST match the currency of your LIVE PayPal Plans (e.g., 'ZAR'). --&gt;</code></pre>
-                </li>
-                <li><strong>Product Card Buttons:</strong> Ensure each "Subscribe Now" button directly implements the PayPal Hosted Button SDK, or links to the direct PayPal payment URL.
-                    <ul>
-                        <li><strong>Starter Package Button (example):</strong>
-                            <pre class="highlight-code"><code>&lt;div id="paypal-container-STARTER"&gt;&lt;/div&gt;
-&lt;!-- JavaScript to render this button (in main &lt;script&gt; block): --&gt;
-&lt;script&gt;
-    paypal.HostedButtons({
-        hostedButtonId: "EMWGPGHNN8Y8E", // This ID is used for Starter Package
-    }).render("#paypal-container-STARTER");
-&lt;/script&gt;</code></pre>
-                        </li>
-                        <li><strong>Pro Package Button (example - using direct PayPal URL):</strong>
-                            <pre class="highlight-code"><code>&lt;div id="paypal-container-PRO"&gt;&lt;/div&gt;
-&lt;!-- JavaScript to render this button (in main &lt;script&gt; block): --&gt;
-&lt;script&gt;
-    const proContainer = document.getElementById('paypal-container-PRO');
-    if (proContainer) {
-        proContainer.innerHTML = `
-            &lt;a href="https://www.paypal.com/ncp/payment/QGU3ZUQCMD49Q"
-               class="price-button"
-               target="_blank" rel="noopener noreferrer"&gt;
-               Subscribe Now
-            &lt;/a&gt;
-        `;
-    }
-&lt;/script&gt;</code></pre>
-                        </li>
-                        <li><strong>Enterprise Package Button (example - using direct PayPal URL):</strong>
-                            <pre class="highlight-code"><code>&lt;div id="paypal-container-ENTERPRISE"&gt;&lt;/div&gt;
-&lt;!-- JavaScript to render this button (in main &lt;script&gt; block): --&gt;
-&lt;script&gt;
-    const enterpriseContainer = document.getElementById('paypal-container-ENTERPRISE');
-    if (enterpriseContainer) {
-        enterpriseContainer.innerHTML = `
-            &lt;a href="https://www.paypal.com/ncp/payment/9C88S44F93M5J"
-               class="price-button"
-               target="_blank" rel="noopener noreferrer"&gt;
-               Subscribe Now
-            &lt;/a&gt;
-        `;
-    }
-&lt;/script&gt;</code></pre>
-                        </li>
-                    </ul>
-                </li>
-                <li><strong>JavaScript Block (within <code>products.html</code>):</strong>
-                    <pre class="highlight-code"><code>// IMPORTANT: Replace this placeholder with your actual LIVE PayPal Product ID.
-const YOUR_PAYPAL_PRODUCT_ID = 'PROD-YOUR_LIVE_PRODUCT_ID_HERE'; // &lt;--- !!! REPLACE THIS WITH YOUR ACTUAL LIVE PRODUCT ID !!! ---&gt;
-
-// IMPORTANT: You MUST replace these placeholders with the actual LIVE PayPal Plan IDs
-// obtained after manually creating them in the LIVE PayPal Developer Dashboard.
-// If using direct PayPal URLs for Pro/Enterprise, these plan IDs are not directly used by the client-side buttons,
-// but would be relevant if your backend expects them for subscription management.
-const PAYPAL_PLAN_IDS = {
-    "Starter Package_MONTHLY": "P-YOUR_STARTER_MONTHLY_LIVE_PLAN_ID",    // &lt;--- !!! REPLACE WITH ACTUAL LIVE ID !!! ---&gt;
-    "Starter Package_ANNUAL": "P-YOUR_STARTER_ANNUAL_LIVE_PLAN_ID",      // &lt;--- !!! REPLACE WITH ACTUAL LIVE ID !!! ---&gt;
-    // ... (add all other LIVE plan mappings here if using Hosted Buttons for all) ...
-};
-
-// Current logged-in user ID. Replace 'CURRENT_LOGGED_IN_USER_ID' with dynamic user ID from your auth system.
-const CURRENT_USER_ID = 'CURRENT_LOGGED_IN_USER_ID'; // &lt;--- !!! REPLACE THIS !!! ---&gt;
-
-// ... (Currency Converter Logic as previously provided - ensure API_KEY is set) ...
-
-// PayPal Subscription Initiation function (would be used if all were Hosted Buttons)
-async function initiatePayPalSubscription(event) {
-    // ... (function logic as previously provided - this call would now use LIVE backend credentials) ...
-    // Note: For Pro/Enterprise with direct URLs, this function might not be directly invoked by the buttons themselves,
-    // but the links handle the redirection directly.
-}
-
-// The event listeners below would apply if using programmatic SDK rendering with data-attributes.
-// For direct &lt;a&gt; links, the href handles navigation directly.
-// document.querySelectorAll('.buy-now-button').forEach(button =&gt; {
-//     button.addEventListener('click', initiatePayPalSubscription);
-// });
-
-// Ensure DOMContentLoaded is handled as a wrapper for all button rendering logic.
-document.addEventListener('DOMContentLoaded', () =&gt; {
-    // Render Starter button (Hosted Button SDK)
-    paypal.HostedButtons({
-        hostedButtonId: "EMWGPGHNN8Y8E",
-    }).render("#paypal-container-STARTER");
-
-    // Render Pro button (direct link disguised as button)
-    const proContainer = document.getElementById('paypal-container-PRO');
-    if (proContainer) {
-        proContainer.innerHTML = `<a href="https://www.paypal.com/ncp/payment/QGU3ZUQCMD49Q" class="price-button" target="_blank" rel="noopener noreferrer">Subscribe Now</a>`;
-    }
-
-    // Render Enterprise button (direct link disguised as button)
-    const enterpriseContainer = document.getElementById('paypal-container-ENTERPRISE');
-    if (enterpriseContainer) {
-        enterpriseContainer.innerHTML = `<a href="https://www.paypal.com/ncp/payment/9C88S44F93M5J" class="price-button" target="_blank" rel="noopener noreferrer">Subscribe Now</a>`;
-    }
-});</code></pre>
-                </li>
-            </ul>
-            <h4>C. Redirect Pages</h4>
-            <p>These static pages provide feedback to the user after completing or cancelling a PayPal flow.</p>
-            <ul>
-                <li><code>public/subscription-success.html</code>: Displays a success message upon successful subscription.</li>
-                <li><code>public/subscription-cancelled.html</code>: Displays a message if the user cancels the PayPal flow.</li>
-                <li><code>public/subscription-failed.html</code>: Displays a message if the subscription process encounters an error.</li>
-            </ul>
-
-            <hr class="section-divider">
-
-            <h2>V. PayPal Live Webhook Configuration (CRITICAL)</h2>
-            <p>This is absolutely essential for receiving real-time updates from PayPal about subscription status, payment completions, failures, and cancellations. Without this, your internal systems (e.g., user access, Zoho Books) will not be reliably updated.</p>
-            <ul>
-                <li><strong>Log into:</strong> <a href="https://developer.paypal.com/" target="_blank" rel="noopener noreferrer">https://developer.paypal.com/</a> with your <strong>Live PayPal Business Account</strong>.</li>
-                <li><strong>Navigate to:</strong> "My Apps &amp; Credentials" → "Live".</li>
-                <li><strong>Scroll down to "WEBHOOKS"</strong> and click "Add Webhook".</li>
-                <li><strong>Webhook URL:</strong> Enter your deployed live API endpoint:
-                    <pre class="highlight-code"><code>https://seedwave.faa.zone/api/paypal?action=webhook</code></pre>
-                </li>
-                <li><strong>Event Types:</strong> Select the following events (at a minimum). These cover the full subscription lifecycle:
-                    <ul>
-                        <li><code>BILLING.SUBSCRIPTION.ACTIVATED</code></li>
-                        <li><code>BILLING.SUBSCRIPTION.CANCELLED</code></li>
-                        <li><code>BILLING.SUBSCRIPTION.PAYMENT.COMPLETED</code></li>
-                        <li><code>BILLING.SUBSCRIPTION.PAYMENT.FAILED</code></li>
-                        <li><code>BILLING.SUBSCRIPTION.SUSPENDED</code></li>
-                        <li><code>BILLING.SUBSCRIPTION.UPDATED</code></li>
-                        <li><code>PAYMENT.CAPTURE.COMPLETED</code> (for initial setup fee if any)</li>
-                        <li><code>CUSTOMER.DISPUTE.CREATED</code> (for chargebacks/disputes)</li>
-                    </ul>
-                </li>
-                <li>Click <strong>"Save"</strong>. Note down the Webhook ID for your records (useful for debugging).</li>
-            </ul>
-
-            <hr class="section-divider">
-
-            <h2>Final Placeholder Replacements (CRITICAL FOR LIVE!)</h2>
-            <p>Before deploying, you <strong>MUST</strong> ensure all placeholder values below are replaced with your <strong>ACTUAL LIVE PayPal IDs</strong>. Failure to do so will result in failed transactions.</p>
-            <ul>
-                <li><code>client-id=YOUR_PAYPAL_CLIENT_ID</code> (in SDK script tags in <code>admin-portal.html</code> and <code>products.html</code>)</li>
-                <li><code>YOUR_STATIC_PAYPAL_PRODUCT_ID_HERE</code> (in JS code of <code>admin-portal.html</code> and <code>products.html</code>)</li>
-                <li><code>P-YOUR_..._LIVE_PLAN_ID</code> (in <code>PAYPAL_PLAN_IDS</code> object in JS code of <code>products.html</code> and possibly <code>admin-portal.html</code>)</li>
-                <li><code>CURRENT_LOGGED_IN_USER_ID</code> (in JS code of <code>admin-portal.html</code> and <code>products.html</code>)</li>
-                <li><code>API_KEY = ""</code> (in Currency Converter logic in <code>products.html</code>, replace with your ExchangeRate-API key)</li>
-            </ul>
-
-            <hr class="section-divider">
-
-            <h2>Deployment to Vercel</h2>
-            <p>Once all code changes are committed and placeholders replaced:</p>
-            <ul>
-                <li><strong>Commit &amp; Push Changes to GitHub:</strong>
-                    <pre class="highlight-code"><code>samantha@Samanthas-iMac seedwave % git add .
-samantha@Samanthas-iMac seedwave % git commit -m "feat: Integrated live PayPal Subscriptions and finalized setup"
-samantha@Samanthas-iMac seedwave % git push origin main # Or your main branch name</code></pre>
-                </li>
-                <li><strong>Deploy to Production via Vercel CLI (or through your connected Git repository):</strong>
-                    <pre class="highlight-code"><code>samantha@Samanthas-iMac seedwave % vercel --prod</code></pre>
-                    <p>This will deploy your application to your live domain (e.g., <a href="https://seedwave.faa.zone" target="_blank" rel="noopener noreferrer">https://seedwave.faa.zone</a>).</p>
-                </li>
-            </ul>
-
-            <hr class="section-divider">
-
-            <h2>Post-Deployment Testing (LIVE Environment)</h2>
-            <p>Perform thorough testing of the entire subscription flow in your LIVE environment. Use <strong>real PayPal accounts and real money</strong> for these tests.</p>
-            <ul>
-                <li><strong>Admin Test (from deployed <code>admin-portal.html</code>):</strong>
-                    <ul>
-                        <li>Confirm the "Deploy Plan" button <strong>does not</strong> create duplicate plans if clicked again (PayPal API handles idempotency, but verify the output).</li>
-                        <li>Confirm the displayed Plan IDs match your manually created LIVE plans.</li>
-                    </ul>
-                </li>
-                <li><strong>User Subscription Test (from deployed <code>products.html</code>):</strong>
-                    <ul>
-                        <li>Access your deployed <code>products.html</code> (e.g., <a href="https://seedwave.faa.zone/products.html" target="_blank" rel="noopener noreferrer">https://seedwave.faa.zone/products.html</a>).</li>
-                        <li>Test the currency converter.</li>
-                        <li>Click "Subscribe Now" for a product.</li>
-                        <li>Complete the PayPal payment flow.</li>
-                        <li>Verify successful redirection to <code>subscription-success.html</code>.</li>
-                    </ul>
-                </li>
-                <li><strong>Backend &amp; Webhook Monitoring:</strong>
-                    <ul>
-                        <li>Check your Vercel dashboard logs for messages from the <code>/api/paypal?action=webhook</code> endpoint. You should see <code>BILLING.SUBSCRIPTION.ACTIVATED</code> and <code>BILLING.SUBSCRIPTION.PAYMENT.COMPLETED</code> events for successful subscriptions.</li>
-                        <li>Confirm your internal systems (e.g., Zoho Books/CRM, user access management) are updated based on webhook data.</li>
-                        <li>Verify the new subscription appears in your <strong>LIVE PayPal Business Account</strong> under "Subscriptions".</li>
-                    </ul>
-                </li>
-            </ul>
-
-            <hr class="section-divider">
-
+    <footer class="main-footer">
+        <div class="container footer-content">
+            <div class="logo">
+                <span class="logo-faa">FAA.zone™</span> / <span class="logo-buildnest">VaultMesh™</span>
+            </div>
+            <p class="copyright">&copy; 2025 FAA.zone™. All systems, symbols, and brand echoes protected by the Omni Present Copyright™.</p>
         </div>
-        <footer class="main-footer">
-            <div class="container footer-content">
-                <div class="logo">
-                    <span class="logo-faa">FAA.zone™</span> / <span class="logo-buildnest">VaultMesh™</span>
-                </div>
-                <p class="copyright">&copy; 2025 FAA.zone™. All systems, symbols, and brand echoes protected by the Omni Present Copyright™.</p>
+        <div class="footer-links">
+            <div class="footer-column">
+                <h4>BuildNest™</h4>
+                <ul>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="index.html#use-cases">Use Cases</a></li>
+                    <li><a href="index.html#pricing">Pricing</a></li>
+                    <li><a href="plotvault.html">Modules</a></li>
+                </ul>
             </div>
-            <div class="footer-links">
-                <div class="footer-column">
-                    <h4>BuildNest™</h4>
-                    <ul>
-                        <li><a href="index.html#features">Features</a></li>
-                        <li><a href="index.html#use-cases">Use Cases</a></li>
-                        <li><a href="index.html#pricing">Pricing</a></li>
-                        <li><a href="plotvault.html">Modules</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>FAA.zone™</h4>
-                    <ul>
-                        <li><a href="about-faa.html">About FAA Systems™</a></li>
-                        <li><a href="index.html">Omni Grid™</a></li>
-                        <li><a href="baobab-archive.html">Baobab Archive™</li>
-                        <li><a href="compliance.html">Compliance</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Connect</h4>
-                    <ul>
-                        <li><a href="contact-support.html">Contact Support</a></li>
-                        <li><a href="partner-program.html">Partner Program</a></li>
-                        <li><a href="developer-api.html">Developer API</a></li>
-                        <li><a href="legal-privacy.html">Legal & Privacy</a></li>
-                    </ul>
-                </div>
+            <div class="footer-column">
+                <h4>FAA.zone™</h4>
+                <ul>
+                    <li><a href="about-faa.html">About FAA Systems™</a></li>
+                    <li><a href="index.html">Omni Grid™</a></li>
+                    <li><a href="baobab-archive.html">Baobab Archive™</li>
+                    <li><a href="compliance.html">Compliance</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="contact-support.html">Contact Support</a></li>
+                    <li><a href="partner-program.html">Partner Program</a></li>
+                    <li><a href="developer-api.html">Developer API</a></li>
+                    <li><a href="legal-privacy.html">Legal & Privacy</a></li>
+                </ul>
             </div>
         </div>
     </footer>
+
+    <script 
+      src="https://www.paypal.com/sdk/js?client-id=BAAGdPecRsf6dw_nIrWqUen0GdW0UsBZapp1Gn62xkPdD-Vqc-4lqWAidKK8LOObXux8pHJGjXknZoar6Q&components=hosted-buttons&disable-funding=venmo&currency=USD">
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // PayPal Button Render Logic
+
+            // Starter Package
+            // This button will display the price associated with EMWGPGHNN8Y8E in your PayPal account.
+            paypal.HostedButtons({
+                hostedButtonId: "EMWGPGHNN8Y8E", 
+            }).render("#paypal-container-STARTER");
+
+            // Pro Package
+            // This now renders a PayPal-branded button.
+            // IMPORTANT: This button will display the price associated with EMWGPGHNN8Y8E.
+            // For LIVE CHECKOUT to show $76.30, you MUST replace "EMWGPGHNN8Y8E" below
+            // with the actual, UNIQUE Hosted Button ID that corresponds to your $76.30 product/subscription in your PayPal account.
+            paypal.HostedButtons({
+                hostedButtonId: "EMWGPGHNN8Y8E", // Using this ID to ensure PayPal button renders visually
+            }).render("#paypal-container-PRO");
+
+            // Enterprise Package
+            // This now renders a PayPal-branded button.
+            // IMPORTANT: This button will display the price associated with EMWGPGHNN8Y8E.
+            // For LIVE CHECKOUT to show $152.60, you MUST replace "EMWGPGHNN8Y8E" below
+            // with the actual, UNIQUE Hosted Button ID that corresponds to your $152.60 product/subscription in your PayPal account.
+            paypal.HostedButtons({
+                hostedButtonId: "EMWGPGHNN8Y8E", // Using this ID to ensure PayPal button renders visually
+            }).render("#paypal-container-ENTERPRISE");
+
+
+            // General theme and quantity selector logic (remains as is)
+            const body = document.body;
+            const savedMode = localStorage.getItem('themeMode');
+            if (savedMode) {
+                body.classList.add(savedMode);
+            } else {
+                body.classList.add('light-mode');
+            }
+
+            const quantitySelects = document.querySelectorAll('.quantity-selector select');
+            quantitySelects.forEach(select => {
+                select.addEventListener('change', (event) => {
+                    const selectedQuantity = event.target.value;
+                    console.log(`Selected quantity: ${selectedQuantity}`);
+                });
+            });
+        });
+    </script>
 </body>
 </html>
