@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-06-19 | fruitful | history | `index.html` | `d26adc3f` | Portal.faa.zone - Your Central Access Hub | 126003 | 85 | 16 | 163.5 |
+| 2 | 2025-06-19 | fruitful | history | `index.html` | `802506c1` | 🦍Fruitful Global - Your Central Access Hub | 125352 | 77 | 16 | 155.9 |
