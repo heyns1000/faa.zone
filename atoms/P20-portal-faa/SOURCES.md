@@ -1,0 +1,7 @@
+# P20 Portal Faa: every version, oldest first
+
+19 distinct versions in buildnest, codenest, fruitful. Grouped by system_map.py: a version joins only when visible text (shingle Jaccard ≥ 0.30) AND structure (ids/functions/labels ≥ 0.45) both match. `portal-faa.html` holds each version's exact bytes per commit.
+
+| # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | 2025-06-19 | fruitful | history | `index.html` | `d26adc3f` | Portal.faa.zone - Your Central Access Hub | 126003 | 85 | 16 | 163.5 |
