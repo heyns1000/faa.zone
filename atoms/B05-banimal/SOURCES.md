@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-05-22 | faa.zone | history | `public/admin/test/snapshot.html` | `3197667f` | Banimal™ - Kind Creatures | 3704 | 9 | 0 | 40.4 |
+| 2 | 2025-06-20 | seedwave | history | `public/homepage.html` | `c440ffe5` | Banimal™ - Kind Creatures, Global Impact | 12875 | 4 | 3 | 28.0 |
