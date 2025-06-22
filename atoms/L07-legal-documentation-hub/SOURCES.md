@@ -6,3 +6,4 @@
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-06-18 | faa.zone | history | `public/legal/index.html` | `debc1912` | FAA.ZONE Legal & Documentation Hub | 19592 | 23 | 0 | 50.0 |
 | 2 | 2025-06-18 | faa.zone | history | `public/legal/index.html` | `0ac8f11c` | FAA.ZONE Legal & Documentation Hub | 18907 | 23 | 0 | 49.9 |
+| 3 | 2025-06-22 | faa.zone | history | `public/legal/index.html` | `b634d303` | FAA.ZONE™ Legal & Documentation Hub | 24962 | 27 | 0 | 54.5 |
