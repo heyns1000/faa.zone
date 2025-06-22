@@ -2,836 +2,75 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌐 Global 💰 Packages by Fruitful</title>
-    <link rel="icon" href="/favicon.ico">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        /* Base Styles */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f5f5f7; /* Very light gray, almost white */
-            color: #1d1d1f; /* Near black for primary text */
-            line-height: 1.4;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Header */
-        header {
-            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
-            backdrop-filter: blur(10px); /* Frosted glass effect */
-            border-bottom: 1px solid #e8e8ed; /* Subtle bottom border */
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-            box-shadow: 0 1px 0 rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-        }
-        header h1 {
-            color: #1d1d1f;
-            font-weight: 700;
-            font-size: 1.5rem;
-            letter-spacing: -0.02em;
-        }
-        header nav {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            justify-content: center;
-        }
-        header nav a {
-            color: #424245;
-            font-size: 0.9rem;
-            font-weight: 500;
-            padding: 0.5rem 0.8rem;
-            border-radius: 6px;
-            transition: all 0.2s ease-in-out;
-            text-decoration: none;
-            flex-shrink: 0;
-        }
-        header nav a:hover {
-            color: #0071e3;
-            background-color: rgba(0, 0, 0, 0.03);
-        }
-        header nav a.button-style-original {
-            background-color: transparent;
-            color: #424245;
-            font-weight: 600;
-            border: 1px solid #dcdcdc;
-            padding: 0.6rem 1.2rem;
-            border-radius: 20px;
-            box-shadow: none;
-        }
-        header nav a.button-style-original:hover {
-            background-color: rgba(0, 0, 0, 0.03);
-            color: #0071e3;
-            transform: none;
-            box-shadow: none;
-        }
-
-        header nav a.button-style-main {
-            background-color: #0071e3;
-            color: white;
-            padding: 0.6rem 1.2rem;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        header nav a.button-style-main:hover {
-            background-color: #0077ed;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-        }
-
-        @media (min-width: 768px) {
-            header {
-                flex-direction: row;
-            }
-            header nav {
-                gap: 0;
-            }
-            header nav a:not(.button-style-original):not(.button-style-main) {
-                margin-right: 1.5rem;
-            }
-            header nav a.login-button {
-                margin-left: auto;
-            }
-            header nav a.button-style-original {
-                margin-left: 1rem;
-                margin-right: 0.5rem;
-            }
-            header nav a.button-style-main {
-                margin-left: 0;
-            }
-        }
-
-
-        /* Hero Section */
-        .hero-section {
-            background-color: white;
-            min-height: 70vh;
-            padding: 6rem 1.5rem;
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-            box-shadow: none;
-            color: #1d1d1f;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* Center content vertically within the hero section */
-            align-items: center;
-            text-align: center;
-        }
-        .hero-section canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: block;
-            z-index: 0;
-            background-color: transparent;
-        }
-        .hero-content {
-            max-width: 800px;
-            position: relative;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            /* Adjusted margin-top to bring title to absolute center of the pulse area */
-            margin-top: 50px; /* Changed to a positive value to push content down from the center */
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        .hero-section h2 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            color: #1d1d1f;
-            line-height: 1.1;
-            /* Space between title and buttons remains constant as before */
-            margin-bottom: 15rem; 
-        }
-        .hero-section h2 span {
-            color: #0071e3;
-        }
-        /* No p tag styling as it's removed from HTML */
-        
-        /* CTA button styling */
-        .cta-button, .cta-button-secondary {
-            padding: 0.8rem 1.8rem;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.2s ease-in-out;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            height: 50px;
-            box-sizing: border-box;
-            width: 100%; /* Ensure buttons fill their grid cells */
-        }
-        .cta-button {
-            background: #0071e3;
-            color: white;
-        }
-        .cta-button:hover {
-            background-color: #0077ed;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-        }
-        .cta-button-secondary {
-            background-color: #f0f0f0;
-            color: #424245;
-            border: 1px solid #dcdcdc;
-            box-shadow: none;
-        }
-        .cta-button-secondary:hover {
-            background-color: #e8e8ed;
-            color: #1d1d1f;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-
-        /* Sections - Clean, defined blocks */
-        section {
-            padding: 8rem 2rem;
-            background-color: var(--bg-color-light);
-            box-shadow: none;
-            border-bottom: 1px solid var(--border-color-light);
-            text-align: center;
-        }
-        section:last-of-type {
-            border-bottom: none;
-        }
-        section h2, section h3 {
-            color: var(--text-color-light);
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 2rem;
-            font-size: 2.2rem;
-        }
-        section p {
-            color: #424245;
-            font-size: 1.1rem;
-            line-height: 1.5;
-        }
-
-        /* Feature Cards */
-        .feature-card {
-            background-color: var(--bg-color-light);
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-            border: 1px solid var(--border-color-light);
-            text-align: left;
-        }
-        .feature-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.12);
-        }
-        .feature-card div:first-child {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-        .feature-card h4 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-color-light);
-            margin-bottom: 0.5rem;
-        }
-        .feature-card p {
-            font-size: 0.95rem;
-            color: var(--muted-text-light);
-        }
-
-        /* Share Signal Section */
-        #shareprice {
-            background-color: var(--card-bg-light);
-            color: var(--text-color-light);
-            padding: 4rem 1.5rem;
-            border-bottom: 1px solid var(--border-color-light);
-        }
-        #shareprice h2 {
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-        #price {
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            letter-spacing: -0.02em;
-        }
-        #timestamp {
-            color: var(--muted-text-light);
-            font-size: 0.85rem;
-        }
-
-        /* Seedwave Growth */
-        #seedwave {
-            background-color: var(--bg-color-light);
-            padding: 6rem 1.5rem;
-            border-bottom: 1px solid var(--border-color-light);
-        }
-        #seedwave h2 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            color: var(--text-color-light);
-        }
-        #seedwave .w-full {
-            background-color: #fcfcfc;
-            border: 1px solid var(--border-color-light);
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        /* Founder's Note */
-        section.founders-note-section {
-            background-color: var(--card-bg-light);
-            color: var(--text-color-light);
-            padding: 6rem 2rem;
-            border-bottom: 1px solid var(--border-color-light);
-        }
-        section.founders-note-section h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--text-color-light);
-        }
-        section.founders-note-section p {
-            font-size: 1.1rem;
-            color: #424245;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        section.founders-note-section p.italic {
-            color: var(--muted-text-light);
-            font-style: italic;
-        }
-        section.founders-note-section p.font-semibold {
-            color: var(--primary-color);
-            font-weight: 600;
-            margin-top: 2rem;
-        }
-
-        /* Vault Terminal Access - Clean buttons */
-        #vault-access {
-            background-color: var(--bg-color-light);
-            padding: 6rem 2rem;
-            border-bottom: 1px solid var(--border-color-light);
-        }
-        #vault-access h3 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--text-color-light);
-            margin-bottom: 2.5rem;
-        }
-        #vault-access .w-full.h-\[800px\] {
-            background-color: #f0f0f0;
-            border: 1px solid #dcdcdc;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        }
-        .terminal-btn {
-            background-color: #f0f0f0;
-            color: #424245;
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: all 0.2s ease-in-out;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            border: 1px solid #dcdcdc;
-            cursor: pointer;
-        }
-        .terminal-btn:hover {
-            background-color: #e8e8ed;
-            color: var(--text-color-light);
-            transform: translateY(-1px);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .terminal-btn.ring {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px var(--primary-color);
-        }
-
-        /* Sector Scrolls - Clean link grid */
-        section.sector-scrolls-section {
-            background-color: var(--card-bg-light);
-            padding: 6rem 2rem;
-            border-bottom: 1px solid var(--border-color-light);
-        }
-        section.sector-scrolls-section h2 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--text-color-light);
-            margin-bottom: 2.5rem;
-        }
-        .glyph {
-            background-color: var(--bg-color-light);
-            color: #424245;
-            padding: 0.8rem 1.2rem;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: all 0.2s ease-in-out;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            border: 1px solid var(--border-color-light);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-        .glyph:hover {
-            background-color: #f0f0f0;
-            color: var(--text-color-light);
-            transform: translateY(-1px);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        /* Treaty Section - Elegant quote */
-        #treaty {
-            background-color: var(--bg-color-light);
-            padding: 6rem 2rem;
-            border-bottom: 1px solid var(--border-color-light);
-        }
-        #treaty h2 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--text-color-light);
-            margin-bottom: 1.5rem;
-        }
-        #treaty p {
-            color: #424245;
-            font-size: 1.1rem;
-            line-height: 1.5;
-        }
-        #treaty blockquote {
-            font-size: 1.5rem;
-            color: var(--text-color-light);
-            font-weight: 600;
-            line-height: 1.4;
-        }
-        #treaty blockquote::before, #treaty blockquote::after {
-            content: '“';
-            font-size: 2.5em;
-            line-height: 0.1;
-            vertical-align: -0.4em;
-            color: #dcdcdc;
-            margin-right: 0.1em;
-        }
-        #treaty blockquote::after {
-            content: '”';
-            margin-left: 0.05em;
-        }
-
-        /* Signal Packet - Developer focused, clean code block */
-        section.signal-packet-section {
-            background-color: #1d1d1f;
-            color: #00e393;
-            padding: 4rem 1.5rem;
-            border-bottom: 1px solid #333;
-        }
-        section.signal-packet-section pre {
-            background-color: #0a0a0a;
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
-            white-space: pre-wrap;
-            word-break: break-all;
-        }
-
-        /* VaultMesh Executive Summary */
-        #vaultmesh {
-            background-color: var(--card-bg-light);
-            padding: 6rem 2rem;
-            color: var(--text-color-light);
-            border-bottom: 1px solid var(--border-color-light);
-        }
-        #vaultmesh h2 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--text-color-light);
-            margin-bottom: 1.5rem;
-        }
-        #vaultmesh h2.text-purple-400 {
-            color: var(--primary-color);
-        }
-        #vaultmesh h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--text-color-light);
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        #vaultmesh p {
-            font-size: 1.05rem;
-            color: #424245;
-            line-height: 1.5;
-        }
-        #vaultmesh ul {
-            list-style-type: disc;
-            margin-left: 1.5rem;
-            color: #424245;
-        }
-        #vaultmesh ul li {
-            font-size: 1.05rem;
-            margin-bottom: 0.5rem;
-        }
-        #vaultmesh ul.list-decimal {
-            list-style-type: decimal;
-        }
-        #vaultmesh code {
-            background-color: #e8e8ed;
-            padding: 0.2em 0.4em;
-            border-radius: 4px;
-            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
-            color: var(--text-color-light);
-        }
-
-        /* About Section */
-        #about {
-            background-color: var(--bg-color-light);
-            padding: 6rem 2rem;
-            color: var(--text-color-light);
-            border-bottom: 1px solid var(--border-color-light);
-        }
-        #about h3 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--text-color-light);
-            margin-bottom: 1.5rem;
-        }
-        #about p {
-            font-size: 1.1rem;
-            color: #424245;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Call to Action Section */
-        #cta {
-            background: var(--card-bg-light);
-            padding: 6rem 2rem;
-            color: var(--text-color-light);
-            text-align: center;
-        }
-        #cta h3 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--text-color-light);
-            margin-bottom: 1.5rem;
-        }
-        #cta p {
-            font-size: 1.2rem;
-            color: #424245;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 2.5rem;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--card-bg-light);
-            color: var(--muted-text-light);
-            padding: 2rem;
-            font-size: 0.85rem;
-            border-top: 1px solid var(--border-color-light);
-            text-align: center;
-        }
-        footer a {
-            color: var(--muted-text-light);
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-        footer a:hover {
-            color: var(--text-color-light);
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .hero-section h2 {
-                font-size: 2.8rem;
-            }
-            .hero-section p {
-                font-size: 1rem;
-            }
-            /* Adjust buttons for smaller screens to ensure visibility and wrapping */
-            .cta-button, .cta-button-secondary {
-                width: 100%; /* Take full width on very small screens */
-                max-width: 200px; /* Max width to prevent them from becoming too wide on slightly larger small screens */
-                height: auto; /* Allow height to adjust based on content wrapping */
-                padding: 0.7rem 0.5rem; /* Adjust padding for smaller width */
-                font-size: 0.9rem; /* Smaller font size for mobile */
-                margin: 0.25rem auto; /* Center individual buttons when stacked */
-            }
-
-            header nav {
-                flex-wrap: wrap; /* Allow nav items to wrap */
-                justify-content: center;
-                margin-top: 1rem;
-            }
-            header nav a {
-                margin: 0.25rem 0.5rem;
-            }
-            /* Adjust spacing for header nav for small screens specifically */
-            header nav a:not(.button-style-original):not(.button-style-main),
-            header nav a.button-style-original,
-            header nav a.button-style-main,
-            header nav a.login-button {
-                margin-left: 0.25rem; /* Closer spacing for mobile */
-                margin-right: 0.25rem;
-            }
-            header nav a.login-button.ml-auto { /* Override ml-auto for mobile so it doesn't push to right */
-                margin-left: 0.25rem; /* Reset to match other links */
-            }
-
-            section {
-                padding: 4rem 1.5rem;
-            }
-            section h2, section h3 {
-                font-size: 1.8rem;
-                margin-bottom: 1.5rem;
-            }
-            section p {
-                font-size: 1rem;
-            }
-            .feature-grid {
-                grid-template-columns: 1fr;
-            }
-            #shareprice h2 {
-                font-size: 1.5rem;
-            }
-            #price {
-                font-size: 2.5rem;
-            }
-            #vault-access .w-full.h-\[800px\] {
-                height: 500px;
-            }
-            .terminal-btn {
-                padding: 0.8rem 1rem;
-                font-size: 0.9rem;
-            }
-            #treaty blockquote {
-                font-size: 1.2rem;
-            }
-            #vaultmesh h2, #vaultmesh h3 {
-                font-size: 1.8rem;
-            }
-            #vaultmesh p, #vaultmesh ul li {
-                font-size: 0.95rem;
-            }
-            #cta h3 {
-                font-size: 2rem;
-            }
-            #cta p {
-                font-size: 1rem;
-            }
-        }
-
-        /* Specific adjustment for very small screens if buttons still overflow */
-        @media (max-width: 480px) {
-            .hero-content > div {
-                /* Handled by grid-cols-1 now, ensuring full width and auto margins */
-            }
-            .cta-button, .cta-button-secondary {
-                width: 90%; /* Adjust width to fit narrower screens */
-                margin: 0.25rem auto; /* Center buttons */
-            }
-            header nav {
-                flex-direction: column; /* Stack header nav links vertically on very small screens */
-                align-items: center;
-            }
-            header nav a {
-                margin: 0.2rem 0; /* Reduce vertical margin */
-            }
-            header nav a.login-button,
-            header nav a.button-style-original,
-            header nav a.button-style-main {
-                margin: 0.2rem auto; /* Center specific buttons as well */
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <header class="py-4 px-6 md:px-12 flex flex-col sm:flex-row justify-between items-center">
-        <h1 class="text-2xl font-extrabold tracking-tight mb-4 sm:mb-0">🌐 VaultMesh™</h1>
-        <nav class="flex flex-wrap justify-center sm:justify-end items-center">
-            <a href="vaultmesh.faa.zone/index.html" class="transition-colors duration-200">Home</a>
-            <a href="#features" class="transition-colors duration-200">Features</a>
-            <a href="#shareprice" class="transition-colors duration-200">Signal</a>
-            <a href="#vault-access" class="transition-colors duration-200">Vault</a>
-            <a href="#treaty" class="transition-colors duration-200">Treaty</a>
-            <a href="#vaultmesh" class="transition-colors duration-200">VaultMesh</a>
-            <a href="#about" class="transition-colors duration-200">About</a>
-            <a href="https://faa.zone/careers/hiring-homepage.html" target="_blank" class="transition-colors duration-200">Careers</a>
-            <a href="https://seedwave.faa.zone/login.html" class="transition-colors duration-200 button-style-original login-button">Login</a>
-            <a href="https://faa.zone/legal/securesign.html" target="_blank" class="transition-colors duration-200 font-semibold px-4 py-2 rounded-full border border-gray-300 hover:bg-gray-100 hover:text-gray-900 button-style-original">SecureSign</a>
-            <a href="https://seedwave.faa.zone/signup.html" class="px-4 py-2 rounded-full font-semibold transition-colors duration-200 button-style-main">Sign Up</a>
-            <a href="https://faa.zone/contact-us.html" class="px-4 py-2 rounded-full font-semibold transition-colors duration-200 button-style-main">Contact Us</a>
-        </nav>
-    </header>
-
-    <section class="hero-section">
-        <canvas id="rhythmicCanvas"></canvas>
-
-      <div class="hero-content">
-        <h2 class="text-5xl md:text-6xl font-extrabold leading-tight mb-6">
-            Welcome to <span class="text-blue-600">VaultMesh™ Pricing & Plans 💰</span>
-        </h2>
-        
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mx-auto w-full max-w-6xl mt-0">
-            <a href="https://faa.zone/omnigrid.html" class="cta-button w-full">
-                Explore Ecosystem
-            </a>
-                <a href="https://fruitful.faa.zone" target="_blank" class="cta-button cta-button-secondary w-full">
-                    Fruitful™
-                </a>
-                <a href="https://baobab.faa.zone" target="_blank" class="cta-button cta-button-secondary w-full">
-                    Baobab Network
-                </a>
-                <a href="https://fruitfulcratedance.com/" target="_blank" class="cta-button cta-button-secondary w-full">
-                    Fruitful Crate Dance
-                </a>
-                <a href="products.html" target="_blank" class="cta-button cta-button-secondary w-full">
-                    Enter Index
-                </a>
-                <a href="https://sellers.takealot.com/" target="_blank" class="cta-button cta-button-secondary w-full">
-                    Takealot Seller
-                </a>
-                <a href="https://www.zoho.com/" target="_blank" class="cta-button cta-button-secondary w-full">
-                    Vault Email
-                </a>
-                <a href="https://www.paypal.com/signin/" target="_blank" class="cta-button cta-button-secondary w-full">
-                    Paypal Access
-                </a>
-                <a href="https://vercel.com/faa-systems-projects/" target="_blank" class="cta-button cta-button-secondary w-full">
-                    Vecel Access
-                </a>
-                <a href="https://github.com/heyns1000/" target="_blank" class="cta-button cta-button-secondary w-full">
-                    Github Access
-                     </a>
-                <a href="https://dash.cloudflare.com/login" target="_blank" class="cta-button cta-button-secondary w-full">
-                    Cloudfare Access
-                    </a>
-                <a href="https://accounts.hetzner.com/account/masterdata" target="_blank" class="cta-button cta-button-secondary w-full">
-                    Hetzner Cloud
-                </a>
-                 <a href="https://faa.zone/legal/" target="_blank" class="cta-button cta-button-secondary w-full">
-                    Legal Access
-                </a>
-                <a href="https://accounting.sageone.co.za/Maintenance/OpenAndManageCompanyMaintenance.aspx" target="_blank" class="cta-button cta-button-secondary w-full">
-                    Sage Access
-                </a>
-           <a href="https://login.alibaba.com/newlogin/icbuLogin.htm?defaultActive=signIn&return_url=https%3A%2F%2Fwww.alibaba.com%2F%3Fsrc%3Dsem_ggl%26field%3DUG%26from%3Dsem_ggl%26cmpgn%3D9922923274%26adgrp%3D97780323342%26fditm%3D%26tgt%3Dkwd-482944541254%26locintrst%3D%26locphyscl%3D1028682%26mtchtyp%3De%26ntwrk%3Dg%26device%3Dc%26dvcmdl%3D%26creative%3D598857653475%26plcmnt%3D%26plcmntcat%3D%26aceid%3D%26position%3D%26gad_source%3D1%26gad_campaignid%3D9922923274%26gbraid%3D0AAAAAD8m77qRAZex2ej01gArx6VezE9m5%26gclid%3DCjwKCAjw6s7CBhACEiwAuHQckkoZ8x6add65vgObqo7p06J8PMrqd9Jj5d3QDQk02m9K2MLM2Q3hURoCWgkQAvD_BwE&_lang=en_US" target="_blank" class="cta-button cta-button-secondary w-full">
-                    Alibaba Account 
-                </a>
-                <a href="https://https://seedwave.faa.zone/sectors/agriculture-biotech/agrichain/paypal/pricing.html" target="_blank" class="cta-button cta-button-secondary w-full">
-                    🌱 Agriculture & Biotech Package Checkout Master Paypal
-                </a>
-
-            </div>
-        </div>
-    </section>
-
- 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <title>⚙️ Heyns Admin Portal - FAA.ZONE™</title>
+    <!-- Add onerror to script tags for better debugging of CDN load failures -->
     <script src="https://cdn.tailwindcss.com" onerror="document.getElementById('loading-message').textContent='Error loading Tailwind CSS. Check network.'; console.error('Tailwind CSS failed to load.');"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js" onerror="document.getElementById('loading-message').textContent='Error loading Chart.js. Check network.'; console.error('Chart.js failed to load.');"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* Chosen Palette: Apple-Inspired Neutrals with Subtle Accents */
-        /* Application Structure Plan: The core structure remains a single, responsive HTML page. Layout is driven by Tailwind's flex and grid utilities to create a clean, card-based dashboard. Navigation is top-level. The key is applying Apple's aesthetic (clean, subtle shadows, crisp typography, blue accents) to ALL existing components (forms, tables, charts, buttons) without altering their underlying data or JS logic. */
-        /* Visualization & Content Choices:
-            - Global Index: HTML table for structured data display (glyph, sector, nodes, fees, tier, region). Interactive Inspect/Deploy buttons.
-            - Metrics: KPI cards for key numbers (Active Nodes, Licenses, Deployments, Sync Logs) and a line chart for pulse monitoring.
-            - Sector View: Select dropdown for filtering, and dynamic product cards for pricing tiers with monthly/annual toggle. Brand buttons display detailed snapshots. Chart.js for pulse monitoring.
-            - All existing data structures (ALL_BRANDS_DETAILS_BY_SECTOR, FAA_ZONE_INDEX_SUMMARY_DATA, clientAdminData) and all JS functions are entirely preserved.
-        */
-        /* CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. */
-
+        /* Base styles for the "Interstellar" theme */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #F5F5F7; /* Light neutral gray, inspired by Apple backgrounds */
-            color: #1D1D1F; /* Dark text */
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); /* Deep space gradient */
+            color: #E0E0E0; /* Light gray for general text */
             line-height: 1.6;
-            min-height: 100vh;
+            min-height: 100vh; /* Ensure full viewport height */
             display: flex;
             flex-direction: column;
         }
 
+        /* Header Styling - Adopted from FAA™ Global Ecosystem Dashboard */
         header {
-            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white header */
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08); /* Subtle, diffused shadow */
+            background-color: rgba(30, 30, 45, 0.9); /* Slightly transparent dark header */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Deeper shadow */
             position: sticky;
             top: 0;
             z-index: 50;
-            backdrop-filter: blur(8px); /* More pronounced blur for modern feel */
-            border-bottom: 1px solid #E0E0E0; /* Light gray bottom border */
-            padding: 1rem 2.5rem; /* Adjusted padding */
+            backdrop-filter: blur(5px); /* Subtle blur effect */
+            border-bottom: 1px solid rgba(70, 70, 90, 0.5); /* Subtle bottom border */
+            padding-top: 1.5rem; /* Equivalent to p-6/2 */
+            padding-bottom: 1.5rem;
+            padding-left: 2.5rem; /* Equivalent to lg:p-10/2 */
+            padding-right: 2.5rem;
         }
         header a {
-            transition: all 0.2s ease-in-out;
-            color: #555555; /* Medium gray for links */
-            padding: 0.5rem 1rem;
-            border-radius: 0.375rem; /* Slightly less rounded */
+            transition: all 0.3s ease-in-out;
+            color: #C0C0C0; /* Lighter gray for links */
+            padding: 0.6rem 1rem;
+            border-radius: 0.5rem; /* More rounded */
             font-weight: 500;
         }
         header a:hover {
-            background-color: #EEEEEE; /* Light gray hover background */
-            color: #007AFF; /* Apple blue accent on hover */
-            transform: translateY(-1px); /* Subtle lift effect */
+            background-color: rgba(60, 60, 90, 0.7); /* Darker hover background */
+            color: #93C5FD; /* Light blue accent on hover */
+            transform: translateY(-2px); /* Subtle lift effect */
         }
-        header a.text-2xl {
-            color: #007AFF; /* Apple blue for logo */
+        header a.text-2xl { /* Logo specific styling */
+            color: #A78BFA; /* Purple accent for logo */
             font-weight: 800;
         }
 
+        /* Call-to-action Button (cta-button) */
         .cta-button {
-            background: linear-gradient(45deg, #007AFF, #005BBF); /* Apple-like blue gradient */
+            background: linear-gradient(45deg, #6B46C1, #8B5CF6); /* Purple gradient */
             color: white;
-            padding: 0.75rem 1.5rem; /* Slightly smaller for Apple feel */
-            border-radius: 0.5rem; /* Consistent rounding */
-            font-weight: 600; /* Medium bold */
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 122, 255, 0.3); /* Blue glow */
+            padding: 0.85rem 1.8rem; /* Slightly larger padding */
+            border-radius: 0.75rem; /* More rounded */
+            font-weight: 700; /* Bolder */
+            transition: all 0.4s ease;
+            box-shadow: 0 6px 15px rgba(139, 92, 246, 0.4); /* Glow effect */
             position: relative;
             overflow: hidden;
             border: none;
-            letter-spacing: 0.02em;
-            min-width: 120px;
+            letter-spacing: 0.05em; /* Slightly spaced out text */
+            min-width: 150px; /* Ensure consistent button width */
             text-align: center;
         }
         .cta-button:hover {
-            background: linear-gradient(45deg, #006ED0, #004F9F); /* Slightly darker on hover */
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 122, 255, 0.4);
+            background: linear-gradient(45deg, #7C5BC7, #9B6EF9); /* Slightly lighter gradient on hover */
+            transform: translateY(-3px) scale(1.02); /* More pronounced lift and slight scale */
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.6); /* Enhanced glow */
         }
         .cta-button::before {
             content: '';
@@ -840,513 +79,496 @@
             left: 50%;
             width: 0%;
             height: 0%;
-            background-color: rgba(255, 255, 255, 0.15); /* Subtler ripple */
+            background-color: rgba(255, 255, 255, 0.2);
             border-radius: 50%;
-            transition: all 0.6s ease-out;
+            transition: all 0.7s ease-out;
             transform: translate(-50%, -50%);
             opacity: 0;
         }
         .cta-button:hover::before {
-            width: 200%; /* Smaller ripple size */
-            height: 200%;
+            width: 300%;
+            height: 300%;
             opacity: 1;
         }
 
-        /* Product Card Styling (for pricing tiers) */
-.product-card {
-    background-color: #FFFFFF; /* Clean white background */
-    border-radius: 0.75rem; /* Consistent rounding */
-    border: 1px solid #E0E0E0; /* Light gray border */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Subtle, diffused shadow */
-    transition: all 0.3s ease-in-out;
-    padding: 2rem;
-    display: flex; /* Keep flex for internal alignment of content and button */
-    flex-direction: column;
-    text-align: left;
-    min-height: 480px; /* This sets the minimum height. */
-    height: 100%;       /* This is crucial: ensures it fills available height in a flex/grid item. */
-    display: flex;       /* Must be flex to control internal layout */
-    flex-direction: column; /* Stack children vertically */
-    justify-content: space-between; /* Pushes the button to the bottom */
-    position: relative;
-    z-index: 2;
-}
-.product-card > div {
-    flex-grow: 1; /* Allow content area to grow */
-    display: flex;
-    flex-direction: column;
-}
-.product-card:hover {
-    transform: translateY(-4px) scale(1.005);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-    border-color: #007AFF;
-}
-.product-card.featured {
-    border-color: #007AFF;
-    box-shadow: 0 8px 25px rgba(0, 122, 255, 0.2);
-}
-.product-card h3 {
-    color: #007AFF;
-}
-.product-card p.text-gray-600 { /* This targets the description text */
-    color: #666666;
-    margin-top: 0.5rem;
-    margin-bottom: 1.5rem; /* Add spacing below description */
-}
-.price-display {
-    color: #007AFF; /* Apple blue for prices - This was already correct and remains */
-    font-size: 3rem; /* Adjusted from 2.5rem back to a larger size, slightly less than the initial 3.5rem to be "corporate smaller" but still impactful */
-    font-weight: 700; /* Retains boldness - This was already correct and remains */
-    line-height: 1; /* Tighter line height - This was already correct and remains */
-    margin-bottom: 1rem; /* Space below price - This was already correct and remains */
-}
-.price-display .text-xl.text-gray-500 { /* Suffix style */
-    font-size: 1.25rem; /* Keep suffix slightly larger for readability */
-    color: #888888; /* Softer gray for suffix */
-    font-weight: 500;
-    margin-left: 1.50rem;
-}
+        /* Product Card Styling (adapted for dark theme) */
+        .product-card {
+            background-color: rgba(25, 25, 40, 0.9); /* Dark card background */
+            border-radius: 1rem; /* More rounded */
+            border: 1px solid rgba(70, 70, 90, 0.5); /* Subtle border */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5); /* Deeper, softer shadow */
+            transition: all 0.4s ease-in-out;
+            padding: 2rem; /* Consistent with dashboard p-8 for cards */
+            display: flex;
+            flex-direction: column;
+            /* text-align: center; -- Removed to allow text-left as default or from inner elements */
+            height: 500px; /* Adjusted height for optimal content fit */
+            justify-content: space-between; /* Pushes buttons to bottom */
+            position: relative;
+            z-index: 2;
+        }
+        /* Override alignment for content within product card for text-left as in products.html */
+        .product-card > div {
+            text-align: left; /* Ensure inner content aligns left */
+            align-items: flex-start;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px) scale(1.01); /* More distinct lift and scale */
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7); /* Even deeper shadow on hover */
+            border-color: #A78BFA; /* Purple border on hover */
+        }
+        .product-card.featured {
+            border-color: #A78BFA; /* Purple for featured border */
+            box-shadow: 0 15px 40px rgba(167, 139, 250, 0.4); /* Featured glow */
+        }
+        .product-card h3 {
+            color: #A78BFA; /* Purple for card titles */
+        }
+        .product-card p.text-gray-400 { /* Changed from text-gray-500 to text-gray-400 for consistency with new styling */
+            color: #B0B0B0; /* Lighter gray for descriptive text */
+        }
+        .price-display {
+            color: #93C5FD; /* Light blue for prices */
+        }
         .feature-list {
             list-style: none;
             padding: 0;
             margin: 0;
             text-align: left;
             width: 100%;
-            flex-grow: 1; /* Allow feature list to grow and push button down */
-            padding-bottom: 1rem; /* Space between features and button */
+            margin-bottom: 1.5rem; /* Consistent spacing, allows flex-grow to work */
+            flex-grow: 1; /* Allows list to take available space */
         }
         .feature-list li {
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.6rem; /* Adjusted spacing */
             display: flex;
-            align-items: center; /* Center icon and text vertically */
-            color: #444444;
-            font-size: 0.95rem;
+            align-items: flex-start; /* Align icon with text top */
+            color: #C0C0C0; /* Light gray for features */
+            font-size: 0.95rem; /* Slightly larger text */
         }
         .feature-list li svg {
             margin-right: 0.75rem;
-            color: #34C759; /* Apple green for checkmarks */
-            flex-shrink: 0;
-            width: 20px;
-            height: 20px;
+            color: #34D399; /* Green accent for checkmarks */
+            flex-shrink: 0; /* Prevent icon from shrinking */
+            width: 24px; /* Larger icon */
+            height: 24px;
         }
 
-        /* Admin main sections and card styles */
-        .admin-main-header, .admin-panel-card, .chart-visual, .snapshot-box, .metric-card, .currency-converter-container {
-            background-color: #FFFFFF;
-            border-radius: 0.75rem;
-            border: 1px solid #E0E0E0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            padding: 2rem;
-            margin-bottom: 2rem; /* Consistent spacing between major blocks */
-        }
+        /* Admin specific styles (dark theme adaptation) */
+        /* Adjusted padding and margin for consistent "waterlevel blocks" */
         .admin-main-header {
-            border-top: 6px solid #007AFF;
-            padding: 2.5rem; /* Slightly more padding for header block */
+            background-color: rgba(30, 30, 45, 0.9);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            padding: 2.5rem; /* Adopted from dashboard p-10 */
+            border-radius: 1rem;
+            margin-bottom: 2.5rem; /* Adopted from dashboard gap-8 for sections */
+            border-top: 8px solid #93C5FD; /* Light blue accent bar */
+            color: #E0E0E0;
         }
         .admin-main-header h1 {
-            color: #007AFF;
-            font-weight: 800;
-            font-size: 2.25rem;
+            color: #93C5FD; /* Light blue for main heading */
+            font-weight: 900;
         }
         .admin-main-header p {
-            color: #666666;
-            font-size: 0.95rem;
+            color: #B0B0B0;
         }
 
-        /* Admin navigation scroll */
         .admin-nav-scroll {
-            background-color: #FFFFFF;
-            border-radius: 0.75rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            padding: 1rem 2rem;
-            margin-bottom: 2rem;
+            background-color: rgba(30, 30, 45, 0.9);
+            border-radius: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            padding: 1.2rem 2.5rem; /* Adjusted for p-10 from dashboard header */
+            margin-bottom: 2.5rem; /* Adopted from dashboard gap-8 for sections */
             overflow-x: auto;
             white-space: nowrap;
-            border: 1px solid #E0E0E0;
-            display: flex; /* Ensure horizontal flex layout */
-            justify-content: center; /* Center navigation items */
-            gap: 1.5rem; /* Space between nav items */
+            border: 1px solid rgba(70, 70, 90, 0.5);
         }
         .admin-nav-scroll a {
-            padding: 0.6rem 1.2rem;
-            border-radius: 0.5rem;
-            color: #555555;
-            transition: all 0.2s ease-in-out;
-            font-weight: 500;
-            flex-shrink: 0; /* Prevent items from shrinking */
-        }
-        .admin-nav-scroll a:hover {
-            background-color: #F0F0F0;
-            color: #007AFF;
+            @apply px-4 py-2 rounded-lg text-gray-300 hover:bg-gray-700 font-medium; /* Darker hover, lighter text */
+            transition: all 0.3s ease-in-out;
         }
         .admin-nav-scroll a.active {
-            background-color: #007AFF;
-            color: #FFFFFF;
-            font-weight: 600;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+            @apply bg-indigo-800 text-indigo-200 font-semibold; /* Darker indigo for active */
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3); /* Inner shadow for active state */
         }
 
-        /* General section headings */
-        h2 {
-            color: #1D1D1F;
-            font-size: 1.875rem; /* text-3xl */
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            text-align: center; /* Center section titles */
+        .admin-panel-card {
+            background-color: rgba(25, 25, 40, 0.9);
+            border-radius: 1rem;
+            border: 1px solid rgba(70, 70, 90, 0.5);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            padding: 2.5rem; /* Adopted from dashboard p-10 */
+            margin-bottom: 2.5rem; /* Adopted from dashboard gap-8 for sections */
+            color: #E0E0E0;
         }
-        .admin-panel-card h2 { /* Override for card-specific titles */
-            color: #007AFF;
-            text-align: left;
+        .admin-panel-card h2 {
+            color: #93C5FD; /* Light blue for section titles */
         }
-        .admin-panel-card h3 { /* General subheadings within cards */
-            color: #1D1D1F;
-            font-weight: 600;
-            font-size: 1.25rem; /* text-xl */
-            margin-bottom: 1rem;
+        .admin-panel-card h3 {
+            color: #A78BFA; /* Purple for sub-titles */
+        }
+        .admin-panel-card p.text-gray-600 {
+            color: #B0B0B0;
         }
 
-        /* Form elements */
+        /* Form elements (dark theme) */
         label {
-            color: #555555;
+            color: #C0C0C0;
         }
         input, select {
-            background-color: #F9F9F9;
-            border: 1px solid #CCCCCC;
-            color: #333333;
-            padding: 0.6rem;
-            border-radius: 0.375rem;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            background-color: rgba(45, 45, 70, 0.8);
+            border: 1px solid rgba(80, 80, 100, 0.6);
+            color: #E0E0E0;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
         input::placeholder {
-            color: #AAAAAA;
+            color: #A0A0A0;
         }
         input:focus, select:focus {
-            border-color: #007AFF;
+            border-color: #93C5FD;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.3);
+            box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.5); /* Focus glow */
         }
 
-        /* Table Styling */
+        /* Table Styling (dark theme) */
         .table-header-style {
-            background-color: #F0F0F0;
-            color: #555555;
-            font-weight: 600;
-            border-bottom: 2px solid #E0E0E0;
+            background-color: rgba(45, 45, 70, 0.8);
+            color: #A78BFA; /* Purple for header text */
+            font-weight: 700;
+            border-bottom: 2px solid rgba(100, 100, 120, 0.5);
         }
         .table-row-style {
-            border-bottom: 1px solid #F0F0F0;
+            border-bottom: 1px solid rgba(70, 70, 90, 0.5);
         }
         .table-row-style:last-child {
             border-bottom: none;
         }
         .table-row-style:hover {
-            background-color: #F9F9F9;
+            background-color: rgba(45, 45, 70, 0.5); /* Subtle hover for rows */
         }
         .table-cell-padding {
-            padding: 0.8rem 1rem;
-            color: #333333;
+            padding: 1rem; /* More padding */
+            color: #E0E0E0;
         }
         .table-cell-padding button {
-            padding: 0.4rem 0.8rem;
-            border-radius: 0.375rem;
-            font-size: 0.8rem;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
-        .table-cell-padding button.bg-blue-500 {
-            background-color: #007AFF;
-            color: white;
+        .table-cell-padding button.bg-blue-500 { /* Inspect button */
+            background-color: #60A5FA; /* Brighter blue */
+            color: #1F2937;
         }
         .table-cell-padding button.bg-blue-500:hover {
-            background-color: #005BBF;
-            transform: translateY(-0.5px);
+            background-color: #3B82F6;
+            transform: translateY(-1px);
         }
-        .table-cell-padding button.bg-green-500 {
-            background-color: #34C759;
+        .table-cell-padding button.bg-green-500 { /* Deploy button */
+            background: linear-gradient(90deg, #10B981, #059669); /* Green gradient */
             color: white;
         }
         .table-cell-padding button.bg-green-500:hover {
-            background-color: #2DA84F;
-            transform: translateY(-0.5px);
+            background: linear-gradient(90deg, #059669, #047857);
+            transform: translateY(-1px);
         }
 
-        /* Metrics Cards */
-        .metric-card {
-            background-color: #FFFFFF;
-            border: 1px solid #E0E0E0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        /* Metrics Cards (dark theme) - Adjusted padding to match dashboard */
+        .metric-card { /* New class for reusability */
+            background-color: rgba(35, 35, 55, 0.9); /* Dark background */
+            border: 1px solid rgba(70, 70, 90, 0.5);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
             border-radius: 0.75rem;
-            padding: 1.25rem;
-            color: #333333;
-            /* Added flex properties for internal alignment */
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: flex-start; /* Align content to the left */
+            padding: 1.5rem; /* Consistent with dashboard metric cards */
+            color: #E0E0E0;
         }
         .metric-card h3 {
-            color: #555555;
-            font-weight: 600;
-            font-size: 1rem;
+            color: #93C5FD; /* Light blue for metric titles */
         }
         .metric-card p {
-            color: #007AFF;
-            font-weight: 700;
-            font-size: 2.25rem;
+            color: #A78BFA; /* Purple for metric values */
         }
 
-        /* Chart visual container */
-        .chart-visual {
-            background-color: #FFFFFF;
-            border: 1px solid #E0E0E0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            color: #333333;
-            padding: 2rem;
-            border-radius: 0.75rem;
+
+        /* Chart container - Adjusted padding to match dashboard */
+        .w-full.bg-white.p-6.rounded-lg.shadow-inner.border.border-gray-200.h-96 {
+            background-color: rgba(25, 25, 40, 0.9);
+            border: 1px solid rgba(70, 70, 90, 0.5);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3); /* Inner shadow */
+            color: #E0E0E0;
+            padding: 2.5rem; /* Consistent with dashboard p-10 */
         }
-        .chart-visual h3 {
-            color: #555555;
-            font-weight: 600;
-            font-size: 1.25rem;
+        .w-full.bg-white.p-6.rounded-lg.shadow-inner.border.border-gray-200.h-96 h3 {
+            color: #93C5FD;
         }
 
-        /* Currency converter */
-        .currency-converter-container {
-            background-color: #F9F9F9;
-            border: 1px solid #E0E0E0;
-            color: #555555;
-            border-radius: 0.75rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            padding: 1rem;
+        /* Sector View specific elements (currency converter and dropdown) */
+        .currency-converter-container { /* New class to control this specific block */
+            background-color: rgba(45, 45, 70, 0.8); /* Darker background for this specific block */
+            border: 1px solid rgba(80, 80, 100, 0.6);
+            color: #D0D0D0; /* Light text for general content in this block */
+            border-radius: 0.75rem; /* Consistent rounding */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+            padding: 1.5rem; /* Consistent with dashboard p-6 for smaller blocks */
         }
         .currency-converter-container label {
-            color: #555555;
+            color: #D0D0D0; /* Ensure label text is also light */
         }
+        /* Specific styling for the currency select element itself within the admin portal */
         #sector-currency-select {
-            background-color: #FFFFFF;
-            border: 1px solid #CCCCCC;
-            color: #333333;
-            min-width: 70px;
+            background-color: rgba(60, 60, 90, 0.9); /* Even darker background for the select dropdown */
+            border: 1px solid rgba(100, 100, 120, 0.7);
+            color: #E0E0E0; /* Light text for the selected option */
+            min-width: 80px; /* Ensure dropdown has enough width */
         }
         #sector-currency-select option {
-            background-color: #FFFFFF;
-            color: #333333;
+            background-color: rgba(60, 60, 90, 0.9); /* Dark background for options */
+            color: #E0E0E0; /* Light text for options */
         }
 
+        /* Toggle switch for monthly/annual */
         .toggle-switch {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 200px; /* INCREASE THIS: Changed from 160px to 200px (or more) */
-    height: 30px;
-    margin: 8px 0;
-    border-radius: 15px;
-    background-color: #E0E0E0;
-    cursor: pointer;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-    padding: 0 6px;
-}
-.toggle-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: transparent;
-    transition: .3s;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: #666666;
-}
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 24px;
-    width: 96px; /* INCREASE THIS: Changed from 76px to 96px (or more) */
-    left: 3px;
-    bottom: 3px;
-    background-color: #007AFF;
-    transition: .3s;
-    border-radius: 12px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-input:checked + .slider:before {
-    transform: translateX(100px); /* Adjust this based on new slider:before width. Should be (new_width_of_slider:before + 4px for padding/margin) */
-}
-.slider span {
-    z-index: 1;
-    user-select: none;
-    color: #666666;
-    transition: color 0.3s ease;
-    flex-shrink: 0;
-}
-input:checked + .slider .annual-text {
-    color: white;
-}
-input:not(:checked) + .slider .monthly-text {
-    color: white;
-}
+            position: relative;
+            display: inline-flex; /* Use inline-flex for better control */
+            align-items: center;
+            justify-content: space-between; /* Space out text labels */
+            width: 180px; /* Increased width to prevent overlap */
+            height: 34px;
+            margin: 10px 0;
+            border-radius: 17px;
+            background-color: rgba(70, 70, 90, 0.8); /* Dark background */
+            cursor: pointer;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3), 0 1px 0 rgba(255,255,255,0.05);
+            padding: 0 8px; /* Added padding here to control text spacing */
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: transparent;
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 17px;
+            display: flex; /* Use flex for text alignment */
+            align-items: center;
+            justify-content: space-between; /* Distribute text labels */
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #C0C0C0;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 85px; /* Adjusted width for slider tab */
+            left: 4px;
+            bottom: 4px;
+            background: linear-gradient(45deg, #60A5FA, #93C5FD); /* Blue gradient for toggle handle */
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 13px; /* Half of height for rounded shape */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        input:checked + .slider {
+            background-color: transparent;
+        }
+        input:focus + .slider {
+            box-shadow: 0 0 1px #93C5FD;
+        }
+        /* Adjusted translation for wider switch */
+        input:checked + .slider:before {
+            -webkit-transform: translateX(88px);
+            -ms-transform: translateX(88px);
+            transform: translateX(88px);
+        }
+        .slider span {
+            z-index: 1; /* Ensure text is above slider */
+            user-select: none;
+            color: #C0C0C0; /* Default text color */
+            transition: color 0.3s ease;
+            flex-shrink: 0; /* Prevent text from shrinking */
+        }
+        /* Monthly text is active when unchecked, annual when checked */
+        .slider .annual-text {
+            margin-right: 5px; /* Adjust spacing between text labels */
+        }
+        .slider .monthly-text {
+            margin-left: 5px; /* Adjust spacing between text labels */
+        }
+        /* Color logic for toggle text based on checked state to match screenshot */
+        input:checked + .slider .annual-text { /* When checked, annual is active (white) */
+            color: white;
+        }
+        input:checked + .slider .monthly-text { /* When checked, monthly is inactive (gray) */
+            color: #C0C0C0;
+        }
+        input:not(:checked) + .slider .annual-text { /* When not checked, annual is inactive (gray) */
+            color: #C0C0C0;
+        }
+        input:not(:checked) + .slider .monthly-text { /* When not checked, monthly is active (white) */
+            color: white;
+        }
 
 
         /* Footer Styling */
         footer {
-            background-color: #FFFFFF;
-            border-top: 1px solid #E0E0E0;
-            color: #888888;
-            margin-top: auto;
-            padding: 2rem;
+            background-color: rgba(20, 20, 35, 0.9);
+            border-top: 1px solid rgba(70, 70, 90, 0.5);
+            color: #A0A0A0; /* Slightly darker gray for footer text */
+            margin-top: auto; /* Push footer to the bottom */
         }
         .footer-logo-text {
-            color: #007AFF;
+            color: #A78BFA;
             font-weight: 800;
         }
         footer a {
-            color: #666666;
-            transition: color 0.2s ease;
+            color: #C0C0C0;
+            transition: color 0.3s ease;
         }
         footer a:hover {
-            color: #007AFF;
+            color: #93C5FD;
         }
 
         /* Specific classes for status messages */
-        #adminStatus.text-sm.italic {
-            color: #666666;
+        #adminStatus.text-sm.italic { /* Simplified to apply to base status */
+            color: #B0B0B0; /* Light gray for general status */
         }
         #adminStatus.text-red-500 {
-            color: #FF3B30;
+            color: #F87171; /* Lighter red for errors */
         }
         #adminStatus.text-green-500 {
-            color: #34C759;
+            color: #6EE7B7; /* Lighter green for success */
         }
        
         /* Clear data button */
         button.text-sm.text-red-600 {
-            color: #FF3B30;
+            color: #EF4444; /* Brighter red for action */
         }
         button.text-sm.text-red-600:hover {
-            color: #D62D20;
+            color: #DC2626;
         }
 
-        /* Adjust Chart.js colors for light theme */
+        /* Adjust Chart.js colors for dark theme */
         .chartjs-render-monitor {
-            background-color: transparent !important;
+            background-color: transparent !important; /* Ensure canvas background is transparent */
         }
         /* Added for PayPal Error Message Display */
         .paypal-error-message {
             position: fixed;
             top: 20px;
             right: 20px;
-            background-color: #FFF2F0;
-            color: #CC3333;
-            padding: 12px 18px;
-            border-radius: 6px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            background-color: #ffdddd;
+            color: #d8000c;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             z-index: 1000;
-            font-size: 0.85rem;
-            max-width: 280px;
+            font-size: 0.9rem;
+            max-width: 300px;
             text-align: center;
             animation: fadeInOut 5s forwards;
         }
-        /* Success message styling */
+        /* Success message styling, extends paypal-error-message */
         .paypal-success-message {
-            background-color: #E6F7ED;
-            color: #2D8C4C;
+            background-color: #d4edda;
+            color: #155724;
         }
 
         @keyframes fadeInOut {
-            0% { opacity: 0; transform: translateY(-10px); }
+            0% { opacity: 0; transform: translateY(-20px); }
             10% { opacity: 1; transform: translateY(0); }
             90% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(-10px); }
+            100% { opacity: 0; transform: translateY(-20px); }
         }
 
         /* Styles for brand buttons (new) */
         .brand-button {
             display: inline-flex;
             align-items: center;
-            padding: 0.6rem 1.2rem;
-            margin: 0.4rem;
-            background-color: #F0F0F0;
-            color: #007AFF;
-            border: 1px solid #DDDDDD;
-            border-radius: 9999px;
-            font-weight: 500;
-            font-size: 0.85rem;
+            padding: 0.75rem 1.5rem;
+            margin: 0.5rem;
+            background-color: rgba(60, 60, 90, 0.7);
+            color: #A78BFA; /* Purple text */
+            border: 1px solid rgba(139, 92, 246, 0.5); /* Purple border */
+            border-radius: 9999px; /* Pill shape */
+            font-weight: 600;
+            font-size: 0.9rem;
             cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            flex-grow: 1;
-            justify-content: center;
-            min-width: 100px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            flex-grow: 1; /* Allow buttons to grow and fill space */
+            justify-content: center; /* Center text in button */
+            min-width: 120px; /* Ensure a minimum width for buttons */
         }
         .brand-button:hover {
-            background-color: #E8E8E8;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+            background-color: rgba(139, 92, 246, 0.2); /* Lighter purple background on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
         }
         .brand-button.active {
-            background-color: #007AFF;
+            background-color: #A78BFA; /* Solid purple when active */
             color: white;
-            box-shadow: 0 2px 5px rgba(0, 122, 255, 0.2);
-            transform: translateY(0);
+            box-shadow: 0 4px 10px rgba(139, 92, 246, 0.6);
+            transform: translateY(-1px);
         }
         .brand-button span {
-            margin-right: 0.4rem;
+            margin-right: 0.5rem; /* Space between glyph and text */
         }
 
         /* Styles for snapshot boxes */
         .snapshot-box {
-            background-color: #FFFFFF;
-            border-radius: 0.75rem;
-            border: 1px solid #E0E0E0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            padding: 2rem;
-            margin-bottom: 2rem;
-            color: #333333;
+            background-color: rgba(25, 25, 40, 0.9);
+            border-radius: 1rem;
+            border: 1px solid rgba(70, 70, 90, 0.5);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            color: #E0E0E0;
         }
         .snapshot-box h3 {
-            color: #007AFF;
+            color: #93C5FD;
             font-weight: 700;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1.5rem;
         }
         .snapshot-box h4 {
-            color: #555555;
+            color: #A78BFA;
             font-weight: 600;
-            margin-top: 1.25rem;
-            margin-bottom: 0.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
         }
         .snapshot-box ul {
             list-style: none;
             padding: 0;
         }
         .snapshot-box ul li {
-            margin-bottom: 0.3rem;
-            font-size: 0.9rem;
-            color: #444444;
+            margin-bottom: 0.4rem;
+            font-size: 0.95rem;
+            color: #C0C0C0;
         }
         .snapshot-box .close-button {
             float: right;
             background: none;
             border: none;
-            font-size: 1.4rem;
-            color: #FF3B30;
+            font-size: 1.5rem;
+            color: #F87171; /* Red close icon */
             cursor: pointer;
-            transition: color 0.2s ease;
+            transition: color 0.3s ease;
         }
         .snapshot-box .close-button:hover {
-            color: #D62D20;
+            color: #EF4444;
         }
 
         /* Styles for initial loading message */
@@ -1361,9 +583,10 @@ input:not(:checked) + .slider .monthly-text {
             border-radius: 0.5rem;
             z-index: 9999;
             font-size: 1.2rem;
-            box-shadow: 0 0 15px rgba(0, 122, 255, 0.5);
-            border: 1px solid #007AFF;
+            box-shadow: 0 0 15px rgba(147, 197, 253, 0.5); /* Blue glow */
+            border: 1px solid #93C5FD;
             text-align: center;
+            /* Ensure it's block initially so the user sees it if JS fails early */
             display: block;
         }
     </style>
@@ -1373,18 +596,22 @@ input:not(:checked) + .slider .monthly-text {
     <!-- Loading message to help diagnose blank pages -->
     <div id="loading-message">Loading FAA.ZONE™ Admin Portal...</div>
 
-    <header class="py-4 px-8">
-        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
-            <a href="index.html" class="text-2xl font-bold">🦍 FAA.ZONE™</a>
-            <nav class="flex flex-wrap justify-center md:justify-end items-center space-x-4 md:space-x-6 text-sm">
-                <a href="/" class="hover:bg-gray-100">Home</a>
-                <a href="/pricing" class="hover:bg-gray-100">Pricing & Plans 💰</a>
-                <a href="/products" class="hover:bg-gray-100">Products</a>
-                <a href="/about" class="hover:bg-gray-100">About Us ℹ️</a>
-                <a href="/contact" class="hover:bg-gray-100">Contact Us 📧</a>
-            </nav>
-        </div>
-    </header>
+<header class="py-4 px-8">
+    <div class="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
+        <a href="index.html" class="text-2xl font-bold">🦍 FAA.ZONE™</a>
+        <nav class="flex flex-wrap justify-center md:justify-end items-center space-x-4 md:space-x-6 text-sm">
+            <a href="/">Home</a>
+            <a href="/pricing">Pricing & Plans 💰</a>
+            <a href="/products">Products</a>
+            <a href="/about">About Us ℹ️</a>
+            <a href="/contact">Contact Us 📧</a>
+            <!-- New Accounting button -->
+            <a href="https://seedwave.faa.zone/admin_panel_xero.html" class="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700 transition-colors duration-200">Accounting</a>
+        </nav>
+        <a href="https://console.firebase.google.com/project/faa-nexus/overview" class="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700 transition-colors duration-200">📊 FAA™ Nexus</a>
+        </nav>
+    </div>
+</header>
 
     <main class="main-content p-6 md:p-12 flex-grow">
         <header class="admin-main-header">
@@ -1402,7 +629,7 @@ input:not(:checked) + .slider .monthly-text {
 
         <section id="add-brand-section" class="admin-panel-card space-y-8">
             <h2 class="text-2xl font-bold">Add New Brand & Subnodes</h2>
-            <p class="text-gray-600">Manually add new core brands and their associated subnodes to the FAA.ZONE ecosystem. This updates client-side data and pushes to backend.</p>
+            <p>Manually add new core brands and their associated subnodes to the FAA.ZONE ecosystem. This updates client-side data and pushes to backend.</p>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div>
                     <label class="text-sm block font-medium mb-1">📂 Sector</label>
@@ -1432,7 +659,7 @@ input:not(:checked) + .slider .monthly-text {
 
         <section id="global-index-section" class="admin-panel-card hidden">
             <h2 class="text-2xl font-bold mb-4">📊 FAA.ZONE Global Index — Core Brands Overview</h2>
-            <p class="mb-4 text-gray-600">A comprehensive list of all core brands within the FAA.ZONE ecosystem, including backend-synced data and client-side additions.</p>
+            <p class="mb-4">A comprehensive list of all core brands within the FAA.ZONE ecosystem, including backend-synced data and client-side additions.</p>
             <div class="overflow-x-auto snapshot-box">
                 <table class="min-w-full text-sm text-left">
                     <thead class="table-header-style">
@@ -1448,41 +675,41 @@ input:not(:checked) + .slider .monthly-text {
                             <th class="px-4 py-2">Deploy</th>
                         </tr>
                     </thead>
-                    <tbody class="text-gray-700" id="faaZoneIndexTableBody"></tbody>
+                    <tbody class="text-gray-200" id="faaZoneIndexTableBody"></tbody>
                 </table>
             </div>
         </section>
 
         <section id="metrics-section" class="admin-panel-card hidden">
             <h2 class="text-2xl font-bold mb-6">📈 Real-Time FAA Pulse Metrics</h2>
-            <p class="mb-8 text-gray-600">Live monitoring of key operational metrics across the ecosystem.</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+            <p class="mb-8">Live monitoring of key operational metrics across the ecosystem.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
                 <div class="metric-card">
-                    <h3 class="font-semibold text-gray-600">🧠 Active Nodes</h3>
-                    <p class="mt-1 text-3xl font-bold" id="activeNodesCount">0</p>
+                    <h3 class="font-semibold">🧠 Active Nodes</h3>
+                    <p class="text-3xl font-bold mt-2" id="activeNodesCount">0</p>
                 </div>
                 <div class="metric-card">
-                    <h3 class="font-semibold text-gray-600">🔐 Licenses Active</h3>
-                    <p class="mt-1 text-3xl font-bold" id="licensesActiveCount">0</p>
+                    <h3 class="font-semibold">🔐 Licenses Active</h3>
+                    <p class="text-3xl font-bold mt-2" id="licensesActiveCount">0</p>
                 </div>
                 <div class="metric-card">
-                    <h3 class="font-semibold text-gray-600">💾 Vault Deployments</h3>
-                    <p class="mt-1 text-3xl font-bold" id="vaultDeploymentsCount">0</p>
+                    <h3 class="font-semibold">💾 Vault Deployments</h3>
+                    <p class="text-3xl font-bold mt-2" id="vaultDeploymentsCount">0</p>
                 </div>
                 <div class="metric-card">
-                    <h3 class="font-semibold text-gray-600">📥 Sync Logs</h3>
-                    <p class="mt-1 text-3xl font-bold" id="syncLogsCount">0</p>
+                    <h3 class="font-semibold">📥 Sync Logs</h3>
+                    <p class="text-3xl font-bold mt-2" id="syncLogsCount">0</p>
                 </div>
             </div>
-            <div class="chart-visual w-full p-8 rounded-lg border h-96">
-                <h3 class="text-xl font-bold mb-4 text-gray-600">FAA Scroll Pulse Monitor</h3>
+            <div class="w-full bg-white p-8 rounded-lg shadow-inner border h-96">
+                <h3 class="text-xl font-bold mb-4">FAA Scroll Pulse Monitor</h3>
                 <canvas id="pulseChart" class="w-full h-full"></canvas>
             </div>
         </section>
 
         <section id="sector-view-section" class="admin-panel-card hidden">
             <h2 class="text-2xl font-bold mb-6">🔍 Sector-Specific View & Snapshots</h2>
-            <p class="mb-8 text-gray-600">Select a sector to view and manage its brands and subnodes, presented with the chosen product card aesthetic.</p>
+            <p class="mb-8">Select a sector to view and manage its brands and subnodes, presented with the chosen product card aesthetic.</p>
 
             <div class="mb-8 p-6 rounded-lg flex items-center justify-between mx-auto max-w-sm currency-converter-container">
                 <label for="sector-currency-select" class="font-medium text-sm">Display prices in:</label>
@@ -1494,7 +721,7 @@ input:not(:checked) + .slider .monthly-text {
                 </select>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-10">
                 <div class="col-span-full">
                     <label class="text-sm block font-medium mb-1">Select Sector:</label>
                     <select id="sectorViewSelect" class="w-full border rounded p-2"></select>
@@ -1502,7 +729,7 @@ input:not(:checked) + .slider .monthly-text {
             </div>
            
             <div id="dynamicSectorDashboard" class="space-y-10">
-                <p class="text-gray-600 col-span-full text-center mt-10">Select a sector to view its detailed dashboard.</p>
+                <p class="text-gray-400 col-span-full text-center mt-10">Select a sector to view its detailed dashboard.</p>
             </div>
             <!-- Container for the brand-specific detailed snapshot -->
             <div id="brandDetailsContainer" class="mt-8"></div>
@@ -1510,15 +737,15 @@ input:not(:checked) + .slider .monthly-text {
 
     </main>
 
-    <footer class="text-center py-8 mt-16">
+    <footer class="enhanced-footer text-center py-10 mt-16">
         <div class="container mx-auto px-6">
             <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
                 <div class="text-lg footer-logo-text">FAA.ZONE™</div>
                 <p class="text-sm">ScrollGrid · PulseTrade Certified · TreatyMesh Validated</p>
                 <div class="flex space-x-4">
-                    <a href="#" class="text-gray-600 hover:text-gray-800 transition-colors">Privacy</a>
-                    <a href="#" class="text-gray-600 hover:text-gray-800 transition-colors">Terms</a>
-                    <a href="#" class="text-gray-600 hover:text-gray-800 transition-colors">Contact</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Terms</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Contact</a>
                 </div>
             </div>
             <p class="text-xs mt-6">© 2025 Fruitful Holdings (Pty) Ltd. All rights reserved.</p>
@@ -1526,7 +753,8 @@ input:not(:checked) + .slider .monthly-text {
     </footer>
 
     <!-- PayPal SDK (client-id now populated from your provided value) -->
-    <!-- The onError function is added to catch SDK loading errors and show a user-friendly message. -->
+    <!-- Note: AY-WQUCahAP77PZrkYkct446AM2Z9x8q-BNBHLNJY is a sandbox (test) client ID. -->
+    <!-- For live payments, you would use your live PayPal Client ID. -->
     <script src="https://www.paypal.com/sdk/js?client-id=BAAThS_oBJJ22PM5R1nVJpXoSl9c3si7TJ3ICJBTht_PAFcRprbXkTv4_wqrG37kkAjUcv3tKBOxnUGQ98&currency=ZAR&vault=true&intent=subscription" onerror="document.getElementById('loading-message').textContent='Error loading PayPal SDK. Check network.'; console.error('PayPal SDK failed to load.');"></script>
 
     <script type="module">
@@ -1940,7 +1168,7 @@ input:not(:checked) + .slider .monthly-text {
                 { name: 'TrendCore', subNodes: ['SyncLoop', 'PulseEcho', 'WearClaim', 'DropTrack', 'CratePanel', 'TrackRoot'], details: {} }
             ],
             "gaming": [
-                { name: 'GameForge', subNodes: ['RenderNode'], details: {} },
+                { name: 'GameForge', subNodes: ['RenderNode', 'MatchSync'], details: {} },
                 { name: 'PlayNexus', subNodes: ['QuestHub'], details: {} }
             ],
             "health": [
@@ -2167,7 +1395,7 @@ input:not(:checked) + .slider .monthly-text {
                         },
                         realTimeMetrics: {
                             currentPulseActivity: "55,000 pulses/sec",
-                            dataVolumeProcessed: "40.5 TB",
+                            slice: "40.5 TB",
                             latencyAverage: "70 ms"
                         },
                         vaultTraceEntries: [
@@ -2466,7 +1694,7 @@ input:not(:checked) + .slider .monthly-text {
             if (selectedSectorKey) {
                 displaySectorSpecificProducts(selectedSectorKey);
             } else {
-                document.getElementById('dynamicSectorDashboard').innerHTML = '<p class="text-gray-600 col-span-full text-center mt-8">Select a sector to view its detailed dashboard.</p>';
+                document.getElementById('dynamicSectorDashboard').innerHTML = '<p class="text-gray-400 col-span-full text-center mt-8">Select a sector to view its detailed dashboard.</p>';
             }
         }
 
@@ -2484,12 +1712,12 @@ input:not(:checked) + .slider .monthly-text {
 
             if (!brandName || subnodesArray.length === 0) {
                 adminStatus.textContent = "⚠️ Please fill in both brand name and at least one subnode.";
-                addBrandBtn.classList.remove('cta-button'); /* Remove cta-button to allow error style to apply */
+                addBrandBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
                 addBrandBtn.classList.add('bg-red-500', 'hover:bg-red-600');
                 setTimeout(() => {
                     adminStatus.textContent = "Ready to receive input.";
                     addBrandBtn.classList.remove('bg-red-500', 'hover:bg-red-600');
-                    addBrandBtn.classList.add('cta-button'); /* Add cta-button back */
+                    addBrandBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
                 }, 3000);
                 return;
             }
@@ -2514,7 +1742,7 @@ input:not(:checked) + .slider .monthly-text {
                     adminStatus.textContent = `✅ Added ${brandName} to ${sectorList[sectorKey]} (Client-side & simulated Backend).`;
                     adminStatus.classList.remove('text-red-500');
                     adminStatus.classList.add('text-green-500'); // Add success color
-                    addBrandBtn.classList.remove('cta-button'); /* Remove cta-button to allow success style to apply */
+                    addBrandBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
                     addBrandBtn.classList.add('bg-green-500', 'hover:bg-green-600');
                     addBrandBtn.innerHTML = '✔️ Added!';
 
@@ -2535,7 +1763,7 @@ input:not(:checked) + .slider .monthly-text {
                 adminStatus.textContent = "❌ Failed to save. Check console.";
                 adminStatus.classList.remove('text-green-500'); // Remove success color
                 adminStatus.classList.add('text-red-500'); // Add error color
-                    addBrandBtn.classList.remove('cta-button'); /* Remove cta-button to allow error style to apply */
+                addBrandBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
                 addBrandBtn.classList.add('bg-red-500', 'hover:bg-red-600');
                 addBrandBtn.innerHTML = 'Failed!';
             })
@@ -2544,7 +1772,7 @@ input:not(:checked) + .slider .monthly-text {
                     adminStatus.textContent = "Ready to receive input.";
                     adminStatus.classList.remove('text-green-500', 'text-red-500'); // Reset status color
                     addBrandBtn.classList.remove('bg-green-500', 'hover:bg-green-600', 'bg-red-500', 'hover:bg-red-600');
-                    addBrandBtn.classList.add('cta-button'); /* Add cta-button back */
+                    addBrandBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
                     addBrandBtn.innerHTML = '➕ Add Brand';
                 }, 3000);
             });
@@ -2559,7 +1787,7 @@ input:not(:checked) + .slider .monthly-text {
             renderFaaZoneIndexTable();
             calculateGlobalMetrics();
             // Clear brand details container as well when data is cleared
-            document.getElementById('dynamicSectorDashboard').innerHTML = '<p class="text-gray-600 col-span-full text-center mt-8">Select a sector to view its detailed dashboard.</p>';
+            document.getElementById('dynamicSectorDashboard').innerHTML = '<p class="text-gray-400 col-span-full text-center mt-8">Select a sector to view its detailed dashboard.</p>';
             document.getElementById('brandDetailsContainer').innerHTML = ''; // Clear brand snapshot
 
             const adminStatus = document.getElementById("adminStatus");
@@ -2599,7 +1827,7 @@ input:not(:checked) + .slider .monthly-text {
                 convertedPrice = window.convertCurrency(newPrice, BASE_CURRENCY, currentCurrency); // Use the exposed function
             }
 
-            priceSpan.innerHTML = `${window.getCurrencySymbol(currentCurrency)}${convertedPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} <span class="text-xl text-gray-500">${suffix}</span>`;
+            priceSpan.innerHTML = `${window.getCurrencySymbol(currentCurrency)}${convertedPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} <span class="text-xl text-gray-400">${suffix}</span>`;
 
             // Update the PayPal button's data attributes
             const buyButton = cardElement.querySelector('.buy-now-button');
@@ -2730,7 +1958,7 @@ input:not(:checked) + .slider .monthly-text {
             return mockData;
         }
 
-// --- Display Brand Details (Snapshot) ---
+        // --- Display Brand Details (Snapshot) ---
         function displayBrandDetails(sectorKey, brandName, clickedButton) {
             const container = document.getElementById('brandDetailsContainer');
             if (!container) {
@@ -2778,29 +2006,6 @@ input:not(:checked) + .slider .monthly-text {
             const currentCurrency = document.getElementById('sector-currency-select').value;
             const currencySymbol = window.getCurrencySymbol(currentCurrency); // Use exposed function
 
-            // *** START OF CRITICAL CHANGE FOR PRICING CONSISTENCY ***
-            // Retrieve actual pricing from FAA_ZONE_INDEX_SUMMARY_DATA
-            const sectorPricingSummary = FAA_ZONE_INDEX_SUMMARY_DATA[sectorKey];
-            const baseMonthlyFee = parseFloat(String(sectorPricingSummary.monthlyFee).replace('$', '').replace(',', ''));
-            const annualDiscountRate = 0.15;
-
-            const snapshotPricingTiers = [
-                {
-                    name: "Starter Node",
-                    baseMonthlyAmount: baseMonthlyFee,
-                },
-                {
-                    name: "Pro Grid",
-                    baseMonthlyAmount: baseMonthlyFee * 2.5,
-                },
-                {
-                    name: "Enterprise Omni-Sync",
-                    baseMonthlyAmount: baseMonthlyFee * 5,
-                }
-            ];
-            // *** END OF CRITICAL CHANGE FOR PRICING CONSISTENCY ***
-
-
             let snapshotHtml = `
                 <div class="admin-panel-card mt-6">
                     <div class="flex items-center justify-between mb-6">
@@ -2814,49 +2019,59 @@ input:not(:checked) + .slider .monthly-text {
                         <!-- Core Protocol Overview -->
                         <div class="lg:col-span-2 admin-panel-card !p-6">
                             <h4 class="text-xl font-bold mb-4">${brandSnapshotData.brandName} Core Protocol Overview</h4>
-                            <p class="text-gray-600 mb-4">
+                            <p class="text-gray-400 mb-4">
                                 ${brandSnapshotData.brandName}™ is ${brandSnapshotData.intro}
                             </p>
 
                             <h5 class="text-lg font-semibold mb-2 mt-4">🎛️ Key Features</h5>
-                            <ul class="list-disc list-inside text-gray-700 ml-4 mb-6">
+                            <ul class="list-disc list-inside text-gray-300 ml-4 mb-6">
                                 ${brandSnapshotData.keyFeatures.map(f => `<li>${f}</li>`).join('')}
                             </ul>
 
                             <h5 class="text-lg font-semibold mb-2 mt-4">📌 Subnodes</h5>
-                            <ul class="list-disc list-inside text-gray-700 ml-4 mb-6">
+                            <ul class="list-disc list-inside text-gray-300 ml-4 mb-6">
                                 ${brandSnapshotData.subnodes.map(n => `<li>${n}</li>`).join('')}
                             </ul>
 
                             <h5 class="text-lg font-semibold mb-2 mt-4">💳 Pricing Structure (Derived from Sector Tier Pricing)</h5>
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-                                ${snapshotPricingTiers.map(tier => { // Use the newly derived snapshotPricingTiers
-                                    let displayMonthlyPrice = tier.baseMonthlyAmount;
-                                    let displayAnnualPrice = tier.baseMonthlyAmount * 12 * (1 - annualDiscountRate);
+                                ${brandSnapshotData.pricing.map(tier => {
+                                    let displayMonthlyPrice = tier.monthlyAmount;
+                                    let displayAnnualPrice = tier.annualAmount;
                                     let priceSuffix = "/ month";
                                     let displayPrice = displayMonthlyPrice;
 
-                                    // Check the state of the main toggle switch on the page
-                                    const toggleCheckbox = document.querySelector('.toggle-switch input[type="checkbox"]');
-                                    let isAnnualChecked = toggleCheckbox ? toggleCheckbox.checked : false;
+                                    // Apply currency conversion
+                                    if (currentCurrency !== BASE_CURRENCY && exchangeRates[currentCurrency]) {
+                                        displayMonthlyPrice = window.convertCurrency(displayMonthlyPrice, BASE_CURRENCY, currentCurrency); // Use exposed function
+                                        displayAnnualPrice = window.convertCurrency(displayAnnualPrice, BASE_CURRENCY, currentCurrency); // Use exposed function
+                                        displayPrice = displayMonthlyPrice; // Default to monthly on snapshot
+                                    }
+
+                                    // Check the toggle state of the first product card if available
+                                    const firstProductCard = document.querySelector('#dynamicSectorDashboard .product-card');
+                                    let isAnnualChecked = false;
+                                    if (firstProductCard) {
+                                        const toggleCheckbox = firstProductCard.querySelector('.toggle-switch input[type="checkbox"]');
+                                        if (toggleCheckbox) {
+                                            isAnnualChecked = toggleCheckbox.checked;
+                                        }
+                                    }
 
                                     if (isAnnualChecked) {
                                         displayPrice = displayAnnualPrice;
                                         priceSuffix = "/ year";
                                     }
 
-                                    // Apply currency conversion here as well
-                                    let convertedPrice = window.convertCurrency(displayPrice, BASE_CURRENCY, currentCurrency);
-
                                     return `
-                                        <div class="bg-gray-50 p-4 rounded-md border border-gray-200">
-                                            <h6 class="font-semibold text-blue-600">${tier.name}</h6>
-                                            <p class="text-xl font-bold text-blue-700 mt-1">
-                                                ${currencySymbol}${convertedPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} <span class="text-sm text-gray-500">${priceSuffix}</span>
+                                        <div class="bg-gray-800 p-4 rounded-md border border-gray-700">
+                                            <h6 class="font-semibold text-blue-300">${tier.name}</h6>
+                                            <p class="text-xl font-bold text-blue-400 mt-1">
+                                                ${currencySymbol}${displayPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} <span class="text-sm text-gray-400">${priceSuffix}</span>
                                             </p>
-                                            <p class="text-gray-600 mt-2 text-xs">${SECTOR_TIER_PRICING[tier.name.replace(/\sNode|\sGrid|\sOmni-Sync/,'')].description}</p>
-                                            <ul class="text-xs text-gray-600 list-disc list-inside ml-3 mt-2">
-                                                ${SECTOR_TIER_PRICING[tier.name.replace(/\sNode|\sGrid|\sOmni-Sync/,'')].features.map(b => `<li>${b}</li>`).join('')}
+                                            <p class="text-gray-400 mt-2 text-xs">${tier.description}</p>
+                                            <ul class="text-xs text-gray-500 list-disc list-inside ml-3 mt-2">
+                                                ${tier.benefits.map(b => `<li>${b}</li>`).join('')}
                                             </ul>
                                         </div>
                                     `;
@@ -2867,26 +2082,26 @@ input:not(:checked) + .slider .monthly-text {
                         <!-- FAA Data & Compliance -->
                         <div class="lg:col-span-1 admin-panel-card !p-6 space-y-4">
                             <h4 class="text-xl font-bold mb-4">🔗 FAA Data & Compliance</h4>
-                            <ul class="list-none p-0 m-0 space-y-2 text-gray-700">
-                                <li><span class="font-semibold text-blue-600">Product ID:</span> <code>${brandSnapshotData.metadata.productId}</code></li>
-                                <li><span class="font-semibold text-blue-600">VaultID:</span> <code>${brandSnapshotData.metadata.vaultId}</code></li>
-                                <li><span class="font-semibold text-blue-600">Signal Echo Layer:</span> <code>${brandSnapshotData.metadata.signalEchoLayer}</code></li>
-                                <li><span class="font-semibold text-blue-600">Deployment Zone:</span> <code>${brandSnapshotData.metadata.deploymentZone}</code></li>
-                                <li><span class="font-semibold text-blue-600">Security Rating:</span> <span class="font-bold text-green-600">${brandSnapshotData.metadata.securityRating}</span></li>
-                                <li><span class="font-semibold text-blue-600">Active Nodes:</span> <code>${brandSnapshotData.metadata.activeNodes.toLocaleString()}</code></li>
-                                <li><span class="font-semibold text-blue-600">Last Audit:</span> <code>${brandSnapshotData.metadata.lastSync}</code></li>
-                                <li><span class="font-semibold text-blue-600">Compliance Status:</span> <span class="font-bold text-green-600">${brandSnapshotData.metadata.complianceStatus}</span></li>
+                            <ul class="list-none p-0 m-0 space-y-2 text-gray-300">
+                                <li><span class="font-semibold text-blue-300">Product ID:</span> <code>${brandSnapshotData.metadata.productId}</code></li>
+                                <li><span class="font-semibold text-blue-300">VaultID:</span> <code>${brandSnapshotData.metadata.vaultId}</code></li>
+                                <li><span class="font-semibold text-blue-300">Signal Echo Layer:</span> <code>${brandSnapshotData.metadata.signalEchoLayer}</code></li>
+                                <li><span class="font-semibold text-blue-300">Deployment Zone:</span> <code>${brandSnapshotData.metadata.deploymentZone}</code></li>
+                                <li><span class="font-semibold text-blue-300">Security Rating:</span> <span class="font-bold text-green-500">${brandSnapshotData.metadata.securityRating}</span></li>
+                                <li><span class="font-semibold text-blue-300">Active Nodes:</span> <code>${brandSnapshotData.metadata.activeNodes.toLocaleString()}</code></li>
+                                <li><span class="font-semibold text-blue-300">Last Audit:</span> <code>${brandSnapshotData.metadata.lastSync}</code></li>
+                                <li><span class="font-semibold text-blue-300">Compliance Status:</span> <span class="font-bold text-green-500">${brandSnapshotData.metadata.complianceStatus}</span></li>
                             </ul>
 
                             <h5 class="text-lg font-semibold mb-2 mt-4">📊 Real-Time Metrics</h5>
-                            <ul class="list-none p-0 m-0 space-y-2 text-gray-700">
-                                <li><span class="font-semibold text-blue-600">Current Pulse Activity:</span> ${brandSnapshotData.realTimeMetrics.currentPulseActivity}</li>
-                                <li><span class="font-semibold text-blue-600">Data Volume Processed (24h):</span> ${brandSnapshotData.realTimeMetrics.dataVolumeProcessed}</li>
-                                <li><span class="font-semibold text-blue-600">Latency Average:</span> ${brandSnapshotData.realTimeMetrics.latencyAverage}</li>
+                            <ul class="list-none p-0 m-0 space-y-2 text-gray-300">
+                                <li><span class="font-semibold text-blue-300">Current Pulse Activity:</span> ${brandSnapshotData.realTimeMetrics.currentPulseActivity}</li>
+                                <li><span class="font-semibold text-blue-300">Data Volume Processed (24h):</span> ${brandSnapshotData.realTimeMetrics.dataVolumeProcessed}</li>
+                                <li><span class="font-semibold text-blue-300">Latency Average:</span> ${brandSnapshotData.realTimeMetrics.latencyAverage}</li>
                             </ul>
 
                             <h5 class="text-lg font-semibold mb-2 mt-4">🧾 VaultTrace™ Ledger Entries</h5>
-                            <ul class="list-disc list-inside text-gray-700 ml-4 space-y-1">
+                            <ul class="list-disc list-inside text-gray-300 ml-4 space-y-1">
                                 ${brandSnapshotData.vaultTraceEntries.map(entry => `<li><code>${entry}</code></li>`).join('')}
                             </ul>
                         </div>
@@ -2928,11 +2143,11 @@ input:not(:checked) + .slider .monthly-text {
 
 
             if (!sectorDataForPricing || allBrandsForDisplay.length === 0) {
-                container.innerHTML = `<p class="text-gray-600 col-span-full text-center mt-8">No detailed data or brands available for this sector yet.</p>`;
+                container.innerHTML = `<p class="text-gray-400 col-span-full text-center mt-8">No detailed data or brands available for this sector yet.</p>`;
                 return;
             }
 
-            // Section for Pricing Tiers
+            // Section for Pricing Tiers (remains mostly same)
             const baseMonthlyFee = parseFloat(String(sectorDataForPricing.monthlyFee).replace('$', '').replace(',', ''));
             const annualDiscountRate = 0.15; // 15% discount for annual
 
@@ -2952,7 +2167,7 @@ input:not(:checked) + .slider .monthly-text {
                 {
                     name: `${sectorDispName.replace(/<.*?>/g, '')} Enterprise Package`,
                     monthlyAmount: (baseMonthlyFee * 5),
-                    annualAmount: (baseMonthlyFee * 5 * 12 * (1 - annualDiscountRate)),
+                    annualAmount: (baseMonthlyFee * 5 * 12 * (1 - annualDiscountRate)), // Corrected typo here, was 5*5*12
                     tier: "Enterprise"
                 }
             ];
@@ -2967,25 +2182,25 @@ input:not(:checked) + .slider .monthly-text {
                         <div class="product-card p-6 md:p-8 ${product.featured ? 'featured' : ''}">
                             <div>
                                 <h3 class="text-2xl font-bold mb-4">${product.name}</h3>
-                                <p class="text-gray-600 mb-6">Unlock powerful features for ${product.tier} success.</p>
+                                <p class="text-gray-400 mb-6">Unlock powerful features for ${product.tier} success.</p>
 
                                 <!-- Toggle Switch for Monthly/Annual -->
                                 <label class="toggle-switch">
                                     <input type="checkbox" onchange="window.toggleSubscriptionType(this.closest('.product-card'), this.checked)">
                                     <span class="slider">
-                                        <span class="monthly-text">Monthly</span>
-                                        <span class="annual-text">Annual (15% off)</span>
+                                        <span class="monthly-text">Monthly (15% off)</span>
+                                        <span class="annual-text">Annual</span>
                                     </span>
                                 </label>
 
                                 <div class="mb-8">
-                                    <span class="price-display"
+                                    <span class="text-5xl font-extrabold ${product.featured ? 'text-blue-400' : 'text-gray-100'} price-display"
                                         data-original-monthly-price="${product.monthlyAmount.toFixed(2)}"
                                         data-original-annual-price="${product.annualAmount.toFixed(2)}"
                                         data-currency-symbol="R"
                                         data-currency-code="ZAR"> <!-- Initial currency -->
                                         R${parseFloat(product.monthlyAmount).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}
-                                        <span class="text-xl text-gray-500">/ month</span>
+                                        <span class="text-xl text-gray-400">/ month</span>
                                     </span>
                                 </div>
                                 <ul class="feature-list mb-8">
@@ -3010,7 +2225,7 @@ input:not(:checked) + .slider .monthly-text {
             pricingHtml += `</div>`;
             container.innerHTML += pricingHtml;
 
-            // Section for Tier-Specific Metrics
+            // Section for Tier-Specific Metrics (remains mostly same)
             let tierMetricsHtml = `<div class="admin-panel-card mt-20">
                 <h3 class="text-2xl font-bold mb-4">Tier-Specific Metrics for ${sectorDispName}</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">`;
@@ -3021,10 +2236,10 @@ input:not(:checked) + .slider .monthly-text {
 
                 tierMetricsHtml += `
                     <div class="metric-card">
-                        <h4 class="font-semibold text-xl mb-2 text-gray-600">${product.name} Metrics</h4>
+                        <h4 class="font-semibold text-xl mb-2">${product.name} Metrics</h4>
                         <ul class="list-none p-0 m-0 space-y-1">
                             ${Object.entries(tierMetrics).map(([key, value]) => `
-                                <li><span class="font-medium text-gray-700">${key}:</span> <span class="text-blue-600">${value}</span></li>
+                                <li><span class="font-medium text-gray-300">${key}:</span> <span class="text-purple-300">${value}</span></li>
                             `).join('')}
                         </ul>
                     </div>
@@ -3033,11 +2248,11 @@ input:not(:checked) + .slider .monthly-text {
             tierMetricsHtml += `</div></div>`;
             container.innerHTML += tierMetricsHtml;
 
-            // Section for Brands and Subnodes
+            // Section for Brands and Subnodes (NEW INTERACTIVE DISPLAY)
             let brandsAndSnapshotHtml = `
                 <div class="admin-panel-card mt-20">
                     <h3 class="text-2xl font-bold mb-4">Brands in ${sectorDispName}</h3>
-                    <p class="mb-4 text-gray-600">Click a brand to see its detailed snapshot and associated subnodes.</p>
+                    <p class="mb-4 text-gray-400">Click a brand to see its detailed snapshot and associated subnodes.</p>
                     <div id="sectorBrandButtons" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-8">
             `;
 
@@ -3076,16 +2291,18 @@ input:not(:checked) + .slider .monthly-text {
         }
 
 
-        // --- Global Metrics & Chart Functions ---
+        // --- Global Metrics & Chart Functions (from previous version) ---
         function calculateGlobalMetrics() {
             let tempActiveNodes = 0;
             let tempLicensesActive = 0;
             let tempVaultDeployments = 0;
             let tempSyncLogs = 0;
+            // These are not yet used in display, but calculated here for consistency
             let tempAuditsRunning = 0;
             let tempSignalZones = 0;
             let tempScrollGridIndex = 0;
 
+            // Iterate through the new ALL_BRANDS_DETAILS_BY_SECTOR to get accurate counts
             for (const sectorKey in ALL_BRANDS_DETAILS_BY_SECTOR) {
                 if (sectorKey === 'admin-panel') continue;
 
@@ -3122,6 +2339,10 @@ input:not(:checked) + .slider .monthly-text {
             document.getElementById("licensesActiveCount").textContent = currentGlobalMetrics.licensesActive.toLocaleString();
             document.getElementById("vaultDeploymentsCount").textContent = currentGlobalMetrics.vaultDeployments.toLocaleString();
             document.getElementById("syncLogsCount").textContent = currentGlobalMetrics.syncLogs.toLocaleString();
+            // If you add these elements to your HTML, they will now be updated:
+            // document.getElementById("auditsRunningCount").textContent = currentGlobalMetrics.auditsRunning.toLocaleString();
+            // document.getElementById("signalZonesCount").textContent = currentGlobalMetrics.signalZones.toLocaleString();
+            // document.getElementById("scrollGridIndexCount").textContent = currentGlobalMetrics.scrollGridIndex.toLocaleString();
         }
 
         function renderDynamicPulseChart() {
@@ -3142,17 +2363,17 @@ input:not(:checked) + .slider .monthly-text {
                 data: {
                     labels: [...chartTimeLabels],
                     datasets: [
-                        { label: 'Active Nodes', data: [...chartDataPoints.activeNodes], borderColor: '#007AFF', backgroundColor: 'rgba(0, 122, 255, 0.1)', borderWidth: 2, tension: 0.3, fill: true, pointRadius: 2, pointHoverRadius: 4 },
-                        { label: 'Licenses Active', data: [...chartDataPoints.licensesActive], borderColor: '#34C759', backgroundColor: 'rgba(52, 199, 89, 0.1)', borderWidth: 2, tension: 0.3, fill: true, pointRadius: 2, pointHoverRadius: 4 },
-                        { label: 'Vault Deployments', data: [...chartDataPoints.vaultDeployments], borderColor: '#FFD700', backgroundColor: 'rgba(255, 215, 0, 0.1)', borderWidth: 2, tension: 0.3, fill: true, pointRadius: 2, pointHoverRadius: 4 }
+                        { label: 'Active Nodes', data: [...chartDataPoints.activeNodes], borderColor: '#60A5FA', backgroundColor: 'rgba(96, 165, 250, 0.1)', borderWidth: 2, tension: 0.3, fill: true, pointRadius: 2, pointHoverRadius: 4 },
+                        { label: 'Licenses Active', data: [...chartDataPoints.licensesActive], borderColor: '#34D399', backgroundColor: 'rgba(52, 211, 153, 0.1)', borderWidth: 2, tension: 0.3, fill: true, pointRadius: 2, pointHoverRadius: 4 },
+                        { label: 'Vault Deployments', data: [...chartDataPoints.vaultDeployments], borderColor: '#FCD34D', backgroundColor: 'rgba(252, 211, 77, 0.1)', borderWidth: 2, tension: 0.3, fill: true, pointRadius: 2, pointHoverRadius: 4 }
                     ]
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false, animation: { duration: 500 },
-                    plugins: { legend: { display: true, position: 'top', labels: { color: "#555555" } }, tooltip: { mode: 'index', intersect: false } },
+                    plugins: { legend: { display: true, position: 'top', labels: { color: "#C0C0C0" } }, tooltip: { mode: 'index', intersect: false } },
                     scales: {
-                        y: { beginAtZero: true, grid: { color: '#E0E0E0' }, ticks: { color: "#666666" }, title: { display: true, text: 'Count', color: '#666666'}},
-                        x: { ticks: { color: "#666666" }, title: {display: true, text: 'Time (Updates every 3s)', color: '#666666'}, grid: { color: '#E0E0E0' } }
+                        y: { beginAtZero: true, ticks: { color: "#A0A0A0" }, title: { display: true, text: 'Count', color: '#C0C0C0'}},
+                        x: { ticks: { color: "#A0A0A0" }, title: {display: true, text: 'Time (Updates every 3s)', color: '#C0C0C0'} }
                     }
                 }
             });
@@ -3229,13 +2450,13 @@ input:not(:checked) + .slider .monthly-text {
                     <td class="table-cell-padding">${summary.payoutTier}</td>
                     <td class="table-cell-padding">${summary.region}</td>
                     <td class="table-cell-padding">
-                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs"
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs deploy-button"
                             data-sector-key="${sectorKey}" data-action="inspect">
                             Inspect
                         </button>
                     </td>
                     <td class="table-cell-padding">
-                        <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-xs cta-button"
+                        <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-xs cta-button deploy-button"
                             data-sector-key="${sectorKey}" data-action="deploy">
                             Deploy Plan
                         </button>
@@ -3244,7 +2465,7 @@ input:not(:checked) + .slider .monthly-text {
             });
 
             // Attach event listeners to the new Inspect and Deploy buttons
-            document.querySelectorAll('#faaZoneIndexTableBody button').forEach(button => {
+            document.querySelectorAll('#faaZoneIndexTableBody .deploy-button').forEach(button => {
                 button.addEventListener('click', (event) => {
                     const sectorKey = event.target.dataset.sectorKey;
                     const action = event.target.dataset.action;
@@ -3348,7 +2569,7 @@ input:not(:checked) + .slider .monthly-text {
                 }
                 // Retain the / month or / year suffix
                 const suffix = isAnnualDisplayed ? '/ year' : '/ month';
-                priceSpan.innerHTML = `${selectedSymbol}${convertedPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} <span class="text-xl text-gray-500">${suffix}</span>`;
+                priceSpan.innerHTML = `${selectedSymbol}${convertedPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} <span class="text-xl text-gray-400">${suffix}</span>`;
                 priceSpan.dataset.currencyCode = selectedCurrency;
             });
         }
@@ -3404,16 +2625,17 @@ input:not(:checked) + .slider .monthly-text {
             const annualDiscount = 0.15; // 15% discount
 
             // Collect pricing for all tiers
+            const baseMonthlyFee = parseFloat(String(sectorData.monthlyFee).replace('$', '').replace(',', ''));
             const monthlyPrices = {
-                "Starter": parseFloat(String(sectorData.monthlyFee).replace('$', '').replace(',', '')),
-                "Pro": parseFloat(String(sectorData.monthlyFee).replace('$', '').replace(',', '')) * 2.5,
-                "Enterprise": parseFloat(String(sectorData.monthlyFee).replace('$', '').replace(',', '')) * 5
+                "Starter": baseMonthlyFee,
+                "Pro": baseMonthlyFee * 2.5,
+                "Enterprise": baseMonthlyFee * 5
             };
 
             const annualPrices = {
-                "Starter": (monthlyPrices["Starter"] * 12 * (1 - annualDiscount)),
-                "Pro": (monthlyPrices["Pro"] * 12 * (1 - annualDiscount)),
-                "Enterprise": (monthlyPrices["Enterprise"] * 12 * (1 - annualDiscount)),
+                "Starter": (baseMonthlyFee * 12 * (1 - annualDiscount)),
+                "Pro": (baseMonthlyFee * 2.5 * 12 * (1 - annualDiscount)),
+                "Enterprise": (baseMonthlyFee * 5 * 12 * (1 - annualDiscount))
             };
 
 
@@ -3463,7 +2685,7 @@ input:not(:checked) + .slider .monthly-text {
                 console.error(`An error occurred while deploying plans for ${sectorDisplayName}. See console.`);
                 deployButton.textContent = 'Deploy Failed ❌';
                 deployButton.classList.remove('bg-gray-400');
-                    deployButton.classList.add('bg-red-500');
+                deployButton.classList.add('bg-red-500');
             } finally {
                 setTimeout(() => {
                     deployButton.disabled = false;
@@ -3508,23 +2730,16 @@ input:not(:checked) + .slider .monthly-text {
             // Note: For subscriptions, the 'createSubscription' function is key.
             // The SDK will handle the redirect/popup for approval.
             try {
-                // Remove existing PayPal buttons to prevent duplicates
-                const existingPaypalButtons = button.querySelectorAll('.paypal-button-container');
-                existingPaypalButtons.forEach(btn => btn.remove());
-
-                const paypalButtonContainer = document.createElement('div');
-                paypalButtonContainer.className = 'paypal-button-container mt-4';
-                button.parentNode.insertBefore(paypalButtonContainer, button.nextSibling);
-
                 paypal.Buttons({
                     style: {
                         shape: 'rect',
-                        color: 'blue', /* Use blue for PayPal branding */
+                        color: 'gold',
                         layout: 'vertical',
                         label: 'subscribe',
                         height: 48
                     },
                     createSubscription: function(data, actions) {
+                        // This is where you pass the PayPal Plan ID.
                         console.log(`Creating subscription for PayPal Plan ID: ${planId}`);
                         return actions.subscription.create({
                             plan_id: planId
@@ -3532,33 +2747,57 @@ input:not(:checked) + .slider .monthly-text {
                     },
                     onApprove: function(data, actions) {
                         console.log('Subscription approved! Subscription ID:', data.subscriptionID);
+                        // Send subscriptionID to your backend (Vercel serverless function) for verification and database update
+                        // Example:
+                        /*
+                        fetch(`/api?action=capture-subscription`, { // Changed URL to hit the main /api endpoint
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                subscriptionID: data.subscriptionID,
+                                planId: planId, // Send the PayPal Plan ID back for your records
+                                userId: CURRENT_USER_ID, // Include user ID if available
+                                productName: productName
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(serverData => {
+                            if (serverData.success) {
+                                showTemporaryMessage('Subscription Successful! Thank you.', 'success');
+                                console.log('Server confirmed subscription:', serverData);
+                            } else {
+                                showTemporaryMessage(`Subscription verification failed: ${serverData.error || 'Unknown error'}.`, 'error');
+                                console.error('Server failed to verify subscription:', serverData);
+                            }
+                        })
+                        .catch(error => {
+                            showTemporaryMessage(`Error during subscription verification: ${error.message}.`, 'error');
+                            console.error('Error capturing subscription on backend:', error);
+                        })
+                        .finally(() => {
+                            button.disabled = false;
+                            button.textContent = originalButtonText;
+                        });
+                        */
                         showTemporaryMessage(`Subscription Confirmed! ID: ${data.subscriptionID}`, 'success');
-                        // Clean up the dynamically added PayPal button
-                        if (paypalButtonContainer) paypalButtonContainer.remove();
                         button.disabled = false;
                         button.textContent = originalButtonText;
                     },
                     onCancel: function (data) {
                         console.log('Subscription cancelled by user:', data);
                         showTemporaryMessage('PayPal subscription cancelled.', 'error');
-                        if (paypalButtonContainer) paypalButtonContainer.remove();
                         button.disabled = false;
                         button.textContent = originalButtonText;
                     },
                     onError: function (err) {
                         console.error('PayPal button error:', err);
-                        // Check for the "Can not read window host" specific error
-                        if (err.message && err.message.includes("Can not read window host")) {
-                            showTemporaryMessage(`PayPal Error: Unable to connect. This may be due to browser security settings in this preview environment. Please try in a standard browser window or deployed environment.`, 'error');
-                        } else {
-                            showTemporaryMessage(`PayPal payment error: ${err.message || 'Unknown error'}. Please try again.`, 'error');
-                        }
-                        if (paypalButtonContainer) paypalButtonContainer.remove();
+                        showTemporaryMessage(`PayPal payment error: ${err.message || 'Unknown error'}. Please try again.`, 'error');
                         button.disabled = false;
                         button.textContent = originalButtonText;
                     }
-                }).render(paypalButtonContainer); // Render into the new container
+                }).render(button); // Render directly into the clicked button element or a temporary container
             } catch (renderError) {
+                // Catch errors specifically during the paypal.Buttons().render() call
                 console.error('Error rendering PayPal button:', renderError);
                 showTemporaryMessage(`Error setting up PayPal button: ${renderError.message}.`, 'error');
                 button.disabled = false;
@@ -3580,7 +2819,7 @@ input:not(:checked) + .slider .monthly-text {
                         const sectionId = event.target.dataset.section;
                         showAdminSection(sectionId, event.target);
                     });
-                }); 
+                });
 
                 // Manually trigger the initial active section
                 const initialNavLink = document.querySelector('.admin-nav-link[data-section="add-brand-section"]');
