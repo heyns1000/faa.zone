@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-06-21 | FGP--samfox | main | `public/foxed_got_mobiles.html` | `d349d566` | Fruitful™ Global Dashboard - All Canvases & E | 88509 | 60 | 12 | 125.9 |
+| 2 | 2025-06-22 | FGP--samfox | main | `foxed_got_mobiles.html` | `2123ba4b` | Fruitful™ Global Dashboard - All Canvases & E | 116128 | 60 | 14 | 132.6 |
