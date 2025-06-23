@@ -50,9 +50,8 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            /* Default to dark mode as per the checkout template, consistent with AgroChain now */
-            background-color: var(--bg-color-dark);
-            color: var(--text-color-dark);
+            background-color: var(--bg-color-dark); /* Use MindLift's overall dark background */
+            color: var(--text-color-dark); /* Default text color for dark theme */
             margin: 0;
             padding: 0;
             transition: background-color 0.3s ease, color 0.3s ease;
@@ -132,13 +131,12 @@
 
         /* NEW: Announcement Bar Styling */
         #announcement-bar {
-            background-color: var(--fcu-color); /* Matches fcu-color */
+            background-color: #4CAF50; /* Matches fcu-color */
             color: white;
             padding: 10px 20px;
             text-align: center;
             font-size: 0.9rem;
-            position: sticky; /* Changed to sticky */
-            top: 0;
+            position: relative;
             z-index: 1001; /* Higher than header sticky */
             display: flex;
             justify-content: center;
@@ -185,7 +183,7 @@
             max-width: 1000px;
             width: 100%;
             padding: 0;
-            text-align: center;
+            text-align: center; /* Ensure text inside is centered */
         }
         /* Adjusted h1 for Banimal Loop */
         .checkout-header h1 {
@@ -275,7 +273,7 @@
             width: 100%;
             padding: 12px 15px;
             border: 1px solid var(--border-color-dark); /* Dark border for inputs */
-            border-radius: 8-px;
+            border-radius: 8px;
             background-color: #3a3a3e; /* Slightly darker input background, from MindLift inputs */
             color: var(--text-color-dark); /* Light text for input values */
             font-size: 1rem;
@@ -411,16 +409,14 @@
         }
 
         /* Styles for theme buttons in footer */
-        .theme-controls button {
+        .theme-controls button,
+        .theme-controls select {
             padding: 8px 16px;
             border-radius: 20px;
             font-weight: 500;
             transition: all 0.3s ease;
             cursor: pointer;
             border: 1px solid transparent;
-            /* Flex properties for buttons */
-            flex-shrink: 0; /* Prevent shrinking too much */
-            white-space: nowrap; /* Prevent text wrapping */
         }
 
         /* Default (Light) Mode button styling */
@@ -477,48 +473,22 @@
             border-color: var(--hyper-border-color);
         }
 
-        /* Language Switcher - NOW WITH PRECISE WIDTH CONTROL */
+        /* Language Switcher */
         .theme-controls #languageSwitcher {
-            padding: 8px 16px; /* Consistent padding */
-            border-radius: 20px; /* Consistent rounded corners */
-            font-weight: 500;
-            transition: all 0.3s ease;
+            background-color: var(--card-bg-dark);
+            color: var(--text-color-dark);
+            border-color: var(--border-color-dark);
             cursor: pointer;
-            border: 1px solid var(--border-color-dark); /* Default border in dark mode */
-            background-color: var(--card-bg-dark); /* Default background in dark mode */
-            color: var(--text-color-dark); /* Default text color in dark mode */
-
-            /* REMOVE DEFAULT ARROW AND ADD CUSTOM */
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            background-repeat: no-repeat;
-            background-position: right 0.75rem center;
-            background-size: 1.5em;
-
-            /* Set the custom arrow SVG based on theme */
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23a0a0a5'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
-            padding-right: 2.5rem; /* Space for the custom arrow */
-
-            /* KEY FIX: Width control for compact layout */
-            width: fit-content; /* Allow it to shrink to content */
-            min-width: 120px; /* Minimum width for readability (adjust as needed) */
-            max-width: 180px; /* Maximum width to keep it compact (adjust as needed) */
-            flex-grow: 0; /* Prevent it from taking up extra space */
-            flex-shrink: 1; /* Allow it to shrink if needed */
         }
-
         .light-mode .theme-controls #languageSwitcher {
             background-color: var(--card-bg-light);
             color: var(--text-color-light);
             border-color: var(--border-color-light);
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%236e6e73'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
         }
         .hyper-mode .theme-controls #languageSwitcher {
             background-color: var(--hyper-card-bg);
             color: var(--hyper-text-color);
             border-color: var(--hyper-border-color);
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23FFCCFF'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
         }
 
         /* Styling for generated text output to preserve whitespace */
@@ -949,7 +919,7 @@
             },
             fr: { // French translations
                 "lang-name": "Français",
-                "announcement-text": "🚀 Accélérez votre flux de travail ! Obtenez 15% de réduction sur Pro Grid para un temps limité !",
+                "announcement-text": "🚀 Accélérez votre flux de travail ! Obtenez 15% de réduction sur Pro Grid pour un temps limité !",
                 "header-slogan": "Achetez un article, et nous en parrainons un ! ❤️",
                 "back-to-shop": "← Retour à la Boutique",
                 "complete-purchase": "Finaliser Votre Achat",
@@ -992,7 +962,7 @@
                 "banimal-footer-slogan": "🐑Créatures Douces. Impact Mondial.",
                 "banimal-footer-text": "Découvrez le monde de Banimal : des essentiels pour bébés et des solutions d'éclairage innovantes. Pour chaque achat, nous livrons le même article à un enfant dans le besoin, identifié grâce aux données du Réseau de Sécurité Baobab.",
                 "explore-banimal-button": "Explorer le Monde de Banimal",
-                "copyright-text-footer": "&copy; �2025 Banimal™. Tous droits réservés.",
+                "copyright-text-footer": "&copy; 👟2025 Banimal™. Tous droits réservés.",
                 "powered-by-text": "Une fière initiative de Fruitful™ Treaty System™"
             },
             de: { // German translations
@@ -1186,7 +1156,10 @@
                 "explore-banimal-button": "استكشف عالم Banimal",
                 "copyright-text-footer": "&copy; 👟2025 Banimal™. جميع الحقوق محفوظة.",
                 "powered-by-text": "مبادرة فخرية من Fruitful™ Treaty System™"
-            }
+            },
+             "light-mode-button": "Light Mode",
+             "dark-mode-button": "Dark Mode",
+             "hyper-mode-button": "Hyper Mode"
         };
 
         // Function to set the current language and update all translatable elements
