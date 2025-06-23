@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-06-23 | FGP--samfox | main | `public/merge_logic.html` | `9eec3a85` | 🌐 Global Synergy Hub - Seedwave™ | VaultMesh™ | 170366 | 64 | 24 | 158.0 |
+| 2 | 2025-06-23 | FGP--samfox | history | `public/merge_logic.html` | `961b1628` | 🌐 Global Synergy Hub - Seedwave™ | VaultMesh™ | 170126 | 64 | 24 | 158.0 |
