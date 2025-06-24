@@ -1208,8 +1208,6 @@
                 const simulateAbilityProcess = async (name, delay) => {
                     const nodeCard = document.getElementById(`card-${name}`);
                     const progressBar = document.getElementById(`${name}ProgressBar`);
-                    const resultSpan = document.getElementById(`${name}Result`);
-                    const metricsSpan = document.getElementById(`${name}Metrics`);
 
                     return new Promise(resolve => {
                         setTimeout(async () => {
@@ -1339,8 +1337,8 @@
                             }
 
                             // Update individual card with results and metrics
-                            if (resultSpan) resultSpan.textContent = result + (name !== 'MirrorLoop' ? '%' : '');
-                            if (metricsSpan) metricsSpan.textContent = metrics;
+                            document.getElementById(`${name}Result`).textContent = result + (name !== 'MirrorLoop' ? '%' : '');
+                            document.getElementById(`${name}Metrics`).textContent = metrics;
                             updateAbilityStatus(name, 'Optimal', 'success');
                             if (nodeCard) {
                                 nodeCard.classList.remove('active'); // Remove active class after completion
@@ -1353,12 +1351,12 @@
                             await new Promise(r => setTimeout(r, 200)); // Small pause
 
                             // Log to contextual consoles if messages exist
-                            if (actionMessageFinancial && financialOperationsLog) {
+                            if (actionMessageFinancial) {
                                 logContextualOperation(financialOperationsLog, actionMessageFinancial, 'info');
                                 await new Promise(r => setTimeout(r, 100));
                                 logContextualOperation(financialOperationsLog, outcomeMessageFinancial, 'success');
                             }
-                            if (actionMessageDataGov && dataGovernanceLog) {
+                            if (actionMessageDataGov) {
                                 logContextualOperation(dataGovernanceLog, actionMessageDataGov, 'info');
                                 await new Promise(r => setTimeout(r, 100));
                                 logContextualOperation(dataGovernanceLog, outcomeMessageDataGov, 'success');
