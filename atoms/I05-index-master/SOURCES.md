@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-06-26 | FGP--samfox | main | `public/Templates/sectors/template/index_master.html` | `4eaf69de` | Fruitful Global™ | Sector Index | 216828 | 137 | 25 | 247.4 |
+| 2 | 2025-06-26 | FGP--samfox | history | `public/Templates/sectors/template/index_master.html` | `bf6c5ef6` | Fruitful Global™ | Sector Index | 197777 | 136 | 23 | 239.5 |
