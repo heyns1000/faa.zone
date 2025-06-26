@@ -295,7 +295,7 @@
         .feature-card div:first-child { /* Icon */
             font-size: 3rem;
             margin-bottom: 1.5rem;
-            color: var(--sector-primary-color); /* Electric blue for icons */
+            color: var(--primary-color); /* Electric blue for icons */
             text-shadow: 0 0 15px rgba(0, 191, 255, 0.6); /* Icon glow */
         }
         .feature-card h4 {
@@ -373,7 +373,7 @@
             font-size: 3rem;
             font-weight: 800;
             color: var(--sector-text-color);
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            text-shadow: 0 0 15px rgba(255,255,255,0.5); /* Stronger glow for textGlow keyframes to reference */
             animation: textGlow 3s infinite alternate;
         }
         @keyframes textGlow {
@@ -1556,6 +1556,18 @@
                             <div id="subNodeGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 <!-- Sub-node cards will be dynamically loaded here -->
                             </div>
+
+                            <!-- New: Sub-Node Details Display Area -->
+                            <div id="subNodeDetailsContainer" class="mt-8 dashboard-card hidden">
+                                <h3 id="subNodeDetailTitle" class="text-2xl font-bold dashboard-primary-text mb-4"></h3>
+                                <p id="subNodeDetailDescription" class="dashboard-muted-text mb-4"></p>
+                                <div id="subNodeDetailContent">
+                                    <!-- Dynamic content based on sub-node will go here -->
+                                </div>
+                                <button onclick="hideSubNodeDetails()" class="mt-6 px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition duration-200">
+                                    <i class="fas fa-arrow-left mr-2"></i> Back to Sub-Nodes
+                                </button>
+                            </div>
                         </section>
 
                         <section id="analytics" class="hidden mb-8 dashboard-card">
@@ -1717,6 +1729,42 @@
 
                             <div class="api-key-warning mb-4">
                                 <strong>Security Alert!</strong> For production, never expose your API key directly in client-side code. Use a backend server to proxy your AI requests.
+                            </div>
+
+                            <!-- Smart Text Editor Section -->
+                            <div class="mb-8">
+                                <h3 class="text-xl font-semibold dashboard-text-light mb-3">✍️ Smart Text Editor</h3>
+                                <p class="dashboard-muted-text mb-3">Enter your text below to use advanced AI™ tools for analysis and generation.</p>
+                                <textarea id="smartTextEditorInput" rows="8" class="w-full p-3 rounded-lg bg-gray-700 border dashboard-border-dark dashboard-text-light placeholder-dashboard-muted-text focus:outline-none focus:ring-2 focus:ring-purple-400" placeholder="Type or paste your text here..."></textarea>
+
+                                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+                                    <button id="btnSummarizeText" class="px-4 py-2 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition duration-200 text-sm">
+                                        Summarize
+                                    </button>
+                                    <button id="btnContinueText" class="px-4 py-2 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition duration-200 text-sm">
+                                        Continue Writing
+                                    </button>
+                                    <button id="btnCorrectGrammar" class="px-4 py-2 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition duration-200 text-sm">
+                                        Correct Grammar
+                                    </button>
+                                    <button id="btnParaphraseText" class="px-4 py-2 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition duration-200 text-sm">
+                                        Paraphrase
+                                    </button>
+                                    <button id="btnAnalyzeSentiment" class="px-4 py-2 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition duration-200 text-sm">
+                                        Analyze Sentiment
+                                    </button>
+                                    <button id="btnExtractKeywords" class="px-4 py-2 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition duration-200 text-sm">
+                                        Extract Keywords
+                                    </button>
+                                </div>
+
+                                <div class="mt-4 p-4 bg-gray-700 rounded-lg border dashboard-border-dark">
+                                    <h4 class="text-lg font-semibold dashboard-text-light mb-2" id="smartTextResultTitle">Smart Text Output:</h4>
+                                    <div id="smartTextResultContent" class="dashboard-text-light whitespace-pre-wrap min-h-[50px] flex items-center justify-center">
+                                        Your AI™ generated text will appear here.
+                                    </div>
+                                    <div id="smartTextError" class="text-red-400 mt-2 hidden"></div>
+                                </div>
                             </div>
 
                             <!-- General Gemini Prompt -->
@@ -1981,7 +2029,6 @@
                             </div>
                         </section>
 
-                        <!-- Settings Section (New) -->
                         <section id="settings" class="hidden mb-8 dashboard-card">
                             <h2 class="text-3xl font-bold dashboard-primary-text mb-6">Settings</h2>
                             <p class="dashboard-muted-text mb-4">
@@ -2639,8 +2686,8 @@
                             <h3 class="text-xl font-semibold dashboard-text-light">${node.name}</h3>
                         </div>
                         <p class="dashboard-muted-text">${node.description}</p>
-                        ${node.link ? `<a href="${node.link}" class="text-primary-color hover:underline text-sm mt-3 inline-block">Learn More <i class="fas fa-arrow-right text-xs ml-1"></i></a>` : ''}
-                    `;
+                        <a href="javascript:void(0)" onclick="showSubNodeDetails('${node.id}')" class="text-primary-color hover:underline text-sm mt-3 inline-block">Learn More <i class="fas fa-arrow-right text-xs ml-1"></i></a>
+                    `; // Changed here: onclick handler
                     subNodeGrid.appendChild(subNodeCard);
                 });
             } else {
@@ -2946,10 +2993,13 @@
         // Helper function for making API calls to Gemini™
         async function callGeminiAPI(prompt, responseDiv, errorDiv) {
             responseDiv.textContent = 'Generating response...';
+            responseDiv.classList.remove('text-red-400'); // Remove error styling
+            responseDiv.classList.add('text-blue-400'); // Add loading styling
             errorDiv.classList.add('hidden'); // Hide previous errors
 
             if (!prompt) {
                 responseDiv.textContent = 'Please enter a prompt.';
+                responseDiv.classList.remove('text-blue-400');
                 return;
             }
 
@@ -2957,6 +3007,8 @@
                 responseDiv.textContent = '';
                 errorDiv.textContent = 'Error: Gemini AI™ API Key is missing or invalid. Please ensure it\'s set correctly.';
                 errorDiv.classList.remove('hidden');
+                responseDiv.classList.remove('text-blue-400');
+                responseDiv.classList.add('text-red-400');
                 return;
             }
 
@@ -2983,14 +3035,114 @@
                 const data = await response.json();
                 const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from AI™.';
                 responseDiv.textContent = aiResponse;
+                responseDiv.classList.remove('text-blue-400');
+                responseDiv.classList.add('dashboard-text-light'); // Reset to normal text color
 
             } catch (error) {
                 console.error("Error calling Gemini AI™ API:", error);
                 responseDiv.textContent = ''; // Clear "Generating response..."
                 errorDiv.textContent = `Failed to get AI™ response: ${error.message}. Check your Gemini AI™ API key and network.`;
                 errorDiv.classList.remove('hidden');
+                responseDiv.classList.remove('text-blue-400');
+                responseDiv.classList.add('text-red-400');
             }
         }
+
+        // --- Smart Text Editor Logic ---
+        let smartTextInput = null;
+        let smartTextResultContent = null;
+        let smartTextResultTitle = null;
+        let smartTextErrorDiv = null;
+
+        function clearSmartTextResults() {
+            smartTextResultContent.textContent = 'Your AI™ generated text will appear here.';
+            smartTextResultContent.classList.remove('text-red-400', 'text-blue-400');
+            smartTextResultContent.classList.add('dashboard-text-light'); // Default color
+            smartTextResultTitle.textContent = 'Smart Text Output:';
+            smartTextErrorDiv.classList.add('hidden');
+        }
+
+        async function handleSmartTextOperation(operationType, promptModifier) {
+            const text = smartTextInput.value.trim();
+            clearSmartTextResults(); // Clear all previous results before new operation
+
+            if (!text) {
+                smartTextResultContent.textContent = "Please enter some text to process.";
+                smartTextResultContent.classList.add('text-red-400');
+                return;
+            }
+
+            smartTextResultContent.textContent = 'Processing...';
+            smartTextResultContent.classList.remove('dashboard-text-light');
+            smartTextResultContent.classList.add('text-blue-400'); // Indicate loading
+
+            let prompt = "";
+            let newTitle = "";
+
+            switch (operationType) {
+                case 'summarize':
+                    prompt = `Summarize the following text:\n\n"${text}"`;
+                    newTitle = "Summary:";
+                    break;
+                case 'continue':
+                    prompt = `Continue the following text. Provide a natural continuation, without repeating the original text. Make sure the continuation is coherent and relevant to the provided text:\n\n"${text}"`;
+                    newTitle = "Text Continuation:";
+                    break;
+                case 'grammar':
+                    prompt = `Review the following text for grammar and spelling errors. If there are errors, provide the corrected version. If no errors, state that the text is correct and provide the original text. Text:\n\n"${text}"`;
+                    newTitle = "Grammar & Spelling Check:";
+                    break;
+                case 'paraphrase':
+                    prompt = `Paraphrase the following text in a clear and concise way, providing a few different variations. Text:\n\n"${text}"`;
+                    newTitle = "Paraphrased Text:";
+                    break;
+                case 'sentiment':
+                    prompt = `Analyze the sentiment of the following text (e.g., positive, negative, neutral) and provide a brief explanation:\n\n"${text}"`;
+                    newTitle = "Sentiment Analysis:";
+                    break;
+                case 'keywords':
+                    prompt = `Extract the most important keywords and key phrases from the following text, listed as a comma-separated list:\n\n"${text}"`;
+                    newTitle = "Extracted Keywords:";
+                    break;
+                default:
+                    smartTextResultContent.textContent = "Invalid operation.";
+                    smartTextResultContent.classList.add('text-red-400');
+                    smartTextResultContent.classList.remove('text-blue-400');
+                    return;
+            }
+
+            // Apply specific prompt modifier if provided (e.g., "Act as a coding assistant")
+            if (promptModifier) {
+                prompt = `${promptModifier} ${prompt}`;
+            }
+
+            smartTextResultTitle.textContent = newTitle;
+            await callGeminiAPI(prompt, smartTextResultContent, smartTextErrorDiv);
+
+            // Special handling for 'continue' to append text to input
+            if (operationType === 'continue' && !smartTextErrorDiv.classList.contains('hidden')) {
+                // Only append if there was no error during generation
+                smartTextInput.value += smartTextResultContent.textContent;
+                smartTextResultContent.textContent = "Text continued in input box."; // Inform user
+            }
+        }
+
+
+        // Event listeners for Smart Text Editor Buttons
+        document.addEventListener('DOMContentLoaded', () => {
+            smartTextInput = document.getElementById('smartTextEditorInput');
+            smartTextResultContent = document.getElementById('smartTextResultContent');
+            smartTextResultTitle = document.getElementById('smartTextResultTitle');
+            smartTextErrorDiv = document.getElementById('smartTextError');
+
+            document.getElementById('btnSummarizeText')?.addEventListener('click', () => handleSmartTextOperation('summarize'));
+            document.getElementById('btnContinueText')?.addEventListener('click', () => handleSmartTextOperation('continue'));
+            document.getElementById('btnCorrectGrammar')?.addEventListener('click', () => handleSmartTextOperation('grammar'));
+            document.getElementById('btnParaphraseText')?.addEventListener('click', () => handleSmartTextOperation('paraphrase'));
+            document.getElementById('btnAnalyzeSentiment')?.addEventListener('click', () => handleSmartTextOperation('sentiment'));
+            document.getElementById('btnExtractKeywords')?.addEventListener('click', () => handleSmartTextOperation('keywords'));
+        });
+
 
         // Event listener for General Query (Dashboard)
         document.addEventListener('click', async (event) => {
@@ -3240,7 +3392,282 @@
             console.log(`Mock PayPal SDK Integration triggered with Client ID: ${paypalClientId}`);
             // In a real scenario, you'd load the PayPal JS SDK script here dynamically
             // and then render a PayPal button or perform a mock payment intent.
+            // For now, we use a simple alert-like modal replacement for user feedback.
             showCustomModal("PayPal SDK Integration (Mock)", `Attempting to initialize PayPal SDK with ID: <br><code>${paypalClientId}</code>.<br>This is a mock call.`);
+        }
+
+        // Custom Modal Function (replaces alert/confirm)
+        function showCustomModal(title, message, isConfirm = false, onConfirm = null) {
+            const modalId = 'custom-modal';
+            let modal = document.getElementById(modalId);
+
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = modalId;
+                modal.className = 'fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[100]';
+                modal.innerHTML = `
+                    <div class="bg-gray-800 p-8 rounded-lg shadow-xl max-w-sm w-full border border-gray-700">
+                        <h3 class="text-2xl font-bold text-white mb-4" id="custom-modal-title"></h3>
+                        <p class="text-gray-300 mb-6" id="custom-modal-message"></p>
+                        <div class="flex justify-end space-x-4">
+                            <button id="custom-modal-cancel" class="px-5 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition duration-200">Cancel</button>
+                            <button id="custom-modal-confirm" class="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200">OK</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+            }
+
+            document.getElementById('custom-modal-title').innerHTML = title;
+            document.getElementById('custom-modal-message').innerHTML = message;
+
+            const confirmButton = document.getElementById('custom-modal-confirm');
+            const cancelButton = document.getElementById('custom-modal-cancel');
+
+            if (isConfirm) {
+                cancelButton.classList.remove('hidden');
+                confirmButton.onclick = () => {
+                    modal.classList.add('hidden');
+                    if (onConfirm) onConfirm();
+                };
+                cancelButton.onclick = () => {
+                    modal.classList.add('hidden');
+                };
+            } else {
+                cancelButton.classList.add('hidden');
+                confirmButton.onclick = () => {
+                    modal.classList.add('hidden');
+                };
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+
+        // --- Sub-Node Details Display Function (NEW) ---
+        function showSubNodeDetails(nodeId) {
+            const subNodeDetailsContainer = document.getElementById('subNodeDetailsContainer');
+            const subNodeDetailTitle = document.getElementById('subNodeDetailTitle');
+            const subNodeDetailDescription = document.getElementById('subNodeDetailDescription');
+            const subNodeDetailContent = document.getElementById('subNodeDetailContent');
+
+            // Hide the main grid of sub-nodes
+            document.getElementById('subNodeGrid').classList.add('hidden');
+
+            // Find the sub-node config
+            const currentSubNodes = currentSectorConfig.subNodes;
+            const selectedNode = currentSubNodes.find(node => node.id === nodeId);
+
+            if (selectedNode) {
+                subNodeDetailTitle.innerText = selectedNode.name;
+                subNodeDetailDescription.innerText = selectedNode.description;
+                subNodeDetailsContainer.classList.remove('hidden');
+
+                // Populate content based on node ID (this is where you'll add more AI Logic specific content)
+                let contentHtml = '';
+                switch (nodeId) {
+                    case 'omnisignal':
+                        contentHtml = `
+                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> OmniSignal™ ensures secure, real-time communication across all decentralized applications within the FAA.Zone™. It leverages advanced encryption and distributed ledger technology to prevent tampering and ensure data integrity.</p>
+                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Key Features:</h4>
+                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
+                                <li>End-to-end encrypted messaging</li>
+                                <li>Broadcast and point-to-point signaling</li>
+                                <li>Real-time data synchronization</li>
+                                <li>Fault-tolerant architecture</li>
+                            </ul>
+                            <p class="dashboard-muted-text mt-4">For more advanced configurations, please refer to the OmniSignal™ API documentation.</p>
+                        `;
+                        break;
+                    case 'pulsegrid':
+                        contentHtml = `
+                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> PulseGrid™ is the high-performance backbone for data orchestration, optimizing data flow and processing across the Fruitful™ ecosystem. It ensures seamless interaction between various sector applications.</p>
+                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Capabilities:</h4>
+                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
+                                <li>High-throughput data ingestion</li>
+                                <li>Intelligent data routing</li>
+                                <li>Real-time data transformation</li>
+                                <li>Scalable for massive data volumes</li>
+                            </ul>
+                            <p class="dashboard-muted-text mt-4">PulseGrid™ integrates directly with VaultMesh™ for secure data handling.</p>
+                        `;
+                        break;
+                    case 'vaultdna':
+                        contentHtml = `
+                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> VaultDNA™ provides immutable digital fingerprints for every piece of content and asset within the Treaty Grid. This ensures unalterable proof of origin, ownership, and integrity.</p>
+                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Benefits:</h4>
+                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
+                                <li>Unforgeable content identification</li>
+                                <li>Transparent provenance tracking</li>
+                                <li>Automated integrity verification</li>
+                                <li>Reduced risk of intellectual property theft</li>
+                            </ul>
+                            <p class="dashboard-muted-text mt-4">Every ScrollClaim™ is secured by VaultDNA™.</p>
+                        `;
+                        break;
+                    case 'claimroot':
+                        contentHtml = `
+                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> ClaimRoot™ establishes the irrefutable origin and timestamp for all digital claims and transactions on the FAA.Zone™. It acts as the foundational anchor for verifying the authenticity and history of any asset or interaction.</p>
+                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Functionality:</h4>
+                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
+                                <li>Cryptographic timestamping</li>
+                                <li>Distributed ledger recording</li>
+                                <li>Immutable origin verification</li>
+                                <li>Foundation for royalty enforcement</li>
+                            </ul>
+                            <p class="dashboard-muted-text mt-4">Crucial for TreatyCommerce™ and ScrollClaim™ integrity.</p>
+                        `;
+                        break;
+                    case 'scrollclaim':
+                        contentHtml = `
+                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> ScrollClaim™ Contracts are programmable smart contracts that encapsulate digital rights, access permissions, and royalty logic for content distributed across the FAA.Zone™. They automate agreements and enforce terms.</p>
+                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Use Cases:</h4>
+                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
+                                <li>Automated royalty distribution (10-11% for Diamond Tier)</li>
+                                <li>Tiered content access management</li>
+                                <li>Transferable digital licenses</li>
+                                <li>Secure content monetization</li>
+                            </ul>
+                            <p class="dashboard-muted-text mt-4">Empowers creators and ensures fair compensation.</p>
+                        `;
+                        break;
+                    case 'ghosttrace':
+                        contentHtml = `
+                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> GhostTrace™ Gen2 provides advanced, privacy-preserving traceability for all interactions and data flows within the Fruitful Global™ ecosystem. It enables forensic analysis without compromising user privacy.</p>
+                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Capabilities:</h4>
+                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
+                                <li>Auditable interaction logs</li>
+                                <li>Anomaly detection for security</li>
+                                <li>Privacy-centric data masking</li>
+                                <li>Real-time threat intelligence</li>
+                            </ul>
+                            <p class="dashboard-muted-text mt-4">Essential for maintaining trust and security across the network.</p>
+                        `;
+                        break;
+                    case 'baobab-terminal':
+                        contentHtml = `
+                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> The Baobab Terminal™ provides a command-line interface (CLI) for direct interaction with the underlying Treaty Grid. It's designed for advanced users and developers to manage contracts, deploy scrolls, and monitor network health.</p>
+                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Commands & Usage:</h4>
+                            <pre class="bg-gray-800 text-green-400 p-4 rounded-md overflow-auto text-sm mt-2">
+<code>> baobab status
+  Node Health: Optimal
+  Connected Peers: 128
+  Active Scrolls: 7038
+
+> baobab deploy --path /my/new/scroll.zip --tier diamond
+  Deployment initiated. TxHash: 0x...
+  ScrollClaim™ issued.
+
+> baobab query-royalty --txid 0x...
+  Royalty payout: 10.5% to Wallet: 0x...
+                            </code></pre>
+                            <p class="dashboard-muted-text mt-4">Access requires proper authentication and permissions.</p>
+                        `;
+                        break;
+                    case 'baobab-security-network':
+                        contentHtml = `
+                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> The Baobab Security Network™ is a specialized sub-node focused on identifying and verifying humanitarian needs globally. It provides critical data insights that power ethical initiatives, such as Banimal™'s one-for-one donation model.</p>
+                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Functions:</h4>
+                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
+                                <li>Real-time need assessment in crisis zones</li>
+                                <li>Data-driven impact verification</li>
+                                <li>Secure beneficiary identification</li>
+                                <li>Ethical data collection and privacy protocols</li>
+                            </ul>
+                            <p class="dashboard-muted-text mt-4">Collaborates with NGOs and local communities to ensure effective aid distribution.</p>
+                        `;
+                        break;
+                    case 'little-lights':
+                        contentHtml = `
+                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> Little Lights™ is a sub-brand under the Banimal™ Sector, specializing in innovative and child-safe lighting solutions. Their products are designed to be both whimsical and energy-efficient, providing comfort and learning opportunities for children.</p>
+                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Product Philosophy:</h4>
+                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
+                                <li>Sustainable materials and production</li>
+                                <li>Non-toxic and child-friendly designs</li>
+                                <li>Educational and interactive lighting features</li>
+                                <li>Contribution to Banimal™'s one-for-one donation model</li>
+                            </ul>
+                            <p class="dashboard-muted-text mt-4">Shining a light on a brighter future for children globally.</p>
+                        `;
+                        break;
+                    case 'cozy-creatures':
+                        contentHtml = `
+                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> Cozy Creatures™ is another sub-brand within the Banimal™ Sector, offering a range of soft baby textiles and plush toys. Each product is crafted with hypoallergenic materials and designed for maximum comfort and safety for infants.</p>
+                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Offerings:</h4>
+                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
+                                <li>Organic cotton blankets and swaddles</li>
+                                <li>Hand-knitted animal plush toys</li>
+                                <li>Durable and washable baby apparel</li>
+                                <li>Ethically sourced and fair-trade production</li>
+                            </ul>
+                            <p class="dashboard-muted-text mt-4">Providing comfort and warmth, one creature at a time, with a positive global impact.</p>
+                        `;
+                        break;
+                    case 'codenest-ai':
+                        contentHtml = `
+                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> CodeNest™ AI™ is the leading AI™-driven development platform for digital scrolls within the Fruitful Global™ Treaty Grid. It automates code generation, optimizes performance, and streamlines deployment, allowing developers to focus on innovation.</p>
+                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Core Features:</h4>
+                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
+                                <li>AI™-powered code completion and suggestion</li>
+                                <li>Automated testing and debugging</li>
+                                <li>Cross-platform compatibility generation</li>
+                                <li>Direct integration with VaultMesh™ for secure deployment</li>
+                            </ul>
+                            <p class="dashboard-muted-text mt-4">Accelerating the creation of high-quality, secure digital experiences.</p>
+                        `;
+                        break;
+                    case 'omnisignal-ai':
+                        contentHtml = `
+                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> OmniSignal™ AI™ is an intelligent extension of OmniSignal™, incorporating advanced AI™ capabilities to further optimize secure, real-time communication. It learns from network patterns to enhance efficiency and detect anomalies.</p>
+                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">AI™ Enhancements:</h4>
+                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
+                                <li>Predictive routing for faster message delivery</li>
+                                <li>AI™-driven threat detection in communication streams</li>
+                                <li>Adaptive encryption protocols</li>
+                                <li>Automated network optimization and load balancing</li>
+                            </ul>
+                            <p class="dashboard-muted-text mt-4">Making communication smarter and more resilient.</p>
+                        `;
+                        break;
+                    case 'pulsegrid-ai':
+                        contentHtml = `
+                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> PulseGrid™ AI™ is the AI™-optimized version of the PulseGrid™ data orchestration system. It uses machine learning to dynamically adapt to data loads, predict bottlenecks, and intelligently manage data distribution for peak performance across the Fruitful Global™ network.</p>
+                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Optimizations:</h4>
+                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
+                                <li>Self-optimizing data pipelines</li>
+                                <li>Predictive resource allocation</li>
+                                <li>Real-time anomaly detection in data streams</li>
+                                <li>Automated scaling based on demand</li>
+                            </ul>
+                            <p class="dashboard-muted-text mt-4">Ensuring uninterrupted and highly efficient data flow.</p>
+                        `;
+                        break;
+                    case 'vaultdna-ai':
+                        contentHtml = `
+                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> VaultDNA™ AI™ enhances the immutable digital fingerprinting with artificial intelligence, providing even more robust security and intelligent content verification. It can detect subtle patterns of unauthorized modifications or deepfakes.</p>
+                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Enhanced Security:</h4>
+                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
+                                <li>AI™-driven content authenticity verification</li>
+                                <li>Predictive threat analysis for digital assets</li>
+                                <li>Automated content lineage auditing</li>
+                                <li>Machine learning for tamper detection</li>
+                            </ul>
+                            <p class="dashboard-muted-text mt-4">The ultimate guardian for digital intellectual property.</p>
+                        `;
+                        break;
+                    default:
+                        contentHtml = `<p class="dashboard-muted-text">Details for "${selectedNode.name}" are not yet available. Please check back later or contribute to its development!</p>`;
+                }
+                subNodeDetailContent.innerHTML = contentHtml;
+            } else {
+                subNodeDetailsContainer.classList.add('hidden');
+                console.warn('Sub-node details not found for ID:', nodeId);
+            }
+        }
+
+        function hideSubNodeDetails() {
+            document.getElementById('subNodeDetailsContainer').classList.add('hidden');
+            document.getElementById('subNodeGrid').classList.remove('hidden');
         }
 
 

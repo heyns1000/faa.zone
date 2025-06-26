@@ -6,3 +6,4 @@
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-06-26 | FGP--samfox | main | `public/Templates/sectors/template/index_master.html` | `4eaf69de` | Fruitful Global™ | Sector Index | 216828 | 137 | 25 | 247.4 |
 | 2 | 2025-06-26 | FGP--samfox | history | `public/Templates/sectors/template/index_master.html` | `bf6c5ef6` | Fruitful Global™ | Sector Index | 197777 | 136 | 23 | 239.5 |
+| 3 | 2025-06-26 | FGP--samfox | main | `public/global_sector_index.html` | `c0e33d7e` | Fruitful Global™ | Sector Index | 228578 | 145 | 28 | 268.6 |
