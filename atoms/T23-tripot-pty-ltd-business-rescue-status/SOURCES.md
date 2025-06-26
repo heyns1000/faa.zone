@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-06-26 | tripot | history | `Public/index.html` | `d13069be` | TRIPOT (PTY) LTD: Business Rescue Status | 22849 | 19 | 1 | 50.3 |
+| 2 | 2025-06-26 | tripot | history | `Public/notice_resolution.html` | `e031a0f4` | TRIPOT (PTY) LTD: Business Rescue Status | 22850 | 19 | 1 | 50.3 |
