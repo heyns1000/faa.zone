@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-06-24 | FGP--samfox | history | `public/Templates/ancestortag_heritage_portal.html` | `dde9d02d` | 👤 AncestorTag™ Heritage Portal | 155507 | 127 | 42 | 267.1 |
+| 2 | 2025-06-27 | FGP--samfox | main | `public/Templates/ancestortag_heritage_portal.html` | `236b4343` | 👤 AncestorTag™ Heritage Portal | 211661 | 167 | 8 | 252.6 |

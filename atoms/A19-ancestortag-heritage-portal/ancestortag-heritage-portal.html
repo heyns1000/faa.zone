@@ -113,6 +113,27 @@
             color: transparent;
         }
 
+        /* Custom animation for emojis */
+        @keyframes bounce-once {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            20% {
+                transform: translateY(-8px);
+            }
+            40% {
+                transform: translateY(0);
+            }
+            60% {
+                transform: translateY(-4px);
+            }
+            80% {
+                transform: translateY(0);
+            }
+        }
+        .animate-bounce-once {
+            animation: bounce-once 1s ease-out 1; /* Run once */
+        }
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
@@ -174,7 +195,7 @@
             font-weight: 600;
         }
         /* Styles for map containers */
-        gmp-map, #leaflet-map-container { /* Updated selector for gmp-map */
+        gmp-map, #leaflet-map-container, #family-map-container { /* Updated selector for gmp-map and added family-map */
             height: 400px; /* Adjust height as needed */
             width: 100%;
             border-radius: 0.5rem;
@@ -331,6 +352,10 @@
             <a href="#" id="nav-admin-panel" class="sidebar-nav-item flex items-center gap-3 w-full p-3 rounded-lg text-lg font-medium transition duration-200 text-text-light hover:bg-hover-bg-light">
                 <i class="fas fa-users-cog"></i> Admin Panel
             </a>
+            <!-- New Fruitful Sectors Navigation Link -->
+            <a href="#" id="nav-fruitful-sectors" class="sidebar-nav-item flex items-center gap-3 w-full p-3 rounded-lg text-lg font-medium transition duration-200 text-text-light hover:bg-hover-bg-light">
+                <i class="fas fa-layer-group"></i> Fruitful Sectors
+            </a>
             <a href="#" id="nav-music" class="sidebar-nav-item flex items-center gap-3 w-full p-3 rounded-lg text-lg font-medium transition duration-200 text-text-light hover:bg-hover-bg-light">
                 <i class="fas fa-music"></i> Music & Media
             </a>
@@ -370,7 +395,7 @@
                         <p class="muted-text mb-8">
                             Experience AncestorTag: Linking Generations in the Digital Cosmos. Seamlessly connect your invaluable cultural content to its ancestral lineage, providing irrefutable digital provenance and enriching history for eons to come.
                         </p>
-                        <button id="openAddModalBtn" class="px-10 py-4 at-btn-primary rounded-full text-lg font-bold hover:shadow-lg">
+                        <button id="openAddModalBtn" class="px-10 py-4 at-btn-primary rounded-full text-lg font-bold hover:shadow-lg" onclick="openModal('addTagModal')">
                             ➕ Tag New Ancestral Content
                         </button>
 
@@ -461,6 +486,218 @@
                         </div>
                     </section>
                     <!-- End Family Hub Section -->
+
+                    <!-- Family Tree Section -->
+                    <section id="family-tree" class="hidden mb-8 p-6 card-bg rounded-lg shadow-xl border border-dark">
+                        <h2 class="text-3xl font-bold primary-text mb-6">Family Tree 🌳</h2>
+                        <p class="muted-text mb-8">
+                            Add and visualize your family members here. Their locations will appear on the map.
+                        </p>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-xl font-bold text-text-light mb-4">Add New Family Member</h3>
+                                <form id="addFamilyMemberForm" class="space-y-4">
+                                    <div>
+                                        <label for="memberName" class="block text-sm font-medium text-gray-300">Name</label>
+                                        <input type="text" id="memberName" class="w-full p-2 rounded input-field" placeholder="e.g., John Doe" required>
+                                    </div>
+                                    <div>
+                                        <label for="memberRelationship" class="block text-sm font-medium text-gray-300">Relationship</label>
+                                        <input type="text" id="memberRelationship" class="w-full p-2 rounded input-field" placeholder="e.g., Father, Sister" required>
+                                    </div>
+                                    <div>
+                                        <label for="memberDOB" class="block text-sm font-medium text-gray-300">Date of Birth</label>
+                                        <input type="date" id="memberDOB" class="w-full p-2 rounded input-field">
+                                    </div>
+                                    <div>
+                                        <label for="memberCurrentLocation" class="block text-sm font-medium text-gray-300">Current Location (City, Country)</label>
+                                        <input type="text" id="memberCurrentLocation" class="w-full p-2 rounded input-field" placeholder="e.g., London, UK">
+                                    </div>
+                                    <button type="submit" class="bg-primary-color hover:bg-green-600 text-white px-6 py-2 rounded-full w-full">Add Member</button>
+                                </form>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-text-light mb-4">Your Family Members</h3>
+                                <div id="familyMembersList" class="space-y-3 max-h-96 overflow-y-auto">
+                                    <p class="text-muted-text text-center">Add family members to see them here.</p>
+                                </div>
+                                <h3 class="text-xl font-bold text-text-light mb-4 mt-8">Family Locations</h3>
+                                <div id="family-map-container" class="w-full rounded-lg shadow-md border border-dark"></div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- End Family Tree Section -->
+
+                    <!-- Family Calendar Section -->
+                    <section id="family-calendar" class="hidden mb-8 p-6 card-bg rounded-lg shadow-xl border border-dark">
+                        <h2 class="text-3xl font-bold primary-text mb-6">Family Calendar 🗓️</h2>
+                        <p class="muted-text mb-8">
+                            Keep track of all important family events, birthdays, anniversaries, and travel plans.
+                        </p>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-xl font-bold text-text-light mb-4">Add New Event</h3>
+                                <form id="addEventForm" class="space-y-4">
+                                    <div>
+                                        <label for="eventName" class="block text-sm font-medium text-gray-300">Event Name</label>
+                                        <input type="text" id="eventName" class="w-full p-2 rounded input-field" placeholder="e.g., Grandma's Birthday" required>
+                                    </div>
+                                    <div>
+                                        <label for="eventDate" class="block text-sm font-medium text-gray-300">Date</label>
+                                        <input type="date" id="eventDate" class="w-full p-2 rounded input-field" required>
+                                    </div>
+                                    <div>
+                                        <label for="eventTime" class="block text-sm font-medium text-gray-300">Time (Optional)</label>
+                                        <input type="time" id="eventTime" class="w-full p-2 rounded input-field">
+                                    </div>
+                                    <div>
+                                        <label for="eventDescription" class="block text-sm font-medium text-gray-300">Description</label>
+                                        <textarea id="eventDescription" class="w-full p-2 rounded input-field h-24" placeholder="Brief details about the event..."></textarea>
+                                    </div>
+                                    <button type="submit" class="bg-primary-color hover:bg-green-600 text-white px-6 py-2 rounded-full w-full">Add Event</button>
+                                </form>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-text-light mb-4">Upcoming Events</h3>
+                                <div id="upcomingEventsList" class="space-y-3 max-h-96 overflow-y-auto">
+                                    <p class="text-muted-text text-center">No upcoming events. Add some above!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- End Family Calendar Section -->
+
+                    <!-- Productivity Section -->
+                    <section id="productivity" class="hidden mb-8 p-6 card-bg rounded-lg shadow-xl border border-dark">
+                        <h2 class="text-3xl font-bold primary-text mb-6">Productivity Tools 🚀</h2>
+                        <p class="muted-text mb-8">
+                            Enhance your daily workflow with integrated notes and to-do lists.
+                        </p>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-xl font-bold text-text-light mb-4">Personal Notes 📝</h3>
+                                <textarea id="personalNotes" class="w-full p-3 rounded-lg input-field h-48 resize-y" placeholder="Write down your thoughts, ideas, or important information here..."></textarea>
+                                <button id="saveNotesBtn" class="bg-primary-color hover:bg-green-600 text-white px-6 py-2 rounded-full w-full mt-4">Save Notes</button>
+                                <p id="notesStatus" class="text-sm text-muted-text mt-2 text-center">Last saved: Never</p>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-text-light mb-4">To-Do List ✅</h3>
+                                <form id="todoForm" class="flex mb-4">
+                                    <input type="text" id="todoInput" placeholder="Add a new task..." class="w-full p-2 rounded-l input-field flex-grow">
+                                    <button type="submit" class="bg-secondary-color hover:bg-blue-600 text-white px-4 py-2 rounded-r">Add</button>
+                                </form>
+                                <div id="todoList" class="space-y-2 max-h-64 overflow-y-auto">
+                                    <p class="text-muted-text text-center">No tasks yet. Add one above!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- End Productivity Section -->
+
+                    <!-- Utilities Section -->
+                    <section id="utilities" class="hidden mb-8 p-6 card-bg rounded-lg shadow-xl border border-dark">
+                        <h2 class="text-3xl font-bold primary-color mb-6">Utilities Hub 🛠️</h2>
+                        <p class="muted-text mb-8">
+                            Quick tools for everyday conversions and information.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- Currency Converter -->
+                            <div class="card-bg p-6">
+                                <h3 class="text-xl font-bold primary-text mb-4">Currency Converter 💱</h3>
+                                <form id="currencyConverterForm" class="space-y-3">
+                                    <div>
+                                        <label for="currencyAmount" class="block text-sm font-medium text-gray-300">Amount</label>
+                                        <input type="number" id="currencyAmount" class="w-full p-2 rounded input-field" value="1" step="0.01">
+                                    </div>
+                                    <div>
+                                        <label for="fromCurrency" class="block text-sm font-medium text-gray-300">From</label>
+                                        <select id="fromCurrency" class="w-full p-2 rounded input-field">
+                                            <option value="USD">USD</option>
+                                            <option value="EUR">EUR</option>
+                                            <option value="GBP">GBP</option>
+                                            <option value="JPY">JPY</option>
+                                            <option value="ZAR">ZAR</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="toCurrency" class="block text-sm font-medium text-gray-300">To</label>
+                                        <select id="toCurrency" class="w-full p-2 rounded input-field">
+                                            <option value="ZAR">ZAR</option>
+                                            <option value="USD">USD</option>
+                                            <option value="EUR">EUR</option>
+                                            <option value="GBP">GBP</option>
+                                            <option value="JPY">JPY</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="bg-primary-color hover:bg-green-600 text-white px-6 py-2 rounded-full w-full">Convert</button>
+                                    <p id="currencyResult" class="text-lg font-bold text-text-light mt-4 text-center">Result: </p>
+                                </form>
+                            </div>
+
+                            <!-- Unit Converter -->
+                            <div class="card-bg p-6">
+                                <h3 class="text-xl font-bold primary-text mb-4">Unit Converter 📏</h3>
+                                <form id="unitConverterForm" class="space-y-3">
+                                    <div>
+                                        <label for="unitType" class="block text-sm font-medium text-gray-300">Category</label>
+                                        <select id="unitType" class="w-full p-2 rounded input-field">
+                                            <option value="length">Length</option>
+                                            <option value="weight">Weight</option>
+                                            <option value="temperature">Temperature</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="unitValue" class="block text-sm font-medium text-gray-300">Value</label>
+                                        <input type="number" id="unitValue" class="w-full p-2 rounded input-field" value="1" step="any">
+                                    </div>
+                                    <div>
+                                        <label for="fromUnit" class="block text-sm font-medium text-gray-300">From Unit</label>
+                                        <select id="fromUnit" class="w-full p-2 rounded input-field"></select>
+                                    </div>
+                                    <div>
+                                        <label for="toUnit" class="block text-sm font-medium text-gray-300">To Unit</label>
+                                        <select id="toUnit" class="w-full p-2 rounded input-field"></select>
+                                    </div>
+                                    <button type="submit" class="bg-primary-color hover:bg-green-600 text-white px-6 py-2 rounded-full w-full">Convert</button>
+                                    <p id="unitResult" class="text-lg font-bold text-text-light mt-4 text-center">Result: </p>
+                                </form>
+                            </div>
+
+                            <!-- Weather Forecast -->
+                            <div class="card-bg p-6 md:col-span-2">
+                                <h3 class="text-xl font-bold primary-text mb-4">Weather Forecast ☁️</h3>
+                                <form id="weatherForm" class="flex flex-col md:flex-row gap-3">
+                                    <input type="text" id="weatherCity" placeholder="Enter city (e.g., London)" class="w-full md:w-2/3 p-2 rounded input-field">
+                                    <button type="submit" class="bg-secondary-color hover:bg-blue-600 text-white px-6 py-2 rounded-full w-full md:w-1/3">Get Weather</button>
+                                </form>
+                                <p id="weatherResult" class="text-lg font-bold text-text-light mt-4 text-center">Weather in [City]:</p>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- End Utilities Section -->
+
+                    <!-- Graphs Section -->
+                    <section id="graphs" class="hidden mb-8 p-6 card-bg rounded-lg shadow-xl border border-dark">
+                        <h2 class="text-3xl font-bold primary-text mb-6">Graphs & Visualizations 📊</h2>
+                        <p class="muted-text mb-8">
+                            Visualize your data with interactive charts.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="card-bg p-6 flex flex-col items-center">
+                                <h3 class="text-xl font-bold text-text-light mb-4">Content Type Distribution</h3>
+                                <div class="w-full h-80 relative">
+                                    <canvas id="contentTypeChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="card-bg p-6 flex flex-col items-center">
+                                <h3 class="text-xl font-bold text-text-light mb-4">Family Members by Location</h3>
+                                <div class="w-full h-80 relative">
+                                    <canvas id="familyLocationChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- End Graphs Section -->
 
                     <!-- Financial Hub Section -->
                     <section id="financial-hub" class="hidden mb-8 p-6 card-bg rounded-lg shadow-xl border border-dark">
@@ -571,8 +808,8 @@
                             <div class="w-32 h-32 bg-gray-600 rounded-full flex items-center justify-center overflow-hidden border-4 border-primary-color">
                                 <img id="profileImagePreview" src="https://placehold.co/128x128/374151/e0e0e0?text=Upload" alt="Profile" class="w-full h-full object-cover">
                             </div>
-                            <input type="file" id="profileImageInput" accept="image/*" class="hidden" onchange="previewProfileImage(event)">
-                            <button onclick="document.getElementById('profileImageInput').click()" class="bg-secondary-color hover:bg-blue-600 text-white px-6 py-2 rounded-full">
+                            <input type="file" id="profileImageInput" accept="image/*" class="hidden">
+                            <button onclick="previewProfileImage(event)" class="bg-secondary-color hover:bg-blue-600 text-white px-6 py-2 rounded-full">
                                 <i class="fas fa-camera mr-2"></i> Upload Image
                             </button>
                             
@@ -662,15 +899,15 @@
                             <div class="p-5 bg-gray-700 rounded-lg shadow-md">
                                 <h3 class="text-xl font-semibold text-text-light mb-2">Usage Trends</h3>
                                 <p class="muted-text">Graph showing daily user activity and data consumption.</p>
-                                <div class="mt-4 bg-gray-800 h-48 flex items-center justify-center rounded-md">
-                                    <span class="text-muted-text">Placeholder Chart</span>
+                                <div class="w-full h-48 flex items-center justify-center rounded-md">
+                                    <canvas id="usageTrendsChart"></canvas> <!-- Added canvas for chart -->
                                 </div>
                             </div>
                             <div class="p-5 bg-gray-700 rounded-lg shadow-md">
                                 <h3 class="text-xl font-semibold text-text-light mb-2">Performance Metrics</h3>
                                 <p class="muted-text">Key performance indicators over time.</p>
-                                <div class="mt-4 bg-gray-800 h-48 flex items-center justify-center rounded-md">
-                                    <span class="text-muted-text">Placeholder Chart</span>
+                                <div class="w-full h-48 flex items-center justify-center rounded-md">
+                                    <canvas id="performanceMetricsChart"></canvas> <!-- Added canvas for chart -->
                                 </div>
                             </div>
                         </div>
@@ -805,6 +1042,18 @@
                             </ul>
                         </div>
                     </section>
+
+                    <!-- New Fruitful Sectors Section -->
+                    <section id="fruitful-sectors" class="hidden mb-8 p-6 card-bg rounded-lg shadow-xl border border-dark">
+                        <h2 class="text-3xl font-bold primary-text mb-6 text-center">Fruitful Sectors: Insights Powered by AI 🧠</h2>
+                        <p class="muted-text mb-8 text-center">
+                            Explore various industry sectors and generate AI-powered insights for innovative use cases and future trends.
+                        </p>
+                        <div id="fruitfulSectorsContainer">
+                            <!-- Content will be dynamically rendered by JavaScript -->
+                        </div>
+                    </section>
+                    <!-- End Fruitful Sectors Section -->
 
                     <section id="ai-gemini" class="mb-8 p-6 card-bg rounded-lg shadow-xl border border-dark">
                         <h2 class="text-3xl font-bold primary-text mb-6">AI Gemini Integration</h2>
@@ -1034,7 +1283,7 @@
                                         <div class="w-full h-64 bg-gray-800 rounded-lg p-4 overflow-auto text-sm text-text-light">
                                             <p>This is where our Gemini AI interacts. You can test it in the "AI Gemini" section!</p>
                                             <p class="mt-2 text-muted-text">Example: Ask the AI "What is the capital of France?"</p>
-                                            <p class="mt-2 text-red-400">**Remember to add your actual API Key!**</p>
+                                            <p class="mt-2 text-red-400"><strong>Remember to add your actual API Key!</strong></p>
                                         </div>
                                     </div>
                                 </div>
@@ -1043,10 +1292,10 @@
                             <div>
                                 <h3 class="text-2xl font-semibold text-text-light mb-3">5. Action Items for the Team:</h3>
                                 <ul class="list-disc list-inside ml-4 text-text-light space-y-2">
-                                    <li>**IMMEDIATE & CRITICAL:** Replace `YOUR_GEMINI_API_KEY` in the JavaScript with your actual key from Google AI Studio.</li>
-                                    <li>**SECURITY:** Begin planning for secure backend proxying of all API calls for production deployment.</li>
-                                    <li>**API ACQUISITION:** Contact "Foxed Has Mobiles™" and "Baobab Security Network™" for their API documentation and access credentials.</li>
-                                    <li>**ANALYTICS:** Investigate Google Analytics Data API or e-commerce platform APIs for detailed purchase/checkout event tracking.</li>
+                                    <li><strong>IMMEDIATE & CRITICAL:</strong> Replace `YOUR_GEMINI_API_KEY` in the JavaScript with your actual key from Google AI Studio.</li>
+                                    <li><strong>SECURITY:</strong> Begin planning for secure backend proxying of all API calls for production deployment.</li>
+                                    <li><strong>API ACQUISITION:</strong> Contact "Foxed Has Mobiles™" and "Baobab Security Network™" for their API documentation and access credentials.</li>
+                                    <li><strong>ANALYTICS:** Investigate Google Analytics Data API or e-commerce platform APIs for detailed purchase/checkout event tracking.</li>
                                     <li>**UI/UX:** Brainstorm and design user interfaces for "Coding Partner" and "Career Guide" functionalities.</li>
                                     <li>**EMBED CODES:** Generate actual embed codes for the live demos (Google Maps, YouTube, Spotify) to make this section truly "live" for the team.</li>
                                     <li>**CONTINUOUS LEARNING:** Encourage "baby staff" to review API documentation for any integrated service to understand capabilities and limitations.</li>
@@ -1054,6 +1303,31 @@
                             </div>
                         </div>
                     </section>
+                    <!-- Settings Section -->
+                    <section id="settings" class="hidden mb-8 p-6 card-bg rounded-lg shadow-xl border border-dark">
+                        <h2 class="text-3xl font-bold primary-text mb-6">Settings ⚙️</h2>
+                        <p class="muted-text mb-8">
+                            Configure your portal preferences and manage account settings.
+                        </p>
+                        <div class="space-y-6">
+                            <div class="card-bg p-6">
+                                <h3 class="text-xl font-bold text-text-light mb-4">General Settings</h3>
+                                <div class="flex items-center justify-between mb-4">
+                                    <label for="darkModeToggle" class="text-text-light">Dark Mode</label>
+                                    <input type="checkbox" id="darkModeToggle" class="toggle toggle-primary">
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <label for="notificationToggle" class="text-text-light">Email Notifications</label>
+                                    <input type="checkbox" id="notificationToggle" class="toggle toggle-primary" checked>
+                                </div>
+                            </div>
+                            <div class="card-bg p-6">
+                                <h3 class="text-xl font-bold text-text-light mb-4">Account Management</h3>
+                                <button class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-full w-full">Delete Account (Simulated)</button>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- End Settings Section -->
                 </div>
             </div>
         </main>
@@ -1114,8 +1388,8 @@
                 <!-- Provenance details will be dynamically injected here -->
             </div>
             <div class="mt-6">
-                <button id="copyProvenanceHashBtn" class="at-btn-secondary px-4 py-2 rounded text-sm mr-2">Copy Provenance Hash</button>
-                <button id="toggleAccessBtn" class="at-btn-secondary px-4 py-2 rounded text-sm">Toggle Secure Access (Simulated)</button>
+                <button id="copyProvenanceHashBtn" class="at-btn-secondary px-4 py-2 rounded text-sm mr-2" onclick="copyProvenanceHash()">Copy Provenance Hash</button>
+                <button id="toggleAccessBtn" class="at-btn-secondary px-4 py-2 rounded text-sm" onclick="toggleSecureAccess(currentProvenanceHash)">Toggle Secure Access (Simulated)</button>
             </div>
         </div>
     </div>
@@ -1154,6 +1428,98 @@
         let familyMapInstance = null; // Store Family Map Leaflet instance
         let activeMusicSubSection = 'allMusic'; // Default active music sub-section
 
+        // Global state for Fruitful Sectors section
+        let fruitfulExpandedSector = null;
+        let fruitfulLlmResponses = {}; // Stores LLM responses by nested sector key
+        let fruitfulLoadingLlm = {}; // Tracks loading state by nested sector key
+
+        // Global state for Ancestor Bio Generation
+        let ancestorBioLoading = {}; // Tracks loading state for each member's bio
+        let ancestorBioResponses = {}; // Stores generated bios for each member
+
+        // Global state for Gift Idea Generation
+        let giftIdeasLoading = {}; // Tracks loading state for each gift item
+        let giftIdeasResponses = {}; // Stores generated gift ideas for each item
+
+        // Global state for Event Idea Generation
+        let eventIdeasLoading = {}; // Tracks loading state for each event
+        let eventIdeasResponses = {}; // Stores generated event ideas for each event
+
+
+        // The comprehensive list of sectors that will be nested
+        const nestedSectorList = {
+            "agriculture": "🌱 Agriculture & Biotech",
+            "fsf": "🥦 Food, Soil & Farming",
+            "banking": "🏦 Banking & Finance",
+            "creative": "🖋️ Creative Tech",
+            "logistics": "📦 Logistics & Packaging",
+            "education-ip": "📚 Education & IP",
+            "fashion": "✂ Fashion & Identity",
+            "gaming": "🎮 Gaming & Simulation",
+            "health": "🧠 Health & Hygiene",
+            "housing": "🏗️ Housing & Infrastructure",
+            "justice": "⚖ Justice & Ethics",
+            "knowledge": "📖 Knowledge & Archives",
+            "micromesh": "☰ Micro-Mesh Logistics",
+            "media": "🎬 Motion, Media & Sonic",
+            "nutrition": "✿ Nutrition & Food Chain",
+            "ai-logic": "🧠 AI, Logic & Grid",
+            "packaging": "📦 Packaging & Materials",
+            "quantum": "✴️ Quantum Protocols",
+            "ritual": "☯ Ritual & Culture",
+            "saas": "🔑 SaaS & Licensing",
+            "trade": "🧺 Trade Systems",
+            "utilities": "🔋 Utilities & Energy",
+            "voice": "🎙️ Voice & Audio",
+            "webless": "📡 Webless Tech & Nodes",
+            "nft": "🔁 NFT & Ownership",
+            "education-youth": "🎓 Education & Youth",
+            "zerowaste": "♻️ Zero Waste",
+            "professional": "🧾 Professional Services",
+            "payroll-mining": "🪙 Payroll Mining & Accounting",
+            "mining": "⛏️ Mining & Resources",
+            "wildlife": "🦁 Wildlife & Habitat",
+            "admin-panel": "⚙️ Admin Panel"
+        };
+
+        // The top-level sector list, including the new 'fruitful' sector
+        const mainSectorList = {
+            "agriculture": "🌱 Agriculture & Biotech",
+            "fsf": "🥦 Food, Soil & Farming",
+            "banking": "🏦 Banking & Finance",
+            "creative": "🖋️ Creative Tech",
+            "logistics": "📦 Logistics & Packaging",
+            "education-ip": "📚 Education & IP",
+            "fashion": "✂ Fashion & Identity",
+            "gaming": "🎮 Gaming & Simulation",
+            "health": "🧠 Health & Hygiene",
+            "housing": "🏗️ Housing & Infrastructure",
+            "justice": "⚖ Justice & Ethics",
+            "knowledge": "📖 Knowledge & Archives",
+            "micromesh": "☰ Micro-Mesh Logistics",
+            "media": "🎬 Motion, Media & Sonic",
+            "nutrition": "✿ Nutrition & Food Chain",
+            "ai-logic": "🧠 AI, Logic & Grid",
+            "packaging": "📦 Packaging & Materials",
+            "quantum": "✴️ Quantum Protocols",
+            "ritual": "☯ Ritual & Culture",
+            "saas": "🔑 SaaS & Licensing",
+            "trade": "🧺 Trade Systems",
+            "utilities": "🔋 Utilities & Energy",
+            "voice": "🎙️ Voice & Audio",
+            "webless": "📡 Webless Tech & Nodes",
+            "nft": "🔁 NFT & Ownership",
+            "education-youth": "🎓 Education & Youth",
+            "zerowaste": "♻️ Zero Waste",
+            "professional": "🧾 Professional Services",
+            "payroll-mining": "🪙 Payroll Mining & Accounting",
+            "mining": "⛏️ Mining & Resources",
+            "wildlife": "🦁 Wildlife & Habitat",
+            "fruitful": "🌟 Fruitful", // New 'Fruitful' sector for nesting
+            "admin-panel": "⚙️ Admin Panel"
+        };
+
+
         // Initialize Firebase and set up auth listener
         document.addEventListener('DOMContentLoaded', async () => {
             if (Object.keys(firebaseConfig).length > 0) {
@@ -1168,19 +1534,38 @@
                         console.log("Firebase Auth: Signed in as", userId);
                         setupFirestoreListeners(); // Start listening to data once authenticated
                     } else {
-                        try {
-                            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        let authSuccess = false;
+                        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                            try {
                                 await signInWithCustomToken(auth, __initial_auth_token);
                                 console.log("Firebase Auth: Signed in with custom token.");
-                            } else {
+                                authSuccess = true;
+                            } catch (error) {
+                                console.warn("Firebase Auth: Custom token sign-in failed. Attempting anonymous sign-in.", error);
+                                // Fall through to anonymous sign-in
+                            }
+                        }
+
+                        if (!authSuccess) {
+                            try {
                                 await signInAnonymously(auth);
                                 console.log("Firebase Auth: Signed in anonymously.");
+                                authSuccess = true;
+                            } catch (anonError) {
+                                console.error("Firebase Auth Error: Anonymous sign-in also failed.", anonError);
+                                document.getElementById('userIdDisplay').textContent = `User ID: Auth Error!`;
                             }
-                        } catch (error) {
-                            console.error("Firebase Auth Error:", error);
-                            document.getElementById('userIdDisplay').textContent = `User ID: Auth Error!`;
-                            // If anonymous sign-in or custom token fails, proceed without listener
-                            // or show an error state
+                        }
+
+                        if (authSuccess) {
+                            // Re-check user after anonymous sign-in attempt
+                            userId = auth.currentUser?.uid || 'anonymous-failed';
+                            document.getElementById('userIdDisplay').textContent = `User ID: ${userId}`;
+                            if (userId !== 'anonymous-failed') {
+                                setupFirestoreListeners(); // Proceed with Firestore if any auth succeeded
+                            } else {
+                                console.warn("Firebase Auth: No successful sign-in. Running without Firestore persistence.");
+                            }
                         }
                     }
                 });
@@ -1191,44 +1576,298 @@
             }
 
             // Attach event listeners for navigation links
-            document.getElementById('nav-ancestor-tag-section').addEventListener('click', () => showSection('ancestor-tag-section'));
-            document.getElementById('nav-family-hub').addEventListener('click', () => showSection('family-hub'));
-            document.getElementById('nav-travel-commerce').addEventListener('click', () => showSection('travel-commerce'));
-            document.getElementById('nav-productivity').addEventListener('click', () => showSection('productivity'));
-            document.getElementById('nav-utilities').addEventListener('click', () => showSection('utilities'));
-            document.getElementById('nav-profile').addEventListener('click', () => showSection('profile')); // New listener
-            document.getElementById('nav-graphs').addEventListener('click', () => showSection('graphs'));
+            document.getElementById('nav-ancestor-tag-section').addEventListener('click', () => window.showSection('ancestor-tag-section'));
+            document.getElementById('nav-family-hub').addEventListener('click', () => window.showSection('family-hub'));
+            document.getElementById('nav-travel-commerce').addEventListener('click', () => window.showSection('travel-commerce'));
+            document.getElementById('nav-productivity').addEventListener('click', () => window.showSection('productivity'));
+            document.getElementById('nav-utilities').addEventListener('click', () => window.showSection('utilities'));
+            document.getElementById('nav-profile').addEventListener('click', () => window.showSection('profile'));
+            document.getElementById('nav-graphs').addEventListener('click', () => window.showSection('graphs'));
 
             // Nested Family Hub navigation
-            document.getElementById('nav-family-tree').addEventListener('click', () => showSection('family-tree'));
-            document.getElementById('nav-financial-hub')?.addEventListener('click', () => showSection('financial-hub')); // Added ? for optional chaining in case it's not present for some reason
-            document.getElementById('nav-gift-lists')?.addEventListener('click', () => showSection('gift-lists')); // Added ?
-            document.getElementById('nav-family-calendar').addEventListener('click', () => showSection('family-calendar'));
+            const navFamilyTree = document.getElementById('nav-family-tree');
+            if (navFamilyTree) navFamilyTree.addEventListener('click', () => window.showSection('family-tree'));
+            
+            const navFinancialHub = document.getElementById('nav-financial-hub');
+            if (navFinancialHub) navFinancialHub.addEventListener('click', () => window.showSection('financial-hub'));
+            
+            const navGiftLists = document.getElementById('nav-gift-lists');
+            if (navGiftLists) navGiftLists.addEventListener('click', () => window.showSection('gift-lists'));
+            
+            const navFamilyCalendar = document.getElementById('nav-family-calendar');
+            if (navFamilyCalendar) navFamilyCalendar.addEventListener('click', () => window.showSection('family-calendar'));
 
-            document.getElementById('nav-overview').addEventListener('click', () => showSection('overview'));
-            document.getElementById('nav-analytics').addEventListener('click', () => showSection('analytics'));
-            document.getElementById('nav-admin-panel').addEventListener('click', () => showSection('admin-panel'));
-            document.getElementById('nav-music').addEventListener('click', () => showSection('music'));
-            document.getElementById('nav-ai-gemini').addEventListener('click', () => showSection('ai-gemini'));
-            document.getElementById('nav-maps').addEventListener('click', () => showSection('maps'));
-            document.getElementById('nav-meeting-minutes').addEventListener('click', () => showSection('meeting-minutes'));
-            document.getElementById('nav-settings').addEventListener('click', () => showSection('settings'));
+
+            document.getElementById('nav-overview').addEventListener('click', () => window.showSection('overview'));
+            document.getElementById('nav-analytics').addEventListener('click', () => window.showSection('analytics'));
+            document.getElementById('nav-admin-panel').addEventListener('click', () => window.showSection('admin-panel'));
+            document.getElementById('nav-fruitful-sectors').addEventListener('click', () => window.showSection('fruitful-sectors'));
+            document.getElementById('nav-music').addEventListener('click', () => window.showSection('music'));
+            document.getElementById('nav-ai-gemini').addEventListener('click', () => window.showSection('ai-gemini'));
+            document.getElementById('nav-maps').addEventListener('click', () => window.showSection('maps'));
+            document.getElementById('nav-meeting-minutes').addEventListener('click', () => window.showSection('meeting-minutes'));
+            document.getElementById('nav-settings').addEventListener('click', () => window.showSection('settings'));
 
             // Attach event listeners for music sub-sidebar links
-            document.getElementById('music-sub-allMusic').addEventListener('click', () => showMusicSubSection('allMusic'));
-            document.getElementById('music-sub-musicPlaylists').addEventListener('click', () => showMusicSubSection('musicPlaylists'));
-            document.getElementById('music-sub-artists').addEventListener('click', () => showMusicSubSection('artists'));
+            const musicSubAllMusic = document.getElementById('music-sub-allMusic');
+            if (musicSubAllMusic) musicSubAllMusic.addEventListener('click', () => window.showMusicSubSection('allMusic'));
+            const musicSubPlaylists = document.getElementById('music-sub-musicPlaylists');
+            if (musicSubPlaylists) musicSubPlaylists.addEventListener('click', () => window.showMusicSubSection('musicPlaylists'));
+            const musicSubArtists = document.getElementById('music-sub-artists');
+            if (musicSubArtists) musicSubArtists.addEventListener('click', () => window.showMusicSubSection('artists'));
+
 
             // Set default active section on page load
-            showSection('ancestor-tag-section'); // Show AncestorTag section by default
+            window.showSection('ancestor-tag-section');
 
             // Initialize productivity and utilities features from localStorage
-            loadNotes();
-            renderTodos();
-            initUnitConverterSelectors();
+            window.loadNotes();
+            window.renderTodos();
+            window.initUnitConverterSelectors();
+            window.loadFunds();
 
-            // Initialize financial fund balances
-            loadFunds();
+            // Attach form submission listeners and button clicks that were previously in global scope
+            const ancestorTagForm = document.getElementById('ancestorTagForm');
+            if (ancestorTagForm) ancestorTagForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (!db || userId === 'anonymous') { return; } // Handled by offline mode
+                const newRecord = window.collectFormData();
+                if (newRecord) {
+                    try {
+                        const collectionRef = collection(db, `artifacts/${appId}/users/${userId}/ancestorTags`);
+                        await addDoc(collectionRef, { ...newRecord, timestamp: new Date(), userId: userId });
+                        window.closeModal('addTagModal');
+                        window.showMessage("AncestorTag submitted successfully!", "success");
+                    } catch (error) {
+                        console.error("Error adding document to Firestore:", error);
+                        window.showMessage(`Failed to submit: ${error.message}`, "error");
+                    }
+                }
+            });
+
+            const addFamilyMemberForm = document.getElementById('addFamilyMemberForm');
+            if (addFamilyMemberForm) addFamilyMemberForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (!db || userId === 'anonymous') { return; } // Handled by offline mode
+                const newMember = window.collectFamilyMemberData();
+                if (newMember) {
+                    try {
+                        const collectionRef = collection(db, `artifacts/${appId}/users/${userId}/familyMembers`);
+                        await addDoc(collectionRef, { ...newMember, timestamp: new Date(), userId: userId });
+                        window.showMessage("Family member added successfully!", "success");
+                        e.target.reset();
+                    } catch (error) {
+                        console.error("Error adding family member to Firestore:", error);
+                        window.showMessage(`Failed to add member: ${error.message}`, "error");
+                    }
+                }
+            });
+
+            const addEventForm = document.getElementById('addEventForm');
+            if (addEventForm) addEventForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (!db || userId === 'anonymous') { return; } // Handled by offline mode
+                const newEvent = window.collectEventData();
+                if (newEvent) {
+                    try {
+                        const collectionRef = collection(db, `artifacts/${appId}/users/${userId}/familyEvents`);
+                        await addDoc(collectionRef, { ...newEvent, timestamp: new Date(), userId: userId });
+                        window.showMessage("Event added successfully!", "success");
+                        e.target.reset();
+                    } catch (error) {
+                        console.error("Error adding event to Firestore:", error);
+                        window.showMessage(`Failed to add event: ${error.message}`, "error");
+                    }
+                }
+            });
+
+            const saveNotesBtn = document.getElementById('saveNotesBtn');
+            if (saveNotesBtn) saveNotesBtn.addEventListener('click', () => {
+                const notesTextarea = document.getElementById('personalNotes');
+                const notesStatus = document.getElementById('notesStatus');
+                if (notesTextarea) {
+                    const noteContent = notesTextarea.value;
+                    if (db && userId !== 'anonymous') {
+                        localStorage.setItem('personalNotesData', noteContent); // Fallback for demo
+                        window.showMessage("Notes saved to Cloud (Simulated)!", "success");
+                    } else {
+                        localStorage.setItem('personalNotesData', noteContent);
+                        window.showMessage("Notes saved (Offline Mode)!", "success");
+                    }
+                    notesStatus.textContent = "Last saved: " + new Date().toLocaleTimeString();
+                }
+            });
+
+            const todoForm = document.getElementById('todoForm');
+            if (todoForm) todoForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const todoInput = document.getElementById('todoInput');
+                const taskText = todoInput.value.trim();
+                if (taskText) {
+                    if (db && userId !== 'anonymous') {
+                        offlineTodos.push({ id: `todo-${Date.now()}`, text: taskText, completed: false });
+                        localStorage.setItem('todoListData', JSON.stringify(offlineTodos));
+                        window.renderTodos();
+                        window.showMessage("Task added to Cloud (Simulated)!", "success");
+                    } else {
+                        offlineTodos.push({ id: `todo-${Date.now()}`, text: taskText, completed: false });
+                        localStorage.setItem('todoListData', JSON.stringify(offlineTodos));
+                        window.renderTodos();
+                        window.showMessage("Task added (Offline Mode)!", "success");
+                    }
+                    todoInput.value = '';
+                }
+            });
+
+            const christmasListForm = document.getElementById('christmasListForm');
+            if (christmasListForm) christmasListForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const itemInput = document.getElementById('christmasItemInput');
+                const itemText = itemInput.value.trim();
+                if (itemText) {
+                    offlineChristmasList.push({ id: `xmas-${Date.now()}`, text: itemText });
+                    localStorage.setItem('christmasListData', JSON.stringify(offlineChristmasList));
+                    window.renderGiftList('christmas', offlineChristmasList);
+                    itemInput.value = '';
+                    window.showMessage("Christmas gift idea added (Offline Mode)!", "success");
+                }
+            });
+
+            const birthdayListForm = document.getElementById('birthdayListForm');
+            if (birthdayListForm) birthdayListForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const itemInput = document.getElementById('birthdayItemInput');
+                const itemText = itemInput.value.trim();
+                if (itemText) {
+                    offlineBirthdayList.push({ id: `bday-${Date.now()}`, text: itemText });
+                    localStorage.setItem('birthdayListData', JSON.stringify(offlineBirthdayList));
+                    window.renderGiftList('birthday', offlineBirthdayList);
+                    itemInput.value = '';
+                    window.showMessage("Birthday gift idea added (Offline Mode)!", "success");
+                }
+            });
+
+            const currencyConverterForm = document.getElementById('currencyConverterForm');
+            if (currencyConverterForm) currencyConverterForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const amount = parseFloat(document.getElementById('currencyAmount').value);
+                const fromCurrency = document.getElementById('fromCurrency').value;
+                const toCurrency = document.getElementById('toCurrency').value;
+                const resultDiv = document.getElementById('currencyResult');
+
+                if (isNaN(amount) || amount <= 0) {
+                    window.showMessage("Please enter a valid amount.", "warning");
+                    return;
+                }
+
+                const rates = {
+                    "USD": { "EUR": 0.92, "GBP": 0.79, "JPY": 159.00, "ZAR": 18.00, "USD": 1 },
+                    "EUR": { "USD": 1.08, "GBP": 0.86, "JPY": 172.80, "ZAR": 19.50, "EUR": 1 },
+                    "GBP": { "USD": 1.27, "EUR": 1.16, "JPY": 201.20, "ZAR": 22.80, "GBP": 1 },
+                    "JPY": { "USD": 0.0063, "EUR": 0.0058, "GBP": 0.005, "ZAR": 0.11, "JPY": 1 },
+                    "ZAR": { "USD": 0.055, "EUR": 0.051, "GBP": 0.044, "JPY": 9.00, "ZAR": 1 }
+                };
+
+                if (rates[fromCurrency] && rates[fromCurrency][toCurrency]) {
+                    const convertedAmount = amount * rates[fromCurrency][toCurrency];
+                    resultDiv.textContent = `Result: ${convertedAmount.toFixed(2)} ${toCurrency}`;
+                    window.showMessage("Conversion successful (Simulated)!", "success");
+                } else {
+                    resultDiv.textContent = `Result: Error`;
+                    window.showMessage("Conversion not available for these currencies (Simulated).", "error");
+                }
+            });
+
+            const unitConverterForm = document.getElementById('unitConverterForm');
+            if (unitConverterForm) unitConverterForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const value = parseFloat(document.getElementById('unitValue').value);
+                const unitType = document.getElementById('unitType').value;
+                const fromUnit = document.getElementById('fromUnit').value;
+                const toUnit = document.getElementById('toUnit').value;
+                const resultDiv = document.getElementById('unitResult');
+
+                if (isNaN(value)) {
+                    window.showMessage("Please enter a valid numerical value.", "warning");
+                    return;
+                }
+                if (fromUnit === toUnit) {
+                    resultDiv.textContent = `Result: ${value} ${fromUnit}`;
+                    window.showMessage("Units are the same.", "info");
+                    return;
+                }
+
+                const conversionRates = unitConversions[unitType];
+                let convertedValue;
+
+                if (unitType === "temperature") {
+                    let valueInBase;
+                    if (fromUnit === "celsius") valueInBase = value;
+                    else if (fromUnit === "fahrenheit") valueInBase = (value - 32) * 5/9;
+                    else if (fromUnit === "kelvin") valueInBase = value - 273.15;
+                    else {
+                        window.showMessage("Unsupported temperature unit.", "error");
+                        return;
+                    }
+
+                    if (toUnit === "celsius") convertedValue = valueInBase;
+                    else if (toUnit === "fahrenheit") convertedValue = (valueInBase * 9/5) + 32;
+                    else if (toUnit === "kelvin") convertedValue = valueInBase + 273.15;
+                    else {
+                        window.showMessage("Unsupported target temperature unit.", "error");
+                        return;
+                    }
+
+                } else {
+                    let valueInBase;
+                    if (fromUnit === "meters") valueInBase = value;
+                    else if (fromUnit === "feet") valueInBase = value * 0.3048;
+                    else if (fromUnit === "inches") valueInBase = value * 0.0254;
+                    else if (fromUnit === "kilograms") valueInBase = value;
+                    else if (fromUnit === "pounds") valueInBase = value * 0.453592;
+                    else if (fromUnit === "ounces") valueInBase = value * 0.0283495;
+                    else {
+                        window.showMessage("Unsupported 'from' unit.", "error");
+                        return;
+                    }
+
+                    if (toUnit === "meters") convertedValue = valueInBase;
+                    else if (toUnit === "feet") convertedValue = valueInBase / 0.3048;
+                    else if (toUnit === "inches") convertedValue = valueInBase / 0.0254;
+                    else if (toUnit === "kilograms") convertedValue = valueInBase;
+                    else if (toUnit === "pounds") convertedValue = valueInBase / 0.453592;
+                    else if (toUnit === "ounces") convertedValue = valueInBase / 0.0283495;
+                    else {
+                        window.showMessage("Unsupported 'to' unit.", "error");
+                        return;
+                    }
+                }
+                
+                resultDiv.textContent = `Result: ${convertedValue.toFixed(2)} ${toUnit}`;
+                window.showMessage("Conversion successful (Simulated)!", "success");
+            });
+
+            const weatherForm = document.getElementById('weatherForm');
+            if (weatherForm) weatherForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const city = document.getElementById('weatherCity').value.trim();
+                const resultDiv = document.getElementById('weatherResult');
+
+                if (!city) {
+                    window.showMessage("Please enter a city.", "warning");
+                    return;
+                }
+
+                const temperatures = ["25°C / 77°F", "18°C / 64°F", "30°C / 86°F", "10°C / 50°F", "22°C / 72°F", "15°C / 59°F"];
+                const conditions = ["Sunny ☀️", "Partly Cloudy 🌤️", "Rainy 🌧️", "Stormy ⛈️", "Clear Night 🌙", "Foggy 🌫️", "Snowy ❄️"];
+
+                const randomTemp = temperatures[Math.floor(Math.random() * temperatures.length)];
+                const randomCondition = conditions[Math.floor(Math.random() * conditions.length)];
+
+                resultDiv.innerHTML = `Weather in ${city}: <br> <span class="font-bold text-xl">${randomTemp}</span>, ${randomCondition}`;
+                window.showMessage("Weather fetched (Simulated)!", "success");
+            });
+
         });
 
         // Combined Firestore Listeners Setup
@@ -1265,98 +1904,106 @@
             offlineFunds = JSON.parse(localStorage.getItem('financialFundsData')) || { familySavingFund: 0, personalSavingFund: 0, emergencyFund: 0 };
 
 
-            renderAncestralRecords(offlineRecords);
-            renderFamilyMembers(offlineFamilyMembers);
-            renderUpcomingEvents(offlineFamilyEvents);
-            loadNotes(); // Load notes into textarea
-            renderTodos(); // Render todos
-            renderGiftList('christmas', offlineChristmasList);
-            renderGiftList('birthday', offlineBirthdayList);
-            loadFunds(); // Load funds into display
-            updateAllCharts(); // Update charts with offline data
+            window.renderAncestralRecords(offlineRecords);
+            window.renderFamilyMembers(offlineFamilyMembers);
+            window.renderUpcomingEvents(offlineFamilyEvents);
+            window.loadNotes(); // Load notes into textarea
+            window.renderTodos(); // Render todos
+            window.renderGiftList('christmas', offlineChristmasList);
+            window.renderGiftList('birthday', offlineBirthdayList);
+            window.loadFunds(); // Load funds into display
+            window.updateAllCharts(); // Update charts with offline data
 
-            document.getElementById('ancestorTagForm').addEventListener('submit', (e) => {
+            // Re-attach event listeners for offline mode as they might be removed/overwritten
+            const ancestorTagForm = document.getElementById('ancestorTagForm');
+            if (ancestorTagForm) ancestorTagForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                const newRecord = collectFormData();
+                const newRecord = window.collectFormData();
                 if (newRecord) {
                     offlineRecords.push({ ...newRecord, id: `offline-${Date.now()}`, timestamp: new Date() });
                     localStorage.setItem('ancestorTagOfflineData', JSON.stringify(offlineRecords));
-                    renderAncestralRecords(offlineRecords);
-                    closeModal('addTagModal');
-                    showMessage("AncestorTag added (Offline Mode)!", "success");
-                    updateAllCharts();
+                    window.renderAncestralRecords(offlineRecords);
+                    window.closeModal('addTagModal');
+                    window.showMessage("AncestorTag added (Offline Mode)!", "success");
+                    window.updateAllCharts();
                 }
             });
 
-            document.getElementById('addFamilyMemberForm').addEventListener('submit', (e) => {
+            const addFamilyMemberForm = document.getElementById('addFamilyMemberForm');
+            if (addFamilyMemberForm) addFamilyMemberForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                const newMember = collectFamilyMemberData();
+                const newMember = window.collectFamilyMemberData();
                 if (newMember) {
                     offlineFamilyMembers.push({ ...newMember, id: `offline-member-${Date.now()}` });
                     localStorage.setItem('familyMembersOfflineData', JSON.stringify(offlineFamilyMembers));
-                    renderFamilyMembers(offlineFamilyMembers);
-                    showMessage("Family member added (Offline Mode)!", "success");
+                    window.renderFamilyMembers(offlineFamilyMembers);
+                    window.showMessage("Family member added (Offline Mode)!", "success");
                     e.target.reset();
-                    updateAllCharts();
-                    initFamilyMap(offlineFamilyMembers); // Update map
+                    window.updateAllCharts();
+                    window.initFamilyMap(offlineFamilyMembers); // Update map
                 }
             });
 
-            document.getElementById('addEventForm').addEventListener('submit', (e) => {
+            const addEventForm = document.getElementById('addEventForm');
+            if (addEventForm) addEventForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                const newEvent = collectEventData();
+                const newEvent = window.collectEventData();
                 if (newEvent) {
                     offlineFamilyEvents.push({ ...newEvent, id: `offline-event-${Date.now()}` });
                     localStorage.setItem('familyEventsOfflineData', JSON.stringify(offlineFamilyEvents));
-                    renderUpcomingEvents(offlineFamilyEvents);
-                    showMessage("Event added (Offline Mode)!", "success");
+                    window.renderUpcomingEvents(offlineFamilyEvents);
+                    window.showMessage("Event added (Offline Mode)!", "success");
                     e.target.reset();
-                    updateAllCharts();
+                    window.updateAllCharts();
                 }
             });
 
-            document.getElementById('saveNotesBtn').addEventListener('click', () => {
+            const saveNotesBtn = document.getElementById('saveNotesBtn');
+            if (saveNotesBtn) saveNotesBtn.addEventListener('click', () => {
                 offlineNotes = document.getElementById('personalNotes').value;
                 localStorage.setItem('personalNotesData', offlineNotes);
-                showMessage("Notes saved (Offline Mode)!", "success");
+                window.showMessage("Notes saved (Offline Mode)!", "success");
             });
 
-            document.getElementById('todoForm').addEventListener('submit', (e) => {
+            const todoForm = document.getElementById('todoForm');
+            if (todoForm) todoForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const todoInput = document.getElementById('todoInput');
                 const taskText = todoInput.value.trim();
                 if (taskText) {
                     offlineTodos.push({ id: `todo-${Date.now()}`, text: taskText, completed: false });
                     localStorage.setItem('todoListData', JSON.stringify(offlineTodos));
-                    renderTodos();
+                    window.renderTodos();
                     todoInput.value = '';
-                    showMessage("Task added (Offline Mode)!", "success");
+                    window.showMessage("Task added (Offline Mode)!", "success");
                 }
             });
 
-            document.getElementById('christmasListForm').addEventListener('submit', (e) => {
+            const christmasListForm = document.getElementById('christmasListForm');
+            if (christmasListForm) christmasListForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const itemInput = document.getElementById('christmasItemInput');
                 const itemText = itemInput.value.trim();
                 if (itemText) {
                     offlineChristmasList.push({ id: `xmas-${Date.now()}`, text: itemText });
                     localStorage.setItem('christmasListData', JSON.stringify(offlineChristmasList));
-                    renderGiftList('christmas', offlineChristmasList);
+                    window.renderGiftList('christmas', offlineChristmasList);
                     itemInput.value = '';
-                    showMessage("Christmas gift idea added (Offline Mode)!", "success");
+                    window.showMessage("Christmas gift idea added (Offline Mode)!", "success");
                 }
             });
 
-            document.getElementById('birthdayListForm').addEventListener('submit', (e) => {
+            const birthdayListForm = document.getElementById('birthdayListForm');
+            if (birthdayListForm) birthdayListForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const itemInput = document.getElementById('birthdayItemInput');
                 const itemText = itemInput.value.trim();
                 if (itemText) {
                     offlineBirthdayList.push({ id: `bday-${Date.now()}`, text: itemText });
                     localStorage.setItem('birthdayListData', JSON.stringify(offlineBirthdayList));
-                    renderGiftList('birthday', offlineBirthdayList);
+                    window.renderGiftList('birthday', offlineBirthdayList);
                     itemInput.value = '';
-                    showMessage("Birthday gift idea added (Offline Mode)!", "success");
+                    window.showMessage("Birthday gift idea added (Offline Mode)!", "success");
                 }
             });
         }
@@ -1375,8 +2022,8 @@
                 snapshot.forEach((doc) => {
                     records.push({ id: doc.id, ...doc.data() });
                 });
-                renderAncestralRecords(records);
-                updateAllCharts();
+                window.renderAncestralRecords(records);
+                window.updateAllCharts();
             }, (error) => {
                 console.error("Error listening to AncestorTag Firestore:", error);
                 document.getElementById('ancestralRecordsList').innerHTML = `<p class="text-red-400 text-center">Error loading records: ${error.message}</p>`;
@@ -1397,9 +2044,9 @@
                 snapshot.forEach((doc) => {
                     familyMembers.push({ id: doc.id, ...doc.data() });
                 });
-                renderFamilyMembers(familyMembers);
-                updateAllCharts();
-                initFamilyMap(familyMembers); // Update map with new family member locations
+                window.renderFamilyMembers(familyMembers);
+                window.updateAllCharts();
+                window.initFamilyMap(familyMembers); // Update map with new family member locations
             }, (error) => {
                 console.error("Error listening to Family Members Firestore:", error);
                 document.getElementById('familyMembersList').innerHTML = `<p class="text-red-400 text-center">Error loading family members: ${error.message}</p>`;
@@ -1420,8 +2067,8 @@
                 snapshot.forEach((doc) => {
                     familyEvents.push({ id: doc.id, ...doc.data() });
                 });
-                renderUpcomingEvents(familyEvents);
-                updateAllCharts();
+                window.renderUpcomingEvents(familyEvents);
+                window.updateAllCharts();
             }, (error) => {
                 console.error("Error listening to Family Events Firestore:", error);
                 document.getElementById('upcomingEventsList').innerHTML = `<p class="text-red-400 text-center">Error loading events: ${error.message}</p>`;
@@ -1429,26 +2076,7 @@
         }
 
 
-        // --- AncestorTag Form Submission Handler (remains largely same) ---
-        document.getElementById('ancestorTagForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            if (!db || userId === 'anonymous') { return; } // Handled by offline mode
-
-            const newRecord = collectFormData();
-            if (newRecord) {
-                try {
-                    const collectionRef = collection(db, `artifacts/${appId}/users/${userId}/ancestorTags`);
-                    await addDoc(collectionRef, { ...newRecord, timestamp: new Date(), userId: userId });
-                    closeModal('addTagModal');
-                    showMessage("AncestorTag submitted successfully!", "success");
-                } catch (error) {
-                    console.error("Error adding document to Firestore:", error);
-                    showMessage(`Failed to submit: ${error.message}`, "error");
-                }
-            }
-        });
-
-        function collectFormData() {
+        window.collectFormData = function() {
             const ancestorName = document.getElementById('ancestorName').value.trim();
             const contentTitle = document.getElementById('contentTitle').value.trim();
             const contentType = document.getElementById('contentType').value;
@@ -1457,7 +2085,7 @@
             const tags = document.getElementById('tags').value.split(',').map(tag => tag.trim()).filter(Boolean);
 
             if (!ancestorName || !contentTitle || !contentType) {
-                showMessage("Ancestor's Name, Content Title, and Type are required!", "warning");
+                window.showMessage("Ancestor's Name, Content Title, and Type are required!", "warning");
                 return null;
             }
 
@@ -1467,12 +2095,12 @@
 
         // --- Render Ancestral Records to Dashboard (remains largely same) ---
         let allRecords = [];
-        function renderAncestralRecords(records) {
+        window.renderAncestralRecords = function(records) {
             allRecords = records;
-            filterAncestralRecords();
+            window.filterAncestralRecords();
         }
 
-        function filterAncestralRecords() {
+        window.filterAncestralRecords = function() {
             const ancestorFilter = document.getElementById('filterAncestor').value.toLowerCase();
             const contentTypeFilter = document.getElementById('filterContentType').value;
 
@@ -1487,7 +2115,7 @@
 
             if (filteredRecords.length === 0) {
                 listContainer.innerHTML = `<p class="text-gray-400 text-center py-8">${ancestorFilter || contentTypeFilter ? 'No records match your filters.' : 'No records found. Click "➕ Tag New Ancestral Content" to add your first!'}</p>`;
-                updateDashboardMetrics([]);
+                window.updateDashboardMetrics([]);
                 return;
             }
 
@@ -1518,16 +2146,16 @@
                 `;
                 listContainer.appendChild(recordElement);
             });
-            updateDashboardMetrics(filteredRecords);
+            window.updateDashboardMetrics(filteredRecords);
         }
 
-        function clearFilters() {
+        window.clearFilters = function() {
             document.getElementById('filterAncestor').value = '';
             document.getElementById('filterContentType').value = '';
-            filterAncestralRecords();
+            window.filterAncestralRecords();
         }
 
-        function updateDashboardMetrics(records) {
+        window.updateDashboardMetrics = function(records) {
             document.getElementById('totalTagsCount').textContent = records.length;
             const uniqueAncestors = new Set(records.map(record => record.ancestorName));
             document.getElementById('uniqueAncestorsCount').textContent = uniqueAncestors.size;
@@ -1537,7 +2165,7 @@
         }
 
         let currentProvenanceHash = '';
-        function showProvenance(recordId, ancestorName, contentTitle, provenanceHash, timestamp) {
+        window.showProvenance = function(recordId, ancestorName, contentTitle, provenanceHash, timestamp) {
             currentProvenanceHash = provenanceHash;
             const provenanceContent = document.getElementById('provenanceContent');
             const toggleAccessBtn = document.getElementById('toggleAccessBtn');
@@ -1570,35 +2198,35 @@
                 </div>
             `;
 
-            toggleAccessBtn.onclick = () => toggleSecureAccess(recordId);
-            document.getElementById('copyProvenanceHashBtn').onclick = copyProvenanceHash;
-            openModal('provenanceModal');
+            toggleAccessBtn.onclick = () => window.toggleSecureAccess(recordId);
+            document.getElementById('copyProvenanceHashBtn').onclick = window.copyProvenanceHash;
+            window.openModal('provenanceModal');
         }
 
-        function toggleSecureAccess(recordId) {
+        window.toggleSecureAccess = function(recordId) {
             const accessMessage = document.getElementById('simulatedAccessMessage');
             if (accessMessage.textContent.includes('Public')) {
                 accessMessage.innerHTML = `<p class="text-red-400">Current Access: Restricted (Simulated)</p>`;
             } else {
                 accessMessage.innerHTML = `<p class="text-green-400">Current Access: Public (Simulated)</p>`;
             }
-            showMessage("Access permission toggled (simulated).", "info");
+            window.showMessage("Access permission toggled (simulated).", "info");
         }
 
-        function copyProvenanceHash() {
+        window.copyProvenanceHash = function() {
             if (currentProvenanceHash) {
                 document.execCommand('copy'); // Use this for clipboard access in iframes
-                showMessage("Provenance Hash copied to clipboard!", "success");
+                window.showMessage("Provenance Hash copied to clipboard!", "success");
             }
         }
 
 
         // --- Modal Control Functions ---
-        function openModal(modalId) {
+        window.openModal = function(modalId) {
             document.getElementById(modalId).classList.remove('hidden');
         }
 
-        function closeModal(modalId) {
+        window.closeModal = function(modalId) {
             document.getElementById(modalId).classList.add('hidden');
             if (modalId === 'addTagModal') {
                 document.getElementById('ancestorTagForm').reset();
@@ -1607,7 +2235,7 @@
 
         // --- Message Display Function (instead of alert) ---
         let messageTimeout;
-        function showMessage(message, type = 'info') {
+        window.showMessage = function(message, type = 'info') {
             const messageBox = document.createElement('div');
             messageBox.className = `fixed bottom-4 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg text-white text-center z-50`;
             
@@ -1630,39 +2258,20 @@
             }, 3000);
         }
 
-        // --- Family Tree Functions ---
-        document.getElementById('addFamilyMemberForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            if (!db || userId === 'anonymous') { return; } // Handled by offline mode
-
-            const newMember = collectFamilyMemberData();
-            if (newMember) {
-                try {
-                    const collectionRef = collection(db, `artifacts/${appId}/users/${userId}/familyMembers`);
-                    await addDoc(collectionRef, { ...newMember, timestamp: new Date(), userId: userId });
-                    showMessage("Family member added successfully!", "success");
-                    e.target.reset();
-                } catch (error) {
-                    console.error("Error adding family member to Firestore:", error);
-                    showMessage(`Failed to add member: ${error.message}`, "error");
-                }
-            }
-        });
-
-        function collectFamilyMemberData() {
+        window.collectFamilyMemberData = function() {
             const memberName = document.getElementById('memberName').value.trim();
             const memberRelationship = document.getElementById('memberRelationship').value.trim();
             const memberDOB = document.getElementById('memberDOB').value;
             const memberCurrentLocation = document.getElementById('memberCurrentLocation').value.trim();
 
             if (!memberName || !memberRelationship) {
-                showMessage("Member Name and Relationship are required!", "warning");
+                window.showMessage("Member Name and Relationship are required!", "warning");
                 return null;
             }
             return { memberName, memberRelationship, memberDOB, memberCurrentLocation };
         }
 
-        function renderFamilyMembers(members) {
+        window.renderFamilyMembers = function(members) {
             const listContainer = document.getElementById('familyMembersList');
             listContainer.innerHTML = '';
             if (members.length === 0) {
@@ -1682,13 +2291,77 @@
                         ${member.memberDOB ? `<span><strong>DOB:</strong> ${member.memberDOB}</span>` : ''}
                         ${member.memberCurrentLocation ? `<span><strong>Location:</strong> ${member.memberCurrentLocation}</span>` : ''}
                     </div>
+                    <button
+                        id="generate-bio-${member.id}"
+                        class="mt-3 px-4 py-2 rounded-md font-semibold text-sm transition-colors duration-200 w-full
+                        ${ancestorBioLoading[member.id]
+                            ? 'bg-purple-300 text-white cursor-not-allowed'
+                            : 'bg-purple-600 text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2'
+                        }"
+                        ${ancestorBioLoading[member.id] ? 'disabled' : ''}
+                    >
+                        ${ancestorBioLoading[member.id] ? 'Generating Bio...' : 'Generate Ancestor Bio ✨'}
+                    </button>
+                    ${ancestorBioResponses[member.id] ? `
+                    <div class="mt-3 text-sm text-muted-text bg-input-bg p-3 rounded-md border border-border-color w-full overflow-auto max-h-40">
+                        <h5 class="font-semibold mb-1 text-text-light">Generated Bio:</h5>
+                        <p class="whitespace-pre-wrap">${ancestorBioResponses[member.id]}</p>
+                    </div>
+                    ` : ''}
                 `;
                 listContainer.appendChild(memberCard);
+
+                // Attach event listener for the generate bio button
+                const generateBioButton = memberCard.querySelector(`#generate-bio-${member.id}`);
+                if (generateBioButton) {
+                    generateBioButton.onclick = () => window.generateAncestorBio(member.id, member.memberName, member.memberRelationship, member.memberCurrentLocation);
+                }
             });
         }
 
+        // Function to generate an ancestor bio using Gemini API
+        window.generateAncestorBio = async function(memberId, memberName, memberRelationship, memberLocation) {
+            // Update loading state
+            ancestorBioLoading = { ...ancestorBioLoading, [memberId]: true };
+            ancestorBioResponses = { ...ancestorBioResponses, [memberId]: "Generating a unique bio..." };
+            window.renderFamilyMembers(familyMembers); // Re-render to show loading state
+
+            const locationPart = memberLocation ? ` from ${memberLocation}` : '';
+            const prompt = `Write a short, imaginative, and positive biography (max 3 sentences) for a historical or mythical figure named '${memberName}'. Describe their role or essence based on their relationship '${memberRelationship}' and their location '${locationPart || 'an unspecified land'}'. Keep it concise and inspiring.`;
+
+            try {
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    ancestorBioResponses = { ...ancestorBioResponses, [memberId]: text };
+                } else {
+                    ancestorBioResponses = { ...ancestorBioResponses, [memberId]: "Could not generate bio. Please try again." };
+                }
+            } catch (error) {
+                console.error("Error calling Gemini API for bio:", error);
+                ancestorBioResponses = { ...ancestorBioResponses, [memberId]: "Error generating bio." };
+            } finally {
+                ancestorBioLoading = { ...ancestorBioLoading, [memberId]: false };
+                window.renderFamilyMembers(familyMembers); // Re-render the family members section to update UI
+            }
+        }
+
         // --- Family Map (Leaflet) ---
-        function initFamilyMap(members) {
+        window.initFamilyMap = function(members) {
             const mapContainer = document.getElementById("family-map-container");
             if (!mapContainer) return;
 
@@ -1745,53 +2418,34 @@
 
 
         // --- Travel Hub Functions ---
-        function simulateBooking(event, serviceType) {
+        window.simulateBooking = function(event, serviceType) {
             event.preventDefault();
-            showMessage(`Booking ${serviceType} via Fruitful (simulated)...`, "info");
+            window.showMessage(`Booking ${serviceType} via Fruitful (simulated)...`, "info");
             setTimeout(() => {
                 const success = Math.random() > 0.3; // 70% success rate
                 if (success) {
-                    showMessage(`${serviceType} booked successfully via Fruitful! Your itinerary is confirmed.`, "success");
+                    window.showMessage(`${serviceType} booked successfully via Fruitful! Your itinerary is confirmed.`, "success");
                 } else {
-                    showMessage(`Failed to book ${serviceType}. Please try again later or contact Fruitful support.`, "error");
+                    window.showMessage(`Failed to book ${serviceType}. Please try again later or contact Fruitful support.`, "error");
                 }
                 event.target.reset(); // Clear form fields
             }, 1500);
         }
 
-        // --- Family Calendar Functions ---
-        document.getElementById('addEventForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            if (!db || userId === 'anonymous') { return; } // Handled by offline mode
-
-            const newEvent = collectEventData();
-            if (newEvent) {
-                try {
-                    const collectionRef = collection(db, `artifacts/${appId}/users/${userId}/familyEvents`);
-                    await addDoc(collectionRef, { ...newEvent, timestamp: new Date(), userId: userId });
-                    showMessage("Event added successfully!", "success");
-                    e.target.reset();
-                } catch (error) {
-                    console.error("Error adding event to Firestore:", error);
-                    showMessage(`Failed to add event: ${error.message}`, "error");
-                }
-            }
-        });
-
-        function collectEventData() {
+        window.collectEventData = function() {
             const eventName = document.getElementById('eventName').value.trim();
             const eventDate = document.getElementById('eventDate').value;
             const eventTime = document.getElementById('eventTime').value;
             const eventDescription = document.getElementById('eventDescription').value.trim();
 
             if (!eventName || !eventDate) {
-                showMessage("Event Name and Date are required!", "warning");
+                window.showMessage("Event Name and Date are required!", "warning");
                 return null;
             }
             return { eventName, eventDate, eventTime, eventDescription };
         }
 
-        function renderUpcomingEvents(events) {
+        window.renderUpcomingEvents = function(events) {
             const listContainer = document.getElementById('upcomingEventsList');
             listContainer.innerHTML = '';
             const now = new Date();
@@ -1812,30 +2466,95 @@
 
             upcoming.forEach(event => {
                 const eventItem = document.createElement('div');
-                eventItem.className = 'card-bg p-3 rounded-lg text-text-light';
+                eventItem.className = 'card-bg p-3 rounded-lg text-text-light mb-2'; // Added mb-2 for spacing
                 eventItem.innerHTML = `
                     <p class="font-bold primary-text">${event.eventName}</p>
                     <p class="text-sm text-muted-text">
                         ${event.eventDate}${event.eventTime ? ` at ${event.eventTime}` : ''}
                     </p>
                     ${event.eventDescription ? `<p class="text-xs mt-1">${event.eventDescription}</p>` : ''}
+                    <button
+                        id="generate-event-ideas-${event.id}"
+                        class="mt-3 px-4 py-2 rounded-md font-semibold text-sm transition-colors duration-200 w-full
+                        ${eventIdeasLoading[event.id]
+                            ? 'bg-green-300 text-white cursor-not-allowed'
+                            : 'bg-green-600 text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2'
+                        }"
+                        ${eventIdeasLoading[event.id] ? 'disabled' : ''}
+                    >
+                        ${eventIdeasLoading[event.id] ? 'Generating Ideas...' : 'Suggest Event Ideas ✨'}
+                    </button>
+                    ${eventIdeasResponses[event.id] ? `
+                    <div class="mt-3 text-sm text-muted-text bg-input-bg p-3 rounded-md border border-border-color w-full overflow-auto max-h-40">
+                        <h5 class="font-semibold mb-1 text-text-light">Suggestions:</h5>
+                        <p class="whitespace-pre-wrap">${eventIdeasResponses[event.id]}</p>
+                    </div>
+                    ` : ''}
                 `;
                 listContainer.appendChild(eventItem);
+
+                const generateButton = eventItem.querySelector(`#generate-event-ideas-${event.id}`);
+                if (generateButton) {
+                    generateButton.onclick = () => window.generateEventIdeas(event.id, event.eventName, event.eventDescription);
+                }
             });
+        }
+
+        // Function to generate event ideas using Gemini API
+        window.generateEventIdeas = async function(eventId, eventName, eventDescription) {
+            eventIdeasLoading = { ...eventIdeasLoading, [eventId]: true };
+            eventIdeasResponses = { ...eventIdeasResponses, [eventId]: "Generating creative event ideas..." };
+            window.renderUpcomingEvents(familyEvents); // Re-render to show loading state
+
+            const prompt = `Suggest 3 creative themes or activity ideas for an event named '${eventName}' with description '${eventDescription || 'no additional details'}'. Focus on unique and engaging concepts suitable for a family or community gathering. Present them as a concise bulleted list.`;
+
+            try {
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    eventIdeasResponses = { ...eventIdeasResponses, [eventId]: text };
+                } else {
+                    eventIdeasResponses = { ...eventIdeasResponses, [eventId]: "Could not generate ideas. Please try again." };
+                }
+            } catch (error) {
+                console.error("Error calling Gemini API for event ideas:", error);
+                eventIdeasResponses = { ...eventIdeasResponses, [eventId]: "Error generating ideas." };
+            } finally {
+                eventIdeasLoading = { ...eventIdeasLoading, [eventId]: false };
+                window.renderUpcomingEvents(familyEvents); // Re-render to update UI
+            }
         }
 
 
         // --- Graphs Functions (using Chart.js) ---
         let contentTypeChartInstance;
         let familyLocationChartInstance;
+        let usageTrendsChartInstance; // Added for Analytics section
+        let performanceMetricsChartInstance; // Added for Analytics section
 
-        function updateAllCharts() {
-            updateContentTypeChart();
-            updateFamilyLocationChart();
+        window.updateAllCharts = function() {
+            window.updateContentTypeChart();
+            window.updateFamilyLocationChart();
+            window.updateUsageTrendsChart(); // Call to update new chart
+            window.updatePerformanceMetricsChart(); // Call to update new chart
             // Other chart updates can go here
         }
 
-        function updateContentTypeChart() {
+        window.updateContentTypeChart = function() {
             const ctx = document.getElementById('contentTypeChart')?.getContext('2d');
             if (!ctx) return; // Ensure canvas exists
 
@@ -1881,7 +2600,7 @@
             });
         }
 
-        function updateFamilyLocationChart() {
+        window.updateFamilyLocationChart = function() {
             const ctx = document.getElementById('familyLocationChart')?.getContext('2d');
             if (!ctx) return; // Ensure canvas exists
             
@@ -1895,7 +2614,7 @@
 
             const labels = Object.keys(locationCounts);
             const data = Object.values(locationCounts);
-            const colors = ['#3b82f6', '#a78bfa', '#22c55e', '#f59e0b', '#ef4444', '#10b981']; // Tailwind colors
+            const colors = ['#3b82f6', '#a78b4fa', '#22c55e', '#f59e0b', '#ef4444', '#10b981']; // Tailwind colors
 
             if (familyLocationChartInstance) {
                 familyLocationChartInstance.destroy();
@@ -1949,9 +2668,82 @@
             });
         }
 
+        // New Chart for Usage Trends (Analytics Section)
+        window.updateUsageTrendsChart = function() {
+            const ctx = document.getElementById('usageTrendsChart')?.getContext('2d');
+            if (!ctx) return;
+
+            if (usageTrendsChartInstance) {
+                usageTrendsChartInstance.destroy();
+            }
+
+            usageTrendsChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Daily Active Users',
+                        data: [1200, 1500, 1300, 1600, 1800, 2000, 1700],
+                        borderColor: 'var(--primary-color)',
+                        backgroundColor: 'rgba(34, 197, 94, 0.2)',
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: false }
+                    },
+                    scales: {
+                        x: { ticks: { color: 'var(--text-muted)' }, grid: { color: 'rgba(255, 255, 255, 0.1)' } },
+                        y: { beginAtZero: true, ticks: { color: 'var(--text-muted)' }, grid: { color: 'rgba(255, 255, 255, 0.1)' } }
+                    }
+                }
+            });
+        }
+
+        // New Chart for Performance Metrics (Analytics Section)
+        window.updatePerformanceMetricsChart = function() {
+            const ctx = document.getElementById('performanceMetricsChart')?.getContext('2d');
+            if (!ctx) return;
+
+            if (performanceMetricsChartInstance) {
+                performanceMetricsChartInstance.destroy();
+            }
+
+            performanceMetricsChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Latency (ms)', 'Throughput (req/s)', 'Error Rate (%)'],
+                    datasets: [{
+                        label: 'Metrics',
+                        data: [50, 120, 0.5],
+                        backgroundColor: ['var(--secondary-color)', 'var(--ancestortag-primary)', 'var(--primary-color)'],
+                        borderColor: ['var(--secondary-color)', 'var(--ancestortag-primary)', 'var(--primary-color)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: false }
+                    },
+                    scales: {
+                        x: { ticks: { color: 'var(--text-muted)' }, grid: { color: 'rgba(255, 255, 255, 0.1)' } },
+                        y: { beginAtZero: true, ticks: { color: 'var(--text-muted)' }, grid: { color: 'rgba(255, 255, 255, 0.1)' } }
+                    }
+                }
+            });
+        }
+
 
         // This function initializes the Leaflet map (for general "Maps" section)
-        function initLeafletMap() {
+        window.initLeafletMap = function() {
             const mapContainer = document.getElementById("leaflet-map-container");
             if (!mapContainer || leafletMapInstance) return; // Prevent re-initialization
 
@@ -1966,7 +2758,7 @@
             marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
         }
 
-        function showSection(sectionId) {
+        window.showSection = function(sectionId) {
             document.querySelectorAll('main section').forEach(section => {
                 section.classList.add('hidden');
             });
@@ -1990,7 +2782,7 @@
             if (sectionId === 'music') {
                 musicSubSidebar.classList.remove('hidden');
                 musicSubSidebar.classList.add('flex');
-                showMusicSubSection(activeMusicSubSection);
+                window.showMusicSubSection(activeMusicSubSection);
             } else {
                 musicSubSidebar.classList.add('hidden');
                 musicSubSidebar.classList.remove('flex');
@@ -2007,20 +2799,27 @@
                     document.body.appendChild(script);
                     googleMapScriptLoaded = true;
                 }
-                initLeafletMap();
+                window.initLeafletMap();
             } else if (sectionId === 'family-tree') {
                 // Ensure family map is initialized/updated when family tree section is active
-                 if (db && userId !== 'anonymous') { // If online, data is already fetched by listener
-                     initFamilyMap(familyMembers);
-                 } else { // Offline mode
-                    initFamilyMap(offlineFamilyMembers);
-                 }
-            } else if (sectionId === 'graphs') {
-                updateAllCharts();
+                   if (db && userId !== 'anonymous') { // If online, data is already fetched by listener
+                       window.initFamilyMap(familyMembers);
+                   } else { // Offline mode
+                       window.initFamilyMap(offlineFamilyMembers);
+                   }
+            } else if (sectionId === 'graphs' || sectionId === 'analytics') { // Call charts for both graphs and analytics
+                window.updateAllCharts();
+            } else if (sectionId === 'fruitful-sectors') {
+                window.renderFruitfulSectors(); // Render the new fruitful sectors section
+            } else if (sectionId === 'gift-lists') {
+                window.renderGiftList('christmas', offlineChristmasList);
+                window.renderGiftList('birthday', offlineBirthdayList);
+            } else if (sectionId === 'family-calendar') { // Added to ensure events are rendered on section switch
+                window.renderUpcomingEvents(familyEvents);
             }
         }
 
-        function showMusicSubSection(subSectionId) {
+        window.showMusicSubSection = function(subSectionId) {
             activeMusicSubSection = subSectionId;
 
             document.querySelectorAll('#music > div').forEach(subSection => {
@@ -2046,7 +2845,7 @@
         // --- Productivity Features (Notes & To-Do List) ---
 
         // Notes
-        function loadNotes() {
+        window.loadNotes = function() {
             const notesTextarea = document.getElementById('personalNotes');
             if (notesTextarea) {
                 if (db && userId !== 'anonymous') {
@@ -2059,26 +2858,8 @@
             }
         }
 
-        document.getElementById('saveNotesBtn').addEventListener('click', () => {
-            const notesTextarea = document.getElementById('personalNotes');
-            const notesStatus = document.getElementById('notesStatus');
-            if (notesTextarea) {
-                const noteContent = notesTextarea.value;
-                if (db && userId !== 'anonymous') {
-                    // In a real Firestore implementation, you'd save the note to a document
-                    // e.g., setDoc(doc(db, `artifacts/${appId}/users/${userId}/notes/myNote`), { content: noteContent });
-                    localStorage.setItem('personalNotesData', noteContent); // Fallback for demo
-                    showMessage("Notes saved to Cloud (Simulated)!", "success");
-                } else {
-                    localStorage.setItem('personalNotesData', noteContent);
-                    showMessage("Notes saved (Offline Mode)!", "success");
-                }
-                notesStatus.textContent = "Last saved: " + new Date().toLocaleTimeString();
-            }
-        });
-
         // To-Do List
-        function renderTodos() {
+        window.renderTodos = function() {
             const todoListContainer = document.getElementById('todoList');
             todoListContainer.innerHTML = '';
             const todos = (db && userId !== 'anonymous') ? offlineTodos : offlineTodos; // Use offlineTodos for demo simplicity
@@ -2092,9 +2873,9 @@
                 const todoItem = document.createElement('div');
                 todoItem.className = `todo-item ${task.completed ? 'completed' : ''}`;
                 todoItem.innerHTML = `
-                    <input type="checkbox" class="mr-3" ${task.completed ? 'checked' : ''} onchange="toggleTodoCompletion('${task.id}')">
+                    <input type="checkbox" class="mr-3" ${task.completed ? 'checked' : ''} onchange="window.toggleTodoCompletion('${task.id}')">
                     <span class="flex-grow">${task.text}</span>
-                    <button class="text-red-400 hover:text-red-500 ml-3" onclick="deleteTodo('${task.id}')">
+                    <button class="text-red-400 hover:text-red-500 ml-3" onclick="window.deleteTodo('${task.id}')">
                         <i class="fas fa-trash"></i>
                     </button>
                 `;
@@ -2102,53 +2883,32 @@
             });
         }
 
-        document.getElementById('todoForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const todoInput = document.getElementById('todoInput');
-            const taskText = todoInput.value.trim();
-            if (taskText) {
-                if (db && userId !== 'anonymous') {
-                    // In real Firestore, you'd addDoc to a 'todos' collection
-                    offlineTodos.push({ id: `todo-${Date.now()}`, text: taskText, completed: false }); // Demo fallback
-                    localStorage.setItem('todoListData', JSON.stringify(offlineTodos));
-                    renderTodos();
-                    showMessage("Task added to Cloud (Simulated)!", "success");
-                } else {
-                    offlineTodos.push({ id: `todo-${Date.now()}`, text: taskText, completed: false });
-                    localStorage.setItem('todoListData', JSON.stringify(offlineTodos));
-                    renderTodos();
-                    showMessage("Task added (Offline Mode)!", "success");
-                }
-                todoInput.value = '';
-            }
-        });
-
-        function toggleTodoCompletion(id) {
+        window.toggleTodoCompletion = function(id) {
             const todos = (db && userId !== 'anonymous') ? offlineTodos : offlineTodos;
             const taskIndex = todos.findIndex(task => task.id === id);
             if (taskIndex > -1) {
                 todos[taskIndex].completed = !todos[taskIndex].completed;
                 localStorage.setItem('todoListData', JSON.stringify(todos)); // Update localStorage
-                renderTodos();
+                window.renderTodos();
             }
         }
 
-        function deleteTodo(id) {
+        window.deleteTodo = function(id) {
             const todos = (db && userId !== 'anonymous') ? offlineTodos : offlineTodos;
             const updatedTodos = todos.filter(task => task.id !== id);
             if (db && userId !== 'anonymous') {
-                 // In real Firestore, you'd deleteDoc from the collection
-                 localStorage.setItem('todoListData', JSON.stringify(updatedTodos)); // Demo fallback
+                    // In real Firestore, you'd deleteDoc from the collection
+                    localStorage.setItem('todoListData', JSON.stringify(updatedTodos)); // Demo fallback
             } else {
                 localStorage.setItem('todoListData', JSON.stringify(updatedTodos));
             }
             offlineTodos = updatedTodos; // Update the in-memory array
-            renderTodos();
-            showMessage("Task deleted!", "info");
+            window.renderTodos();
+            window.showMessage("Task deleted!", "info");
         }
 
         // --- Gift Lists ---
-        function renderGiftList(type, list) {
+        window.renderGiftList = function(type, list) {
             const listContainer = document.getElementById(`${type}List`);
             listContainer.innerHTML = '';
             if (list.length === 0) {
@@ -2157,18 +2917,43 @@
             }
             list.forEach(item => {
                 const itemDiv = document.createElement('div');
-                itemDiv.className = 'flex justify-between items-center bg-gray-700 p-2 rounded';
+                itemDiv.className = 'flex flex-col bg-gray-700 p-2 rounded mb-2'; // Adjusted for new content
                 itemDiv.innerHTML = `
-                    <span>${item.text}</span>
-                    <button class="text-red-400 hover:text-red-500" onclick="deleteGiftItem('${type}', '${item.id}')">
-                        <i class="fas fa-trash"></i>
+                    <div class="flex justify-between items-center w-full">
+                        <span>${item.text}</span>
+                        <button class="text-red-400 hover:text-red-500 ml-3" onclick="window.deleteGiftItem('${type}', '${item.id}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    <button
+                        id="generate-gift-item-${item.id}"
+                        class="mt-2 px-3 py-1 rounded-md font-semibold text-xs transition-colors duration-200 w-full
+                        ${giftIdeasLoading[item.id]
+                            ? 'bg-blue-300 text-white cursor-not-allowed'
+                            : 'bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+                        }"
+                        ${giftIdeasLoading[item.id] ? 'disabled' : ''}
+                    >
+                        ${giftIdeasLoading[item.id] ? 'Generating Ideas...' : 'Generate Ideas ✨'}
                     </button>
+                    ${giftIdeasResponses[item.id] ? `
+                    <div class="mt-2 text-xs text-muted-text bg-input-bg p-2 rounded-md border border-border-color w-full overflow-auto max-h-20">
+                        <h5 class="font-semibold mb-1 text-text-light">Suggestions:</h5>
+                        <p class="whitespace-pre-wrap">${giftIdeasResponses[item.id]}</p>
+                    </div>
+                    ` : ''}
                 `;
                 listContainer.appendChild(itemDiv);
+
+                // Attach event listener for the generate gift ideas button
+                const generateButton = itemDiv.querySelector(`#generate-gift-item-${item.id}`);
+                if (generateButton) {
+                    generateButton.onclick = () => window.generateGiftIdeas(item.id, item.text, type);
+                }
             });
         }
 
-        function deleteGiftItem(type, id) {
+        window.deleteGiftItem = function(type, id) {
             let list = (type === 'christmas') ? offlineChristmasList : offlineBirthdayList;
             const updatedList = list.filter(item => item.id !== id);
             if (type === 'christmas') {
@@ -2178,44 +2963,56 @@
                 offlineBirthdayList = updatedList;
                 localStorage.setItem('birthdayListData', JSON.stringify(offlineBirthdayList));
             }
-            renderGiftList(type, updatedList);
-            showMessage("Gift idea deleted!", "info");
+            window.renderGiftList(type, updatedList);
+            window.showMessage("Gift idea deleted!", "info");
+        }
+
+        // Function to generate gift ideas using Gemini API
+        window.generateGiftIdeas = async function(itemId, itemText, listType) {
+            giftIdeasLoading = { ...giftIdeasLoading, [itemId]: true };
+            giftIdeasResponses = { ...giftIdeasResponses, [itemId]: "Generating gift suggestions..." };
+            window.renderGiftList(listType, (listType === 'christmas' ? offlineChristmasList : offlineBirthdayList)); // Re-render to show loading state
+
+            // Try to extract a person's name or a general item description
+            let personMatch = itemText.match(/for\s+([A-Za-z\s]+)/i);
+            let personOrItem = personMatch ? personMatch[1].trim() : itemText.toLowerCase().replace(/^(a|an|the)\s+/, '').trim();
+            
+            const occasion = listType === 'christmas' ? 'Christmas' : 'a Birthday';
+            const prompt = `Suggest 3 unique gift ideas for '${personOrItem}' for ${occasion}. If '${personOrItem}' sounds like a person, suggest gifts for a person. If it sounds like a general item, suggest variations or related items. Be concise and creative.`;
+
+            try {
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    giftIdeasResponses = { ...giftIdeasResponses, [itemId]: text };
+                } else {
+                    giftIdeasResponses = { ...giftIdeasResponses, [itemId]: "Could not generate ideas. Please try again." };
+                }
+            } catch (error) {
+                console.error("Error calling Gemini API for gift ideas:", error);
+                giftIdeasResponses = { ...giftIdeasResponses, [itemId]: "Error generating ideas." };
+            } finally {
+                giftIdeasLoading = { ...giftIdeasLoading, [itemId]: false };
+                window.renderGiftList(listType, (listType === 'christmas' ? offlineChristmasList : offlineBirthdayList)); // Re-render to update UI
+            }
         }
 
 
         // --- Utilities Features ---
-
-        // Currency Converter
-        document.getElementById('currencyConverterForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const amount = parseFloat(document.getElementById('currencyAmount').value);
-            const fromCurrency = document.getElementById('fromCurrency').value;
-            const toCurrency = document.getElementById('toCurrency').value;
-            const resultDiv = document.getElementById('currencyResult');
-
-            if (isNaN(amount) || amount <= 0) {
-                showMessage("Please enter a valid amount.", "warning");
-                return;
-            }
-
-            // Simulated exchange rates relative to USD (very basic mock)
-            const rates = {
-                "USD": { "EUR": 0.92, "GBP": 0.79, "JPY": 159.00, "ZAR": 18.00, "USD": 1 },
-                "EUR": { "USD": 1.08, "GBP": 0.86, "JPY": 172.80, "ZAR": 19.50, "EUR": 1 },
-                "GBP": { "USD": 1.27, "EUR": 1.16, "JPY": 201.20, "ZAR": 22.80, "GBP": 1 },
-                "JPY": { "USD": 0.0063, "EUR": 0.0058, "GBP": 0.005, "ZAR": 0.11, "JPY": 1 },
-                "ZAR": { "USD": 0.055, "EUR": 0.051, "GBP": 0.044, "JPY": 9.00, "ZAR": 1 }
-            };
-
-            if (rates[fromCurrency] && rates[fromCurrency][toCurrency]) {
-                const convertedAmount = amount * rates[fromCurrency][toCurrency];
-                resultDiv.textContent = `Result: ${convertedAmount.toFixed(2)} ${toCurrency}`;
-                showMessage("Conversion successful (Simulated)!", "success");
-            } else {
-                resultDiv.textContent = `Result: Error`;
-                showMessage("Conversion not available for these currencies (Simulated).", "error");
-            }
-        });
 
         // Unit Converter
         const unitConversions = {
@@ -2236,10 +3033,12 @@
             }
         };
 
-        function initUnitConverterSelectors() {
+        window.initUnitConverterSelectors = function() {
             const unitTypeSelect = document.getElementById('unitType');
             const fromUnitSelect = document.getElementById('fromUnit');
             const toUnitSelect = document.getElementById('toUnit');
+
+            if (!unitTypeSelect || !fromUnitSelect || !toUnitSelect) return; // Ensure elements exist
 
             function updateUnitOptions() {
                 const selectedType = unitTypeSelect.value;
@@ -2275,111 +3074,23 @@
             updateUnitOptions(); // Initial population
         }
 
-        document.getElementById('unitConverterForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const value = parseFloat(document.getElementById('unitValue').value);
-            const unitType = document.getElementById('unitType').value;
-            const fromUnit = document.getElementById('fromUnit').value;
-            const toUnit = document.getElementById('toUnit').value;
-            const resultDiv = document.getElementById('unitResult');
-
-            if (isNaN(value)) {
-                showMessage("Please enter a valid numerical value.", "warning");
-                return;
-            }
-            if (fromUnit === toUnit) {
-                resultDiv.textContent = `Result: ${value} ${fromUnit}`;
-                showMessage("Units are the same.", "info");
-                return;
-            }
-
-            const conversionRates = unitConversions[unitType];
-            let convertedValue;
-
-            if (unitType === "temperature") {
-                // For temperature, conversions are functions
-                let valueInBase;
-                if (fromUnit === "celsius") valueInBase = value;
-                else if (fromUnit === "fahrenheit") valueInBase = (value - 32) * 5/9; // Convert to Celsius
-                else if (fromUnit === "kelvin") valueInBase = value - 273.15; // Convert to Celsius
-                else {
-                    showMessage("Unsupported temperature unit.", "error");
-                    return;
-                }
-
-                if (toUnit === "celsius") convertedValue = valueInBase;
-                else if (toUnit === "fahrenheit") convertedValue = (valueInBase * 9/5) + 32;
-                else if (toUnit === "kelvin") convertedValue = valueInBase + 273.15;
-                else {
-                    showMessage("Unsupported target temperature unit.", "error");
-                    return;
-                }
-
-            } else {
-                // For length and weight, use direct multiplication
-                // Convert from current unit to a base unit (e.g., meters for length, kilograms for weight)
-                let valueInBase;
-                if (fromUnit === "meters") valueInBase = value;
-                else if (fromUnit === "feet") valueInBase = value * 0.3048;
-                else if (fromUnit === "inches") valueInBase = value * 0.0254;
-                else if (fromUnit === "kilograms") valueInBase = value;
-                else if (fromUnit === "pounds") valueInBase = value * 0.453592;
-                else if (fromUnit === "ounces") valueInBase = value * 0.0283495;
-                else {
-                    showMessage("Unsupported 'from' unit.", "error");
-                    return;
-                }
-
-                // Convert from base unit to target unit
-                if (toUnit === "meters") convertedValue = valueInBase;
-                else if (toUnit === "feet") convertedValue = valueInBase / 0.3048;
-                else if (toUnit === "inches") convertedValue = valueInBase / 0.0254;
-                else if (toUnit === "kilograms") convertedValue = valueInBase;
-                else if (toUnit === "pounds") convertedValue = valueInBase / 0.453592;
-                else if (toUnit === "ounces") convertedValue = valueInBase / 0.0283495;
-                else {
-                    showMessage("Unsupported 'to' unit.", "error");
-                    return;
-                }
-            }
-            
-            resultDiv.textContent = `Result: ${convertedValue.toFixed(2)} ${toUnit}`;
-            showMessage("Conversion successful (Simulated)!", "success");
-        });
-
-
-        // Weather Forecast
-        document.getElementById('weatherForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const city = document.getElementById('weatherCity').value.trim();
-            const resultDiv = document.getElementById('weatherResult');
-
-            if (!city) {
-                showMessage("Please enter a city.", "warning");
-                return;
-            }
-
-            const temperatures = ["25°C / 77°F", "18°C / 64°F", "30°C / 86°F", "10°C / 50°F", "22°C / 72°F", "15°C / 59°F"];
-            const conditions = ["Sunny ☀️", "Partly Cloudy 🌤️", "Rainy 🌧️", "Stormy ⛈️", "Clear Night 🌙", "Foggy 🌫️", "Snowy ❄️"];
-
-            const randomTemp = temperatures[Math.floor(Math.random() * temperatures.length)];
-            const randomCondition = conditions[Math.floor(Math.random() * conditions.length)];
-
-            resultDiv.innerHTML = `Weather in ${city}: <br> <span class="font-bold text-xl">${randomTemp}</span>, ${randomCondition}`;
-            showMessage("Weather fetched (Simulated)!", "success");
-        });
 
         // --- Financial Hub Functions ---
-        function loadFunds() {
+        window.loadFunds = function() {
             if (db && userId !== 'anonymous') {
                 // In real app, fetch from Firestore. For demo, use offlineFunds
             }
-            document.getElementById('familySavingFundBalance').textContent = offlineFunds.familySavingFund.toFixed(2);
-            document.getElementById('personalSavingFundBalance').textContent = offlineFunds.personalSavingFund.toFixed(2);
-            document.getElementById('emergencyFundBalance').textContent = offlineFunds.emergencyFund.toFixed(2);
+            const familySavingFundBalance = document.getElementById('familySavingFundBalance');
+            if(familySavingFundBalance) familySavingFundBalance.textContent = offlineFunds.familySavingFund.toFixed(2);
+            
+            const personalSavingFundBalance = document.getElementById('personalSavingFundBalance');
+            if(personalSavingFundBalance) personalSavingFundBalance.textContent = offlineFunds.personalSavingFund.toFixed(2);
+            
+            const emergencyFundBalance = document.getElementById('emergencyFundBalance');
+            if(emergencyFundBalance) emergencyFundBalance.textContent = offlineFunds.emergencyFund.toFixed(2);
         }
 
-        function updateFund(fundType, operation) {
+        window.updateFund = function(fundType, operation) {
             let amountInputId;
             let fundKey;
             if (fundType === 'familySavingFund') {
@@ -2393,41 +3104,42 @@
                 fundKey = 'emergencyFund';
             }
 
-            const amount = parseFloat(document.getElementById(amountInputId).value);
+            const amountInput = document.getElementById(amountInputId);
+            const amount = parseFloat(amountInput.value);
 
             if (isNaN(amount) || amount <= 0) {
-                showMessage("Please enter a valid amount.", "warning");
+                window.showMessage("Please enter a valid amount.", "warning");
                 return;
             }
 
             if (operation === 'add') {
                 offlineFunds[fundKey] += amount;
-                showMessage(`$${amount.toFixed(2)} added to ${fundType.replace(/([A-Z])/g, ' $1').toLowerCase()}!`, "success");
+                window.showMessage(`$${amount.toFixed(2)} added to ${fundType.replace(/([A-Z])/g, ' $1').toLowerCase()}!`, "success");
             } else if (operation === 'subtract') {
                 if (offlineFunds[fundKey] >= amount) {
                     offlineFunds[fundKey] -= amount;
-                    showMessage(`$${amount.toFixed(2)} withdrawn from ${fundType.replace(/([A-Z])/g, ' $1').toLowerCase()}!`, "success");
+                    window.showMessage(`$${amount.toFixed(2)} withdrawn from ${fundType.replace(/([A-Z])/g, ' $1').toLowerCase()}!`, "success");
                 } else {
-                    showMessage("Insufficient funds.", "error");
+                    window.showMessage("Insufficient funds.", "error");
                     return;
                 }
             }
             localStorage.setItem('financialFundsData', JSON.stringify(offlineFunds));
-            loadFunds(); // Update display
-            document.getElementById(amountInputId).value = ''; // Clear input
+            window.loadFunds(); // Update display
+            amountInput.value = ''; // Clear input
         }
 
-        function simulatePayPalTransfer(fundType) {
+        window.simulatePayPalTransfer = function(fundType) {
             const fundName = fundType.replace(/([A-Z])/g, ' $1').toLowerCase();
-            showMessage(`Initiating PayPal transfer for ${fundName} (SIMULATED)...`, "info");
+            window.showMessage(`Initiating PayPal transfer for ${fundName} (SIMULATED)...`, "info");
             setTimeout(() => {
-                showMessage(`PayPal transfer for ${fundName} completed (SIMULATED)! This would typically redirect to PayPal for authorization.`, "success");
+                window.showMessage(`PayPal transfer for ${fundName} completed (SIMULATED)! This would typically redirect to PayPal for authorization.`, "success");
             }, 2000);
         }
 
 
         // --- Profile Section ---
-        function previewProfileImage(event) {
+        window.previewProfileImage = function(event) {
             const reader = new FileReader();
             reader.onload = function(){
                 const output = document.getElementById('profileImagePreview');
@@ -2443,12 +3155,14 @@
         document.addEventListener('DOMContentLoaded', () => {
             const savedImage = localStorage.getItem('profileImage');
             if (savedImage) {
-                document.getElementById('profileImagePreview').src = savedImage;
+                const profileImagePreview = document.getElementById('profileImagePreview');
+                if (profileImagePreview) profileImagePreview.src = savedImage;
             }
             // Other initializations here
         });
 
         // --- Gemini API Integration ---
+        // This API key is used for the general AI Gemini, Coding Partner, and Career Guide sections
         const GEMINI_API_KEY = "AIzaSyBGSDZATtITv5iIoB3rgKHBpWx9MrufxXE";
 
         async function callGeminiAPI(prompt, responseDiv, errorDiv) {
@@ -2468,10 +3182,15 @@
             }
 
             try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+
+                const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                    body: JSON.stringify(payload)
                 });
 
                 if (!response.ok) {
@@ -2491,14 +3210,16 @@
             }
         }
 
-        document.getElementById('sendGeminiPrompt').addEventListener('click', async () => {
+        const sendGeminiPromptBtn = document.getElementById('sendGeminiPrompt');
+        if (sendGeminiPromptBtn) sendGeminiPromptBtn.addEventListener('click', async () => {
             const promptText = document.getElementById('geminiPrompt').value.trim();
             const responseDiv = document.getElementById('geminiResponse');
             const errorDiv = document.getElementById('geminiError');
             callGeminiAPI(promptText, responseDiv, errorDiv);
         });
 
-        document.getElementById('sendCodingPrompt').addEventListener('click', async () => {
+        const sendCodingPromptBtn = document.getElementById('sendCodingPrompt');
+        if (sendCodingPromptBtn) sendCodingPromptBtn.addEventListener('click', async () => {
             const codingPromptText = document.getElementById('codingPrompt').value.trim();
             const responseDiv = document.getElementById('codingResponse');
             const errorDiv = document.getElementById('codingError');
@@ -2506,7 +3227,8 @@
             callGeminiAPI(fullPrompt, responseDiv, errorDiv);
         });
 
-        document.getElementById('sendCareerPrompt').addEventListener('click', async () => {
+        const sendCareerPromptBtn = document.getElementById('sendCareerPrompt');
+        if (sendCareerPromptBtn) sendCareerPromptBtn.addEventListener('click', async () => {
             const careerPromptText = document.getElementById('careerPrompt').value.trim();
             const responseDiv = document.getElementById('careerResponse');
             const errorDiv = document.getElementById('careerError');
@@ -2514,13 +3236,164 @@
             callGeminiAPI(fullPrompt, responseDiv, errorDiv);
         });
 
-        document.getElementById('sendAdminAIPrompt').addEventListener('click', async () => {
+        const sendAdminAIPromptBtn = document.getElementById('sendAdminAIPrompt');
+        if (sendAdminAIPromptBtn) sendAdminAIPromptBtn.addEventListener('click', async () => {
             const adminPromptText = document.getElementById('adminAIPrompt').value.trim();
             const responseDiv = document.getElementById('adminAIResponse');
             const errorDiv = document.getElementById('adminAIError');
             const fullPrompt = `Act as an admin assistant for a dashboard. ${adminPromptText}`;
             callGeminiAPI(fullPrompt, responseDiv, errorDiv);
         });
+
+        // --- Fruitful Sectors Display Logic (Vanilla JS adaptation of React component) ---
+
+        window.renderFruitfulSectors = function() {
+            const container = document.getElementById('fruitfulSectorsContainer');
+            if (!container) return; // Ensure the container exists
+
+            container.innerHTML = ''; // Clear previous content
+
+            const gridDiv = document.createElement('div');
+            gridDiv.className = "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6";
+
+            Object.entries(mainSectorList).forEach(([key, value]) => {
+                const [emoji, ...textParts] = value.split(' ');
+                const text = textParts.join(' ');
+
+                const isFruitfulSector = key === "fruitful";
+                const isExpanded = isFruitfulSector && fruitfulExpandedSector === key;
+
+                const cardDiv = document.createElement('div');
+                cardDiv.className = `bg-card-bg rounded-xl shadow-lg transition-all duration-300 p-6 flex flex-col items-center text-center border border-dark transform ${isFruitfulSector ? 'cursor-pointer hover:shadow-xl hover:-translate-y-1' : ''}`;
+                cardDiv.innerHTML = `
+                    <div class="text-5xl mb-4 leading-none animate-bounce-once">
+                      ${emoji}
+                    </div>
+                    <h3 class="text-lg font-semibold text-text-light mb-1">
+                      ${text}
+                    </h3>
+                    <p class="text-sm text-muted-text italic">
+                      (${key})
+                    </p>
+                    ${isFruitfulSector ? `<span class="mt-2 text-primary-color text-xs font-medium">
+                      ${isExpanded ? 'Click to collapse' : 'Click to expand'}
+                    </span>` : ''}
+                `;
+
+                if (isFruitfulSector) {
+                    cardDiv.onclick = () => {
+                        fruitfulExpandedSector = (fruitfulExpandedSector === key) ? null : key;
+                        window.renderFruitfulSectors(); // Re-render the section to reflect state change
+                    };
+                }
+                gridDiv.appendChild(cardDiv);
+
+                if (isExpanded) {
+                    const nestedContainer = document.createElement('div');
+                    nestedContainer.className = "col-span-full bg-medium-dark-bg rounded-xl p-6 mt-4 shadow-inner border border-dark";
+                    nestedContainer.innerHTML = `
+                        <h4 class="text-xl font-bold primary-text mb-4 text-center">
+                            Nested Sectors (Fruitful Expansion)
+                        </h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="nestedSectorsGrid">
+                            <!-- Nested sectors will be injected here -->
+                        </div>
+                    `;
+                    gridDiv.appendChild(nestedContainer);
+
+                    const nestedGrid = nestedContainer.querySelector('#nestedSectorsGrid');
+                    Object.entries(nestedSectorList).forEach(([nestedKey, nestedValue]) => {
+                        const [nestedEmoji, ...nestedTextParts] = nestedValue.split(' ');
+                        const nestedText = nestedTextParts.join(' ');
+
+                        const nestedCard = document.createElement('div');
+                        nestedCard.className = "bg-card-bg rounded-lg shadow-sm p-4 flex flex-col justify-between items-start space-y-3 border border-border-color";
+                        nestedCard.innerHTML = `
+                            <div class="flex items-center space-x-3 w-full">
+                                <div class="text-3xl leading-none">
+                                    ${nestedEmoji}
+                                </div>
+                                <div>
+                                    <p class="text-md font-medium text-text-light">
+                                        ${nestedText}
+                                    </p>
+                                    <p class="text-xs text-muted-text italic">
+                                        (${nestedKey})
+                                    </p>
+                                </div>
+                            </div>
+                            <button
+                                id="generate-insights-${nestedKey}"
+                                class="w-full px-4 py-2 rounded-md font-semibold text-sm transition-colors duration-200
+                                ${fruitfulLoadingLlm[nestedKey]
+                                    ? 'bg-primary-color opacity-70 cursor-not-allowed text-white' // Using a primary color from the HTML's palette
+                                    : 'bg-primary-color text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-primary-color focus:ring-offset-2'
+                                }"
+                                ${fruitfulLoadingLlm[nestedKey] ? 'disabled' : ''}
+                            >
+                                ${fruitfulLoadingLlm[nestedKey] ? 'Generating...' : 'Generate Insights ✨'}
+                            </button>
+                            ${fruitfulLlmResponses[nestedKey] ? `
+                            <div class="mt-3 text-sm text-muted-text bg-input-bg p-3 rounded-md border border-border-color w-full overflow-auto max-h-40">
+                                <h5 class="font-semibold mb-1 text-text-light">Insights:</h5>
+                                <p class="whitespace-pre-wrap">${fruitfulLlmResponses[nestedKey]}</p>
+                            </div>
+                            ` : ''}
+                        `;
+                        nestedGrid.appendChild(nestedCard);
+
+                        // Attach event listener for the generate insights button
+                        const generateButton = nestedCard.querySelector(`#generate-insights-${nestedKey}`);
+                        if (generateButton) {
+                            generateButton.onclick = () => window.handleGenerateInsights(nestedKey, nestedValue);
+                        }
+                    });
+                }
+            });
+
+            container.appendChild(gridDiv);
+        }
+
+        // Function to handle generating insights for a nested sector using Gemini API
+        window.handleGenerateInsights = async function(nestedKey, nestedValue) {
+            // Update loading state
+            fruitfulLoadingLlm = { ...fruitfulLoadingLlm, [nestedKey]: true };
+            fruitfulLlmResponses = { ...fruitfulLlmResponses, [nestedKey]: "Generating response..." };
+            window.renderFruitfulSectors(); // Re-render to show loading state
+
+            const prompt = `Provide 3 innovative use cases or future insights for the sector: '${nestedValue}'. Present them as a concise bulleted list.`;
+
+            try {
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                // Use the GEMINI_API_KEY from the parent HTML scope
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    fruitfulLlmResponses = { ...fruitfulLlmResponses, [nestedKey]: text };
+                } else {
+                    fruitfulLlmResponses = { ...fruitfulLlmResponses, [nestedKey]: "Could not generate insights. Please try again." };
+                }
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                fruitfulLlmResponses = { ...fruitfulLlmResponses, [nestedKey]: "Error generating insights." };
+            } finally {
+                fruitfulLoadingLlm = { ...fruitfulLoadingLlm, [nestedKey]: false };
+                window.renderFruitfulSectors(); // Re-render the entire fruitful sectors section to update UI based on new state
+            }
+        }
     </script>
 </body>
 </html>
