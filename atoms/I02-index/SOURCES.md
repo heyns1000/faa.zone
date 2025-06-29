@@ -18,3 +18,4 @@
 | 12 | 2025-06-20 | seedwave | history | `index.html` | `a96c25d4` | Seedwave™ - Global Pulse of Expansion | 21246 | 14 | 2 | 42.0 |
 | 13 | 2025-06-20 | seedwave | history | `public/homepage.html` | `f1117be5` | Seedwave™ - Global Pulse of Expansion | 21247 | 14 | 2 | 42.0 |
 | 14 | 2025-06-25 | careers | main | `public/index.html` | `b9923b79` | FAA.ZONE™ | Careers | 17537 | 26 | 4 | 60.8 |
+| 15 | 2025-06-29 | mining.seedwave.faa.zone | history | `index.html` | `750411a1` | Fruitful™ | About Us: Thabo Ntlatleng | 152650 | 191 | 15 | 270.3 |
