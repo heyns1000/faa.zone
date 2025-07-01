@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="dynamicTitle">Fruitful Global™ | Sector Index</title>
+    <link rel="icon" href="/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Leaflet CSS for OpenStreetMap -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-     crossorigin=""/>
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
@@ -19,7 +20,7 @@
             --primary-color: #22c55e; /* Vibrant green */
             --secondary-color: #3b82f6; /* Blue for accents */
             --dark-bg-dashboard: #1a1a1d; /* Deep charcoal for dashboard specific elements */
-            --medium-dark-bg-dashboard: #2a2a2e; /* Slightly lighter charcoal for dashboard specifics */
+            --medium-dark-dashboard: #2a2a2e; /* Slightly lighter charcoal for dashboard specifics */
             --card-bg-dashboard: #374151; /* Dark gray for dashboard cards */
             --text-light-dashboard: #e0e0e0;
             --text-muted-dashboard: #9ca3af;
@@ -58,7 +59,6 @@
         /* Custom Scrollbar Styling for Dark Theme */
         ::-webkit-scrollbar {
             width: 8px;
-            height: 8px;
         }
         ::-webkit-scrollbar-track {
             background: #1a1b20; /* Darker track */
@@ -295,7 +295,7 @@
         .feature-card div:first-child { /* Icon */
             font-size: 3rem;
             margin-bottom: 1.5rem;
-            color: var(--primary-color); /* Electric blue for icons */
+            color: var(--sector-primary-color); /* Electric blue for icons */
             text-shadow: 0 0 15px rgba(0, 191, 255, 0.6); /* Icon glow */
         }
         .feature-card h4 {
@@ -373,7 +373,7 @@
             font-size: 3rem;
             font-weight: 800;
             color: var(--sector-text-color);
-            text-shadow: 0 0 15px rgba(255,255,255,0.5); /* Stronger glow for textGlow keyframes to reference */
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
             animation: textGlow 3s infinite alternate;
         }
         @keyframes textGlow {
@@ -701,8 +701,8 @@
         #fruitful-dashboard-wrapper {
             background-color: #0d1117; /* Use main body background for wrapper */
         }
-        .dashboard-header-bg { background-color: var(--medium-dark-bg-dashboard); }
-        .dashboard-sidebar-bg { background-color: var(--medium-dark-bg-dashboard); }
+        .dashboard-header-bg { background-color: var(--medium-dark-dashboard); }
+        .dashboard-sidebar-bg { background-color: var(--medium-dark-dashboard); }
         .dashboard-main-content-bg { background-color: #121317; } /* Use a slightly different dark tone */
         .dashboard-card-bg { background-color: var(--card-bg-dashboard); }
         .dashboard-primary-text { color: var(--primary-color); }
@@ -1062,30 +1062,38 @@
     <header class="py-4 px-6 md:px-12 flex justify-between items-center text-white">
         <h1 id="headerFruitfulText" class="text-2xl font-extrabold tracking-tight">Fruitful™</h1>
         <nav class="flex items-center space-x-4">
-            <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" onclick="showMainSection('hero-section')">Home</a>
-            <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" onclick="showMainSection('features')">Features</a>
-            <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" id="headerCoreBrandLink" onclick="showMainSection('core-brand-landing-page')">Core Brand</a>
-            <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" onclick="showMainSection('shareprice')">Signal</a>
-            <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" onclick="showMainSection('vault-access')">Vault</a>
-            <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" onclick="showMainSection('treaty')">Treaty</a>
-            <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" onclick="showMainSection('vaultmesh')">VaultMesh™</a>
-            <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" onclick="showMainSection('about')">About</a>
-            <a href="javascript:void(0)" class="header-nav-item px-4 py-2 rounded-full font-semibold transition-colors duration-200 header-sign-up" onclick="showMainSection('sign-up-section')">Sign Up</a>
-            <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" onclick="showMainSection('sign-in-section')">Sign In</a>
-            <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" onclick="showMainSection('fruitful-dashboard-wrapper')">Dashboard</a>
-            <!-- New: Sector Index dropdown -->
+            <a href="#" class="header-nav-item transition-colors duration-200" data-section-id="hero-section">Home</a>
+            <a href="#" class="header-nav-item transition-colors duration-200" data-section-id="features">Features</a>
+            <a href="#" class="header-nav-item transition-colors duration-200" id="headerCoreBrandLink" data-section-id="core-brand-landing-page">Core Brand</a>
+            <a href="#" class="header-nav-item transition-colors duration-200" data-section-id="shareprice">Signal</a>
+            <a href="#" class="header-nav-item transition-colors duration-200" data-section-id="vault-access">Vault</a>
+            <a href="#" class="header-nav-item transition-colors duration-200" data-section-id="treaty">Treaty</a>
+            <a href="#" class="header-nav-item transition-colors duration-200" data-section-id="vaultmesh">VaultMesh™</a>
+            <a href="#" class="header-nav-item transition-colors duration-200" data-section-id="about">About</a>
+            <a href="https://fruitfulcratedance.com/" class="transition-colors duration-200">Fruitful Crate Dance</a>
+            <a href="https://faa.zone/careers/hiring-homepage.html" class="transition-colors duration-200">Careers</a>
+            <a href="https://faa.zone/legal/securesign.html" class="transition-colors duration-200 font-semibold px-4 py-2 rounded-full header-sign-up">SecureSign</a>
+            <a href="#" class="px-4 py-2 rounded-full font-semibold transition-colors duration-200 header-sign-up" data-section-id="sign-up-section">Sign Up</a>
+            <a href="#" class="transition-colors duration-200" data-section-id="sign-in-section">Sign In</a>
+            <a href="#" class="header-nav-item transition-colors duration-200" data-section-id="fruitful-dashboard-wrapper">Dashboard</a>
             <div class="relative group">
                 <button class="header-nav-item transition-colors duration-200 focus:outline-none flex items-center">
                     Sector Index <i class="fas fa-chevron-down ml-2 text-xs"></i>
                 </button>
                 <div id="sectorDropdown" class="absolute right-0 mt-2 w-64 bg-gray-800 rounded-lg shadow-lg py-2 hidden group-hover:block transition-all duration-300 ease-out transform scale-y-0 origin-top opacity-0">
-                    <!-- Sector links will be dynamically populated here -->
-                </div>
+                    </div>
             </div>
         </nav>
     </header>
 
-    <!-- Landing Page Sections -->
+    <div class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50">
+        <button id="goToDashboardBtn"
+                class="px-6 py-3 bg-purple-600 text-white font-bold rounded-full shadow-lg hover:bg-purple-700 transition duration-300 transform hover:scale-105 flex items-center space-x-2">
+            <i class="fas fa-tachometer-alt"></i> <span>Go to Dashboard (Dev Access)</span>
+        </button>
+    </div>
+
+
     <section id="hero-section" class="landing-section text-center">
         <div class="hero-content">
             <h2 class="text-5xl md:text-6xl font-extrabold mb-6 leading-tight" id="heroHeadline">
@@ -1094,20 +1102,11 @@
             <p class="text-xl md:text-2xl mb-10 max-w-2xl mx-auto" id="heroSubtitle">
                 Discover a new era of collaboration and sustainable growth with Fruitful™'s cutting-edge platform.
             </p>
-            <a href="javascript:void(0)" class="cta-button" id="heroCtaButton" onclick="showMainSection('cta-landing')">
+            <a href="#" class="cta-button" id="heroCtaButton" data-section-id="cta-landing">
                 Get Started Today <span>🚀</span>
             </a>
         </div>
     </section>
-
-    <!-- New: Direct Dashboard Access Button for Development -->
-    <div class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50">
-        <button onclick="showMainSection('fruitful-dashboard-wrapper')"
-                class="px-6 py-3 bg-purple-600 text-white font-bold rounded-full shadow-lg hover:bg-purple-700 transition duration-300 transform hover:scale-105 flex items-center space-x-2">
-            <i class="fas fa-tachometer-alt"></i> <span>Go to Dashboard (Dev Access)</span>
-        </button>
-    </div>
-
 
     <section id="features" class="landing-section py-16 md:py-24 px-6 md:px-12 text-center">
         <div class="max-w-6xl mx-auto">
@@ -1115,12 +1114,10 @@
                 Unlock Your Potential with Our Core Features
             </h3>
             <div id="featuresGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Feature cards will be dynamically loaded here -->
-            </div>
+                </div>
         </div>
     </section>
 
-    <!-- Featured Core Brand Section (Dynamically rendered) -->
     <section id="featured-core-brand-section" class="landing-section featured-core-brand-section">
         <h2 id="featuredCoreBrandTitle">✨ Featured Core Brand: Fruitful Innovations™ ✨</h2>
         <p id="featuredCoreBrandDescription">
@@ -1129,7 +1126,7 @@
         <p id="featuredCoreBrandSubDescription">
             Learn about its mission, unique value proposition, and how it contributes to the Fruitful™ ecosystem.
         </p>
-        <a href="javascript:void(0)" class="cta-button" id="featuredCoreBrandCtaButton" onclick="showMainSection('core-brand-landing-page')">
+        <a href="#" class="cta-button" id="featuredCoreBrandCtaButton" data-section-id="core-brand-landing-page">
             Discover Brand <i class="fas fa-arrow-right"></i>
         </a>
     </section>
@@ -1177,20 +1174,16 @@
         </div>
 
         <div id="terminalButtons" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            <!-- Terminal buttons will be dynamically loaded here -->
-        </div>
+            </div>
     </section>
 
     <section id="sector-scrolls" class="landing-section py-16 px-6 text-center bg-gray-800">
         <h2 class="text-4xl font-bold mb-8">🧬 Sector Scrolls</h2>
         <div id="sectorGlyphGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
-            <!-- Sector glyphs will be dynamically loaded here -->
-        </div>
+            </div>
     </section>
 
     <div id="sector-content-container" class="mt-10 px-6 max-w-6xl mx-auto">
-        <!-- Dynamic sector content will be loaded here -->
-        <!-- These hidden sections are placeholders for showSectorPanel -->
         <div id="embedded-payroll-snapshot" class="brand-snapshot hidden"></div>
         <div id="embedded-retail-snapshot" class="brand-snapshot hidden"></div>
         <div id="embedded-ai-logic-snapshot" class="brand-snapshot hidden"></div>
@@ -1366,13 +1359,12 @@
             <p class="text-xl mb-10">
                 Join the Fruitful™ community today and start your journey towards innovation, connection, and a sustainable tomorrow.
             </p>
-            <a href="javascript:void(0)" class="cta-button" onclick="showMainSection('sign-up-section')">
+            <a href="#" class="cta-button" data-section-id="sign-up-section">
                 Sign Up Now
             </a>
         </div>
     </section>
 
-    <!-- Core Brand Landing Page Content (Dynamic) -->
     <section id="core-brand-landing-page" class="hidden content-section">
         <canvas id="core-brand-canvas"></canvas>
         <div class="core-brand-hero-content">
@@ -1381,41 +1373,39 @@
                 Discover this brand's world of thoughtful essentials & innovative solutions. For every purchase, we deliver the same item to a child in need, identified by the Baobab Security Network™'s data-driven insights.
             </p>
             <div class="button-container flex flex-wrap justify-center gap-4 mt-6">
-                <a href="javascript:void(0)" class="cta-button core-brand-cta-button" id="coreBrandExploreButton">
+                <a href="#" class="cta-button core-brand-cta-button" id="coreBrandExploreButton">
                     Explore Brand World <i class="fas fa-arrow-right"></i>
                 </a>
-                <a href="javascript:void(0)" target="_blank" class="cta-button core-brand-cta-button" id="coreBrandShopButton">
+                <a href="#" target="_blank" class="cta-button core-brand-cta-button" id="coreBrandShopButton">
                     Shop Now <i class="fas fa-external-link-alt"></i>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Sign In Section (New) -->
     <section id="sign-in-section" class="landing-section hidden py-16 md:py-24 px-6 md:px-12 text-center">
         <div class="auth-form-container">
             <h2>Sign In to Your Fruitful™ Account</h2>
-            <form id="signInForm" onsubmit="event.preventDefault(); handleSignIn();">
+            <form id="signInForm">
                 <label for="signInEmail">Email Address</label>
                 <input type="email" id="signInEmail" placeholder="your.email@example.com" required>
 
                 <label for="signInPassword">Password</label>
                 <input type="password" id="signInPassword" placeholder="********" required>
 
-                <button type="submit">Sign In</button>
+                <button type="submit" id="signInBtn">Sign In</button>
             </form>
             <p class="text-center mt-6 text-sm text-gray-400">
-                Don't have an account? <a href="javascript:void(0)" onclick="showMainSection('sign-up-section')">Sign Up Here</a>
+                Don't have an account? <a href="#" data-section-id="sign-up-section">Sign Up Here</a>
             </p>
             <div id="signInMessage" class="mt-4 text-red-400"></div>
         </div>
     </section>
 
-    <!-- Sign Up Section (New) -->
     <section id="sign-up-section" class="landing-section hidden py-16 md:py-24 px-6 md:px-12 text-center">
         <div class="auth-form-container">
             <h2>Create Your Fruitful™ Account</h2>
-            <form id="signUpForm" onsubmit="event.preventDefault(); handleSignUp();">
+            <form id="signUpForm">
                 <label for="signUpName">Full Name</label>
                 <input type="text" id="signUpName" placeholder="John Doe" required>
 
@@ -1428,49 +1418,48 @@
                 <label for="signUpConfirmPassword">Confirm Password</label>
                 <input type="password" id="signUpConfirmPassword" placeholder="********" required>
 
-                <button type="submit">Sign Up</button>
+                <button type="submit" id="signUpBtn">Sign Up</button>
             </form>
             <p class="text-center mt-6 text-sm text-gray-400">
-                Already have an account? <a href="javascript:void(0)" onclick="showMainSection('sign-in-section')">Sign In Here</a>
+                Already have an account? <a href="#" data-section-id="sign-in-section">Sign In Here</a>
             </p>
             <div id="signUpMessage" class="mt-4 text-red-400"></div>
         </div>
     </section>
 
 
-    <!-- Fruitful Dashboard Content (initially hidden) -->
     <div id="fruitful-dashboard-wrapper" class="hidden flex-grow main-content-bg">
         <div class="flex flex-grow dashboard-container">
             <nav class="dashboard-sidebar-bg dashboard-sidebar">
                 <h2 class="text-xl font-semibold dashboard-primary-text mb-4">Dashboard</h2>
-                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('overview')">
+                <a href="#" class="dashboard-sidebar-nav-item" data-dashboard-section-id="overview">
                     <i class="fas fa-tachometer-alt"></i> Sector Overview
                 </a>
-                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('core-brand-dashboard-panel')">
+                <a href="#" class="dashboard-sidebar-nav-item" data-dashboard-section-id="core-brand-dashboard-panel">
                     <i class="fas fa-gem"></i> Core Brand Details
                 </a>
-                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('sub-node-index')">
+                <a href="#" class="dashboard-sidebar-nav-item" data-dashboard-section-id="sub-node-index">
                     <i class="fas fa-network-wired"></i> Sub-Node Index
                 </a>
-                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('analytics')">
+                <a href="#" class="dashboard-sidebar-nav-item" data-dashboard-section-id="analytics">
                     <i class="fas fa-chart-line"></i> Data Analytics
                 </a>
-                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('admin-panel')">
+                <a href="#" class="dashboard-sidebar-nav-item" data-dashboard-section-id="admin-panel">
                     <i class="fas fa-users-cog"></i> Admin Panel
                 </a>
-                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('music')">
+                <a href="#" class="dashboard-sidebar-nav-item" data-dashboard-section-id="music">
                     <i class="fas fa-music"></i> Music & Media
                 </a>
-                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('ai-gemini')">
+                <a href="#" class="dashboard-sidebar-nav-item" data-dashboard-section-id="ai-gemini">
                     <i class="fas fa-robot"></i> AI Gemini™
                 </a>
-                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('maps')">
+                <a href="#" class="dashboard-sidebar-nav-item" data-dashboard-section-id="maps">
                     <i class="fas fa-map-marked-alt"></i> Maps
                 </a>
-                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('meeting-minutes')">
+                <a href="#" class="dashboard-sidebar-nav-item" data-dashboard-section-id="meeting-minutes">
                     <i class="fas fa-clipboard-list"></i> Meeting Minutes
                 </a>
-                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('settings')">
+                <a href="#" class="dashboard-sidebar-nav-item" data-dashboard-section-id="settings">
                     <i class="fas fa-cog"></i> Settings
                 </a>
             </nav>
@@ -1479,13 +1468,13 @@
                 <div class="flex h-full dashboard-main-content-wrapper">
                     <nav id="musicSubSidebar" class="dashboard-sidebar-bg music-sub-sidebar hidden">
                         <h3 class="text-lg font-semibold dashboard-primary-text mb-3">Music Library</h3>
-                        <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showMusicSubSection('allMusic')">
+                        <a href="#" class="dashboard-sidebar-nav-item" data-music-subsection-id="allMusic">
                             <i class="fas fa-compact-disc"></i> All Music
                         </a>
-                        <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showMusicSubSection('musicPlaylists')">
+                        <a href="#" class="dashboard-sidebar-nav-item" data-music-subsection-id="musicPlaylists">
                             <i class="fas fa-list-music"></i> Playlists
                         </a>
-                        <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showMusicSubSection('artists')">
+                        <a href="#" class="dashboard-sidebar-nav-item" data-music-subsection-id="artists">
                             <i class="fas fa-microphone-alt"></i> Artists
                         </a>
                     </nav>
@@ -1522,7 +1511,6 @@
                             </div>
                         </section>
 
-                        <!-- New Core Brand Dashboard Panel -->
                         <section id="core-brand-dashboard-panel" class="hidden mb-8 dashboard-card">
                             <h2 class="text-3xl font-bold dashboard-primary-text mb-6" id="coreBrandDashboardTitle">Core Brand: Fruitful Innovations™</h2>
                             <div class="flex flex-col md:flex-row items-center gap-6 mb-8">
@@ -1538,33 +1526,28 @@
                             </p>
                             <h4 class="text-xl font-semibold dashboard-text-light mb-3">Key Highlights:</h4>
                             <ul id="coreBrandDashboardHighlights" class="list-disc list-inside dashboard-muted-text space-y-2 ml-4">
-                                <!-- Dynamically populated highlights -->
-                            </ul>
+                                </ul>
                             <div class="mt-6 text-center">
-                                <a href="javascript:void(0)" id="coreBrandDashboardCta" class="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-200">
+                                <a href="#" id="coreBrandDashboardCta" class="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-200">
                                     Visit Core Brand Site <i class="fas fa-external-link-alt ml-2"></i>
                                 </a>
                             </div>
                         </section>
 
-                        <!-- New Sub-Node Index Dashboard Panel -->
                         <section id="sub-node-index" class="hidden mb-8 dashboard-card">
                             <h2 class="text-3xl font-bold dashboard-primary-text mb-6" id="subNodeIndexTitle">Sub-Node Index: Fruitful Innovations™</h2>
                             <p class="dashboard-muted-text mb-4" id="subNodeIndexDescription">
                                 Explore the various sub-nodes and specialized entities that operate within this sector, providing granular functionalities and services.
                             </p>
                             <div id="subNodeGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                <!-- Sub-node cards will be dynamically loaded here -->
-                            </div>
+                                </div>
 
-                            <!-- New: Sub-Node Details Display Area -->
                             <div id="subNodeDetailsContainer" class="mt-8 dashboard-card hidden">
                                 <h3 id="subNodeDetailTitle" class="text-2xl font-bold dashboard-primary-text mb-4"></h3>
                                 <p id="subNodeDetailDescription" class="dashboard-muted-text mb-4"></p>
                                 <div id="subNodeDetailContent">
-                                    <!-- Dynamic content based on sub-node will go here -->
-                                </div>
-                                <button onclick="hideSubNodeDetails()" class="mt-6 px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition duration-200">
+                                    </div>
+                                <button id="hideSubNodeDetailsBtn" class="mt-6 px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition duration-200">
                                     <i class="fas fa-arrow-left mr-2"></i> Back to Sub-Nodes
                                 </button>
                             </div>
@@ -1718,6 +1701,7 @@
                                 <ul class="list-disc list-inside dashboard-muted-text space-y-2">
                                     <li>Artist A - Genre: Ambient</li>
                                     <li>Artist B - Genre: Lo-Fi</li>
+                                    <li>Artist B - Genre: Lo-Fi</li>
                                     <li>Artist C - Genre: Classical</li>
                                 </ul>
                             </div>
@@ -1731,43 +1715,6 @@
                                 <strong>Security Alert!</strong> For production, never expose your API key directly in client-side code. Use a backend server to proxy your AI requests.
                             </div>
 
-                            <!-- Smart Text Editor Section -->
-                            <div class="mb-8">
-                                <h3 class="text-xl font-semibold dashboard-text-light mb-3">✍️ Smart Text Editor</h3>
-                                <p class="dashboard-muted-text mb-3">Enter your text below to use advanced AI™ tools for analysis and generation.</p>
-                                <textarea id="smartTextEditorInput" rows="8" class="w-full p-3 rounded-lg bg-gray-700 border dashboard-border-dark dashboard-text-light placeholder-dashboard-muted-text focus:outline-none focus:ring-2 focus:ring-purple-400" placeholder="Type or paste your text here..."></textarea>
-
-                                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
-                                    <button id="btnSummarizeText" class="px-4 py-2 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition duration-200 text-sm">
-                                        Summarize
-                                    </button>
-                                    <button id="btnContinueText" class="px-4 py-2 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition duration-200 text-sm">
-                                        Continue Writing
-                                    </button>
-                                    <button id="btnCorrectGrammar" class="px-4 py-2 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition duration-200 text-sm">
-                                        Correct Grammar
-                                    </button>
-                                    <button id="btnParaphraseText" class="px-4 py-2 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition duration-200 text-sm">
-                                        Paraphrase
-                                    </button>
-                                    <button id="btnAnalyzeSentiment" class="px-4 py-2 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition duration-200 text-sm">
-                                        Analyze Sentiment
-                                    </button>
-                                    <button id="btnExtractKeywords" class="px-4 py-2 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition duration-200 text-sm">
-                                        Extract Keywords
-                                    </button>
-                                </div>
-
-                                <div class="mt-4 p-4 bg-gray-700 rounded-lg border dashboard-border-dark">
-                                    <h4 class="text-lg font-semibold dashboard-text-light mb-2" id="smartTextResultTitle">Smart Text Output:</h4>
-                                    <div id="smartTextResultContent" class="dashboard-text-light whitespace-pre-wrap min-h-[50px] flex items-center justify-center">
-                                        Your AI™ generated text will appear here.
-                                    </div>
-                                    <div id="smartTextError" class="text-red-400 mt-2 hidden"></div>
-                                </div>
-                            </div>
-
-                            <!-- General Gemini Prompt -->
                             <div class="mb-8">
                                 <h3 class="text-xl font-semibold dashboard-text-light mb-3">General Query ✨</h3>
                                 <textarea id="geminiPrompt" rows="4" class="w-full p-3 rounded-lg bg-gray-700 border dashboard-border-dark dashboard-text-light placeholder-dashboard-muted-text focus:outline-none focus:ring-2 focus:ring-primary-color" placeholder="Enter your prompt for Gemini AI™ here... (e.g., 'Explain how AI works in a few words', 'Write a short poem about fruit.')"></textarea>
@@ -1783,7 +1730,23 @@
                                 </div>
                             </div>
 
-                            <!-- Coding Partner Feature -->
+                            <div class="mb-8">
+                                <h3 class="text-xl font-semibold dashboard-text-light mb-3">Sector Trend Analysis ✨</h3>
+                                <p class="dashboard-muted-text mb-3">Get current trends, future outlook, and key players for a specified sector.</p>
+                                <input type="text" id="sectorTrendInput" placeholder="e.g., Technology, Healthcare, Finance" class="w-full p-3 rounded-lg bg-gray-700 border dashboard-border-dark dashboard-text-light placeholder-dashboard-muted-text focus:outline-none focus:ring-2 focus:ring-purple-400 mb-4">
+                                <button id="getSectorTrendAnalysisBtn" class="px-6 py-3 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition duration-200 self-end">
+                                    Analyze Sector Trends
+                                </button>
+                                <div class="mt-4 p-4 bg-gray-700 rounded-lg border dashboard-border-dark">
+                                    <h4 class="text-lg font-semibold dashboard-text-light mb-2">Sector Trend Analysis Response:</h4>
+                                    <div id="sectorTrendAnalysisResponse" class="dashboard-text-light whitespace-pre-wrap">
+                                        Enter a sector (e.g., Technology, Healthcare) and click "Analyze Sector Trends" to get insights.
+                                    </div>
+                                    <div id="sectorTrendAnalysisError" class="text-red-400 mt-2 hidden"></div>
+                                </div>
+                            </div>
+
+
                             <div class="mb-8">
                                 <h3 class="text-xl font-semibold dashboard-text-light mb-3">Coding Partner ✨</h3>
                                 <p class="dashboard-muted-text mb-3">Get explanations for code, generate snippets, or debug issues.</p>
@@ -1800,7 +1763,6 @@
                                 </div>
                             </div>
 
-                            <!-- Career Guide Feature -->
                             <div>
                                 <h3 class="text-xl font-semibold dashboard-text-light mb-3">Career Guide ✨</h3>
                                 <p class="dashboard-muted-text mb-3">Receive advice on career paths, resume building, or interview preparation.</p>
@@ -1844,7 +1806,7 @@
                             </div>
                         </section>
 
-                        <section id="meeting-minutes" class="hidden mb-8 dashboard-card">
+                        <section id="meeting-minutes" class="mb-8 dashboard-card">
                             <h2 class="text-3xl font-bold dashboard-primary-text mb-6">Meeting Minutes: Fruitful™ Dashboard Development</h2>
                             <p class="text-lg dashboard-muted-text mb-4">A quick recap of our discussions regarding API integrations and future features.</p>
 
@@ -1852,260 +1814,87 @@
                                 <div>
                                     <h3 class="text-2xl font-semibold dashboard-text-light mb-3">Meeting Details:</h3>
                                     <ul class="list-disc list-inside ml-4 dashboard-text-light space-y-1">
-                                        <li><strong>Date:</strong> June 23, 2025</li>
-                                        <li><strong>Time:</strong> 18:45 SAST (6:45 PM, Silver Lakes Golf Estate, Gauteng, South Africa)</li>
-                                        <li><strong>Attendees:</strong> Fruitful™ Dashboard Development Team (represented by user and Gemini AI™)</li>
+                                        <li><strong>Date:</strong> June 26, 2025</li>
+                                        <li><strong>Time:</strong> 02:16 AM SAST (Silver Lakes Golf Estate, Gauteng, South Africa)</li>
+                                        <li><strong>Attendees:</strong> Fruitful™ Dashboard Development Team (User and Gemini AI™)</li>
                                     </ul>
                                 </div>
 
                                 <div>
-                                    <h3 class="text-2xl font-semibold dashboard-text-light mb-3">1. Review of Previous API Discussions:</h3>
+                                    <h3 class="text-2xl font-semibold dashboard-text-light mb-3">1. Progress Update (June 26, 2025 - 02:16 AM SAST):</h3>
                                     <div class="space-y-4 ml-4">
                                         <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Design Styling API Key:</h4>
-                                            <p class="dashboard-muted-text"><strong>Conclusion:</strong> No single "API key" for generic styling. Styling handled primarily by CSS (e.g., Tailwind CSS). Specific design services (e.g., Google Fonts, mapping APIs with custom styles) *would* require their own API keys.</p>
-                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Continue using Tailwind CSS. Explore specific API-driven styling if a particular design service is integrated.</p>
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">API Key Consolidation & Implementation:</h4>
+                                            <p class="dashboard-muted-text"><strong>Status:</strong> All provided API keys (PayPal, Google Maps, Spotify, Gemini AI™, Xero) have been successfully added to the `window.API_KEYS` object.</p>
+                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Implemented mock functions (`mockPayPalSdkIntegration`, `callGeminiAPI`) to demonstrate usage of these keys. Security warnings regarding client-side exposure are prominent.</p>
                                         </div>
                                         <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Language Toggler:</h4>
-                                            <p class="dashboard-muted-text"><strong>Conclusion:</strong> Achieved via JavaScript logic and `data-key` attributes for translatable text. No external API key strictly necessary for the toggler if translations are stored locally.</p>
-                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Current implementation is good. For complex internationalization, consider dedicated I18n JavaScript libraries or a translation API if dynamic, on-the-fly translation is required.</p>
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Settings Section Functionality:</h4>
+                                            <p class="dashboard-muted-text"><strong>Status:</strong> Mock functionality for "Profile Settings" (save), "Notification Preferences" (toggle), and "Theme Settings" (dark mode toggle) is now in place.</p>
+                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> These provide a user experience, pending actual backend integration for persistence.</p>
                                         </div>
                                         <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Selector to Change All Text in HTML with Script:</h4>
-                                            <p class="dashboard-muted-text"><strong>Conclusion:</strong> `document.querySelectorAll()` with specific tag names or custom attributes is the best method for targeted text manipulation. Use `document.querySelectorAll('*')` with extreme caution.</p>
-                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Continue using specific selectors for controlled text modification.</p>
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Sign In/Sign Up Forms:</h4>
+                                            <p class="dashboard-muted-text"><strong>Status:</strong> Basic HTML forms for Sign In and Sign Up are implemented with mock `handleSignIn()` and `handleSignUp()` functions. They simulate success/failure.</p>
+                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Ready for Firebase/Google authentication integration.</p>
                                         </div>
                                         <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">General Helpful API Categories (Recap):</h4>
-                                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
-                                                <li>**Mapping & Location:** Google Maps Platform (requires key).</li>
-                                                <li>**Data & Information:** OpenWeatherMap (key), REST Countries (often no key), News API (key), Free Dictionary (no key).</li>
-                                                <li>**Authentication & User Management:** Firebase Auth, Auth0.</li>
-                                                <li>**Payment Processing:** Stripe (key), PayPal (credentials).</li>
-                                                <li>**AI/ML:** OpenAI (key), Hugging Face Inference API (key), **Gemini AI™ API (key - our current focus!)**.</li>
-                                                <li>**Image/Media:** Pexels API / Unsplash API (keys).</li>
-                                                <li>**Utility:** Bitly API (key), SendGrid API / Mailgun API (keys).</li>
-                                            </ul>
-                                            <p class="api-key-warning mt-3">
-                                                <strong>CRITICAL SECURITY NOTE:</strong> Never expose API keys directly in client-side code. Use a backend server or strict restrictions.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <h3 class="text-2xl font-semibold dashboard-text-light mb-3">2. Gemini AI™ Integration (Current Progress & Understanding):</h3>
-                                    <div class="space-y-4 ml-4">
-                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">What does a Gemini AI™ API Key do? (for "Baby Staff"):</h4>
-                                            <p class="dashboard-text-light mb-2">Imagine the Gemini AI™ as a super-smart robot brain that lives far away in a Google data center. This robot brain can do amazing things like talk like a human, understand pictures, summarize long texts, and write code.</p>
-                                            <p class="dashboard-text-light mb-2">**Your Gemini AI™ API Key is like a special secret VIP pass** that allows your Fruitful™ Dashboard to "talk" to this super-smart robot brain. It tells Google it's *our* dashboard asking, keeps track of usage, and ensures safe communication.</p>
-                                            <p class="dashboard-text-light">**Crucial Point for "Baby Staff":** This API key is a **secret!** Never show it to anyone who shouldn't have access, and never put it directly into code that everyone can see (like the HTML if it's on a public website). It's like your house key – keep it safe!</p>
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Dashboard Access & Visibility:</h4>
+                                            <p class="dashboard-muted-text"><strong>Status:</strong> A prominent "Go to Dashboard (Dev Access)" button has been added to the landing page for direct, development-time access, bypassing sign-in/sign-up. The header "Dashboard" link also correctly navigates.</p>
+                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Confirmed visibility and navigation.</p>
                                         </div>
                                         <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Key Acquisition:</h4>
-                                            <p class="dashboard-muted-text">API keys are obtained via <a href="https://aistudio.google.com/" target="_blank" class="dashboard-secondary-text hover:underline">Google AI Studio</a>.</p>
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Sub-Node "Learn More" Functionality:</h4>
+                                            <p class="dashboard-muted-text"><strong>Status:</strong> The "Learn More" links on sub-node cards in the "Sub-Node Index" now correctly open an internal detail view within the dashboard (similar to the Music section).</p>
+                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Mock content is displayed for each sub-node, preparing for detailed AI Logic sector integration.</p>
                                         </div>
                                         <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Current Dashboard Implementation:</h4>
-                                            <p class="dashboard-muted-text">A new "AI Gemini™" section has been added with a general prompt area, plus new specialized "Coding Partner" and "Career Guide" features, all powered by Gemini AI™. The API key for Gemini is now explicitly set using the key you provided (`AIzaSyBGSDZATtITv5iIoB3rgKHBpWx9MrufxXE`).</p>
-                                            <p class="api-key-warning mt-2">
-                                                <strong>ACTION REQUIRED for PRODUCTION:</strong> While the key is now in the code, for any production deployment, move this API call to a secure backend server to protect your key.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <h3 class="text-2xl font-semibold dashboard-text-light mb-3">3. Discussion of New API-related Features for Fruitful™ Dashboard:</h3>
-                                    <div class="space-y-6 ml-4">
-                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2"><i class="fas fa-code"></i> Coding Partner Integration:</h4>
-                                            <p class="dashboard-muted-text"><strong>Concept:</strong> Use Gemini AI™'s code generation and explanation capabilities.</p>
-                                            <p class="dashboard-muted-text"><strong>API(s) to explore:</strong> Gemini AI™ API (already integrated).</p>
-                                            <p class="dashboard-muted-text"><strong>Implementation Idea:</strong> Integrated into "AI Gemini™" section with dedicated input/output.</p>
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">TradeMark™ Symbol Integration:</h4>
+                                            <p class="dashboard-muted-text"><strong>Status:</strong> All specified brand names and technologies across the entire HTML document (e.g., Fruitful™, FAA™, VaultMesh™, Gemini AI™) have been updated with the ™ symbol.</p>
+                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Consistent branding maintained.</p>
                                         </div>
                                         <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2"><i class="fas fa-graduation-cap"></i> Career Guide Integration:</h4>
-                                            <p class="dashboard-muted-text"><strong>Concept:</strong> Leverage AI™ to provide career advice, resume tips, interview prep, or learning paths.</p>
-                                            <p class="dashboard-muted-text"><strong>API(s) to explore:</strong> Gemini AI™ API (primary), potentially specialized career APIs for structured data.</p>
-                                            <p class="dashboard-muted-text"><strong>Implementation Idea:</strong> New "Career Insights" section where users input goals/questions for AI™-generated guidance.</p>
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2"><strong>NEW FEATURE: Sector Trend Analysis (Gemini AI™)</strong></h4>
+                                            <p class="dashboard-muted-text"><strong>Description:</strong> Added a new input field and button within the "AI Gemini™" section to allow users to request trend analysis for specific sectors (e.g., "Technology", "Healthcare").</p>
+                                            <p class="dashboard-muted-text mt-1"><strong>Functionality:</strong> Calls the Gemini AI™ API with a tailored prompt to generate a summary of current trends, future outlook, and key players for the given sector.</p>
                                         </div>
-                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2"><i class="fas fa-mobile-alt"></i> "🦊 Foxed Has Mobiles™" - Product Data/Inventory Integration:</h4>
-                                            <p class="dashboard-muted-text"><strong>Concept:</strong> Pull mobile product data (names, specs, prices, stock) from a dedicated system.</p>
-                                            <p class="dashboard-muted-text"><strong>API(s) to explore:</strong> Likely a **custom API** from "Foxed Has Mobiles™" or a third-party e-commerce platform API (Shopify, WooCommerce).</p>
-                                            <p class="dashboard-muted-text"><strong>Action:</strong> Contact "Foxed Has Mobiles™" for API documentation and keys.</p>
-                                        </div>
-                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2"><i class="fas fa-shield-alt"></i> "🌳 Baobab Security Network™" - Security Monitoring:</h4>
-                                            <p class="dashboard-muted-text"><strong>Concept:</strong> Display security alerts, network status, or security logs.</p>
-                                            <p class="dashboard-muted-text"><strong>API(s) to explore:</strong> Likely a **custom API** from "Baobab Security Network™".</p>
-                                            <p class="dashboard-muted-text"><strong>Action:</strong> Obtain API documentation and credentials from "Baobab Security Network™".</p>
-                                        </div>
-                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2"><i class="fas fa-shopping-cart"></i> "🌱Global_Complete_purchase™" & "🌱Global_checkout_success™" - E-commerce Analytics:</h4>
-                                            <p class="dashboard-muted-text"><strong>Concept:</strong> Track successful purchases and checkout completions.</p>
-                                            <p class="dashboard-muted-text"><strong>API(s) to explore:</strong> Google Analytics Data API, Custom E-commerce Platform API, CRM/ERP APIs.</p>
-                                            <p class="dashboard-muted-text"><strong>Implementation Idea:</strong> New charts/metrics in "Data Analytics" showing conversion rates, successful purchases, checkout funnel performance.</p>
-                                        </div>
-                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2"><i class="fas fa-cogs"></i> Xero Accounting Integration:</h4>
-                                            <p class="dashboard-muted-text"><strong>Concept:</strong> Integrate with Xero for accounting data (invoices, payments, etc.).</p>
-                                            <p class="dashboard-muted-text"><strong>API(s) to explore:</strong> Xero API (OAuth 2.0).</p>
-                                            <p class="api-key-warning mt-2">
-                                                <strong>CRITICAL SECURITY NOTE:</strong> Xero Client ID, Client Secret, and Webhook Key **MUST** be handled on a secure backend server. They should never be directly exposed in client-side code. This setup will require a full OAuth 2.0 flow initiated from your server.
-                                            </p>
-                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Develop server-side logic for Xero OAuth and API calls. Client-side will only initiate the OAuth flow to the backend.</p>
-                                        </div>
-                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2"><i class="fab fa-paypal"></i> PayPal Integration:</h4>
-                                            <p class="dashboard-muted-text"><strong>Concept:</strong> Integrate various PayPal functionalities for payments (SDK, Hosted Buttons).</p>
-                                            <p class="dashboard-muted-text"><strong>API(s) to explore:</strong> PayPal JavaScript SDK, PayPal Buttons API.</p>
-                                            <p class="api-key-warning mt-2">
-                                                <strong>SECURITY NOTE:</strong> While PayPal SDK `client-id` can be on the frontend, for critical operations and security best practices, server-side processing for payments is highly recommended. Hosted Button IDs are less sensitive but still should be managed carefully.
-                                            </p>
-                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Implement PayPal SDK and/or Hosted Buttons where relevant on payment-related pages, ensuring server-side validation for actual transactions.</p>
-                                            <button onclick="mockPayPalSdkIntegration()" class="px-4 py-2 bg-blue-500 text-white rounded-md mt-2 text-sm hover:bg-blue-600">Test PayPal SDK (Mock)</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <h3 class="text-2xl font-semibold dashboard-text-light mb-3">4. Live Demos (for Visual Learners / "Baby Staff"):</h3>
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div class="dashboard-card p-4 rounded-lg shadow-md border dashboard-border-dark flex flex-col items-center">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Live Google Map</h4>
-                                            <p class="dashboard-muted-text mb-3">A real-time map, demonstrating location services. (Replace with your actual embed!)</p>
-                                            <div class="w-full h-64 bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center">
-                                                <iframe src="YOUR_GOOGLE_MAP_EMBED_CODE" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                                                <span class="dashboard-muted-text absolute text-center">**PLACEHOLDER MAP**<br>Get your embed code from Google Maps.</span>
-                                            </div>
-                                        </div>
-                                        <div class="dashboard-card p-4 rounded-lg shadow-md border dashboard-border-dark flex flex-col items-center">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Live YouTube Video</h4>
-                                            <p class="dashboard-muted-text mb-3">An embedded video, showing media integration. (Replace with your actual embed!)</p>
-                                            <div class="w-full h-64 bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center">
-                                                <iframe width="100%" height="100%" src="YOUR_YOUTUBE_EMBED_CODE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                                <span class="dashboard-muted-text absolute text-center">**PLACEHOLDER VIDEO**<br>Get your embed code from YouTube.</span>
-                                            </div>
-                                        </div>
-                                        <div class="dashboard-card p-4 rounded-lg shadow-md border dashboard-border-dark flex flex-col items-center">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Live Spotify Music</h4>
-                                            <p class="dashboard-muted-text mb-3">Interactive Spotify embeds for albums/tracks.</p>
-                                            <div class="w-full h-64 bg-gray-800 rounded-lg overflow-hidden flex flex-col items-center justify-center space-y-2 p-2">
-                                                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/3RyjFxsU9hcmg14vqzUUMy?utm_source=generator" width="90%" height="100" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                                                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2kdQY3b6dDRGonyIzcWljc?utm_source=generator" width="90%" height="100" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                                                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/6Xe9wT5xeZETPwtaP2ynUz?utm_source=generator" width="90%" height="100" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                                            </div>
-                                        </div>
-                                        <div class="dashboard-card p-4 rounded-lg shadow-md border dashboard-border-dark flex flex-col items-center">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Gemini AI™ Test (re-iterated)</h4>
-                                            <p class="dashboard-muted-text mb-3">See our core AI™ integration in action.</p>
-                                            <div class="w-full h-64 bg-gray-800 rounded-lg p-4 overflow-auto text-sm dashboard-text-light">
-                                                <p>This is where our Gemini AI™ interacts. You can test it in the "AI Gemini™" section!</p>
-                                                <p class="mt-2 dashboard-muted-text">Example: Ask the AI™ "What is the capital of France?"</p>
-                                                <p class="mt-2 text-red-400">**Remember to add your actual API Key!**</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <h3 class="text-2xl font-semibold dashboard-text-light mb-3">5. Action Items for the Team:</h3>
-                                    <ul class="list-disc list-inside ml-4 dashboard-text-light space-y-2">
-                                        <li>**IMMEDIATE & CRITICAL:** Replace `YOUR_GEMINI_API_KEY` in the JavaScript with your actual key from Google AI Studio.</li>
-                                        <li>**SECURITY:** Begin planning for secure backend proxying of all API calls for production deployment.</li>
-                                        <li>**API ACQUISITION:** Contact "Foxed Has Mobiles™" and "Baobab Security Network™" for their API documentation and access credentials.</li>
-                                        <li>**ANALYTICS:** Investigate Google Analytics Data API or e-commerce platform APIs for detailed purchase/checkout event tracking.</li>
-                                        <li>**UI/UX:** Brainstorm and design user interfaces for "Coding Partner" and "Career Guide" functionalities.</li>
-                                        <li>**EMBED CODES:** Generate actual embed codes for the live demos (Google Maps, YouTube, Spotify) to make this section truly "live" for the team.</li>
-                                        <li>**AUTHENTICATION:** Implement Firebase/Google authentication for "Sign In" and "Sign Up" sections to enable user accounts.</li>
-                                        <li>**SETTINGS:** Develop functionality for the "Settings" panel (e.g., saving user preferences, updating profile).</li>
-                                        <li>**CONTINUOUS LEARNING:** Encourage "baby staff" to review API documentation for any integrated service to understand capabilities and limitations.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </section>
-
-                        <section id="settings" class="hidden mb-8 dashboard-card">
-                            <h2 class="text-3xl font-bold dashboard-primary-text mb-6">Settings</h2>
-                            <p class="dashboard-muted-text mb-4">
-                                Manage your account preferences, notifications, and application settings.
-                            </p>
-
-                            <div class="space-y-6">
-                                <div class="dashboard-sub-card">
-                                    <h3 class="text-xl font-semibold dashboard-text-light mb-3">Profile Settings</h3>
-                                    <div class="flex flex-col gap-4">
-                                        <div>
-                                            <label for="userName" class="block text-sm font-medium dashboard-muted-text mb-1">Full Name</label>
-                                            <input type="text" id="userName" value="[Your Name]" class="w-full px-3 py-2 rounded-lg bg-gray-700 border dashboard-border-dark dashboard-text-light focus:outline-none focus:ring-2 focus:ring-primary-color">
-                                        </div>
-                                        <div>
-                                            <label for="userEmail" class="block text-sm font-medium dashboard-muted-text mb-1">Email Address</label>
-                                            <input type="email" id="userEmail" value="[Your Email]" class="w-full px-3 py-2 rounded-lg bg-gray-700 border dashboard-border-dark dashboard-text-light focus:outline-none focus:ring-2 focus:ring-primary-color" disabled>
-                                            <p class="text-xs text-gray-500 mt-1">Email cannot be changed here.</p>
-                                        </div>
-                                        <button onclick="saveProfileSettings()" class="px-6 py-3 bg-primary-color text-white font-semibold rounded-lg hover:bg-green-600 transition duration-200 self-start">
-                                            Save Profile
-                                        </button>
-                                        <div id="profileSaveMessage" class="mt-2 text-sm text-green-400 hidden"></div>
-                                    </div>
-                                </div>
-
-                                <div class="dashboard-sub-card">
-                                    <h3 class="text-xl font-semibold dashboard-text-light mb-3">Notification Preferences</h3>
-                                    <div class="flex items-center justify-between mb-3">
-                                        <span class="dashboard-muted-text">Email Notifications</span>
-                                        <label class="toggle-switch">
-                                            <input type="checkbox" id="emailNotifications" checked onchange="toggleNotification('Email')">
-                                            <span class="slider"></span>
-                                        </label>
-                                    </div>
-                                    <div class="flex items-center justify-between">
-                                        <span class="dashboard-muted-text">Push Notifications</span>
-                                        <label class="toggle-switch">
-                                            <input type="checkbox" id="pushNotifications" onchange="toggleNotification('Push')">
-                                            <span class="slider"></span>
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div class="dashboard-sub-card">
-                                    <h3 class="text-xl font-semibold dashboard-text-light mb-3">Theme Settings</h3>
-                                    <div class="flex items-center justify-between">
-                                        <span class="dashboard-muted-text">Dark Mode</span>
-                                        <label class="toggle-switch">
-                                            <input type="checkbox" id="darkModeToggle" checked onchange="toggleDarkMode(this)">
-                                            <span class="slider"></span>
-                                        </label>
-                                    </div>
-                                    <p class="text-xs text-gray-500 mt-2">
-                                        Note: Theme changes currently apply globally based on primary sector configuration.
-                                    </p>
-                                </div>
-
-                                <div class="dashboard-sub-card">
-                                    <h3 class="text-xl font-semibold dashboard-text-light mb-3">API Key Management</h3>
-                                    <p class="dashboard-muted-text mb-4">
-                                        View and manage API keys for integrations. For security, sensitive keys are not editable here.
-                                    </p>
-                                    <div class="space-y-3 text-sm dashboard-text-light">
-                                        <p><strong>Google Maps API Key:</strong> <code>[Configured in script, not displayed for security]</code></p>
-                                        <p><strong>Gemini AI™ API Key:</strong> <code>[Configured in script, not displayed for security]</code></p>
-                                        <p><strong>PayPal SDK Client ID:</strong> <code>${window.API_KEYS.PAYPAL_SDK_CLIENT_ID}</code> <span class="text-yellow-400 text-xs">(For client-side; server-side processing recommended)</span></p>
-                                        <p><strong>Xero Client ID:</strong> <code>${window.API_KEYS.XERO_CLIENT_ID}</code> <span class="text-red-400 text-xs">(Backend Only!)</span></p>
-                                        <p><strong>Xero Redirect URI:</strong> <code>${window.API_KEYS.XERO_REDIRECT_URI}</code> <span class="text-red-400 text-xs">(Backend Only!)</span></p>
-                                        <p class="api-key-warning mt-3">
-                                            <strong>SECURITY ALERT:</strong> The above values are shown for demonstration. In a real application, most API keys (especially secrets) should be managed **only on your backend server** and never exposed client-side.
-                                        </p>
                                     </div>
                                 </div>
                             </div>
-                        </section>
-                    </div>
+
+                            <div>
+                                <h3 class="text-2xl font-semibold dashboard-text-light mb-3">Page Routes & Navigation Summary:</h3>
+                                <ul class="list-disc list-inside ml-4 dashboard-text-light space-y-1">
+                                    <li><strong>Home (`#hero-section`):</strong> Default landing page.</li>
+                                    <li><strong>Features (`#features`):</strong> Displays core platform features.</li>
+                                    <li><strong>Core Brand (`#core-brand-landing-page`):</strong> Detailed landing page for the primary brand of the selected sector (e.g., Fruitful Innovations™, Banimal™).</li>
+                                    <li><strong>Signal (`#shareprice`):</strong> Live share signal display.</li>
+                                    <li><strong>Vault (`#vault-access`):</strong> Access to various sector-specific iframe terminals.</li>
+                                    <li><strong>Treaty (`#treaty`):</strong> Information about the Treaty System™.</li>
+                                    <li><strong>VaultMesh™ (`#vaultmesh`):</strong> Executive summary of the VaultMesh™ framework.</li>
+                                    <li><strong>About (`#about`):</strong> About Fruitful Innovations™.</li>
+                                    <li><strong>Sign Up (`#sign-up-section`):</strong> User registration form.</li>
+                                    <li><strong>Sign In (`#sign-in-section`):</strong> User login form.</li>
+                                    <li><strong>Dashboard (`#fruitful-dashboard-wrapper`):</strong> Main user dashboard with multiple sub-sections.</li>
+                                    <li>
+                                        <strong>Dashboard Sub-Sections (accessed via sidebar):</strong>
+                                        <ul class="list-disc list-inside ml-6 text-sm dashboard-muted-text">
+                                            <li>`overview`: General sector statistics.</li>
+                                            <li>`core-brand-dashboard-panel`: Detailed view of the core brand within the dashboard.</li>
+                                            <li>`sub-node-index`: Grid of sub-nodes; clicking "Learn More" dynamically loads `subNodeDetailsContainer`.</li>
+                                            <li>`analytics`: Data analytics placeholders.</li>
+                                            <li>`admin-panel`: Admin controls with AI™ assistant.</li>
+                                            <li>`music`: Music and media embeds with sub-navigation.</li>
+                                            <li>`ai-gemini`: Gemini AI™ interaction panel (General, Coding, Career, **Sector Trend Analysis**).</li>
+                                            <li>`maps`: Google Maps and Leaflet.js integrations.</li>
+                                            <li>`meeting-minutes`: This very document.</li>
+                                            <li>`settings`: User settings and API key display.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </main>
         </div>
@@ -2116,8 +1905,8 @@
     </footer>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-     crossorigin=""></script>
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
 
     <script>
         // --- GLOBAL API KEYS AND CREDENTIALS (FOR DEMO/DEVELOPMENT) ---
@@ -2514,7 +2303,7 @@
             const headerCoreBrandLink = document.getElementById('headerCoreBrandLink');
             if (headerCoreBrandLink) {
                 headerCoreBrandLink.innerText = currentCoreBrand.name;
-                headerCoreBrandLink.onclick = () => showMainSection('core-brand-landing-page');
+                // onclick will be attached by event listener
             }
 
 
@@ -2547,7 +2336,7 @@
                 document.getElementById('featuredCoreBrandSubDescription').innerText = currentCoreBrand.subDescription;
                 const featuredCtaButton = document.getElementById('featuredCoreBrandCtaButton');
                 if (featuredCtaButton) {
-                    featuredCtaButton.innerHTML = `Discover ${currentCoreBrand.name} <i class="${currentCoreBrand.icon} ml-2"></i>`;
+                    featuredCtaButton.innerHTML = `Discover ${currentCoreBrand.name} <i class="fas fa-arrow-right"></i>`; // Using fas fa-arrow-right as a default icon
                 }
             } else {
                 featuredCoreBrandSection.classList.add('hidden'); // Hide if no core brand
@@ -2561,7 +2350,7 @@
                     const button = document.createElement('button');
                     button.className = 'terminal-btn p-6';
                     button.innerHTML = `${terminal.icon} ${terminal.name}`;
-                    button.onclick = () => loadTerminal(terminal.url);
+                    button.dataset.terminalUrl = terminal.url; // Store URL in data attribute
                     terminalButtonsContainer.appendChild(button);
                 });
             } else {
@@ -2579,11 +2368,7 @@
                 glyph.href = `javascript:void(0)`; // Use javascript:void(0) to prevent default hash jump
                 glyph.className = 'glyph';
                 glyph.innerHTML = `<i class="${sector.coreBrand.icon}"></i> ${sector.name}`; // Using icon here
-                glyph.onclick = (event) => {
-                    event.preventDefault(); // Prevent default anchor jump (redundant with javascript:void(0) but good practice)
-                    switchSector(sectorId);
-                    // showMainSection('hero-section'); // Go to top of new sector
-                };
+                glyph.dataset.sectorId = sectorId; // Store sectorId in data attribute
                 sectorGlyphGrid.appendChild(glyph);
             }
 
@@ -2597,11 +2382,7 @@
                 dropdownItem.href = `javascript:void(0)`; // Use javascript:void(0) to prevent default hash jump
                 dropdownItem.className = 'block px-4 py-2 text-sm text-gray-200 hover:bg-gray-700';
                 dropdownItem.innerHTML = `<i class="${sector.coreBrand.icon} mr-2"></i> ${sector.name}`;
-                dropdownItem.onclick = (event) => {
-                    event.preventDefault();
-                    switchSector(sectorId);
-                    // Close dropdown (optional, handled by CSS group-hover for now)
-                };
+                dropdownItem.dataset.sectorId = sectorId; // Store sectorId in data attribute
                 sectorDropdown.appendChild(dropdownItem);
             }
 
@@ -2615,27 +2396,27 @@
                 const coreBrandExploreButton = document.getElementById('coreBrandExploreButton');
                 if (coreBrandExploreButton) {
                     coreBrandExploreButton.href = currentCoreBrand.link;
-                    coreBrandExploreButton.innerHTML = `Explore ${currentCoreBrand.name}'s World <i class="${currentCoreBrand.icon} ml-2"></i>`;
+                    coreBrandExploreButton.innerHTML = `Explore ${currentCoreBrand.name}'s World <i class="fas fa-arrow-right"></i>`;
                 }
 
                 const coreBrandShopButton = document.getElementById('coreBrandShopButton');
                 if (coreBrandShopButton) {
                     coreBrandShopButton.href = currentCoreBrand.shopLink;
-                    coreBrandShopButton.innerHTML = `Shop Now <i class="fas fa-external-link-alt ml-2"></i>`;
+                    coreBrandShopButton.innerHTML = `Shop Now <i class="fas fa-external-link-alt"></i>`;
                 }
 
                 // Initialize/reset canvas particles for the core brand landing page
                 if (coreBrandCanvas && coreBrandCanvas.getContext) {
-                    initCoreBrandParticles(currentCoreBrand.canvasColors);
+                    initCoreBrandParticles(currentCoreBrand.canvasColors); // Re-initialize particles to avoid artifacts
                 } else {
                     console.warn("Core Brand Canvas or context not available.");
                 }
 
             } else {
-                 // Hide core brand specific sections if no core brand is defined for the sector
-                 coreBrandLandingPage.classList.add('hidden');
-                 // Also ensure the header link for core brand is hidden or appropriately handled
-                 document.getElementById('headerCoreBrandLink').classList.add('hidden');
+                // Hide core brand specific sections if no core brand is defined for the sector
+                coreBrandLandingPage.classList.add('hidden');
+                // Also ensure the header link for core brand is hidden or appropriately handled
+                document.getElementById('headerCoreBrandLink').classList.add('hidden');
             }
 
 
@@ -2666,7 +2447,7 @@
                     coreBrandDashboardCta.href = currentCoreBrand.link;
                 }
             } else {
-                 coreBrandDashboardPanel.classList.add('hidden');
+                coreBrandDashboardPanel.classList.add('hidden');
             }
 
             // Update Sub-Node Index Dashboard Panel
@@ -2686,7 +2467,7 @@
                             <h3 class="text-xl font-semibold dashboard-text-light">${node.name}</h3>
                         </div>
                         <p class="dashboard-muted-text">${node.description}</p>
-                        <a href="javascript:void(0)" onclick="showSubNodeDetails('${node.id}')" class="text-primary-color hover:underline text-sm mt-3 inline-block">Learn More <i class="fas fa-arrow-right text-xs ml-1"></i></a>
+                        <a href="javascript:void(0)" class="text-primary-color hover:underline text-sm mt-3 inline-block" data-subnode-id="${node.id}">Learn More <i class="fas fa-arrow-right text-xs ml-1"></i></a>
                     `; // Changed here: onclick handler
                     subNodeGrid.appendChild(subNodeCard);
                 });
@@ -2743,7 +2524,7 @@
                 link.classList.remove('header-nav-active');
             });
             // Find the link that points to the current sectionIdToShow
-            const clickedLink = document.querySelector(`.header-nav-item[onclick*="showMainSection('${sectionIdToShow}')"]`);
+            const clickedLink = document.querySelector(`.header-nav-item[data-section-id="${sectionIdToShow}"]`);
             if (clickedLink) {
                 clickedLink.classList.add('header-nav-active');
             }
@@ -2869,7 +2650,7 @@
                 el.classList.remove('hidden');
                 el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 // Add active class to the clicked link
-                const clickedLink = document.querySelector(`.glyph[onclick*="${panelId}"]`);
+                const clickedLink = document.querySelector(`.glyph[data-sector-id="${panelId.replace('embedded-', '').replace('-snapshot', '')}"]`);
                 if (clickedLink) {
                     clickedLink.classList.add('active');
                 }
@@ -2932,7 +2713,7 @@
             document.querySelectorAll('.dashboard-sidebar-nav-item').forEach(link => {
                 link.classList.remove('dashboard-active-nav-item');
             });
-            const clickedLink = document.querySelector(`.dashboard-sidebar-nav-item[onclick*="${sectionId}"]`);
+            const clickedLink = document.querySelector(`.dashboard-sidebar-nav-item[data-dashboard-section-id="${sectionId}"]`);
             if (clickedLink) {
                 clickedLink.classList.add('dashboard-active-nav-item');
             }
@@ -2984,7 +2765,7 @@
             document.querySelectorAll('#musicSubSidebar .dashboard-sidebar-nav-item').forEach(link => {
                 link.classList.remove('dashboard-active-nav-item');
             });
-            const clickedSubLink = document.querySelector(`#musicSubSidebar .dashboard-sidebar-nav-item[onclick*="${subSectionId}"]`);
+            const clickedSubLink = document.querySelector(`#musicSubSidebar .dashboard-sidebar-nav-item[data-music-subsection-id="${subSectionId}"]`);
             if (clickedSubLink) {
                 clickedSubLink.classList.add('dashboard-active-nav-item');
             }
@@ -2993,13 +2774,10 @@
         // Helper function for making API calls to Gemini™
         async function callGeminiAPI(prompt, responseDiv, errorDiv) {
             responseDiv.textContent = 'Generating response...';
-            responseDiv.classList.remove('text-red-400'); // Remove error styling
-            responseDiv.classList.add('text-blue-400'); // Add loading styling
             errorDiv.classList.add('hidden'); // Hide previous errors
 
             if (!prompt) {
                 responseDiv.textContent = 'Please enter a prompt.';
-                responseDiv.classList.remove('text-blue-400');
                 return;
             }
 
@@ -3007,8 +2785,6 @@
                 responseDiv.textContent = '';
                 errorDiv.textContent = 'Error: Gemini AI™ API Key is missing or invalid. Please ensure it\'s set correctly.';
                 errorDiv.classList.remove('hidden');
-                responseDiv.classList.remove('text-blue-400');
-                responseDiv.classList.add('text-red-400');
                 return;
             }
 
@@ -3035,157 +2811,14 @@
                 const data = await response.json();
                 const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from AI™.';
                 responseDiv.textContent = aiResponse;
-                responseDiv.classList.remove('text-blue-400');
-                responseDiv.classList.add('dashboard-text-light'); // Reset to normal text color
 
             } catch (error) {
                 console.error("Error calling Gemini AI™ API:", error);
                 responseDiv.textContent = ''; // Clear "Generating response..."
                 errorDiv.textContent = `Failed to get AI™ response: ${error.message}. Check your Gemini AI™ API key and network.`;
                 errorDiv.classList.remove('hidden');
-                responseDiv.classList.remove('text-blue-400');
-                responseDiv.classList.add('text-red-400');
             }
         }
-
-        // --- Smart Text Editor Logic ---
-        let smartTextInput = null;
-        let smartTextResultContent = null;
-        let smartTextResultTitle = null;
-        let smartTextErrorDiv = null;
-
-        function clearSmartTextResults() {
-            smartTextResultContent.textContent = 'Your AI™ generated text will appear here.';
-            smartTextResultContent.classList.remove('text-red-400', 'text-blue-400');
-            smartTextResultContent.classList.add('dashboard-text-light'); // Default color
-            smartTextResultTitle.textContent = 'Smart Text Output:';
-            smartTextErrorDiv.classList.add('hidden');
-        }
-
-        async function handleSmartTextOperation(operationType, promptModifier) {
-            const text = smartTextInput.value.trim();
-            clearSmartTextResults(); // Clear all previous results before new operation
-
-            if (!text) {
-                smartTextResultContent.textContent = "Please enter some text to process.";
-                smartTextResultContent.classList.add('text-red-400');
-                return;
-            }
-
-            smartTextResultContent.textContent = 'Processing...';
-            smartTextResultContent.classList.remove('dashboard-text-light');
-            smartTextResultContent.classList.add('text-blue-400'); // Indicate loading
-
-            let prompt = "";
-            let newTitle = "";
-
-            switch (operationType) {
-                case 'summarize':
-                    prompt = `Summarize the following text:\n\n"${text}"`;
-                    newTitle = "Summary:";
-                    break;
-                case 'continue':
-                    prompt = `Continue the following text. Provide a natural continuation, without repeating the original text. Make sure the continuation is coherent and relevant to the provided text:\n\n"${text}"`;
-                    newTitle = "Text Continuation:";
-                    break;
-                case 'grammar':
-                    prompt = `Review the following text for grammar and spelling errors. If there are errors, provide the corrected version. If no errors, state that the text is correct and provide the original text. Text:\n\n"${text}"`;
-                    newTitle = "Grammar & Spelling Check:";
-                    break;
-                case 'paraphrase':
-                    prompt = `Paraphrase the following text in a clear and concise way, providing a few different variations. Text:\n\n"${text}"`;
-                    newTitle = "Paraphrased Text:";
-                    break;
-                case 'sentiment':
-                    prompt = `Analyze the sentiment of the following text (e.g., positive, negative, neutral) and provide a brief explanation:\n\n"${text}"`;
-                    newTitle = "Sentiment Analysis:";
-                    break;
-                case 'keywords':
-                    prompt = `Extract the most important keywords and key phrases from the following text, listed as a comma-separated list:\n\n"${text}"`;
-                    newTitle = "Extracted Keywords:";
-                    break;
-                default:
-                    smartTextResultContent.textContent = "Invalid operation.";
-                    smartTextResultContent.classList.add('text-red-400');
-                    smartTextResultContent.classList.remove('text-blue-400');
-                    return;
-            }
-
-            // Apply specific prompt modifier if provided (e.g., "Act as a coding assistant")
-            if (promptModifier) {
-                prompt = `${promptModifier} ${prompt}`;
-            }
-
-            smartTextResultTitle.textContent = newTitle;
-            await callGeminiAPI(prompt, smartTextResultContent, smartTextErrorDiv);
-
-            // Special handling for 'continue' to append text to input
-            if (operationType === 'continue' && !smartTextErrorDiv.classList.contains('hidden')) {
-                // Only append if there was no error during generation
-                smartTextInput.value += smartTextResultContent.textContent;
-                smartTextResultContent.textContent = "Text continued in input box."; // Inform user
-            }
-        }
-
-
-        // Event listeners for Smart Text Editor Buttons
-        document.addEventListener('DOMContentLoaded', () => {
-            smartTextInput = document.getElementById('smartTextEditorInput');
-            smartTextResultContent = document.getElementById('smartTextResultContent');
-            smartTextResultTitle = document.getElementById('smartTextResultTitle');
-            smartTextErrorDiv = document.getElementById('smartTextError');
-
-            document.getElementById('btnSummarizeText')?.addEventListener('click', () => handleSmartTextOperation('summarize'));
-            document.getElementById('btnContinueText')?.addEventListener('click', () => handleSmartTextOperation('continue'));
-            document.getElementById('btnCorrectGrammar')?.addEventListener('click', () => handleSmartTextOperation('grammar'));
-            document.getElementById('btnParaphraseText')?.addEventListener('click', () => handleSmartTextOperation('paraphrase'));
-            document.getElementById('btnAnalyzeSentiment')?.addEventListener('click', () => handleSmartTextOperation('sentiment'));
-            document.getElementById('btnExtractKeywords')?.addEventListener('click', () => handleSmartTextOperation('keywords'));
-        });
-
-
-        // Event listener for General Query (Dashboard)
-        document.addEventListener('click', async (event) => {
-            if (event.target && event.target.id === 'sendGeminiPrompt') {
-                const promptText = document.getElementById('geminiPrompt').value.trim();
-                const responseDiv = document.getElementById('geminiResponse');
-                const errorDiv = document.getElementById('geminiError');
-                callGeminiAPI(promptText, responseDiv, errorDiv);
-            }
-        });
-
-        // Event listener for Coding Partner (Dashboard)
-        document.addEventListener('click', async (event) => {
-            if (event.target && event.target.id === 'sendCodingPrompt') {
-                const codingPromptText = document.getElementById('codingPrompt').value.trim();
-                const responseDiv = document.getElementById('codingResponse');
-                const errorDiv = document.getElementById('codingError');
-                const fullPrompt = `Act as a coding assistant. ${codingPromptText}`;
-                callGeminiAPI(fullPrompt, responseDiv, errorDiv);
-            }
-        });
-
-        // Event listener for Career Guide (Dashboard)
-        document.addEventListener('click', async (event) => {
-            if (event.target && event.target.id === 'sendCareerPrompt') {
-                const careerPromptText = document.getElementById('careerPrompt').value.trim();
-                const responseDiv = document.getElementById('careerResponse');
-                const errorDiv = document.getElementById('careerError');
-                const fullPrompt = `Act as a career guide. ${careerPromptText}`;
-                callGeminiAPI(fullPrompt, responseDiv, errorDiv);
-            }
-        });
-
-        // Event listener for Admin Assistant (Dashboard)
-        document.addEventListener('click', async (event) => {
-            if (event.target && event.target.id === 'sendAdminAIPrompt') {
-                const adminPromptText = document.getElementById('adminAIPrompt').value.trim();
-                const responseDiv = document.getElementById('adminAIResponse');
-                const errorDiv = document.getElementById('adminAIError');
-                const fullPrompt = `Act as an admin assistant for a dashboard. ${adminPromptText}`;
-                callGeminiAPI(fullPrompt, responseDiv, errorDiv);
-            }
-        });
 
         // --- Core Brand Canvas Animation Functions (Refactored from Banimal™) ---
         let coreBrandCanvas = null;
@@ -3290,7 +2923,8 @@
         }
 
         // --- AUTHENTICATION PLACEHOLDER FUNCTIONS (For Firebase integration later) ---
-        function handleSignIn() {
+        function handleSignIn(event) {
+            event.preventDefault(); // Prevent default form submission
             const email = document.getElementById('signInEmail').value;
             const password = document.getElementById('signInPassword').value;
             const messageDiv = document.getElementById('signInMessage');
@@ -3318,7 +2952,8 @@
             }, 1500);
         }
 
-        function handleSignUp() {
+        function handleSignUp(event) {
+            event.preventDefault(); // Prevent default form submission
             const name = document.getElementById('signUpName').value;
             const email = document.getElementById('signUpEmail').value;
             const password = document.getElementById('signUpPassword').value;
@@ -3392,57 +3027,8 @@
             console.log(`Mock PayPal SDK Integration triggered with Client ID: ${paypalClientId}`);
             // In a real scenario, you'd load the PayPal JS SDK script here dynamically
             // and then render a PayPal button or perform a mock payment intent.
-            // For now, we use a simple alert-like modal replacement for user feedback.
-            showCustomModal("PayPal SDK Integration (Mock)", `Attempting to initialize PayPal SDK with ID: <br><code>${paypalClientId}</code>.<br>This is a mock call.`);
+            // showCustomModal("PayPal SDK Integration (Mock)", `Attempting to initialize PayPal SDK with ID: <br><code>${paypalClientId}</code>.<br>This is a mock call.`); // Assuming showCustomModal exists
         }
-
-        // Custom Modal Function (replaces alert/confirm)
-        function showCustomModal(title, message, isConfirm = false, onConfirm = null) {
-            const modalId = 'custom-modal';
-            let modal = document.getElementById(modalId);
-
-            if (!modal) {
-                modal = document.createElement('div');
-                modal.id = modalId;
-                modal.className = 'fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[100]';
-                modal.innerHTML = `
-                    <div class="bg-gray-800 p-8 rounded-lg shadow-xl max-w-sm w-full border border-gray-700">
-                        <h3 class="text-2xl font-bold text-white mb-4" id="custom-modal-title"></h3>
-                        <p class="text-gray-300 mb-6" id="custom-modal-message"></p>
-                        <div class="flex justify-end space-x-4">
-                            <button id="custom-modal-cancel" class="px-5 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition duration-200">Cancel</button>
-                            <button id="custom-modal-confirm" class="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200">OK</button>
-                        </div>
-                    </div>
-                `;
-                document.body.appendChild(modal);
-            }
-
-            document.getElementById('custom-modal-title').innerHTML = title;
-            document.getElementById('custom-modal-message').innerHTML = message;
-
-            const confirmButton = document.getElementById('custom-modal-confirm');
-            const cancelButton = document.getElementById('custom-modal-cancel');
-
-            if (isConfirm) {
-                cancelButton.classList.remove('hidden');
-                confirmButton.onclick = () => {
-                    modal.classList.add('hidden');
-                    if (onConfirm) onConfirm();
-                };
-                cancelButton.onclick = () => {
-                    modal.classList.add('hidden');
-                };
-            } else {
-                cancelButton.classList.add('hidden');
-                confirmButton.onclick = () => {
-                    modal.classList.add('hidden');
-                };
-            }
-
-            modal.classList.remove('hidden');
-        }
-
 
         // --- Sub-Node Details Display Function (NEW) ---
         function showSubNodeDetails(nodeId) {
@@ -3673,8 +3259,164 @@
 
         // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
+            // Attach event listeners for main section navigation
+            document.querySelectorAll('nav.flex a[data-section-id]').forEach(link => {
+                link.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    showMainSection(event.currentTarget.dataset.sectionId);
+                });
+            });
+
+            // Attach event listener for the "Go to Dashboard (Dev Access)" button
+            const goToDashboardBtn = document.getElementById('goToDashboardBtn');
+            if (goToDashboardBtn) {
+                goToDashboardBtn.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    showMainSection('fruitful-dashboard-wrapper');
+                });
+            }
+
+            // Attach event listener for hero CTA button
+            const heroCtaButton = document.getElementById('heroCtaButton');
+            if (heroCtaButton) {
+                heroCtaButton.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    showMainSection(event.currentTarget.dataset.sectionId);
+                });
+            }
+
+            // Attach event listener for featured core brand CTA button
+            const featuredCoreBrandCtaButton = document.getElementById('featuredCoreBrandCtaButton');
+            if (featuredCoreBrandCtaButton) {
+                featuredCoreBrandCtaButton.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    showMainSection(event.currentTarget.dataset.sectionId);
+                });
+            }
+
+            // Attach event listeners for terminal buttons
+            document.getElementById('terminalButtons').addEventListener('click', (event) => {
+                const button = event.target.closest('.terminal-btn');
+                if (button && button.dataset.terminalUrl) {
+                    loadTerminal(button.dataset.terminalUrl);
+                }
+            });
+
+            // Attach event listeners for sector glyphs
+            document.getElementById('sectorGlyphGrid').addEventListener('click', (event) => {
+                const glyph = event.target.closest('.glyph');
+                if (glyph && glyph.dataset.sectorId) {
+                    switchSector(glyph.dataset.sectorId);
+                }
+            });
+
+            // Attach event listeners for sector dropdown items
+            document.getElementById('sectorDropdown').addEventListener('click', (event) => {
+                const dropdownItem = event.target.closest('a[data-sector-id]');
+                if (dropdownItem && dropdownItem.dataset.sectorId) {
+                    switchSector(dropdownItem.dataset.sectorId);
+                }
+            });
+
+            // Attach event listeners for auth forms
+            const signInForm = document.getElementById('signInForm');
+            if (signInForm) {
+                signInForm.addEventListener('submit', handleSignIn);
+            }
+            const signUpForm = document.getElementById('signUpForm');
+            if (signUpForm) {
+                signUpForm.addEventListener('submit', handleSignUp);
+            }
+            const signInBtn = document.getElementById('signInBtn');
+            if (signInBtn) {
+                signInBtn.addEventListener('click', handleSignIn);
+            }
+            const signUpBtn = document.getElementById('signUpBtn');
+            if (signUpBtn) {
+                signUpBtn.addEventListener('click', handleSignUp);
+            }
+
+            // Attach event listeners for dashboard sidebar navigation
+            document.querySelectorAll('.dashboard-sidebar-nav-item').forEach(link => {
+                link.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    showDashboardSection(event.currentTarget.dataset.dashboardSectionId);
+                });
+            });
+
+            // Attach event listeners for music sub-sidebar navigation
+            document.querySelectorAll('#musicSubSidebar .dashboard-sidebar-nav-item').forEach(link => {
+                link.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    showMusicSubSection(event.currentTarget.dataset.musicSubsectionId);
+                });
+            });
+
+            // Attach event listener for sub-node "Learn More" links
+            document.getElementById('subNodeGrid').addEventListener('click', (event) => {
+                const learnMoreLink = event.target.closest('a[data-subnode-id]');
+                if (learnMoreLink && learnMoreLink.dataset.subnodeId) {
+                    showSubNodeDetails(learnMoreLink.dataset.subnodeId);
+                }
+            });
+
+            // Attach event listener for "Back to Sub-Nodes" button
+            const hideSubNodeDetailsBtn = document.getElementById('hideSubNodeDetailsBtn');
+            if (hideSubNodeDetailsBtn) {
+                hideSubNodeDetailsBtn.addEventListener('click', hideSubNodeDetails);
+            }
+
+            // Attach event listeners for AI Gemini buttons
+            document.getElementById('sendGeminiPrompt')?.addEventListener('click', async () => {
+                const promptText = document.getElementById('geminiPrompt').value.trim();
+                const responseDiv = document.getElementById('geminiResponse');
+                const errorDiv = document.getElementById('geminiError');
+                callGeminiAPI(promptText, responseDiv, errorDiv);
+            });
+
+            document.getElementById('getSectorTrendAnalysisBtn')?.addEventListener('click', async () => {
+                const sectorName = document.getElementById('sectorTrendInput').value.trim();
+                const responseDiv = document.getElementById('sectorTrendAnalysisResponse');
+                const errorDiv = document.getElementById('sectorTrendAnalysisError');
+                if (!sectorName) {
+                    responseDiv.textContent = '';
+                    errorDiv.textContent = 'Please enter a sector name (e.g., Technology, Healthcare).';
+                    errorDiv.classList.remove('hidden');
+                    return;
+                }
+                const prompt = `Analyze the "${sectorName}" sector. Provide a summary of its current trends, future outlook, and list 3-5 key players in that sector. Keep it concise, around 150-200 words.`;
+                callGeminiAPI(prompt, responseDiv, errorDiv);
+            });
+
+            document.getElementById('sendCodingPrompt')?.addEventListener('click', async () => {
+                const codingPromptText = document.getElementById('codingPrompt').value.trim();
+                const responseDiv = document.getElementById('codingResponse');
+                const errorDiv = document.getElementById('codingError');
+                const fullPrompt = `Act as a coding assistant. ${codingPromptText}`;
+                callGeminiAPI(fullPrompt, responseDiv, errorDiv);
+            });
+
+            document.getElementById('sendCareerPrompt')?.addEventListener('click', async () => {
+                const careerPromptText = document.getElementById('careerPrompt').value.trim();
+                const responseDiv = document.getElementById('careerResponse');
+                const errorDiv = document.getElementById('careerError');
+                const fullPrompt = `Act as a career guide. ${careerPromptText}`;
+                callGeminiAPI(fullPrompt, responseDiv, errorDiv);
+            });
+
+            document.getElementById('sendAdminAIPrompt')?.addEventListener('click', async () => {
+                const adminPromptText = document.getElementById('adminAIPrompt').value.trim();
+                const responseDiv = document.getElementById('adminAIResponse');
+                const errorDiv = document.getElementById('adminAIError');
+                const fullPrompt = `Act as an admin assistant for a dashboard. ${adminPromptText}`;
+                callGeminiAPI(fullPrompt, responseDiv, errorDiv);
+            });
+
+
             // Set initial sector and render content
-            switchSector("fruitful-global"); // Loads the default sector on page load
+            const urlParams = new URLSearchParams(window.location.search);
+            const initialSectorId = urlParams.get('sector') || "fruitful-global";
+            switchSector(initialSectorId);
 
             // Initialize landing page features that don't depend on sector config
             updateSharePrice();
