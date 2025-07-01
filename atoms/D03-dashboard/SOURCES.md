@@ -6,3 +6,4 @@
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-06-21 | FGP--samfox | main | `public/foxed_got_mobiles.html` | `d349d566` | Fruitful™ Global Dashboard - All Canvases & E | 88509 | 60 | 12 | 125.9 |
 | 2 | 2025-06-22 | FGP--samfox | main | `foxed_got_mobiles.html` | `2123ba4b` | Fruitful™ Global Dashboard - All Canvases & E | 116128 | 60 | 14 | 132.6 |
+| 3 | 2025-07-01 | mining.seedwave.faa.zone | history | `public/sectors/minenest/index.html` | `bd20b44b` | Fruitful™ | MineNest™ Dashboard | 232938 | 141 | 21 | 295.3 |
