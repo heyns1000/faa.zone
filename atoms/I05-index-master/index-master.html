@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="dynamicTitle">Fruitful Global™ | Sector Index</title>
-    <link rel="icon" href="/favicon.ico">
+    <title id="dynamicTitle">Fruitful Global | Sector Index</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Leaflet CSS for OpenStreetMap -->
+    <!-- Leaflet CSS for OpenStreetMap (from Dashboard) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""/>
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
@@ -20,7 +19,7 @@
             --primary-color: #22c55e; /* Vibrant green */
             --secondary-color: #3b82f6; /* Blue for accents */
             --dark-bg-dashboard: #1a1a1d; /* Deep charcoal for dashboard specific elements */
-            --medium-dark-dashboard: #2a2a2e; /* Slightly lighter charcoal for dashboard specifics */
+            --medium-dark-bg-dashboard: #2a2a2e; /* Slightly lighter charcoal for dashboard specifics */
             --card-bg-dashboard: #374151; /* Dark gray for dashboard cards */
             --text-light-dashboard: #e0e0e0;
             --text-muted-dashboard: #9ca3af;
@@ -40,6 +39,17 @@
 
             /* Consolidated Fruitful Logo Color (now white) */
             --fruitful-corporate-white: #ffffff;
+
+            /* Auth Page Specific Colors */
+            --auth-bg-color: #1a1a1c; /* Deep black/dark grey */
+            --auth-card-bg: #2a2a2e; /* Darker grey for card backgrounds */
+            --auth-text-color: #f5f5f7;
+            --auth-input-bg: #1d1d1f;
+            --auth-input-border: #3a3a3e;
+            --auth-button-primary: #0071e3; /* Apple Blue */
+            --auth-button-hover: #005bb5;
+            --auth-google-button-bg: #4285F4;
+            --auth-google-button-hover: #357ae8;
         }
 
         /* Base Styles - Cooler, darker, more vibrant (from Landing Page, prioritized) */
@@ -59,6 +69,7 @@
         /* Custom Scrollbar Styling for Dark Theme */
         ::-webkit-scrollbar {
             width: 8px;
+            height: 8px;
         }
         ::-webkit-scrollbar-track {
             background: #1a1b20; /* Darker track */
@@ -453,9 +464,9 @@
         .landing-section.bg-gray-800.text-center h2 {
             font-size: 2.8rem;
             font-weight: 800;
+            color: var(--sector-text-color);
             margin-bottom: 3rem;
             text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-            color: var(--sector-text-color);
         }
         .glyph {
             background-color: var(--sector-card-bg);
@@ -701,8 +712,8 @@
         #fruitful-dashboard-wrapper {
             background-color: #0d1117; /* Use main body background for wrapper */
         }
-        .dashboard-header-bg { background-color: var(--medium-dark-dashboard); }
-        .dashboard-sidebar-bg { background-color: var(--medium-dark-dashboard); }
+        .dashboard-header-bg { background-color: var(--medium-dark-bg-dashboard); }
+        .dashboard-sidebar-bg { background-color: var(--medium-dark-bg-dashboard); }
         .dashboard-main-content-bg { background-color: #121317; } /* Use a slightly different dark tone */
         .dashboard-card-bg { background-color: var(--card-bg-dashboard); }
         .dashboard-primary-text { color: var(--primary-color); }
@@ -809,151 +820,9 @@
             background-color: #374151; /* card-bg */
         }
 
-        /* Form Styling for Sign-in/Sign-up/Settings */
-        .auth-form-container {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 2.5rem;
-            background-color: var(--sector-card-bg);
-            border-radius: 16px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.6);
-            border: 1px solid var(--sector-border-color);
-        }
-        .auth-form-container h2 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--sector-text-color);
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-        .auth-form-container label {
-            display: block;
-            font-size: 1rem;
-            color: var(--sector-muted-text);
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-        .auth-form-container input[type="text"],
-        .auth-form-container input[type="email"],
-        .auth-form-container input[type="password"] {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            margin-bottom: 1.5rem;
-            border-radius: 8px;
-            border: 1px solid var(--border-color-dashboard);
-            background-color: #2a2a2e; /* Slightly lighter than card bg */
-            color: var(--text-light-dashboard);
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-        .auth-form-container input[type="text"]:focus,
-        .auth-form-container input[type="email"]:focus,
-        .auth-form-container input[type="password"]:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.3); /* primary-color with opacity */
-        }
-        .auth-form-container button[type="submit"] {
-            width: 100%;
-            padding: 1rem 1.5rem;
-            background: linear-gradient(90deg, var(--sector-primary-color), var(--sector-secondary-color));
-            color: white;
-            border: none;
-            border-radius: 25px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.2s ease-in-out;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
-        }
-        .auth-form-container button[type="submit"]:hover {
-            filter: brightness(1.15);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.4), 0 0 15px rgba(168, 85, 247, 0.5);
-        }
-        .auth-form-container .text-center a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-        .auth-form-container .text-center a:hover {
-            color: var(--primary-color);
-        }
 
-        /* Toggle switch for settings */
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-            margin-bottom: 1rem;
-        }
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            -webkit-transition: .4s;
-            transition: .4s;
-            border-radius: 34px;
-        }
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            -webkit-transition: .4s;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        input:checked + .slider {
-            background-color: var(--primary-color);
-        }
-        input:focus + .slider {
-            box-shadow: 0 0 1px var(--primary-color);
-        }
-        input:checked + .slider:before {
-            -webkit-transform: translateX(26px);
-            -ms-transform: translateX(26px);
-            transform: translateX(26px);
-        }
-
-
-        /* Responsive adjustments for Core Brand sections */
+        /* Responsive Adjustments (from Dashboard CSS, adapted) */
         @media (max-width: 768px) {
-            #core-brand-landing-page { padding-top: 6rem; padding-bottom: 6rem; }
-            .core-brand-hero-content h1 { font-size: 3rem; }
-            .core-brand-hero-content h1 span { font-size: 0.6em; }
-            .core-brand-hero-content p { font-size: 1rem; }
-            .button-container {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            .featured-core-brand-section {
-                padding: 4rem 1.5rem;
-                margin: 2rem auto;
-            }
-            .featured-core-brand-section h2 {
-                font-size: 2.2rem;
-            }
-            .featured-core-brand-section p {
-                font-size: 1rem;
-            }
-            .featured-core-brand-section .cta-button {
-                padding: 0.8rem 1.8rem;
-                font-size: 1rem;
-            }
             .dashboard-sidebar {
                 width: 100%;
                 height: auto;
@@ -988,72 +857,339 @@
             }
         }
 
-        /* Styling for Core Brand Landing Page specifically */
+        /* Core Brand Section (was Banimal) Specific Styles */
         #core-brand-landing-page {
-            background: linear-gradient(135deg, var(--core-brand-bg-start), var(--core-brand-bg-end)); /* Use specific core brand colors */
-            min-height: 100vh; /* Ensure it takes full viewport height */
-            padding: 8rem 2rem;
-            display: flex; /* Use flex to center content */
+            padding-top: 8rem; /* Space for fixed header */
+            padding-bottom: 8rem;
+            width: 100%;
+            flex-grow: 1;
+            display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: var(--core-brand-text-color);
-            position: relative; /* For canvas z-index */
-            z-index: 10; /* Ensure it's above other sections if they overlap */
-            overflow: hidden; /* To contain particles */
+            justify-content: flex-start; /* Align content to top for header */
+            position: relative;
+            overflow: hidden; /* For canvas background */
+            /* Background will be set by JS dynamically using CSS variables */
+            background: linear-gradient(135deg, var(--core-brand-bg-start), var(--core-brand-bg-end));
+            color: var(--core-brand-text-color); /* Darker text for light background */
         }
 
-        /* Ensure canvas is behind content but visible */
         #core-brand-canvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1; /* Behind content */
+            z-index: 0;
+            pointer-events: none; /* Allow clicks to pass through */
+            opacity: 0.7; /* Slightly more subtle overlay */
         }
 
         .core-brand-hero-content {
             position: relative;
-            z-index: 5; /* Above canvas */
+            z-index: 1; /* Ensure content is above canvas */
             max-width: 900px;
-            margin: 0 auto;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 16rem); /* Adjust min-height to push footer down */
+            padding: 1rem;
+            box-sizing: border-box;
+            text-align: center; /* Ensure text is centered within the content block */
         }
         .core-brand-hero-content h1 {
-            font-size: 4.5rem;
+            font-size: 5rem; /* Enlarge */
             font-weight: 900;
             line-height: 1.1;
-            color: var(--core-brand-text-color);
-            text-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            margin-bottom: 0.5rem;
+            color: var(--core-brand-dark-text); /* Stronger text color */
+            text-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Soft shadow */
+            max-width: 700px;
         }
         .core-brand-hero-content h1 span {
-            background: linear-gradient(90deg, var(--core-brand-accent-color), var(--core-brand-button-color)); /* Accent color */
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 0.5em; /* Reduce relative to main title */
+            font-weight: 700; /* Keep bold for slogan */
+            color: var(--core-brand-accent-color); /* Accent color for slogan */
+            display: block; /* Ensure it's on a new line */
+            line-height: 1.2; /* Adjust line height for subtitle */
+            margin-top: 0.5rem; /* Space between Banimal and slogan */
         }
         .core-brand-hero-content p {
-            font-size: 1.3rem;
+            font-size: 1.3rem; /* Slightly reduced body text */
             color: var(--core-brand-muted-text);
-            margin-top: 1.5rem;
             margin-bottom: 2.5rem;
+            max-width: 700px;
         }
-        .core-brand-cta-button {
-            background: linear-gradient(90deg, var(--core-brand-button-color), var(--core-brand-button-color-dark)); /* Use core brand specific button colors */
+
+        .core-brand-cta-button { /* General style for core brand CTAs */
+            background: linear-gradient(45deg, var(--core-brand-button-color), var(--core-brand-button-color-dark));
+            box-shadow: 0 8px 25px rgba(144, 238, 144, 0.4); /* Example default shadow */
+            border: 1px solid rgba(144, 238, 144, 0.5);
+        }
+
+        .core-brand-cta-button:hover {
+            background: linear-gradient(45deg, var(--core-brand-button-color-dark), var(--core-brand-button-color));
+            box-shadow: 0 10px 30px rgba(144, 238, 144, 0.6);
+            border-color: rgba(144, 238, 144, 0.8);
+        }
+
+        /* Featured Core Brand Section on Landing Page */
+        .featured-core-brand-section {
+            /* Background will be set by JS dynamically using CSS variables */
+            background: linear-gradient(135deg, var(--featured-core-brand-bg-start), var(--featured-core-brand-bg-end));
+            color: var(--featured-core-brand-text-color);
+            padding: 6rem 2rem;
+            border-radius: 20px;
+            margin: 4rem auto;
+            max-width: 900px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .featured-core-brand-section h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--featured-core-brand-text-color);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .featured-core-brand-section p {
+            font-size: 1.2rem;
+            color: var(--featured-core-brand-muted-text);
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .featured-core-brand-section .cta-button {
+            background: linear-gradient(45deg, var(--featured-core-brand-button-color), var(--featured-core-brand-button-color-dark));
             color: white;
             padding: 1rem 2.5rem;
             border-radius: 30px;
             font-weight: 700;
             font-size: 1.15rem;
             transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            box-shadow: 0 5px 20px rgba(144, 238, 144, 0.4);
             letter-spacing: 0.05em;
             text-transform: uppercase;
+            border: none;
         }
-        .core-brand-cta-button:hover {
-            filter: brightness(1.2);
+        .featured-core-brand-section .cta-button:hover {
+            filter: brightness(1.15);
             transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.5), 0 0 25px var(--core-brand-button-color);
+            box-shadow: 0 8px 25px rgba(144, 238, 144, 0.6);
+        }
+
+        /* Responsive adjustments for Core Brand sections */
+        @media (max-width: 768px) {
+            #core-brand-landing-page { padding-top: 6rem; padding-bottom: 6rem; }
+            .core-brand-hero-content h1 { font-size: 3rem; }
+            .core-brand-hero-content h1 span { font-size: 0.6em; }
+            .core-brand-hero-content p { font-size: 1rem; }
+            .button-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .featured-core-brand-section {
+                padding: 4rem 1.5rem;
+                margin: 2rem auto;
+            }
+            .featured-core-brand-section h2 {
+                font-size: 2.2rem;
+            }
+            .featured-core-brand-section p {
+                font-size: 1rem;
+            }
+            .featured-core-brand-section .cta-button {
+                padding: 0.8rem 1.8rem;
+                font-size: 1rem;
+            }
+        }
+
+        /* Auth Pages */
+        .auth-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 5rem); /* Adjust for header/footer */
+            background-color: var(--auth-bg-color);
+            color: var(--auth-text-color);
+            padding: 2rem;
+        }
+
+        .auth-card {
+            background-color: var(--auth-card-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--auth-input-border);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .auth-card h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+        }
+
+        .auth-input-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .auth-input-group label {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-muted-dashboard);
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-input-group input[type="email"],
+        .auth-input-group input[type="password"],
+        .auth-input-group input[type="text"] {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--auth-input-border);
+            background-color: var(--auth-input-bg);
+            color: var(--auth-text-color);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .auth-input-group input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+        }
+
+        .auth-button {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .auth-button.primary {
+            background-color: var(--auth-button-primary);
+            color: white;
+        }
+
+        .auth-button.primary:hover {
+            background-color: var(--auth-button-hover);
+            transform: translateY(-2px);
+        }
+
+        .auth-button.google {
+            background-color: var(--auth-google-button-bg);
+            color: white;
+            margin-top: 1rem;
+        }
+
+        .auth-button.google:hover {
+            background-color: var(--auth-google-button-hover);
+            transform: translateY(-2px);
+        }
+
+        .auth-toggle-link {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            margin-top: 1.5rem;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        #auth-status {
+            background-color: var(--card-bg-dashboard);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color-dashboard);
+            margin-top: 1.5rem;
+            text-align: left;
+            word-wrap: break-word; /* Ensure long IDs wrap */
+        }
+        #auth-status strong {
+            color: var(--primary-color);
+        }
+
+        /* Settings Page Styles */
+        .settings-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Removed min-height here as it's now part of dashboard content */
+            background-color: var(--auth-bg-color); /* Still applies if shown standalone */
+            color: var(--auth-text-color);
+            padding: 2rem;
+        }
+        .settings-card {
+            background-color: var(--auth-card-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--auth-input-border);
+            width: 100%;
+            max-width: 700px;
+            text-align: left;
+        }
+        .settings-card h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .settings-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--auth-input-border);
+        }
+        .settings-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .settings-item h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--auth-text-color);
+            margin-bottom: 0.5rem;
+        }
+        .settings-item p {
+            font-size: 0.95rem;
+            color: var(--text-muted-dashboard);
+        }
+        .settings-item button {
+            margin-top: 1rem;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            background-color: var(--auth-button-primary);
+            color: white;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+            cursor: pointer;
+        }
+        .settings-item button:hover {
+            background-color: var(--auth-button-hover);
+        }
+        .settings-item button.danger {
+            background-color: #ef4444;
+        }
+        .settings-item button.danger:hover {
+            background-color: #dc2626;
         }
     </style>
 </head>
@@ -1062,47 +1198,38 @@
     <header class="py-4 px-6 md:px-12 flex justify-between items-center text-white">
         <h1 id="headerFruitfulText" class="text-2xl font-extrabold tracking-tight">Fruitful™</h1>
         <nav class="flex items-center space-x-4">
-            <a href="#" class="header-nav-item transition-colors duration-200" data-section-id="hero-section">Home</a>
-            <a href="#" class="header-nav-item transition-colors duration-200" data-section-id="features">Features</a>
-            <a href="#" class="header-nav-item transition-colors duration-200" id="headerCoreBrandLink" data-section-id="core-brand-landing-page">Core Brand</a>
-            <a href="#" class="header-nav-item transition-colors duration-200" data-section-id="shareprice">Signal</a>
-            <a href="#" class="header-nav-item transition-colors duration-200" data-section-id="vault-access">Vault</a>
-            <a href="#" class="header-nav-item transition-colors duration-200" data-section-id="treaty">Treaty</a>
-            <a href="#" class="header-nav-item transition-colors duration-200" data-section-id="vaultmesh">VaultMesh™</a>
-            <a href="#" class="header-nav-item transition-colors duration-200" data-section-id="about">About</a>
-            <a href="https://fruitfulcratedance.com/" class="transition-colors duration-200">Fruitful Crate Dance</a>
-            <a href="https://faa.zone/careers/hiring-homepage.html" class="transition-colors duration-200">Careers</a>
-            <a href="https://faa.zone/legal/securesign.html" class="transition-colors duration-200 font-semibold px-4 py-2 rounded-full header-sign-up">SecureSign</a>
-            <a href="#" class="px-4 py-2 rounded-full font-semibold transition-colors duration-200 header-sign-up" data-section-id="sign-up-section">Sign Up</a>
-            <a href="#" class="transition-colors duration-200" data-section-id="sign-in-section">Sign In</a>
-            <a href="#" class="header-nav-item transition-colors duration-200" data-section-id="fruitful-dashboard-wrapper">Dashboard</a>
+            <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" onclick="showMainSection('hero-section')">Home</a>
+            <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" onclick="showMainSection('features')">Features</a>
+            <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" id="headerCoreBrandLink" onclick="showMainSection('featured-core-brand-section')">Core Brand</a>
+            <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" onclick="showMainSection('shareprice')">Signal</a>
+            <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" onclick="showMainSection('vault-access')">Vault</a>
+            <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" onclick="showMainSection('treaty')">Treaty</a>
+            <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" onclick="showMainSection('vaultmesh')">VaultMesh</a>
+            <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" onclick="showMainSection('about')">About</a>
+            <a href="javascript:void(0)" class="header-nav-item px-4 py-2 rounded-full font-semibold transition-colors duration-200 header-sign-up" onclick="showAuthSection('signup-section')">Sign Up</a>
+            <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" onclick="showMainSection('fruitful-dashboard-wrapper')">Dashboard</a>
+            <!-- New: Sector Index dropdown -->
             <div class="relative group">
                 <button class="header-nav-item transition-colors duration-200 focus:outline-none flex items-center">
                     Sector Index <i class="fas fa-chevron-down ml-2 text-xs"></i>
                 </button>
                 <div id="sectorDropdown" class="absolute right-0 mt-2 w-64 bg-gray-800 rounded-lg shadow-lg py-2 hidden group-hover:block transition-all duration-300 ease-out transform scale-y-0 origin-top opacity-0">
-                    </div>
+                    <!-- Sector links will be dynamically populated here -->
+                </div>
             </div>
         </nav>
     </header>
 
-    <div class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50">
-        <button id="goToDashboardBtn"
-                class="px-6 py-3 bg-purple-600 text-white font-bold rounded-full shadow-lg hover:bg-purple-700 transition duration-300 transform hover:scale-105 flex items-center space-x-2">
-            <i class="fas fa-tachometer-alt"></i> <span>Go to Dashboard (Dev Access)</span>
-        </button>
-    </div>
-
-
+    <!-- Landing Page Sections -->
     <section id="hero-section" class="landing-section text-center">
         <div class="hero-content">
             <h2 class="text-5xl md:text-6xl font-extrabold mb-6 leading-tight" id="heroHeadline">
                 Innovate. Connect. <span class="dynamic-accent-text">Thrive.</span>
             </h2>
             <p class="text-xl md:text-2xl mb-10 max-w-2xl mx-auto" id="heroSubtitle">
-                Discover a new era of collaboration and sustainable growth with Fruitful™'s cutting-edge platform.
+                Discover a new era of collaboration and sustainable growth with Fruitful's cutting-edge platform.
             </p>
-            <a href="#" class="cta-button" id="heroCtaButton" data-section-id="cta-landing">
+            <a href="javascript:void(0)" class="cta-button" id="heroCtaButton" onclick="showMainSection('cta-landing')">
                 Get Started Today <span>🚀</span>
             </a>
         </div>
@@ -1114,19 +1241,21 @@
                 Unlock Your Potential with Our Core Features
             </h3>
             <div id="featuresGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                </div>
+                <!-- Feature cards will be dynamically loaded here -->
+            </div>
         </div>
     </section>
 
+    <!-- Featured Core Brand Section (Dynamically rendered) -->
     <section id="featured-core-brand-section" class="landing-section featured-core-brand-section">
-        <h2 id="featuredCoreBrandTitle">✨ Featured Core Brand: Fruitful Innovations™ ✨</h2>
+        <h2 id="featuredCoreBrandTitle">✨ Featured Core Brand: Fruitful Innovations ✨</h2>
         <p id="featuredCoreBrandDescription">
             This section dynamically highlights the core brand for the selected sector.
         </p>
         <p id="featuredCoreBrandSubDescription">
-            Learn about its mission, unique value proposition, and how it contributes to the Fruitful™ ecosystem.
+            Learn about its mission, unique value proposition, and how it contributes to the Fruitful ecosystem.
         </p>
-        <a href="#" class="cta-button" id="featuredCoreBrandCtaButton" data-section-id="core-brand-landing-page">
+        <a href="javascript:void(0)" class="cta-button" id="featuredCoreBrandCtaButton" onclick="showMainSection('core-brand-landing-page')">
             Discover Brand <i class="fas fa-arrow-right"></i>
         </a>
     </section>
@@ -1138,7 +1267,7 @@
     </section>
 
     <section id="seedwave" class="landing-section py-16 px-6 text-center">
-        <h2 class="text-4xl font-bold mb-8">🌱 Seedwave™ Brand Growth 🌱</h2>
+        <h2 class="text-4xl font-bold mb-8">🌱 Seedwave Brand Growth 🌱</h2>
         <div class="w-full max-w-4xl mx-auto p-6 rounded-xl shadow-lg">
             <canvas id="brandChart"></canvas>
         </div>
@@ -1154,7 +1283,7 @@
             Where others scale with speed, we scale with meaning. Every brand here agreed to something deeper than growth — they signed a Treaty.
             That’s why this isn’t eCommerce. It’s TreatyCommerce™.
         </p>
-        <p class="mt-6 font-semibold">— Written from the edge of code & culture 🌍 FAA.Zone™ Founder Glyph Activated™</p>
+        <p class="mt-6 font-semibold">— Written from the edge of code & culture 🌍 FAA.Zone Founder Glyph Activated™</p>
     </section>
 
     <section id="vault-access" class="landing-section py-16 px-6">
@@ -1174,16 +1303,20 @@
         </div>
 
         <div id="terminalButtons" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            </div>
+            <!-- Terminal buttons will be dynamically loaded here -->
+        </div>
     </section>
 
     <section id="sector-scrolls" class="landing-section py-16 px-6 text-center bg-gray-800">
         <h2 class="text-4xl font-bold mb-8">🧬 Sector Scrolls</h2>
         <div id="sectorGlyphGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
-            </div>
+            <!-- Sector glyphs will be dynamically loaded here -->
+        </div>
     </section>
 
     <div id="sector-content-container" class="mt-10 px-6 max-w-6xl mx-auto">
+        <!-- Dynamic sector content will be loaded here -->
+        <!-- These hidden sections are placeholders for showSectorPanel -->
         <div id="embedded-payroll-snapshot" class="brand-snapshot hidden"></div>
         <div id="embedded-retail-snapshot" class="brand-snapshot hidden"></div>
         <div id="embedded-ai-logic-snapshot" class="brand-snapshot hidden"></div>
@@ -1212,7 +1345,7 @@
     <section id="signal-packet" class="landing-section py-10 text-xs text-center">
         <pre class="max-w-2xl mx-auto p-4 rounded-lg overflow-auto"><code>{
     "signal": "omnidrop",
-    "origin": "If you dont like the fruits you are growing, change the seed™ / FAA™ Vault Layer",
+    "origin": "If you dont like the fruits you are growing, change the seed™ / FAA Vault Layer",
     "payload": {
         "type": "scroll",
         "value": "homepage + VaultRouter + all terminal iframe buttons live + Treaty Grid"
@@ -1255,7 +1388,7 @@
             </ul>
 
             <h3 class="text-xl font-bold mt-10">☑️ 1. Introduction to VaultMesh™</h3>
-            <p>VaultMesh™ transforms disorganized digital content into claimable, trackable assets. It bridges enterprise content systems, decentralized data vaults, and monetization layers through FAA™-compliant infrastructure.</p>
+            <p>VaultMesh™ transforms disorganized digital content into claimable, trackable assets. It bridges enterprise content systems, decentralized data vaults, and monetization layers through FAA-compliant infrastructure.</p>
 
             <h3 class="text-xl font-bold mt-10">⚒️ 2. Core System Components</h3>
             <ul class="list-disc ml-6 space-y-1">
@@ -1290,7 +1423,7 @@
                 <li>Diamond Tier: 10–11% royalty enforced</li>
                 <li>SmartWallet Integration: ScrollClaim™ payments and transfers</li>
                 <li>VaultPay™ Tier III: Required for commercial deployments</li>
-                <li>Compliance: FAA™ scroll ID, ClaimRoot™ hash, and royalty schema</li>
+                <li>Compliance: FAA scroll ID, ClaimRoot™ hash, and royalty schema</li>
             </ul>
 
             <h3 class="text-xl font-bold mt-10">📡 6. Integration with FAA.Zone™</h3>
@@ -1323,13 +1456,13 @@
             <ul class="list-disc ml-6 space-y-1">
                 <li>Q2 2025: ScrollClaim™ v2.2 with multi-claim staking</li>
                 <li>Q3 2025: GhostTrace™ Gen3 with forensic backtrace tooling</li>
-                <li>Q4 2025: Autonomous AI™ Sector Agents</li>
+                <li>Q4 2025: Autonomous AI Sector Agents</li>
                 <li>Q1 2026: Inter-vault Federation</li>
             </ul>
 
             <h3 class="text-xl font-bold mt-10">🔧 10. Team & Governance</h3>
             <ul class="list-disc ml-6 space-y-1">
-                <li>FAA™-certified engineers (scroll claimers)</li>
+                <li>FAA-certified engineers (scroll claimers)</li>
                 <li>Scroll Ministers: Compliance + tiering</li>
                 <li>Vault Admins: Metadata + ClaimRoot™ enforcement</li>
                 <li>HSOMNI9000™ Operators: Diamond-tier execution agents</li>
@@ -1341,12 +1474,12 @@
 
     <section id="about" class="landing-section py-16 md:py-24 px-6 md:px-12 text-center">
         <div class="max-w-4xl mx-auto">
-            <h3 class="text-4xl font-bold mb-8">About Fruitful Innovations™</h3>
+            <h3 class="text-4xl font-bold mb-8">About Fruitful Innovations</h3>
             <p class="text-lg leading-relaxed mb-6">
-                At Fruitful™, we believe in a future where technology empowers positive change. Our platform is designed to break down traditional barriers, fostering a collaborative ecosystem where businesses and individuals can thrive while making a meaningful impact on the world.
+                At Fruitful, we believe in a future where technology empowers positive change. Our platform is designed to break down traditional barriers, fostering a collaborative ecosystem where businesses and individuals can thrive while making a meaningful impact on the world.
             </p>
             <p class="text-lg leading-relaxed">
-                We are committed to transparency, sustainability, and innovation, driven by a powerful AI™ that ensures fairness, efficiency, and personalized experiences for every user. Join us in building a more fruitful planet.
+                We are committed to transparency, sustainability, and innovation, driven by a powerful AI that ensures fairness, efficiency, and personalized experiences for every user. Join us in building a more fruitful planet.
             </p>
         </div>
     </section>
@@ -1357,109 +1490,66 @@
                 Ready to Transform Your Future?
             </h3>
             <p class="text-xl mb-10">
-                Join the Fruitful™ community today and start your journey towards innovation, connection, and a sustainable tomorrow.
+                Join the Fruitful community today and start your journey towards innovation, connection, and a sustainable tomorrow.
             </p>
-            <a href="#" class="cta-button" data-section-id="sign-up-section">
+            <a href="javascript:void(0)" class="cta-button" onclick="showAuthSection('signup-section')">
                 Sign Up Now
             </a>
         </div>
     </section>
 
+    <!-- Core Brand Landing Page Content (Dynamic) -->
     <section id="core-brand-landing-page" class="hidden content-section">
         <canvas id="core-brand-canvas"></canvas>
         <div class="core-brand-hero-content">
             <h1 id="coreBrandHeadline">Core Brand: <br> <span id="coreBrandSlogan">Kind Creatures. Global Impact.</span></h1>
             <p id="coreBrandDescriptionHero">
-                Discover this brand's world of thoughtful essentials & innovative solutions. For every purchase, we deliver the same item to a child in need, identified by the Baobab Security Network™'s data-driven insights.
+                Discover this brand's world of thoughtful essentials & innovative solutions. For every purchase, we deliver the same item to a child in need, identified by the Baobab Security Network's data-driven insights.
             </p>
             <div class="button-container flex flex-wrap justify-center gap-4 mt-6">
-                <a href="#" class="cta-button core-brand-cta-button" id="coreBrandExploreButton">
+                <a href="javascript:void(0)" class="cta-button core-brand-cta-button" id="coreBrandExploreButton">
                     Explore Brand World <i class="fas fa-arrow-right"></i>
                 </a>
-                <a href="#" target="_blank" class="cta-button core-brand-cta-button" id="coreBrandShopButton">
+                <a href="javascript:void(0)" target="_blank" class="cta-button core-brand-cta-button" id="coreBrandShopButton">
                     Shop Now <i class="fas fa-external-link-alt"></i>
                 </a>
             </div>
         </div>
     </section>
 
-    <section id="sign-in-section" class="landing-section hidden py-16 md:py-24 px-6 md:px-12 text-center">
-        <div class="auth-form-container">
-            <h2>Sign In to Your Fruitful™ Account</h2>
-            <form id="signInForm">
-                <label for="signInEmail">Email Address</label>
-                <input type="email" id="signInEmail" placeholder="your.email@example.com" required>
-
-                <label for="signInPassword">Password</label>
-                <input type="password" id="signInPassword" placeholder="********" required>
-
-                <button type="submit" id="signInBtn">Sign In</button>
-            </form>
-            <p class="text-center mt-6 text-sm text-gray-400">
-                Don't have an account? <a href="#" data-section-id="sign-up-section">Sign Up Here</a>
-            </p>
-            <div id="signInMessage" class="mt-4 text-red-400"></div>
-        </div>
-    </section>
-
-    <section id="sign-up-section" class="landing-section hidden py-16 md:py-24 px-6 md:px-12 text-center">
-        <div class="auth-form-container">
-            <h2>Create Your Fruitful™ Account</h2>
-            <form id="signUpForm">
-                <label for="signUpName">Full Name</label>
-                <input type="text" id="signUpName" placeholder="John Doe" required>
-
-                <label for="signUpEmail">Email Address</label>
-                <input type="email" id="signUpEmail" placeholder="your.email@example.com" required>
-
-                <label for="signUpPassword">Password</label>
-                <input type="password" id="signUpPassword" placeholder="********" required>
-
-                <label for="signUpConfirmPassword">Confirm Password</label>
-                <input type="password" id="signUpConfirmPassword" placeholder="********" required>
-
-                <button type="submit" id="signUpBtn">Sign Up</button>
-            </form>
-            <p class="text-center mt-6 text-sm text-gray-400">
-                Already have an account? <a href="#" data-section-id="sign-in-section">Sign In Here</a>
-            </p>
-            <div id="signUpMessage" class="mt-4 text-red-400"></div>
-        </div>
-    </section>
-
-
+    <!-- Fruitful Dashboard Content (initially hidden) -->
     <div id="fruitful-dashboard-wrapper" class="hidden flex-grow main-content-bg">
         <div class="flex flex-grow dashboard-container">
             <nav class="dashboard-sidebar-bg dashboard-sidebar">
                 <h2 class="text-xl font-semibold dashboard-primary-text mb-4">Dashboard</h2>
-                <a href="#" class="dashboard-sidebar-nav-item" data-dashboard-section-id="overview">
+                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('overview')">
                     <i class="fas fa-tachometer-alt"></i> Sector Overview
                 </a>
-                <a href="#" class="dashboard-sidebar-nav-item" data-dashboard-section-id="core-brand-dashboard-panel">
+                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('core-brand-dashboard-panel')">
                     <i class="fas fa-gem"></i> Core Brand Details
                 </a>
-                <a href="#" class="dashboard-sidebar-nav-item" data-dashboard-section-id="sub-node-index">
+                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('sub-node-index')">
                     <i class="fas fa-network-wired"></i> Sub-Node Index
                 </a>
-                <a href="#" class="dashboard-sidebar-nav-item" data-dashboard-section-id="analytics">
+                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('analytics')">
                     <i class="fas fa-chart-line"></i> Data Analytics
                 </a>
-                <a href="#" class="dashboard-sidebar-nav-item" data-dashboard-section-id="admin-panel">
+                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('admin-panel')">
                     <i class="fas fa-users-cog"></i> Admin Panel
                 </a>
-                <a href="#" class="dashboard-sidebar-nav-item" data-dashboard-section-id="music">
+                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('music')">
                     <i class="fas fa-music"></i> Music & Media
                 </a>
-                <a href="#" class="dashboard-sidebar-nav-item" data-dashboard-section-id="ai-gemini">
-                    <i class="fas fa-robot"></i> AI Gemini™
+                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('ai-gemini')">
+                    <i class="fas fa-robot"></i> AI Gemini
                 </a>
-                <a href="#" class="dashboard-sidebar-nav-item" data-dashboard-section-id="maps">
+                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('maps')">
                     <i class="fas fa-map-marked-alt"></i> Maps
                 </a>
-                <a href="#" class="dashboard-sidebar-nav-item" data-dashboard-section-id="meeting-minutes">
+                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('meeting-minutes')">
                     <i class="fas fa-clipboard-list"></i> Meeting Minutes
                 </a>
-                <a href="#" class="dashboard-sidebar-nav-item" data-dashboard-section-id="settings">
+                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('settings-section-in-dashboard')">
                     <i class="fas fa-cog"></i> Settings
                 </a>
             </nav>
@@ -1468,13 +1558,13 @@
                 <div class="flex h-full dashboard-main-content-wrapper">
                     <nav id="musicSubSidebar" class="dashboard-sidebar-bg music-sub-sidebar hidden">
                         <h3 class="text-lg font-semibold dashboard-primary-text mb-3">Music Library</h3>
-                        <a href="#" class="dashboard-sidebar-nav-item" data-music-subsection-id="allMusic">
+                        <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showMusicSubSection('allMusic')">
                             <i class="fas fa-compact-disc"></i> All Music
                         </a>
-                        <a href="#" class="dashboard-sidebar-nav-item" data-music-subsection-id="musicPlaylists">
+                        <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showMusicSubSection('musicPlaylists')">
                             <i class="fas fa-list-music"></i> Playlists
                         </a>
-                        <a href="#" class="dashboard-sidebar-nav-item" data-music-subsection-id="artists">
+                        <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showMusicSubSection('artists')">
                             <i class="fas fa-microphone-alt"></i> Artists
                         </a>
                     </nav>
@@ -1483,7 +1573,7 @@
                         <section id="overview" class="mb-8 dashboard-card">
                             <h2 class="text-3xl font-bold dashboard-primary-text mb-6" id="dashboardOverviewTitle">Sector Overview</h2>
                             <p class="dashboard-muted-text mb-4" id="dashboardOverviewDescription">
-                                This section provides an overview of your personalized Fruitful Global™ data.
+                                This section provides an overview of your personalized Fruitful Global data.
                                 In a live system, these values would dynamically reflect your account's activity and metrics.
                             </p>
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -1511,45 +1601,39 @@
                             </div>
                         </section>
 
+                        <!-- New Core Brand Dashboard Panel -->
                         <section id="core-brand-dashboard-panel" class="hidden mb-8 dashboard-card">
-                            <h2 class="text-3xl font-bold dashboard-primary-text mb-6" id="coreBrandDashboardTitle">Core Brand: Fruitful Innovations™</h2>
+                            <h2 class="text-3xl font-bold dashboard-primary-text mb-6" id="coreBrandDashboardTitle">Core Brand: Fruitful Innovations</h2>
                             <div class="flex flex-col md:flex-row items-center gap-6 mb-8">
                                 <i id="coreBrandDashboardIcon" class="text-6xl text-purple-400"></i>
                                 <div>
-                                    <h3 class="text-2xl font-semibold dashboard-text-light" id="coreBrandDashboardName">Fruitful Innovations™</h3>
+                                    <h3 class="text-2xl font-semibold dashboard-text-light" id="coreBrandDashboardName">Fruitful Innovations</h3>
                                     <p class="dashboard-muted-text" id="coreBrandDashboardSlogan">The original spirit of progress.</p>
                                 </div>
                             </div>
                             <p class="dashboard-muted-text mb-6" id="coreBrandDashboardDescription">
                                 This panel provides a detailed overview of the core brand for the currently selected sector.
-                                It includes its mission, key functionalities, and its overall contribution to the Fruitful™ ecosystem.
+                                It includes its mission, key functionalities, and its overall contribution to the Fruitful ecosystem.
                             </p>
                             <h4 class="text-xl font-semibold dashboard-text-light mb-3">Key Highlights:</h4>
                             <ul id="coreBrandDashboardHighlights" class="list-disc list-inside dashboard-muted-text space-y-2 ml-4">
-                                </ul>
+                                <!-- Dynamically populated highlights -->
+                            </ul>
                             <div class="mt-6 text-center">
-                                <a href="#" id="coreBrandDashboardCta" class="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-200">
+                                <a href="javascript:void(0)" id="coreBrandDashboardCta" class="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-200">
                                     Visit Core Brand Site <i class="fas fa-external-link-alt ml-2"></i>
                                 </a>
                             </div>
                         </section>
 
+                        <!-- New Sub-Node Index Dashboard Panel -->
                         <section id="sub-node-index" class="hidden mb-8 dashboard-card">
-                            <h2 class="text-3xl font-bold dashboard-primary-text mb-6" id="subNodeIndexTitle">Sub-Node Index: Fruitful Innovations™</h2>
+                            <h2 class="text-3xl font-bold dashboard-primary-text mb-6" id="subNodeIndexTitle">Sub-Node Index: Fruitful Innovations</h2>
                             <p class="dashboard-muted-text mb-4" id="subNodeIndexDescription">
                                 Explore the various sub-nodes and specialized entities that operate within this sector, providing granular functionalities and services.
                             </p>
                             <div id="subNodeGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                </div>
-
-                            <div id="subNodeDetailsContainer" class="mt-8 dashboard-card hidden">
-                                <h3 id="subNodeDetailTitle" class="text-2xl font-bold dashboard-primary-text mb-4"></h3>
-                                <p id="subNodeDetailDescription" class="dashboard-muted-text mb-4"></p>
-                                <div id="subNodeDetailContent">
-                                    </div>
-                                <button id="hideSubNodeDetailsBtn" class="mt-6 px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition duration-200">
-                                    <i class="fas fa-arrow-left mr-2"></i> Back to Sub-Nodes
-                                </button>
+                                <!-- Sub-node cards will be dynamically loaded here -->
                             </div>
                         </section>
 
@@ -1650,7 +1734,7 @@
                             </div>
 
                             <h3 class="text-2xl font-semibold dashboard-text-light mb-4">Admin Assistant (AI Powered)</h3>
-                            <p class="dashboard-muted-text mb-3">Ask Gemini AI™ for insights on administrative tasks, user trends, or content moderation advice.</p>
+                            <p class="dashboard-muted-text mb-3">Ask Gemini AI for insights on administrative tasks, user trends, or content moderation advice.</p>
                             <textarea id="adminAIPrompt" rows="4" class="w-full p-3 rounded-lg bg-gray-700 border dashboard-border-dark dashboard-text-light placeholder-dashboard-muted-text focus:outline-none focus:ring-2 focus:ring-purple-400" placeholder="e.g., 'Summarize recent user activity trends for the past week.', 'Suggest a policy for handling spam content.'"></textarea>
                             <button id="sendAdminAIPrompt" class="px-6 py-3 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition duration-200 mt-4 self-end">
                                 Ask Admin Assistant
@@ -1658,7 +1742,7 @@
                             <div class="mt-4 p-4 bg-gray-700 rounded-lg border dashboard-border-dark">
                                 <h4 class="text-lg font-semibold dashboard-text-light mb-2">Admin Assistant Response:</h4>
                                 <div id="adminAIResponse" class="dashboard-text-light whitespace-pre-wrap">
-                                    Your AI™-powered admin assistant response will appear here.
+                                    Your AI-powered admin assistant response will appear here.
                                 </div>
                                 <div id="adminAIError" class="text-red-400 mt-2 hidden"></div>
                             </div>
@@ -1690,7 +1774,7 @@
                             <div id="musicPlaylistsContent" class="hidden">
                                 <h3 class="text-xl font-semibold dashboard-text-light mb-4">Your Music Playlists</h3>
                                 <ul class="list-disc list-inside dashboard-muted-text space-y-2">
-                                    <li>Fruitful™ Focus Playlist</li>
+                                    <li>Fruitful Focus Playlist</li>
                                     <li>Deep Work Rhythms</li>
                                     <li>Relax & Grow Collection</li>
                                 </ul>
@@ -1701,52 +1785,36 @@
                                 <ul class="list-disc list-inside dashboard-muted-text space-y-2">
                                     <li>Artist A - Genre: Ambient</li>
                                     <li>Artist B - Genre: Lo-Fi</li>
-                                    <li>Artist B - Genre: Lo-Fi</li>
                                     <li>Artist C - Genre: Classical</li>
                                 </ul>
                             </div>
                         </section>
 
                         <section id="ai-gemini" class="hidden mb-8 dashboard-card">
-                            <h2 class="text-3xl font-bold dashboard-primary-text mb-6">AI Gemini™ Integration</h2>
-                            <p class="dashboard-muted-text mb-4">Interact with the Gemini AI™ model directly from your dashboard.</p>
+                            <h2 class="text-3xl font-bold dashboard-primary-text mb-6">AI Gemini Integration</h2>
+                            <p class="dashboard-muted-text mb-4">Interact with the Gemini AI model directly from your dashboard.</p>
 
                             <div class="api-key-warning mb-4">
                                 <strong>Security Alert!</strong> For production, never expose your API key directly in client-side code. Use a backend server to proxy your AI requests.
                             </div>
 
+                            <!-- General Gemini Prompt -->
                             <div class="mb-8">
                                 <h3 class="text-xl font-semibold dashboard-text-light mb-3">General Query ✨</h3>
-                                <textarea id="geminiPrompt" rows="4" class="w-full p-3 rounded-lg bg-gray-700 border dashboard-border-dark dashboard-text-light placeholder-dashboard-muted-text focus:outline-none focus:ring-2 focus:ring-primary-color" placeholder="Enter your prompt for Gemini AI™ here... (e.g., 'Explain how AI works in a few words', 'Write a short poem about fruit.')"></textarea>
+                                <textarea id="geminiPrompt" rows="4" class="w-full p-3 rounded-lg bg-gray-700 border dashboard-border-dark dashboard-text-light placeholder-dashboard-muted-text focus:outline-none focus:ring-2 focus:ring-primary-color" placeholder="Enter your prompt for Gemini AI here... (e.g., 'Explain how AI works in a few words', 'Write a short poem about fruit.')"></textarea>
                                 <button id="sendGeminiPrompt" class="px-6 py-3 bg-primary-color text-white font-semibold rounded-lg hover:bg-green-600 transition duration-200 mt-4 self-end">
-                                    Send to Gemini™
+                                    Send to Gemini
                                 </button>
                                 <div class="mt-4 p-4 bg-gray-700 rounded-lg border dashboard-border-dark">
-                                    <h4 class="text-lg font-semibold dashboard-text-light mb-2">Gemini AI™ Response:</h4>
+                                    <h4 class="text-lg font-semibold dashboard-text-light mb-2">Gemini AI Response:</h4>
                                     <div id="geminiResponse" class="dashboard-text-light whitespace-pre-wrap">
-                                        Type a general prompt and click "Send to Gemini™" to get a response.
+                                        Type a general prompt and click "Send to Gemini" to get a response.
                                     </div>
                                     <div id="geminiError" class="text-red-400 mt-2 hidden"></div>
                                 </div>
                             </div>
 
-                            <div class="mb-8">
-                                <h3 class="text-xl font-semibold dashboard-text-light mb-3">Sector Trend Analysis ✨</h3>
-                                <p class="dashboard-muted-text mb-3">Get current trends, future outlook, and key players for a specified sector.</p>
-                                <input type="text" id="sectorTrendInput" placeholder="e.g., Technology, Healthcare, Finance" class="w-full p-3 rounded-lg bg-gray-700 border dashboard-border-dark dashboard-text-light placeholder-dashboard-muted-text focus:outline-none focus:ring-2 focus:ring-purple-400 mb-4">
-                                <button id="getSectorTrendAnalysisBtn" class="px-6 py-3 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition duration-200 self-end">
-                                    Analyze Sector Trends
-                                </button>
-                                <div class="mt-4 p-4 bg-gray-700 rounded-lg border dashboard-border-dark">
-                                    <h4 class="text-lg font-semibold dashboard-text-light mb-2">Sector Trend Analysis Response:</h4>
-                                    <div id="sectorTrendAnalysisResponse" class="dashboard-text-light whitespace-pre-wrap">
-                                        Enter a sector (e.g., Technology, Healthcare) and click "Analyze Sector Trends" to get insights.
-                                    </div>
-                                    <div id="sectorTrendAnalysisError" class="text-red-400 mt-2 hidden"></div>
-                                </div>
-                            </div>
-
-
+                            <!-- Coding Partner Feature -->
                             <div class="mb-8">
                                 <h3 class="text-xl font-semibold dashboard-text-light mb-3">Coding Partner ✨</h3>
                                 <p class="dashboard-muted-text mb-3">Get explanations for code, generate snippets, or debug issues.</p>
@@ -1763,6 +1831,7 @@
                                 </div>
                             </div>
 
+                            <!-- Career Guide Feature -->
                             <div>
                                 <h3 class="text-xl font-semibold dashboard-text-light mb-3">Career Guide ✨</h3>
                                 <p class="dashboard-muted-text mb-3">Receive advice on career paths, resume building, or interview preparation.</p>
@@ -1806,150 +1875,473 @@
                             </div>
                         </section>
 
-                        <section id="meeting-minutes" class="mb-8 dashboard-card">
-                            <h2 class="text-3xl font-bold dashboard-primary-text mb-6">Meeting Minutes: Fruitful™ Dashboard Development</h2>
+                        <section id="meeting-minutes" class="hidden mb-8 dashboard-card">
+                            <h2 class="text-3xl font-bold dashboard-primary-text mb-6">Meeting Minutes: Fruitful Dashboard Development</h2>
                             <p class="text-lg dashboard-muted-text mb-4">A quick recap of our discussions regarding API integrations and future features.</p>
 
                             <div class="space-y-8">
                                 <div>
                                     <h3 class="text-2xl font-semibold dashboard-text-light mb-3">Meeting Details:</h3>
                                     <ul class="list-disc list-inside ml-4 dashboard-text-light space-y-1">
-                                        <li><strong>Date:</strong> June 26, 2025</li>
-                                        <li><strong>Time:</strong> 02:16 AM SAST (Silver Lakes Golf Estate, Gauteng, South Africa)</li>
-                                        <li><strong>Attendees:</strong> Fruitful™ Dashboard Development Team (User and Gemini AI™)</li>
+                                        <li><strong>Date:</strong> June 23, 2025</li>
+                                        <li><strong>Time:</strong> 18:45 SAST (6:45 PM, Silver Lakes Golf Estate, Gauteng, South Africa)</li>
+                                        <li><strong>Attendees:</strong> Fruitful Dashboard Development Team (represented by user and Gemini AI)</li>
                                     </ul>
                                 </div>
 
                                 <div>
-                                    <h3 class="text-2xl font-semibold dashboard-text-light mb-3">1. Progress Update (June 26, 2025 - 02:16 AM SAST):</h3>
+                                    <h3 class="text-2xl font-semibold dashboard-text-light mb-3">1. Review of Previous API Discussions:</h3>
                                     <div class="space-y-4 ml-4">
                                         <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">API Key Consolidation & Implementation:</h4>
-                                            <p class="dashboard-muted-text"><strong>Status:</strong> All provided API keys (PayPal, Google Maps, Spotify, Gemini AI™, Xero) have been successfully added to the `window.API_KEYS` object.</p>
-                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Implemented mock functions (`mockPayPalSdkIntegration`, `callGeminiAPI`) to demonstrate usage of these keys. Security warnings regarding client-side exposure are prominent.</p>
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Design Styling API Key:</h4>
+                                            <p class="dashboard-muted-text"><strong>Conclusion:</strong> No single "API key" for generic styling. Styling handled primarily by CSS (e.g., Tailwind CSS). Specific design services (e.g., Google Fonts, mapping APIs with custom styles) *would* require their own API keys.</p>
+                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Continue using Tailwind CSS. Explore specific API-driven styling if a particular design service is integrated.</p>
                                         </div>
                                         <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Settings Section Functionality:</h4>
-                                            <p class="dashboard-muted-text"><strong>Status:</strong> Mock functionality for "Profile Settings" (save), "Notification Preferences" (toggle), and "Theme Settings" (dark mode toggle) is now in place.</p>
-                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> These provide a user experience, pending actual backend integration for persistence.</p>
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Language Toggler:</h4>
+                                            <p class="dashboard-muted-text"><strong>Conclusion:</strong> Achieved via JavaScript logic and `data-key` attributes for translatable text. No external API key strictly necessary for the toggler if translations are stored locally.</p>
+                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Current implementation is good. For complex internationalization, consider dedicated I18n JavaScript libraries or a translation API if dynamic, on-the-fly translation is required.</p>
                                         </div>
                                         <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Sign In/Sign Up Forms:</h4>
-                                            <p class="dashboard-muted-text"><strong>Status:</strong> Basic HTML forms for Sign In and Sign Up are implemented with mock `handleSignIn()` and `handleSignUp()` functions. They simulate success/failure.</p>
-                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Ready for Firebase/Google authentication integration.</p>
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Selector to Change All Text in HTML with Script:</h4>
+                                            <p class="dashboard-muted-text"><strong>Conclusion:</strong> `document.querySelectorAll()` with specific tag names or custom attributes is the best method for targeted text manipulation. Use `document.querySelectorAll('*')` with extreme caution.</p>
+                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Continue using specific selectors for controlled text modification.</p>
                                         </div>
                                         <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Dashboard Access & Visibility:</h4>
-                                            <p class="dashboard-muted-text"><strong>Status:</strong> A prominent "Go to Dashboard (Dev Access)" button has been added to the landing page for direct, development-time access, bypassing sign-in/sign-up. The header "Dashboard" link also correctly navigates.</p>
-                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Confirmed visibility and navigation.</p>
-                                        </div>
-                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Sub-Node "Learn More" Functionality:</h4>
-                                            <p class="dashboard-muted-text"><strong>Status:</strong> The "Learn More" links on sub-node cards in the "Sub-Node Index" now correctly open an internal detail view within the dashboard (similar to the Music section).</p>
-                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Mock content is displayed for each sub-node, preparing for detailed AI Logic sector integration.</p>
-                                        </div>
-                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">TradeMark™ Symbol Integration:</h4>
-                                            <p class="dashboard-muted-text"><strong>Status:</strong> All specified brand names and technologies across the entire HTML document (e.g., Fruitful™, FAA™, VaultMesh™, Gemini AI™) have been updated with the ™ symbol.</p>
-                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Consistent branding maintained.</p>
-                                        </div>
-                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2"><strong>NEW FEATURE: Sector Trend Analysis (Gemini AI™)</strong></h4>
-                                            <p class="dashboard-muted-text"><strong>Description:</strong> Added a new input field and button within the "AI Gemini™" section to allow users to request trend analysis for specific sectors (e.g., "Technology", "Healthcare").</p>
-                                            <p class="dashboard-muted-text mt-1"><strong>Functionality:</strong> Calls the Gemini AI™ API with a tailored prompt to generate a summary of current trends, future outlook, and key players for the given sector.</p>
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">General Helpful API Categories (Recap):</h4>
+                                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
+                                                <li>**Mapping & Location:** Google Maps Platform (requires key).</li>
+                                                <li>**Data & Information:** OpenWeatherMap (key), REST Countries (often no key), News API (key), Free Dictionary (no key).</li>
+                                                <li>**Authentication & User Management:** Firebase Auth, Auth0.</li>
+                                                <li>**Payment Processing:** Stripe (key), PayPal (credentials).</li>
+                                                <li>**AI/ML:** OpenAI (key), Hugging Face Inference API (key), **Gemini API (key - our current focus!)**.</li>
+                                                <li>**Image/Media:** Pexels API / Unsplash API (keys).</li>
+                                                <li>**Utility:** Bitly API (key), SendGrid API / Mailgun API (keys).</li>
+                                            </ul>
+                                            <p class="api-key-warning mt-3">
+                                                <strong>CRITICAL SECURITY NOTE:</strong> Never expose API keys directly in client-side code. Use a backend server or strict restrictions.
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div>
-                                <h3 class="text-2xl font-semibold dashboard-text-light mb-3">Page Routes & Navigation Summary:</h3>
-                                <ul class="list-disc list-inside ml-4 dashboard-text-light space-y-1">
-                                    <li><strong>Home (`#hero-section`):</strong> Default landing page.</li>
-                                    <li><strong>Features (`#features`):</strong> Displays core platform features.</li>
-                                    <li><strong>Core Brand (`#core-brand-landing-page`):</strong> Detailed landing page for the primary brand of the selected sector (e.g., Fruitful Innovations™, Banimal™).</li>
-                                    <li><strong>Signal (`#shareprice`):</strong> Live share signal display.</li>
-                                    <li><strong>Vault (`#vault-access`):</strong> Access to various sector-specific iframe terminals.</li>
-                                    <li><strong>Treaty (`#treaty`):</strong> Information about the Treaty System™.</li>
-                                    <li><strong>VaultMesh™ (`#vaultmesh`):</strong> Executive summary of the VaultMesh™ framework.</li>
-                                    <li><strong>About (`#about`):</strong> About Fruitful Innovations™.</li>
-                                    <li><strong>Sign Up (`#sign-up-section`):</strong> User registration form.</li>
-                                    <li><strong>Sign In (`#sign-in-section`):</strong> User login form.</li>
-                                    <li><strong>Dashboard (`#fruitful-dashboard-wrapper`):</strong> Main user dashboard with multiple sub-sections.</li>
-                                    <li>
-                                        <strong>Dashboard Sub-Sections (accessed via sidebar):</strong>
-                                        <ul class="list-disc list-inside ml-6 text-sm dashboard-muted-text">
-                                            <li>`overview`: General sector statistics.</li>
-                                            <li>`core-brand-dashboard-panel`: Detailed view of the core brand within the dashboard.</li>
-                                            <li>`sub-node-index`: Grid of sub-nodes; clicking "Learn More" dynamically loads `subNodeDetailsContainer`.</li>
-                                            <li>`analytics`: Data analytics placeholders.</li>
-                                            <li>`admin-panel`: Admin controls with AI™ assistant.</li>
-                                            <li>`music`: Music and media embeds with sub-navigation.</li>
-                                            <li>`ai-gemini`: Gemini AI™ interaction panel (General, Coding, Career, **Sector Trend Analysis**).</li>
-                                            <li>`maps`: Google Maps and Leaflet.js integrations.</li>
-                                            <li>`meeting-minutes`: This very document.</li>
-                                            <li>`settings`: User settings and API key display.</li>
-                                        </ul>
-                                    </li>
-                                </ul>
+                                <div>
+                                    <h3 class="text-2xl font-semibold dashboard-text-light mb-3">2. Gemini API Integration (Current Progress & Understanding):</h3>
+                                    <div class="space-y-4 ml-4">
+                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">What does a Gemini API Key do? (for "Baby Staff"):</h4>
+                                            <p class="dashboard-text-light mb-2">Imagine the Gemini AI as a super-smart robot brain that lives far away in a Google data center. This robot brain can do amazing things like talk like a human, understand pictures, summarize long texts, and write code.</p>
+                                            <p class="dashboard-text-light mb-2">**Your Gemini API Key is like a special secret VIP pass** that allows your Fruitful Dashboard to "talk" to this super-smart robot brain. It tells Google it's *our* dashboard asking, keeps track of usage, and ensures safe communication.</p>
+                                            <p class="dashboard-text-light">**Crucial Point for "Baby Staff":** This API key is a **secret!** Never show it to anyone who shouldn't have access, and never put it directly into code that everyone can see (like the HTML if it's on a public website). It's like your house key – keep it safe!</p>
+                                        </div>
+                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Key Acquisition:</h4>
+                                            <p class="dashboard-muted-text">API keys are obtained via <a href="https://aistudio.google.com/" target="_blank" class="dashboard-secondary-text hover:underline">Google AI Studio</a>.</p>
+                                        </div>
+                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Current Dashboard Implementation:</h4>
+                                            <p class="dashboard-muted-text">A new "AI Gemini" section has been added with a general prompt area, plus new specialized "Coding Partner" and "Career Guide" features, all powered by Gemini AI. The API key for Gemini is now explicitly set using the key you provided (`AIzaSyBGSDZATtITv5iIoB3rgKHBpWx9MrufxXE`).</p>
+                                            <p class="api-key-warning mt-2">
+                                                <strong>ACTION REQUIRED for PRODUCTION:</strong> While the key is now in the code, for any production deployment, move this API call to a secure backend server to protect your key.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-2xl font-semibold dashboard-text-light mb-3">3. Discussion of New API-related Features for Fruitful Dashboard:</h3>
+                                    <div class="space-y-6 ml-4">
+                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2"><i class="fas fa-code"></i> Coding Partner Integration:</h4>
+                                            <p class="dashboard-muted-text"><strong>Concept:</strong> Use Gemini AI's code generation and explanation capabilities.</p>
+                                            <p class="dashboard-muted-text"><strong>API(s) to explore:</strong> Gemini API (already integrated).</p>
+                                            <p class="dashboard-muted-text"><strong>Implementation Idea:</strong> Integrated into "AI Gemini" section with dedicated input/output.</p>
+                                        </div>
+                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2"><i class="fas fa-graduation-cap"></i> Career Guide Integration:</h4>
+                                            <p class="dashboard-muted-text"><strong>Concept:</strong> Leverage AI to provide career advice, resume tips, interview prep, or learning paths.</p>
+                                            <p class="dashboard-muted-text"><strong>API(s) to explore:</strong> Gemini API (primary), potentially specialized career APIs for structured data.</p>
+                                            <p class="dashboard-muted-text"><strong>Implementation Idea:</strong> New "Career Insights" section where users input goals/questions for AI-generated guidance.</p>
+                                        </div>
+                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2"><i class="fas fa-mobile-alt"></i> "🦊 Foxed Has Mobiles™" - Product Data/Inventory Integration:</h4>
+                                            <p class="dashboard-muted-text"><strong>Concept:</strong> Pull mobile product data (names, specs, prices, stock) from a dedicated system.</p>
+                                            <p class="dashboard-muted-text"><strong>API(s) to explore:</strong> Likely a **custom API** from "Foxed Has Mobiles™" or a third-party e-commerce platform API (Shopify, WooCommerce).</p>
+                                            <p class="dashboard-muted-text"><strong>Action:</strong> Contact "Foxed Has Mobiles™" for API documentation and keys.</p>
+                                        </div>
+                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2"><i class="fas fa-shield-alt"></i> "🌳 Baobab Security Network™" - Security Monitoring:</h4>
+                                            <p class="dashboard-muted-text"><strong>Concept:</strong> Display security alerts, network status, or security logs.</p>
+                                            <p class="dashboard-muted-text"><strong>API(s) to explore:</strong> Likely a **custom API** from "Baobab Security Network™".</p>
+                                            <p class="dashboard-muted-text"><strong>Action:</strong> Obtain API documentation and credentials from "Baobab Security Network™".</p>
+                                        </div>
+                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2"><i class="fas fa-shopping-cart"></i> "🌱Global_Complete_purchase" & "🌱Global_checkout_success" - E-commerce Analytics:</h4>
+                                            <p class="dashboard-muted-text"><strong>Concept:</strong> Track successful purchases and checkout completions.</p>
+                                            <p class="dashboard-muted-text"><strong>API(s) to explore:</strong> Google Analytics Data API, Custom E-commerce Platform API, CRM/ERP APIs.</p>
+                                            <p class="dashboard-muted-text"><strong>Implementation Idea:</strong> New charts/metrics in "Data Analytics" showing conversion rates, successful purchases, checkout funnel performance.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-2xl font-semibold dashboard-text-light mb-3">4. Live Demos (for Visual Learners / "Baby Staff"):</h3>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div class="dashboard-card p-4 rounded-lg shadow-md border dashboard-border-dark flex flex-col items-center">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Live Google Map</h4>
+                                            <p class="dashboard-muted-text mb-3">A real-time map, demonstrating location services. (Replace with your actual embed!)</p>
+                                            <div class="w-full h-64 bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center">
+                                                <iframe src="YOUR_GOOGLE_MAP_EMBED_CODE" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                                                <span class="dashboard-muted-text absolute text-center">**PLACEHOLDER MAP**<br>Get your embed code from Google Maps.</span>
+                                            </div>
+                                        </div>
+                                        <div class="dashboard-card p-4 rounded-lg shadow-md border dashboard-border-dark flex flex-col items-center">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Live YouTube Video</h4>
+                                            <p class="dashboard-muted-text mb-3">An embedded video, showing media integration. (Replace with your actual embed!)</p>
+                                            <div class="w-full h-64 bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center">
+                                                <iframe width="100%" height="100%" src="YOUR_YOUTUBE_EMBED_CODE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                                <span class="dashboard-muted-text absolute text-center">**PLACEHOLDER VIDEO**<br>Get your embed code from YouTube.</span>
+                                            </div>
+                                        </div>
+                                        <div class="dashboard-card p-4 rounded-lg shadow-md border dashboard-border-dark flex flex-col items-center">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Live Spotify Music</h4>
+                                            <p class="dashboard-muted-text mb-3">Interactive Spotify embeds for albums/tracks.</p>
+                                            <div class="w-full h-64 bg-gray-800 rounded-lg overflow-hidden flex flex-col items-center justify-center space-y-2 p-2">
+                                                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/3RyjFxsU9hcmg14vqzUUMy?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                                                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2kdQY3b6dDRGonyIzcWljc?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                                                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/6Xe9wT5xeZETPwtaP2ynUz?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                                            </div>
+                                        </div>
+                                        <div class="dashboard-card p-4 rounded-lg shadow-md border dashboard-border-dark flex flex-col items-center">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Gemini AI Test (re-iterated)</h4>
+                                            <p class="dashboard-muted-text mb-3">See our core AI integration in action.</p>
+                                            <div class="w-full h-64 bg-gray-800 rounded-lg p-4 overflow-auto text-sm dashboard-text-light">
+                                                <p>This is where our Gemini AI interacts. You can test it in the "AI Gemini" section!</p>
+                                                <p class="mt-2 dashboard-muted-text">Example: Ask the AI "What is the capital of France?"</p>
+                                                <p class="mt-2 text-red-400">**Remember to add your actual API Key!**</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-2xl font-semibold dashboard-text-light mb-3">5. Action Items for the Team:</h3>
+                                    <ul class="list-disc list-inside ml-4 dashboard-text-light space-y-2">
+                                        <li>**IMMEDIATE & CRITICAL:** Replace `YOUR_GEMINI_API_KEY` in the JavaScript with your actual key from Google AI Studio.</li>
+                                        <li>**SECURITY:** Begin planning for secure backend proxying of all API calls for production deployment.</li>
+                                        <li>**API ACQUISITION:** Contact "Foxed Has Mobiles™" and "Baobab Security Network™" for their API documentation and access credentials.</li>
+                                        <li>**ANALYTICS:** Investigate Google Analytics Data API or e-commerce platform APIs for detailed purchase/checkout event tracking.</li>
+                                        <li>**UI/UX:** Brainstorm and design user interfaces for "Coding Partner" and "Career Guide" functionalities.</li>
+                                        <li>**EMBED CODES:** Generate actual embed codes for the live demos (Google Maps, YouTube, Spotify) to make this section truly "live" for the team.</li>
+                                        <li>**CONTINUOUS LEARNING:** Encourage "baby staff" to review API documentation for any integrated service to understand capabilities and limitations.</li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                    </section>
+                        </section>
+                    </div>
                 </div>
             </main>
         </div>
     </div>
 
+    <!-- Sign-up/Sign-in/Settings Sections (Hidden by default) -->
+    <section id="signup-section" class="auth-section hidden">
+        <div class="auth-card">
+            <h2>Sign Up</h2>
+            <div class="auth-input-group">
+                <label for="signup-email">Email</label>
+                <input type="email" id="signup-email" placeholder="Enter your email">
+            </div>
+            <div class="auth-input-group">
+                <label for="signup-password">Password</label>
+                <input type="password" id="signup-password" placeholder="Create a password">
+            </div>
+            <div class="auth-input-group">
+                <label for="signup-confirm-password">Confirm Password</label>
+                <input type="password" id="signup-confirm-password" placeholder="Confirm your password">
+            </div>
+            <button class="auth-button primary" id="signup-email-password">Sign Up with Email</button>
+            <p class="text-center text-gray-500 my-4">OR</p>
+            <button class="auth-button google" id="signup-google"><i class="fab fa-google"></i> Sign Up with Google</button>
+            <p class="auth-toggle-link" onclick="showAuthSection('signin-section')">Already have an account? Sign In</p>
+            <div id="signup-status" class="mt-4 text-red-400"></div>
+        </div>
+    </section>
+
+    <section id="signin-section" class="auth-section hidden">
+        <div class="auth-card">
+            <h2>Sign In</h2>
+            <div class="auth-input-group">
+                <label for="signin-email">Email</label>
+                <input type="email" id="signin-email" placeholder="Enter your email">
+            </div>
+            <div class="auth-input-group">
+                <label for="signin-password">Password</label>
+                <input type="password" id="signin-password" placeholder="Enter your password">
+            </div>
+            <button class="auth-button primary" id="signin-email-password">Sign In with Email</button>
+            <p class="text-center text-gray-500 my-4">OR</p>
+            <button class="auth-button google" id="signin-google"><i class="fab fa-google"></i> Sign In with Google</button>
+            <p class="auth-toggle-link" onclick="showAuthSection('signup-section')">Don't have an account? Sign Up</p>
+            <div id="signin-status" class="mt-4 text-red-400"></div>
+        </div>
+    </section>
+
+    <!-- Settings Section - now part of the dashboard's main content -->
+    <section id="settings-section-in-dashboard" class="settings-section hidden dashboard-card">
+        <div class="settings-card">
+            <h2>User Settings</h2>
+            <div id="user-info-display" class="settings-item">
+                <h3>User Information</h3>
+                <p><strong>Email:</strong> <span id="settings-email">N/A</span></p>
+                <p><strong>User ID:</strong> <span id="settings-uid">N/A</span></p>
+                <p><strong>Provider:</strong> <span id="settings-provider">N/A</span></p>
+                <button id="signout-button" class="danger">Sign Out</button>
+            </div>
+            <div class="settings-item">
+                <h3>Account Management</h3>
+                <button onclick="alert('Email/Password change not implemented in this demo.')">Change Password</button>
+                <button class="danger" onclick="alert('Account deletion not implemented in this demo.')">Delete Account</button>
+            </div>
+            <div class="settings-item">
+                <h3>Preferences</h3>
+                <p>Theme: Dark (Default)</p>
+                <p>Notifications: Enabled</p>
+                <button>Edit Preferences</button>
+            </div>
+        </div>
+    </section>
+
+
     <footer class="py-8 px-6 md:px-12 text-center">
         © 2025 FAA™ Treaty System™. All Rights Reserved. Powered by 🦍 glyphs + Vault API. Synced with Seedwave™.
     </footer>
 
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import {
+            getAuth,
+            signInAnonymously,
+            signInWithCustomToken,
+            onAuthStateChanged,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            GoogleAuthProvider,
+            signInWithPopup,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        // Firebase global variables provided by Canvas environment
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const googleProvider = new GoogleAuthProvider();
+
+        // Expose Firebase Auth related objects globally
+        window.firebaseAuth = auth;
+        window.googleProvider = googleProvider; // Required for signInWithGoogle
+
+        // Function to sign in anonymously or with custom token on load
+        async function authenticateFirebase() {
+            try {
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                    console.log("Firebase signed in with custom token.");
+                } else {
+                    await signInAnonymously(auth);
+                    console.log("Firebase signed in anonymously.");
+                }
+            } catch (error) {
+                console.error("Firebase authentication error:", error);
+                // In a real app, you might show a user-facing error here.
+            }
+        }
+
+        // Listen for auth state changes to update UI
+        onAuthStateChanged(auth, (user) => {
+            const signupLink = document.querySelector('a[onclick*="showAuthSection(\'signup-section\')"]');
+            const signinLink = document.querySelector('a[onclick*="showAuthSection(\'signin-section\')"]');
+            const settingsLinkHeader = document.querySelector('a[onclick*="showDashboardSection(\'settings-section-in-dashboard\')"]'); // The one in the dashboard sidebar
+            const headerFruitfulText = document.getElementById('headerFruitfulText');
+            const ctaSignUpButton = document.querySelector('#cta-landing .cta-button'); // The Sign Up Now button
+
+            if (user) {
+                console.log("User is signed in:", user.uid);
+                if (headerFruitfulText) headerFruitfulText.innerText = 'Fruitful™ (Logged In)';
+
+                // Update settings page details
+                if (document.getElementById('settings-email')) document.getElementById('settings-email').innerText = user.email || 'N/A';
+                if (document.getElementById('settings-uid')) document.getElementById('settings-uid').innerText = user.uid;
+                if (document.getElementById('settings-provider')) document.getElementById('settings-provider').innerText = user.providerData[0]?.providerId || 'N/A';
+
+                // Hide signup/signin links and show settings link
+                if (signupLink) signupLink.classList.add('hidden');
+                if (signinLink) signinLink.classList.add('hidden');
+                // The main "Sign Up Now" CTA button should also change behavior or hide
+                if (ctaSignUpButton) {
+                    ctaSignUpButton.textContent = "Go to Dashboard";
+                    ctaSignUpButton.onclick = (event) => {
+                        event.preventDefault();
+                        window.showMainSection('fruitful-dashboard-wrapper');
+                    };
+                }
+                // Show the settings link in the dashboard sidebar (if it exists)
+                if (settingsLinkHeader) settingsLinkHeader.classList.remove('hidden');
+
+            } else {
+                console.log("User is signed out.");
+                if (headerFruitfulText) headerFruitfulText.innerText = 'Fruitful™';
+
+                // Reset settings page details
+                if (document.getElementById('settings-email')) document.getElementById('settings-email').innerText = 'N/A';
+                if (document.getElementById('settings-uid')) document.getElementById('settings-uid').innerText = 'N/A';
+                if (document.getElementById('settings-provider')) document.getElementById('settings-provider').innerText = 'N/A';
+
+                // Show signup/signin links and hide settings link
+                if (signupLink) signupLink.classList.remove('hidden');
+                if (signinLink) signinLink.classList.remove('hidden');
+                // Reset the main "Sign Up Now" CTA button
+                if (ctaSignUpButton) {
+                    ctaSignUpButton.textContent = "Sign Up Now";
+                    ctaSignUpButton.onclick = (event) => {
+                        event.preventDefault();
+                        window.showAuthSection('signup-section');
+                    };
+                }
+                // Hide the settings link in the dashboard sidebar (if it exists)
+                if (settingsLinkHeader) settingsLinkHeader.classList.add('hidden');
+            }
+        });
+
+        // Attach event listeners for auth buttons on DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // These event listeners directly use the imported functions via `auth` instance
+            document.getElementById('signup-email-password')?.addEventListener('click', async (event) => {
+                event.preventDefault();
+                const email = document.getElementById('signup-email').value;
+                const password = document.getElementById('signup-password').value;
+                const confirmPassword = document.getElementById('signup-confirm-password').value;
+                const statusDiv = document.getElementById('signup-status');
+
+                if (password !== confirmPassword) {
+                    statusDiv.innerText = "Passwords do not match!";
+                    statusDiv.style.color = '#ef4444';
+                    return;
+                }
+                statusDiv.innerText = "Signing up...";
+                statusDiv.style.color = 'white';
+
+                try {
+                    // Use the `auth` instance directly from the module scope
+                    await createUserWithEmailAndPassword(auth, email, password);
+                    statusDiv.innerText = "Sign up successful! You are now logged in.";
+                    statusDiv.style.color = 'var(--primary-color)';
+                    // After successful signup, immediately transition to dashboard and show settings
+                    window.showMainSection('fruitful-dashboard-wrapper'); // First go to dashboard
+                    window.showDashboardSection('settings-section-in-dashboard'); // Then show settings within dashboard
+                } catch (error) {
+                    console.error("Signup error:", error);
+                    statusDiv.innerText = `Sign up failed: ${error.message}`;
+                    statusDiv.style.color = '#ef4444';
+                }
+            });
+
+            document.getElementById('signup-google')?.addEventListener('click', async (event) => {
+                event.preventDefault();
+                const statusDiv = document.getElementById('signup-status');
+                statusDiv.innerText = "Signing up with Google...";
+                statusDiv.style.color = 'white';
+                try {
+                    // Use the `auth` and `googleProvider` instances directly from the module scope
+                    await signInWithPopup(auth, googleProvider);
+                    statusDiv.innerText = "Google Sign up successful!";
+                    statusDiv.style.color = 'var(--primary-color)';
+                    window.showMainSection('fruitful-dashboard-wrapper');
+                    window.showDashboardSection('settings-section-in-dashboard');
+                } catch (error) {
+                    console.error("Google sign-in error:", error);
+                    statusDiv.innerText = `Google Sign-up failed: ${error.message}`;
+                    statusDiv.style.color = '#ef4444';
+                }
+            });
+
+            document.getElementById('signin-email-password')?.addEventListener('click', async (event) => {
+                event.preventDefault();
+                const email = document.getElementById('signin-email').value;
+                const password = document.getElementById('signin-password').value;
+                const statusDiv = document.getElementById('signin-status');
+                statusDiv.innerText = "Signing in...";
+                statusDiv.style.color = 'white';
+
+                try {
+                    // Use the `auth` instance directly from the module scope
+                    await signInWithEmailAndPassword(auth, email, password);
+                    statusDiv.innerText = "Sign in successful!";
+                    statusDiv.style.color = 'var(--primary-color)';
+                    window.showMainSection('fruitful-dashboard-wrapper');
+                    window.showDashboardSection('overview'); // Go to overview after signin
+                } catch (error) {
+                    console.error("Signin error:", error);
+                    statusDiv.innerText = `Sign in failed: ${error.message}`;
+                    statusDiv.style.color = '#ef4444';
+                }
+            });
+
+            document.getElementById('signin-google')?.addEventListener('click', async (event) => {
+                event.preventDefault();
+                const statusDiv = document.getElementById('signin-status');
+                statusDiv.innerText = "Signing in with Google...";
+                statusDiv.style.color = 'white';
+                try {
+                    // Use the `auth` and `googleProvider` instances directly from the module scope
+                    await signInWithPopup(auth, googleProvider);
+                    statusDiv.innerText = "Google Sign in successful!";
+                    statusDiv.style.color = 'var(--primary-color)';
+                    window.showMainSection('fruitful-dashboard-wrapper');
+                    window.showDashboardSection('overview');
+                } catch (error) {
+                    console.error("Google sign-in error:", error);
+                    statusDiv.innerText = `Google Sign-in failed: ${error.message}`;
+                    statusDiv.style.color = '#ef4444';
+                }
+            });
+
+            document.getElementById('signout-button')?.addEventListener('click', async (event) => {
+                event.preventDefault();
+                try {
+                    // Use the `auth` instance directly from the module scope
+                    await signOut(auth);
+                    console.log("User signed out.");
+                    window.showMainSection('hero-section'); // Redirect to home page after signout
+                } catch (error) {
+                    console.error("Sign out error:", error);
+                }
+            });
+
+            // Initial Firebase Authentication on page load
+            authenticateFirebase();
+        });
+
+    </script>
+
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""></script>
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
 
     <script>
-        // --- GLOBAL API KEYS AND CREDENTIALS (FOR DEMO/DEVELOPMENT) ---
-        // IMPORTANT SECURITY NOTE:
-        // For production environments, sensitive API keys (especially client secrets,
-        // webhook keys, and any key giving write access or access to sensitive user data)
-        // MUST NEVER be directly exposed in client-side JavaScript.
-        // Instead, these should be securely stored on a backend server, and client-side
-        // applications should communicate with your backend, which then proxies
-        // requests to the third-party APIs.
-        window.API_KEYS = {
-            // PayPal
-            PAYPAL_SDK_CLIENT_ID: "BAAGdPecRsf6dw_nIrWqUen0GdW0UsBZapp1Gn62xkPdD-Vqc-4lqWAidKK8LOObXux8pHJGjXknZoar6Q",
-            PAYPAL_HOSTED_BUTTON_STARTER: "EMWGPGHNN8Y8E",
-            PAYPAL_HOSTED_BUTTON_PRO: "QGU3ZUQCMD49Q",
-            PAYPAL_HOSTED_BUTTON_ENTERPRISE: "9C88S44F93M5J",
-            PAYPAL_HOSTED_BUTTON_BANIMAL_LOOP: "YOUR_BANIMAL_PAYPAL_BUTTON_ID_HERE", // Placeholder
-
-            // Google Maps (already present, now explicitly listed)
-            GOOGLE_MAPS_API_KEY: "AIzaSyBPG8dG29cl0TvYRGyLozejGed5Wj5Ab80",
-
-            // Spotify (Access Token - Note: These are short-lived. A backend would refresh them.)
-            SPOTIFY_ACCESS_TOKEN: "BQBDSZ232IQmSLV1BROkxqdwNMoGhtitKOJBjDzE-Lu9YKsSK1RKVwXNfYfncP2wf6Fj6xcYlnGD75baEqOmd3XtxhUhB-X6koPd92H9S0rQBqZ0HSKpsb04HiAme_FtqVLket7_s07gH9y1nxuPhbRyxp0r59oXtovV-uw0lCt2B7Mh5OmN3untEAGhfg6a6AZsaWLsv02dh6zKOQ_6DXHvCHZWxcVmoggu4eLA2NrqAf8rFRSNOw6HQpaN-VZkJWblznWQ0pT7ynzjpKOPlM_70N7vOLIZF8XnRmN1Oe784V-XfYNV-j1x1kdXGEpzlx1", // Long token, likely for API calls, not embeds.
-
-            // Gemini AI (already present)
-            GEMINI_API_KEY: "AIzaSyBGSDZATtITv5iIoB3rgKHBpWx9MrufxXE",
-
-            // Xero (CRITICAL: These MUST be handled server-side for production!)
-            XERO_CLIENT_ID: "81B3573D453040508996432C5DAD565B",
-            XERO_CLIENT_SECRET: "FIaJGmsaCcKR3Z8kWxPnQd04EhYy6_bImPmoitQDP1U6Smaq", // Highly sensitive!
-            XERO_REDIRECT_URI: "https://seedwave.faa.zone/admin_panel_xero.html",
-            XERO_WEBHOOK_KEY: "2fd5LQV0TQDI3572Er/sg66zqEbl8mFWRyfX3XkoKFZGRLK2cZPGpWV/j4yMTU7aUpbgBCfeZkuHnQIwD/0igw==", // Highly sensitive!
-        };
-
-
         // --- GLOBAL CONFIGURATION FOR ALL SECTORS ---
         window.allSectorConfigs = {
             "fruitful-global": {
                 name: "Fruitful™ Global",
                 shortName: "Fruitful™",
-                description: "Innovate. Connect. Thrive. Discover a new era of collaboration and sustainable growth with Fruitful™'s cutting-edge platform.",
+                description: "Innovate. Connect. Thrive. Discover a new era of collaboration and sustainable growth with Fruitful's cutting-edge platform.",
                 heroHeadline: "Innovate. Connect. <span class='dynamic-accent-text'>Thrive.</span>",
-                heroSubtitle: "Discover a new era of collaboration and sustainable growth with Fruitful™'s cutting-edge platform.",
+                heroSubtitle: "Discover a new era of collaboration and sustainable growth with Fruitful's cutting-edge platform.",
                 ctaButtonText: "Get Started Today <span>🚀</span>",
                 colors: {
                     primary: "#6366f1", // Purple
@@ -1968,17 +2360,17 @@
                     id: "fruitful-innovations",
                     name: "Fruitful Innovations™",
                     slogan: "The original spirit of progress.",
-                    description: "This panel provides a detailed overview of the core brand for the currently selected sector. It includes its mission, key functionalities, and its overall contribution to the Fruitful™ ecosystem.",
-                    subDescription: "Fruitful Innovations™ is the foundational pillar of the entire FAA.Zone™ ecosystem, driving forward the core principles of collaboration, sustainability, and AI™-powered growth. It encompasses the overarching vision and strategic initiatives that guide all other sectors and brands within Fruitful Global™.",
+                    description: "This panel provides a detailed overview of the core brand for the currently selected sector. It includes its mission, key functionalities, and its overall contribution to the Fruitful ecosystem.",
+                    subDescription: "Fruitful Innovations is the foundational pillar of the entire FAA.Zone ecosystem, driving forward the core principles of collaboration, sustainability, and AI-powered growth. It encompasses the overarching vision and strategic initiatives that guide all other sectors and brands within Fruitful Global.",
                     icon: "fas fa-leaf",
                     highlights: [
                         "Architecting the entire Treaty System™ infrastructure.",
-                        "Developing core AI™ models for cross-sector insights.",
+                        "Developing core AI models for cross-sector insights.",
                         "Establishing global partnerships for sustainable growth.",
                         "Overseeing the ethical and technological roadmap of FAA.Zone™."
                     ],
-                    link: "#",
-                    shopLink: "#",
+                    link: "javascript:void(0)",
+                    shopLink: "javascript:void(0)",
                     colors: {
                         primary: "#22c55e", // Green
                         accent: "#3b82f6", // Blue
@@ -1992,35 +2384,35 @@
                     canvasColors: ['rgba(224, 242, 254, ', 'rgba(240, 249, 255, '], // for canvas particles
                 },
                 features: [
-                    { icon: "💡", title: "AI™-Powered Insights", description: "Leverage advanced AI™ to gain deep insights, optimize operations, and make smarter decisions." },
+                    { icon: "💡", title: "AI-Powered Insights", description: "Leverage advanced AI to gain deep insights, optimize operations, and make smarter decisions." },
                     { icon: "🤝", title: "Global Collaboration", description: "Connect with thousands of independent brands and partners worldwide, fostering a network of mutual growth." },
                     { icon: "🌱", title: "Sustainable Solutions", description: "Champion eco-friendly practices and contribute to a healthier planet through our curated marketplace." },
                     { icon: "🔒", title: "Secure VaultMesh™", description: "Protect your data and transactions with our state-of-the-art blockchain-inspired security protocols." },
                     { icon: "📈", title: "Real-time Analytics", description: "Monitor your progress and impact with intuitive dashboards and real-time performance metrics." },
-                    { icon: "🌐", title: "OmniScroll™ Integration", description: "Seamlessly integrate with our OmniScroll™ ledger for transparent and efficient record-keeping." }
+                    { icon: "🌐", title: "OmniScroll Integration", description: "Seamlessly integrate with our OmniScroll ledger for transparent and efficient record-keeping." }
                 ],
                 terminals: [
-                    { name: "VaultMaster™ Terminal", url: "vault-master.html", icon: "🦍" },
-                    { name: "Cube Lattice GPT™", url: "cube-lattice.html", icon: "🧱" },
-                    { name: "Global View GPT™", url: "global-view.html", icon: "🌍" },
-                    { name: "Freight Ops GPT™", url: "freight-ops.html", icon: "🚚" },
-                    { name: "Loop Watch GPT™", url: "loop-watch.html", icon: "♻️" },
-                    { name: "Seedwave™ GPT", url: "seedwave.html", icon: "🌱" },
-                    { name: "Distribution GPT™", url: "distribution.html", icon: "📦" },
-                    { name: "Signal GPT™", url: "signal.html", icon: "🔐" },
-                    { name: "7038 FAA™ Brands", url: "faa-brands.html", icon: "📦" }
+                    { name: "VaultMaster Terminal", url: "javascript:void(0)", icon: "🦍" },
+                    { name: "Cube Lattice GPT", url: "javascript:void(0)", icon: "🧱" },
+                    { name: "Global View GPT", url: "javascript:void(0)", icon: "🌍" },
+                    { name: "Freight Ops GPT", url: "javascript:void(0)", icon: "🚚" },
+                    { name: "Loop Watch GPT", url: "javascript:void(0)", icon: "♻️" },
+                    { name: "Seedwave GPT", url: "javascript:void(0)", icon: "🌱" },
+                    { name: "Distribution GPT", url: "javascript:void(0)", icon: "📦" },
+                    { name: "Signal GPT", url: "javascript:void(0)", icon: "🔐" },
+                    { name: "7038 FAA Brands", url: "javascript:void(0)", icon: "📦" }
                 ],
                 subNodes: [
-                    { id: "omnisignal", name: "OmniSignal™", description: "Advanced multi-protocol messaging for decentralized apps.", icon: "fas fa-broadcast-tower", link: "#" },
-                    { id: "pulsegrid", name: "PulseGrid™", description: "High-performance data orchestration grid.", icon: "fas fa-network-wired", link: "#" },
-                    { id: "vaultdna", name: "VaultDNA™", description: "Immutable digital fingerprints for content.", icon: "fas fa-fingerprint", link: "#" },
-                    { id: "claimroot", name: "ClaimRoot™", description: "Anchors digital claims and timestamps.", icon: "fas fa-clock", link: "#" },
-                    { id: "scrollclaim", name: "ScrollClaim™ Contracts", description: "Programmable wrappers for digital rights.", icon: "fas fa-file-contract", link: "#" },
-                    { id: "ghosttrace", name: "GhostTrace™ Gen2", description: "Next-gen traceability protocol.", icon: "fas fa-ghost", link: "#" },
-                    { id: "baobab-terminal", name: "Baobab Terminal™", description: "CLI for Treaty Grid interaction.", icon: "fas fa-tree", link: "#" }
+                    { id: "omnisignal", name: "OmniSignal™", description: "Advanced multi-protocol messaging for decentralized apps.", icon: "fas fa-broadcast-tower", link: "javascript:void(0)" },
+                    { id: "pulsegrid", name: "PulseGrid™", description: "High-performance data orchestration grid.", icon: "fas fa-network-wired", link: "javascript:void(0)" },
+                    { id: "vaultdna", name: "VaultDNA™", description: "Immutable digital fingerprints for content.", icon: "fas fa-fingerprint", link: "javascript:void(0)" },
+                    { id: "claimroot", name: "ClaimRoot™", description: "Anchors digital claims and timestamps.", icon: "fas fa-clock", link: "javascript:void(0)" },
+                    { id: "scrollclaim", name: "ScrollClaim™ Contracts", description: "Programmable wrappers for digital rights.", icon: "fas fa-file-contract", link: "javascript:void(0)" },
+                    { id: "ghosttrace", name: "GhostTrace™ Gen2", description: "Next-gen traceability protocol.", icon: "fas fa-ghost", link: "javascript:void(0)" },
+                    { id: "baobab-terminal", name: "Baobab Terminal™", description: "CLI for Treaty Grid interaction.", icon: "fas fa-tree", link: "javascript:void(0)" }
                 ],
                 dashboard: {
-                    overviewDescription: "This sector represents the overarching Fruitful Global™ initiatives and serves as the central hub for all operations. It provides a holistic view of the ecosystem's performance and strategic direction.",
+                    overviewDescription: "This sector represents the overarching Fruitful Global initiatives and serves as the central hub for all operations. It provides a holistic view of the ecosystem's performance and strategic direction.",
                 }
             },
             "banimal-sector": {
@@ -2028,8 +2420,8 @@
                 shortName: "Banimal™",
                 description: "Step into the heartwarming world of Banimal™, where every purchase creates a ripple of kindness. Discover thoughtful baby essentials and innovative lighting solutions.",
                 heroHeadline: "Banimal™: <br> <span>🐑Kind Creatures. Global Impact.</span>",
-                heroSubtitle: "Discover Banimal™'s world of thoughtful baby essentials & innovative lighting. For every purchase, we deliver the same item to a child in need, identified by the Baobab Security Network™'s data-driven insights.",
-                ctaButtonText: "Explore Banimal™'s World <i class='fas fa-arrow-right'></i>",
+                heroSubtitle: "Discover Banimal's world of thoughtful baby essentials & innovative lighting. For every purchase, we deliver the same item to a child in need, identified by the Baobab Security Network's data-driven insights.",
+                ctaButtonText: "Explore Banimal's World <i class='fas fa-arrow-right'></i>",
                 colors: {
                     primary: "#90EE90", // Soft Green
                     secondary: "#6B8E23", // Darker Green
@@ -2047,14 +2439,14 @@
                     id: "banimal",
                     name: "Banimal™",
                     slogan: "Kind Creatures. Global Impact.",
-                    description: "Banimal™ is the core brand of the Banimal™ Sector, dedicated to creating thoughtful products that also contribute to social good. Its mission is to combine ethical commerce with impactful philanthropy.",
-                    subDescription: "**For every Banimal™ item purchased, an identical item is donated to a child in need, powered by insights from the Baobab Security Network™.** Experience meaningful impact with every choice.",
+                    description: "Banimal™ is the core brand of the Banimal Sector, dedicated to creating thoughtful products that also contribute to social good. Its mission is to combine ethical commerce with impactful philanthropy.",
+                    subDescription: "**For every Banimal™ item purchased, an identical item is donated to a child in need, powered by insights from the Baobab Security Network.** Experience meaningful impact with every choice.",
                     icon: "fas fa-paw",
                     highlights: [
                         "Ethical Baby Essentials",
                         "Innovative Lighting Solutions",
                         "One-for-One Donation Model",
-                        "Partnership with Baobab Security Network™ for Needs Identification"
+                        "Partnership with Baobab Security Network for Needs Identification"
                     ],
                     link: "global_brands.html",
                     shopLink: "https://www.banimal.co.za/",
@@ -2074,7 +2466,7 @@
                     { icon: "👶", title: "Thoughtful Baby Essentials", description: "Carefully designed products for infants, focusing on safety, comfort, and sustainable materials." },
                     { icon: "💡", title: "Innovative Lighting", description: "Creative and energy-efficient lighting solutions that enhance living spaces with unique designs." },
                     { icon: "💖", title: "Impactful Philanthropy", description: "Every purchase directly contributes to a child in need, fostering a direct and transparent cycle of giving." },
-                    { icon: "🌳", title: "Baobab Network™ Insights", description: "Donations are guided by data from the Baobab Security Network™, ensuring aid reaches those most in need." },
+                    { icon: "🌳", title: "Baobab Network Insights", description: "Donations are guided by data from the Baobab Security Network, ensuring aid reaches those most in need." },
                     { icon: "♻️", title: "Sustainable Sourcing", description: "Commitment to environmentally friendly materials and production processes to minimize ecological footprint." },
                     { icon: "🌐", title: "Global Reach", description: "Brings positive impact to communities worldwide through a network of trusted partners and distribution channels." }
                 ],
@@ -2085,17 +2477,17 @@
                     { id: "cozy-creatures", name: "Cozy Creatures™", description: "Sub-brand for soft baby textiles and plush toys.", icon: "fas fa-teddy-bear", link: "#" }
                 ],
                 dashboard: {
-                    overviewDescription: "The Banimal™ Sector Dashboard provides an overview of ethical commerce, philanthropic impact, and product performance within the Banimal™ ecosystem. Track donations, product reach, and community engagement.",
+                    overviewDescription: "The Banimal Sector Dashboard provides an overview of ethical commerce, philanthropic impact, and product performance within the Banimal ecosystem. Track donations, product reach, and community engagement.",
                 }
             },
             // Add more sectors here following the same structure
             "ai-logic-grid": {
-                name: "AI™, Logic & Grid Systems",
-                shortName: "AI™, Logic",
+                name: "AI, Logic & Grid Systems",
+                shortName: "AI, Logic",
                 description: "Powering intelligence, data orchestration, and decentralized networks.",
-                heroHeadline: "AI™, Logic & Grid Systems: <br> <span>Powering the Future of Data.</span>",
-                heroSubtitle: "At the forefront of innovation, developing intelligent automation and data management protocols for the Fruitful Global™ Treaty Grid.",
-                ctaButtonText: "Explore AI™ Solutions <span>✨</span>",
+                heroHeadline: "AI, Logic & Grid Systems: <br> <span>Powering the Future of Data.</span>",
+                heroSubtitle: "At the forefront of innovation, developing intelligent automation and data management protocols for the Fruitful Global Treaty Grid.",
+                ctaButtonText: "Explore AI Solutions <span>✨</span>",
                 colors: {
                     primary: "#0071e3", // Apple Blue
                     secondary: "#30d158", // Apple Green
@@ -2111,13 +2503,13 @@
                 },
                 coreBrand: {
                     id: "codenest-ai",
-                    name: "CodeNest™ AI™",
+                    name: "CodeNest™ AI",
                     slogan: "Intelligent Scroll Development",
-                    description: "Revolutionize your web scroll projects with AI™-powered code generation, optimization, and seamless deployment. Your direct portal to the scroll economy.",
-                    subDescription: "CodeNest™ AI™ leverages advanced machine learning to automate development workflows, enhance code quality, and accelerate time-to-market for digital scrolls across the Fruitful Global™ Treaty Grid.",
+                    description: "Revolutionize your web scroll projects with AI-powered code generation, optimization, and seamless deployment. Your direct portal to the scroll economy.",
+                    subDescription: "CodeNest™ AI leverages advanced machine learning to automate development workflows, enhance code quality, and accelerate time-to-market for digital scrolls across the Fruitful Global Treaty Grid.",
                     icon: "fas fa-brain",
                     highlights: [
-                        "AI™-Powered Code Generation & Optimization",
+                        "AI-Powered Code Generation & Optimization",
                         "Seamless Deployment to Treaty Grid",
                         "Enhanced Scroll Economy Integration",
                         "Automated Workflow Solutions"
@@ -2137,30 +2529,30 @@
                     canvasColors: ['rgba(245, 245, 247, ', 'rgba(235, 235, 235, '], // for canvas particles
                 },
                 features: [
-                    { icon: "🤖", title: "Intelligent Automation", description: "Automate complex tasks and decision-making processes across the grid with adaptive AI™ algorithms." },
+                    { icon: "🤖", title: "Intelligent Automation", description: "Automate complex tasks and decision-making processes across the grid with adaptive AI algorithms." },
                     { icon: "🗄️", title: "Data Orchestration", description: "Efficiently manage and secure vast datasets with our robust data grids and synchronization protocols." },
                     { icon: "🔗", title: "Decentralized Networks", description: "Operate on a secure, distributed ledger, ensuring transparency and resilience for all operations." },
-                    { icon: "🔮", title: "Predictive Analytics", description: "Utilize AI™ to forecast trends, anticipate challenges, and identify new opportunities for growth." },
-                    { icon: "📜", title: "Automated Reporting", description: "Streamline compliance and regulatory reporting with AI™-driven data aggregation and generation." },
+                    { icon: "🔮", title: "Predictive Analytics", description: "Utilize AI to forecast trends, anticipate challenges, and identify new opportunities for growth." },
+                    { icon: "📜", title: "Automated Reporting", description: "Streamline compliance and regulatory reporting with AI-driven data aggregation and generation." },
                     { icon: "⚡", title: "Scalable Infrastructure", description: "Build and deploy solutions that scale effortlessly to meet global demands and expanding data needs." }
                 ],
                 terminals: [], // AI Logic has its own dashboard terminals from the previous file.
                 subNodes: [
-                    { id: "omnisignal-ai", name: "OmniSignal™ AI™", description: "AI™-enhanced multi-protocol messaging and signaling.", icon: "fas fa-robot", link: "#" },
-                    { id: "pulsegrid-ai", name: "PulseGrid™ AI™", description: "AI™-optimized data orchestration grid for performance.", icon: "fas fa-microchip", link: "#" },
-                    { id: "vaultdna-ai", name: "VaultDNA™ AI™", description: "AI™-driven immutable digital fingerprints for enhanced security.", icon: "fas fa-fingerprint", link: "#" }
+                    { id: "omnisignal-ai", name: "OmniSignal™ AI", description: "AI-enhanced multi-protocol messaging and signaling.", icon: "fas fa-robot", link: "#" },
+                    { id: "pulsegrid-ai", name: "PulseGrid™ AI", description: "AI-optimized data orchestration grid for performance.", icon: "fas fa-microchip", link: "#" },
+                    { id: "vaultdna-ai", name: "VaultDNA™ AI", description: "AI-driven immutable digital fingerprints for enhanced security.", icon: "fas fa-fingerprint", link: "#" }
                 ],
                 dashboard: {
-                    overviewDescription: "The AI™, Logic & Grid Systems dashboard provides deep insights into the performance of our intelligent automation and data management protocols. Monitor AI™ model efficiency, data grid utilization, and network health.",
+                    overviewDescription: "The AI, Logic & Grid Systems dashboard provides deep insights into the performance of our intelligent automation and data management protocols. Monitor AI model efficiency, data grid utilization, and network health.",
                 }
             },
             // Default sector if none is specified or found
             "default": {
                 name: "Fruitful™ Global",
                 shortName: "Fruitful™",
-                description: "Innovate. Connect. Thrive. Discover a new era of collaboration and sustainable growth with Fruitful™'s cutting-edge platform.",
+                description: "Innovate. Connect. Thrive. Discover a new era of collaboration and sustainable growth with Fruitful's cutting-edge platform.",
                 heroHeadline: "Innovate. Connect. <span class='dynamic-accent-text'>Thrive.</span>",
-                heroSubtitle: "Discover a new era of collaboration and sustainable growth with Fruitful™'s cutting-edge platform.",
+                heroSubtitle: "Discover a new era of collaboration and sustainable growth with Fruitful's cutting-edge platform.",
                 ctaButtonText: "Get Started Today <span>🚀</span>",
                 colors: {
                     primary: "#6366f1", // Purple
@@ -2179,12 +2571,12 @@
                     id: "fruitful-innovations",
                     name: "Fruitful Innovations™",
                     slogan: "The original spirit of progress.",
-                    description: "This panel provides a detailed overview of the core brand for the currently selected sector. It includes its mission, key functionalities, and its overall contribution to the Fruitful™ ecosystem.",
-                    subDescription: "Fruitful Innovations™ is the foundational pillar of the entire FAA.Zone™ ecosystem, driving forward the core principles of collaboration, sustainability, and AI™-powered growth. It encompasses the overarching vision and strategic initiatives that guide all other sectors and brands within Fruitful Global™.",
+                    description: "This panel provides a detailed overview of the core brand for the currently selected sector. It includes its mission, key functionalities, and its overall contribution to the Fruitful ecosystem.",
+                    subDescription: "Fruitful Innovations is the foundational pillar of the entire FAA.Zone ecosystem, driving forward the core principles of collaboration, sustainability, and AI-powered growth. It encompasses the overarching vision and strategic initiatives that guide all other sectors and brands within Fruitful Global.",
                     icon: "fas fa-leaf",
                     highlights: [
                         "Architecting the entire Treaty System™ infrastructure.",
-                        "Developing core AI™ models for cross-sector insights.",
+                        "Developing core AI models for cross-sector insights.",
                         "Establishing global partnerships for sustainable growth.",
                         "Overseeing the ethical and technological roadmap of FAA.Zone™."
                     ],
@@ -2203,35 +2595,35 @@
                     canvasColors: ['rgba(224, 242, 254, ', 'rgba(240, 249, 255, '], // for canvas particles
                 },
                 features: [
-                    { icon: "💡", title: "AI™-Powered Insights", description: "Leverage advanced AI™ to gain deep insights, optimize operations, and make smarter decisions." },
+                    { icon: "�", title: "AI-Powered Insights", description: "Leverage advanced AI to gain deep insights, optimize operations, and make smarter decisions." },
                     { icon: "🤝", title: "Global Collaboration", description: "Connect with thousands of independent brands and partners worldwide, fostering a network of mutual growth." },
                     { icon: "🌱", title: "Sustainable Solutions", description: "Champion eco-friendly practices and contribute to a healthier planet through our curated marketplace." },
                     { icon: "🔒", title: "Secure VaultMesh™", description: "Protect your data and transactions with our state-of-the-art blockchain-inspired security protocols." },
                     { icon: "📈", title: "Real-time Analytics", description: "Monitor your progress and impact with intuitive dashboards and real-time performance metrics." },
-                    { icon: "🌐", title: "OmniScroll™ Integration", description: "Seamlessly integrate with our OmniScroll™ ledger for transparent and efficient record-keeping." }
+                    { icon: "🌐", title: "OmniScroll Integration", description: "Seamlessly integrate with our OmniScroll ledger for transparent and efficient record-keeping." }
                 ],
                 terminals: [
-                    { name: "VaultMaster™ Terminal", url: "vault-master.html", icon: "🦍" },
-                    { name: "Cube Lattice GPT™", url: "cube-lattice.html", icon: "🧱" },
-                    { name: "Global View GPT™", url: "global-view.html", icon: "🌍" },
-                    { name: "Freight Ops GPT™", url: "freight-ops.html", icon: "🚚" },
-                    { name: "Loop Watch GPT™", url: "loop-watch.html", icon: "♻️" },
-                    { name: "Seedwave™ GPT", url: "seedwave.html", icon: "🌱" },
-                    { name: "Distribution GPT™", url: "distribution.html", icon: "📦" },
-                    { name: "Signal GPT™", url: "signal.html", icon: "🔐" },
-                    { name: "7038 FAA™ Brands", url: "faa-brands.html", icon: "📦" }
+                    { name: "VaultMaster Terminal", url: "javascript:void(0)", icon: "🦍" },
+                    { name: "Cube Lattice GPT", url: "javascript:void(0)", icon: "🧱" },
+                    { name: "Global View GPT", url: "javascript:void(0)", icon: "🌍" },
+                    { name: "Freight Ops GPT", url: "javascript:void(0)", icon: "🚚" },
+                    { name: "Loop Watch GPT", url: "javascript:void(0)", icon: "♻️" },
+                    { name: "Seedwave GPT", url: "javascript:void(0)", icon: "🌱" },
+                    { name: "Distribution GPT", url: "javascript:void(0)", icon: "📦" },
+                    { name: "Signal GPT", url: "javascript:void(0)", icon: "🔐" },
+                    { name: "7038 FAA Brands", url: "javascript:void(0)", icon: "📦" }
                 ],
                 subNodes: [
-                    { id: "omnisignal", name: "OmniSignal™", description: "Advanced multi-protocol messaging for decentralized apps.", icon: "fas fa-broadcast-tower", link: "#" },
-                    { id: "pulsegrid", name: "PulseGrid™", description: "High-performance data orchestration grid.", icon: "fas fa-network-wired", link: "#" },
-                    { id: "vaultdna", name: "VaultDNA™", description: "Immutable digital fingerprints for content.", icon: "fas fa-fingerprint", link: "#" },
-                    { id: "claimroot", name: "ClaimRoot™", description: "Anchors digital claims and timestamps.", icon: "fas fa-clock", link: "#" },
-                    { id: "scrollclaim", name: "ScrollClaim™ Contracts", description: "Programmable wrappers for digital rights.", icon: "fas fa-file-contract", link: "#" },
-                    { id: "ghosttrace", name: "GhostTrace™ Gen2", description: "Next-gen traceability protocol.", icon: "fas fa-ghost", link: "#" },
-                    { id: "baobab-terminal", name: "Baobab Terminal™", description: "CLI for Treaty Grid interaction.", icon: "fas fa-tree", link: "#" }
+                    { id: "omnisignal", name: "OmniSignal™", description: "Advanced multi-protocol messaging for decentralized apps.", icon: "fas fa-broadcast-tower", link: "javascript:void(0)" },
+                    { id: "pulsegrid", name: "PulseGrid™", description: "High-performance data orchestration grid.", icon: "fas fa-network-wired", link: "javascript:void(0)" },
+                    { id: "vaultdna", name: "VaultDNA™", description: "Immutable digital fingerprints for content.", icon: "fas fa-fingerprint", link: "javascript:void(0)" },
+                    { id: "claimroot", name: "ClaimRoot™", description: "Anchors digital claims and timestamps.", icon: "fas fa-clock", link: "javascript:void(0)" },
+                    { id: "scrollclaim", name: "ScrollClaim™ Contracts", description: "Programmable wrappers for digital rights.", icon: "fas fa-file-contract", link: "javascript:void(0)" },
+                    { id: "ghosttrace", name: "GhostTrace™ Gen2", description: "Next-gen traceability protocol.", icon: "fas fa-ghost", link: "javascript:void(0)" },
+                    { id: "baobab-terminal", name: "Baobab Terminal™", description: "CLI for Treaty Grid interaction.", icon: "fas fa-tree", link: "javascript:void(0)" }
                 ],
                 dashboard: {
-                    overviewDescription: "This sector represents the overarching Fruitful Global™ initiatives and serves as the central hub for all operations. It provides a holistic view of the ecosystem's performance and strategic direction.",
+                    overviewDescription: "This sector represents the overarching Fruitful Global initiatives and serves as the central hub for all operations. It provides a holistic view of the ecosystem's performance and strategic direction.",
                 }
             }
         };
@@ -2246,9 +2638,21 @@
         let activeMusicSubSection = 'allMusic';
         let coreBrandAnimationFrameId; // Changed from banimalAnimationFrameId
 
-        // Gemini API Key and Google Maps API Key (from previous versions, kept for consistency)
-        const GEMINI_API_KEY = window.API_KEYS.GEMINI_API_KEY;
-        const GOOGLE_MAPS_API_KEY = window.API_KEYS.GOOGLE_MAPS_API_KEY;
+        // ALL API Keys from previous conversations, centrally managed
+        const ALL_API_KEYS = {
+            GEMINI_AI: "AIzaSyBGSDZATtITv5iIoB3rgKHBpWx9MrufxXE",
+            GOOGLE_MAPS: "AIzaSyBPG8dG29cl0TvYRGyLozejGed5Wj5Ab80",
+            PAYPAL_SDK: "BAAGdPecRsf6dw_nIrWqUen0GdW0UsBZapp1Gn62xkPdD-Vqc-4lqWAidKK8LOObXux8pHJGjXknZoar6Q",
+            PAYPAL_HOSTED_STARTER: "EMWGPGHNN8Y8E",
+            PAYPAL_HOSTED_PRO: "QGU3ZUQCMD49Q",
+            PAYPAL_HOSTED_ENTERPRISE: "9C88S44F93M5J",
+            PAYPAL_BANIMAL_PLACEHOLDER: "YOUR_BANIMAL_PAYPAL_BUTTON_ID_HERE", // Placeholder from user's data
+            SPOTIFY_ACCESS_TOKEN: "BQBDSZ232IQmSLVbROkxqdwNMoGhtitKOJBjDzE-Lu9YKsSK1RKVwXNfYfncP2wf6Fj6xcYlnGD75baEqOmd3XtxhU...",
+            XERO_CLIENT_ID: "81B3573D453040508996432C5DAD565B",
+            XERO_CLIENT_SECRET: "FIaJGmsaCcKR3Z8kWxPnQd04EhYy6_bImPmoitQDP1U6Smaq",
+            XERO_REDIRECT_URI: "https://seedwave.faa.zone/admin_panel_xero.html",
+            XERO_WEBHOOK_KEY: "2fd5LQV0TQDI3572Er/sg66zqEbl8mFWRyfX3XkoKFZGRLK2cZPGpWV/j4yMTU7aUpbgBCfeZkuHnQIwD/0igw=="
+        };
 
 
         // --- DYNAMIC RENDERING FUNCTIONS ---
@@ -2293,18 +2697,18 @@
             const currentCoreBrand = currentSectorConfig.coreBrand;
 
             // Update page title
-            document.getElementById('dynamicTitle').innerText = `${currentSectorConfig.name} | Fruitful Global™`;
+            document.getElementById('dynamicTitle').innerText = `${currentSectorConfig.name} | Fruitful Global`;
 
             // Update CSS variables
             updateCssVariables(currentSectorConfig.colors);
 
             // Update Header
             document.getElementById('headerFruitfulText').innerText = currentSectorConfig.shortName;
-            const headerCoreBrandLink = document.getElementById('headerCoreBrandLink');
-            if (headerCoreBrandLink) {
-                headerCoreBrandLink.innerText = currentCoreBrand.name;
-                // onclick will be attached by event listener
-            }
+            document.getElementById('headerCoreBrandLink').innerText = currentCoreBrand.name;
+            document.getElementById('headerCoreBrandLink').onclick = (event) => {
+                event.preventDefault(); // Prevent default link behavior
+                window.showMainSection('core-brand-landing-page');
+            };
 
 
             // Update Hero Section
@@ -2335,9 +2739,7 @@
                 document.getElementById('featuredCoreBrandDescription').innerText = currentCoreBrand.description;
                 document.getElementById('featuredCoreBrandSubDescription').innerText = currentCoreBrand.subDescription;
                 const featuredCtaButton = document.getElementById('featuredCoreBrandCtaButton');
-                if (featuredCtaButton) {
-                    featuredCtaButton.innerHTML = `Discover ${currentCoreBrand.name} <i class="fas fa-arrow-right"></i>`; // Using fas fa-arrow-right as a default icon
-                }
+                featuredCtaButton.innerHTML = `Discover ${currentCoreBrand.name} <i class="${currentCoreBrand.icon} ml-2"></i>`;
             } else {
                 featuredCoreBrandSection.classList.add('hidden'); // Hide if no core brand
             }
@@ -2350,7 +2752,7 @@
                     const button = document.createElement('button');
                     button.className = 'terminal-btn p-6';
                     button.innerHTML = `${terminal.icon} ${terminal.name}`;
-                    button.dataset.terminalUrl = terminal.url; // Store URL in data attribute
+                    button.onclick = () => loadTerminal(terminal.url);
                     terminalButtonsContainer.appendChild(button);
                 });
             } else {
@@ -2367,8 +2769,12 @@
                 const glyph = document.createElement('a');
                 glyph.href = `javascript:void(0)`; // Use javascript:void(0) to prevent default hash jump
                 glyph.className = 'glyph';
-                glyph.innerHTML = `<i class="${sector.coreBrand.icon}"></i> ${sector.name}`; // Using icon here
-                glyph.dataset.sectorId = sectorId; // Store sectorId in data attribute
+                glyph.innerHTML = `${sector.coreBrand.icon} ${sector.name}`;
+                glyph.onclick = (event) => {
+                    event.preventDefault(); // Prevent default anchor jump (redundant with javascript:void(0) but good practice)
+                    switchSector(sectorId);
+                    // window.showMainSection('hero-section'); // Go to top of new sector
+                };
                 sectorGlyphGrid.appendChild(glyph);
             }
 
@@ -2382,7 +2788,11 @@
                 dropdownItem.href = `javascript:void(0)`; // Use javascript:void(0) to prevent default hash jump
                 dropdownItem.className = 'block px-4 py-2 text-sm text-gray-200 hover:bg-gray-700';
                 dropdownItem.innerHTML = `<i class="${sector.coreBrand.icon} mr-2"></i> ${sector.name}`;
-                dropdownItem.dataset.sectorId = sectorId; // Store sectorId in data attribute
+                dropdownItem.onclick = (event) => {
+                    event.preventDefault();
+                    switchSector(sectorId);
+                    // Close dropdown (optional, handled by CSS group-hover for now)
+                };
                 sectorDropdown.appendChild(dropdownItem);
             }
 
@@ -2396,27 +2806,27 @@
                 const coreBrandExploreButton = document.getElementById('coreBrandExploreButton');
                 if (coreBrandExploreButton) {
                     coreBrandExploreButton.href = currentCoreBrand.link;
-                    coreBrandExploreButton.innerHTML = `Explore ${currentCoreBrand.name}'s World <i class="fas fa-arrow-right"></i>`;
+                    coreBrandExploreButton.innerHTML = `Explore ${currentCoreBrand.name}'s World <i class="${currentCoreBrand.icon} ml-2"></i>`;
                 }
 
                 const coreBrandShopButton = document.getElementById('coreBrandShopButton');
                 if (coreBrandShopButton) {
                     coreBrandShopButton.href = currentCoreBrand.shopLink;
-                    coreBrandShopButton.innerHTML = `Shop Now <i class="fas fa-external-link-alt"></i>`;
+                    coreBrandShopButton.innerHTML = `Shop Now <i class="fas fa-external-link-alt ml-2"></i>`;
                 }
 
                 // Initialize/reset canvas particles for the core brand landing page
                 if (coreBrandCanvas && coreBrandCanvas.getContext) {
-                    initCoreBrandParticles(currentCoreBrand.canvasColors); // Re-initialize particles to avoid artifacts
+                    initCoreBrandParticles(currentCoreBrand.canvasColors);
                 } else {
                     console.warn("Core Brand Canvas or context not available.");
                 }
 
             } else {
-                // Hide core brand specific sections if no core brand is defined for the sector
-                coreBrandLandingPage.classList.add('hidden');
-                // Also ensure the header link for core brand is hidden or appropriately handled
-                document.getElementById('headerCoreBrandLink').classList.add('hidden');
+                 // Hide core brand specific sections if no core brand is defined for the sector
+                 coreBrandLandingPage.classList.add('hidden');
+                 // Also ensure the header link for core brand is hidden or appropriately handled
+                 document.getElementById('headerCoreBrandLink').classList.add('hidden');
             }
 
 
@@ -2434,20 +2844,15 @@
                 document.getElementById('coreBrandDashboardDescription').innerText = currentCoreBrand.description;
 
                 const highlightsList = document.getElementById('coreBrandDashboardHighlights');
-                if (highlightsList) {
-                    highlightsList.innerHTML = '';
-                    currentCoreBrand.highlights.forEach(highlight => {
-                        const li = document.createElement('li');
-                        li.innerText = highlight;
-                        highlightsList.appendChild(li);
-                    });
-                }
-                const coreBrandDashboardCta = document.getElementById('coreBrandDashboardCta');
-                if (coreBrandDashboardCta) {
-                    coreBrandDashboardCta.href = currentCoreBrand.link;
-                }
+                highlightsList.innerHTML = '';
+                currentCoreBrand.highlights.forEach(highlight => {
+                    const li = document.createElement('li');
+                    li.innerText = highlight;
+                    highlightsList.appendChild(li);
+                });
+                document.getElementById('coreBrandDashboardCta').href = currentCoreBrand.link;
             } else {
-                coreBrandDashboardPanel.classList.add('hidden');
+                 coreBrandDashboardPanel.classList.add('hidden');
             }
 
             // Update Sub-Node Index Dashboard Panel
@@ -2467,8 +2872,8 @@
                             <h3 class="text-xl font-semibold dashboard-text-light">${node.name}</h3>
                         </div>
                         <p class="dashboard-muted-text">${node.description}</p>
-                        <a href="javascript:void(0)" class="text-primary-color hover:underline text-sm mt-3 inline-block" data-subnode-id="${node.id}">Learn More <i class="fas fa-arrow-right text-xs ml-1"></i></a>
-                    `; // Changed here: onclick handler
+                        ${node.link ? `<a href="${node.link}" class="text-primary-color hover:underline text-sm mt-3 inline-block">Learn More <i class="fas fa-arrow-right text-xs ml-1"></i></a>` : ''}
+                    `;
                     subNodeGrid.appendChild(subNodeCard);
                 });
             } else {
@@ -2495,21 +2900,19 @@
             console.log(`Switched to sector: ${currentSectorId}`);
         }
 
-        // --- Landing Page Specific Functions ---
-
-        // Function to toggle main landing page sections and the dashboard
-        function showMainSection(sectionIdToShow) {
-            // Stop any active core brand canvas animations if not going to that section
+        // --- Global Section Visibility Control ---
+        // This function controls which top-level section (landing, dashboard, auth) is visible.
+        window.showMainSection = function(sectionIdToShow) {
+            // Stop any active canvas animations if not navigating to the core brand page
             if (coreBrandAnimationFrameId && sectionIdToShow !== 'core-brand-landing-page') {
                 cancelAnimationFrame(coreBrandAnimationFrameId);
                 coreBrandAnimationFrameId = null;
             }
 
-            // Hide all landing page sections
-            document.querySelectorAll('section').forEach(section => { // Select all sections
+            // Hide all top-level sections
+            document.querySelectorAll('section').forEach(section => {
                 section.classList.add('hidden');
             });
-            // Hide the dashboard wrapper
             document.getElementById('fruitful-dashboard-wrapper').classList.add('hidden');
             document.getElementById('fruitful-dashboard-wrapper').classList.remove('flex'); // Ensure flex is removed when hidden
 
@@ -2524,21 +2927,23 @@
                 link.classList.remove('header-nav-active');
             });
             // Find the link that points to the current sectionIdToShow
-            const clickedLink = document.querySelector(`.header-nav-item[data-section-id="${sectionIdToShow}"]`);
+            const clickedLink = document.querySelector(`.header-nav-item[onclick*="showMainSection('${sectionIdToShow}')"]`);
             if (clickedLink) {
                 clickedLink.classList.add('header-nav-active');
             }
 
-            // Special handling for dashboard display
+            // Handle dashboard display
             if (sectionIdToShow === 'fruitful-dashboard-wrapper') {
                 sectionToShow.classList.add('flex'); // Ensure dashboard wrapper uses flex for layout
-                showDashboardSection(activeDashboardSubSection); // Show the default dashboard sub-section
+                showDashboardSection(activeDashboardSubSection);
                 // DO NOT SCROLL TO TOP FOR DASHBOARD ACTIVATION
-            } else {
-                // Ensure main dashboard sections are hidden when not viewing dashboard
-                document.querySelectorAll('#fruitful-dashboard-wrapper main section').forEach(section => {
-                    section.classList.add('hidden');
-                });
+            }
+            // Handle auth/settings pages (these are full-screen forms, no additional scroll is needed)
+            else if (['signup-section', 'signin-section'].includes(sectionIdToShow)) {
+                // No extra scroll needed.
+            }
+            // For all other landing page sections, scroll to top
+            else {
                 // Hide music sub-sidebar if moving away from dashboard
                 document.getElementById('musicSubSidebar').classList.add('hidden');
                 // ONLY SCROLL TO TOP FOR MAIN LANDING SECTIONS
@@ -2553,7 +2958,38 @@
                     animateCoreBrandCanvas();
                 }
             }
-        }
+        };
+
+        // Function to show specific authentication sections (signup, signin, settings)
+        window.showAuthSection = function(sectionIdToShow) {
+            // First, hide all main content sections and the dashboard
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById('fruitful-dashboard-wrapper').classList.add('hidden');
+            document.getElementById('fruitful-dashboard-wrapper').classList.remove('flex');
+
+            // Then, show only the requested authentication section
+            const authSection = document.getElementById(sectionIdToShow);
+            if (authSection) {
+                authSection.classList.remove('hidden');
+            }
+
+            // Update header navigation links' active states.
+            document.querySelectorAll('.header-nav-item').forEach(link => {
+                link.classList.remove('header-nav-active');
+            });
+            const signUpHeaderLink = document.querySelector('a[onclick*="showAuthSection(\'signup-section\')"]');
+            if (signUpHeaderLink && (sectionIdToShow === 'signup-section' || sectionIdToShow === 'signin-section')) {
+                 signUpHeaderLink.classList.add('header-nav-active');
+            }
+            // Ensure settings link in dashboard sidebar is not active when outside dashboard context
+            const settingsDashboardLink = document.querySelector('a[onclick*="showDashboardSection(\'settings-section-in-dashboard\')"]');
+            if (settingsDashboardLink) settingsDashboardLink.classList.remove('dashboard-active-nav-item');
+
+            // No scroll to top for auth sections, as they are designed to fill the viewport.
+        };
+
 
         // Function to load terminal content into the iframe (from landing page)
         function loadTerminal(url) {
@@ -2650,7 +3086,7 @@
                 el.classList.remove('hidden');
                 el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 // Add active class to the clicked link
-                const clickedLink = document.querySelector(`.glyph[data-sector-id="${panelId.replace('embedded-', '').replace('-snapshot', '')}"]`);
+                const clickedLink = document.querySelector(`.glyph[onclick*="${panelId}"]`);
                 if (clickedLink) {
                     clickedLink.classList.add('active');
                 }
@@ -2661,7 +3097,6 @@
                     if (mediaContentDiv) {
                         mediaContentDiv.innerHTML = `<p class="dashboard-muted-text">Media content for Motion, Media, Sonic sector will load here.</p>
                             <iframe style="border-radius:12px; margin-top:1rem;" src="https://open.spotify.com/embed/album/3RyjFxsU9hcmg14vqzUUMy?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                            <iframe style="border-radius:12px; margin-top:1rem;" src="https://open.spotify.com/embed/track/2kdQY3b6dDRGonyIzcWljc?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                             <iframe style="border-radius:12px; margin-top:1rem;" src="https://open.spotify.com/embed/track/6Xe9wT5xeZETPwtaP2ynUz?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                         `;
                     }
@@ -2675,7 +3110,7 @@
         // --- Dashboard Specific Functions ---
 
         // This function initializes the Leaflet map (from dashboard)
-        function initLeafletMap() {
+        window.initLeafletMap = function() { // Made global to be callable from showDashboardSection
             const mapContainer = document.getElementById("leaflet-map-container");
             if (!mapContainer || leafletMapInstance) return; // Prevent re-initialization
 
@@ -2693,9 +3128,9 @@
 
             // Add a popup to the marker
             marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
-        }
+        };
 
-        function showDashboardSection(sectionId) {
+        window.showDashboardSection = function(sectionId) {
             activeDashboardSubSection = sectionId; // Update the active sub-section for dashboard
 
             // Hide all dashboard sections
@@ -2713,7 +3148,7 @@
             document.querySelectorAll('.dashboard-sidebar-nav-item').forEach(link => {
                 link.classList.remove('dashboard-active-nav-item');
             });
-            const clickedLink = document.querySelector(`.dashboard-sidebar-nav-item[data-dashboard-section-id="${sectionId}"]`);
+            const clickedLink = document.querySelector(`.dashboard-sidebar-nav-item[onclick*="${sectionId}"]`);
             if (clickedLink) {
                 clickedLink.classList.add('dashboard-active-nav-item');
             }
@@ -2723,7 +3158,7 @@
             if (sectionId === 'music') {
                 musicSubSidebar.classList.remove('hidden');
                 musicSubSidebar.classList.add('flex'); // Use flex to make it visible and take space
-                showMusicSubSection(activeMusicSubSection); // Show the default music sub-section
+                window.showMusicSubSection(activeMusicSubSection); // Call window.showMusicSubSection
             } else {
                 musicSubSidebar.classList.add('hidden');
                 musicSubSidebar.classList.remove('flex');
@@ -2737,17 +3172,17 @@
                     script.id = 'google-maps-api-script'; // Give it a unique ID
                     script.async = true;
                     script.defer = true;
-                    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=console.debug&libraries=maps,marker&v=beta`;
+                    script.src = `https://maps.googleapis.com/maps/api/js?key=${ALL_API_KEYS.GOOGLE_MAPS}&callback=console.debug&libraries=maps,marker&v=beta`;
                     document.body.appendChild(script);
                     googleMapScriptLoaded = true; // Mark as loaded or loading
                 }
                 // Initialize Leaflet map when the section is shown
-                initLeafletMap();
+                window.initLeafletMap(); // Call window.initLeafletMap
             }
             // IMPORTANT: No scroll to top here, as this function is for *internal* dashboard navigation.
-        }
+        };
 
-        function showMusicSubSection(subSectionId) {
+        window.showMusicSubSection = function(subSectionId) { // Made global
             activeMusicSubSection = subSectionId; // Update the active sub-section
 
             // Hide all music sub-sections
@@ -2765,14 +3200,14 @@
             document.querySelectorAll('#musicSubSidebar .dashboard-sidebar-nav-item').forEach(link => {
                 link.classList.remove('dashboard-active-nav-item');
             });
-            const clickedSubLink = document.querySelector(`#musicSubSidebar .dashboard-sidebar-nav-item[data-music-subsection-id="${subSectionId}"]`);
+            const clickedSubLink = document.querySelector(`#musicSubSidebar .dashboard-sidebar-nav-item[onclick*="${subSectionId}"]`);
             if (clickedSubLink) {
                 clickedSubLink.classList.add('dashboard-active-nav-item');
             }
-        }
+        };
 
-        // Helper function for making API calls to Gemini™
-        async function callGeminiAPI(prompt, responseDiv, errorDiv) {
+        // Helper function for making API calls to Gemini
+        window.callGeminiAPI = async function(prompt, responseDiv, errorDiv) { // Made global
             responseDiv.textContent = 'Generating response...';
             errorDiv.classList.add('hidden'); // Hide previous errors
 
@@ -2781,15 +3216,17 @@
                 return;
             }
 
-            if (!GEMINI_API_KEY || GEMINI_API_KEY === 'YOUR_GEMINI_API_KEY') {
+            // Use the centralized API key storage
+            const GEMINI_API_KEY_LOCAL = ALL_API_KEYS.GEMINI_AI;
+            if (!GEMINI_API_KEY_LOCAL || GEMINI_API_KEY_LOCAL === 'YOUR_GEMINI_API_KEY') {
                 responseDiv.textContent = '';
-                errorDiv.textContent = 'Error: Gemini AI™ API Key is missing or invalid. Please ensure it\'s set correctly.';
+                errorDiv.textContent = 'Error: Gemini API Key is missing or invalid. Please ensure it\'s set correctly.';
                 errorDiv.classList.remove('hidden');
                 return;
             }
 
             try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY_LOCAL}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -2809,18 +3246,61 @@
                 }
 
                 const data = await response.json();
-                const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from AI™.';
+                const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from AI.';
                 responseDiv.textContent = aiResponse;
 
             } catch (error) {
-                console.error("Error calling Gemini AI™ API:", error);
+                console.error("Error calling Gemini API:", error);
                 responseDiv.textContent = ''; // Clear "Generating response..."
-                errorDiv.textContent = `Failed to get AI™ response: ${error.message}. Check your Gemini AI™ API key and network.`;
+                errorDiv.textContent = `Failed to get AI response: ${error.message}. Check your Gemini API key and network.`;
                 errorDiv.classList.remove('hidden');
             }
-        }
+        };
 
-        // --- Core Brand Canvas Animation Functions (Refactored from Banimal™) ---
+        // Event listener for General Query (Dashboard)
+        document.addEventListener('click', async (event) => {
+            if (event.target && event.target.id === 'sendGeminiPrompt') {
+                const promptText = document.getElementById('geminiPrompt').value.trim();
+                const responseDiv = document.getElementById('geminiResponse');
+                const errorDiv = document.getElementById('geminiError');
+                window.callGeminiAPI(promptText, responseDiv, errorDiv); // Call global function
+            }
+        });
+
+        // Event listener for Coding Partner (Dashboard)
+        document.addEventListener('click', async (event) => {
+            if (event.target && event.target.id === 'sendCodingPrompt') {
+                const codingPromptText = document.getElementById('codingPrompt').value.trim();
+                const responseDiv = document.getElementById('codingResponse');
+                const errorDiv = document.getElementById('codingError');
+                const fullPrompt = `Act as a coding assistant. ${codingPromptText}`;
+                window.callGeminiAPI(fullPrompt, responseDiv, errorDiv); // Call global function
+            }
+        });
+
+        // Event listener for Career Guide (Dashboard)
+        document.addEventListener('click', async (event) => {
+            if (event.target && event.target.id === 'sendCareerPrompt') {
+                const careerPromptText = document.getElementById('careerPrompt').value.trim();
+                const responseDiv = document.getElementById('careerResponse');
+                const errorDiv = document.getElementById('careerError');
+                const fullPrompt = `Act as a career guide. ${careerPromptText}`;
+                window.callGeminiAPI(fullPrompt, responseDiv, errorDiv); // Call global function
+            }
+        });
+
+        // Event listener for Admin Assistant (Dashboard)
+        document.addEventListener('click', async (event) => {
+            if (event.target && event.target.id === 'sendAdminAIPrompt') {
+                const adminPromptText = document.getElementById('adminAIPrompt').value.trim();
+                const responseDiv = document.getElementById('adminAIResponse');
+                const errorDiv = document.getElementById('adminAIError');
+                const fullPrompt = `Act as an admin assistant for a dashboard. ${adminPromptText}`;
+                window.callGeminiAPI(fullPrompt, responseDiv, errorDiv); // Call global function
+            }
+        });
+
+        // --- Core Brand Canvas Animation Functions (Refactored from Banimal) ---
         let coreBrandCanvas = null;
         let coreBrandCtx = null;
         let coreBrandParticles = [];
@@ -2922,501 +3402,11 @@
             return { r, g, b };
         }
 
-        // --- AUTHENTICATION PLACEHOLDER FUNCTIONS (For Firebase integration later) ---
-        function handleSignIn(event) {
-            event.preventDefault(); // Prevent default form submission
-            const email = document.getElementById('signInEmail').value;
-            const password = document.getElementById('signInPassword').value;
-            const messageDiv = document.getElementById('signInMessage');
-
-            // Basic validation
-            if (!email || !password) {
-                messageDiv.textContent = 'Please enter both email and password.';
-                return;
-            }
-
-            messageDiv.textContent = 'Attempting to sign in... (Firebase integration pending)';
-            console.log('Sign In Attempt:', { email, password });
-
-            // In a real app, you'd use Firebase Auth signInWithEmailAndPassword here
-            setTimeout(() => { // Simulate API call
-                if (email === 'test@example.com' && password === 'password123') {
-                    messageDiv.textContent = 'Sign In successful! (This is a mock login)';
-                    messageDiv.style.color = '#22c55e'; // Green color
-                    // Redirect or update UI
-                    showMainSection('fruitful-dashboard-wrapper'); // Redirect to dashboard on mock success
-                } else {
-                    messageDiv.textContent = 'Mock Sign In Failed: Invalid credentials.';
-                    messageDiv.style.color = '#ef4444'; // Red color
-                }
-            }, 1500);
-        }
-
-        function handleSignUp(event) {
-            event.preventDefault(); // Prevent default form submission
-            const name = document.getElementById('signUpName').value;
-            const email = document.getElementById('signUpEmail').value;
-            const password = document.getElementById('signUpPassword').value;
-            const confirmPassword = document.getElementById('signUpConfirmPassword').value;
-            const messageDiv = document.getElementById('signUpMessage');
-
-            // Basic validation
-            if (!name || !email || !password || !confirmPassword) {
-                messageDiv.textContent = 'Please fill in all fields.';
-                return;
-            }
-            if (password !== confirmPassword) {
-                messageDiv.textContent = 'Passwords do not match.';
-                return;
-            }
-            if (password.length < 6) { // Firebase minimum password length
-                messageDiv.textContent = 'Password must be at least 6 characters long.';
-                return;
-            }
-
-            messageDiv.textContent = 'Attempting to sign up... (Firebase integration pending)';
-            console.log('Sign Up Attempt:', { name, email, password });
-
-            // In a real app, you'd use Firebase Auth createUserWithEmailAndPassword here
-            setTimeout(() => { // Simulate API call
-                messageDiv.textContent = 'Sign Up successful! Please sign in. (This is a mock registration)';
-                messageDiv.style.color = '#22c55e'; // Green color
-                // Optionally clear form or redirect to sign-in
-                document.getElementById('signUpForm').reset();
-                showMainSection('sign-in-section'); // Redirect to sign-in after mock registration
-            }, 1500);
-        }
-
-        // --- Settings Panel Functions ---
-        function saveProfileSettings() {
-            const userName = document.getElementById('userName').value;
-            // In a real app, you'd save this to a backend/database
-            console.log("Saving user profile:", { userName });
-
-            const messageDiv = document.getElementById('profileSaveMessage');
-            messageDiv.textContent = 'Profile settings saved! (Mock Save)';
-            messageDiv.classList.remove('hidden');
-            setTimeout(() => {
-                messageDiv.classList.add('hidden');
-            }, 3000);
-        }
-
-        function toggleNotification(type) {
-            const checkbox = document.getElementById(`${type.toLowerCase()}Notifications`);
-            console.log(`${type} Notifications Toggled: ${checkbox.checked}`);
-            // In a real app, you'd send this preference to a backend
-        }
-
-        function toggleDarkMode(checkbox) {
-            if (checkbox.checked) {
-                document.documentElement.classList.add('dark');
-                document.body.style.setProperty('background-color', '#0d1117');
-                document.body.style.setProperty('color', '#e2e8f0');
-                console.log("Dark Mode Enabled (mock)");
-            } else {
-                document.documentElement.classList.remove('dark');
-                document.body.style.setProperty('background-color', '#f0f0f0'); // Example light mode bg
-                document.body.style.setProperty('color', '#333333');
-                console.log("Dark Mode Disabled (mock)");
-            }
-            // In a real app, you'd save this preference to local storage or a backend
-        }
-
-        function mockPayPalSdkIntegration() {
-            const paypalClientId = window.API_KEYS.PAYPAL_SDK_CLIENT_ID;
-            console.log(`Mock PayPal SDK Integration triggered with Client ID: ${paypalClientId}`);
-            // In a real scenario, you'd load the PayPal JS SDK script here dynamically
-            // and then render a PayPal button or perform a mock payment intent.
-            // showCustomModal("PayPal SDK Integration (Mock)", `Attempting to initialize PayPal SDK with ID: <br><code>${paypalClientId}</code>.<br>This is a mock call.`); // Assuming showCustomModal exists
-        }
-
-        // --- Sub-Node Details Display Function (NEW) ---
-        function showSubNodeDetails(nodeId) {
-            const subNodeDetailsContainer = document.getElementById('subNodeDetailsContainer');
-            const subNodeDetailTitle = document.getElementById('subNodeDetailTitle');
-            const subNodeDetailDescription = document.getElementById('subNodeDetailDescription');
-            const subNodeDetailContent = document.getElementById('subNodeDetailContent');
-
-            // Hide the main grid of sub-nodes
-            document.getElementById('subNodeGrid').classList.add('hidden');
-
-            // Find the sub-node config
-            const currentSubNodes = currentSectorConfig.subNodes;
-            const selectedNode = currentSubNodes.find(node => node.id === nodeId);
-
-            if (selectedNode) {
-                subNodeDetailTitle.innerText = selectedNode.name;
-                subNodeDetailDescription.innerText = selectedNode.description;
-                subNodeDetailsContainer.classList.remove('hidden');
-
-                // Populate content based on node ID (this is where you'll add more AI Logic specific content)
-                let contentHtml = '';
-                switch (nodeId) {
-                    case 'omnisignal':
-                        contentHtml = `
-                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> OmniSignal™ ensures secure, real-time communication across all decentralized applications within the FAA.Zone™. It leverages advanced encryption and distributed ledger technology to prevent tampering and ensure data integrity.</p>
-                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Key Features:</h4>
-                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
-                                <li>End-to-end encrypted messaging</li>
-                                <li>Broadcast and point-to-point signaling</li>
-                                <li>Real-time data synchronization</li>
-                                <li>Fault-tolerant architecture</li>
-                            </ul>
-                            <p class="dashboard-muted-text mt-4">For more advanced configurations, please refer to the OmniSignal™ API documentation.</p>
-                        `;
-                        break;
-                    case 'pulsegrid':
-                        contentHtml = `
-                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> PulseGrid™ is the high-performance backbone for data orchestration, optimizing data flow and processing across the Fruitful™ ecosystem. It ensures seamless interaction between various sector applications.</p>
-                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Capabilities:</h4>
-                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
-                                <li>High-throughput data ingestion</li>
-                                <li>Intelligent data routing</li>
-                                <li>Real-time data transformation</li>
-                                <li>Scalable for massive data volumes</li>
-                            </ul>
-                            <p class="dashboard-muted-text mt-4">PulseGrid™ integrates directly with VaultMesh™ for secure data handling.</p>
-                        `;
-                        break;
-                    case 'vaultdna':
-                        contentHtml = `
-                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> VaultDNA™ provides immutable digital fingerprints for every piece of content and asset within the Treaty Grid. This ensures unalterable proof of origin, ownership, and integrity.</p>
-                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Benefits:</h4>
-                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
-                                <li>Unforgeable content identification</li>
-                                <li>Transparent provenance tracking</li>
-                                <li>Automated integrity verification</li>
-                                <li>Reduced risk of intellectual property theft</li>
-                            </ul>
-                            <p class="dashboard-muted-text mt-4">Every ScrollClaim™ is secured by VaultDNA™.</p>
-                        `;
-                        break;
-                    case 'claimroot':
-                        contentHtml = `
-                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> ClaimRoot™ establishes the irrefutable origin and timestamp for all digital claims and transactions on the FAA.Zone™. It acts as the foundational anchor for verifying the authenticity and history of any asset or interaction.</p>
-                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Functionality:</h4>
-                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
-                                <li>Cryptographic timestamping</li>
-                                <li>Distributed ledger recording</li>
-                                <li>Immutable origin verification</li>
-                                <li>Foundation for royalty enforcement</li>
-                            </ul>
-                            <p class="dashboard-muted-text mt-4">Crucial for TreatyCommerce™ and ScrollClaim™ integrity.</p>
-                        `;
-                        break;
-                    case 'scrollclaim':
-                        contentHtml = `
-                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> ScrollClaim™ Contracts are programmable smart contracts that encapsulate digital rights, access permissions, and royalty logic for content distributed across the FAA.Zone™. They automate agreements and enforce terms.</p>
-                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Use Cases:</h4>
-                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
-                                <li>Automated royalty distribution (10-11% for Diamond Tier)</li>
-                                <li>Tiered content access management</li>
-                                <li>Transferable digital licenses</li>
-                                <li>Secure content monetization</li>
-                            </ul>
-                            <p class="dashboard-muted-text mt-4">Empowers creators and ensures fair compensation.</p>
-                        `;
-                        break;
-                    case 'ghosttrace':
-                        contentHtml = `
-                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> GhostTrace™ Gen2 provides advanced, privacy-preserving traceability for all interactions and data flows within the Fruitful Global™ ecosystem. It enables forensic analysis without compromising user privacy.</p>
-                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Capabilities:</h4>
-                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
-                                <li>Auditable interaction logs</li>
-                                <li>Anomaly detection for security</li>
-                                <li>Privacy-centric data masking</li>
-                                <li>Real-time threat intelligence</li>
-                            </ul>
-                            <p class="dashboard-muted-text mt-4">Essential for maintaining trust and security across the network.</p>
-                        `;
-                        break;
-                    case 'baobab-terminal':
-                        contentHtml = `
-                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> The Baobab Terminal™ provides a command-line interface (CLI) for direct interaction with the underlying Treaty Grid. It's designed for advanced users and developers to manage contracts, deploy scrolls, and monitor network health.</p>
-                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Commands & Usage:</h4>
-                            <pre class="bg-gray-800 text-green-400 p-4 rounded-md overflow-auto text-sm mt-2">
-<code>> baobab status
-  Node Health: Optimal
-  Connected Peers: 128
-  Active Scrolls: 7038
-
-> baobab deploy --path /my/new/scroll.zip --tier diamond
-  Deployment initiated. TxHash: 0x...
-  ScrollClaim™ issued.
-
-> baobab query-royalty --txid 0x...
-  Royalty payout: 10.5% to Wallet: 0x...
-                            </code></pre>
-                            <p class="dashboard-muted-text mt-4">Access requires proper authentication and permissions.</p>
-                        `;
-                        break;
-                    case 'baobab-security-network':
-                        contentHtml = `
-                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> The Baobab Security Network™ is a specialized sub-node focused on identifying and verifying humanitarian needs globally. It provides critical data insights that power ethical initiatives, such as Banimal™'s one-for-one donation model.</p>
-                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Functions:</h4>
-                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
-                                <li>Real-time need assessment in crisis zones</li>
-                                <li>Data-driven impact verification</li>
-                                <li>Secure beneficiary identification</li>
-                                <li>Ethical data collection and privacy protocols</li>
-                            </ul>
-                            <p class="dashboard-muted-text mt-4">Collaborates with NGOs and local communities to ensure effective aid distribution.</p>
-                        `;
-                        break;
-                    case 'little-lights':
-                        contentHtml = `
-                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> Little Lights™ is a sub-brand under the Banimal™ Sector, specializing in innovative and child-safe lighting solutions. Their products are designed to be both whimsical and energy-efficient, providing comfort and learning opportunities for children.</p>
-                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Product Philosophy:</h4>
-                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
-                                <li>Sustainable materials and production</li>
-                                <li>Non-toxic and child-friendly designs</li>
-                                <li>Educational and interactive lighting features</li>
-                                <li>Contribution to Banimal™'s one-for-one donation model</li>
-                            </ul>
-                            <p class="dashboard-muted-text mt-4">Shining a light on a brighter future for children globally.</p>
-                        `;
-                        break;
-                    case 'cozy-creatures':
-                        contentHtml = `
-                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> Cozy Creatures™ is another sub-brand within the Banimal™ Sector, offering a range of soft baby textiles and plush toys. Each product is crafted with hypoallergenic materials and designed for maximum comfort and safety for infants.</p>
-                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Offerings:</h4>
-                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
-                                <li>Organic cotton blankets and swaddles</li>
-                                <li>Hand-knitted animal plush toys</li>
-                                <li>Durable and washable baby apparel</li>
-                                <li>Ethically sourced and fair-trade production</li>
-                            </ul>
-                            <p class="dashboard-muted-text mt-4">Providing comfort and warmth, one creature at a time, with a positive global impact.</p>
-                        `;
-                        break;
-                    case 'codenest-ai':
-                        contentHtml = `
-                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> CodeNest™ AI™ is the leading AI™-driven development platform for digital scrolls within the Fruitful Global™ Treaty Grid. It automates code generation, optimizes performance, and streamlines deployment, allowing developers to focus on innovation.</p>
-                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Core Features:</h4>
-                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
-                                <li>AI™-powered code completion and suggestion</li>
-                                <li>Automated testing and debugging</li>
-                                <li>Cross-platform compatibility generation</li>
-                                <li>Direct integration with VaultMesh™ for secure deployment</li>
-                            </ul>
-                            <p class="dashboard-muted-text mt-4">Accelerating the creation of high-quality, secure digital experiences.</p>
-                        `;
-                        break;
-                    case 'omnisignal-ai':
-                        contentHtml = `
-                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> OmniSignal™ AI™ is an intelligent extension of OmniSignal™, incorporating advanced AI™ capabilities to further optimize secure, real-time communication. It learns from network patterns to enhance efficiency and detect anomalies.</p>
-                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">AI™ Enhancements:</h4>
-                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
-                                <li>Predictive routing for faster message delivery</li>
-                                <li>AI™-driven threat detection in communication streams</li>
-                                <li>Adaptive encryption protocols</li>
-                                <li>Automated network optimization and load balancing</li>
-                            </ul>
-                            <p class="dashboard-muted-text mt-4">Making communication smarter and more resilient.</p>
-                        `;
-                        break;
-                    case 'pulsegrid-ai':
-                        contentHtml = `
-                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> PulseGrid™ AI™ is the AI™-optimized version of the PulseGrid™ data orchestration system. It uses machine learning to dynamically adapt to data loads, predict bottlenecks, and intelligently manage data distribution for peak performance across the Fruitful Global™ network.</p>
-                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Optimizations:</h4>
-                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
-                                <li>Self-optimizing data pipelines</li>
-                                <li>Predictive resource allocation</li>
-                                <li>Real-time anomaly detection in data streams</li>
-                                <li>Automated scaling based on demand</li>
-                            </ul>
-                            <p class="dashboard-muted-text mt-4">Ensuring uninterrupted and highly efficient data flow.</p>
-                        `;
-                        break;
-                    case 'vaultdna-ai':
-                        contentHtml = `
-                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> VaultDNA™ AI™ enhances the immutable digital fingerprinting with artificial intelligence, providing even more robust security and intelligent content verification. It can detect subtle patterns of unauthorized modifications or deepfakes.</p>
-                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Enhanced Security:</h4>
-                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
-                                <li>AI™-driven content authenticity verification</li>
-                                <li>Predictive threat analysis for digital assets</li>
-                                <li>Automated content lineage auditing</li>
-                                <li>Machine learning for tamper detection</li>
-                            </ul>
-                            <p class="dashboard-muted-text mt-4">The ultimate guardian for digital intellectual property.</p>
-                        `;
-                        break;
-                    default:
-                        contentHtml = `<p class="dashboard-muted-text">Details for "${selectedNode.name}" are not yet available. Please check back later or contribute to its development!</p>`;
-                }
-                subNodeDetailContent.innerHTML = contentHtml;
-            } else {
-                subNodeDetailsContainer.classList.add('hidden');
-                console.warn('Sub-node details not found for ID:', nodeId);
-            }
-        }
-
-        function hideSubNodeDetails() {
-            document.getElementById('subNodeDetailsContainer').classList.add('hidden');
-            document.getElementById('subNodeGrid').classList.remove('hidden');
-        }
-
 
         // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
-            // Attach event listeners for main section navigation
-            document.querySelectorAll('nav.flex a[data-section-id]').forEach(link => {
-                link.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    showMainSection(event.currentTarget.dataset.sectionId);
-                });
-            });
-
-            // Attach event listener for the "Go to Dashboard (Dev Access)" button
-            const goToDashboardBtn = document.getElementById('goToDashboardBtn');
-            if (goToDashboardBtn) {
-                goToDashboardBtn.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    showMainSection('fruitful-dashboard-wrapper');
-                });
-            }
-
-            // Attach event listener for hero CTA button
-            const heroCtaButton = document.getElementById('heroCtaButton');
-            if (heroCtaButton) {
-                heroCtaButton.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    showMainSection(event.currentTarget.dataset.sectionId);
-                });
-            }
-
-            // Attach event listener for featured core brand CTA button
-            const featuredCoreBrandCtaButton = document.getElementById('featuredCoreBrandCtaButton');
-            if (featuredCoreBrandCtaButton) {
-                featuredCoreBrandCtaButton.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    showMainSection(event.currentTarget.dataset.sectionId);
-                });
-            }
-
-            // Attach event listeners for terminal buttons
-            document.getElementById('terminalButtons').addEventListener('click', (event) => {
-                const button = event.target.closest('.terminal-btn');
-                if (button && button.dataset.terminalUrl) {
-                    loadTerminal(button.dataset.terminalUrl);
-                }
-            });
-
-            // Attach event listeners for sector glyphs
-            document.getElementById('sectorGlyphGrid').addEventListener('click', (event) => {
-                const glyph = event.target.closest('.glyph');
-                if (glyph && glyph.dataset.sectorId) {
-                    switchSector(glyph.dataset.sectorId);
-                }
-            });
-
-            // Attach event listeners for sector dropdown items
-            document.getElementById('sectorDropdown').addEventListener('click', (event) => {
-                const dropdownItem = event.target.closest('a[data-sector-id]');
-                if (dropdownItem && dropdownItem.dataset.sectorId) {
-                    switchSector(dropdownItem.dataset.sectorId);
-                }
-            });
-
-            // Attach event listeners for auth forms
-            const signInForm = document.getElementById('signInForm');
-            if (signInForm) {
-                signInForm.addEventListener('submit', handleSignIn);
-            }
-            const signUpForm = document.getElementById('signUpForm');
-            if (signUpForm) {
-                signUpForm.addEventListener('submit', handleSignUp);
-            }
-            const signInBtn = document.getElementById('signInBtn');
-            if (signInBtn) {
-                signInBtn.addEventListener('click', handleSignIn);
-            }
-            const signUpBtn = document.getElementById('signUpBtn');
-            if (signUpBtn) {
-                signUpBtn.addEventListener('click', handleSignUp);
-            }
-
-            // Attach event listeners for dashboard sidebar navigation
-            document.querySelectorAll('.dashboard-sidebar-nav-item').forEach(link => {
-                link.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    showDashboardSection(event.currentTarget.dataset.dashboardSectionId);
-                });
-            });
-
-            // Attach event listeners for music sub-sidebar navigation
-            document.querySelectorAll('#musicSubSidebar .dashboard-sidebar-nav-item').forEach(link => {
-                link.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    showMusicSubSection(event.currentTarget.dataset.musicSubsectionId);
-                });
-            });
-
-            // Attach event listener for sub-node "Learn More" links
-            document.getElementById('subNodeGrid').addEventListener('click', (event) => {
-                const learnMoreLink = event.target.closest('a[data-subnode-id]');
-                if (learnMoreLink && learnMoreLink.dataset.subnodeId) {
-                    showSubNodeDetails(learnMoreLink.dataset.subnodeId);
-                }
-            });
-
-            // Attach event listener for "Back to Sub-Nodes" button
-            const hideSubNodeDetailsBtn = document.getElementById('hideSubNodeDetailsBtn');
-            if (hideSubNodeDetailsBtn) {
-                hideSubNodeDetailsBtn.addEventListener('click', hideSubNodeDetails);
-            }
-
-            // Attach event listeners for AI Gemini buttons
-            document.getElementById('sendGeminiPrompt')?.addEventListener('click', async () => {
-                const promptText = document.getElementById('geminiPrompt').value.trim();
-                const responseDiv = document.getElementById('geminiResponse');
-                const errorDiv = document.getElementById('geminiError');
-                callGeminiAPI(promptText, responseDiv, errorDiv);
-            });
-
-            document.getElementById('getSectorTrendAnalysisBtn')?.addEventListener('click', async () => {
-                const sectorName = document.getElementById('sectorTrendInput').value.trim();
-                const responseDiv = document.getElementById('sectorTrendAnalysisResponse');
-                const errorDiv = document.getElementById('sectorTrendAnalysisError');
-                if (!sectorName) {
-                    responseDiv.textContent = '';
-                    errorDiv.textContent = 'Please enter a sector name (e.g., Technology, Healthcare).';
-                    errorDiv.classList.remove('hidden');
-                    return;
-                }
-                const prompt = `Analyze the "${sectorName}" sector. Provide a summary of its current trends, future outlook, and list 3-5 key players in that sector. Keep it concise, around 150-200 words.`;
-                callGeminiAPI(prompt, responseDiv, errorDiv);
-            });
-
-            document.getElementById('sendCodingPrompt')?.addEventListener('click', async () => {
-                const codingPromptText = document.getElementById('codingPrompt').value.trim();
-                const responseDiv = document.getElementById('codingResponse');
-                const errorDiv = document.getElementById('codingError');
-                const fullPrompt = `Act as a coding assistant. ${codingPromptText}`;
-                callGeminiAPI(fullPrompt, responseDiv, errorDiv);
-            });
-
-            document.getElementById('sendCareerPrompt')?.addEventListener('click', async () => {
-                const careerPromptText = document.getElementById('careerPrompt').value.trim();
-                const responseDiv = document.getElementById('careerResponse');
-                const errorDiv = document.getElementById('careerError');
-                const fullPrompt = `Act as a career guide. ${careerPromptText}`;
-                callGeminiAPI(fullPrompt, responseDiv, errorDiv);
-            });
-
-            document.getElementById('sendAdminAIPrompt')?.addEventListener('click', async () => {
-                const adminPromptText = document.getElementById('adminAIPrompt').value.trim();
-                const responseDiv = document.getElementById('adminAIResponse');
-                const errorDiv = document.getElementById('adminAIError');
-                const fullPrompt = `Act as an admin assistant for a dashboard. ${adminPromptText}`;
-                callGeminiAPI(fullPrompt, responseDiv, errorDiv);
-            });
-
-
             // Set initial sector and render content
-            const urlParams = new URLSearchParams(window.location.search);
-            const initialSectorId = urlParams.get('sector') || "fruitful-global";
-            switchSector(initialSectorId);
+            switchSector("fruitful-global"); // Loads the default sector on page load
 
             // Initialize landing page features that don't depend on sector config
             updateSharePrice();
@@ -3424,15 +3414,8 @@
 
             // Ensure a section is shown on initial load
             showMainSection('hero-section');
-
-            // Initialize dark mode toggle (mock) - Ensure it reflects initial CSS state
-            const darkModeToggle = document.getElementById('darkModeToggle');
-            if (darkModeToggle) {
-                // Read the initial state from CSS (assuming dark mode is default)
-                darkModeToggle.checked = document.documentElement.classList.contains('dark') ||
-                                         window.matchMedia('(prefers-color-scheme: dark)').matches;
-            }
         });
     </script>
 </body>
 </html>
+�
