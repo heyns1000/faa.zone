@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruitful Holdings | Repository & Legal Hub</title>
+    <link rel="icon" href="/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- External CSS for global styling -->
+    <link rel="stylesheet" href="../css/style.css"> 
+    <style>
+        /* Specific styles for Legal Index, adapting from global style.css */
+        body {
+            background-color: var(--bg-color-dark);
+            color: var(--text-color-dark);
+        }
+        .app-header {
+            background-color: var(--fcu-color); /* Green header, consistent with your previous output */
+            color: white;
+            min-height: 150px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4);
+            border-bottom: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .app-header h1 {
+            font-family: 'Inter', sans-serif;
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin: 0;
+            letter-spacing: -0.05em;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            color: white;
+            word-break: break-word;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+        }
+        .app-header .slogan {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 10px;
+            line-height: 1.5;
+            max-width: 800px;
+        }
+        .main-content-area {
+            flex-grow: 1;
+            padding: 40px 20px;
+            background-color: var(--bg-color-dark);
+        }
+        .app-card {
+            background-color: var(--card-bg-dark);
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color-dark);
+            padding: 30px;
+            margin-bottom: 30px;
+            color: var(--text-color-dark);
+        }
+        .app-card h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-color-dark);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .app-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-color-dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .app-card h3 i {
+            color: var(--mindlift-accent-color); /* Assuming mindlift colors are defined globally or here */
+            margin-right: 15px;
+            font-size: 1.8rem;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--muted-text-dark);
+        }
+        .form-input, .form-select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color-dark);
+            border-radius: 8px;
+            background-color: #3a3a3e;
+            color: var(--text-color-dark);
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+        }
+        .form-input::placeholder {
+            color: #718096;
+        }
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.2);
+        }
+        .app-action-button {
+            display: block;
+            width: 100%;
+            height: 56px;
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+        .app-action-button.purple { background-color: #8A2BE2; }
+        .app-action-button.purple:hover { background-color: #7b27cb; transform: translateY(-2px); }
+        .app-action-button.blue { background-color: #4169E1; }
+        .app-action-button.blue:hover { background-color: #375ac7; transform: translateY(-2px); }
+
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Legal Document Item Styles */
+        .document-item, .repository-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 0.75rem;
+            background-color: var(--legal-item-bg);
+            border: 1px solid var(--legal-item-border);
+            box-shadow: 0 1px 3px var(--legal-item-shadow);
+            transition: all 0.2s ease-in-out;
+            text-align: left;
+            width: 100%;
+            cursor: pointer;
+        }
+        @media (min-width: 640px) {
+            .document-item, .repository-item {
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 1rem;
+                padding: 1rem;
+            }
+        }
+        .document-item:hover, .repository-item:hover {
+            box-shadow: 0 4px 10px var(--legal-item-shadow);
+            transform: translateY(-2px);
+            border-color: var(--primary-color);
+        }
+        .document-item.selected, .repository-item.selected {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.4);
+        }
+        .document-item .icon, .repository-item i {
+            flex-shrink: 0;
+            font-size: 2.5rem;
+            color: var(--legal-icon-color);
+        }
+        .document-item-content, .repository-item .repo-name {
+            flex-grow: 1;
+        }
+        .document-item-content h3, .repository-item .repo-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--legal-text-color);
+            margin-bottom: 0.25rem;
+        }
+        .document-item-content p {
+            font-size: 0.95rem;
+            color: var(--legal-muted-text);
+            margin-bottom: 0.5rem;
+        }
+        .document-item-content a, .repository-item .repo-link {
+            color: var(--legal-link-color);
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+        .document-item-content a:hover, .repository-item .repo-link:hover {
+            text-decoration: underline;
+        }
+        .document-item-content a svg {
+            margin-left: 0.25rem;
+        }
+        #selectedLegalDocDetails, #selectedRepoDetails {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: var(--card-bg-dark);
+            border: 1px solid var(--border-color-dark);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            color: var(--text-color-dark);
+        }
+        #selectedLegalDocDetails p, #selectedRepoDetails p {
+            margin-bottom: 5px;
+            color: var(--text-color-dark);
+        }
+        #selectedLegalDocDetails .text-sm, #selectedRepoDetails .text-sm {
+            color: var(--muted-text-dark);
+        }
+        #selectedLegalDocDetails a, #selectedRepoDetails a {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        #selectedLegalDocDetails.hidden, #selectedRepoDetails.hidden {
+            display: none;
+        }
+        .app-footer { /* Reusing the new-footer from previous output */
+            background-color: #1a1a1a;
+            color: white;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            margin-top: auto; /* Pushes footer to bottom */
+        }
+        @media (min-width: 768px) {
+            .app-footer { padding-left: 5rem; padding-right: 5rem; }
+        }
+        .app-footer-content h1 {
+            font-size: 2rem; line-height: 1.25; font-weight: 800; color: #ffffff; margin-bottom: 0.5rem;
+        }
+        @media (min-width: 768px) { .app-footer-content h1 { font-size: 2.25rem; } }
+        @media (min-width: 1024px) { .app-footer-content h1 { font-size: 3rem; } }
+        .app-footer-content .text-blue-400 { color: #60a5fa; }
+        .app-footer-content p {
+            font-size: 1rem; line-height: 1.625; color: #d1d5db; margin-bottom: 1.5rem;
+        }
+        @media (min-width: 768px) { .app-footer-content p { font-size: 1.125rem; } }
+        .cta-button {
+            background-color: #3b82f6; color: #ffffff; font-weight: 600; padding: 0.75rem 1.5rem;
+            border-radius: 9999px; display: inline-flex; align-items: center; justify-content: center;
+            transition-property: background-color; transition-duration: 0.2s; text-decoration: none;
+        }
+        .cta-button:hover { background-color: #2563eb; }
+        .cta-button .ml-2 { margin-left: 0.5rem; }
+        .copyright { font-size: 0.875rem; color: #6b7280; margin-top: 2rem; }
+        .copyright a { color: #60a5fa; text-decoration: none; }
+        .copyright a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <header class="py-4 px-6 md:px-12 flex justify-between items-center text-white">
+        <h1 class="text-2xl font-extrabold tracking-tight">Fruitful Holdings</h1>
+        <nav class="flex items-center space-x-4">
+            <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" id="legalHomeLink">Home</a>
+            <a href="https://faa.zone/careers/hiring-homepage.html" class="transition-colors duration-200">Careers</a>
+            <a href="https://faa.zone/legal/securesign.html" class="transition-colors duration-200 font-semibold px-4 py-2 rounded-full header-sign-up">SecureSign</a>
+            <a href="javascript:void(0)" class="px-4 py-2 rounded-full font-semibold transition-colors duration-200 header-sign-up" id="legalSignUpLink">Sign Up</a>
+            <a href="javascript:void(0)" class="transition-colors duration-200" id="legalSignInLink">Sign In</a>
+            <a href="javascript:void(0)" class="transition-colors duration-200" id="legalDashboardLink">Dashboard</a>
+        </nav>
+    </header>
+
+    <main class="main-content-area">
+        <div class="container max-w-3xl mx-auto">
+            <div class="app-card">
+                <h2 id="main-heading">Our Enterprise Hub</h2>
+
+                <!-- Repository Search and List Section -->
+                <section class="mb-8">
+                    <h3 id="find-repo-heading"><i class="fas fa-search"></i> Find a Repository</h3>
+                    <div class="mb-4">
+                        <label for="repoSearchInput" class="form-label">Search Repository:</label>
+                        <input type="text" id="repoSearchInput" class="form-input" placeholder="e.g., faa.zone or baobab">
+                    </div>
+                    <div id="repositoryList" class="space-y-4">
+                        <div id="repoLoadingIndicator" class="loading-spinner hidden"></div>
+                        <p id="noReposMessage" class="text-center text-muted-text-dark hidden">No repositories found matching your search.</p>
+                    </div>
+                    <div id="selectedRepoDetails" class="mt-4 p-4 rounded-lg border border-gray-600 bg-gray-700 hidden">
+                        <p class="text-sm text-gray-400">Selected Repository:</p>
+                        <p id="displaySelectedRepoName" class="font-semibold text-lg"></p>
+                        <p class="text-sm text-gray-400 mt-2">URL:</p>
+                        <p id="displaySelectedRepoUrl" class="text-blue-400 break-words"></p>
+                    </div>
+                </section>
+
+                <!-- Add New Repository Section -->
+                <section class="app-card mt-8">
+                    <h3 id="add-new-repo-heading"><i class="fas fa-plus-circle"></i> Add New Code Repository</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="newRepoName" class="form-label">Repository Name (e.g., heyns1000/my-new-project)</label>
+                            <input type="text" id="newRepoName" class="form-input" placeholder="e.g., heyns1000/new-awesome-project">
+                        </div>
+                        <div>
+                            <label for="newRepoUrl" class="form-label">Repository URL (e.g., https://github.com/heyns1000/my-new-project)</label>
+                            <input type="text" id="newRepoUrl" class="form-input" placeholder="e.g., https://github.com/heyns1000/new-awesome-project">
+                        </div>
+                        <button id="addRepoBtn" class="app-action-button purple mt-4">Add Repository</button>
+                        <div id="addRepoMessage" class="hidden text-center mt-2"></div>
+                    </div>
+                </section>
+
+                <!-- Legal & Documentation Hub Section -->
+                <section class="app-card mt-8">
+                    <h3 id="legal-hub-heading"><i class="fas fa-balance-scale"></i> Legal & Documentation Hub</h3>
+                    <p class="text-sm mb-4 text-center text-muted-text-dark">Access essential legal documents, setup guides, and critical information for the FAA.ZONE™ ecosystem.</p>
+                    <div id="legalDocumentList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div id="legalLoadingIndicator" class="loading-spinner hidden"></div>
+                        <p id="noLegalDocsMessage" class="text-center text-muted-text-dark hidden">No legal documents found matching your search.</p>
+                    </div>
+                    <div id="selectedLegalDocDetails" class="mt-4 p-4 rounded-lg hidden">
+                        <p class="text-sm text-gray-400">Selected Document:</p>
+                        <p id="displaySelectedLegalDocTitle" class="font-semibold text-lg"></p>
+                        <p class="text-sm text-gray-400 mt-2">Description:</p>
+                        <p id="displaySelectedLegalDocDesc" class="text-base"></p>
+                        <p class="text-sm text-gray-400 mt-2">URL:</p>
+                        <a id="displaySelectedLegalDocUrl" href="#" target="_blank" rel="noopener noreferrer" class="text-blue-400 break-words"></a>
+                    </div>
+                </section>
+
+                <!-- Add New Legal Document Section -->
+                <section class="app-card mt-8">
+                    <h3 id="add-new-legal-doc-heading"><i class="fas fa-file-invoice"></i> Add New Legal Document</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="newLegalDocTitle" class="form-label">Document Title</label>
+                            <input type="text" id="newLegalDocTitle" class="form-input" placeholder="e.g., Fruitful Holdings NDA">
+                        </div>
+                        <div>
+                            <label for="newLegalDocUrl" class="form-label">Document URL</label>
+                            <input type="text" id="newLegalDocUrl" class="form-input" placeholder="e.g., /legal/nda.pdf or https://example.com/doc.html">
+                        </div>
+                        <div>
+                            <label for="newLegalDocDescription" class="form-label">Description</label>
+                            <textarea id="newLegalDocDescription" class="form-input" rows="3" placeholder="Brief description of the document."></textarea>
+                        </div>
+                        <div>
+                            <label for="newLegalDocIcon" class="form-label">Icon (Emoji or FontAwesome Class)</label>
+                            <input type="text" id="newLegalDocIcon" class="form-input" placeholder="e.g., 📚 or fas fa-file-alt">
+                        </div>
+                        <button id="addLegalDocBtn" class="app-action-button blue mt-4">Add Legal Document</button>
+                        <div id="addLegalDocMessage" class="hidden text-center mt-2"></div>
+                    </div>
+                </section>
+
+                <!-- AI-Powered Help/FAQ Section -->
+                <section class="app-card mt-8">
+                    <h3 id="ai-help-heading"><i class="fas fa-question-circle"></i> AI Help & FAQ Answers</h3>
+                    <p class="text-sm mb-4 text-center text-muted-text-dark">Ask your question about Fruitful Holdings or our operations, and our AI will answer.</p>
+                    <div class="form-group">
+                        <label for="faqPromptInput" class="form-label">Your Question:</label>
+                        <textarea id="faqPromptInput" class="form-input" rows="4" placeholder="e.g., What is Fruitful Holdings?"></textarea>
+                    </div>
+                    <button id="getFaqAnswerBtn" class="app-action-button purple mt-4">Get Answer ✨</button>
+                    <div id="faqLoadingIndicator" class="hidden text-center mt-2 text-blue-400">
+                        <i class="fas fa-spinner fa-spin mr-2"></i> <span>Generating answer...</span>
+                    </div>
+                    <p id="faqAnswerOutput" class="result-text mt-4 whitespace-pre-wrap"></p>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Planet Pulse Text -->
+    <p id="planet-text" class="text-center text-xl font-bold mt-8 mb-8">fruchtbarer.planet.wandel</p>
+
+    <!-- User ID Display -->
+    <div class="text-center text-sm text-gray-500 mb-4">
+        User ID: <span id="displayUserId">Loading...</span>
+    </div>
+
+    <footer class="app-footer">
+        <div class="app-footer-content text-center max-w-2xl mx-auto">
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight text-white mb-2">
+                <span>Fruitful Holdings:</span> <br>
+                <span class="text-blue-400">Repository Global Growth</span>
+            </h1>
+            <p class="text-base md:text-lg text-gray-300 leading-relaxed mb-6">
+                Fruitful Holdings (Pty) Ltd is dedicated to fostering innovation and growth across various sectors. Our open-source initiatives aim to contribute to global progress, alongside transparent legal and operational documentation.
+            </p>
+            <a href="javascript:void(0)" class="cta-button" id="footerExploreButton">
+                Explore Our World <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+        <p class="copyright text-sm text-gray-500 mt-8">&copy; 2025 Fruitful Holdings (Pty) Ltd. All rights reserved.</p>
+        <p class="copyright text-sm text-gray-500">A proud initiative of <a href="https://fruitful.faa.zone/" target="_blank" class="text-blue-400 hover:underline">Fruitful™ Treaty System™</a></p>
+
+        <!-- Theme & Language Controls in Footer -->
+        <div class="theme-controls flex items-center justify-center space-x-4 mt-4 flex-wrap gap-2">
+            <button id="theme-day-btn">Light Mode</button>
+            <button id="theme-night-btn">Dark Mode</button>
+            <button id="theme-hyper-btn">Hyper Mode</button>
+            <select id="languageSwitcher" class="form-select">
+                <!-- Options populated dynamically by JS -->
+            </select>
+        </div>
+    </footer>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, query, onSnapshot, addDoc, serverTimestamp, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global translations object (will be populated by global_js_definitions.js)
+        window.translations = {}; // Ensure it's initialized
+
+        // Function to set the current language and update all translatable elements
+        function setLanguage(lang) {
+            document.body.lang = lang;
+            localStorage.setItem('selectedLanguage', lang);
+
+            document.querySelectorAll('[data-lang-key]').forEach(element => {
+                const key = element.getAttribute('data-lang-key');
+                if (window.translations[lang] && window.translations[lang][key] !== undefined) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = window.translations[lang][key];
+                    } else if (['get-answer-button', 'explore-button', 'add-repo-button', 'add-legal-doc-button', 'footerExploreButton'].includes(key)) {
+                        const iconHtml = element.innerHTML.match(/<i class=".*"><\/i>/);
+                        if (iconHtml) {
+                            element.innerHTML = window.translations[lang][key] + ' ' + iconHtml[0];
+                        } else {
+                            element.textContent = window.translations[lang][key];
+                        }
+                    } else if (['main-heading', 'repository-heading', 'find-repo-heading', 'ai-help-heading', 'add-new-repo-heading', 'legal-hub-heading', 'add-new-legal-doc-heading', 'footer-heading'].includes(key)) {
+                        const iconMatch = element.innerHTML.match(/(<i class=".*"><\/i>|.)/);
+                        const textPart = window.translations[lang][key];
+                        if (iconMatch && iconMatch[0] !== undefined) {
+                            if (iconMatch[0].length === 2 && /\p{Emoji}/u.test(iconMatch[0])) {
+                                element.innerHTML = iconMatch[0] + ' ' + textPart;
+                            } else if (iconMatch[0].startsWith('<i')) {
+                                element.innerHTML = iconMatch[0] + ' ' + textPart;
+                            } else {
+                                element.textContent = textPart;
+                            }
+                        } else {
+                            element.textContent = textPart;
+                        }
+                    } else if (['light-mode-button', 'dark-mode-button', 'hyper-mode-button'].includes(key)) {
+                        element.textContent = window.translations[lang][key];
+                    } else {
+                        element.textContent = window.translations[lang][key];
+                    }
+                } else {
+                    console.warn(`Missing translation for key '${key}' in language '${lang}'. Falling back to English.`);
+                    if (window.translations['en'] && window.translations['en'][key] !== undefined) {
+                         if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                            element.placeholder = window.translations['en'][key];
+                        } else if (['get-answer-button', 'explore-button', 'add-repo-button', 'add-legal-doc-button', 'footerExploreButton'].includes(key)) {
+                            const iconHtml = element.innerHTML.match(/<i class=".*"><\/i>/);
+                            if (iconHtml) {
+                                element.innerHTML = window.translations['en'][key] + ' ' + iconHtml[0];
+                            } else {
+                                element.textContent = window.translations['en'][key];
+                            }
+                        } else if (['main-heading', 'repository-heading', 'find-repo-heading', 'ai-help-heading', 'add-new-repo-heading', 'legal-hub-heading', 'add-new-legal-doc-heading', 'footer-heading'].includes(key)) {
+                            const iconMatch = element.innerHTML.match(/(<i class=".*"><\/i>|.)/);
+                            const textPart = window.translations['en'][key];
+                            if (iconMatch && iconMatch[0] !== undefined) {
+                                if (iconMatch[0].length === 2 && /\p{Emoji}/u.test(iconMatch[0])) {
+                                    element.innerHTML = iconMatch[0] + ' ' + textPart;
+                                } else if (iconMatch[0].startsWith('<i')) {
+                                    element.innerHTML = iconMatch[0] + ' ' + textPart;
+                                } else {
+                                    element.textContent = textPart;
+                                }
+                            } else {
+                                element.textContent = textPart;
+                            }
+                        } else if (['light-mode-button', 'dark-mode-button', 'hyper-mode-button'].includes(key)) {
+                            element.textContent = window.translations['en'][key];
+                        }
+                        else {
+                            element.textContent = window.translations['en'][key];
+                        }
+                    }
+                }
+            });
+
+            const faqAnswerOutput = document.getElementById('faqAnswerOutput');
+            const faqPromptInput = document.getElementById('faqPromptInput');
+            if (faqAnswerOutput && faqPromptInput) {
+                if (!faqPromptInput.value.trim() && faqAnswerOutput.textContent === (window.translations['en']['please-enter-question'] || '')) {
+                    faqAnswerOutput.textContent = window.translations[lang]['please-enter-question'];
+                }
+                if (faqAnswerOutput.textContent.startsWith(window.translations['en']['error-no-ai-answer'] || '')) {
+                    faqAnswerOutput.textContent = window.translations[lang]['error-no-ai-answer'];
+                } else if (faqAnswerOutput.textContent.startsWith(window.translations['en']['error-ai-connection'] || '')) {
+                    faqAnswerOutput.textContent = window.translations[lang]['error-ai-connection'];
+                }
+            }
+        }
+
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Define translations (should eventually be loaded from global_js_definitions.js)
+            window.translations = {
+                en: {
+                    "lang-name": "English", "announcement-text": "Welcome to Fruitful Holdings Repository! Explore our open-source projects.",
+                    "main-heading": "Our Enterprise Hub", "repository-heading": "Code Repositories",
+                    "find-repo-heading": "Find a Repository", "search-repo-label": "Search Repository:",
+                    "search-repo-placeholder": "e.g., faa.zone or baobab", "no-repos-found": "No repositories found matching your search.",
+                    "selected-repo-name-label": "Selected Repository:", "selected-repo-url-label": "URL:",
+                    "add-new-repo-heading": "Add New Code Repository", "new-repo-name-label": "Repository Name (e.g., heyns1000/my-new-project)",
+                    "new-repo-name-placeholder": "e.g., heyns1000/new-awesome-project", "new-repo-url-label": "Repository URL (e.g., https://github.com/heyns1000/my-new-project)",
+                    "new-repo-url-placeholder": "e.g., https://github.com/heyns1000/new-awesome-project",
+                    "add-repo-button": "Add Repository", "add-repo-success": "Repository added successfully!",
+                    "add-repo-error": "Error adding repository:", "add-repo-validation-error": "Please enter both repository name and a valid URL.",
+                    "legal-hub-heading": "Legal & Documentation Hub",
+                    "legal-hub-slogan": "Access essential legal documents, setup guides, and critical information for the FAA.ZONE™ ecosystem.",
+                    "no-legal-docs-found": "No legal documents found matching your search.",
+                    "selected-doc-title-label": "Selected Document:", "selected-doc-desc-label": "Description:",
+                    "selected-doc-url-label": "URL:", "add-new-legal-doc-heading": "Add New Legal Document",
+                    "new-legal-doc-title-label": "Document Title", "new-legal-doc-title-placeholder": "e.g., Fruitful Holdings NDA",
+                    "new-legal-doc-url-label": "Document URL", "new-legal-doc-url-placeholder": "e.g., /legal/nda.pdf or https://example.com/doc.html",
+                    "new-legal-doc-desc-label": "Description", "new-legal-doc-desc-placeholder": "Brief description of the document.",
+                    "new-legal-doc-icon-label": "Icon (Emoji or FontAwesome Class)", "new-legal-doc-icon-placeholder": "e.g., 📚 or fas fa-file-alt",
+                    "add-legal-doc-button": "Add Legal Document", "add-legal-doc-success": "Legal document added successfully!",
+                    "add-legal-doc-error": "Error adding legal document:", "add-legal-doc-validation-error": "Please fill in all fields for the legal document.",
+                    "ai-help-heading": "AI Help & FAQ Answers",
+                    "ai-help-slogan": "Ask your question about Fruitful Holdings or our operations, and our AI will answer.",
+                    "your-question-label": "Your Question:", "faq-placeholder": "e.g., What is Fruitful Holdings?",
+                    "get-answer-button": "Get Answer ✨", "generating-answer-loading": "Generating answer...",
+                    "error-no-ai-answer": "Error: No answer from AI. Please try again later.",
+                    "reason": "Reason:", "error-ai-connection": "Error: Could not connect to language model. Check console for network issues.",
+                    "please-enter-question": "Please enter a question to get an answer.",
+                    "planet-pulse-text": "fruchtbarer.planet.wandel",
+                    "footer-heading": "Fruitful Holdings:", "footer-slogan": "Repository Global Growth",
+                    "footer-text": "Fruitful Holdings (Pty) Ltd is dedicated to fostering innovation and growth across various sectors. Our open-source initiatives aim to contribute to global progress, alongside transparent legal and operational documentation.",
+                    "explore-button": "Explore Our World",
+                    "copyright-text-footer": "&copy; 2025 Fruitful Holdings (Pty) Ltd. All rights reserved.",
+                    "powered-by-text": "A proud initiative of Fruitful™ Treaty System™",
+                    "light-mode-button": "Light Mode", "dark-mode-button": "Dark Mode", "hyper-mode-button": "Hyper Mode",
+                    "view-document-link": "View Document"
+                },
+                lb: { /* ... Luxembourgish translations ... */ },
+                es: { /* ... Spanish translations ... */ },
+                fr: { /* ... French translations ... */ },
+                hi: { /* ... Hindi translations ... */ },
+                ar: { /* ... Arabic translations ... */ }
+            };
+
+
+            const mainHeader = document.querySelector('header');
+            const announcementBar = document.getElementById('announcement-bar');
+            const displayUserId = document.getElementById('displayUserId');
+
+            const updateHeaderTop = () => {
+                const announcementHeight = announcementBar && !announcementBar.classList.contains('hidden') ? announcementBar.offsetHeight : 0;
+                document.documentElement.style.setProperty('--announcement-bar-height', `${announcementHeight}px`);
+                document.documentElement.style.setProperty('--header-height', `${mainHeader.offsetHeight}px`);
+            };
+
+            if (announcementBar && announcementBar.querySelector('.close-btn')) {
+                announcementBar.querySelector('.close-btn').addEventListener('click', () => {
+                    announcementBar.classList.add('hidden');
+                    updateHeaderTop();
+                    localStorage.setItem('hideAnnouncementBar', 'true');
+                });
+            }
+
+            const themeDayBtn = document.getElementById('theme-day-btn');
+            const themeNightBtn = document.getElementById('theme-night-btn');
+            const themeHyperBtn = document.getElementById('theme-hyper-btn');
+
+            function setTheme(theme) {
+                document.body.classList.remove('light-mode', 'dark-mode', 'hyper-mode');
+                themeDayBtn?.classList.remove('active');
+                themeNightBtn?.classList.remove('active');
+                themeHyperBtn?.classList.remove('active');
+
+                if (theme === 'dark') {
+                    document.body.classList.add('dark-mode');
+                    themeNightBtn?.classList.add('active');
+                } else if (theme === 'hyper') {
+                    document.body.classList.add('hyper-mode');
+                    themeHyperBtn?.classList.add('active');
+                } else {
+                    document.body.classList.add('light-mode');
+                    themeDayBtn?.classList.add('active');
+                }
+                localStorage.setItem('themeMode', theme);
+            }
+
+            if (themeDayBtn && themeNightBtn && themeHyperBtn) {
+                themeDayBtn.addEventListener('click', () => setTheme('day'));
+                themeNightBtn.addEventListener('click', () => setTheme('dark'));
+                themeHyperBtn.addEventListener('click', () => setTheme('hyper'));
+
+                const savedTheme = localStorage.getItem('themeMode') || 'dark';
+                setTheme(savedTheme);
+            }
+
+            const languageSwitcher = document.getElementById('languageSwitcher');
+            if (languageSwitcher) {
+                for (const langCode in window.translations) {
+                    const option = document.createElement('option');
+                    option.value = langCode;
+                    option.textContent = window.translations[langCode]["lang-name"] || langCode.toUpperCase();
+                    languageSwitcher.appendChild(option);
+                }
+
+                languageSwitcher.addEventListener('change', (e) => {
+                    const selectedLang = e.target.value;
+                    setLanguage(selectedLang);
+                    console.log(`Language changed to: ${selectedLang}`);
+                });
+
+                const initialLang = localStorage.getItem('selectedLanguage') || 'en';
+                languageSwitcher.value = initialLang;
+                setLanguage(initialLang);
+            }
+
+            window.addEventListener('DOMContentLoaded', () => {
+                if (announcementBar && mainHeader) {
+                    if (localStorage.getItem('hideAnnouncementBar') === 'true') {
+                        announcementBar.classList.add('hidden');
+                        document.documentElement.style.setProperty('--announcement-bar-height', '0px');
+                    } else {
+                        announcementBar.classList.remove('hidden');
+                        updateHeaderTop();
+                    }
+                    window.addEventListener('resize', updateHeaderTop);
+                    window.addEventListener('load', updateHeaderTop);
+                }
+            });
+
+            const planetTextElement = document.getElementById('planet-text');
+            const planetPhrases = [
+                { text: "fruchtbarer.planet.wandel", lang: "de" }
+            ];
+            let currentPhraseIndex = 0;
+
+            function updatePlanetText() {
+                if (planetTextElement) {
+                    planetTextElement.classList.remove('pulse-animation');
+                    void planetTextElement.offsetWidth;
+
+                    currentPhraseIndex = (currentPhraseIndex + 1) % planetPhrases.length;
+                    const nextPhrase = planetPhrases[currentPhraseIndex];
+
+                    planetTextElement.textContent = nextPhrase.text;
+                    planetTextElement.lang = nextPhrase.lang;
+
+                    planetTextElement.classList.add('pulse-animation');
+                }
+            }
+            if (planetTextElement) {
+                setInterval(updatePlanetText, 3000);
+                updatePlanetText();
+            }
+
+            // Firebase Initialization (only if __firebase_config is available)
+            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+            const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+
+            let app, db, auth;
+            let userId;
+
+            if (Object.keys(firebaseConfig).length > 0) {
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                if (typeof __initial_auth_token !== 'undefined') {
+                    try {
+                        signInWithCustomToken(auth, __initial_auth_token).then(() => {
+                            userId = auth.currentUser?.uid;
+                            if(displayUserId) displayUserId.textContent = userId;
+                            console.log("Signed in with custom token:", userId);
+                        }).catch((error) => {
+                            console.error("Error signing in with custom token:", error);
+                            signInAnonymously(auth).then(() => {
+                                userId = auth.currentUser?.uid;
+                                if(displayUserId) displayUserId.textContent = userId;
+                                console.log("Signed in anonymously due to token error:", userId);
+                            });
+                        });
+                    } catch (error) {
+                        console.error("Error during custom token sign-in setup:", error);
+                        signInAnonymously(auth).then(() => {
+                            userId = auth.currentUser?.uid;
+                            if(displayUserId) displayUserId.textContent = userId;
+                            console.log("Signed in anonymously due to setup error:", userId);
+                        });
+                    }
+                } else {
+                    signInAnonymously(auth).then(() => {
+                        userId = auth.currentUser?.uid;
+                        if(displayUserId) displayUserId.textContent = userId;
+                        console.log("Signed in anonymously:", userId);
+                    });
+                }
+
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        if(displayUserId) displayUserId.textContent = userId;
+                    } else {
+                        userId = null;
+                        if(displayUserId) displayUserId.textContent = "Not authenticated";
+                    }
+                    if (userId) {
+                        loadRepositories();
+                        loadLegalDocuments();
+                    }
+                });
+
+            } else {
+                console.error("Firebase config is not available. Firestore will not function.");
+                document.getElementById('repoLoadingIndicator').classList.add('hidden');
+                document.getElementById('noReposMessage').textContent = "Firebase is not configured. Cannot load repositories.";
+                document.getElementById('noReposMessage').classList.remove('hidden');
+                document.getElementById('legalLoadingIndicator').classList.add('hidden');
+                document.getElementById('noLegalDocsMessage').textContent = "Firebase is not configured. Cannot load legal documents.";
+                document.getElementById('noLegalDocsMessage').classList.remove('hidden');
+                if(displayUserId) displayUserId.textContent = "Firebase not configured";
+            }
+
+            const repoSearchInput = document.getElementById('repoSearchInput');
+            const repositoryListDiv = document.getElementById('repositoryList');
+            const repoLoadingIndicator = document.getElementById('repoLoadingIndicator');
+            const noReposMessage = document.getElementById('noReposMessage');
+            const selectedRepoDetails = document.getElementById('selectedRepoDetails');
+            const displaySelectedRepoName = document.getElementById('displaySelectedRepoName');
+            const displaySelectedRepoUrl = document.getElementById('displaySelectedRepoUrl');
+
+            let allRepositories = [];
+            let selectedRepository = null;
+
+            async function loadRepositories() {
+                if (!db || !userId) {
+                    console.error("Firestore or User ID not available for loading repositories.");
+                    return;
+                }
+
+                repoLoadingIndicator.classList.remove('hidden');
+                noReposMessage.classList.add('hidden');
+                repositoryListDiv.innerHTML = '<div id="repoLoadingIndicator" class="loading-spinner"></div>';
+
+                try {
+                    const q = query(collection(db, `artifacts/${appId}/public/data/repositories`));
+
+                    onSnapshot(q, (snapshot) => {
+                        allRepositories = [];
+                        snapshot.forEach((doc) => {
+                            allRepositories.push({ id: doc.id, ...doc.data() });
+                        });
+                        console.log("Fetched repositories:", allRepositories);
+                        filterAndDisplayRepositories();
+                        repoLoadingIndicator.classList.add('hidden');
+                    }, (error) => {
+                        console.error("Error listening to repositories:", error);
+                        repositoryListDiv.innerHTML = `<p class="text-red-500 text-center">${window.translations[document.body.lang]['error-ai-connection']} Error: ${error.message}</p>`;
+                        repoLoadingIndicator.classList.add('hidden');
+                    });
+
+                    const initialRepos = await getDocs(collection(db, `artifacts/${appId}/public/data/repositories`));
+                    if (initialRepos.empty) {
+                        console.log("Adding initial dummy repository data...");
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), { name: "heyns1000/faa.zone", url: "https://github.com/heyns1000/faa.zone", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), { name: "heyns1000/seedwave", url: "https://github.com/heyns1000/seedwave", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), { name: "heyns1000/vaultmesh", url: "https://github.com/heyns1000/vaultmesh", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), { name: "heyns1000/baobab", url: "https://github.com/heyns1000/baobab", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), { name: "heyns1000/fruitful", url: "https://github.com/heyns1000/fruitful", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), { name: "heyns1000/samfox", url: "https://github.com/heyns1000/samfox", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), { name: "heyns1000/portal", url: "https://github.com/heyns1000/portal", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), { name: "heyns1000/faa-zone-admin-portal", url: "https://github.com/heyns1000/faa-zone-admin-portal", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), { name: "heyns1000/astrowind", url: "https://github.com/heyns1000/astrowind", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), { name: "heyns1000/cloudflare-docs", url: "https://github.com/heyns1000/cloudflare-docs", createdAt: serverTimestamp() });
+                        console.log("Initial dummy repository data added.");
+                    }
+
+                } catch (error) {
+                    console.error("Error setting up Firestore listener or adding initial data (repos):", error);
+                    repositoryListDiv.innerHTML = `<p class="text-red-500 text-center">Failed to load repositories. Error: ${error.message}</p>`;
+                    repoLoadingIndicator.classList.add('hidden');
+                }
+            }
+
+            function filterAndDisplayRepositories() {
+                const searchTerm = repoSearchInput.value.toLowerCase().trim();
+                const filteredRepos = allRepositories.filter(repo =>
+                    repo.name.toLowerCase().includes(searchTerm)
+                ).sort((a, b) => a.name.localeCompare(b.name));
+
+                repositoryListDiv.innerHTML = '';
+
+                if (filteredRepos.length === 0) {
+                    noReposMessage.classList.remove('hidden');
+                } else {
+                    noReposMessage.classList.add('hidden');
+                    filteredRepos.forEach(repo => {
+                        const repoItem = document.createElement('div');
+                        repoItem.classList.add('repository-item');
+                        if (selectedRepository && selectedRepository.id === repo.id) {
+                            repoItem.classList.add('selected');
+                        }
+                        repoItem.dataset.repoId = repo.id;
+                        repoItem.innerHTML = `
+                            <i class="fas fa-code-branch"></i>
+                            <span class="repo-name">${repo.name}</span>
+                            <a href="${repo.url || '#'}" target="_blank" rel="noopener noreferrer" class="repo-link ml-auto">
+                                <i class="fas fa-external-link-alt text-sm opacity-75"></i>
+                            </a>
+                        `;
+                        repoItem.addEventListener('click', () => {
+                            document.querySelectorAll('.repository-item').forEach(item => {
+                                item.classList.remove('selected');
+                            });
+                            repoItem.classList.add('selected');
+                            selectedRepository = repo;
+                            displaySelectedRepo();
+                        });
+                        repositoryListDiv.appendChild(repoItem);
+                    });
+                }
+            }
+
+            function displaySelectedRepo() {
+                if (selectedRepository) {
+                    displaySelectedRepoName.textContent = selectedRepository.name;
+                    displaySelectedRepoUrl.textContent = selectedRepository.url;
+                    selectedRepoDetails.classList.remove('hidden');
+                } else {
+                    selectedRepoDetails.classList.add('hidden');
+                }
+            }
+
+            if (repoSearchInput) {
+                repoSearchInput.addEventListener('input', filterAndDisplayRepositories);
+            }
+
+            const newRepoNameInput = document.getElementById('newRepoName');
+            const newRepoUrlInput = document.getElementById('newRepoUrl');
+            const addRepoBtn = document.getElementById('addRepoBtn');
+            const addRepoMessage = document.getElementById('addRepoMessage');
+
+            if (addRepoBtn && newRepoNameInput && newRepoUrlInput && addRepoMessage) {
+                addRepoBtn.addEventListener('click', async () => {
+                    const name = newRepoNameInput.value.trim();
+                    const url = newRepoUrlInput.value.trim();
+
+                    if (!name || !url || (!url.startsWith('http') && !url.startsWith('/'))) {
+                        addRepoMessage.textContent = window.translations[document.body.lang]['add-repo-validation-error'];
+                        addRepoMessage.style.color = "red";
+                        addRepoMessage.classList.remove('hidden');
+                        return;
+                    }
+
+                    addRepoBtn.disabled = true;
+                    addRepoMessage.classList.add('hidden');
+
+                    try {
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), {
+                            name: name,
+                            url: url,
+                            createdAt: serverTimestamp()
+                        });
+                        addRepoMessage.textContent = window.translations[document.body.lang]['add-repo-success'];
+                        addRepoMessage.style.color = "green";
+                        addRepoMessage.classList.remove('hidden');
+                        newRepoNameInput.value = '';
+                        newRepoUrlInput.value = '';
+                    } catch (error) {
+                        console.error("Error adding document: ", error);
+                        addRepoMessage.textContent = `${window.translations[document.body.lang]['add-repo-error']} ${error.message}`;
+                        addRepoMessage.style.color = "red";
+                        addRepoMessage.classList.remove('hidden');
+                    } finally {
+                        addRepoBtn.disabled = false;
+                    }
+                });
+            }
+
+            const legalDocumentListDiv = document.getElementById('legalDocumentList');
+            const legalLoadingIndicator = document.getElementById('legalLoadingIndicator');
+            const noLegalDocsMessage = document.getElementById('noLegalDocsMessage');
+            const selectedLegalDocDetails = document.getElementById('selectedLegalDocDetails');
+            const displaySelectedLegalDocTitle = document.getElementById('displaySelectedLegalDocTitle');
+            const displaySelectedLegalDocDesc = document.getElementById('displaySelectedLegalDocDesc');
+            const displaySelectedLegalDocUrl = document.getElementById('displaySelectedLegalDocUrl');
+
+            let allLegalDocuments = [];
+            let selectedLegalDocument = null;
+
+            async function loadLegalDocuments() {
+                if (!db || !userId) {
+                    console.error("Firestore or User ID not available for loading legal documents.");
+                    return;
+                }
+
+                legalLoadingIndicator.classList.remove('hidden');
+                noLegalDocsMessage.classList.add('hidden');
+                legalDocumentListDiv.innerHTML = '<div id="legalLoadingIndicator" class="loading-spinner"></div>';
+
+                try {
+                    const q = query(collection(db, `artifacts/${appId}/public/data/legal_documents`));
+
+                    onSnapshot(q, (snapshot) => {
+                        allLegalDocuments = [];
+                        snapshot.forEach((doc) => {
+                            allLegalDocuments.push({ id: doc.id, ...doc.data() });
+                        });
+                        console.log("Fetched legal documents:", allLegalDocuments);
+                        displayLegalDocuments();
+                        legalLoadingIndicator.classList.add('hidden');
+                    }, (error) => {
+                        console.error("Error listening to legal documents:", error);
+                        legalDocumentListDiv.innerHTML = `<p class="text-red-500 text-center">${window.translations[document.body.lang]['error-ai-connection']} Error: ${error.message}</p>`;
+                        legalLoadingIndicator.classList.add('hidden');
+                    });
+
+                    const initialDocs = await getDocs(collection(db, `artifacts/${appId}/public/data/legal_documents`));
+                    if (initialDocs.empty) {
+                        console.log("Adding initial dummy legal document data...");
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Fruitful™ & Seedwave™ Deployment Manual", description: "Comprehensive guide detailing the design philosophy, visual specifications, Git workflow, file structure, and Node packing strategies for the Fruitful™ & Seedwave™ Global Portal.", url: "/legal/fruitful_seedwave_deployment_manual.html", icon: "📚", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Xero Integration Setup Minutes", description: "Detailed setup and troubleshooting for Xero OAuth 2.0 integration with the Seedwave Admin Panel.", url: "/legal/xero_integration_minutes.html", icon: "📊", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Firebase Core Setup Minutes", description: "Minutes documenting the foundational Firebase project setup: Authentication, Cloud Firestore, and Google Analytics.", url: "/legal/firebase_core_minutes.html", icon: "🔥", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Firebase Scalable Admin Panel (7000 Sites)", description: "Comprehensive guide for setting up scalable Firebase Authentication, Firestore, and Hosting for a large-scale (7000 sites) admin panel.", url: "/legal/firebase_scale_7000_minutes.html", icon: "🚀", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Fruitful™ Holdings NDA", description: "Standard Non-Disclosure Agreement for collaborations with Fruitful™ Holdings.", url: "/legal/fruitful_holdings_nda.pdf", icon: "📜", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Secure Sign Application", description: "Portal for securely submitting comprehensive NDA applications with Atom-Level Verification™ Protocols.", url: "/legal/securesign.html", icon: "✍️", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "PayPal Subscriptions Setup Manual", description: "Detailed guide for configuring and deploying PayPal subscription payments within the FAA.ZONE™ Admin Portal.", url: "/legal/paypal_setup.html", icon: "💳", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "FAA™ Seedwave Admin Portal Setup Manual", description: "Comprehensive blueprint for setting up the central Seedwave Admin Portal, detailing serverless architecture and Zoho OAuth integration.", url: "/legal/seedwave.html", icon: "⚙️", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "NDA SecureSign Portal Setup Manual (Page 1)", description: "Guide for installing and configuring the local Node.js server for the SecureSign NDA portal.", url: "/legal/setup.html", icon: "📖", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Setup Guide (Page 2)", description: "Part 2 of the comprehensive setup instructions for FAA.ZONE systems. (Placeholder)", url: "/legal/setup2.html", icon: "📄", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Setup Guide (Page 3)", description: "Part 3 of the comprehensive setup instructions for FAA.ZONE systems. (Placeholder)", url: "/legal/setup3.html", icon: "📃", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Setup Guide (Page 4)", description: "Part 4 of the comprehensive setup instructions for FAA.ZONE systems. (Placeholder)", url: "/legal/setup4.html", icon: "📜", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Setup Guide (Page 5)", description: "Part 5 of the comprehensive setup instructions for FAA.ZONE systems. (Placeholder)", url: "/legal/setup5.html", icon: "📑", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "USA Information", description: "General information pertinent to USA operations and legalities within the FAA.ZONE™ ecosystem.", url: "/legal/usa.html", icon: "🇺🇸", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Setup USA Guide", description: "Specific setup instructions and guidelines for USA-based FAA.ZONE™ operations. (Placeholder)", url: "/legal/setupusa.html", icon: "🗺️", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Baobab Security Network™ Business Package README", description: "Overview of The Baobab Security Network™ Business Package, including conceptual model and usage instructions.", url: "/legal/baobab.html", icon: "🌳", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "King Price™ Pricing & Plans", description: "Information regarding King Price insurance pricing and various plans offered by the FAA.ZONE™ partner.", url: "/legal/pricing.html", icon: "💰", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Index Transdata", description: "A reference document for data transformation and indexing within the FAA.ZONE™ Transdata framework. (Placeholder)", url: "/legal/index_transdata.html", icon: "📊", createdAt: serverTimestamp() });
+                        console.log("Initial dummy legal document data added.");
+                    }
+
+                } catch (error) {
+                    console.error("Error setting up Firestore listener or adding initial data (legal docs):", error);
+                    legalDocumentListDiv.innerHTML = `<p class="text-red-500 text-center">${window.translations[document.body.lang]['error-ai-connection']} Error: ${error.message}</p>`;
+                    legalLoadingIndicator.classList.add('hidden');
+                }
+            }
+
+            function displayLegalDocuments() {
+                legalDocumentListDiv.innerHTML = '';
+
+                if (allLegalDocuments.length === 0) {
+                    noLegalDocsMessage.classList.remove('hidden');
+                } else {
+                    noLegalDocsMessage.classList.add('hidden');
+                    allLegalDocuments.forEach(doc => {
+                        const docItem = document.createElement('div');
+                        docItem.classList.add('document-item');
+                        if (selectedLegalDocument && selectedLegalDocument.id === doc.id) {
+                            docItem.classList.add('selected');
+                        }
+                        docItem.dataset.docId = doc.id;
+                        docItem.innerHTML = `
+                            <div class="icon">${doc.icon || '📄'}</div>
+                            <div class="document-item-content">
+                                <h3>${doc.title}</h3>
+                                <p>${doc.description}</p>
+                                <a href="${doc.url || '#'}" target="_blank" rel="noopener noreferrer">
+                                    <span>${window.translations[document.body.lang]['view-document-link']}</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    </svg>
+                                </a>
+                            </div>
+                        `;
+                        docItem.addEventListener('click', () => {
+                            document.querySelectorAll('.document-item').forEach(item => {
+                                item.classList.remove('selected');
+                            });
+                            docItem.classList.add('selected');
+                            selectedLegalDocument = doc;
+                            displaySelectedLegalDoc();
+                        });
+                        legalDocumentListDiv.appendChild(docItem);
+                    });
+                }
+            }
+
+            function displaySelectedLegalDoc() {
+                if (selectedLegalDocument) {
+                    displaySelectedLegalDocTitle.textContent = selectedLegalDocument.title;
+                    displaySelectedLegalDocDesc.textContent = selectedLegalDocument.description;
+                    displaySelectedLegalDocUrl.href = selectedLegalDocument.url || '#';
+                    displaySelectedLegalDocUrl.textContent = selectedLegalDocument.url;
+                    selectedLegalDocDetails.classList.remove('hidden');
+                } else {
+                    selectedLegalDocDetails.classList.add('hidden');
+                }
+            }
+
+            const newLegalDocTitleInput = document.getElementById('newLegalDocTitle');
+            const newLegalDocUrlInput = document.getElementById('newLegalDocUrl');
+            const newLegalDocDescriptionInput = document.getElementById('newLegalDocDescription');
+            const newLegalDocIconInput = document.getElementById('newLegalDocIcon');
+            const addLegalDocBtn = document.getElementById('addLegalDocBtn');
+            const addLegalDocMessage = document.getElementById('addLegalDocMessage');
+
+            if (addLegalDocBtn && newLegalDocTitleInput && newLegalDocUrlInput && newLegalDocDescriptionInput && newLegalDocIconInput && addLegalDocMessage) {
+                addLegalDocBtn.addEventListener('click', async () => {
+                    const title = newLegalDocTitleInput.value.trim();
+                    const url = newLegalDocUrlInput.value.trim();
+                    const description = newLegalDocDescriptionInput.value.trim();
+                    const icon = newLegalDocIconInput.value.trim();
+
+                    if (!title || !url || (!url.startsWith('http') && !url.startsWith('/')) || !description || !icon) {
+                        addLegalDocMessage.textContent = window.translations[document.body.lang]['add-legal-doc-validation-error'];
+                        addLegalDocMessage.style.color = "red";
+                        addLegalDocMessage.classList.remove('hidden');
+                        return;
+                    }
+
+                    addLegalDocBtn.disabled = true;
+                    addLegalDocMessage.classList.add('hidden');
+
+                    try {
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), {
+                            title: title,
+                            url: url,
+                            description: description,
+                            icon: icon,
+                            createdAt: serverTimestamp()
+                        });
+                        addLegalDocMessage.textContent = window.translations[document.body.lang]['add-legal-doc-success'];
+                        addLegalDocMessage.style.color = "green";
+                        addLegalDocMessage.classList.remove('hidden');
+                        newLegalDocTitleInput.value = '';
+                        newLegalDocUrlInput.value = '';
+                        newLegalDocDescriptionInput.value = '';
+                        newLegalDocIconInput.value = '';
+                    } catch (error) {
+                        console.error("Error adding legal document: ", error);
+                        addLegalDocMessage.textContent = `${window.translations[document.body.lang]['add-legal-doc-error']} ${error.message}`;
+                        addLegalDocMessage.style.color = "red";
+                        addLegalDocMessage.classList.remove('hidden');
+                    } finally {
+                        addLegalDocBtn.disabled = false;
+                    }
+                });
+            }
+
+            const getFaqAnswerBtn = document.getElementById('getFaqAnswerBtn');
+            const faqPromptInput = document.getElementById('faqPromptInput');
+            const faqAnswerOutput = document.getElementById('faqAnswerOutput');
+            const faqLoadingIndicator = document.getElementById('faqLoadingIndicator');
+
+            if (getFaqAnswerBtn && faqPromptInput && faqAnswerOutput && faqLoadingIndicator) {
+                getFaqAnswerBtn.addEventListener('click', async () => {
+                    const prompt = faqPromptInput.value.trim();
+                    if (!prompt) {
+                        faqAnswerOutput.textContent = window.translations[document.body.lang]['please-enter-question'];
+                        faqAnswerOutput.style.color = "red";
+                        return;
+                    }
+
+                    faqAnswerOutput.textContent = '';
+                    faqAnswerOutput.style.color = "var(--text-color-dark)";
+                    faqLoadingIndicator.classList.remove('hidden');
+                    getFaqAnswerBtn.disabled = true;
+
+                    try {
+                        const currentLang = document.body.lang;
+                        const fullPrompt = `You are an AI assistant for "Fruitful Holdings (Pty) Ltd" repository and legal documentation page.
+                        Answer the user's question as concisely and accurately as possible, specifically regarding "Fruitful Holdings (Pty) Ltd" operations, its open-source repositories, or its legal and documentation initiatives.
+                        If the question is not directly related to these topics, or if you don't have enough information, politely state that you can only answer questions about Fruitful Holdings, its repositories, and its legal/documentation.
+                        Translate the response into the user's current language, which is "${currentLang}".
+                        User's question: "${prompt}"
+                        Context for Fruitful Holdings:
+                        - Name: Fruitful Holdings (Pty) Ltd
+                        - Mission/Slogan: Repository global growth, transparent legal and operational documentation.
+                        - Activities: Fostering innovation and growth across various sectors, open-source initiatives to contribute to global progress, providing essential legal documents and setup guides.
+                        - Associated terms/projects: faa.zone, seedwave, vaultmesh, baobab, fruitful, samfox, portal, faa-zone-admin-portal, astrowind, cloudflare-docs, Xero integration, Firebase setup, Secure Sign, PayPal Subscriptions, NDA, legal guides, USA operations.
+                        Answer:`;
+
+                        let chatHistory = [];
+                        chatHistory.push({ role: "user", parts: [{ text: fullPrompt }] });
+                        const payload = { contents: chatHistory };
+                        const apiKey = window.API_KEYS.GEMINI_API_KEY;
+                        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                        console.log("Attempting to call Gemini API with prompt:", fullPrompt);
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+
+                        console.log("Raw API Response Object:", response);
+                        const result = await response.json();
+                        console.log("Parsed API Result JSON:", result);
+
+                        if (result.candidates && result.candidates.length > 0 &&
+                            result.candidates[0].content && result.candidates[0].content.parts &&
+                            result.candidates[0].content.parts.length > 0) {
+                            const text = result.candidates[0].content.parts[0].text;
+                            console.log("Extracted Generated Text:", text);
+                            faqAnswerOutput.textContent = text;
+                        } else {
+                            faqAnswerOutput.textContent = window.translations[document.body.lang]['error-no-ai-answer'];
+                            faqAnswerOutput.style.color = "red";
+                            console.error("Gemini API response was unexpected or missing content:", result);
+                            if (result.error && result.error.message) {
+                                faqAnswerOutput.textContent += ` ${window.translations[document.body.lang]['reason']} ${result.error.message}`;
+                            }
+                        }
+
+                    } catch (error) {
+                        faqAnswerOutput.textContent = window.translations[document.body.lang]['error-ai-connection'];
+                        faqAnswerOutput.style.color = "red";
+                        console.error("Error calling Gemini API:", error);
+                    } finally {
+                        faqLoadingIndicator.classList.add('hidden');
+                        getFaqAnswerBtn.disabled = false;
+                    }
+                });
+            } else {
+                console.warn("AI text generation elements (button, input, output, or loading indicator) not found in DOM. Please check IDs.");
+            }
+        });
+    </script>
+</body>
+</html>
