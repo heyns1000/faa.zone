@@ -2,6 +2,6 @@
 
 
 
-![Fruitful_crate_dance_Water_the_Seed_IP_ Findings.faa.zone](Fruitful_crate_dance_Water_the_Seed_IP_ Findings.faa.zone.png)
+![Fruitful_crate_dance_Water_the_Seed_IP_ Findings](Fruitful_crate_dance_Water_the_Seed_IP_ Findings.faa.zone.png)
 
 Your description and content go here.
