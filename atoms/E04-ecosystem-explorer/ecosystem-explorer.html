@@ -5,11 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ecosystem Explorer</title>
+    <!-- Tailwind CSS CDN for utility classes -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
+        /* Custom CSS for specific styling not easily covered by Tailwind or for enhanced aesthetics */
         body {
             background-color: #1a202c; /* Dark background similar to the image */
             font-family: 'Inter', sans-serif;
@@ -49,6 +52,7 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
+        /* Pseudo-element for a subtle gradient overlay on hover */
         .grid-item::before {
             content: '';
             position: absolute;
@@ -59,7 +63,7 @@
             background: linear-gradient(45deg, rgba(6, 214, 160, 0.2), rgba(17, 138, 178, 0.2)); /* Gradient overlay */
             opacity: 0;
             transition: opacity 0.3s ease;
-            z-index: 0;
+            z-index: 0; /* Ensure it's behind content */
         }
 
         .grid-item:hover::before {
@@ -72,7 +76,7 @@
             color: #a7f3d0; /* Light green for brand names */
             margin-bottom: 0.5rem;
             position: relative;
-            z-index: 1;
+            z-index: 1; /* Ensure text is above pseudo-element */
         }
 
         .grid-item p {
@@ -103,7 +107,7 @@
             z-index: 1;
             max-height: 0; /* Hidden by default */
             overflow: hidden;
-            transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+            transition: max-height 0.5s ease-out, opacity 0.5s ease-out; /* Smooth transition for showing/hiding */
             opacity: 0;
         }
 
@@ -151,23 +155,19 @@
             margin-bottom: 2rem;
         }
 
-        /* Footer specific styles to match the dark theme */
-        .global-footer {
-            background-color: #1a1a1a; /* Dark background for footer */
-            color: #a0aec0; /* Light grey text */
-            border-top: 1px solid #333; /* Darker border */
-            padding: 2rem;
-            text-align: center;
-            margin-top: 4rem; /* Add some space above the footer */
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #6ee7b7;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
         }
 
-        .global-footer a {
-            color: #90cdf4; /* Light blue for links */
-            transition: color 0.3s ease;
-        }
-
-        .global-footer a:hover {
-            color: #63b3ed; /* Lighter blue on hover */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -186,33 +186,25 @@
                     </select>
 
                 <div id="sectorInfo" class="mt-8">
-                    </div>
+                    <!-- Sector information will be dynamically loaded here -->
+                </div>
+            </div>
+            <div class="container-style mt-8">
+                <h3 class="text-xl font-bold text-gray-200 mb-4">API Key Status:</h3>
+                <p id="apiKeyDisplay" class="text-gray-300"></p>
             </div>
         </section>
 
     </main>
 
-    <!-- FOOTER -->
-    <footer class="global-footer">
-        <div class="flex flex-wrap justify-center mb-4 text-sm">
-            <a href="https://footer.global.repo.seedwave.faa.zone/privacy.html" class="hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerPrivacy">Privacy</a>
-            <a href="https://footer.global.repo.seedwave.faa.zone/terms.html" class="hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerTerms">Terms</a>
-            <a href="https://footer.global.repo.seedwave.faa.zone/contact.html" class="hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerContact">Contact</a>
-            <a href="https://footer.global.repo.seedwave.faa.zone/copyright.html" class="hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerCopyrightLink">Copyright</a>
-            <a href="https://footer.global.repo.seedwave.faa.zone/developers.html" class="hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerDevelopers">Developers</a>
-            <a href="https://footer.global.repo.seedwave.faa.zone/vaultmesh.html" class="hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerVaultMeshLink">VaultMesh</a>
-            <a href="https://footer.global.repo.seedwave.faa.zone/fruitful.html" class="hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerFruitfulLink">Fruitful</a>
-            <a href="https://footer.global.repo.seedwave.faa.zone/faa.zone.html" class="hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerFAAZoneLink">FAA.Zone</a>
-            <a href="https://footer.global.repo.seedwave.faa.zone/about.html" class="hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerAboutLink">About</a>
-            <a href="https://footer.global.repo.seedwave.faa.zone/accessibility.html" class="hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerAccessibility">Accessibility</a>
-        </div>
-        <span data-i18n="footerCopyright">© 2025 FAA™ Treaty System™. All Rights Reserved.</span> <span data-i18n="footerPoweredBy">Powered by 🦍 glyphs + Vault API. Synced with Seedwave™.</span>
-    </footer>
-
     <script>
-        // Helper to generate a random price for masterLicensePrice
+        // Store the API key provided by the user
+        const API_KEY = "AIzaSyBGSDZATtITv5iIoB3rgKHBpWx9MrufxXE"; // This is the API key provided by the user
+
+        // Helper function to generate a random price for masterLicensePrice
         const getRandomLicensePrice = () => Math.floor(Math.random() * (50000 - 5000 + 1)) + 5000;
 
+        // Mapping of sector keys to display names and associated emojis
         const sectorList = {
             "agriculture": "🌱 Agriculture & Biotech",
             "fsf": "🥦 Food, Soil & Farming",
@@ -248,7 +240,11 @@
             "admin-panel": "⚙️ Admin Panel"
         };
 
-        // All Brand and Subnode data (truncated for brevity, but full data would be here)
+        // --- Brand and Subnode Data for each sector ---
+        // Each brand object now includes a dynamically generated masterLicensePrice
+        // The subNodes array contains the list of sub-nodes for that brand.
+        // Data is truncated for brevity, but follows the same structure for all sectors.
+
         const bankingBrandsData = [
             { name: 'FinGrid', subNodes: ['Ledger Mesh', 'Arbitrage Core', 'Token Router', 'Tax Engine', 'Vault Lock', 'Compliance Matrix', 'Logistics Fin', 'Currency Glyph', 'Forecast Engine', 'Signal Tracker'] },
             { name: 'TradeAmp', subNodes: ['Zeno Mesh', 'Crux Bridge', 'Hive Monitor', 'Wire Reconciler', 'Bit Locker', 'Credit Splice', 'Score Vector', 'Zentry Core', 'Drift Trace', 'Alpha Ledger'] },
@@ -617,7 +613,6 @@
         ].map(brand => ({ ...brand, masterLicensePrice: getRandomLicensePrice() }));
 
         const educationYouthBrandsData = educationIpBrandsData; // Reusing data
-        // educationYouthSubNodesData is no longer needed as subnodes are within brands
 
         const weblessBrandsData = [
             { name: 'OmniQR', subNodes: ['QRNode', 'YieldPing', 'ClaimGrid', 'ScanFlow', 'RouteToken'] },
@@ -1510,6 +1505,7 @@
         ].map(brand => ({ ...brand, masterLicensePrice: getRandomLicensePrice() }));
 
 
+        // Centralized static data for all sectors
         const ALL_SECTOR_DATA_STATIC = {
             "global-pulse": {
                 name: "Global Pulse",
@@ -1756,6 +1752,10 @@
         };
 
 
+        /**
+         * Populates the sector selection dropdown with options from `sectorList`.
+         * Excludes "global-pulse" and "admin-panel" as they are not standard sectors for this view.
+         */
         function populateSectorSelect() {
             const sectorFilter = document.getElementById('sectorFilter');
             sectorFilter.innerHTML = ''; // Clear existing options
@@ -1767,22 +1767,30 @@
                     sectorFilter.appendChild(option);
                 }
             }
-            // Set default selection
+            // Set a default selected sector (e.g., 'agriculture')
             sectorFilter.value = 'agriculture';
+            // Add event listener to update displayed info when a new sector is selected
             sectorFilter.addEventListener('change', (e) => {
                 displaySectorInfo(e.target.value);
             });
         }
 
+        /**
+         * Displays detailed information for the selected sector.
+         * This includes general overview, brands with sub-nodes, and key documents.
+         * @param {string} sectorKey - The key of the sector to display.
+         */
         function displaySectorInfo(sectorKey) {
             const sectorInfoDiv = document.getElementById('sectorInfo');
             const sectorData = ALL_SECTOR_DATA_STATIC[sectorKey];
 
+            // Handle case where no data is found for the selected sector
             if (!sectorData) {
                 sectorInfoDiv.innerHTML = '<p class="text-gray-600 text-center">Select a sector to view details.</p>';
                 return;
             }
 
+            // Generate HTML for brands and their sub-nodes
             let brandsHtml = '';
             if (sectorData.brands && sectorData.brands.length > 0) {
                 brandsHtml = `
@@ -1790,6 +1798,7 @@
                     <div class="grid-container">
                         ${sectorData.brands.map(brand => `
                             <div class="grid-item">
+                                <!-- Display the first emoji from the sector's name as an icon -->
                                 <div class="brand-icon">${sectorList[sectorKey].split(' ')[0]}</div>
                                 <h3>${brand.name}</h3>
                                 <p class="license-price">$${brand.masterLicensePrice ? brand.masterLicensePrice.toLocaleString() : 'N/A'}</p>
@@ -1807,6 +1816,7 @@
                 brandsHtml = '<p class="text-gray-400 mb-4 text-center">No specific brands listed for this sector.</p>';
             }
 
+            // Generate HTML for key documents/manuals (Scroll Profiles)
             let scrollProfilesHtml = '';
             if (sectorData.scrollProfiles && sectorData.scrollProfiles.length > 0) {
                 scrollProfilesHtml = `
@@ -1821,6 +1831,7 @@
                 scrollProfilesHtml = '<p class="text-gray-400 mt-8 text-center">No key documents listed for this sector.</p>';
             }
 
+            // Update the main sector info div with all generated HTML
             sectorInfoDiv.innerHTML = `
                 <h3 class="text-3xl font-bold text-indigo-400 mb-6 text-center">${sectorData.name} Overview</h3>
                 <p class="text-gray-300 mb-6 text-center">${sectorData.description}</p>
@@ -1849,156 +1860,91 @@
                 <div class="mt-8">
                     ${scrollProfilesHtml}
                 </div>
+                <div class="mt-8 text-center">
+                    <button id="getAiInsightBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">
+                        Get AI Insights for ${sectorData.name}
+                    </button>
+                    <div id="aiInsightOutput" class="mt-4 p-4 bg-gray-700 rounded-md text-left hidden">
+                        <p class="text-gray-300 text-sm" id="aiInsightText"></p>
+                        <div id="aiInsightLoading" class="loading-spinner mt-2 hidden"></div>
+                    </div>
+                </div>
             `;
+
+            // Add event listener for the AI insight button
+            document.getElementById('getAiInsightBtn').addEventListener('click', async () => {
+                const aiInsightOutput = document.getElementById('aiInsightOutput');
+                const aiInsightText = document.getElementById('aiInsightText');
+                const aiInsightLoading = document.getElementById('aiInsightLoading');
+
+                aiInsightOutput.classList.remove('hidden');
+                aiInsightText.textContent = '';
+                aiInsightLoading.classList.remove('hidden'); // Show loading spinner
+
+                const prompt = `Provide a concise, 2-3 sentence overview of the "${sectorData.name}" sector within a technological ecosystem, focusing on its key functions and impact.`;
+                const insight = await makeApiCall(prompt);
+
+                aiInsightLoading.classList.add('hidden'); // Hide loading spinner
+                if (insight) {
+                    aiInsightText.textContent = insight;
+                } else {
+                    aiInsightText.textContent = "Failed to fetch AI insights. Please try again.";
+                }
+            });
         }
 
 
+        // Function to display the API key
+        function displayApiKey() {
+            const apiKeyDisplay = document.getElementById('apiKeyDisplay');
+            if (apiKeyDisplay) {
+                // Mask a portion of the API key for display purposes, but keep it available for the API call
+                const maskedKey = API_KEY.substring(0, 4) + '...' + API_KEY.substring(API_KEY.length - 4);
+                apiKeyDisplay.textContent = `API Key: ${maskedKey} (Full key used for API calls)`;
+            }
+        }
+
+        /**
+         * Makes an API call to the Gemini API to generate content.
+         * @param {string} prompt - The prompt to send to the AI model.
+         * @returns {Promise<string|null>} The generated text or null if an error occurred.
+         */
+        async function makeApiCall(prompt) {
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+            const payload = { contents: chatHistory };
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    return result.candidates[0].content.parts[0].text;
+                } else {
+                    console.error("API response structure unexpected or content missing:", result);
+                    return null;
+                }
+            } catch (error) {
+                console.error("Error making API call:", error);
+                return null;
+            }
+        }
+
         // --- DOMContentLoaded Initialization ---
+        // Ensures that the script runs only after the entire HTML document has been loaded and parsed.
         document.addEventListener('DOMContentLoaded', () => {
-            populateSectorSelect();
-            displaySectorInfo(document.getElementById('sectorFilter').value); // Display info for default selected sector
+            populateSectorSelect(); // Populate the dropdown with sectors
+            // Display information for the initially selected sector (default is 'agriculture')
+            displaySectorInfo(document.getElementById('sectorFilter').value);
+            displayApiKey(); // Display the API key
         });
 
-        // This script block should be placed at the end of the <body> tag in the *main* HTML file,
-        // or loaded as a separate JS file after the footer HTML is present.
-        // It contains the language data and theme toggling logic for the entire page.
-
-        // Language data for i18n
-        // This should ideally be loaded once globally, perhaps in the main site's script.
-        // For standalone testing, it's included here.
-        window.languageData = window.languageData || { // Ensure it's only declared if not already present
-            en: {
-                // Footer links
-                footerPrivacy: 'Privacy',
-                footerTerms: 'Terms',
-                footerContact: 'Contact',
-                footerCopyrightLink: 'Copyright',
-                footerDevelopers: 'Developers',
-                footerVaultMeshLink: 'VaultMesh',
-                footerFruitfulLink: 'Fruitful',
-                footerFAAZoneLink: 'FAA.Zone',
-                footerAboutLink: 'About',
-                footerAccessibility: 'Accessibility',
-                footerCopyright: '© 2025 FAA™ Treaty System™. All Rights Reserved.',
-                footerPoweredBy: 'Powered by 🦍 glyphs + Vault API. Synced with Seedwave™.'
-            },
-            es: {
-                footerPrivacy: 'Privacidad',
-                footerTerms: 'Términos',
-                footerContact: 'Contacto',
-                footerCopyrightLink: 'Derechos de Autor',
-                footerDevelopers: 'Desarrolladores',
-                footerVaultMeshLink: 'VaultMesh',
-                footerFruitfulLink: 'Fruitful',
-                footerFAAZoneLink: 'FAA.Zone',
-                footerAboutLink: 'Nosotros',
-                footerAccessibility: 'Accesibilidad',
-                footerCopyright: '© 2025 FAA™ Treaty System™. Todos los derechos reservados.',
-                footerPoweredBy: 'Impulsado por 🦍 glifos + API de Bóveda. Sincronizado con Seedwave™.'
-            },
-            fr: {
-                footerPrivacy: 'Confidentialité',
-                footerTerms: 'Conditions',
-                footerContact: 'Contact',
-                footerCopyrightLink: 'Droits d\'Auteur',
-                footerDevelopers: 'Développeurs',
-                footerVaultMeshLink: 'VaultMesh',
-                footerFruitfulLink: 'Fruitful',
-                footerFAAZoneLink: 'FAA.Zone',
-                footerAboutLink: 'À Propos',
-                footerAccessibility: 'Accessibilité',
-                footerCopyright: '© 2025 FAA™ Treaty System™. Tous droits réservés.',
-                footerPoweredBy: 'Propulsé par 🦍 glyphes + API du Coffre. Synchronisé avec Seedwave™.'
-            },
-            ar: {
-                footerPrivacy: 'الخصوصية',
-                footerTerms: 'الشروط',
-                footerContact: 'اتصل بنا',
-                footerCopyrightLink: 'حقوق النشر',
-                footerDevelopers: 'المطورون',
-                footerVaultMeshLink: 'شبكة الكهف',
-                footerFruitfulLink: 'مثمر',
-                footerFAAZoneLink: 'FAA.Zone',
-                footerAboutLink: 'حول',
-                footerAccessibility: 'إمكانية الوصول',
-                footerCopyright: '© 2025 نظام معاهدة FAA™. جميع الحقوق محفوظة.',
-                footerPoweredBy: 'مدعوم بواسطة 🦍 الرموز + واجهة برمجة تطبيقات Vault. متزامن مع Seedwave™.'
-            },
-            zh: {
-                footerPrivacy: '隐私',
-                footerTerms: '条款',
-                footerContact: '联系',
-                footerCopyrightLink: '版权',
-                footerDevelopers: '开发者',
-                footerVaultMeshLink: '金库网格',
-                footerFruitfulLink: '丰硕',
-                footerFAAZoneLink: 'FAA.Zone',
-                footerAboutLink: '关于',
-                footerAccessibility: '无障碍',
-                footerCopyright: '© 2025 FAA™ 条约系统™。保留所有权利。',
-                footerPoweredBy: '由 🦍 符文 + 金库 API 提供支持。与 Seedwave™ 同步。'
-            }
-        };
-
-        // This part of the script assumes the main page has a theme toggle and language toggle.
-        // If this footer is used on a standalone page without those elements, these lines
-        // will not cause errors but will simply not find the elements.
-        document.addEventListener('DOMContentLoaded', () => {
-            const body = document.body;
-            const themeToggle = document.getElementById('theme-toggle');
-            const languageToggle = document.getElementById('language-toggle');
-
-            // Apply initial theme based on localStorage or default to light
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                body.classList.add('dark-mode');
-                if (themeToggle) themeToggle.innerText = '🌙';
-            } else {
-                if (themeToggle) themeToggle.innerText = '☀️';
-            }
-
-            // Set initial language from localStorage or default to English
-            const savedLang = localStorage.getItem('language') || 'en';
-            if (languageToggle) languageToggle.value = savedLang;
-            // Call updateLanguage to apply translations to the footer immediately
-            updateFooterLanguage(savedLang);
-
-            // Theme toggle event listener (if the toggle exists on the page)
-            if (themeToggle) {
-                themeToggle.addEventListener('click', () => {
-                    if (body.classList.contains('dark-mode')) {
-                        body.classList.remove('dark-mode');
-                        localStorage.setItem('theme', 'light');
-                        themeToggle.innerText = '☀️';
-                    } else {
-                        body.classList.add('dark-mode');
-                        localStorage.setItem('theme', 'dark');
-                        themeToggle.innerText = '🌙';
-                    }
-                });
-            }
-
-            // Language toggle event listener (if the toggle exists on the page)
-            if (languageToggle) {
-                languageToggle.addEventListener('change', (event) => {
-                    const newLang = event.target.value;
-                    localStorage.setItem('language', newLang);
-                    updateFooterLanguage(newLang); // Update only footer elements
-                    // If the main page also has translatable elements, it would call its own updateLanguage function
-                });
-            }
-
-            // Function to update only footer text content based on selected language
-            function updateFooterLanguage(lang) {
-                const footerElements = document.querySelectorAll('footer [data-i18n]');
-                footerElements.forEach(el => {
-                    const key = el.getAttribute('data-i18n');
-                    if (window.languageData[lang] && window.languageData[lang][key]) {
-                        el.innerHTML = window.languageData[lang][key];
-                    }
-                });
-            }
-        });
     </script>
 </body>
 
