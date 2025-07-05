@@ -1,6 +1,6 @@
 ![Noodle_juice_gorilla_comb](Noodle_juice_gorilla_comb.png)
  
-# Water the Seed - Core Principles & Brand Creation
+# Water the Seed"™ - Core Principles & Brand Creation
 
 ### 🌱 Introduction: "Water the Seed"™ in the FAA™ Global Ecosystem 🚀
 
