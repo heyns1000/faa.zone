@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-07-07 | FGP--samfox | main | `public/global_templates/hotstack.html` | `06f36eb8` | Fruitful | HotStack™ – Omnidrop Your Digital  | 15442 | 3 | 5 | 39.5 |
+| 2 | 2025-07-07 | FGP--samfox | history | `public/global_templates/hotstack.html` | `d327489c` | Fruitful | HotStack™ – Omnidrop Your Digital  | 14275 | 3 | 4 | 37.4 |

@@ -32,7 +32,7 @@
       justify-content: center; /* Center content vertically */
       min-height: 100vh; /* Full viewport height */
       padding: 1rem; /* Responsive padding */
-      /* Removed overflow: hidden; to allow scrolling */
+      overflow: hidden; /* Hide canvas overflow */
       position: relative; /* For canvas positioning */
     }
 
@@ -283,10 +283,8 @@
     </a>
 
     <div id="dropZone" class="drop-zone">
-        <p><i class="fas fa-cloud-upload-alt mr-2"></i> Drag & Drop HTML/PDF here or Click to Upload</p>
+        <p><i class="fas fa-cloud-upload-alt mr-2"></i> Drag & Drop HTML/PDF here to Omnidrop into CodeNest™</p>
         <p class="text-sm mt-1 text-gray-500">(Adheres to the 3-minute rule for rapid ingestion)</p>
-        <!-- Hidden file input for click-to-upload functionality -->
-        <input type="file" id="fileInput" class="hidden" accept=".html,.pdf">
     </div>
 
     <footer>
@@ -409,37 +407,7 @@
 
     // Drag and Drop Logic for Omnidrop Ingestion
     const dropZone = document.getElementById('dropZone');
-    const fileInput = document.getElementById('fileInput');
 
-    // Function to handle file processing
-    function handleFiles(files) {
-      if (time <= 0) {
-        showCustomModal("Omnidrop Window Closed!", "The 3-minute Omnidrop window has expired. Please refresh the page to start a new ingestion timer.", true);
-        return;
-      }
-
-      if (files.length > 0) {
-        const file = files[0];
-        // Simulate file ingestion based on file type
-        if (file.type === 'text/html' || file.type === 'application/pdf') {
-          showCustomModal("Omnidrop Initiated!", `"${file.name}" is being omnidropped into CodeNest™! (Simulated rapid ingestion adhering to 3-minute rule)`, false); // Don't auto-dismiss immediately
-
-          // Simulate processing time
-          setTimeout(() => {
-            const simulatedProjectName = file.name.replace(/\.(html|pdf)$/i, ''); // Use filename as project name
-            const simulatedProjectId = `OMNI-${Math.random().toString(36).substring(2, 8).toUpperCase()}`; // Generate a random ID
-
-            // Redirect to the post-omnidrop confirmation page with parameters
-            window.location.href = `hotstack_post_omnidrop.html?projectName=${encodeURIComponent(simulatedProjectName)}&projectId=${encodeURIComponent(simulatedProjectId)}`;
-          }, 2000); // Simulate 2-second processing
-          
-        } else {
-          showCustomModal("Invalid File Type", "Only HTML or PDF files can be omnidropped.", true);
-        }
-      }
-    }
-
-    // Drag and Drop Event Listeners
     dropZone.addEventListener('dragover', (e) => {
       e.preventDefault(); // Prevent default to allow drop
       dropZone.classList.add('highlight');
@@ -453,19 +421,25 @@
     dropZone.addEventListener('drop', (e) => {
       e.preventDefault();
       dropZone.classList.remove('highlight');
-      handleFiles(e.dataTransfer.files);
-    });
 
-    // Click to Upload Event Listeners
-    dropZone.addEventListener('click', () => {
-        fileInput.click(); // Trigger the hidden file input click
-    });
+      if (time <= 0) {
+        showCustomModal("Omnidrop Window Closed!", "The 3-minute Omnidrop window has expired. Please refresh the page to start a new ingestion timer.", true);
+        return;
+      }
 
-    fileInput.addEventListener('change', (e) => {
-        handleFiles(e.target.files);
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        const file = files[0];
+        // Simulate file ingestion based on file type
+        if (file.type === 'text/html' || file.type === 'application/pdf') {
+          showCustomModal("Omnidrop Initiated!", `"${file.name}" is being omnidropped into CodeNest™! (Simulated rapid ingestion adhering to 3-minute rule)`, true);
+          // In a real app, you'd send this file to a backend for processing
+        } else {
+          showCustomModal("Invalid File Type", "Only HTML or PDF files can be omnidropped.", true);
+        }
+      }
     });
 
   </script>
 </body>
 </html>
-
