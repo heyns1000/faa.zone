@@ -389,6 +389,7 @@
             <!-- User Authentication Status -->
             <div id="auth-status" class="mb-6 text-center text-sm">
                 <!-- Authentication status will be rendered here -->
+                <div class="spinner"></div> Loading authentication...
             </div>
             <button id="auth-button" class="action-button info-button w-full mb-6">Login</button>
 
@@ -404,14 +405,26 @@
         </main>
     </div>
 
-    <!-- Modal Structure -->
+    <!-- Modal Structure for Brand Details -->
     <div id="modal" class="modal-backdrop">
         <div id="modal-content" class="modal-content rounded-2xl p-8">
             <!-- Modal content will be dynamically loaded here -->
         </div>
     </div>
 
+    <!-- Modal Structure for Authentication (Login/Signup) -->
+    <div id="auth-modal" class="modal-backdrop">
+        <div id="auth-modal-content" class="modal-content rounded-2xl p-8">
+            <!-- Auth content will be dynamically loaded here -->
+        </div>
+    </div>
+
     <script type="module">
+        // Firebase SDK Imports
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
         // --- EMBEDDED API KEYS ---
         // These API keys are directly embedded for demonstration purposes.
         // In a production environment, these should be securely managed (e.g., environment variables, backend service).
@@ -469,11 +482,68 @@
         const modalContent = document.getElementById('modal-content');
         const authStatusDiv = document.getElementById('auth-status');
         const authButton = document.getElementById('auth-button');
+        const authModal = document.getElementById('auth-modal');
+        const authModalContent = document.getElementById('auth-modal-content');
+
 
         // State variables
         let activeTab = 'sa_brands'; // Currently active tab
         let usePartnerPricing = false; // Toggle for pricing display
-        let isLoggedIn = false; // Mock authentication state
+        // isLoggedIn is now managed by Firebase onAuthStateChanged
+        let currentUserId = null; // Stores Firebase UID
+        let authInstance = null; // Stores Firebase Auth instance
+        let dbInstance = null; // Stores Firebase Firestore instance
+
+
+        // Firebase Initialization and Auth Listener
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+
+        // Initialize Firebase and set up auth listener
+        function initializeFirebaseAndAuth() {
+            try {
+                const app = initializeApp(firebaseConfig);
+                authInstance = getAuth(app);
+                dbInstance = getFirestore(app);
+
+                onAuthStateChanged(authInstance, async (user) => {
+                    if (user) {
+                        currentUserId = user.uid;
+                        console.log("Firebase User Logged In:", user.uid);
+                        updateAuthStatusUI(true, user.email || user.uid);
+                    } else {
+                        currentUserId = null;
+                        console.log("Firebase User Logged Out or Anonymous.");
+                        updateAuthStatusUI(false);
+                        // Sign in anonymously if no user is logged in and no initial token is provided
+                        if (typeof __initial_auth_token === 'undefined') {
+                            await signInAnonymously(authInstance);
+                        }
+                    }
+                });
+
+                // Use the initial custom token if provided by the environment
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    signInWithCustomToken(authInstance, __initial_auth_token)
+                        .then((userCredential) => {
+                            console.log("Signed in with custom token:", userCredential.user.uid);
+                        })
+                        .catch((error) => {
+                            console.error("Error signing in with custom token:", error);
+                            // Fallback to anonymous sign-in if custom token fails
+                            signInAnonymously(authInstance).catch(anonError => console.error("Anonymous sign-in failed:", anonError));
+                        });
+                } else {
+                    // Sign in anonymously if no initial token is provided
+                    signInAnonymously(authInstance).catch(error => console.error("Anonymous sign-in failed:", error));
+                }
+
+            } catch (error) {
+                console.error("Error initializing Firebase:", error);
+                showCustomMessageBox(`Firebase initialization failed: ${error.message}`);
+            }
+        }
+
 
         /**
          * Renders the navigation tabs in the sidebar.
@@ -1058,31 +1128,111 @@
 
 
         /**
-         * Updates the mock authentication status in the UI.
+         * Updates the authentication status display in the UI.
+         * @param {boolean} loggedIn - True if a user is logged in, false otherwise.
+         * @param {string} userIdentifier - The user's email or UID to display.
          */
-        function updateAuthStatus() {
-            if (isLoggedIn) {
-                authStatusDiv.innerHTML = '<p class="text-green-400">Logged in as: <span class="font-bold">User</span></p>';
+        function updateAuthStatusUI(loggedIn, userIdentifier = '') {
+            if (loggedIn) {
+                authStatusDiv.innerHTML = `<p class="text-green-400">Logged in as: <span class="font-bold">${userIdentifier}</span></p><p class="text-xs text-text-med">UID: ${currentUserId}</p>`;
                 authButton.textContent = 'Logout';
                 authButton.classList.remove('info-button');
                 authButton.classList.add('bg-red-500', 'hover:bg-red-600');
+                authButton.onclick = async () => {
+                    try {
+                        await signOut(authInstance);
+                        showCustomMessageBox('Logged out successfully!');
+                    } catch (error) {
+                        console.error("Error signing out:", error);
+                        showCustomMessageBox(`Error logging out: ${error.message}`);
+                    }
+                };
             } else {
                 authStatusDiv.innerHTML = '<p class="text-red-400">Not logged in</p>';
                 authButton.textContent = 'Login';
                 authButton.classList.remove('bg-red-500', 'hover:bg-red-600');
                 authButton.classList.add('info-button');
+                authButton.onclick = () => showAuthModal('login'); // Show login modal on click
             }
         }
 
         /**
-         * Toggles the mock login state.
+         * Displays the authentication modal (login or signup).
+         * @param {string} type - 'login' or 'signup'.
          */
-        function toggleLogin() {
-            isLoggedIn = !isLoggedIn;
-            updateAuthStatus();
-            // Re-render content to potentially show/hide user-specific features (though not implemented yet)
-            renderContent();
-        }
+        window.showAuthModal = (type = 'login') => {
+            authModalContent.innerHTML = `
+                <div class="flex justify-between items-start mb-6">
+                    <h2 class="font-space-grotesk text-3xl font-bold text-white">${type === 'login' ? 'Login' : 'Sign Up'}</h2>
+                    <button onclick="closeAuthModal()" class="text-gray-400 hover:text-white text-4xl font-bold">&times;</button>
+                </div>
+                <form id="auth-form" class="space-y-4">
+                    <div>
+                        <label for="auth-email" class="block text-text-med text-sm font-bold mb-2">Email:</label>
+                        <input type="email" id="auth-email" class="w-full p-3 rounded-lg border border-gray-700 bg-gray-800 text-text-light" required>
+                    </div>
+                    <div>
+                        <label for="auth-password" class="block text-text-med text-sm font-bold mb-2">Password:</label>
+                        <input type="password" id="auth-password" class="w-full p-3 rounded-lg border border-gray-700 bg-gray-800 text-text-light" required>
+                    </div>
+                    <button type="submit" id="auth-submit-btn" class="action-button w-full">
+                        ${type === 'login' ? 'Login' : 'Sign Up'}
+                    </button>
+                    <div id="auth-error-message" class="text-red-500 text-center mt-4"></div>
+                </form>
+                <p class="text-center text-text-med mt-4">
+                    ${type === 'login' ? 'Don\'t have an account?' : 'Already have an account?'}
+                    <button onclick="showAuthModal('${type === 'login' ? 'signup' : 'login'}')" class="text-primary-color hover:underline">
+                        ${type === 'login' ? 'Sign Up' : 'Login'}
+                    </button>
+                </p>
+            `;
+            authModal.classList.add('active'); // Show the auth modal
+
+            document.getElementById('auth-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('auth-email').value;
+                const password = document.getElementById('auth-password').value;
+                const errorMessageDiv = document.getElementById('auth-error-message');
+                const submitBtn = document.getElementById('auth-submit-btn');
+
+                errorMessageDiv.textContent = '';
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<div class="spinner"></div> Authenticating...';
+
+                try {
+                    if (type === 'login') {
+                        await signInWithEmailAndPassword(authInstance, email, password);
+                        showCustomMessageBox('Logged in successfully!');
+                    } else {
+                        await createUserWithEmailAndPassword(authInstance, email, password);
+                        showCustomMessageBox('Account created successfully! You are now logged in.');
+                    }
+                    closeAuthModal(); // Close modal on success
+                } catch (error) {
+                    let message = error.message;
+                    // Provide more user-friendly messages for common Firebase auth errors
+                    if (error.code === 'auth/invalid-email') message = 'Invalid email address.';
+                    else if (error.code === 'auth/user-disabled') message = 'This account has been disabled.';
+                    else if (error.code === 'auth/user-not-found') message = 'No user found with this email.';
+                    else if (error.code === 'auth/wrong-password') message = 'Incorrect password.';
+                    else if (error.code === 'auth/email-already-in-use') message = 'Email already in use. Try logging in.';
+                    else if (error.code === 'auth/weak-password') message = 'Password should be at least 6 characters.';
+                    errorMessageDiv.textContent = message;
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = type === 'login' ? 'Login' : 'Sign Up';
+                }
+            });
+        };
+
+        /**
+         * Closes the authentication modal.
+         */
+        window.closeAuthModal = () => {
+            authModal.classList.remove('active');
+        };
+
 
         /**
          * Handles the submission of the contact form.
@@ -1538,10 +1688,11 @@
 
 
         // Initial rendering calls when the script loads
+        initializeFirebaseAndAuth(); // Initialize Firebase and set up auth listener
         renderNav();
         renderContent();
-        updateAuthStatus(); // Initialize auth status display
-        authButton.onclick = toggleLogin; // Attach event listener for auth button
+        // updateAuthStatusUI is now called by onAuthStateChanged listener
+        // authButton.onclick is now set by updateAuthStatusUI
     </script>
 </body>
 </html>

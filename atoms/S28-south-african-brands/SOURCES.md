@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-07-07 | FGP--samfox | history | `public/global_template/south_african_brands.html` | `fa7a3db6` | Fruitful | South Africa Dashboard | 82502 | 2 | 18 | 72.3 |
+| 2 | 2025-07-07 | FGP--samfox | main | `public/global_templates/south_african_brands.html` | `072ae051` | Fruitful | South Africa Dashboard | 91377 | 2 | 18 | 73.1 |
