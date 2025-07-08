@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,127 +8,6 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-    
-    /* General Button Styling */
-    button {
-        transition: all 0.3s ease-in-out;
-    }
-
-    button:hover {
-        transform: scale(1.05);
-    }
-
-    /* Dropdown Styling */
-    select {
-        border: 1px solid #e2e8f0;
-        padding: 0.5rem;
-        border-radius: 0.375rem;
-        background-color: #f9fafb;
-        font-size: 0.875rem;
-        color: #374151;
-        transition: border-color 0.2s ease-in-out;
-    }
-
-    select:focus {
-        outline: none;
-        border-color: #6366f1;
-        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
-    }
-
-    /* Input Field Styling */
-    input {
-        border: 1px solid #e2e8f0;
-        padding: 0.5rem;
-        border-radius: 0.375rem;
-        background-color: #f9fafb;
-        font-size: 0.875rem;
-        color: #374151;
-        transition: border-color 0.2s ease-in-out;
-    }
-
-    input:focus {
-        outline: none;
-        border-color: #6366f1;
-        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
-    }
-
-    /* Table Styling */
-    table {
-        border-collapse: collapse;
-        width: 100%;
-        background-color: #ffffff;
-        border: 1px solid #e5e7eb;
-    }
-
-    th, td {
-        padding: 12px;
-        text-align: left;
-        border-bottom: 1px solid #e5e7eb;
-    }
-
-    th {
-        background-color: #f9fafb;
-        font-weight: bold;
-        color: #374151;
-    }
-
-    tr:hover {
-        background-color: #f3f4f6;
-    }
-
-    /* Card Styling */
-    .card {
-        background-color: #ffffff;
-        border: 1px solid #e5e7eb;
-        border-radius: 0.5rem;
-        padding: 1rem;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    }
-
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.1), 0 4px 8px -2px rgba(0, 0, 0, 0.06);
-    }
-
-    /* Grid Styling */
-    .grid {
-        display: grid;
-        gap: 1rem;
-    }
-
-    .grid-cols-2 {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .grid-cols-3 {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .grid-cols-4 {
-        grid-template-columns: repeat(4, 1fr);
-    }
-
-    /* Header Styling */
-    .global-header-title {
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    }
-
-    /* Footer Styling */
-    .enhanced-footer {
-        background: linear-gradient(to right, #2d3748, #1a202c);
-        color: #a0aec0;
-        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
-        border-top: 1px solid #4a5568;
-    }
-
-    .footer-logo-text {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-weight: bold;
-        color: #ffffff;
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-    }
-</style>
         body {
             background-color: #f3f4f6;
             font-family: 'Inter', sans-serif;
@@ -295,10 +175,20 @@
                     <div>
                         <label class="text-sm block font-medium mb-1">🏷 Brand Name</label>
                         <input id="brandInput" class="w-full border rounded p-2" placeholder="e.g. OmniCastX">
+                        <button id="generateDescriptionBtn" onclick="generateBrandDescription()" class="mt-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold px-3 py-1 rounded shadow w-full">
+                            ✨ Generate Description
+                        </button>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="text-sm block font-medium mb-1">📝 Brand Description</label>
+                        <textarea id="brandDescriptionOutput" class="w-full border rounded p-2 text-sm h-24 resize-y" placeholder="Generated description will appear here..." readonly></textarea>
                     </div>
                     <div>
                         <label class="text-sm block font-medium mb-1">📌 Subnodes (comma-separated)</label>
                         <input id="subnodesInput" class="w-full border rounded p-2" placeholder="e.g. VaultDrop, QRClaim">
+                        <button id="suggestSubnodesBtn" onclick="suggestSubnodes()" class="mt-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold px-3 py-1 rounded shadow w-full">
+                            ✨ Suggest Subnodes
+                        </button>
                     </div>
                     <div class="flex items-end">
                         <button id="addBrandBtn" onclick="addBrandToSector()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded shadow w-full">
@@ -307,7 +197,7 @@
                     </div>
                 </div>
                 <p id="adminStatus" class="text-sm text-gray-600 italic mt-4">Ready to receive input.</p>
-                   <div class="mt-4">
+                    <div class="mt-4">
                     <button onclick="clearAdminAddedData()" class="text-sm text-red-600 underline">
                         🗑 Clear Locally Added Admin Data (Client-Side)
                     </button>
@@ -517,7 +407,7 @@
                                 <th class="px-4 py-2">Glyph</th><th class="px-4 py-2">Sector</th><th class="px-4 py-2">Core Brands</th><th class="px-4 py-2">Total Nodes</th><th class="px-4 py-2">Monthly Fee</th><th class="px-4 py-2">Annual Fee</th><th class="px-4 py-2">Payout Tier</th><th class="px-4 py-2">Region</th><th class="px-4 py-2">Inspect</th><th class="px-4 py-2">Deploy</th>
                             </tr>
                         </thead>
-                        <tbody class="text-gray-700" id="faaZoneIndexTableBody"> 
+                        <tbody class="text-gray-700" id="faaZoneIndexTableBody">  
                             </tbody>
                     </table>
                 </div>
@@ -610,7 +500,7 @@
             "education-youth": "🎓 Education & Youth",
             "zerowaste": "♻️ Zero Waste",
             "professional": "🧾 Professional Services",
-            "payroll-mining": "🪙 Payroll Mining & Accounting",
+            "payroll-mining": "🪙 Payroll Mining & Accounting", 
             "mining": "⛏️ Mining & Resources", 
             "wildlife": "🦁 Wildlife & Habitat",
             "admin-panel": "⚙️ Admin Panel" 
@@ -986,6 +876,134 @@
             });
         }
 
+        async function generateBrandDescription() {
+            const brandInput = document.getElementById("brandInput");
+            const sectorSelect = document.getElementById("sectorSelect");
+            const brandDescriptionOutput = document.getElementById("brandDescriptionOutput");
+            const generateDescriptionBtn = document.getElementById("generateDescriptionBtn");
+            const adminStatus = document.getElementById("adminStatus");
+
+            const brandName = brandInput.value.trim();
+            const sectorKey = sectorSelect.value;
+            const sectorDisplayName = sectorList[sectorKey] || sectorKey.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+
+            if (!brandName) {
+                adminStatus.textContent = "⚠️ Please enter a brand name first.";
+                setTimeout(() => { adminStatus.textContent = "Ready to receive input."; }, 3000);
+                return;
+            }
+
+            generateDescriptionBtn.disabled = true;
+            generateDescriptionBtn.innerHTML = 'Generating...';
+            adminStatus.textContent = "Generating description with AI...";
+            brandDescriptionOutput.value = "";
+
+            try {
+                const prompt = `Generate a concise and compelling 50-word description for a brand named "${brandName}" operating in the "${sectorDisplayName}" sector for an admin portal. Focus on its core value proposition and innovation.`;
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                const apiKey = ""; // Leave as-is for Canvas environment
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    brandDescriptionOutput.value = text;
+                    adminStatus.textContent = "Description generated successfully!";
+                } else {
+                    adminStatus.textContent = "Failed to generate description. Please try again.";
+                    console.error("Gemini API response structure unexpected:", result);
+                }
+            } catch (error) {
+                adminStatus.textContent = "Error calling Gemini API for description.";
+                console.error("Error generating brand description:", error);
+            } finally {
+                generateDescriptionBtn.disabled = false;
+                generateDescriptionBtn.innerHTML = '✨ Generate Description';
+                setTimeout(() => { adminStatus.textContent = "Ready to receive input."; }, 3000);
+            }
+        }
+
+        async function suggestSubnodes() {
+            const brandInput = document.getElementById("brandInput");
+            const sectorSelect = document.getElementById("sectorSelect");
+            const subnodesInput = document.getElementById("subnodesInput");
+            const suggestSubnodesBtn = document.getElementById("suggestSubnodesBtn");
+            const adminStatus = document.getElementById("adminStatus");
+
+            const brandName = brandInput.value.trim();
+            const sectorKey = sectorSelect.value;
+            const sectorDisplayName = sectorList[sectorKey] || sectorKey.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+
+            if (!brandName) {
+                adminStatus.textContent = "⚠️ Please enter a brand name first.";
+                setTimeout(() => { adminStatus.textContent = "Ready to receive input."; }, 3000);
+                return;
+            }
+
+            suggestSubnodesBtn.disabled = true;
+            suggestSubnodesBtn.innerHTML = 'Suggesting...';
+            adminStatus.textContent = "Suggesting subnodes with AI...";
+
+            try {
+                const prompt = `Suggest 3-5 innovative subnodes for a brand named "${brandName}" in the "${sectorDisplayName}" sector. Provide the response as a JSON array of strings, where each string is a subnode name. Example: ["Subnode A", "Subnode B", "Subnode C"].`;
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = {
+                    contents: chatHistory,
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "ARRAY",
+                            items: { "type": "STRING" }
+                        }
+                    }
+                };
+                const apiKey = ""; // Leave as-is for Canvas environment
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const jsonString = result.candidates[0].content.parts[0].text;
+                    const suggestedNodes = JSON.parse(jsonString);
+                    if (Array.isArray(suggestedNodes)) {
+                        subnodesInput.value = suggestedNodes.join(', ');
+                        adminStatus.textContent = "Subnodes suggested successfully!";
+                    } else {
+                        adminStatus.textContent = "AI returned unexpected format for subnodes.";
+                        console.error("Gemini API returned non-array for subnodes:", suggestedNodes);
+                    }
+                } else {
+                    adminStatus.textContent = "Failed to suggest subnodes. Please try again.";
+                    console.error("Gemini API response structure unexpected:", result);
+                }
+            } catch (error) {
+                adminStatus.textContent = "Error calling Gemini API for subnodes.";
+                console.error("Error suggesting subnodes:", error);
+            } finally {
+                suggestSubnodesBtn.disabled = false;
+                suggestSubnodesBtn.innerHTML = '✨ Suggest Subnodes';
+                setTimeout(() => { adminStatus.textContent = "Ready to receive input."; }, 3000);
+            }
+        }
+
         function addBrandToSector() {
             const sectorKey = document.getElementById("sectorSelect").value;
             const brandInput = document.getElementById("brandInput");
@@ -1039,6 +1057,7 @@
 
                 brandInput.value = "";
                 subnodesInput.value = "";
+                document.getElementById("brandDescriptionOutput").value = ""; // Clear generated description
             })
             .catch(err => {
                 console.error("❌ Error saving data to backend:", err);
@@ -1131,7 +1150,7 @@
                 `;
             } else {
                 if (typeof generateGenericBrandSnapshotContent === 'function') {
-                    snap.innerHTML = generateGenericBrandSnapshotContent(sectorKey, brand, currentSubNodes);
+                    snap.innerHTML = generateGenericBrandSnapshotContent(sectorKey, brand, subnodes); // Pass the actual subnodes
                 } else {
                     console.error('generateGenericBrandSnapshotContent is not defined');
                     snap.innerHTML = `<p class="text-red-500">Error: Snapshot generator function is missing.</p>`;
@@ -1283,24 +1302,24 @@
         function renderMediaSection() { renderSectorBrandsAndSnapshots('media', 'media-grid', 'media-snapshots', ALL_SECTOR_DATA_STATIC['media'].brands, ALL_SECTOR_DATA_STATIC['media'].subNodes, ALL_SECTOR_DATA_STATIC['media'].scrollProfiles); }
         function renderProfessionalSection() { renderSectorBrandsAndSnapshots('professional', 'professional-grid', 'professional-snapshots', ALL_SECTOR_DATA_STATIC['professional'].brands, ALL_SECTOR_DATA_STATIC['professional'].subNodes); }
         function renderFashionSection() { renderSectorBrandsAndSnapshots('fashion', 'fashion-grid', 'fashion-snapshots', ALL_SECTOR_DATA_STATIC['fashion'].brands, ALL_SECTOR_DATA_STATIC['fashion'].subNodes); }
-        function renderGamingSection() { renderSectorBrandsAndSnapshots('gaming', 'gaming-grid', 'gaming-snapshots', ALL_SECTOR_DATA_STATIC['gaming'].brands, ALL_SECTOR_DATA_STATIC['gaming'].subNodes); }
-        function renderJusticeSection() { renderSectorBrandsAndSnapshots('justice', 'justice-grid', 'justice-snapshots', ALL_SECTOR_DATA_STATIC['justice'].brands, ALL_SECTOR_DATA_STATIC['justice'].subNodes); }
-        function renderKnowledgeSection() { renderSectorBrandsAndSnapshots('knowledge', 'knowledge-grid', 'knowledge-snapshots', ALL_SECTOR_DATA_STATIC['knowledge'].brands, ALL_SECTOR_DATA_STATIC['knowledge'].subNodes); }
-        function renderMicromeshSection() { renderSectorBrandsAndSnapshots('micromesh', 'micromesh-grid', 'micromesh-snapshots', ALL_SECTOR_DATA_STATIC['micromesh'].brands, ALL_SECTOR_DATA_STATIC['micromesh'].subNodes); }
+        function renderGamingSection() { renderSectorBrandsAndSnapshots('gaming', 'gaming-grid', 'gaming-snapshots', ALL_SECTOR_DATA_STATIC['gaming'].brands, ALL_SECTOR_DATA_STATIC['gaming'].gamingSubNodes); }
+        function renderJusticeSection() { renderSectorBrandsAndSnapshots('justice', 'justice-grid', 'justice-snapshots', ALL_SECTOR_DATA_STATIC['justice'].brands, ALL_SECTOR_DATA_STATIC['justice'].justiceSubNodes); }
+        function renderKnowledgeSection() { renderSectorBrandsAndSnapshots('knowledge', 'knowledge-grid', 'knowledge-snapshots', ALL_SECTOR_DATA_STATIC['knowledge'].brands, ALL_SECTOR_DATA_STATIC['knowledge'].knowledgeSubNodes); }
+        function renderMicromeshSection() { renderSectorBrandsAndSnapshots('micromesh', 'micromesh-grid', 'micromesh-snapshots', ALL_SECTOR_DATA_STATIC['micromesh'].brands, ALL_SECTOR_DATA_STATIC['micromesh'].micromeshSubNodes); }
         function renderNutritionSection() { renderSectorBrandsAndSnapshots('nutrition', 'nutrition-grid', 'nutrition-snapshots', ALL_SECTOR_DATA_STATIC['nutrition'].brands, ALL_SECTOR_DATA_STATIC['nutrition'].subNodes); } 
-        function renderPackagingSection() { renderSectorBrandsAndSnapshots('packaging', 'packaging-grid', 'packaging-snapshots', ALL_SECTOR_DATA_STATIC['packaging'].brands, ALL_SECTOR_DATA_STATIC['packaging'].subNodes); }
+        function renderPackagingSection() { renderSectorBrandsAndSnapshots('packaging', 'packaging-grid', 'packaging-snapshots', ALL_SECTOR_DATA_STATIC['packaging'].brands, ALL_SECTOR_DATA_STATIC['packaging'].packagingSubNodes); }
         function renderQuantumSection() { renderSectorBrandsAndSnapshots('quantum', 'quantum-grid', 'quantum-snapshots', ALL_SECTOR_DATA_STATIC['quantum'].brands, ALL_SECTOR_DATA_STATIC['quantum'].subNodes); }
         function renderRitualSection() { renderSectorBrandsAndSnapshots('ritual', 'ritual-grid', 'ritual-snapshots', ALL_SECTOR_DATA_STATIC['ritual'].brands, ALL_SECTOR_DATA_STATIC['ritual'].subNodes); }
         function renderSaasSection() { renderSectorBrandsAndSnapshots('saas', 'saas-grid', 'saas-snapshots', ALL_SECTOR_DATA_STATIC['saas'].brands, ALL_SECTOR_DATA_STATIC['saas'].subNodes); } 
-        function renderTradeSection() { renderSectorBrandsAndSnapshots('trade', 'trade-grid', 'trade-snapshots', ALL_SECTOR_DATA_STATIC['trade'].brands, ALL_SECTOR_DATA_STATIC['trade'].subNodes); }
-        function renderUtilitiesSection() { renderSectorBrandsAndSnapshots('utilities', 'utilities-grid', 'utilities-snapshots', ALL_SECTOR_DATA_STATIC['utilities'].brands, ALL_SECTOR_DATA_STATIC['utilities'].subNodes); }
-        function renderVoiceSection() { renderSectorBrandsAndSnapshots('voice', 'voice-grid', 'voice-snapshots', ALL_SECTOR_DATA_STATIC['voice'].brands, ALL_SECTOR_DATA_STATIC['voice'].subNodes); }
+        function renderTradeSection() { renderSectorBrandsAndSnapshots('trade', 'trade-grid', 'trade-snapshots', ALL_SECTOR_DATA_STATIC['trade'].brands, ALL_SECTOR_DATA_STATIC['trade'].tradeSubNodes); }
+        function renderUtilitiesSection() { renderSectorBrandsAndSnapshots('utilities', 'utilities-grid', 'utilities-snapshots', ALL_SECTOR_DATA_STATIC['utilities'].brands, ALL_SECTOR_DATA_STATIC['utilities'].utilitiesSubNodes); }
+        function renderVoiceSection() { renderSectorBrandsAndSnapshots('voice', 'voice-grid', 'voice-snapshots', ALL_SECTOR_DATA_STATIC['voice'].brands, ALL_SECTOR_DATA_STATIC['voice'].voiceSubNodes); }
         function renderNftSection() { renderSectorBrandsAndSnapshots('nft', 'nft-grid', 'nft-snapshots', ALL_SECTOR_DATA_STATIC['nft'].brands, ALL_SECTOR_DATA_STATIC['nft'].subNodes); } 
         function renderZerowasteSection() { renderSectorBrandsAndSnapshots('zerowaste', 'zerowaste-grid', 'zerowaste-snapshots', ALL_SECTOR_DATA_STATIC['zerowaste'].brands, ALL_SECTOR_DATA_STATIC['zerowaste'].subNodes); }
         function renderProfessionalSection() { renderSectorBrandsAndSnapshots('professional', 'professional-grid', 'professional-snapshots', ALL_SECTOR_DATA_STATIC['professional'].brands, ALL_SECTOR_DATA_STATIC['professional'].subNodes); }
-        function renderPayrollMiningSection() { renderSectorBrandsAndSnapshots('payroll-mining', 'payroll-mining-grid', 'payroll-mining-snapshots', ALL_SECTOR_DATA_STATIC['payroll-mining'].brands, ALL_SECTOR_DATA_STATIC['payroll-mining'].subNodes); }
+        function renderPayrollMiningSection() { renderSectorBrandsAndSnapshots('payroll-mining', 'payroll-mining-grid', 'payroll-mining-snapshots', ALL_SECTOR_DATA_STATIC['payroll-mining'].brands, ALL_SECTOR_DATA_STATIC['payroll-mining'].payrollMiningSubNodes); }
         function renderMiningSection() { renderSectorBrandsAndSnapshots('mining', 'mining-grid', 'mining-snapshots', ALL_SECTOR_DATA_STATIC['mining'].brands, ALL_SECTOR_DATA_STATIC['mining'].subNodes); } 
-        function renderWildlifeSection() { renderSectorBrandsAndSnapshots('wildlife', 'wildlife-grid', 'wildlife-snapshots', ALL_SECTOR_DATA_STATIC['wildlife'].brands, ALL_SECTOR_DATA_STATIC['wildlife'].subNodes); }
+        function renderWildlifeSection() { renderSectorBrandsAndSnapshots('wildlife', 'wildlife-grid', 'wildlife-snapshots', ALL_SECTOR_DATA_STATIC['wildlife'].brands, ALL_SECTOR_DATA_STATIC['wildlife'].wildlifeSubNodes); }
 
 
         // --- Load Main Dashboard Data (from Backend) ---
@@ -1316,7 +1335,7 @@
             fetch('http://localhost:5000/api/sectors') 
                 .then(res => {
                     if (!res.ok) {
-                           console.error(`Backend Error: ${res.status} ${res.statusText}`); 
+                             console.error(`Backend Error: ${res.status} ${res.statusText}`); 
                         throw new Error(`Network response was not ok: ${res.status} ${res.statusText}`);
                     }
                     return res.json();
@@ -1656,13 +1675,15 @@
             });
         }
 
-      // --- DOMContentLoaded Initialization ---
-      document.addEventListener('DOMContentLoaded', () => {
+
+        // --- DOMContentLoaded Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
             populateSectorSelect();
             loadMainDashboardData(); 
 
             // Consolidated rendering of all sector panels
             for (const sectorKey in ALL_SECTOR_DATA_STATIC) {
+                // Ensure ALL_SECTOR_DATA_STATIC[sectorKey] is an object before accessing properties
                 const sectorData = ALL_SECTOR_DATA_STATIC[sectorKey];
                 if (typeof sectorData === 'object' && sectorData !== null && sectorKey !== 'admin-panel') {
                     renderSectorBrandsAndSnapshots(
@@ -1671,203 +1692,19 @@
                         `${sectorKey}-snapshots`,
                         sectorData.brands,
                         sectorData.subNodes,
-                        sectorData.scrollProfiles
+                        sectorData.scrollProfiles // Pass scrollProfiles for media specifically
                     );
                 } else if (sectorKey !== 'admin-panel') {
                     console.warn(`[Initialization] Missing or invalid data for sector: ${sectorKey}. Skipping rendering.`);
                 }
             }
             
-            renderFaaZoneIndexTable();
+            renderFaaZoneIndexTable(); // Render the FAA Zone Index table
             calculateGlobalMetrics(); 
             renderDynamicPulseChart(); 
             setInterval(updateDynamicPulseChart, 3000); 
         });
 
-    </script>
-
-    <script src="https://www.paypal.com/sdk/js?client-id=BAAThS_oBJJ22PM5R1nVJ...&currency=ZAR&vault=true&intent=subscription"></script>
-    <script>
-        // ... (Your existing JavaScript functions and global variables go here, before DOMContentLoaded) ...
-
-        // NEW: PayPal Integration Constants and Functions
-
-        // IMPORTANT: Replace this placeholder with your actual LIVE PayPal Product ID.
-        // This is the ID you copied after creating your product in the LIVE PayPal Developer Dashboard.
-        const YOUR_PAYPAL_PRODUCT_ID = 'PROD-YOUR_LIVE_PRODUCT_ID_HERE'; // <--- !!! REPLACE THIS WITH YOUR ACTUAL LIVE PRODUCT ID !!! --->
-
-        // Function to Deploy Sector Plans to PayPal (for Admin 'Deploy' button)
-        // NOTE: This function *can* still be used to create plans programmatically in LIVE,
-        // but since you're creating them manually, you will primarily use it for its output (Plan IDs).
-        async function deploySectorPlanToPayPal(sectorKey) {
-            const deployButton = event.target;
-            deployButton.disabled = true;
-            deployButton.textContent = 'Deploying...';
-            deployButton.classList.remove('bg-green-500', 'hover:bg-green-600');
-            deployButton.classList.add('bg-gray-400');
-
-            if (YOUR_PAYPAL_PRODUCT_ID === 'PROD-YOUR_LIVE_PRODUCT_ID_HERE') {
-                alert('Please replace PROD-YOUR_LIVE_PRODUCT_ID_HERE with your actual LIVE PayPal Product ID in the JavaScript. You must create it in the LIVE PayPal Developer Dashboard first.');
-                deployButton.disabled = false;
-                deployButton.textContent = 'Deploy Plan';
-                deployButton.classList.remove('bg-gray-400');
-                deployButton.classList.add('bg-green-500', 'hover:bg-green-600');
-                return;
-            }
-
-            const sectorData = FAA_ZONE_INDEX_SUMMARY_DATA[sectorKey];
-            const sectorDisplayName = sectorList[sectorKey];
-
-            if (!sectorData) {
-                alert(`Pricing data not found for sector: ${sectorKey}`);
-                deployButton.disabled = false;
-                deployButton.textContent = 'Deploy Plan';
-                deployButton.classList.remove('bg-gray-400');
-                deployButton.classList.add('bg-green-500', 'hover:bg-green-600');
-                return;
-            }
-
-            try {
-                // This backend call will now use LIVE credentials and create LIVE plans
-                const response = await fetch(`/api/paypal?action=create-plan`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        productId: YOUR_PAYPAL_PRODUCT_ID,
-                        sector: sectorDisplayName,
-                        monthlyFee: parseFloat(sectorData.monthlyFee.replace('$', '').replace(',', '')),
-                        annualFee: parseFloat(sectorData.annualFee.replace('$', '').replace(',', '')),
-                        currencyCode: 'ZAR' // <-- IMPORTANT: This should match the currency you created plans with in PayPal LIVE
-                    })
-                });
-
-                const result = await response.json();
-
-                if (response.ok) {
-                    alert(`Successfully deployed PayPal plans for ${sectorDisplayName}! Monthly Plan ID: ${result.createdPlans[0].id}, Annual Plan ID: ${result.createdPlans[1].id}. IMPORTANT: These are LIVE Plan IDs!`);
-                    console.log('Deployed Plans (LIVE):', result.createdPlans);
-                    // IMPORTANT: You MUST manually copy these LIVE Plan IDs and use them to replace the placeholders in your 'products.html'
-                    // and 'admin-portal.html' for 'initiateSubscription'.
-                    deployButton.textContent = 'Deployed ✔️';
-                    deployButton.classList.remove('bg-gray-400');
-                    deployButton.classList.add('bg-green-700');
-                } else {
-                    alert(`Failed to deploy plans for ${sectorDisplayName}: ${result.error || 'Unknown error'}`);
-                    console.error('Plan deployment error (LIVE):', result);
-                    deployButton.textContent = 'Deploy Failed ❌';
-                    deployButton.classList.remove('bg-gray-400');
-                    deployButton.classList.add('bg-red-500');
-                }
-            } catch (error) {
-                console.error('Error deploying PayPal plans (LIVE):', error);
-                alert(`An error occurred while deploying plans for ${sectorDisplayName}. See console.`);
-                deployButton.textContent = 'Deploy Failed ❌';
-                deployButton.classList.remove('bg-gray-400');
-                deployButton.classList.add('bg-red-500');
-            } finally {
-                setTimeout(() => {
-                    deployButton.disabled = false;
-                    deployButton.textContent = 'Deploy Plan';
-                    deployButton.classList.remove('bg-green-700', 'bg-red-500');
-                    deployButton.classList.add('bg-green-500', 'hover:bg-green-600');
-                }, 5000);
-            }
-        }
-
-        // Function to Initiate a User Subscription (for 'Subscribe Now' button)
-        async function initiateSubscription(tierName, rawAmount, sectorKey) {
-            alert(`Attempting to subscribe to: ${tierName} for ${rawAmount} in ${sectorKey} sector.`);
-
-            // IMPORTANT: These MUST be your actual LIVE PayPal Plan IDs.
-            // Replace 'P-YOUR_..._PLAN_ID' placeholders with the IDs you copied from the LIVE PayPal Developer Dashboard.
-            let planId;
-            if (sectorKey === 'agriculture' && tierName.includes('Starter Node')) {
-                planId = 'P-YOUR_AGRICULTURE_MONTHLY_LIVE_PLAN_ID'; // <--- !!! REPLACE WITH ACTUAL LIVE ID !!! --->
-            } else if (sectorKey === 'agriculture' && tierName.includes('Pro Grid')) {
-                planId = 'P-YOUR_AGRICULTURE_ANNUAL_LIVE_PLAN_ID'; // <--- !!! REPLACE WITH ACTUAL LIVE ID !!! --->
-            } else if (sectorKey === 'banking' && tierName.includes('Starter Node')) {
-                planId = 'P-YOUR_BANKING_MONTHLY_LIVE_PLAN_ID'; // <--- !!! REPLACE WITH ACTUAL LIVE ID !!! --->
-            }
-            // ... continue this mapping for all your LIVE sectors and tiers using the IDs you copied.
-
-            if (!planId || planId.includes('YOUR_')) {
-                alert('PayPal LIVE Plan ID not correctly configured for this tier/sector. Ensure plans are deployed in LIVE PayPal and their IDs are mapped here.');
-                return;
-            }
-
-            const paypalContainerId = `paypal-sub-container-${sectorKey}-${tierName.replace(/\s+|[^a-zA-Z0-9]/g, '')}`;
-            let paypalButtonContainer = document.getElementById(paypalContainerId);
-
-            if (!paypalButtonContainer) {
-                paypalButtonContainer = document.createElement('div');
-                paypalButtonContainer.id = paypalContainerId;
-                event.target.parentNode.appendChild(paypalButtonContainer);
-            } else {
-                paypalButtonContainer.innerHTML = '';
-            }
-
-            paypal.Buttons({
-                createSubscription: async function(data, actions) {
-                    try {
-                        const response = await fetch(`/api/paypal?action=create-subscription`, { // Uses LIVE backend credentials
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                planId: planId,
-                                userId: 'CURRENT_LOGGED_IN_USER_ID', // <--- REPLACE with actual logged-in user ID (e.g., from Zoho auth)
-                            }),
-                        });
-                        const result = await response.json();
-                        if (!response.ok) { console.error('Backend create-subscription error:', result); throw new Error(result.error || 'Failed to create PayPal subscription on backend'); }
-                        return result.subscriptionID;
-                    } catch (error) { console.error('Client-side createSubscription error:', error); alert('Could not initiate LIVE subscription. Please try again.'); if (paypalButtonContainer) paypalButtonContainer.remove(); return actions.reject(); }
-                },
-                onApprove: function(data, actions) {
-                    console.log('LIVE Subscription approved by user. PayPal Subscription ID:', data.subscriptionID);
-                    window.location.href = `/subscription-success?subscriptionID=${data.subscriptionID}`;
-                },
-                onCancel: function (data) {
-                    console.log('LIVE Subscription cancelled by user:', data);
-                    window.location.href = '/subscription-cancelled';
-                },
-                onError: function (err) {
-                    console.error('PayPal SDK error during LIVE subscription:', err);
-                    alert('An error occurred with PayPal LIVE subscription. Please try again.');
-                    window.location.href = '/subscription-failed';
-                }
-            }).render(`#${paypalContainerId}`);
-        }
-
-    </script>
-    </script>
-    <script>
-        async function deployAllBrands() {
-            const deployAllBtn = document.getElementById("deployAllBtn");
-            deployAllBtn.disabled = true;
-            deployAllBtn.textContent = "Deploying...";
-            deployAllBtn.classList.add("bg-gray-400");
-
-            try {
-                for (const [sectorKey, sectorData] of Object.entries(ALL_SECTOR_DATA_STATIC)) {
-                    if (sectorKey === "admin-panel") continue; // Skip admin panel
-
-                    const brands = sectorData.brands || [];
-                    for (const brand of brands) {
-                        console.log(`Deploying brand: ${brand} in sector: ${sectorKey}`);
-                        // Call your existing deployment logic here
-                        await deploySectorPlanToPayPal(sectorKey); // Assuming this function exists
-                    }
-                }
-                alert("All brands deployed successfully!");
-            } catch (error) {
-                console.error("Error deploying all brands:", error);
-                alert("An error occurred while deploying all brands. Check the console for details.");
-            } finally {
-                deployAllBtn.disabled = false;
-                deployAllBtn.textContent = "🚀 Deploy All Brands";
-                deployAllBtn.classList.remove("bg-gray-400");
-            }
-        }
     </script>
 </body>
 </html>
