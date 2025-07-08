@@ -175,10 +175,20 @@
                     <div>
                         <label class="text-sm block font-medium mb-1">🏷 Brand Name</label>
                         <input id="brandInput" class="w-full border rounded p-2" placeholder="e.g. OmniCastX">
+                        <button id="generateDescriptionBtn" onclick="generateBrandDescription()" class="mt-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold px-3 py-1 rounded shadow w-full">
+                            ✨ Generate Description
+                        </button>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="text-sm block font-medium mb-1">📝 Brand Description</label>
+                        <textarea id="brandDescriptionOutput" class="w-full border rounded p-2 text-sm h-24 resize-y" placeholder="Generated description will appear here..." readonly></textarea>
                     </div>
                     <div>
                         <label class="text-sm block font-medium mb-1">📌 Subnodes (comma-separated)</label>
                         <input id="subnodesInput" class="w-full border rounded p-2" placeholder="e.g. VaultDrop, QRClaim">
+                        <button id="suggestSubnodesBtn" onclick="suggestSubnodes()" class="mt-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold px-3 py-1 rounded shadow w-full">
+                            ✨ Suggest Subnodes
+                        </button>
                     </div>
                     <div class="flex items-end">
                         <button id="addBrandBtn" onclick="addBrandToSector()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded shadow w-full">
@@ -187,7 +197,7 @@
                     </div>
                 </div>
                 <p id="adminStatus" class="text-sm text-gray-600 italic mt-4">Ready to receive input.</p>
-                   <div class="mt-4">
+                    <div class="mt-4">
                     <button onclick="clearAdminAddedData()" class="text-sm text-red-600 underline">
                         🗑 Clear Locally Added Admin Data (Client-Side)
                     </button>
@@ -397,7 +407,7 @@
                                 <th class="px-4 py-2">Glyph</th><th class="px-4 py-2">Sector</th><th class="px-4 py-2">Core Brands</th><th class="px-4 py-2">Total Nodes</th><th class="px-4 py-2">Monthly Fee</th><th class="px-4 py-2">Annual Fee</th><th class="px-4 py-2">Payout Tier</th><th class="px-4 py-2">Region</th><th class="px-4 py-2">Inspect</th><th class="px-4 py-2">Deploy</th>
                             </tr>
                         </thead>
-                        <tbody class="text-gray-700" id="faaZoneIndexTableBody"> 
+                        <tbody class="text-gray-700" id="faaZoneIndexTableBody">  
                             </tbody>
                     </table>
                 </div>
@@ -490,7 +500,7 @@
             "education-youth": "🎓 Education & Youth",
             "zerowaste": "♻️ Zero Waste",
             "professional": "🧾 Professional Services",
-            "payroll-mining": "🪙 Payroll Mining & Accounting",
+            "payroll-mining": "🪙 Payroll Mining & Accounting", 
             "mining": "⛏️ Mining & Resources", 
             "wildlife": "🦁 Wildlife & Habitat",
             "admin-panel": "⚙️ Admin Panel" 
@@ -866,6 +876,134 @@
             });
         }
 
+        async function generateBrandDescription() {
+            const brandInput = document.getElementById("brandInput");
+            const sectorSelect = document.getElementById("sectorSelect");
+            const brandDescriptionOutput = document.getElementById("brandDescriptionOutput");
+            const generateDescriptionBtn = document.getElementById("generateDescriptionBtn");
+            const adminStatus = document.getElementById("adminStatus");
+
+            const brandName = brandInput.value.trim();
+            const sectorKey = sectorSelect.value;
+            const sectorDisplayName = sectorList[sectorKey] || sectorKey.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+
+            if (!brandName) {
+                adminStatus.textContent = "⚠️ Please enter a brand name first.";
+                setTimeout(() => { adminStatus.textContent = "Ready to receive input."; }, 3000);
+                return;
+            }
+
+            generateDescriptionBtn.disabled = true;
+            generateDescriptionBtn.innerHTML = 'Generating...';
+            adminStatus.textContent = "Generating description with AI...";
+            brandDescriptionOutput.value = "";
+
+            try {
+                const prompt = `Generate a concise and compelling 50-word description for a brand named "${brandName}" operating in the "${sectorDisplayName}" sector for an admin portal. Focus on its core value proposition and innovation.`;
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                const apiKey = ""; // Leave as-is for Canvas environment
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    brandDescriptionOutput.value = text;
+                    adminStatus.textContent = "Description generated successfully!";
+                } else {
+                    adminStatus.textContent = "Failed to generate description. Please try again.";
+                    console.error("Gemini API response structure unexpected:", result);
+                }
+            } catch (error) {
+                adminStatus.textContent = "Error calling Gemini API for description.";
+                console.error("Error generating brand description:", error);
+            } finally {
+                generateDescriptionBtn.disabled = false;
+                generateDescriptionBtn.innerHTML = '✨ Generate Description';
+                setTimeout(() => { adminStatus.textContent = "Ready to receive input."; }, 3000);
+            }
+        }
+
+        async function suggestSubnodes() {
+            const brandInput = document.getElementById("brandInput");
+            const sectorSelect = document.getElementById("sectorSelect");
+            const subnodesInput = document.getElementById("subnodesInput");
+            const suggestSubnodesBtn = document.getElementById("suggestSubnodesBtn");
+            const adminStatus = document.getElementById("adminStatus");
+
+            const brandName = brandInput.value.trim();
+            const sectorKey = sectorSelect.value;
+            const sectorDisplayName = sectorList[sectorKey] || sectorKey.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+
+            if (!brandName) {
+                adminStatus.textContent = "⚠️ Please enter a brand name first.";
+                setTimeout(() => { adminStatus.textContent = "Ready to receive input."; }, 3000);
+                return;
+            }
+
+            suggestSubnodesBtn.disabled = true;
+            suggestSubnodesBtn.innerHTML = 'Suggesting...';
+            adminStatus.textContent = "Suggesting subnodes with AI...";
+
+            try {
+                const prompt = `Suggest 3-5 innovative subnodes for a brand named "${brandName}" in the "${sectorDisplayName}" sector. Provide the response as a JSON array of strings, where each string is a subnode name. Example: ["Subnode A", "Subnode B", "Subnode C"].`;
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = {
+                    contents: chatHistory,
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "ARRAY",
+                            items: { "type": "STRING" }
+                        }
+                    }
+                };
+                const apiKey = ""; // Leave as-is for Canvas environment
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const jsonString = result.candidates[0].content.parts[0].text;
+                    const suggestedNodes = JSON.parse(jsonString);
+                    if (Array.isArray(suggestedNodes)) {
+                        subnodesInput.value = suggestedNodes.join(', ');
+                        adminStatus.textContent = "Subnodes suggested successfully!";
+                    } else {
+                        adminStatus.textContent = "AI returned unexpected format for subnodes.";
+                        console.error("Gemini API returned non-array for subnodes:", suggestedNodes);
+                    }
+                } else {
+                    adminStatus.textContent = "Failed to suggest subnodes. Please try again.";
+                    console.error("Gemini API response structure unexpected:", result);
+                }
+            } catch (error) {
+                adminStatus.textContent = "Error calling Gemini API for subnodes.";
+                console.error("Error suggesting subnodes:", error);
+            } finally {
+                suggestSubnodesBtn.disabled = false;
+                suggestSubnodesBtn.innerHTML = '✨ Suggest Subnodes';
+                setTimeout(() => { adminStatus.textContent = "Ready to receive input."; }, 3000);
+            }
+        }
+
         function addBrandToSector() {
             const sectorKey = document.getElementById("sectorSelect").value;
             const brandInput = document.getElementById("brandInput");
@@ -919,6 +1057,7 @@
 
                 brandInput.value = "";
                 subnodesInput.value = "";
+                document.getElementById("brandDescriptionOutput").value = ""; // Clear generated description
             })
             .catch(err => {
                 console.error("❌ Error saving data to backend:", err);
@@ -1011,7 +1150,7 @@
                 `;
             } else {
                 if (typeof generateGenericBrandSnapshotContent === 'function') {
-                    snap.innerHTML = generateGenericBrandSnapshotContent(sectorKey, brand, currentSubNodes);
+                    snap.innerHTML = generateGenericBrandSnapshotContent(sectorKey, brand, subnodes); // Pass the actual subnodes
                 } else {
                     console.error('generateGenericBrandSnapshotContent is not defined');
                     snap.innerHTML = `<p class="text-red-500">Error: Snapshot generator function is missing.</p>`;
@@ -1163,24 +1302,24 @@
         function renderMediaSection() { renderSectorBrandsAndSnapshots('media', 'media-grid', 'media-snapshots', ALL_SECTOR_DATA_STATIC['media'].brands, ALL_SECTOR_DATA_STATIC['media'].subNodes, ALL_SECTOR_DATA_STATIC['media'].scrollProfiles); }
         function renderProfessionalSection() { renderSectorBrandsAndSnapshots('professional', 'professional-grid', 'professional-snapshots', ALL_SECTOR_DATA_STATIC['professional'].brands, ALL_SECTOR_DATA_STATIC['professional'].subNodes); }
         function renderFashionSection() { renderSectorBrandsAndSnapshots('fashion', 'fashion-grid', 'fashion-snapshots', ALL_SECTOR_DATA_STATIC['fashion'].brands, ALL_SECTOR_DATA_STATIC['fashion'].subNodes); }
-        function renderGamingSection() { renderSectorBrandsAndSnapshots('gaming', 'gaming-grid', 'gaming-snapshots', ALL_SECTOR_DATA_STATIC['gaming'].brands, ALL_SECTOR_DATA_STATIC['gaming'].subNodes); }
-        function renderJusticeSection() { renderSectorBrandsAndSnapshots('justice', 'justice-grid', 'justice-snapshots', ALL_SECTOR_DATA_STATIC['justice'].brands, ALL_SECTOR_DATA_STATIC['justice'].subNodes); }
-        function renderKnowledgeSection() { renderSectorBrandsAndSnapshots('knowledge', 'knowledge-grid', 'knowledge-snapshots', ALL_SECTOR_DATA_STATIC['knowledge'].brands, ALL_SECTOR_DATA_STATIC['knowledge'].subNodes); }
-        function renderMicromeshSection() { renderSectorBrandsAndSnapshots('micromesh', 'micromesh-grid', 'micromesh-snapshots', ALL_SECTOR_DATA_STATIC['micromesh'].brands, ALL_SECTOR_DATA_STATIC['micromesh'].subNodes); }
+        function renderGamingSection() { renderSectorBrandsAndSnapshots('gaming', 'gaming-grid', 'gaming-snapshots', ALL_SECTOR_DATA_STATIC['gaming'].brands, ALL_SECTOR_DATA_STATIC['gaming'].gamingSubNodes); }
+        function renderJusticeSection() { renderSectorBrandsAndSnapshots('justice', 'justice-grid', 'justice-snapshots', ALL_SECTOR_DATA_STATIC['justice'].brands, ALL_SECTOR_DATA_STATIC['justice'].justiceSubNodes); }
+        function renderKnowledgeSection() { renderSectorBrandsAndSnapshots('knowledge', 'knowledge-grid', 'knowledge-snapshots', ALL_SECTOR_DATA_STATIC['knowledge'].brands, ALL_SECTOR_DATA_STATIC['knowledge'].knowledgeSubNodes); }
+        function renderMicromeshSection() { renderSectorBrandsAndSnapshots('micromesh', 'micromesh-grid', 'micromesh-snapshots', ALL_SECTOR_DATA_STATIC['micromesh'].brands, ALL_SECTOR_DATA_STATIC['micromesh'].micromeshSubNodes); }
         function renderNutritionSection() { renderSectorBrandsAndSnapshots('nutrition', 'nutrition-grid', 'nutrition-snapshots', ALL_SECTOR_DATA_STATIC['nutrition'].brands, ALL_SECTOR_DATA_STATIC['nutrition'].subNodes); } 
-        function renderPackagingSection() { renderSectorBrandsAndSnapshots('packaging', 'packaging-grid', 'packaging-snapshots', ALL_SECTOR_DATA_STATIC['packaging'].brands, ALL_SECTOR_DATA_STATIC['packaging'].subNodes); }
+        function renderPackagingSection() { renderSectorBrandsAndSnapshots('packaging', 'packaging-grid', 'packaging-snapshots', ALL_SECTOR_DATA_STATIC['packaging'].brands, ALL_SECTOR_DATA_STATIC['packaging'].packagingSubNodes); }
         function renderQuantumSection() { renderSectorBrandsAndSnapshots('quantum', 'quantum-grid', 'quantum-snapshots', ALL_SECTOR_DATA_STATIC['quantum'].brands, ALL_SECTOR_DATA_STATIC['quantum'].subNodes); }
         function renderRitualSection() { renderSectorBrandsAndSnapshots('ritual', 'ritual-grid', 'ritual-snapshots', ALL_SECTOR_DATA_STATIC['ritual'].brands, ALL_SECTOR_DATA_STATIC['ritual'].subNodes); }
         function renderSaasSection() { renderSectorBrandsAndSnapshots('saas', 'saas-grid', 'saas-snapshots', ALL_SECTOR_DATA_STATIC['saas'].brands, ALL_SECTOR_DATA_STATIC['saas'].subNodes); } 
-        function renderTradeSection() { renderSectorBrandsAndSnapshots('trade', 'trade-grid', 'trade-snapshots', ALL_SECTOR_DATA_STATIC['trade'].brands, ALL_SECTOR_DATA_STATIC['trade'].subNodes); }
-        function renderUtilitiesSection() { renderSectorBrandsAndSnapshots('utilities', 'utilities-grid', 'utilities-snapshots', ALL_SECTOR_DATA_STATIC['utilities'].brands, ALL_SECTOR_DATA_STATIC['utilities'].subNodes); }
-        function renderVoiceSection() { renderSectorBrandsAndSnapshots('voice', 'voice-grid', 'voice-snapshots', ALL_SECTOR_DATA_STATIC['voice'].brands, ALL_SECTOR_DATA_STATIC['voice'].subNodes); }
+        function renderTradeSection() { renderSectorBrandsAndSnapshots('trade', 'trade-grid', 'trade-snapshots', ALL_SECTOR_DATA_STATIC['trade'].brands, ALL_SECTOR_DATA_STATIC['trade'].tradeSubNodes); }
+        function renderUtilitiesSection() { renderSectorBrandsAndSnapshots('utilities', 'utilities-grid', 'utilities-snapshots', ALL_SECTOR_DATA_STATIC['utilities'].brands, ALL_SECTOR_DATA_STATIC['utilities'].utilitiesSubNodes); }
+        function renderVoiceSection() { renderSectorBrandsAndSnapshots('voice', 'voice-grid', 'voice-snapshots', ALL_SECTOR_DATA_STATIC['voice'].brands, ALL_SECTOR_DATA_STATIC['voice'].voiceSubNodes); }
         function renderNftSection() { renderSectorBrandsAndSnapshots('nft', 'nft-grid', 'nft-snapshots', ALL_SECTOR_DATA_STATIC['nft'].brands, ALL_SECTOR_DATA_STATIC['nft'].subNodes); } 
         function renderZerowasteSection() { renderSectorBrandsAndSnapshots('zerowaste', 'zerowaste-grid', 'zerowaste-snapshots', ALL_SECTOR_DATA_STATIC['zerowaste'].brands, ALL_SECTOR_DATA_STATIC['zerowaste'].subNodes); }
         function renderProfessionalSection() { renderSectorBrandsAndSnapshots('professional', 'professional-grid', 'professional-snapshots', ALL_SECTOR_DATA_STATIC['professional'].brands, ALL_SECTOR_DATA_STATIC['professional'].subNodes); }
-        function renderPayrollMiningSection() { renderSectorBrandsAndSnapshots('payroll-mining', 'payroll-mining-grid', 'payroll-mining-snapshots', ALL_SECTOR_DATA_STATIC['payroll-mining'].brands, ALL_SECTOR_DATA_STATIC['payroll-mining'].subNodes); }
+        function renderPayrollMiningSection() { renderSectorBrandsAndSnapshots('payroll-mining', 'payroll-mining-grid', 'payroll-mining-snapshots', ALL_SECTOR_DATA_STATIC['payroll-mining'].brands, ALL_SECTOR_DATA_STATIC['payroll-mining'].payrollMiningSubNodes); }
         function renderMiningSection() { renderSectorBrandsAndSnapshots('mining', 'mining-grid', 'mining-snapshots', ALL_SECTOR_DATA_STATIC['mining'].brands, ALL_SECTOR_DATA_STATIC['mining'].subNodes); } 
-        function renderWildlifeSection() { renderSectorBrandsAndSnapshots('wildlife', 'wildlife-grid', 'wildlife-snapshots', ALL_SECTOR_DATA_STATIC['wildlife'].brands, ALL_SECTOR_DATA_STATIC['wildlife'].subNodes); }
+        function renderWildlifeSection() { renderSectorBrandsAndSnapshots('wildlife', 'wildlife-grid', 'wildlife-snapshots', ALL_SECTOR_DATA_STATIC['wildlife'].brands, ALL_SECTOR_DATA_STATIC['wildlife'].wildlifeSubNodes); }
 
 
         // --- Load Main Dashboard Data (from Backend) ---
@@ -1196,7 +1335,7 @@
             fetch('http://localhost:5000/api/sectors') 
                 .then(res => {
                     if (!res.ok) {
-                           console.error(`Backend Error: ${res.status} ${res.statusText}`); 
+                             console.error(`Backend Error: ${res.status} ${res.statusText}`); 
                         throw new Error(`Network response was not ok: ${res.status} ${res.statusText}`);
                     }
                     return res.json();
