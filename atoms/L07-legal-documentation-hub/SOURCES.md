@@ -12,3 +12,4 @@
 | 6 | 2025-06-23 | faa.zone | history | `public/legal/index.html` | `16a1345d` | FAA.ZONE™ Legal & Documentation Hub | 32200 | 34 | 0 | 62.2 |
 | 7 | 2025-06-23 | faa.zone | history | `public/legal/index.html` | `ddcd6d93` | FAA.ZONE™ Legal & Documentation Hub | 27902 | 27 | 0 | 54.8 |
 | 8 | 2025-07-08 | legal | history | `index.html` | `c03f1d6c` | FAA.ZONE™ Legal & Documentation Hub | 40759 | 49 | 0 | 78.1 |
+| 9 | 2025-07-08 | legal | history | `public/index.html` | `5f0a988c` | FAA.ZONE™ Legal & Documentation Hub | 40758 | 49 | 0 | 78.1 |
