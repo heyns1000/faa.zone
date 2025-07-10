@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="pageTitle">Footer Index | Fruitful Global™</title>
+    <title>Global Footer</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts - Inter for clean typography -->
@@ -11,386 +11,34 @@
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Base Styles - Consistent with Fruitful aesthetic */
+        /* Basic body styling for full height and font */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f5f5f7; /* Very light gray, almost white */
-            color: #1d1d1f; /* Near black for primary text */
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
             margin: 0;
-            padding: 0;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: space-between; /* Pushes footer to the bottom */
+            min-height: 100vh; /* Ensures footer sticks to the bottom */
         }
-
-        /* Dark Mode Styles */
-        body.dark-mode {
+        /* Flex grow for main content to push footer down, if there was content above */
+        main {
+            flex-grow: 1;
+        }
+        /* Custom styles for the new footer's dark mode */
+        body.dark-mode .dark\:bg-1a1a1a {
             background-color: #1a1a1a;
-            color: #f5f5f7;
         }
-        body.dark-mode header {
-            background-color: rgba(26, 26, 26, 0.9);
-            border-bottom-color: #333;
-            box-shadow: 0 1px 0 rgba(255,255,255,0.05);
+        body.dark-mode .dark\:text-gray-400 {
+            color: #9ca3af;
         }
-        body.dark-mode header h1 {
-            color: #f5f5f7;
+        body.dark-mode .dark\:border-333 {
+            border-color: #333;
         }
-        body.dark-mode header nav a {
-            color: #f5f5f7; /* Light text in dark mode for visibility */
-        }
-        body.dark-mode header nav a:hover {
-            color: #66b2ff; /* Lighter blue for dark mode hover */
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-        body.dark-mode header nav a.px-4 { /* SecureSign button in dark mode */
-            background-color: #66b2ff;
-            color: #1d1d1f;
-            box-shadow: 0 1px 3px rgba(255,255,255,0.1);
-            border-color: #66b2ff; /* Ensure border color matches */
-        }
-        body.dark-mode header nav a.px-4:hover {
-            background-color: #7abaff;
-            box-shadow: 0 2px 5px rgba(255,255,255,0.15);
-        }
-        body.dark-mode #language-toggle, body.dark-mode #theme-toggle {
-            background-color: #3a3a3a;
-            color: #f5f5f7;
-        }
-        body.dark-mode #language-toggle:focus, body.dark-mode #theme-toggle:focus {
-            box-shadow: 0 0 0 2px rgba(102, 178, 255, 0.5); /* Blue ring for dark mode */
-        }
-
-        body.dark-mode .container {
-            background-color: #2a2a2a;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-        }
-        body.dark-mode .container h1 {
-            color: #f5f5f7; /* White in dark mode */
-        }
-        body.dark-mode .container .brand-logo-text {
-            color: #66b2ff; /* Lighter blue for brand text in dark mode */
-        }
-        body.dark-mode h2, body.dark-mode h3 {
-            color: #f5f5f7;
-            border-bottom-color: #333; /* Darker border for headings */
-        }
-        body.dark-mode p, body.dark-mode ul li {
-            color: #e0e0e0;
-        }
-        body.dark-mode a {
-            color: #66b2ff;
-        }
-        body.dark-mode a:hover {
-            color: #7abaff;
-        }
-        body.dark-mode footer {
-            background-color: #1a1a1a;
-            border-top-color: #333;
-            color: #888;
-        }
-        body.dark-mode footer a {
-            color: #e0e0e0;
-        }
-        body.dark-mode footer a:hover {
-            color: #f5f5f7;
-        }
-
-        /* Header specific styling from faa.zone/index.html */
-        header {
-            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
-            backdrop-filter: blur(10px); /* Frosted glass effect */
-            border-bottom: 1px solid #e8e8ed; /* Subtle bottom border */
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-            box-shadow: 0 1px 0 rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            display: flex;
-            flex-direction: column;
-            sm:flex-direction: row; /* Adjusted for responsive header */
-            justify-content: space-between;
-            align-items: center;
-            padding-left: 1.5rem; /* px-6 */
-            padding-right: 1.5rem; /* px-6 */
-            md:padding-left: 3rem; /* md:px-12 */
-            md:padding-right: 3rem; /* md:px-12 */
-        }
-        header h1 {
-            color: #1d1d1f; /* Dark text for logo */
-            font-weight: 700;
-            font-size: 1.5rem;
-            letter-spacing: -0.02em;
-            margin-bottom: 1rem; /* mb-4 sm:mb-0 */
-            sm:margin-bottom: 0;
-        }
-        header nav {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            sm:justify-content: flex-end; /* sm:justify-end */
-            align-items: center;
-            gap: 0.5rem; /* space-x-2 sm:space-x-4 */
-            sm:gap: 1rem;
-        }
-        header nav a {
-            color: #1d1d1f; /* Ensure dark color for links on light header */
-            font-size: 0.9rem;
-            font-weight: 500;
-            padding: 0.5rem 0.8rem;
-            border-radius: 6px;
-            transition: all 0.2s ease-in-out;
-            position: relative;
-        }
-        header nav a:hover {
-            color: #0071e3; /* Apple blue on hover */
-            background-color: rgba(0, 0, 0, 0.03);
-        }
-        header nav a.px-4 { /* Sign Up button */
-            background-color: #0071e3; /* Apple blue */
-            color: white;
-            padding: 0.6rem 1.2rem;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            border: 1px solid #0071e3; /* Ensure border is visible and matches */
-        }
-        header nav a.px-4:hover {
-            background-color: #0077ed;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-        }
-        header .flex.items-center.space-x-2.ml-4 {
-            margin-left: 1rem; /* ml-4 */
-        }
-        header select, header button {
-            padding: 0.5rem; /* p-2 */
-            border-radius: 9999px; /* rounded-full */
-            font-size: 0.875rem; /* text-sm */
-            cursor: pointer;
-            outline: none;
-            border: none; /* remove default border */
-            background-color: #e5e7eb; /* bg-gray-100 */
-            color: #1f2937; /* text-gray-800 */
-            transition: all 0.2s ease-in-out;
-        }
-        header select:focus, header button:focus {
-            box-shadow: 0 0 0 2px #3b82f6; /* focus:ring-2 focus:ring-blue-500 */
-        }
-
-
-        .container {
-            background-color: #ffffff;
-            border-radius: 12px;
-            padding: 2.5rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            max-width: 960px;
-            width: 100%;
-            margin: 2rem auto;
-            flex-grow: 1; /* Allows container to take available space */
-        }
-
-        /* Corrected styling for main title and headings */
-        .container h1 {
-            font-size: 2.8rem; /* Consistent with faa.zone hero h2 */
-            font-weight: 800; /* Extra bold */
-            color: #1d1d1f; /* Near black for primary text on light mode */
-            margin-bottom: 0.5rem; /* Reduced margin to bring brand text closer */
-            text-align: center;
-            letter-spacing: -0.03em;
-        }
-        /* Specific override for the main "Privacy Policy" title to be black, not blue */
-        body.dark-mode .container h1[data-i18n="privacyTitle"] {
-            color: #f5f5f7; /* White in dark mode */
-        }
-        .container .brand-logo-text {
-            font-size: 1.8rem; /* Adjusted for a strong presence within content */
-            font-weight: 700;
-            color: #0071e3; /* Fruitful blue */
-            text-align: center;
-            margin-top: 0; /* Align with h1's bottom */
-            margin-bottom: 2rem; /* Space below brand text */
-            letter-spacing: -0.02em;
-        }
-        body.dark-mode .container .brand-logo-text {
-            color: #66b2ff; /* Lighter blue in dark mode */
-        }
-
-
-        /* Enhanced H2 styling for numbered sections */
-        h2 {
-            font-size: 2.2rem; /* Slightly larger than before, closer to main H1 */
-            font-weight: 800; /* Extra bold, like main title */
-            color: #0071e3; /* Fruitful blue for prominence */
-            margin-top: 3rem; /* More space above */
-            margin-bottom: 1.5rem; /* More space below */
-            border-bottom: 1px solid #e8e8ed;
-            padding-bottom: 0.75rem; /* More padding below border */
-            letter-spacing: -0.02em; /* Tighter spacing */
-        }
-        body.dark-mode h2 {
-            color: #66b2ff; /* Lighter blue in dark mode */
-            border-bottom-color: #333;
-        }
-
-        h3 {
-            font-size: 1.5rem; /* Consistent with faa.zone h3 */
-            font-weight: 700; /* Bold */
-            color: #1d1d1f; /* Near black */
-            margin-top: 1.5rem;
-            margin-bottom: 0.75rem;
-        }
-        body.dark-mode h3 {
-            color: #f5f5f7;
-        }
-
-        p {
-            margin-bottom: 1rem; /* Consistent spacing between paragraphs */
-            color: #424245; /* Slightly lighter gray for body text */
-        }
-        body.dark-mode p {
-            color: #e0e0e0;
-        }
-
-        ul {
-            list-style-type: disc;
-            margin-left: 1.5rem;
-            margin-bottom: 1rem;
-            color: #424245;
-        }
-        ul li {
-            margin-bottom: 0.5rem; /* Spacing for list items */
-        }
-        body.dark-mode ul {
-            color: #e0e0e0;
-        }
-        body.dark-mode ul li {
-            color: #e0e0e0;
-        }
-
-        a {
-            color: #0071e3; /* Apple Blue */
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        a:hover {
-            color: #005bb5;
-            text-decoration: underline;
-        }
-
-        .last-updated {
-            text-align: right;
-            font-size: 0.9rem;
-            color: #6e6e73;
-            margin-top: 2rem;
-            margin-bottom: 1rem; /* Ensure space below last updated */
-        }
-        body.dark-mode .last-updated {
-            color: #888;
-        }
-
-        /* Footer styles - copied directly from faa.zone/index.html */
-        footer {
-            background-color: #f5f5f7;
-            color: #6e6e73;
-            padding: 2rem;
-            font-size: 0.85rem;
-            border-top: 1px solid #e8e8ed;
-            text-align: center;
-        }
-        body.dark-mode footer {
-            background-color: #1a1a1a;
-            color: #888;
-            border-top-color: #333;
-        }
-        footer .footer-links {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-bottom: 1rem;
-        }
-        footer .footer-links a {
-            color: #6e6e73;
-            text-decoration: none;
-            transition: color 0.2s ease;
-            margin: 0 0.5rem; /* Horizontal spacing */
-            margin-bottom: 0.5rem; /* Vertical spacing for wrapped items */
-            white-space: nowrap; /* Prevent links from breaking individually */
-        }
-        body.dark-mode footer .footer-links a {
-            color: #e0e0e0; /* Adjusted for better visibility in dark mode */
-        }
-        footer .footer-links a:hover {
-            color: #1d1d1f;
-        }
-        body.dark-mode footer .footer-links a:hover {
-            color: #f5f5f7;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            header {
-                padding: 1rem;
-            }
-            header h1 {
-                font-size: 1.2rem;
-            }
-            header nav {
-                margin-top: 1rem;
-            }
-            header nav a {
-                margin: 0.25rem 0.5rem;
-                padding: 0.4rem 0.6rem;
-                font-size: 0.8rem;
-            }
-            header .flex.items-center.space-x-2.ml-4 {
-                margin-left: 0;
-                margin-top: 0.5rem;
-                width: 100%;
-                justify-content: center;
-            }
-            header select, header button {
-                padding: 0.4rem;
-                font-size: 0.8rem;
-            }
-
-            .container {
-                padding: 1.5rem;
-                margin: 1rem auto;
-            }
-            h1 {
-                font-size: 2.2rem;
-            }
-            .container .brand-logo-text {
-                font-size: 1.5rem;
-            }
-            h2 {
-                font-size: 1.6rem;
-            }
-            h3 {
-                font-size: 1.3rem;
-            }
-            p, ul li {
-                font-size: 0.95rem;
-            }
-            footer {
-                padding: 1.5rem;
-            }
-            footer .footer-links a {
-                margin: 0 0.25rem; /* Smaller horizontal margin for mobile */
-                margin-bottom: 0.25rem; /* Smaller vertical margin for mobile */
-            }
+        body.dark-mode .dark\:hover\:text-gray-200:hover {
+            color: #e5e7eb;
         }
     </style>
 </head>
-<body>
+<body class="bg-gray-50"> <!-- Added a light background to the body for contrast -->
     <!-- Header Section -->
     <header class="bg-blue-600 text-white py-6 px-4 text-center shadow-md">
         <h1 class="text-3xl font-bold mb-2">Welcome and Thank You for Your Support!</h1>
@@ -419,7 +67,7 @@
                     <a href="https://footer.global.repo.seedwave.faa.zone/developers.html" class="hover:text-gray-900 transition-colors mx-2 my-1">Developers</a>
                     <a href="https://footer.global.repo.seedwave.faa.zone/vaultmesh.html" class="hover:text-gray-900 transition-colors mx-2 my-1">VaultMesh</a>
                     <a href="https://footer.global.repo.seedwave.faa.zone/fruitful.html" class="hover:text-gray-900 transition-colors mx-2 my-1">Fruitful</a>
-                    <a href="https://faa.zone/" class="hover:text-gray-900 transition-colors mx-2 my-1">FAA.Zone</a>
+                    <a href="https://footer.global.repo.seedwave.faa.zone/faa.zone.html" class="hover:text-gray-900 transition-colors mx-2 my-1">FAA.Zone</a>
                     <a href="https://footer.global.repo.seedwave.faa.zone/about.html" class="hover:text-gray-900 transition-colors mx-2 my-1">About</a>
                     <a href="https://footer.global.repo.seedwave.faa.zone/accessibility.html" class="hover:text-gray-900 transition-colors mx-2 my-1">Accessibility</a>
                 </div>
@@ -477,7 +125,7 @@
         &lt;a href="https://footer.global.repo.seedwave.faa.zone/developers.html" class="hover:text-gray-900 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerDevelopers"&gt;Developers&lt;/a&gt;
         &lt;a href="https://footer.global.repo.seedwave.faa.zone/vaultmesh.html" class="hover:text-gray-900 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerVaultMeshLink"&gt;VaultMesh&lt;/a&gt;
         &lt;a href="https://footer.global.repo.seedwave.faa.zone/fruitful.html" class="hover:text-gray-900 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerFruitfulLink"&gt;Fruitful&lt;/a&gt;
-        <a href="https://faa.zone/" class="hover:text-gray-900 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerFAAZoneLink">FAA.Zone</a>
+        &lt;a href="https://footer.global.repo.seedwave.faa.zone/faa.zone.html" class="hover:text-gray-900 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerFAAZoneLink"&gt;FAA.Zone&lt;/a&gt;
         &lt;a href="https://footer.global.repo.seedwave.faa.zone/about.html" class="hover:text-gray-900 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerAboutLink"&gt;About&lt;/a&gt;
         &lt;a href="https://footer.global.repo.seedwave.faa.zone/accessibility.html" class="hover:text-gray-900 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerAccessibility"&gt;Accessibility&lt;/a&gt;
     &lt;/div&gt;
@@ -499,7 +147,7 @@
                 Discover Banimal's world of thoughtful baby essentials & innovative lighting. For every purchase, we deliver the same item to a child in need, identified by the Baobab Security Network's data-driven insights.
             </p>
             <!-- Call to Action Button -->
-            <a href="https://banimal.co.za" class="bg-blue-600 text-white font-semibold py-3 px-6 rounded-full inline-flex items-center justify-center hover:bg-blue-700 transition-colors duration-200 shadow-lg hover:shadow-xl">
+            <a href="global_brands.html" class="bg-blue-600 text-white font-semibold py-3 px-6 rounded-full inline-flex items-center justify-center hover:bg-blue-700 transition-colors duration-200 shadow-lg hover:shadow-xl">
                 Explore Banimal's World <i class="fas fa-arrow-right ml-2"></i>
             </a>
 
@@ -537,7 +185,7 @@
             <a href="https://footer.global.repo.seedwave.faa.zone/developers.html" class="hover:text-gray-900 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerDevelopers">Developers</a>
             <a href="https://footer.global.repo.seedwave.faa.zone/vaultmesh.html" class="hover:text-gray-900 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerVaultMeshLink">VaultMesh</a>
             <a href="https://footer.global.repo.seedwave.faa.zone/fruitful.html" class="hover:text-gray-900 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerFruitfulLink">Fruitful</a>
-            <a href="https://faa.zone/" class="hover:text-gray-900 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerFAAZoneLink">FAA.Zone</a>
+            <a href="https://footer.global.repo.seedwave.faa.zone/faa.zone.html" class="hover:text-gray-900 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerFAAZoneLink">FAA.Zone</a>
             <a href="https://footer.global.repo.seedwave.faa.zone/about.html" class="hover:text-gray-900 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerAboutLink">About</a>
             <a href="https://footer.global.repo.seedwave.faa.zone/accessibility.html" class="hover:text-gray-900 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerAccessibility">Accessibility</a>
         </div>
@@ -546,26 +194,16 @@
 
     <!-- The script block for i18n and theme toggle remains at the end of the body -->
     <script>
+        // This script block should be placed at the end of the <body> tag in the *main* HTML file,
+        // or loaded as a separate JS file after the footer HTML is present.
+        // It contains the language data and theme toggling logic for the entire page.
+
         // Language data for i18n
-        window.languageData = {
+        // This should ideally be loaded once globally, perhaps in the main site's script.
+        // For standalone testing, it's included here.
+        window.languageData = window.languageData || { // Ensure it's only declared if not already present
             en: {
-                pageTitle: 'Footer Index | Fruitful Global™',
-                fruitfulBrand: 'Fruitful™',
-                navFeatures: 'Features',
-                navSignal: 'Signal',
-                navVault: 'Vault',
-                navTreaty: 'Treaty',
-                navVaultMesh: 'VaultMesh',
-                navAbout: 'About',
-                navCrateDance: 'Fruitful Crate Dance',
-                navCareers: 'Careers',
-                navSecureSign: 'SecureSign',
-                navSignUp: 'Sign Up',
-                // Index Page Content
-                indexTitle: 'Global Footer Repository Index',
-                indexDescription: 'This page serves as a central directory for all global footer content and legal pages within the Fruitful Global™ ecosystem. Below you will find links to various essential documents and informational pages.',
-                indexLinksTitle: 'Essential Pages:',
-                // Footer links (for i18n in JS, if needed, though HTML data-i18n is used above)
+                // Footer links
                 footerPrivacy: 'Privacy',
                 footerTerms: 'Terms',
                 footerContact: 'Contact',
@@ -577,36 +215,9 @@
                 footerAboutLink: 'About',
                 footerAccessibility: 'Accessibility',
                 footerCopyright: '© 2025 FAA™ Treaty System™. All Rights Reserved.',
-                footerPoweredBy: 'Powered by 🦍 glyphs + Vault API. Synced with Seedwave™.',
-                // Specific links for index page
-                footerPrivacyLink: 'Privacy Policy',
-                footerTermsLink: 'Terms & Conditions',
-                footerContactLink: 'Contact Us',
-                footerCopyrightPageLink: 'Copyright Information',
-                footerDevelopersPageLink: 'Developers',
-                footerVaultMeshPageLink: 'VaultMesh Overview',
-                footerFruitfulPageLink: 'About Fruitful Global™',
-                footerFAAZonePageLink: 'FAA.Zone Portal',
-                footerAboutPageLink: 'About Us',
-                footerAccessibilityPageLink: 'Accessibility Statement'
+                footerPoweredBy: 'Powered by 🦍 glyphs + Vault API. Synced with Seedwave™.'
             },
             es: {
-                pageTitle: 'Índice de Pie de Página | Fruitful Global™',
-                fruitfulBrand: 'Fruitful™',
-                navFeatures: 'Características',
-                navSignal: 'Señal',
-                navVault: 'Bóveda',
-                navTreaty: 'Tratado',
-                navVaultMesh: 'VaultMesh',
-                navAbout: 'Nosotros',
-                navCrateDance: 'Danza de Cestas Frutales',
-                navCareers: 'Carreras',
-                navSecureSign: 'Firma Segura',
-                navSignUp: 'Registrarse',
-                // Index Page Content
-                indexTitle: 'Índice del Repositorio Global de Pie de Página',
-                indexDescription: 'Esta página sirve como un directorio central para todo el contenido del pie de página global y las páginas legales dentro del ecosistema Fruitful Global™. A continuación encontrará enlaces a varios documentos esenciales y páginas de información.',
-                indexLinksTitle: 'Páginas Esenciales:',
                 footerPrivacy: 'Privacidad',
                 footerTerms: 'Términos',
                 footerContact: 'Contacto',
@@ -618,36 +229,9 @@
                 footerAboutLink: 'Nosotros',
                 footerAccessibility: 'Accesibilidad',
                 footerCopyright: '© 2025 FAA™ Treaty System™. Todos los derechos reservados.',
-                footerPoweredBy: 'Impulsado por 🦍 glifos + API de Bóveda. Sincronizado con Seedwave™.',
-                // Specific links for index page
-                footerPrivacyLink: 'Política de Privacidad',
-                footerTermsLink: 'Términos y Condiciones',
-                footerContactLink: 'Contáctenos',
-                footerCopyrightPageLink: 'Información de Derechos de Autor',
-                footerDevelopersPageLink: 'Desarrolladores',
-                footerVaultMeshPageLink: 'Resumen de VaultMesh',
-                footerFruitfulPageLink: 'Acerca de Fruitful Global™',
-                footerFAAZonePageLink: 'Portal FAA.Zone',
-                footerAboutPageLink: 'Acerca de Nosotros',
-                footerAccessibilityPageLink: 'Declaración de Accesibilidad'
+                footerPoweredBy: 'Impulsado por 🦍 glifos + API de Bóveda. Sincronizado con Seedwave™.'
             },
             fr: {
-                pageTitle: 'Index du Pied de Page | Fruitful Global™',
-                fruitfulBrand: 'Fruitful™',
-                navFeatures: 'Fonctionnalités',
-                navSignal: 'Signal',
-                navVault: 'Coffre',
-                navTreaty: 'Traité',
-                navVaultMesh: 'VaultMesh',
-                navAbout: 'À Propos',
-                navCrateDance: 'Fruitful Crate Dance',
-                navCareers: 'Carrières',
-                navSecureSign: 'Signature Sécurisée',
-                navSignUp: 'S\'inscrire',
-                // Index Page Content
-                indexTitle: 'Index du Répertoire Global de Pied de Page',
-                indexDescription: 'Cette page sert de répertoire central pour tout le contenu du pied de page global et les pages légales au sein de l\'écosystème Fruitful Global™. Vous trouverez ci-dessous des liens vers divers documents essentiels et pages d\'information.',
-                indexLinksTitle: 'Pages Essentielles :',
                 footerPrivacy: 'Confidentialité',
                 footerTerms: 'Conditions',
                 footerContact: 'Contact',
@@ -659,36 +243,9 @@
                 footerAboutLink: 'À Propos',
                 footerAccessibility: 'Accessibilité',
                 footerCopyright: '© 2025 FAA™ Treaty System™. Tous droits réservés.',
-                footerPoweredBy: 'Propulsé par 🦍 glyphes + API du Coffre. Synchronisé avec Seedwave™.',
-                // Specific links for index page
-                footerPrivacyLink: 'Politique de Confidentialité',
-                footerTermsLink: 'Conditions Générales',
-                footerContactLink: 'Nous Contacter',
-                footerCopyrightPageLink: 'Informations sur les Droits d\'Auteur',
-                footerDevelopersPageLink: 'Développeurs',
-                footerVaultMeshPageLink: 'Aperçu de VaultMesh',
-                footerFruitfulPageLink: 'À Propos de Fruitful Global™',
-                footerFAAZonePageLink: 'Portail FAA.Zone',
-                footerAboutPageLink: 'À Propos de Nous',
-                footerAccessibilityPageLink: 'Déclaration d\'Accessibilité'
+                footerPoweredBy: 'Propulsé par 🦍 glyphes + API du Coffre. Synchronisé avec Seedwave™.'
             },
             ar: {
-                pageTitle: 'فهرس تذييل الصفحة | Fruitful Global™',
-                fruitfulBrand: 'Fruitful™',
-                navFeatures: 'الميزات',
-                navSignal: 'الإشارة',
-                navVault: 'الخزنة',
-                navTreaty: 'المعاهدة',
-                navVaultMesh: 'شبكة الكهف',
-                navAbout: 'حول',
-                navCrateDance: 'رقصة الصندوق المثمر',
-                navCareers: 'الوظائف',
-                navSecureSign: 'توقيع آمن',
-                navSignUp: 'التسجيل',
-                // Index Page Content
-                indexTitle: 'فهرس مستودع تذييل الصفحة العالمي',
-                indexDescription: 'تعمل هذه الصفحة كدليل مركزي لجميع محتوى تذييل الصفحة العالمي والصفحات القانونية ضمن نظام Fruitful Global™. ستجد أدناه روابط لوثائق أساسية وصفحات معلومات متنوعة.',
-                indexLinksTitle: 'الصفحات الأساسية:',
                 footerPrivacy: 'الخصوصية',
                 footerTerms: 'الشروط',
                 footerContact: 'اتصل بنا',
@@ -700,36 +257,9 @@
                 footerAboutLink: 'حول',
                 footerAccessibility: 'إمكانية الوصول',
                 footerCopyright: '© 2025 نظام معاهدة FAA™. جميع الحقوق محفوظة.',
-                footerPoweredBy: 'مدعوم بواسطة 🦍 الرموز + واجهة برمجة تطبيقات Vault. متزامن مع Seedwave™.',
-                // Specific links for index page
-                footerPrivacyLink: 'سياسة الخصوصية',
-                footerTermsLink: 'الشروط والأحكام',
-                footerContactLink: 'اتصل بنا',
-                footerCopyrightPageLink: 'معلومات حقوق النشر',
-                footerDevelopersPageLink: 'المطورون',
-                footerVaultMeshPageLink: 'نظرة عامة على شبكة الكهف',
-                footerFruitfulPageLink: 'حول Fruitful Global™',
-                footerFAAZonePageLink: 'بوابة FAA.Zone',
-                footerAboutPageLink: 'حولنا',
-                footerAccessibilityPageLink: 'بيان إمكانية الوصول'
+                footerPoweredBy: 'مدعوم بواسطة 🦍 الرموز + واجهة برمجة تطبيقات Vault. متزامن مع Seedwave™.'
             },
             zh: {
-                pageTitle: '页脚索引 | 丰硕全球™',
-                fruitfulBrand: 'Fruitful™',
-                navFeatures: '功能',
-                navSignal: '信号',
-                navVault: '金库',
-                navTreaty: '条约',
-                navVaultMesh: '金库网格',
-                navAbout: '关于',
-                navCrateDance: '丰硕板条箱之舞',
-                navCareers: '职业',
-                navSecureSign: '安全签署',
-                navSignUp: '注册',
-                // Index Page Content
-                indexTitle: '全球页脚仓库索引',
-                indexDescription: '本页面作为丰硕全球™生态系统内所有全球页脚内容和法律页面的中心目录。您将在下方找到各种基本文档和信息页面的链接。',
-                indexLinksTitle: '重要页面:',
                 footerPrivacy: '隐私',
                 footerTerms: '条款',
                 footerContact: '联系',
@@ -741,74 +271,71 @@
                 footerAboutLink: '关于',
                 footerAccessibility: '无障碍',
                 footerCopyright: '© 2025 FAA™ 条约系统™。保留所有权利。',
-                footerPoweredBy: '由 🦍 符文 + 金库 API 提供支持。与 Seedwave™ 同步。',
-                // Specific links for index page
-                footerPrivacyLink: '隐私政策',
-                footerTermsLink: '条款和条件',
-                footerContactLink: '联系我们',
-                footerCopyrightPageLink: '版权信息',
-                footerDevelopersPageLink: '开发者',
-                footerVaultMeshPageLink: '金库网格概览',
-                footerFruitfulPageLink: '关于丰硕全球™',
-                footerFAAZonePageLink: 'FAA.Zone 门户',
-                footerAboutPageLink: '关于我们',
-                footerAccessibilityPageLink: '无障碍声明'
+                footerPoweredBy: '由 🦍 符文 + 金库 API 提供支持。与 Seedwave™ 同步。'
             }
         };
 
-        // Theme Toggle Logic
+        // This part of the script assumes the main page has a theme toggle and language toggle.
+        // If this footer is used on a standalone page without those elements, these lines
+        // will not cause errors but will simply not find the elements.
         document.addEventListener('DOMContentLoaded', () => {
             const body = document.body;
+            // You might need to add these elements to your HTML if they don't exist for full functionality
+            // For example: <button id="theme-toggle">☀️</button> and <select id="language-toggle"></select>
             const themeToggle = document.getElementById('theme-toggle');
             const languageToggle = document.getElementById('language-toggle');
 
-            // Load saved theme
+            // Apply initial theme based on localStorage or default to light
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'dark') {
                 body.classList.add('dark-mode');
-                themeToggle.innerText = '🌙';
+                if (themeToggle) themeToggle.innerText = '🌙';
             } else {
-                themeToggle.innerText = '☀️';
+                if (themeToggle) themeToggle.innerText = '☀️';
             }
 
-            // Load saved language
+            // Set initial language from localStorage or default to English
             const savedLang = localStorage.getItem('language') || 'en';
-            languageToggle.value = savedLang;
-            updateLanguage(savedLang);
+            if (languageToggle) languageToggle.value = savedLang;
+            // Call updateLanguage to apply translations to the footer immediately
+            updateFooterLanguage(savedLang);
 
-            // Theme toggle event listener
-            themeToggle.addEventListener('click', () => {
-                if (body.classList.contains('dark-mode')) {
-                    body.classList.remove('dark-mode');
-                    localStorage.setItem('theme', 'light');
-                    themeToggle.innerText = '☀️';
-                } else {
-                    body.classList.add('dark-mode');
-                    localStorage.setItem('theme', 'dark');
-                    themeToggle.innerText = '🌙';
-                }
-            });
+            // Theme toggle event listener (if the toggle exists on the page)
+            if (themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    if (body.classList.contains('dark-mode')) {
+                        body.classList.remove('dark-mode');
+                        localStorage.setItem('theme', 'light');
+                        themeToggle.innerText = '☀️';
+                    } else {
+                        body.classList.add('dark-mode');
+                        localStorage.setItem('theme', 'dark');
+                        themeToggle.innerText = '🌙';
+                    }
+                });
+            }
 
-            // Language toggle event listener
-            languageToggle.addEventListener('change', (event) => {
-                const newLang = event.target.value;
-                updateLanguage(newLang);
-                localStorage.setItem('language', newLang);
-            });
+            // Language toggle event listener (if the toggle exists on the page)
+            if (languageToggle) {
+                languageToggle.addEventListener('change', (event) => {
+                    const newLang = event.target.value;
+                    localStorage.setItem('language', newLang);
+                    updateFooterLanguage(newLang); // Update only footer elements
+                    // If the main page also has translatable elements, it would call its own updateLanguage function
+                });
+            }
 
-            // Function to update text content based on selected language
-            function updateLanguage(lang) {
-                const elements = document.querySelectorAll('[data-i18n]');
-                elements.forEach(el => {
+            // Function to update only footer text content based on selected language
+            function updateFooterLanguage(lang) {
+                const footerElements = document.querySelectorAll('footer [data-i18n]');
+                footerElements.forEach(el => {
                     const key = el.getAttribute('data-i18n');
                     if (window.languageData[lang] && window.languageData[lang][key]) {
                         el.innerHTML = window.languageData[lang][key];
                     }
                 });
-                document.title = window.languageData[lang]?.pageTitle || 'Fruitful Global';
             }
         });
     </script>
 </body>
 </html>
-
