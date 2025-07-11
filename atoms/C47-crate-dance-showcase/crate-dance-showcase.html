@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,7 +5,7 @@
     <title data-lang-key="page_title">Fruitful Crate Dance Showcase - Sponsorship Tiers</title>
     <!-- PayPal SDK script -->
     <script
-      src="https://www.paypal.com/sdk/js?client-id=BAAGdPecRsf6dw_nIrWqUen0GdW0UsBZapp1Gn62xkPdD-Vqc-4lqWAidKK8LOObXux8pHJGjXknar6Q&components=hosted-buttons&disable-funding=venmo&currency=USD">
+      src="https://www.paypal.com/sdk/js?client-id=BAAGdPecRsf6dw_nIrWqUen0GdW0UsBZapp1Gn62xkPdD-Vqc-4lqWAidKK8LOObXux5pHJGjXknar6Q&components=hosted-buttons&disable-funding=venmo&currency=USD">
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -116,7 +115,7 @@
         .light-mode .section-padding { border-bottom-color: var(--border-color-light); }
         .section-padding:last-of-type { border-bottom: none; }
         .section-title { font-size: 2.5rem; font-weight: 800; text-align: center; margin-bottom: 50px; }
-       
+        
         /* Specific styles for sponsorship tiers */
         .sponsorship-header {
             text-align: center;
@@ -557,7 +556,6 @@
 
         <section class="section-padding">
             <div class="container">
-                <!-- Removed New Currency Selector for Pricing Tiers as it was related to MineNest -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8" id="sponsorship-tiers">
                     <!-- Tier cards will be dynamically populated by JavaScript -->
                 </div>
@@ -579,7 +577,7 @@
             <div class="container max-w-5xl mx-auto">
                 <h2 data-lang-key="currency_converter_title" class="section-title">💱 Global Currency Converter</h2>
                 <p data-lang-key="currency_converter_desc" class="text-center -mt-8 mb-6">Convert any currency globally using real-time exchange rates. Please note, this tool is for informational purposes only and uses a third-party API.</p>
-               
+                
                 <div class="currency-input-group">
                     <input type="number" id="amount-input" data-lang-key="amount_placeholder" placeholder="Amount" value="1" min="0.01" step="0.01" class="w-full p-3 rounded-lg text-lg">
                     <select id="from-currency-select" class="w-full p-3 rounded-lg text-lg"></select>
@@ -595,7 +593,7 @@
             </div>
         </section>
     </main>
-   
+    
     <!-- Global Footer -->
     <footer class="py-8 px-6 md:px-12 text-center bg-f5f5f7 text-gray-600 border-t border-e8e8ed dark:bg-1a1a1a dark:text-gray-400 dark:border-333">
         <div class="flex flex-wrap justify-center mb-4 text-sm">
@@ -660,7 +658,7 @@
                     "invalid_amount": "Please enter a valid amount.",
                     "currency_not_found": "Currency not found or exchange rate unavailable.",
                     "error_conversion": "Error during conversion. Please try again.",
-                    footerPrivacy: 'Privacy', footerTerms: 'Terms', footerContact: 'Contact', footerCopyrightLink: 'Copyright', footerDevelopers: 'Developers', footerVaultMeshLink: 'VaultMesh', footerFruitfulLink: 'Fruitful', footerFAAZoneLink: 'FAA.Zone', footerAboutLink: 'About', footerAccessibility: 'Accessibility', footerCopyright: '© 2025 FAA™ Treaty System™. All Rights Reserved.', footerPoweredBy: '由 🦍 glyphs + Vault API. Synced with Seedwave™.'
+                    footerPrivacy: 'Privacy', footerTerms: 'Terms', footerContact: 'Contact', footerCopyrightLink: 'Copyright', footerDevelopers: 'Developers', footerVaultMeshLink: 'VaultMesh', footerFruitfulLink: 'Fruitful', footerFAAZoneLink: 'FAA.Zone', footerAboutLink: 'About', footerAccessibility: 'Accessibility', footerCopyright: '© 2025 FAA™ Treaty System™. All Rights Reserved.', footerPoweredBy: 'Powered by 🦍 glyphs + Vault API. Synced with Seedwave™.'
                 },
                 af: {
                     "page_title": "Fruitful Crate Dance Showcase - Borgskapvlakke",
@@ -1001,20 +999,30 @@
                     themeNightBtn.classList.add('active');
                 }
                 localStorage.setItem('themeMode', theme);
+
+                // Update Chart.js colors based on the new theme
+                const rootStyles = getComputedStyle(document.documentElement);
+                const mutedTextColor = theme === 'light' ? rootStyles.getPropertyValue('--muted-text-light') : rootStyles.getPropertyValue('--muted-text-dark');
+                const borderColor = theme === 'light' ? rootStyles.getPropertyValue('--border-color-light') : rootStyles.getPropertyValue('--border-color-dark');
+
+                if (impactChartInstance) { // Check if instance exists before updating
+                    impactChartInstance.options.scales.y.title.color = mutedTextColor;
+                    impactChartInstance.options.scales.y.ticks.color = mutedTextColor;
+                    impactChartInstance.options.scales.y.grid.color = borderColor;
+                    impactChartInstance.options.scales.x.ticks.color = mutedTextColor;
+                    impactChartInstance.update();
+                }
             };
 
             themeDayBtn.addEventListener('click', () => setTheme('light'));
             themeNightBtn.addEventListener('click', () => setTheme('dark'));
-
-            const savedTheme = localStorage.getItem('themeMode') || 'dark';
-            setTheme(savedTheme);
 
             // Sponsorship Data - Base costs are in ZAR
             const sponsorshipData = [
                 { tier: 'Starter', costZAR: 25000, meals: 250, descKey: 'starter_desc', titleKey: 'starter_title', features: ['feature_logo_website', 'feature_social_mention', 'feature_event_passes'], paypalId: '9KZH38XFK3TX2' },
                 { tier: 'Local Champion', costZAR: 75000, meals: 750, descKey: 'local_champion_desc', titleKey: 'local_champion_title', features: ['feature_all_starter', 'feature_logo_local_banners', 'feature_small_booth', 'feature_product_placement', 'feature_event_passes'], paypalId: 'FNGGP5UJ9VYHQ' },
                 { tier: 'Regional Partner', costZAR: 250000, meals: 2500, descKey: 'regional_partner_desc', titleKey: 'regional_partner_title', features: ['feature_all_local_champion', 'feature_prominent_regional_logo', 'feature_regional_press', 'feature_dedicated_social', 'feature_vip_access', 'feature_branded_clothing'], paypalId: 'AL5VLUCCEW586', popular: true },
-                { tier: 'National Sponsor', costZAR: 1000000, meals: 10000, descKey: 'national_sponsor_desc', titleKey: 'national_sponsor_title', features: ['feature_all_regional_partner', 'feature_national_marketing_logo', 'feature_stage_branding', 'feature_category_exclusivity', 'feature_vip_hospitality', 'feature_branded_clothing', 'feature_national_crates'], paypalId: 'NATIONAL_SPONSOR_PAYPAL_ID_PLACEHOLDER' } // Placeholder ID
+                { tier: 'National Sponsor', costZAR: 1000000, meals: 10000, descKey: 'national_sponsor_desc', titleKey: 'national_sponsor_title', features: ['feature_all_regional_partner', 'feature_national_marketing_logo', 'feature_stage_branding', 'feature_category_exclusivity', 'feature_vip_hospitality', 'feature_branded_clothing', 'feature_national_crates'], paypalId: 'DUMMY_NATIONAL_SPONSOR_PAYPAL_ID' } // Placeholder ID
             ];
 
             const tiersContainer = document.getElementById('sponsorship-tiers');
@@ -1170,7 +1178,7 @@
                                         weight: 'bold',
                                         family: 'Inter'
                                     },
-                                    color: 'var(--text-color-dark)'
+                                    color: getComputedStyle(document.documentElement).getPropertyValue('--muted-text-dark') // Dynamic color
                                 },
                                 ticks: {
                                     callback: function(value) {
@@ -1179,10 +1187,10 @@
                                     font: {
                                         family: 'Inter'
                                     },
-                                    color: 'var(--muted-text-dark)'
+                                    color: getComputedStyle(document.documentElement).getPropertyValue('--muted-text-dark') // Dynamic color
                                 },
                                 grid: {
-                                    color: 'var(--border-color-dark)'
+                                    color: getComputedStyle(document.documentElement).getPropertyValue('--border-color-dark') // Dynamic color
                                 }
                             },
                             x: {
@@ -1190,7 +1198,7 @@
                                     font: {
                                         family: 'Inter'
                                     },
-                                    color: 'var(--muted-text-dark)'
+                                    color: getComputedStyle(document.documentElement).getPropertyValue('--muted-text-dark') // Dynamic color
                                 },
                                 grid: {
                                     display: false
@@ -1225,6 +1233,9 @@
                 });
             }
 
+            const savedTheme = localStorage.getItem('themeMode') || 'dark';
+            setTheme(savedTheme); // Moved this call after chart initialization
+
             // Global variables for currency API
             const CURRENCY_API_KEY = '40015d117bc7fff9495dcf28'; // Provided API Key
             const BASE_CURRENCY_API_URL = `https://v6.exchangerate-api.com/v6/${CURRENCY_API_KEY}`;
@@ -1246,7 +1257,7 @@
 
                     if (codesData.result === 'success' && codesData.supported_codes) {
                         const currencies = codesData.supported_codes;
-                       
+                        
                         // Populate general currency converter dropdowns
                         if (fromCurrencySelect) fromCurrencySelect.innerHTML = '';
                         if (toCurrencySelect) toCurrencySelect.innerHTML = '';
@@ -1267,7 +1278,7 @@
                         // Set default selected currencies for general converter
                         if (fromCurrencySelect) fromCurrencySelect.value = 'USD';
                         if (toCurrencySelect) toCurrencySelect.value = 'ZAR';
-                       
+                        
                         // Fetch initial rates for general converter (USD as base)
                         await fetchGeneralExchangeRates('USD');
 
