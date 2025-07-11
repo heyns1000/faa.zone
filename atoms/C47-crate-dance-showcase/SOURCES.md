@@ -7,3 +7,4 @@
 | 1 | 2025-07-11 | FGP--samfox | history | `public/global_templates/Fruitful_crate_dance_pricing.html` | `15768ccc` | Fruitful Crate Dance Showcase - Sponsorship T | 84688 | 16 | 4 | 58.2 |
 | 2 | 2025-07-11 | FGP--samfox | history | `public/global_templates/Fruitful_crate_dance_pricing.html` | `2384cabc` | Fruitful Crate Dance Showcase - Sponsorship T | 73835 | 15 | 4 | 56.1 |
 | 3 | 2025-07-11 | FGP--samfox | history | `public/global_templates/Fruitful_crate_dance_pricing.html` | `e58a1940` | Fruitful Crate Dance Showcase - Sponsorship T | 73819 | 15 | 4 | 56.1 |
+| 4 | 2025-07-11 | FGP--samfox | main | `public/global_templates/Fruitful_crate_dance_pricing.html` | `8f43c6d0` | Fruitful Crate Dance Showcase - Sponsorship T | 82869 | 14 | 3 | 54.0 |

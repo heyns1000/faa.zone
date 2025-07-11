@@ -1,8 +1,13 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-lang-key="page_title">Fruitful Crate Dance Showcase - Sponsorship Tiers</title>
+    <!-- PayPal SDK script -->
+    <script
+      src="https://www.paypal.com/sdk/js?client-id=BAAGdPecRsf6dw_nIrWqUen0GdW0UsBZapp1Gn62xkPdD-Vqc-4lqWAidKK8LOObXux8pHJGjXknar6Q&components=hosted-buttons&disable-funding=venmo&currency=USD">
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -19,8 +24,6 @@
             --border-color-light: #e8e8ed;
             --border-color-dark: #3a3a3e;
             --primary-color: #0071e3; /* Fruitful primary blue */
-            --minenest-color: #D2691E; /* Chocolate */
-            --minenest-accent-color: #E97451; /* Burnt Sienna */
             --muted-text-light: #6e6e73;
             --muted-text-dark: #a0a0a5;
         }
@@ -113,7 +116,7 @@
         .light-mode .section-padding { border-bottom-color: var(--border-color-light); }
         .section-padding:last-of-type { border-bottom: none; }
         .section-title { font-size: 2.5rem; font-weight: 800; text-align: center; margin-bottom: 50px; }
-        
+       
         /* Specific styles for sponsorship tiers */
         .sponsorship-header {
             text-align: center;
@@ -310,6 +313,54 @@
             text-transform: uppercase;
         }
 
+        /* Custom PayPal and Checkout button styles */
+        .paypal-button-container {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem; /* Space between PayPal and Checkout buttons */
+        }
+
+        /* Styles for PayPal SDK rendered buttons */
+        .paypal-button-container .paypal-buttons {
+            width: 100%; /* Ensure PayPal SDK buttons take full width */
+        }
+
+        /* Fallback/Custom styled buttons (if SDK rendering fails or for Checkout) */
+        .paypal-mimic-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease, filter 0.2s ease;
+            text-decoration: none; /* Remove underline */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+        }
+
+        .paypal-mimic-button.paypal-yellow {
+            background-color: #FFC439; /* PayPal yellow */
+            color: #1d2d50; /* Dark blue text for contrast */
+        }
+        .paypal-mimic-button.paypal-yellow:hover {
+            filter: brightness(0.9); /* Slightly darken on hover */
+        }
+        .paypal-mimic-button.paypal-yellow .fab {
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+
+        .paypal-mimic-button.checkout-blue {
+            background-color: #003087; /* PayPal dark blue */
+            color: white;
+        }
+        .paypal-mimic-button.checkout-blue:hover {
+            filter: brightness(1.2); /* Slightly lighten on hover */
+        }
+
         /* Chart container styling */
         .chart-container {
             position: relative;
@@ -497,19 +548,16 @@
             <div class="container">
                 <h1 class="text-4xl md:text-5xl font-bold mb-2" data-lang-key="sponsorship_main_title">Sponsorship Opportunities</h1>
                 <p class="text-xl" data-lang-key="sponsorship_subtitle">Join the Movement. Amplify Your Brand. Make a Difference.</p>
+                <!-- Spotify Embed iFrame -->
+                <div class="mt-8 mb-8 flex justify-center">
+                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/6Yc1jKNswE2CEuRO43u291?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
             </div>
         </section>
 
         <section class="section-padding">
             <div class="container">
-                <!-- New Currency Selector for Pricing Tiers -->
-                <div class="flex justify-center items-center gap-4 mb-8">
-                    <label for="pricing-currency-select" class="text-lg font-medium" data-lang-key="select_pricing_currency_label">Display Prices In:</label>
-                    <select id="pricing-currency-select" class="p-2 rounded-lg text-lg bg-gray-700 text-white border border-gray-600">
-                        <!-- Options populated by JS -->
-                    </select>
-                </div>
-
+                <!-- Removed New Currency Selector for Pricing Tiers as it was related to MineNest -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8" id="sponsorship-tiers">
                     <!-- Tier cards will be dynamically populated by JavaScript -->
                 </div>
@@ -531,7 +579,7 @@
             <div class="container max-w-5xl mx-auto">
                 <h2 data-lang-key="currency_converter_title" class="section-title">💱 Global Currency Converter</h2>
                 <p data-lang-key="currency_converter_desc" class="text-center -mt-8 mb-6">Convert any currency globally using real-time exchange rates. Please note, this tool is for informational purposes only and uses a third-party API.</p>
-                
+               
                 <div class="currency-input-group">
                     <input type="number" id="amount-input" data-lang-key="amount_placeholder" placeholder="Amount" value="1" min="0.01" step="0.01" class="w-full p-3 rounded-lg text-lg">
                     <select id="from-currency-select" class="w-full p-3 rounded-lg text-lg"></select>
@@ -547,7 +595,7 @@
             </div>
         </section>
     </main>
-    
+   
     <!-- Global Footer -->
     <footer class="py-8 px-6 md:px-12 text-center bg-f5f5f7 text-gray-600 border-t border-e8e8ed dark:bg-1a1a1a dark:text-gray-400 dark:border-333">
         <div class="flex flex-wrap justify-center mb-4 text-sm">
@@ -612,7 +660,7 @@
                     "invalid_amount": "Please enter a valid amount.",
                     "currency_not_found": "Currency not found or exchange rate unavailable.",
                     "error_conversion": "Error during conversion. Please try again.",
-                    footerPrivacy: 'Privacy', footerTerms: 'Terms', footerContact: 'Contact', footerCopyrightLink: 'Copyright', footerDevelopers: 'Developers', footerVaultMeshLink: 'VaultMesh', footerFruitfulLink: 'Fruitful', footerFAAZoneLink: 'FAA.Zone', footerAboutLink: 'About', footerAccessibility: 'Accessibility', footerCopyright: '© 2025 FAA™ Treaty System™. All Rights Reserved.', footerPoweredBy: 'Powered by 🦍 glyphs + Vault API. Synced with Seedwave™.'
+                    footerPrivacy: 'Privacy', footerTerms: 'Terms', footerContact: 'Contact', footerCopyrightLink: 'Copyright', footerDevelopers: 'Developers', footerVaultMeshLink: 'VaultMesh', footerFruitfulLink: 'Fruitful', footerFAAZoneLink: 'FAA.Zone', footerAboutLink: 'About', footerAccessibility: 'Accessibility', footerCopyright: '© 2025 FAA™ Treaty System™. All Rights Reserved.', footerPoweredBy: '由 🦍 glyphs + Vault API. Synced with Seedwave™.'
                 },
                 af: {
                     "page_title": "Fruitful Crate Dance Showcase - Borgskapvlakke",
@@ -649,7 +697,7 @@
                     "feature_branded_clothing": "Gebrandmerkde klere (hoede, sweetbande, T-hemde, broeke, sokkies, skoene, logo-plasing op T-hemde)",
                     "feature_national_crates": "Handelsmerk op 400,000 nasionale kratte (20-jaar lewensduur, eko-vriendelike vervaardiging van herwinde materiale, sluit logiese skooltas-rolkratte vir skoliere in)",
                     "select_pricing_currency_label": "Wys Pryse In:",
-                    "currency_converter_title": "� Wêreldwye Geldeenheid Omsetter",
+                    "currency_converter_title": "💱 Wêreldwye Geldeenheid Omsetter",
                     "currency_converter_desc": "Skakel enige geldeenheid wêreldwyd om met intydse wisselkoerse. Let wel, hierdie hulpmiddel is slegs vir inligtingdoeleindes en gebruik 'n derdeparty-API.",
                     "amount_placeholder": "Bedrag",
                     "convert_button": "Skakel om",
@@ -664,7 +712,7 @@
                     "sponsorship_main_title": "Amathuba Okuxhasa",
                     "sponsorship_subtitle": "Joyina Umnyakazo. Khulisa Umkhiqizo Wakho. Yenza Umehluko.",
                     "chart_title": "Ukubuka Umthelela: Utshalomali vs. Ukudla Okunikwe Umusa",
-                    "chart_description": "Le chart ikhombisa ubudlelwane obuphakathi kwezinga lokuxhasa kwakho kanye nenani lokudla okunikezwa izingane ezidingayo. Njengoba utshalomali lwakho lukhula, kanjalo nomthelela wakho oqondile, olinganisekayo emphakathini.",
+                    "chart_description": "Le chart ikhombisa ubudlelwane obuphakathi kwezinga lokuxhasa kwakho kanye nenani lokudla okunikezwa zingane ezidingayo. Njengoba utshalomali lwakho lukhula, kanjalo nomthelela wakho oqondile, olinganisekayo emphakathini.",
                     "lang_name": "isiZulu",
                     "starter_title": "Isiqalo", "starter_desc": "Ubudlelwane bezinga lokuqala",
                     "local_champion_title": "Umpetha Wendawo", "local_champion_desc": "Ukuzibandakanya Okugxile emphakathini",
@@ -785,7 +833,7 @@
                     "feature_national_crates": "Chapa kwenye makreti ya kitaifa 400,000 (muda wa maisha wa miaka 20, utengenezaji rafiki wa mazingira kutoka kwa vifaa vilivyorejeshwa, inajumuisha makreti ya shule yenye magurudumu kwa wasomi)",
                     "select_pricing_currency_label": "Onyesha Bei Katika:",
                     "currency_converter_title": "💱 Kigeuzi cha Sarafu cha Ulimwengu",
-                    "currency_converter_desc": "Badilisha sarafu yoyote duniani kote ukitumia viwango vya ubadilishaji halisi. Tafadhali kumbuka, zana hii ni kwa madhumuni ya habari tu na inatumia API ya mtu wa tatu.",
+                    "currency_converter_desc": "Badilisha sarafu yoyote duniani kote ukitumia viwango vya ubadilishaji halisi. Tafadhali kumbuka, zana hii ni kwa madhumini ya habari tu na inatumia API ya mtu wa tatu.",
                     "amount_placeholder": "Kiasi",
                     "convert_button": "Badilisha",
                     "currency_result_placeholder": "Kiasi kilichobadilishwa kitaonekana hapa...",
@@ -838,6 +886,51 @@
                     "currency_not_found": "未找到货币或汇率不可用。",
                     "error_conversion": "转换错误。请重试。",
                     footerPrivacy: '隐私', footerTerms: '条款', footerContact: '联系', footerCopyrightLink: '版权', footerDevelopers: '开发者', footerVaultMeshLink: '金库网格', footerFruitfulLink: '丰硕', footerFAAZoneLink: 'FAA.Zone', footerAboutLink: '关于', footerAccessibility: '无障碍', footerCopyright: '© 2025 FAA™ Treaty System™. 保留所有权利。', footerPoweredBy: '由 🦍 符文 + 金库 API 提供支持。与 Seedwave™ 同步。'
+                },
+                ar: {
+                    "page_title": "عرض رقصة الصناديق المثمرة - مستويات الرعاية",
+                    "sponsorship_main_title": "فرص الرعاية",
+                    "sponsorship_subtitle": "انضم إلى الحركة. عزز علامتك التجارية. اصنع فرقًا.",
+                    "chart_title": "تصور التأثير: الاستثمار مقابل الوجبات المتبرع بها",
+                    "chart_description": "يوضح هذا الرسم البياني العلاقة المباشرة بين مستوى رعايتك وعدد الوجبات المقدمة للأطفال المحتاجين. مع نمو استثمارك، يزداد تأثيرك المباشر والقابل للقياس على المجتمع.",
+                    "lang_name": "العربية",
+                    "starter_title": "المستوى المبتدئ", "starter_desc": "شراكة على مستوى الدخول",
+                    "local_champion_title": "بطل محلي", "local_champion_desc": "مشاركة مجتمعية مركزة",
+                    "regional_partner_title": "شريك إقليمي", "regional_partner_desc": "وجود إقليمي قوي",
+                    "national_sponsor_title": "راعي وطني", "national_sponsor_desc": "تعرض وطني متميز",
+                    "investment_label": "الاستثمار",
+                    "value_return_label": "العائد قيمة مقابل قيمة",
+                    "meals_donated_suffix": "وجبة متبرع بها",
+                    "key_features_label": "الميزات الرئيسية:",
+                    "feature_logo_website": "شعار على موقع الحدث",
+                    "feature_social_mention": "ذكر في وسائل التواصل الاجتماعي",
+                    "feature_event_passes": "تذاكر دخول الحدث",
+                    "feature_all_starter": "جميع مزايا المستوى المبتدئ",
+                    "feature_logo_local_banners": "شعار على لافتات الأحداث المحلية",
+                    "feature_small_booth": "كشك صغير في الموقع",
+                    "feature_product_placement": "فرصة وضع المنتج",
+                    "feature_all_local_champion": "جميع مزايا البطل المحلي",
+                    "feature_prominent_regional_logo": "شعار بارز في التسويق الإقليمي",
+                    "feature_regional_press": "ذكر في البيانات الصحفية الإقليمية",
+                    "feature_dedicated_social": "منشور مخصص على وسائل التواصل الاجتماعي",
+                    "feature_vip_access": "دخول كبار الشخصيات",
+                    "feature_vip_hospitality": "ضيافة كبار الشخصيات",
+                    "feature_all_regional_partner": "جميع مزايا الشريك الإقليمي",
+                    "feature_national_marketing_logo": "شعار على جميع المواد التسويقية الوطنية",
+                    "feature_stage_branding": "إعلان المسرح والعلامة التجارية",
+                    "feature_category_exclusivity": "حصرية الفئة (مثل \"المشروب الرسمي\")",
+                    "feature_branded_clothing": "ملابس تحمل العلامة التجارية (قبعات، عصابات رأس، تي شيرتات، بناطيل، جوارب، أحذية، وضع الشعار على التي شيرتات)",
+                    "feature_national_crates": "علامة تجارية على 400,000 صندوق وطني (عمر افتراضي 20 عامًا، تصنيع صديق للبيئة من مواد معاد تدويرها، يشمل صناديق مدرسية بعجلات للعلماء)",
+                    "select_pricing_currency_label": "عرض الأسعار بـ:",
+                    "currency_converter_title": "💱 محول العملات العالمي",
+                    "currency_converter_desc": "حول أي عملة حول العالم باستخدام أسعار الصرف في الوقت الفعلي. يرجى ملاحظة أن هذه الأداة لأغراض إعلامية فقط وتستخدم واجهة برمجة تطبيقات (API) لجهة خارجية.",
+                    "amount_placeholder": "المبلغ",
+                    "convert_button": "تحويل",
+                    "currency_result_placeholder": "سيظهر المبلغ المحول هنا...",
+                    "invalid_amount": "الرجاء إدخال مبلغ صالح.",
+                    "currency_not_found": "العملة غير موجودة أو سعر الصرف غير متاح.",
+                    "error_conversion": "خطأ أثناء التحويل. الرجاء المحاولة مرة أخرى.",
+                    footerPrivacy: 'الخصوصية', footerTerms: 'الشروط', footerContact: 'الاتصال', footerCopyrightLink: 'حقوق النشر', footerDevelopers: 'المطورون', footerVaultMeshLink: 'VaultMesh', footerFruitfulLink: 'Fruitful', footerFAAZoneLink: 'FAA.Zone', footerAboutLink: 'حول', footerAccessibility: 'إمكانية الوصول', footerCopyright: '© 2025 نظام معاهدة FAA™. جميع الحقوق محفوظة.', footerPoweredBy: 'مدعوم بواسطة 🦍 glyphs + Vault API. متزامن مع Seedwave™.'
                 }
             };
 
@@ -877,6 +970,7 @@
             };
 
             const languageSwitcher = document.getElementById('languageSwitcher');
+            languageSwitcher.innerHTML = ''; // Clear existing options
             for (const langCode in translations) {
                 const option = document.createElement('option');
                 option.value = langCode;
@@ -917,10 +1011,10 @@
 
             // Sponsorship Data - Base costs are in ZAR
             const sponsorshipData = [
-                { tier: 'Starter', costZAR: 25000, meals: 250, descKey: 'starter_desc', titleKey: 'starter_title', features: ['feature_logo_website', 'feature_social_mention', 'feature_event_passes'] },
-                { tier: 'Local Champion', costZAR: 75000, meals: 750, descKey: 'local_champion_desc', titleKey: 'local_champion_title', features: ['feature_all_starter', 'feature_logo_local_banners', 'feature_small_booth', 'feature_product_placement', 'feature_event_passes', 'feature_event_passes'] },
-                { tier: 'Regional Partner', costZAR: 250000, meals: 2500, descKey: 'regional_partner_desc', titleKey: 'regional_partner_title', features: ['feature_all_local_champion', 'feature_prominent_regional_logo', 'feature_regional_press', 'feature_dedicated_social', 'feature_vip_access', 'feature_branded_clothing'] },
-                { tier: 'National Sponsor', costZAR: 1000000, meals: 10000, descKey: 'national_sponsor_desc', titleKey: 'national_sponsor_title', features: ['feature_all_regional_partner', 'feature_national_marketing_logo', 'feature_stage_branding', 'feature_category_exclusivity', 'feature_vip_hospitality', 'feature_branded_clothing', 'feature_national_crates'] }
+                { tier: 'Starter', costZAR: 25000, meals: 250, descKey: 'starter_desc', titleKey: 'starter_title', features: ['feature_logo_website', 'feature_social_mention', 'feature_event_passes'], paypalId: '9KZH38XFK3TX2' },
+                { tier: 'Local Champion', costZAR: 75000, meals: 750, descKey: 'local_champion_desc', titleKey: 'local_champion_title', features: ['feature_all_starter', 'feature_logo_local_banners', 'feature_small_booth', 'feature_product_placement', 'feature_event_passes'], paypalId: 'FNGGP5UJ9VYHQ' },
+                { tier: 'Regional Partner', costZAR: 250000, meals: 2500, descKey: 'regional_partner_desc', titleKey: 'regional_partner_title', features: ['feature_all_local_champion', 'feature_prominent_regional_logo', 'feature_regional_press', 'feature_dedicated_social', 'feature_vip_access', 'feature_branded_clothing'], paypalId: 'AL5VLUCCEW586', popular: true },
+                { tier: 'National Sponsor', costZAR: 1000000, meals: 10000, descKey: 'national_sponsor_desc', titleKey: 'national_sponsor_title', features: ['feature_all_regional_partner', 'feature_national_marketing_logo', 'feature_stage_branding', 'feature_category_exclusivity', 'feature_vip_hospitality', 'feature_branded_clothing', 'feature_national_crates'], paypalId: 'NATIONAL_SPONSOR_PAYPAL_ID_PLACEHOLDER' } // Placeholder ID
             ];
 
             const tiersContainer = document.getElementById('sponsorship-tiers');
@@ -989,8 +1083,51 @@
                                 ${featuresHtml}
                             </ul>
                         </div>
+                        <div class="paypal-button-container" id="paypal-buttons-${item.tier.toLowerCase().replace(' ', '-')}"></div>
                     `;
                     tiersContainer.appendChild(card);
+
+                    // Attempt to render PayPal Hosted Buttons using the SDK
+                    // This is done inside a setTimeout to ensure the SDK has fully loaded
+                    // and to give the DOM element time to be appended.
+                    setTimeout(() => {
+                        const paypalButtonDiv = document.getElementById(`paypal-buttons-${item.tier.toLowerCase().replace(' ', '-')}`);
+                        if (paypalButtonDiv && typeof paypal !== 'undefined' && paypal.HostedButtons) {
+                            try {
+                                paypal.HostedButtons({
+                                    hostedButtonId: item.paypalId,
+                                    // Optional: Customize button appearance if needed, but SDK defaults are usually good
+                                    // style: {
+                                    //     layout: 'vertical',
+                                    //     color: 'gold',
+                                    //     shape: 'rect',
+                                    //     label: 'paypal'
+                                    // }
+                                }).render(`#paypal-buttons-${item.tier.toLowerCase().replace(' ', '-')}`);
+                            } catch (error) {
+                                console.error(`Error rendering PayPal button for ${item.tier}:`, error);
+                                // Fallback to direct links if SDK rendering fails
+                                paypalButtonDiv.innerHTML = `
+                                    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=${item.paypalId}" target="_blank" rel="noopener noreferrer" class="paypal-mimic-button paypal-yellow">
+                                        <i class="fab fa-paypal"></i> PayPal
+                                    </a>
+                                    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=${item.paypalId}" target="_blank" rel="noopener noreferrer" class="paypal-mimic-button checkout-blue">
+                                        Checkout
+                                    </a>
+                                `;
+                            }
+                        } else if (paypalButtonDiv) {
+                            // Fallback to direct links if SDK is not available or HostedButtons is not defined
+                            paypalButtonDiv.innerHTML = `
+                                <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=${item.paypalId}" target="_blank" rel="noopener noreferrer" class="paypal-mimic-button paypal-yellow">
+                                    <i class="fab fa-paypal"></i> PayPal
+                                </a>
+                                <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=${item.paypalId}" target="_blank" rel="noopener noreferrer" class="paypal-mimic-button checkout-blue">
+                                    Checkout
+                                </a>
+                            `;
+                        }
+                    }, 500); // Small delay to ensure DOM is ready and SDK has started loading
                 });
             };
 
@@ -1109,11 +1246,10 @@
 
                     if (codesData.result === 'success' && codesData.supported_codes) {
                         const currencies = codesData.supported_codes;
-                        
+                       
                         // Populate general currency converter dropdowns
                         if (fromCurrencySelect) fromCurrencySelect.innerHTML = '';
                         if (toCurrencySelect) toCurrencySelect.innerHTML = '';
-                        if (pricingCurrencySelect) pricingCurrencySelect.innerHTML = '';
 
                         currencies.forEach(currency => {
                             const [code, name] = currency;
@@ -1126,28 +1262,18 @@
                             optionTo.value = code;
                             optionTo.textContent = `${code} - ${name}`;
                             if (toCurrencySelect) toCurrencySelect.appendChild(optionTo);
-
-                            const optionPricing = document.createElement('option');
-                            optionPricing.value = code;
-                            optionPricing.textContent = `${code} - ${name}`;
-                            if (pricingCurrencySelect) pricingCurrencySelect.appendChild(optionPricing);
                         });
 
                         // Set default selected currencies for general converter
                         if (fromCurrencySelect) fromCurrencySelect.value = 'USD';
                         if (toCurrencySelect) toCurrencySelect.value = 'ZAR';
-                        
-                        // Set default selected currency for pricing
-                        if (pricingCurrencySelect) pricingCurrencySelect.value = 'ZAR'; // Default to ZAR for pricing
-
+                       
                         // Fetch initial rates for general converter (USD as base)
                         await fetchGeneralExchangeRates('USD');
-                        // Fetch initial rates for pricing converter (ZAR as base)
-                        await fetchPricingExchangeRates('ZAR');
 
                         // Perform initial conversion for general converter
                         convertCurrency();
-                        // Render pricing tiers with initial currency
+                        // Render sponsorship tiers with initial currency (already called by updateContent)
                         renderSponsorshipTiers();
 
                     } else {
@@ -1171,22 +1297,6 @@
                     }
                 } catch (error) {
                     console.error("Fetch General Exchange Rates Error:", error);
-                }
-            }
-
-            // Function to fetch exchange rates for the pricing converter (ZAR as base)
-            async function fetchPricingExchangeRates(baseCurrency) {
-                try {
-                    const ratesResponse = await fetch(`${BASE_CURRENCY_API_URL}/latest/${baseCurrency}`);
-                    const ratesData = await ratesResponse.json();
-
-                    if (ratesData.result === 'success' && ratesData.conversion_rates) {
-                        pricingExchangeRates = ratesData.conversion_rates;
-                    } else {
-                        console.error("Currency API Error (pricing rates):", ratesData);
-                    }
-                } catch (error) {
-                    console.error("Fetch Pricing Exchange Rates Error:", error);
                 }
             }
 
@@ -1226,15 +1336,6 @@
             if (fromCurrencySelect) fromCurrencySelect.addEventListener('change', convertCurrency);
             if (toCurrencySelect) toCurrencySelect.addEventListener('change', convertCurrency);
             if (amountInput) amountInput.addEventListener('input', convertCurrency);
-
-            // Event listener for pricing currency select
-            const pricingCurrencySelect = document.getElementById('pricing-currency-select');
-            if (pricingCurrencySelect) {
-                pricingCurrencySelect.addEventListener('change', (e) => {
-                    selectedPricingCurrency = e.target.value;
-                    renderSponsorshipTiers(); // Re-render tiers with new currency
-                });
-            }
 
             // Initial population of all currencies and rates
             populateAllCurrencyDropdowns();
