@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-07-11 | FGP--samfox | history | `public/global_templates/Fruitful_crate_dance_pricing.html` | `15768ccc` | Fruitful Crate Dance Showcase - Sponsorship T | 84688 | 16 | 4 | 58.2 |
+| 2 | 2025-07-11 | FGP--samfox | history | `public/global_templates/Fruitful_crate_dance_pricing.html` | `2384cabc` | Fruitful Crate Dance Showcase - Sponsorship T | 73835 | 15 | 4 | 56.1 |
