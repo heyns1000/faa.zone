@@ -8,3 +8,4 @@
 | 2 | 2025-07-15 | fruitful.crate.dance.faa.zone | history | `public/king_price_dashboard.html` | `5465a1f6` | King Price Strategic Opportunity Dashboard | 103847 | 107 | 4 | 151.6 |
 | 3 | 2025-07-15 | fruitful.crate.dance.faa.zone | history | `public/king_price_dashboard.html` | `6a1d7c19` | King Price Strategic Opportunity Dashboard | 97436 | 95 | 4 | 139.9 |
 | 4 | 2025-07-15 | fruitful.crate.dance.faa.zone | history | `public/king_price_dashboard2.0.html` | `fba1c90b` | King Price Strategic Opportunity Dashboard | 116275 | 122 | 4 | 171.7 |
+| 5 | 2025-07-15 | fruitful.crate.dance.faa.zone | history | `public/king_price_dashboard2.0.html` | `15d9d643` | King Price Strategic Opportunity Dashboard | 137200 | 112 | 6 | 158.7 |
