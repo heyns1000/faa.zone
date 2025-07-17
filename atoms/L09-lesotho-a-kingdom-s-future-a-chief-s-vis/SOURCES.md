@@ -1,0 +1,7 @@
+# L09 Lesotho: A Kingdom'S Future, A Chief'S Vision: every version, oldest first
+
+4 distinct versions in codenest, lesotho.faa.zone. Grouped by system_map.py: a version joins only when visible text (shingle Jaccard ≥ 0.30) AND structure (ids/functions/labels ≥ 0.45) both match. `lesotho-a-kingdom-s-future-a-chief-s-vis.html` holds each version's exact bytes per commit.
+
+| # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | 2025-07-17 | lesotho.faa.zone | history | `index.html` | `65402482` | Lesotho: A Kingdom's Future, A Chief's Vision | 32430 | 22 | 0 | 52.2 |
