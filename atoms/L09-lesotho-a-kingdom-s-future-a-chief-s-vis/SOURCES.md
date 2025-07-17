@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-07-17 | lesotho.faa.zone | history | `index.html` | `65402482` | Lesotho: A Kingdom's Future, A Chief's Vision | 32430 | 22 | 0 | 52.2 |
+| 2 | 2025-07-17 | lesotho.faa.zone | history | `index.html` | `694d815b` | Lesotho: A Kingdom's Future, A Chief's Vision | 31472 | 22 | 0 | 52.1 |
