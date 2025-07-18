@@ -3,37 +3,35 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fruitful | CodeNest™ Dashboard - Fruitful Global</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Fruitful™ | ToyNest™ Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Chart.js for data visualization -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.js"></script>
     <style>
         /* Define Fruitful Global Color Palette and Base Styles */
         :root {
             /* Dark Mode Defaults */
             --primary-color: #0071e3; /* Apple Blue */
-            --secondary-color: #30d158; /* Apple Green */
+            --secondary-color: #facc15; /* Yellow-400 for Smart Toys accent */
             --text-color-light: #f5f5f7; /* Light text on dark backgrounds */
             --text-color-dark: #1d1d1f; /* Dark text on light backgrounds - used for some components that flip colors */
             --bg-color-dark: #1a1a1c; /* Deep black/dark grey */
             --card-bg-dark: #2a2a2e; /* Darker grey for dark cards */
             --border-color-dark: #3a3a3e; /* Subtle dark border */
-            --accent-gold: #B8860B; /* Corporate gold accent */
+            --accent-gold: #B8860B; /* Corporate gold accent (retained for general use) */
             --status-active: #30d158; /* Green for active */
             --status-pending: #f59e0b; /* Amber for pending */
             --status-draft: #6e6e73; /* Gray for draft */
             --status-error: #ef4444; /* Red for error */
 
-            /* Light Mode Variables (will override dark mode) */
-            --light-primary-color: #0071e3;
-            --light-secondary-color: #30d158;
+            /* Light Mode Variables (will override dark mode) - Inspired by Smart Toys HTML */
+            --light-primary-color: #0071e3; /* Apple Blue */
+            --light-secondary-color: #facc15; /* Yellow-400 */
             --light-text-color-light: #1d1d1f; /* Dark text for light mode body */
             --light-text-color-dark: #1d1d1f; /* Dark text for light mode body content */
-            --light-bg-color-dark: #ffffff; /* White background for light mode */
-            --light-card-bg-dark: #fcfcfc; /* Off-white for light cards */
+            --light-bg-color-dark: #f5f5f7; /* Very light gray, almost white */
+            --light-card-bg-dark: #ffffff; /* White for light cards */
             --light-border-color-dark: #e8e8ed; /* Subtle light border */
         }
 
@@ -63,6 +61,9 @@
             .sidebar-header .logo-text {
                 color: var(--light-text-color-light); /* Fruitful part darker */
             }
+            .sidebar-header .logo-text span { /* ToyNest part in Yellow-400 */
+                color: var(--light-secondary-color);
+            }
             .nav-list a {
                 color: var(--light-text-color-dark); /* Darker nav text */
             }
@@ -75,10 +76,10 @@
                 color: white;
             }
             .nav-icon {
-                color: var(--accent-gold); /* Gold remains contrast */
+                color: var(--light-secondary-color); /* Yellow remains contrast */
             }
             .panel h3, .panel h4 {
-                color: var(--accent-gold); /* Gold remains contrast */
+                color: var(--light-secondary-color); /* Yellow for headings */
             }
             .panel p, .project-card p, .api-key-value, .form-control label, .form-control input, .form-control select, .form-control textarea {
                 color: var(--light-text-color-dark); /* Darker text for readability */
@@ -97,15 +98,20 @@
                 border-color: #d1d1d1;
             }
             .project-actions button {
-                color: var(--bg-color-dark); /* Dark button text */
+                color: black; /* Button text black for yellow bg */
+                background-color: var(--light-secondary-color); /* Yellow buttons */
+            }
+            .project-actions button:hover {
+                background-color: #d9b813; /* Darker yellow on hover */
+                color: black;
             }
             .project-actions button.secondary {
                 color: var(--light-primary-color);
                 border-color: var(--light-primary-color);
+                background-color: transparent;
             }
             .project-actions button.secondary:hover {
                 background-color: rgba(0, 113, 227, 0.08);
-                color: var(--light-primary-color);
             }
             .api-key-table th {
                 background-color: #e8e8ed;
@@ -149,10 +155,9 @@
             }
             .editor-actions button.secondary:hover {
                 background-color: rgba(0, 113, 227, 0.08);
-                color: var(--light-primary-color);
             }
             .copy-square pre {
-                color: var(--light-text-color-dark);
+                 color: var(--light-text-color-dark);
             }
             .toggle-section-btn span {
                 color: var(--light-text-color-dark) !important;
@@ -198,9 +203,9 @@
             line-height: 1; /* Adjust line height for better alignment */
         }
         .sidebar-header .logo-text span {
-            color: var(--accent-gold); /* CodeNest part in gold */
-            font-size: 0.8em; /* Make 'CodeNest' slightly smaller relative to 'Fruitful' */
-            letter-spacing: -0.02em; /* Tighter spacing for "CodeNest" */
+            color: var(--secondary-color); /* ToyNest part in Yellow */
+            font-size: 0.8em; /* Make 'ToyNest' slightly smaller relative to 'Fruitful' */
+            letter-spacing: -0.02em; /* Tighter spacing for "ToyNest" */
         }
         .nav-list a {
             display: flex;
@@ -230,7 +235,7 @@
         }
         .nav-icon {
             font-size: 1.2rem;
-            color: var(--accent-gold);
+            color: var(--secondary-color);
             transition: color 0.2s ease;
         }
 
@@ -252,7 +257,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         .panel h3, .panel h4 {
-            color: var(--accent-gold);
+            color: var(--secondary-color);
             font-weight: 700;
             margin-top: 0;
             margin-bottom: 1.5rem;
@@ -272,6 +277,11 @@
             border: 1px solid var(--border-color-dark); /* Border changes with theme */
             text-align: center;
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        /* Light mode specific override for metric card background */
+        body.light-mode .metric-card {
+            background-color: var(--light-card-bg-dark);
+            border-color: var(--light-border-color-dark);
         }
         .metric-card h4 {
             font-size: 1rem;
@@ -333,12 +343,12 @@
             font-size: 0.8rem;
         }
         .status-live { background-color: var(--status-active); color: white; }
-        .status-pending { background-color: var(--status-pending); color: white; }
+        .status-pending { background-color: var(--status-pending); color: black; } /* pending in yellow/black */
         .status-draft { background-color: var(--status-draft); color: white; }
         .status-error { background-color: var(--status-error); color: white; }
         .project-actions button {
-            background-color: var(--accent-gold);
-            color: var(--dark-bg);
+            background-color: var(--secondary-color);
+            color: black; /* Text black for yellow buttons */
             padding: 0.6rem 1rem;
             border-radius: 6px;
             font-weight: 600;
@@ -350,9 +360,10 @@
             cursor: pointer;
         }
         .project-actions button:hover {
-            background-color: #DAA520;
+            background-color: #d9b813; /* Darker yellow for hover */
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 15px rgba(250,204,21,0.3);
+            color: black;
         }
         .project-actions button.secondary {
             background-color: transparent;
@@ -405,7 +416,7 @@
         }
         .form-action-button {
             background-color: var(--secondary-color);
-            color: var(--dark-bg);
+            color: black; /* Text black for yellow buttons */
             padding: 0.8rem 1.5rem;
             border-radius: 8px;
             font-weight: 600;
@@ -416,9 +427,10 @@
             cursor: pointer;
         }
         .form-action-button:hover {
-            background-color: #28a745;
+            background-color: #d9b813; /* Darker yellow hover */
             transform: translateY(-2px);
-            box-shadow: 0 2px 8px rgba(48, 209, 88, 0.3);
+            box-shadow: 0 2px 8px rgba(250,204,21,0.3);
+            color: black;
         }
         .form-action-button:disabled {
             opacity: 0.6;
@@ -459,7 +471,7 @@
         }
         .api-key-table th {
             background-color: #1a1a1a; /* Header background (slightly lighter dark) */
-            color: var(--accent-gold);
+            color: var(--secondary-color);
             font-weight: 600;
         }
         body.light-mode .api-key-table th {
@@ -606,7 +618,7 @@
         }
         .btn-primary {
             background-color: var(--secondary-color);
-            color: var(--dark-bg);
+            color: black; /* Text black for yellow buttons */
             border: none;
             padding: 0.75rem 1.5rem;
             border-radius: 8px;
@@ -615,7 +627,7 @@
             transition: all 0.2s ease;
         }
         .btn-primary:hover {
-            background-color: #28a745;
+            background-color: #d9b813; /* Darker yellow */
             transform: translateY(-1px);
         }
         .btn-secondary {
@@ -636,7 +648,7 @@
         /* Ecosystem Map Styling */
         .copy-square {
             position: relative;
-            background-color: #3a3a3a; /* Darker background for code blocks */
+            background-color: #3a3a3e;
             border-radius: 8px;
             padding: 0.75rem 1rem;
             margin-top: 0.75rem;
@@ -731,7 +743,7 @@
 
         /* Ecosystem Map specific section-intro and section-title */
         #ecosystem-map-view .section-title {
-            color: var(--accent-gold);
+            color: var(--secondary-color);
             font-size: 2.2rem;
             font-weight: 800;
         }
@@ -781,7 +793,7 @@
         }
         #ecosystem-map-view .checkout-button {
             background-color: var(--secondary-color);
-            color: white;
+            color: black; /* Text black for yellow buttons */
             padding: 0.8rem 1.5rem;
             border-radius: 8px;
             font-weight: 600;
@@ -792,9 +804,10 @@
             cursor: pointer;
         }
         #ecosystem-map-view .checkout-button:hover {
-            background-color: #28a745;
+            background-color: #d9b813; /* Darker yellow */
             transform: translateY(-2px);
-            box-shadow: 0 2px 8px rgba(48, 209, 88, 0.3);
+            box-shadow: 0 2px 8px rgba(250,204,21,0.3);
+            color: black;
         }
 
         /* Editor Workspace Styling */
@@ -894,14 +907,14 @@
         /* Company Selection Card for Settings */
         .company-select-card {
             background-color: #2a2a2e; /* Darker grey background */
-            border: 1px solid #3a3a3e; /* Dark border */
+            border: 1px solid var(--border-color-dark); /* Dark border */
             border-radius: 10px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
         body.light-mode .company-select-card {
-            background-color: #f0f0f0; /* Lighter background in light mode */
-            border-color: #d1d1d1;
+            background-color: var(--light-card-bg-dark);
+            border-color: var(--light-border-color-dark);
         }
         .company-select-card:hover {
             transform: translateY(-3px);
@@ -909,15 +922,15 @@
         }
         .company-details-section {
             background-color: #2a2a2e;
-            border: 1px solid #3a3a3e;
+            border: 1px solid var(--border-color-dark);
             padding: 2rem;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             margin-top: 2.5rem;
         }
         body.light-mode .company-details-section {
-            background-color: #fcfcfc;
-            border-color: #e8e8ed;
+            background-color: var(--light-card-bg-dark);
+            border-color: var(--light-border-color-dark);
         }
 
         /* Responsive adjustments */
@@ -1058,13 +1071,11 @@
     </style>
 </head>
 <body>
-    <!-- Sidebar Navigation -->
     <aside class="sidebar">
         <div class="sidebar-header">
-            <h2 class="logo-text">Fruitful™ | <span>CodeNest™</span></h2>
+            <h2 class="logo-text">Fruitful™ | <span>ToyNest™</span></h2>
             <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
-                <i class="fas fa-sun"></i> <!-- Default to sun icon for dark mode -->
-            </button>
+                <i class="fas fa-sun"></i> </button>
         </div>
         <nav class="nav-list">
             <a href="#dashboard" class="active" data-view="dashboard">
@@ -1077,19 +1088,16 @@
                 <i class="fas fa-plus-circle nav-icon"></i> New Project
             </a>
             <a href="#scroll-builder" data-view="scroll-builder">
-                <i class="fas fa-tools nav-icon"></i> Scroll Builder
+                <i class="fas fa-tools nav-icon"></i> Content Builder
             </a>
             <a href="#ecosystem-map" data-view="ecosystem-map">
                 <i class="fas fa-sitemap nav-icon"></i> Ecosystem Map
             </a>
+            <a href="#user-dashboards" data-view="user-dashboards">
+                <i class="fas fa-users-cog nav-icon"></i> User Dashboards
+            </a>
             <a href="#global-checkout" data-view="global-checkout">
                 <i class="fas fa-shopping-cart nav-icon"></i> Global Payment
-            </a>
-            <a href="#overview" data-view="overview">
-                <i class="fas fa-globe nav-icon"></i> Overview
-            </a>
-            <a href="#modules" data-view="modules">
-                <i class="fas fa-box nav-icon"></i> Modules
             </a>
             <a href="#templates" data-view="templates">
                 <i class="fas fa-palette nav-icon"></i> Templates
@@ -1099,7 +1107,6 @@
             </a>
             <a href="#analytics" data-view="analytics">
                 <i class="fas fa-chart-line nav-icon"></i> Analytics
-                <span class="ml-auto text-xs font-semibold px-2 py-1 rounded-full bg-blue-500 text-white">NEW</span>
             </a>
             <a href="#api-keys" data-view="api-keys">
                 <i class="fas fa-key nav-icon"></i> API Keys
@@ -1116,72 +1123,81 @@
         </nav>
     </aside>
 
-    <!-- Main Content Area -->
     <main class="main-content">
-        <!-- Dashboard Home View -->
         <section id="dashboard-view" class="view">
             <div class="panel">
-                <h3>Welcome Back, Scroll Creator!</h3>
-                <p class="mb-4">Your CodeNest™ portal offers comprehensive tools to build, license, and deploy scroll-based web projects across the Fruitful Global Treaty Grid.</p>
+                <h3>Welcome Back, Smart Toys Innovator!</h3>
+                <p class="mb-4">Your ToyNest™ portal provides comprehensive tools for developing, deploying, and managing educational smart toys and learning experiences across the Fruitful Global Treaty Grid.</p>
                 <button class="form-action-button" onclick="showView('new-project')">
-                    <i class="fas fa-plus-circle mr-2"></i> Start New Scroll Project
+                    <i class="fas fa-plus-circle mr-2"></i> Start New Smart Toy Project
                 </button>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
                 <div class="metric-card">
-                    <h4>Total Projects</h4>
+                    <h4>Active Smart Toy Engagements</h4>
                     <p id="totalProjectsCount">0</p>
                 </div>
                 <div class="metric-card">
-                    <h4>Live Scrolls</h4>
+                    <h4>Learning Modules Engaged</h4>
                     <p id="liveScrollsCount">0</p>
                 </div>
                 <div class="metric-card">
-                    <h4>Monthly Royalties</h4>
-                    <p id="monthlyRoyalties">$0.00</p>
+                    <h4>VaultMint™ Certifications</h4>
+                    <p id="monthlyRoyalties">0</p>
                 </div>
             </div>
 
             <div class="panel">
-                <h3>System Health Overview</h3>
+                <h3>Educational Systems Health Overview</h3>
                 <div class="chart-container">
                     <canvas id="systemHealthChart"></canvas>
                 </div>
             </div>
+            
+            <div class="panel">
+                <h3>Fruitful Smart Toys™ Snapshot</h3>
+                <p>Treaty-Class Cognitive Engines · OmniScroll Systems · VaultMint™ Certified.</p>
+                <h4>Key Features:</h4>
+                <ul>
+                    <li>Smart Learning Companions: AI that grows with child's intelligence map</li>
+                    <li>Speech Recognition Engine: Real-time language processing and feedback</li>
+                    <li>Emotional Intelligence & Storytelling: Building empathy, creativity, emotional literacy</li>
+                    <li>AI Parental Dashboard: Real-time emotional, academic progress reports</li>
+                    <li>OmniScroll + Infinite Ledger Ready: Immutable proof of cognitive growth for life</li>
+                </ul>
+                <a href="https://faa.zone/sectors/education/smart-toys/index.html" target="_blank" class="form-action-button">Go to Fruitful Smart Toys™ Public Page →</a>
+            </div>
         </section>
 
-        <!-- Projects View -->
         <section id="projects-view" class="view view-hidden">
             <div class="panel">
-                <h3>Your Projects</h3>
+                <h3>Your Smart Toy & Learning Projects</h3>
                 <div class="flex flex-wrap items-center gap-4 mb-4">
                     <input type="text" id="projectSearch" placeholder="Search projects..." class="flex-grow p-2 rounded-md bg-gray-700 border border-gray-600 text-white">
                     <select id="projectFilterStatus" class="p-2 rounded-md bg-gray-700 border border-gray-600 text-white">
                         <option value="all">All Statuses</option>
-                        <option value="live">Live</option>
-                        <option value="pending">Pending</option>
-                        <option value="draft">Draft</option>
-                        <option value="error">Error</option>
+                        <option value="live">Deployed</option>
+                        <option value="pending">Testing</option>
+                        <option value="draft">Development</option>
+                        <option value="error">Maintenance</option>
                     </select>
                 </div>
                 <div id="projectsList" class="project-grid">
-                    <!-- Projects will be loaded here -->
-                </div>
+                    </div>
                 <div class="text-center mt-6">
                     <button id="loadMoreProjects" class="form-action-button"><i class="fas fa-sync-alt mr-2"></i> Load More Projects</button>
                 </div>
             </div>
         </section>
 
-        <!-- New Project View -->
         <section id="new-project-view" class="view view-hidden">
             <div class="panel">
-                <h3><i class="fas fa-plus-circle mr-2"></i> Start a New Scroll Project</h3>
+                <h3><i class="fas fa-plus-circle mr-2"></i> Initiate a New Smart Toy Project</h3>
                 <form id="newProjectForm">
                     <div class="form-control">
                         <label for="projectName">Project Name</label>
-                        <input type="text" id="projectName" name="projectName" placeholder="e.g. UrbanNest Launch Scroll" required>
+                        <input type="text" id="projectName" name="projectName" placeholder="e.g. AI Language Companion V2" required>
                     </div>
 
                     <div class="form-control">
@@ -1194,7 +1210,7 @@
                     <div class="form-control">
                         <label for="description">Project Description</label>
                         <div class="flex items-center space-x-2">
-                            <textarea id="description" name="description" rows="5" class="flex-grow" placeholder="Describe your project goals, use case, or scroll story..."></textarea>
+                            <textarea id="description" name="description" rows="5" class="flex-grow" placeholder="Describe the educational focus, target age group, and core functionalities..."></textarea>
                             <button type="button" id="generateDescriptionBtn" class="form-action-button text-xs px-3 py-2">
                                 <i class="fas fa-magic"></i> ✨ AI Generate Description
                             </button>
@@ -1205,7 +1221,7 @@
                     <div class="form-control">
                         <label for="projectConcept">High-Level Project Concept</label>
                         <div class="flex items-center space-x-2">
-                            <input type="text" id="projectConcept" placeholder="e.g., AI-powered urban gardening platform">
+                            <input type="text" id="projectConcept" placeholder="e.g., Personalized math tutor robot">
                             <button type="button" id="generateProjectIdeaBtn" class="form-action-button text-xs px-3 py-2">
                                 ✨ AI Project Idea
                             </button>
@@ -1216,61 +1232,60 @@
                     <div class="form-control">
                         <label for="region">Deployment Region</label>
                         <select id="region" name="region">
-                            <option value="global">Global</option>
-                            <option value="local">Local Only</option>
-                            <option value="street">Street Scroll (Pop-up deploy)</option>
+                            <option value="global">Global Rollout</option>
+                            <option value="local">Regional Pilot</option>
+                            <option value="beta">Beta Testing Group</option>
                         </select>
                     </div>
 
                     <div class="form-control">
-                        <label for="claim">Enable ClaimRoot™ Auto-License?</label>
+                        <label for="claim">Enable ClaimRoot™ Auto-Certification?</label>
                         <select id="claim" name="claim">
-                            <option value="yes">Yes – License this scroll</option>
+                            <option value="yes">Yes – Certify this product</option>
                             <option value="no">No – Just save it</option>
                         </select>
                     </div>
 
                     <button type="submit" class="form-action-button">Create Project</button>
-                    <p class="text-gray-500 text-sm mt-4">Scrolls will be saved in your CodeNest workspace and can be synced to Fruitful Global upon deployment.</p>
+                    <p class="text-gray-500 text-sm mt-4">Projects will be saved in your ToyNest workspace and can be certified by VaultMint™ upon deployment.</p>
                 </form>
             </div>
         </section>
 
-        <!-- Scroll Builder View -->
         <section id="scroll-builder-view" class="view view-hidden">
             <div class="panel">
-                <h3><i class="fas fa-tools mr-2"></i> Scroll Builder — Deploy Your CodeNest™ Scroll</h3>
+                <h3><i class="fas fa-tools mr-2"></i> Content Builder — Develop Toy Modules</h3>
                 <form id="scrollBuilderForm">
                     <div class="form-control">
-                        <label for="sbScrollName">Scroll Name</label>
-                        <input type="text" id="sbScrollName" name="scrollName" placeholder="e.g. VaultIntro Scroll">
+                        <label for="sbScrollName">Module Title</label>
+                        <input type="text" id="sbScrollName" name="scrollName" placeholder="e.g. Interactive Phonics Lesson">
                     </div>
 
                     <div class="form-control">
-                        <label for="sbScrollType">Scroll Type</label>
+                        <label for="sbScrollType">Module Type</label>
                         <select id="sbScrollType" name="scrollType">
                             <option value="">Loading types...</option>
                         </select>
                     </div>
 
                     <div class="form-control">
-                        <label for="htmlCode">HTML Code</label>
-                        <textarea id="htmlCode" name="htmlCode" rows="8" class="flex-grow" placeholder="Paste or write HTML code..."></textarea>
+                        <label for="htmlCode">Learning Content / Toy Script Code</label>
+                        <textarea id="htmlCode" name="htmlCode" rows="8" class="flex-grow" placeholder="Paste or write the toy's interactive script, AI dialogue, or learning module content..."></textarea>
                         <div class="flex flex-wrap items-center gap-2 mt-2">
                             <button type="button" id="refineHtmlBtn" class="form-action-button text-xs px-3 py-2">
-                                ✨ Refine HTML
+                                ✨ Refine Code
                             </button>
                             <button type="button" id="explainHtmlBtn" class="form-action-button secondary text-xs px-3 py-2">
-                                ✨ Explain HTML
+                                ✨ Explain Code
                             </button>
                             <button type="button" id="reviewHtmlBtn" class="form-action-button secondary text-xs px-3 py-2 bg-yellow-600 hover:bg-yellow-700">
-                                ✨ Review HTML
+                                ✨ Review Code
                             </button>
                             <label for="uploadHtml" class="form-action-button text-xs px-3 py-2 cursor-pointer bg-gray-600 hover:bg-gray-700">
-                                <i class="fas fa-upload mr-1"></i> Upload HTML
-                                <input type="file" id="uploadHtml" accept=".html,.htm" class="hidden">
+                                <i class="fas fa-upload mr-1"></i> Upload Code
+                                <input type="file" id="uploadHtml" accept=".html,.js,.json,.txt" class="hidden">
                             </label>
-                            <input type="text" id="importHtmlUrl" placeholder="Import HTML from URL (e.g., GitHub raw)" class="flex-grow p-2 rounded-md bg-gray-700 border border-gray-600 text-white text-xs">
+                            <input type="text" id="importHtmlUrl" placeholder="Import code from URL (e.g., GitHub raw)" class="flex-grow p-2 rounded-md bg-gray-700 border border-gray-600 text-white text-xs">
                             <button type="button" id="importHtmlUrlBtn" class="form-action-button text-xs px-3 py-2 bg-blue-600 hover:bg-blue-700">
                                 <i class="fas fa-download mr-1"></i> Import
                             </button>
@@ -1281,8 +1296,8 @@
                     </div>
 
                     <div class="form-control">
-                        <label for="cssCode">CSS Styling</label>
-                        <textarea id="cssCode" name="cssCode" rows="6" class="flex-grow" placeholder="Add scroll styling here..."></textarea>
+                        <label for="cssCode">Styling/Visuals (for holographic units/AR)</label>
+                        <textarea id="cssCode" name="cssCode" rows="6" class="flex-grow" placeholder="Add styling for interactive visuals, holographic projections, or AR overlays..."></textarea>
                         <div class="flex flex-wrap items-center gap-2 mt-2">
                             <button type="button" id="refineCssBtn" class="form-action-button text-xs px-3 py-2">
                                 ✨ Refine CSS
@@ -1308,8 +1323,8 @@
                     </div>
 
                     <div class="form-control">
-                        <label for="jsCode">JavaScript (Optional)</label>
-                        <textarea id="jsCode" name="jsCode" rows="5" class="flex-grow" placeholder="Optional scripts, claim triggers, hover FX..."></textarea>
+                        <label for="jsCode">Logic/AI Scripts (Optional)</label>
+                        <textarea id="jsCode" name="jsCode" rows="5" class="flex-grow" placeholder="Optional scripts for AI behavior, adaptive learning algorithms, sensor integration..."></textarea>
                         <div class="flex flex-wrap items-center gap-2 mt-2">
                             <button type="button" id="refineJsBtn" class="form-action-button text-xs px-3 py-2">
                                 ✨ Refine JavaScript
@@ -1335,9 +1350,9 @@
                     </div>
 
                     <div class="form-control">
-                        <label for="scrollTopic">Scroll Topic (for AI Content Ideas)</label>
+                        <label for="scrollTopic">Module Topic (for AI Content Ideas)</label>
                         <div class="flex items-center space-x-2">
-                            <input type="text" id="scrollTopic" placeholder="e.g., Sustainable Urban Farming, Future of AI in Healthcare">
+                            <input type="text" id="scrollTopic" placeholder="e.g., Early literacy development, Social-emotional skills">
                             <button type="button" id="generateContentIdeasBtn" class="form-action-button text-xs px-3 py-2">
                                 ✨ Generate Ideas
                             </button>
@@ -1347,20 +1362,19 @@
                     </div>
 
                     <div class="form-control">
-                        <label for="sbClaim">Scroll Licensing with ClaimRoot™?</label>
+                        <label for="sbClaim">Content Certification with VaultMint™?</label>
                         <select id="sbClaim" name="claim">
-                            <option value="yes">Yes — Activate scroll claim</option>
+                            <option value="yes">Yes — Activate certification</option>
                             <option value="no">No — Build only</option>
                         </select>
                     </div>
 
-                    <button type="submit" class="form-action-button">Compile Scroll & Save</button>
-                    <p class="text-gray-500 text-sm mt-4">Your scroll will be saved to your local CodeNest workspace with optional auto-deploy to Fruitful Global.</p>
+                    <button type="submit" class="form-action-button">Compile Module & Save</button>
+                    <p class="text-gray-500 text-sm mt-4">Your module will be saved to your local ToyNest workspace with optional VaultMint™ certification.</p>
                 </form>
             </div>
         </section>
 
-        <!-- NEW: Ecosystem Map View -->
         <section id="ecosystem-map-view" class="view view-hidden">
             <div class="panel">
                 <h2 class="section-title text-center mb-12">Global Repository & Routing Structure</h2>
@@ -1369,8 +1383,7 @@
                 <div id="sectorContainer" class="max-w-4xl mx-auto bg-gray-800 p-6 rounded-lg shadow-2xl text-left">
                     <h3 class="text-xl font-bold mb-4 text-yellow-400">Explore File Paths by Sector:</h3>
                     <div class="space-y-3">
-                        <!-- Dynamic sector-brand-subnode structure will be rendered here by JS -->
-                    </div>
+                        </div>
                 </div>
 
                 <div class="panel mt-8">
@@ -1384,22 +1397,22 @@
                             <pre class="conversation-code-block">
 /footer-global-repo/
 ├── src/
-│   ├── components/
-│   │   └── GlobalFooter.js  # Reusable footer component
-│   └── styles/
-│       └── footer.css       # Styling for the footer
+│   ├── components/
+│   │   └── GlobalFooter.js  # Reusable footer component
+│   └── styles/
+│       └── footer.css       # Styling for the footer
 ├── public/
-│   ├── privacy.html         # Content for /privacy route
-│   ├── terms.html           # Content for /terms route
-│   ├── contact.html         # Content for /contact route
-│   ├── copyright.html       # Content for /copyright route
-│   ├── developers.html      # Content for /developers route
-│   ├── vaultmesh.html       # Content for /vaultmesh route
-│   ├── fruitful.html        # Content for /fruitful route
-│   ├── faa.zone.html        # Content for /faa.zone route
-│   ├── about.html           # Content for /about route
-│   └── accessibility.html   # Content for /accessibility route
-└── package.json             # Build scripts for global deployment
+│   ├── privacy.html         # Content for /privacy route
+│   ├── terms.html           # Content for /terms route
+│   ├── contact.html         # Content for /contact route
+│   ├── copyright.html       # Content for /copyright route
+│   ├── developers.html      # Content for /developers route
+│   ├── vaultmesh.html       # Content for /vaultmesh route
+│   ├── fruitful.html        # Content for /fruitful route
+│   ├── faa.zone.html        # Content for /faa.zone route
+│   ├── about.html           # Content for /about route
+│   └── accessibility.html   # Content for /accessibility route
+└── package.json             # Build scripts for global deployment
                             </pre>
                         </div>
                         <p class="text-gray-400 text-sm">This repository is automatically integrated into every sector's build process, ensuring all sites adhere to the global footer mandate.</p>
@@ -1415,8 +1428,8 @@
                         
                         <div id="checkout-step-1">
                             <h4 class="text-lg font-semibold mb-4 text-white flex items-center justify-center"><span class="step-indicator">1</span> Item Selection</h4>
-                            <p class="text-gray-300 mb-4">Your selected item: **Fruitful Global Protocol License (Enterprise Tier)**</p>
-                            <p class="text-gray-300 mb-4">Price: **$999.00 USD** (One-time license fee)</p>
+                            <p class="text-gray-300 mb-4">Your selected item: **ToyNest™ Developer License**</p>
+                            <p class="text-gray-300 mb-4">Price: **$9,999.00 USD** (One-time license fee)</p>
                             <button class="checkout-button" onclick="showCheckoutStep(2)">Proceed to Checkout</button>
                         </div>
 
@@ -1444,149 +1457,121 @@
             </div>
         </section>
 
-        <!-- NEW: Overview View -->
-        <section id="overview-view" class="view view-hidden">
+        <section id="user-dashboards-view" class="view view-hidden">
             <div class="panel">
-                <h2 class="text-2xl font-bold text-gray-900 text-yellow-400">🌐 Fruitful™ Crate Dance™ Overview</h2>
-                <p class="text-gray-400">
-                    The Fruitful™ Crate Dance™ Smart Grid is an advanced, FAA-certified platform designed to streamline and secure digital asset management, financial transactions, and operational workflows across diverse sectors. Leveraging cutting-cutting-edge "Scroll" technology, it ensures transparency, immutability, and efficiency in every interaction.
-                </p>
-                <p class="text-gray-400 mt-2">
-                    Our core mission is to provide a robust, scalable, and compliant ecosystem for businesses and creators to manage their digital presence, payroll, and intellectual property with unparalleled security and speed. With features like instant payouts, verifiable contracts, and real-time analytics, the Smart Grid empowers users to achieve maximum yield and operational fluidity.
-                </p>
-                <div class="grid md:grid-cols-2 gap-4 mt-6">
-                    <div class="bg-blue-900 bg-opacity-30 p-4 rounded-lg shadow-sm border border-blue-800">
-                        <h3 class="font-semibold text-blue-400 flex items-center"><i class="fas fa-rocket mr-2"></i> Seamless Deployment</h3>
-                        <p class="text-sm text-blue-300 mt-1">Deploy digital assets and web presences in minutes with integrated tools like DeployNow™ and VaultDNS™.</p>
+                <h2 class="section-title text-center mb-12">User Dashboards Overview</h2>
+                <p class="section-intro mb-8">This section provides a conceptual overview of the various end-user and role-specific dashboards available within the Fruitful Smart Toys™ ecosystem. These are the interfaces designed for parents, caregivers, and children to interact with the smart toys and learning modules you develop.</p>
+
+                <div class="panel bg-gray-900 border border-gray-700 mb-8">
+                    <h3 class="text-yellow-400 mb-4">ModularView: Core Child Management Dashboards</h3>
+                    <p class="text-gray-400 text-sm mb-6">ModularView is the central hub for parents to manage their child's learning, toy settings, and activities. It provides a holistic view of their child's engagement and progress.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                            <h4 class="text-white font-semibold mb-2"><i class="fas fa-chart-line mr-2 text-blue-400"></i> Learning Progress</h4>
+                            <p class="text-gray-400 text-sm">Track academic mastery and skill acquisition.</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                            <h4 class="text-white font-semibold mb-2"><i class="fas fa-cog mr-2 text-green-400"></i> Toy Settings</h4>
+                            <p class="text-gray-400 text-sm">Modify interactive settings and controls.</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                            <h4 class="text-white font-semibold mb-2"><i class="fas fa-book-open mr-2 text-purple-400"></i> Learning Modules</h4>
+                            <p class="text-gray-400 text-sm">Explore and assign various educational modules.</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                            <h4 class="text-white font-semibold mb-2"><i class="fas fa-users mr-2 text-yellow-400"></i> Parental Dashboard</h4>
+                            <p class="text-gray-400 text-sm">Overall performance and activity logs.</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                            <h4 class="text-white font-semibold mb-2"><i class="fas fa-robot mr-2 text-red-400"></i> AI Feedback</h4>
+                            <p class="text-gray-400 text-sm">Receive AI-driven insights on learning habits.</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                            <h4 class="text-white font-semibold mb-2"><i class="fas fa-bell mr-2 text-teal-400"></i> Notifications & Alerts</h4>
+                            <p class="text-gray-400 text-sm">Stay updated on milestones and new content.</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                            <h4 class="text-white font-semibold mb-2"><i class="fas fa-family mr-2 text-orange-400"></i> Family Learning Experience</h4>
+                            <p class="text-gray-400 text-sm">Integrate family interactions into learning.</p>
+                        </div>
                     </div>
-                    <div class="bg-green-900 bg-opacity-30 p-4 rounded-lg shadow-sm border border-green-800">
-                        <h3 class="font-semibold text-green-400 flex items-center"><i class="fas fa-dollar-sign mr-2"></i> Instant Payouts & Compliance</h3>
-                        <p class="text-sm text-green-300 mt-1">Achieve real-time payroll and secure financial transactions with TaxTrace™ and VaultPay™ integration.</p>
+                    <a href="/sectors/education/smart-toys/modularview.html" target="_blank" class="form-action-button mt-6">
+                        <i class="fas fa-external-link-alt mr-2"></i> Visit ModularView
+                    </a>
+                </div>
+
+                <div class="panel bg-gray-900 border border-gray-700">
+                    <h3 class="text-yellow-400 mb-4">Role-Specific Dashboards: Personalized Views for Caregivers</h3>
+                    <p class="text-gray-400 text-sm mb-6">Tailored dashboards provide relevant information and controls for every individual involved in a child's care and development.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                            <h4 class="text-white font-semibold mb-2"><i class="fas fa-female mr-2 text-pink-400"></i> Mother's Insight Hub</h4>
+                            <p class="text-gray-400 text-sm">Emotional well-being, daily activities, social development.</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                            <h4 class="text-white font-semibold mb-2"><i class="fas fa-male mr-2 text-blue-400"></i> Father's Progress Monitor</h4>
+                            <p class="text-gray-400 text-sm">Academic milestones, skill mastery, STEM engagement.</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                            <h4 class="text-white font-semibold mb-2"><i class="fas fa-user-friends mr-2 text-purple-400"></i> Parents' Collaborative View</h4>
+                            <p class="text-gray-400 text-sm">Unified insights, shared settings, family activity planning.</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                            <h4 class="text-white font-semibold mb-2"><i class="fas fa-user-nurse mr-2 text-green-400"></i> Nanny's Daily Planner</h4>
+                            <p class="text-gray-400 text-sm">Manage routines, track play sessions, log essential care.</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                            <h4 class="text-white font-semibold mb-2"><i class="fas fa-globe-europe mr-2 text-indigo-400"></i> Au Pair's Cultural Exchange Hub</h4>
+                            <p class="text-gray-400 text-sm">Monitor language exposure and cultural learning.</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                            <h4 class="text-white font-semibold mb-2"><i class="fas fa-chalkboard-teacher mr-2 text-red-400"></i> Tutor's Academic Focus</h4>
+                            <p class="text-gray-400 text-sm">Detailed insights into subject challenges and progress.</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                            <h4 class="text-white font-semibold mb-2"><i class="fas fa-baby mr-2 text-teal-400"></i> Babysitter's Quick Guide</h4>
+                            <p class="text-gray-400 text-sm">Essential routines, emergency contacts, approved activities.</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                            <h4 class="text-white font-semibold mb-2"><i class="fas fa-hand-holding-heart mr-2 text-yellow-400"></i> Grandparents' Connection Portal</h4>
+                            <p class="text-gray-400 text-sm">Simplified view of favorite activities and creative outputs.</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                            <h4 class="text-white font-semibold mb-2"><i class="fas fa-child mr-2 text-cyan-400"></i> Child's Own Activity View</h4>
+                            <p class="text-gray-400 text-sm">Fun, simplified dashboard showing achievements and adventures.</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                            <h4 class="text-white font-semibold mb-2"><i class="fas fa-shield-alt mr-2 text-gray-400"></i> Guardian's Security & Privacy Hub</h4>
+                            <p class="text-gray-400 text-sm">Advanced controls for data privacy and content filtering.</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                            <h4 class="text-white font-semibold mb-2"><i class="fas fa-calendar-alt mr-2 text-orange-400"></i> Family Learning Coordinator</h4>
+                            <p class="text-gray-400 text-sm">Manage schedules and coordinate multi-child learning.</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                            <h4 class="text-white font-semibold mb-2"><i class="fas fa-star mr-2 text-purple-400"></i> Special Needs Support Dashboard</h4>
+                            <p class="text-gray-400 text-sm">Customizable tracking for diverse learning needs.</p>
+                        </div>
                     </div>
-                    <div class="bg-purple-900 bg-opacity-30 p-4 rounded-lg shadow-sm border border-purple-800">
-                        <h3 class="font-semibold text-purple-400 flex items-center"><i class="fas fa-lock mr-2"></i> Immutable Security</h3>
-                        <p class="text-sm text-purple-300 mt-1">Every scroll, contract, and transaction is secured on an Infinite Ledger Protocol, ensuring data integrity and auditability.</p>
-                    </div>
-                    <div class="bg-yellow-900 bg-opacity-30 p-4 rounded-lg shadow-sm border border-yellow-800">
-                        <h3 class="font-semibold text-yellow-400 flex items-center"><i class="fas fa-chart-line mr-2"></i> Optimized Yield & Analytics</h3>
-                        <p class="text-sm text-yellow-300 mt-1">Monitor performance with live PulseGrid™ metrics and optimize strategies for maximum yield across all operations.</p>
-                    </div>
+                    <a href="/sectors/education/smart-toys/family-dashboards.html" target="_blank" class="form-action-button mt-6">
+                        <i class="fas fa-external-link-alt mr-2"></i> Explore All Family Dashboards
+                    </a>
                 </div>
             </div>
         </section>
 
-        <!-- NEW: Modules View -->
-        <section id="modules-view" class="view view-hidden">
-            <div class="panel">
-                <h2 class="text-2xl font-bold text-gray-900 text-yellow-400">📦 Fruitful™ Crate Dance™ Modules</h2>
-                <p class="text-gray-400 mb-6">Explore the core modular components that power the Fruitful™ Crate Dance™ Smart Grid, enabling its robust functionality and seamless operations.</p>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Module: ScrollStack™ Core -->
-                    <div class="panel bg-gray-900 border border-gray-700">
-                        <h3 class="text-xl font-semibold text-white flex items-center mb-2">
-                            <i class="fas fa-layer-group text-yellow-400 mr-2"></i> ScrollStack™ Core
-                        </h3>
-                        <p class="text-sm text-gray-400">
-                            The foundational module for all Scroll operations. Manages the creation, indexing, and versioning of every digital Scroll, ensuring immutability and traceability.
-                        </p>
-                        <ul class="list-disc list-inside text-sm text-gray-300 mt-3 space-y-1">
-                            <li>Immutable Scroll Registry</li>
-                            <li>Version Control & Archiving</li>
-                            <li>Cross-Protocol Interoperability</li>
-                        </ul>
-                    </div>
-
-                    <!-- Module: VaultPay™ Secure Relay -->
-                    <div class="panel bg-gray-900 border border-gray-700">
-                        <h3 class="text-xl font-semibold text-white flex items-center mb-2">
-                            <i class="fas fa-credit-card text-yellow-400 mr-2"></i> VaultPay™ Secure Relay
-                        </h3>
-                        <p class="text-sm text-gray-400">
-                            Enables secure, instant, and compliant financial transactions. Integrates directly with TaxTrace™ for automated tax reporting and audit readiness.
-                        </p>
-                        <ul class="list-disc list-inside text-sm text-gray-300 mt-3 space-y-1">
-                            <li>Instant Payout Processing</li>
-                            <li>Automated TaxTrace™ Sync</li>
-                            <li>Multi-Currency Support</li>
-                        </ul>
-                    </div>
-
-                    <!-- Module: TreatyMesh™ Clause Binder -->
-                    <div class="panel bg-gray-900 border border-gray-700">
-                        <h3 class="text-xl font-semibold text-white flex items-center mb-2">
-                            <i class="fas fa-gavel text-yellow-400 mr-2"></i> TreatyMesh™ Clause Binder
-                        </h3>
-                        <p class="text-sm text-gray-400">
-                            Automates the creation and enforcement of smart contracts and legal agreements, ensuring all parties are bound by immutable, transparent clauses.
-                        </p>
-                        <ul class="list-disc list-inside text-sm text-gray-300 mt-3 space-y-1">
-                            <li>Smart Contract Generation</li>
-                            <li>Automated Compliance Checks</li>
-                            <li>Dispute Resolution Triggers</li>
-                        </ul>
-                    </div>
-
-                    <!-- Module: PulseGrid™ Analytics Engine -->
-                    <div class="panel bg-gray-900 border border-gray-700">
-                        <h3 class="text-xl font-semibold text-white flex items-center mb-2">
-                            <i class="fas fa-chart-bar text-yellow-400 mr-2"></i> PulseGrid™ Analytics Engine
-                        </h3>
-                        <p class="text-sm text-gray-400">
-                            Provides real-time operational insights and performance metrics. Monitors Scroll activity, yield rates, and system health with 9-second GlowFlow™ updates.
-                        </p>
-                        <ul class="list-disc list-inside text-sm text-gray-300 mt-3 space-y-1">
-                            <li>Live Performance Dashboards</li>
-                            <li>Predictive Yield Forecasting</li>
-                            <li>Anomaly Detection & Alerts</li>
-                        </ul>
-                    </div>
-
-                    <!-- Module: OmniDrop™ Template Injector -->
-                    <div class="panel bg-gray-900 border border-gray-700">
-                        <h3 class="text-xl font-semibold text-white flex items-center mb-2">
-                            <i class="fas fa-cloud-download-alt text-yellow-400 mr-2"></i> OmniDrop™ Template Injector
-                        </h3>
-                        <p class="text-sm text-gray-400">
-                            Facilitates rapid deployment of standardized Scroll templates across various brand and sector needs. Ensures consistent branding and compliance from the outset.
-                        </p>
-                        <ul class="list-disc list-inside text-sm text-gray-300 mt-3 space-y-1">
-                            <li>Pre-configured Scroll Templates</li>
-                            <li>Automated Brand Integration</li>
-                            <li>Sector-Specific Deployments</li>
-                        </ul>
-                    </div>
-
-                    <!-- Module: Seedwave™ Growth Engine -->
-                    <div class="panel bg-gray-900 border border-gray-700">
-                        <h3 class="text-xl font-semibold text-white flex items-center mb-2">
-                            <i class="fas fa-leaf text-yellow-400 mr-2"></i> Seedwave™ Growth Engine
-                        </h3>
-                        <p class="text-sm text-gray-400">
-                            The self-sustaining core for infinite Scroll expansion. Automatically generates new nodes and lattice dimensions based on predefined growth parameters and market signals.
-                        </p>
-                        <ul class="list-disc list-inside text-sm text-gray-300 mt-3 space-y-1">
-                            <li>Autonomous Node Generation</li>
-                            <li>Predictive Market Expansion</li>
-                            <li>Self-Healing Lattice Integrity</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- NEW: Editor Workspace View (Integrated Landing Scroll Editor) -->
         <section id="editor-workspace-view" class="view view-hidden">
             <div class="editor-container">
                 <div class="editor-header">
-                    <span id="currentProjectEditName">Project Editor</span>
+                    <span id="currentProjectEditName">Content Editor</span>
                     <button class="text-white text-xl hover:text-gray-300" onclick="showView('projects')">
                         <i class="fas fa-times-circle"></i>
                     </button>
                 </div>
                 <div class="editor-content-area">
                     <div class="code-editor">
-                        <h4 class="text-xl font-semibold mb-4 text-white">Edit HTML/CSS</h4>
-                        <textarea id="editorHtmlCssCode" placeholder="Edit your Landing Scroll HTML and CSS here..."></textarea>
+                        <h4 class="text-xl font-semibold mb-4 text-white">Edit Learning Module Code</h4>
+                        <textarea id="editorHtmlCssCode" placeholder="Edit your Smart Toy learning module or content code here..."></textarea>
                         <div class="flex flex-wrap items-center gap-2 mt-2">
                             <button type="button" id="editorRefineCodeBtn" class="form-action-button text-xs px-3 py-2">
                                 ✨ Refine Code
@@ -1604,8 +1589,8 @@
 
                         <h5 class="text-lg font-semibold mt-6 mb-2 text-white">AI Content Generation</h5>
                         <div class="form-control">
-                            <label for="editorSectionTopicInput" class="text-white text-sm mb-1">Section Topic</label>
-                            <input type="text" id="editorSectionTopicInput" placeholder="e.g., Key Features, About Us, Testimonials" class="w-full p-2 rounded-md bg-gray-700 border border-gray-600 text-white text-sm">
+                            <label for="editorSectionTopicInput" class="text-white text-sm mb-1">Learning Content Topic</label>
+                            <input type="text" id="editorSectionTopicInput" placeholder="e.g., Interactive Math Problem, Emotional Response Script" class="w-full p-2 rounded-md bg-gray-700 border border-gray-600 text-white text-sm">
                         </div>
                         <div class="flex flex-wrap items-center gap-2 mt-2">
                             <button type="button" id="editorGenerateHeadlineBtn" class="form-action-button text-xs px-3 py-2">
@@ -1635,8 +1620,7 @@
                         <iframe id="editorLivePreviewFrame" title="Live Preview"></iframe>
                     </div>
                 </div>
-                <div class="editor-actions flex justify-center w-full"> <!-- Added flex and justify-center -->
-                    <button class="form-action-button secondary" onclick="updateEditorPreview()">Update Preview</button>
+                <div class="editor-actions flex justify-center w-full"> <button class="form-action-button secondary" onclick="updateEditorPreview()">Update Preview</button>
                     <button class="form-action-button" onclick="showCustomModal('Save Project', 'Project saved! (Simulation)')">Save Project</button>
                     <button class="form-action-button" onclick="showCustomModal('Deploy Project', 'Project deployed! (Simulation)')">Deploy Project</button>
                 </div>
@@ -1644,40 +1628,34 @@
         </section>
 
 
-        <!-- Templates View -->
         <section id="templates-view" class="view view-hidden">
             <div class="panel">
                 <h3><i class="fas fa-palette mr-2"></i> Select a Template</h3>
                 <div id="templatesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <!-- Templates will be loaded here -->
-                </div>
+                    </div>
             </div>
         </section>
 
-        <!-- Licenses View -->
         <section id="licenses-view" class="view view-hidden">
             <div class="panel">
-                <h3><i class="fas fa-file-contract mr-2"></i> My Licensed Scrolls</h3>
-                <p class="mb-4 text-gray-400">View and manage all your deployed and licensed scrolls within the Fruitful Global Treaty Grid.</p>
+                <h3><i class="fas fa-file-contract mr-2"></i> My Smart Toy Certifications</h3>
+                <p class="mb-4 text-gray-400">View and manage all your deployed and VaultMint™ certified smart toy content within the Fruitful Global network.</p>
                 <div id="licensesList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Licenses will be loaded here -->
-                </div>
+                    </div>
             </div>
 
             <div class="panel">
-                <h3><i class="fas fa-handshake mr-2"></i> Royalty License Agreements</h3>
-                <p class="mb-4 text-gray-400">Review and sign your royalty agreements with Fruitful Global via SecureSign™.</p>
+                <h3><i class="fas fa-handshake mr-2"></i> SaaS Licensing Agreements</h3>
+                <p class="mb-4 text-gray-400">Review and sign your SaaS licensing agreements with Fruitful Global via SecureSign™.</p>
                 <div id="royaltyAgreementsList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Royalty agreements will be loaded here -->
-                </div>
+                    </div>
             </div>
         </section>
 
-        <!-- Analytics View -->
         <section id="analytics-view" class="view view-hidden">
             <div class="panel">
-                <h3><i class="fas fa-chart-line mr-2"></i> Performance Analytics</h3>
-                <p class="mb-4 text-gray-400">Insights into your deployed scrolls and overall platform engagement.</p>
+                <h3><i class="fas fa-chart-line mr-2"></i> Engagement Analytics</h3>
+                <p class="mb-4 text-gray-400">Insights into smart toy engagement and learning progress.</p>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                     <div class="chart-container">
@@ -1689,7 +1667,7 @@
                 </div>
 
                 <div class="panel">
-                    <h4>User Engagement Metrics</h4>
+                    <h4>Child Progress Metrics</h4>
                     <div class="chart-container">
                         <canvas id="userActivityChart"></canvas>
                     </div>
@@ -1697,7 +1675,6 @@
             </div>
         </section>
 
-        <!-- API Keys View -->
         <section id="api-keys-view" class="view view-hidden">
             <div class="panel">
                 <h3><i class="fas fa-key mr-2"></i> Consolidated API Key Index (Fruitful Global)</h3>
@@ -1716,69 +1693,63 @@
                         </tr>
                     </thead>
                     <tbody id="apiKeysTableBody">
-                        <!-- API keys will be loaded here -->
-                    </tbody>
+                        </tbody>
                 </table>
             </div>
         </section>
 
-        <!-- Settings View -->
         <section id="settings-view" class="view view-hidden">
             <div class="panel">
                 <h3><i class="fas fa-cog mr-2"></i> My Settings</h3>
 
-                <!-- Settings Navigation -->
                 <div class="flex border-b border-gray-700 mb-6">
                     <button class="settings-tab-btn active" data-settings-tab="profile">Profile</button>
-                    <button class="settings-tab-btn" data-settings-tab="preferences">Scroll Preferences</button>
+                    <button class="settings-tab-btn" data-settings-tab="preferences">Learning Preferences</button>
                     <button class="settings-tab-btn" data-settings-tab="security">Security</button>
                     <button class="settings-tab-btn" data-settings-tab="domains">Domain & Cloud Services</button>
                 </div>
 
-                <!-- Profile Sub-view -->
                 <div id="settings-profile" class="settings-sub-view">
                     <section class="panel bg-gray-900 border border-gray-700">
                         <h4>Profile</h4>
                         <div class="form-control">
                             <label for="displayName">Display Name</label>
-                            <input type="text" id="displayName" value="ScrollUser001">
+                            <input type="text" id="displayName" value="ToyInnovator001">
                         </div>
 
                         <div class="form-control">
                             <label for="email">Email</label>
-                            <input type="email" id="email" value="user@scrollmail.com">
+                            <input type="email" id="email" value="smarttoys.dev@example.com">
                         </div>
 
                         <button class="form-action-button" onclick="showCustomModal('Profile Updated!', 'Your display name and email have been saved.')">Update Profile</button>
                     </section>
                 </div>
 
-                <!-- Scroll Preferences Sub-view -->
                 <div id="settings-preferences" class="settings-sub-view hidden">
                     <section class="panel bg-gray-900 border border-gray-700">
-                        <h4>Scroll Preferences</h4>
+                        <h4>Learning Preferences</h4>
                         <div class="form-control">
                             <label for="defaultRegion">Default Deployment Region</label>
                             <select id="defaultRegion">
-                                <option value="global">Global</option>
-                                <option value="local">Local</option>
-                                <option value="pop-up">Street Scroll (Pop-up)</option>
+                                <option value="global">Global Rollout</option>
+                                <option value="local">Regional Pilot</option>
+                                <option value="beta">Beta Testing Group</option>
                             </select>
                         </div>
 
                         <div class="form-control">
-                            <label for="autoClaimSetting">Auto-Enable ClaimRoot™ on Save?</label>
+                            <label for="autoClaimSetting">Auto-Enable VaultMint™ on Certification?</label>
                             <select id="autoClaimSetting">
                                 <option value="yes">Yes</option>
                                 <option value="no">No</option>
                             </select>
                         </div>
 
-                        <button class="form-action-button" onclick="showCustomModal('Preferences Saved!', 'Your scroll preferences have been updated.')">Save Preferences</button>
+                        <button class="form-action-button" onclick="showCustomModal('Preferences Saved!', 'Your learning preferences have been updated.')">Save Preferences</button>
                     </section>
                 </div>
 
-                <!-- Security Sub-view -->
                 <div id="settings-security" class="settings-sub-view hidden">
                     <section class="panel bg-gray-900 border border-gray-700">
                         <h4>Security</h4>
@@ -1796,7 +1767,6 @@
                     </section>
                 </div>
 
-                <!-- Domain & Cloud Services Sub-view (NEW) -->
                 <div id="settings-domains" class="settings-sub-view hidden">
                     <section class="panel bg-gray-900 border border-gray-700 mb-6">
                         <h4>DNS Zone Management (Cloudflare Integrated)</h4>
@@ -1812,11 +1782,10 @@
                                 </tr>
                             </thead>
                             <tbody id="dnsRecordsTableBody">
-                                <!-- DNS records will be loaded here -->
-                            </tbody>
+                                </tbody>
                         </table>
                         <div class="flex flex-wrap items-center gap-2">
-                               <input type="text" id="dnsRecordTypeInput" placeholder="DNS Type (e.g., A, CNAME, MX)" class="flex-grow p-2 rounded-md bg-gray-700 border border-gray-600 text-white text-xs max-w-[200px]">
+                             <input type="text" id="dnsRecordTypeInput" placeholder="DNS Type (e.g., A, CNAME, MX)" class="flex-grow p-2 rounded-md bg-gray-700 border border-gray-600 text-white text-xs max-w-[200px]">
                             <button class="form-action-button text-sm px-3 py-2 bg-purple-600 hover:bg-purple-700" id="explainDnsBtn">
                                 ✨ Explain DNS Type
                             </button>
@@ -1832,21 +1801,20 @@
                         <h4>Domain Management (Vercel Integrated for Silent Deployments)</h4>
                         <p class="text-gray-400 text-sm mb-4">Manage your primary domains and add-on domains. Deployed silently via Vercel integration.</p>
                         <ul id="domainList" class="list-disc list-inside text-gray-200 mb-4">
-                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i> examplefruitful.com (Primary)</li>
-                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i> myblog.examplefruitful.com (Subdomain)</li>
-                            <!-- More domains will be loaded here -->
-                        </ul>
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i> toynest.faa.zone (Primary)</li>
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i> learncomp.toynest.faa.zone (Subdomain)</li>
+                            </ul>
                         <div class="flex flex-wrap items-center gap-2">
-                            <input type="text" id="newDomainName" placeholder="Add New Domain (e.g., newbrand.com)" class="flex-grow p-2 rounded-md bg-gray-700 border border-gray-600 text-white text-sm">
+                            <input type="text" id="newDomainName" placeholder="Add New Domain (e.g., newtoy.com)" class="flex-grow p-2 rounded-md bg-gray-700 border border-gray-600 text-white text-sm">
                             <button class="form-action-button text-sm px-3 py-2" onclick="showCustomModal('Add Domain', 'Adding domain functionality coming soon!')">
                                 <i class="fas fa-plus mr-1"></i> Add Domain
                             </button>
                         </div>
                         <div class="flex flex-wrap items-center gap-2 mt-2">
-                            <input type="text" id="newAddonDomainName" placeholder="Add Add-on Domain (e.g., addon.newbrand.com)" class="flex-grow p-2 rounded-md bg-gray-700 border border-gray-600 text-white text-sm">
+                            <input type="text" id="newAddonDomainName" placeholder="Add Add-on Domain (e.g., arbooks.newtoy.com)" class="flex-grow p-2 rounded-md bg-gray-700 border border-gray-600 text-white text-sm">
                             <select id="addonDomainTarget" class="p-2 rounded-md bg-gray-700 border border-gray-600 text-white text-sm">
                                 <option value="">Select Primary Domain</option>
-                                <option value="examplefruitful.com">examplefruitful.com</option>
+                                <option value="toynest.faa.zone">toynest.faa.zone</option>
                             </select>
                             <button class="form-action-button text-sm px-3 py-2" onclick="showCustomModal('Add Add-on Domain', 'Adding add-on domain functionality coming soon!')">
                                 <i class="fas fa-plus mr-1"></i> Add Add-on
@@ -1869,13 +1837,12 @@
                                 </tr>
                             </thead>
                             <tbody id="emailAccountsTableBody">
-                                <!-- Email accounts will be loaded here -->
-                            </tbody>
+                                </tbody>
                         </table>
                         <div class="flex flex-wrap items-center gap-2">
-                            <input type="text" id="newEmailPrefix" placeholder="New email (e.g., info)" class="w-1/3 p-2 rounded-md bg-gray-700 border border-gray-600 text-white text-sm">
+                            <input type="text" id="newEmailPrefix" placeholder="New email (e.g., learning)" class="w-1/3 p-2 rounded-md bg-gray-700 border border-gray-600 text-white text-sm">
                             <span class="text-gray-200">@</span>
-                            <input type="text" id="newEmailDomain" placeholder="yourdomain.com" value="examplefruitful.com" class="w-1/3 p-2 rounded-md bg-gray-700 border border-gray-600 text-white text-sm">
+                            <input type="text" id="newEmailDomain" placeholder="yourdomain.com" value="toynest.faa.zone" class="w-1/3 p-2 rounded-md bg-gray-700 border border-gray-600 text-white text-sm">
                             <button class="form-action-button text-sm px-3 py-2" id="createEmailBtn">
                                 <i class="fas fa-plus mr-1"></i> Create Email
                             </button>
@@ -1888,12 +1855,10 @@
                         <p class="text-gray-300 mb-4">Access the comprehensive setup details for any company. Select a company below to reveal its granular configurations. **No troubleshooting or helpline needed**.</p>
                         
                         <div id="settingsCompanySelectionGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-                            <!-- Company selection cards for settings will be rendered here -->
-                        </div>
+                            </div>
 
                         <div id="settingsCompanyDetailsOutput" class="company-details-section hidden">
-                            <!-- Dynamic company details will be rendered here when a company is selected -->
-                        </div>
+                            </div>
                     </section>
 
                 </div>
@@ -1902,14 +1867,13 @@
             </div>
         </section>
 
-        <!-- Login View -->
         <section id="login-view" class="view view-hidden">
             <div class="panel">
-                <h3><i class="fas fa-sign-in-alt mr-2"></i> Sign In to CodeNest™</h3>
+                <h3><i class="fas fa-sign-in-alt mr-2"></i> Sign In to ToyNest™</h3>
                 <form id="loginForm">
                     <div class="form-control">
                         <label for="loginEmail">Email</label>
-                        <input type="email" id="loginEmail" placeholder="your@email.com" value="test@example.com" required>
+                        <input type="email" id="loginEmail" placeholder="your@email.com" value="smarttoys.dev@example.com" required>
                     </div>
                     <div class="form-control">
                         <label for="loginPassword">Password</label>
@@ -1921,14 +1885,13 @@
             </div>
         </section>
 
-        <!-- Sign Up View -->
         <section id="signup-view" class="view view-hidden">
             <div class="panel">
-                <h3><i class="fas fa-user-plus mr-2"></i> Join CodeNest™</h3>
+                <h3><i class="fas fa-user-plus mr-2"></i> Join ToyNest™</h3>
                 <form id="signupForm">
                     <div class="form-control">
                         <label for="signupName">Display Name</label>
-                        <input type="text" id="signupName" placeholder="Your Display Name" required>
+                        <input type="text" id="signupName" placeholder="Your Developer Name" required>
                     </div>
                     <div class="form-control">
                         <label for="signupEmail">Email</label>
@@ -1949,7 +1912,6 @@
         </section>
     </main>
 
-    <!-- Template Preview Modal -->
     <div id="templatePreviewModal" class="custom-modal-overlay">
         <div class="custom-modal-content max-w-4xl w-full h-auto" style="padding: 0; text-align: left;">
             <div class="template-preview-header">
@@ -1961,13 +1923,12 @@
                 <p id="templatePreviewDescription" class="text-gray-400 text-sm mt-2"></p>
                 <div class="template-preview-actions">
                     <button class="btn-primary" id="useTemplateNewProjectBtn"><i class="fas fa-plus-circle mr-2"></i> Use in New Project</button>
-                    <button class="btn-secondary" id="useTemplateScrollBuilderBtn"><i class="fas fa-tools mr-2"></i> Use in Scroll Builder</button>
+                    <button class="btn-secondary" id="useTemplateScrollBuilderBtn"><i class="fas fa-tools mr-2"></i> Use in Content Builder</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Simplify Agreement Modal -->
     <div id="simplifyAgreementModal" class="custom-modal-overlay view-hidden">
         <div class="custom-modal-content max-w-xl w-full h-auto">
             <div class="template-preview-header">
@@ -1983,7 +1944,6 @@
         </div>
     </div>
 
-    <!-- Project Idea Modal -->
     <div id="projectIdeaModal" class="custom-modal-overlay view-hidden">
         <div class="custom-modal-content max-w-xl w-full h-auto">
             <div class="template-preview-header">
@@ -2005,7 +1965,6 @@
         </div>
     </div>
 
-    <!-- Project Summary Modal (NEW) -->
     <div id="projectSummaryModal" class="custom-modal-overlay view-hidden">
         <div class="custom-modal-content max-w-xl w-full h-auto">
             <div class="template-preview-header">
@@ -2021,7 +1980,6 @@
         </div>
     </div>
 
-    <!-- Email Draft Modal (NEW) -->
     <div id="emailDraftModal" class="custom-modal-overlay view-hidden">
         <div class="custom-modal-content max-w-xl w-full h-auto">
             <div class="template-preview-header">
@@ -2032,17 +1990,10 @@
                 <p class="text-gray-400 text-sm mb-2">To: <span id="emailDraftTo"></span></p>
                 <div class="form-control">
                     <label for="emailPurposeInput" class="text-white text-sm mb-1">Purpose of Email</label>
-                    <input type="text" id="emailPurposeInput" placeholder="e.g., Welcome new user, Support query, Marketing announcement" class="w-full p-2 rounded-md bg-gray-700 border border-gray-600 text-white text-sm">
-                </div>
-                   <div class="form-control">
-                    <label for="customerQueryInput" class="text-white text-sm mb-1">Customer Query/Issue (for Support Emails)</label>
-                    <textarea id="customerQueryInput" rows="3" placeholder="e.g., My payment failed, I need help with licensing." class="w-full p-2 rounded-md bg-gray-700 border border-gray-600 text-white text-sm"></textarea>
+                    <input type="text" id="emailPurposeInput" placeholder="e.g., Welcome new user, Support query, Marketing announcement" class="w-1/3 p-2 rounded-md bg-gray-700 border border-gray-600 text-white text-sm">
                 </div>
                 <button type="button" id="generateEmailDraftBtn" class="form-action-button text-xs px-3 py-2">
                     ✨ Generate Draft
-                </button>
-                <button type="button" id="generateSupportResponseBtn" class="form-action-button text-xs px-3 py-2 ml-2">
-                    ✨ Generate Support Response
                 </button>
                 <p id="emailDraftStatus" class="text-xs text-gray-400 mt-1 hidden"></p>
                 <textarea id="generatedEmailDraftOutput" rows="10" class="w-full p-2 border border-gray-600 rounded-md bg-gray-700 text-white mt-2" placeholder="Your AI-generated email draft will appear here..." readonly></textarea>
@@ -2054,25 +2005,7 @@
         </div>
     </div>
 
-    <!-- Marketing Copy Modal (NEW) -->
-    <div id="marketingCopyModal" class="custom-modal-overlay view-hidden">
-        <div class="custom-modal-content max-w-xl w-full h-auto">
-            <div class="template-preview-header">
-                <h3 id="marketingCopyModalTitle">Generated Marketing Copy</h3>
-                <button class="close-preview-btn" onclick="hideMarketingCopyModal()"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="template-preview-body text-left">
-                <p id="marketingCopyOutput" class="text-gray-700 text-left whitespace-pre-wrap leading-relaxed"></p>
-                <div class="template-preview-actions">
-                    <button class="btn-primary" onclick="document.execCommand('copy'); showCustomModal('Copy Copied', 'Marketing copy copied to clipboard!', true);">Copy to Clipboard</button>
-                    <button class="btn-secondary" onclick="hideMarketingCopyModal()">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-
-    <!-- Custom Modal for Alerts (standard app alerts) -->
     <div id="customModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden">
         <div class="bg-gray-800 text-white p-6 rounded-lg shadow-xl text-center max-w-sm">
             <p id="customModalMessage"></p>
@@ -2080,6 +2013,44 @@
     </div>
 
     <script>
+        // Data for Smart Toys from your provided HTML
+        const smartToySubBrandsRaw = [
+            "Smart Learning Companions",
+            "Speech Recognition Engine",
+            "Core Subjects: Math, Science, Literacy",
+            "Emotional Intelligence & Storytelling",
+            "Interactive Holographic Story Units",
+            "Smart Pens with Adaptive AI Feedback",
+            "AR-Enhanced Interactive Books",
+            "Gamified Educational Apps",
+            "Multilingual Framework",
+            "AI Parental Dashboard",
+            "FAA VaultMint™ Certified",
+            "OmniScroll + Infinite Ledger Ready"
+        ];
+
+        // Brands from the second provided HTML, assumed to be part of Education & Youth
+        const otherEducationBrandsRaw = [
+            "BrightMinds Institute", "NextWave Learning", "Elevate Academy", "NovaEdge Schools",
+            "YouthQuest Alliance", "EduSphere Global", "OpenFuture Campus", "KinderNest Systems",
+            "TalentBloom Initiative", "LearnLoop Foundation", "SkillSpring Academies", "GrowGrid Labs",
+            "BeaconBridge Schools", "QuantumEdu Nexus", "PolyLearn Group", "YouthLine Academy",
+            "OpenKnowledge Core", "YoungGenius Hub", "Educatalyst Engine", "DreamBuild Institute",
+            "FutureSteps Labs", "Kidspire Solutions", "NeoEdu Chain", "CloudMind Learning",
+            "SparkQuest Network", "ProdigyLink Schools", "SafeStart Education", "VaultED Foundation",
+            "OmniMind Academy", "LeapNode Schools", "EduOrbit Center", "Mindwave Institute",
+            "LearnSync Systems", "NurtureLine Schools", "BloomStep EduNet", "YouthDelta Project",
+            "SkillNest Alliance", "EduPilot Grid", "VaultNest Learning", "ThinkGrow Systems",
+            "OpenYouth Exchange", "QuantumSteps Academy", "BrightArc Eduware", "GenEd Frontier",
+            "MindHatch Network", "NetLearn Institute"
+        ];
+
+        // Format into the `brands` array for education-youth sector
+        const educationYouthBrandsFormatted = [
+            { name: "Fruitful Smart Toys", subnodes: smartToySubBrandsRaw }
+        ].concat(otherEducationBrandsRaw.map(brandName => ({ name: brandName, subnodes: [] })));
+
+
         // --- Centralized Data Store for CodeNest Dashboard ---
         const sectorList = {
             "agriculture": { name: "🌱 Agriculture & Biotech" },
@@ -2087,7 +2058,7 @@
             "banking": { name: "🏦 Banking & Finance" },
             "creative": { name: "🖋️ Creative Tech" },
             "logistics": { name: "📦 Logistics & Packaging" },
-            "education-ip": { name: "📚 Education & IP" },
+            "education-ip": { name: "📚 Education & IP" }, // Intellectual Property focus
             "fashion": { name: "✂ Fashion & Identity" },
             "gaming": { name: "🎮 Gaming & Simulation" },
             "health": { name: "🧠 Health & Hygiene" },
@@ -2107,310 +2078,165 @@
             "voice": { name: "🎙️ Voice & Audio" },
             "webless": { name: "📡 Webless Tech & Nodes" },
             "nft": { name: "🔁 NFT & Ownership" },
-            "education-youth": { name: "🎓 Education & Youth" },
+            "education-youth": { name: "🎓 Education & Youth" }, // Specific for youth/smart toys
             "zerowaste": { name: "♻️ Zero Waste" },
             "professional": { name: "🧾 Professional Services" },
             "payroll-mining": { name: "🪙 Payroll Mining & Accounting" },
             "mining": { name: "⛏️ Mining & Resources" },
             "wildlife": { name: "🦁 Wildlife & Habitat" },
-            "admin-panel": { name: "⚙️ Admin Panel" }
+            "admin-panel": { name: "⚙️ CodeNest™ Central Hub" }
         };
 
 
         const allSectorsData = {
-            "ai-logic": {
-                name: "🧠 AI, Logic & Grid",
-                repoName: "ai-logic-seedwave-admin",
-                baseUrl: "ai-logic.seedwave.faa.zone",
+            "admin-panel": {
+                name: "⚙️ CodeNest™ Central Hub",
+                repoName: "codenest-global-admin",
+                baseUrl: "codenest.faa.zone",
                 brands: [
-                    { name: "OmniKey", subnodes: ["TraceBeam", "VaultEcho", "QRPath", "MeshID"] },
-                    { name: "SignalPulse", subnodes: ["BeamNode", "VaultTrack", "QRLogic", "SignalDrop"] },
-                    { name: "MeshIndex", subnodes: ["YieldTrack", "VaultMap", "QRClaim", "OmniPath"] }
+                    { name: "Core Services", subnodes: ["Project Management", "License Vault", "Deployment Pipelines", "User Access"] },
+                    { name: "System Monitoring", subnodes: ["Health Dashboard", "Log Analysis", "Traffic Insights"] }
                 ]
             },
-            "agriculture": {
-                name: "🌱 Agriculture & Biotech",
-                repoName: "agriculture-seedwave-admin",
-                baseUrl: "agriculture.seedwave.faa.zone",
-                brands: [
-                    { name: "CropLink", subnodes: ["CropLink ID™", "CropLink Vault™", "CropLink Field™", "CropLink Yield™"] },
-                    { name: "SoilPulse", subnodes: ["SoilPulse Trace™", "SoilPulse Data™", "SoilPulse Alert™"] }
-                ]
-            },
-            "fsf": { 
-                name: "🥦 Food, Soil & Farming",
-                repoName: "fsf-seedwave-admin",
-                baseUrl: "fsf.seedwave.faa.zone",
-                brands: [{ name: "FarmFlow", subnodes: ["SoilScan", "WaterNet", "CropMonitor"] }] 
-            },
-            "banking": { 
-                name: "🏦 Banking & Finance",
-                repoName: "banking-seedwave-admin",
-                baseUrl: "banking.seedwave.faa.zone",
-                brands: [{ name: "CoinFlow", subnodes: ["LedgerTrack", "AssetVault"] }] 
-            },
-            "creative": { 
-                name: "🖋️ Creative Tech",
-                repoName: "creative-seedwave-admin",
-                baseUrl: "creative.seedwave.faa.zone",
-                brands: [{ name: "PixelFlow", subnodes: ["RenderEngine", "SonicWave", "VisualStory"] }] 
-            },
-            "logistics": { 
-                name: "📦 Logistics & Packaging",
-                repoName: "logistics-seedwave-admin",
-                baseUrl: "logistics.seedwave.faa.zone",
-                brands: [{ name: "CrateLogic", subnodes: ["RouteOptimize", "FleetTrack", "WarehouseSync"] }] 
-            },
-            "education-ip": { 
-                name: "📚 Education & IP",
-                repoName: "education-seedwave-admin",
-                baseUrl: "education-ip.seedwave.faa.zone",
-                brands: [{ name: "EduNest", subnodes: ["CurriculumForge", "LicenseTrack"] }] 
-            },
-            "fashion": { 
-                name: "✂ Fashion & Identity",
-                repoName: "fashion-seedwave-admin",
-                baseUrl: "fashion.seedwave.faa.zone",
-                brands: [{ name: "StyleFlow", subnodes: ["IdentityMesh", "TrendPulse"] }] 
-            },
-            "gaming": { 
-                name: "🎮 Gaming & Simulation",
-                repoName: "gaming-seedwave-admin",
-                baseUrl: "gaming.seedwave.faa.zone",
-                brands: [{ name: "GameGrid", subnodes: ["SimEngine", "RenderNode"] }] 
-            },
-            "health": { 
-                name: "🧠 Health & Hygiene",
-                repoName: "health-seedwave-admin",
-                baseUrl: "health.seedwave.faa.zone",
-                brands: [{ name: "MediVault", subnodes: ["DiagAI", "PatientLink"] }] 
-            },
-            "housing": { 
-                name: "🏗️ Housing & Infrastructure",
-                repoName: "housing-seedwave-admin",
-                baseUrl: "housing.seedwave.faa.zone",
-                brands: [{ name: "BuildFlow", subnodes: ["SmartGrid", "UrbanMesh"] }] 
-            },
-            "justice": { 
-                name: "⚖ Justice & Ethics",
-                repoName: "justice-seedwave-admin",
-                baseUrl: "justice.seedwave.faa.zone",
-                brands: [{ name: "EthiLock", subnodes: ["ComplianceScan", "VaultJustice"] }] 
-            },
-            "knowledge": { 
-                name: "📖 Knowledge & Archives",
-                repoName: "knowledge-seedwave-admin",
-                baseUrl: "knowledge.seedwave.faa.zone",
-                brands: [{ name: "LoreKeeper", subnodes: ["ArchiveSync", "MetaGrid"] }] 
-            },
-            "micromesh": { 
-                name: "☰ Micro-Mesh Logistics",
-                repoName: "micromesh-seedwave-admin",
-                baseUrl: "micromesh.seedwave.faa.zone",
-                brands: [{ name: "PicoFlow", subnodes: ["NanoTrack", "MicroRoute"] }] 
-            },
-            "media": { 
-                name: "🎬 Motion, Media & Sonic",
-                repoName: "media-seedwave-admin",
-                baseUrl: "media.seedwave.faa.zone",
-                brands: [{ name: "SoundWave", subnodes: ["VisualSync", "SonicForge"] }] 
-            },
-            "nutrition": { 
-                name: "✿ Nutrition & Food Chain",
-                repoName: "nutrition-seedwave-admin",
-                baseUrl: "nutrition.seedwave.faa.zone",
-                brands: [{ name: "NutriFlow", subnodes: ["FoodTrace", "YieldOpt"] }] 
-            },
-            "packaging": { 
-                name: "📦 Packaging & Materials",
-                repoName: "packaging-seedwave-admin",
-                baseUrl: "packaging.seedwave.faa.zone",
-                brands: [{ name: "PackSync", subnodes: ["MaterialTrace", "EcoPack"] }] 
-            },
-            "quantum": { 
-                name: "✴️ Quantum Protocols",
-                repoName: "quantum-seedwave-admin",
-                baseUrl: "quantum.seedwave.faa.zone",
-                brands: [{ name: "QuantumLock", subnodes: ["EntangleNode", "CipherStream"] }] 
-            },
-            "ritual": { 
-                name: "☯ Ritual & Culture",
-                repoName: "ritual-seedwave-admin",
-                baseUrl: "ritual.seedwave.faa.zone",
-                brands: [{ name: "CultureMesh", subnodes: ["TraditionVault", "EthnoSync"] }] 
-            },
-            "saas": { 
-                name: "🔑 SaaS & Licensing",
-                repoName: "saas-seedwave-admin",
-                baseUrl: "saas.seedwave.faa.zone",
-                brands: [{ name: "LicenseKey", subnodes: ["ClaimFlow", "TokenGate"] }] 
-            },
-            "trade": { 
-                name: "🧺 Trade Systems",
-                repoName: "trade-seedwave-admin",
-                baseUrl: "trade.seedwave.faa.zone",
-                brands: [{ name: "TradeFlow", subnodes: ["MarketSync", "SupplyLink"] }] 
-            },
-            "utilities": { 
-                name: "🔋 Utilities & Energy",
-                repoName: "utilities-seedwave-admin",
-                baseUrl: "utilities.seedwave.faa.zone",
-                brands: [{ name: "PowerGrid", subnodes: ["EnergyTrack", "DemandSync"] }] 
-            },
-            "voice": { 
-                name: "🎙️ Voice & Audio",
-                repoName: "sonic-seedwave-admin",
-                baseUrl: "voice.seedwave.faa.zone",
-                brands: [{ name: "SonicFlow", subnodes: ["VoiceID", "AudioMesh"] }] 
-            },
-            "webless": { 
-                name: "📡 Webless Tech & Nodes",
-                repoName: "webless-seedwave-admin",
-                baseUrl: "webless.seedwave.faa.zone",
-                brands: [{ name: "ZeroWeb", subnodes: ["NodeConnect", "MeshPoint"] }] 
-            },
-            "nft": { 
-                name: "🔁 NFT & Ownership",
-                repoName: "nft-seedwave-admin",
-                baseUrl: "nft.seedwave.faa.zone",
-                brands: [{ name: "TokenVault", subnodes: ["ClaimChain", "ArtFlow"] }] 
-            },
-            "education-youth": { 
+            "education-youth": { // Updated to include Smart Toys and other education brands
                 name: "🎓 Education & Youth",
                 repoName: "education-youth-seedwave-admin",
                 baseUrl: "education-youth.seedwave.faa.zone",
-                brands: [{ name: "FutureMind", subnodes: ["LearnPath", "SkillNode"] }] 
+                brands: educationYouthBrandsFormatted
             },
-            "zerowaste": { 
-                name: "♻️ Zero Waste",
-                repoName: "zerowaste-seedwave-admin",
-                baseUrl: "zerowaste.seedwave.faa.zone",
-                brands: [{ name: "EcoCycle", subnodes: ["RecycleTrack", "WasteOpt"] }] 
-            },
-            "professional": { 
-                name: "🧾 Professional Services",
-                repoName: "professional-seedwave-admin",
-                baseUrl: "professional.seedwave.faa.zone",
-                brands: [{ name: "ProServe", subnodes: ["ConsultFlow", "AdvisoryLink"] }] 
-            },
-            "payroll-mining": { 
-                name: "🪙 Payroll Mining & Accounting",
-                repoName: "payroll-mining-seedwave-admin",
-                baseUrl: "payroll-mining.seedwave.faa.zone",
-                brands: [{ name: "PayMine", subnodes: ["AccountSync", "LedgerFlow"] }] 
-            },
-            "mining": { 
+            "mining": {
                 name: "⛏️ Mining & Resources",
                 repoName: "mining-seedwave-admin",
                 baseUrl: "mining.seedwave.faa.zone",
-                brands: [{ name: "ResourceFlow", subnodes: ["MineTrack", "DrillNode"] }] 
+                brands: [
+                    { name: "MineNest", subnodes: ["NestTrack", "VaultShaft", "QRMine", "ClaimGrid"] },
+                    { name: "DrillCoreX", subnodes: ["CoreDrop", "PulsePath", "OreTrace", "DrillYield"] },
+                    { name: "OreSync", subnodes: ["SyncRock", "VaultEcho", "QRDrill", "ClaimTag"] },
+                    { name: "VaultRock", subnodes: ["RockBeam", "MineLoop", "SignalTrace", "QRClaim"] },
+                    { name: "ClaimMine", subnodes: ["ClaimOre", "VaultPath", "OrePing", "MineSignal"] },
+                    { name: "TrackShaft", subnodes: ["ShaftMesh", "DropMine", "TrackSeam", "QRTrack"] },
+                    { name: "PulseMine", subnodes: ["PulseCrate", "MineEcho", "YieldDrill", "GridTag"] },
+                    { name: "CoreBeam", subnodes: ["BeamPath", "ClaimRock", "VaultLoop", "SeamDrop"] },
+                    { name: "DigEcho", subnodes: ["EchoMine", "RockPing", "VaultTrace", "ClaimBeam"] },
+                    { name: "RockPath", subnodes: ["PathDrop", "GridMine", "QRNode", "YieldOre"] },
+                    { name: "YieldDrill", subnodes: ["DrillGrid", "ClaimYield", "SyncTunnel", "OreEcho"] },
+                    { name: "MineProof", subnodes: ["ProofMine", "SeamCast", "VaultGrid", "DropCrate"] },
+                    { name: "OreLine", subnodes: ["OreLineX", "VaultDrill", "MineForm", "TagTrace"] },
+                    { name: "DrillLink", subnodes: ["LinkMine", "PulseEcho", "GridSeam", "YieldCast"] },
+                    { name: "VaultTunnel", subnodes: ["TunnelSync", "ClaimLoop", "QRDrillX", "OreBeam"] },
+                    { name: "GeoGrid", subnodes: ["GridGeo", "VaultMap", "RockForm", "ClaimTunnel"] },
+                    { name: "SeamSync", subnodes: ["SeamSyncX", "OreDrop", "QRMineX", "DrillMark"] },
+                    { name: "ClaimOre", subnodes: ["ClaimOreX", "TrackGrid", "VaultDrop", "PingEcho"] },
+                    { name: "PulseBlast", subnodes: ["BlastMine", "PulsePing", "QRPath", "SeamMark"] },
+                    { name: "OreEcho", subnodes: ["EchoRock", "YieldTrack", "VaultBeam", "ClaimSync"] },
+                    { name: "DeepCrate", subnodes: ["CrateDrop", "SyncClaim", "DrillForm", "TunnelMap"] },
+                    { name: "RockLogic", subnodes: ["RockLogicX", "VaultOre", "YieldLoop", "PingDrill"] },
+                    { name: "CoreDrill", subnodes: ["CoreMine", "OreTag", "VaultPing", "GridTrack"] },
+                    { name: "MineCast", subnodes: ["MineCastX", "ClaimNest", "QRTrace", "YieldEcho"] },
+                    { name: "DrillMark", subnodes: ["DrillMarkX", "OreSignal", "VaultCrate", "PingTag"] },
+                    { name: "SignalOre", subnodes: ["OreSignalX", "GridEcho", "ClaimDrop", "TrackTunnel"] },
+                    { name: "YieldTrack", subnodes: ["TrackYield", "MineFrame", "SignalGrid", "EchoDrill"] },
+                    { name: "VaultSeam", subnodes: ["VaultSeamX", "QRClaimX", "GridOre", "TunnelEcho"] },
+                    { name: "ShaftDrop", subnodes: ["DropShaft", "ClaimTunnelX", "YieldDrillX", "VaultGrid"] },
+                    { name: "GeoNode", subnodes: ["GeoNodeX", "SignalPing", "DropEcho", "MineLink"] }
+                ]
             },
-            "wildlife": { 
-                name: "🦁 Wildlife & Habitat",
-                repoName: "wildlife-seedwave-admin",
-                baseUrl: "wildlife.seedwave.faa.zone",
-                brands: [{ name: "HabitatGuard", subnodes: ["EcoTrack", "BioLink"] }] 
-            },
-            "admin-panel": { 
-                name: "⚙️ Admin Panel",
-                repoName: "admin-panel-seedwave-admin",
-                baseUrl: "admin-panel.seedwave.faa.zone",
-                brands: [{ name: "ControlCore", subnodes: ["MetricsView", "UserManage"] }] 
-            }
+            // Other sectors are omitted for brevity in this dashboard, but conceptually exist.
         };
 
+
         const companyData = {
-            "fruitful-global-hq": {
-                name: "Fruitful Global HQ",
-                sector_key: "admin-panel",
+            "smarttoys-pty": {
+                name: "Fruitful Smart Toys (Pty) Ltd",
+                sector_key: "education-youth",
                 details: {
-                    "Location": "Fruitful Tower, Neo-Johannesburg, ZA",
-                    "CEO": "Dr. Aris Thorne",
-                    "Primary Contact": "support@fruitful.global",
-                    "Deployment Servers": "Global (Managed by CodeNest™)",
-                    "Active Licenses": "All Treaty Grid Protocols",
-                    "Compliance Standards": "ISO 27001, GDPR, Fruitful Treaty Law",
+                    "Location": "Cape Town, South Africa",
+                    "CEO": "Dr. Anya Sharma",
+                    "Primary Contact": "info@smarttoys.faa.zone",
+                    "Deployment Servers": "Global (Managed by ToyNest™)",
+                    "Active Certifications": "VaultMint™ Gold Standard",
+                    "Compliance Standards": "COPPA, GDPR-K, ISO 27001",
                     "Security Audit": "Annual (Last: Q1 2025)",
+                    "System Uptime (YTD)": "99.999%",
+                    "VaultMesh Integration": "Full",
+                    "ClaimRoot Integration": "Full"
+                }
+            },
+            "kindernest-systems": {
+                name: "KinderNest Systems Inc.",
+                sector_key: "education-youth",
+                details: {
+                    "Location": "Silicon Valley, USA",
+                    "CEO": "Mark Chen",
+                    "Primary Contact": "support@kindernest.com",
+                    "Deployment Servers": "North America (Cloud-based)",
+                    "Active Certifications": "VaultMint™ Bronze Standard",
+                    "Compliance Standards": "COPPA",
+                    "Security Audit": "Bi-annual",
+                    "System Uptime (YTD)": "99.8%",
+                    "VaultMesh Integration": "Partial",
+                    "ClaimRoot Integration": "Enabled"
+                }
+            },
+            "minenest-corp": { // Existing mining company (for settings view context)
+                name: "MineNest Corporation",
+                sector_key: "mining",
+                details: {
+                    "Location": "Johannesburg, South Africa",
+                    "CEO": "Thabo Ntlatleng",
+                    "Primary Contact": "operations@minenest.com",
+                    "Deployment Servers": "Africa (Managed by MineNest™)",
+                    "Active Licenses": "All Mining & Resources Protocols",
+                    "Compliance Standards": "ISO 14001, OHSAS 18001",
+                    "Security Audit": "Bi-annual (Last: Q2 2025)",
                     "System Uptime (YTD)": "99.998%",
                     "VaultMesh Integration": "Full",
                     "ClaimRoot Integration": "Full"
                 }
             },
-            "auranest-solutions": {
-                name: "AuraNest Solutions",
-                sector_key: "ai-logic",
+            "drillcorex-ltd": { // Existing mining company (for settings view context)
+                name: "DrillCoreX Ltd.",
+                sector_key: "mining",
                 details: {
-                    "Location": "Silicon Valley Nexus, CA, USA",
-                    "CEO": "Jane Doe",
-                    "Primary Contact": "contact@auranest.com",
-                    "Deployment Servers": "North America (Hybrid Cloud)",
-                    "Active Licenses": "OmniKey, TraceBeam",
-                    "Compliance Standards": "HIPAA, CCPA",
-                    "Security Audit": "Bi-annual",
-                    "System Uptime (YTD)": "99.9%",
-                    "VaultMesh Integration": "Partial",
-                    "ClaimRoot Integration": "Partial"
-                }
-            },
-            "terrasustain-agri": {
-                name: "TerraSustain AgriTech",
-                sector_key: "agriculture",
-                details: {
-                    "Location": "Rural Innovation Hub, UK",
-                    "CEO": "John Smith",
-                    "Primary Contact": "info@terrasustain.co.uk",
-                    "Deployment Servers": "Europe (On-premise + Cloud)",
-                    "Active Licenses": "CropLink ID, SoilPulse Trace",
-                    "Compliance Standards": "Organic Certs, Food Safety Regulations",
+                    "Location": "Perth, Australia",
+                    "CEO": "Sarah O'Connell",
+                    "Primary Contact": "support@drillcorex.com",
+                    "Deployment Servers": "Asia-Pacific (Cloud-based)",
+                    "Active Licenses": "DrillCoreX, CoreDrop",
+                    "Compliance Standards": "Australian Mining Regs",
                     "Security Audit": "Annual",
-                    "System Uptime (YTD)": "99.7%",
-                    "VaultMesh Integration": "Planned Q3 2025",
+                    "System Uptime (YTD)": "99.8%",
+                    "VaultMesh Integration": "Partial",
                     "ClaimRoot Integration": "Enabled"
-                }
-            },
-            "vaultpay-finance": {
-                name: "VaultPay Finance",
-                sector_key: "banking",
-                details: {
-                    "Location": "Frankfurt, DE",
-                    "CEO": "Lena Müller",
-                    "Primary Contact": "support@vaultpay.de",
-                    "Deployment Servers": "Europe (Private Cloud)",
-                    "Active Licenses": "CoinFlow, AssetVault",
-                    "Compliance Standards": "PSD2, Basel III, KYC/AML",
-                    "Security Audit": "Quarterly",
-                    "System Uptime (YTD)": "99.99%",
-                    "VaultMesh Integration": "Full",
-                    "ClaimRoot Integration": "Full"
                 }
             }
         };
 
         const appData = {
             user: {
-                displayName: "ScrollUser001",
-                email: "user@scrollmail.com",
+                displayName: "ToyInnovator001",
+                email: "smarttoys.dev@example.com",
                 defaultRegion: "global",
                 autoClaim: "yes"
             },
             dashboard: {
-                totalProjects: 7038, // Simulating a large number
-                liveScrolls: 5820,
-                monthlyRoyalties: 12500.75,
+                totalProjects: 520, // Total active smart toy engagements
+                liveScrolls: 380,   // Learning modules currently engaged
+                monthlyRoyalties: 120, // VaultMint Certifications completed
                 systemHealth: {
                     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                     datasets: [{
-                        label: 'Deployment Success Rate (%)',
-                        data: [95, 96, 97, 98, 97, 99, 98, 99, 99, 100, 99, 99.5],
-                        borderColor: 'rgba(48, 209, 88, 0.8)', // Green
-                        backgroundColor: 'rgba(48, 209, 88, 0.1)',
+                        label: 'Child Engagement Rate (%)',
+                        data: [75, 80, 85, 82, 88, 90, 92, 95, 93, 96, 98, 99],
+                        borderColor: 'rgba(0, 113, 227, 0.8)', // Blue
+                        backgroundColor: 'rgba(0, 113, 227, 0.1)',
                         fill: true,
                         tension: 0.4
                     }, {
-                        label: 'Vault Sync Latency (ms)',
-                        data: [80, 75, 70, 65, 72, 68, 62, 58, 55, 50, 48, 45],
-                        borderColor: 'rgba(0, 113, 227, 0.8)', // Blue
-                        backgroundColor: 'rgba(0, 113, 227, 0.1)',
+                        label: 'Learning Progress Index',
+                        data: [50, 55, 60, 62, 65, 70, 75, 78, 80, 83, 85, 88],
+                        borderColor: 'rgba(250, 204, 21, 0.8)', // Yellow
+                        backgroundColor: 'rgba(250, 204, 21, 0.1)',
                         fill: true,
                         tension: 0.4
                     }]
@@ -2421,70 +2247,49 @@
             projectsPerLoad: 12, // Number of projects to load at once
 
             licenses: [
-                { id: 'CN-0401', name: 'CodeNest™ – Web Dev Scroll Studio', region: 'Global', royalty: '6%', activationDate: '2025-04-01', claimStatus: 'Enabled', verified: true, editorLink: '/brands/codenest/editor-landing.html' },
-                { id: 'QC-1079', name: 'QuickClaim™ – Checkout Scroll', region: 'Local', royalty: '6%', activationDate: '2025-03-21', claimStatus: 'Enabled', verified: true, editorLink: '/brands/codenest/editor-checkout.html' },
-                { id: 'VD-2201', name: 'VaultDNS™ – Micro Scroll Node', region: 'Regional', royalty: '5%', activationDate: '2025-04-10', claimStatus: 'Pending Sync', verified: false, editorLink: '/brands/codenest/editor-microsite.html' },
-                { id: 'HS-3002', name: 'HotStack™ – Rapid Deploy Site', region: 'Global', royalty: '7%', activationDate: '2025-05-01', claimStatus: 'Enabled', verified: true, editorLink: '#' },
-                { id: 'TG-4100', name: 'Treaty Grid Portal Framework', region: 'Enterprise', royalty: '10%', activationDate: '2025-05-15', claimStatus: 'Enabled', verified: true, editorLink: '#' },
+                { id: 'TOY-001', name: 'Smart Learning Companions Dev License', region: 'Global Rollout', royalty: 'VaultMint™ Gold', activationDate: '2025-01-10', claimStatus: 'Certified', verified: true, editorLink: '#' },
+                { id: 'TOY-002', name: 'Holographic Story Unit Content License', region: 'Regional Pilot', royalty: 'VaultMint™ Silver', activationDate: '2025-02-01', claimStatus: 'Pending Certification', verified: false, editorLink: '#' },
+                { id: 'TOY-003', name: 'Speech Recognition Engine SDK', region: 'Global Rollout', royalty: 'VaultMint™ Platinum', activationDate: '2025-03-15', claimStatus: 'Certified', verified: true, editorLink: '#' },
+                { id: 'TOY-004', name: 'AR-Enhanced Books Publishing Rights', region: 'Beta Testing', royalty: 'VaultMint™ Bronze', activationDate: '2025-04-01', claimStatus: 'Draft', verified: false, editorLink: '#' },
             ],
             templates: [
-                { name: 'Landing Scroll', description: 'Perfect for product launches and branded homepage scrolls. ClaimRoot-ready with starter scroll pack.', link: '/brands/codenest/editor-landing.html', icon: 'fas fa-rocket',
+                { name: 'Interactive Phonics Module', description: 'Template for creating engaging, AI-powered phonics lessons.', link: '#', icon: 'fas fa-lightbulb',
                     previewHtml: `
-                        <div style="background-color: #ffffff; color: #1d1d1f; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;">
-                            <h1 style="font-size: 1.8rem; font-weight: 800; color: #0071e3; margin-bottom: 1rem;">Fruitful™ | <span style="color: #B8860B;">AuraNest™</span></h1>
-                            <h2 style="font-size: 1.2rem; color: #4a4a4a; margin-bottom: 1.5rem;">Sustainable Living Solutions</h2>
-                            <p style="font-size: 0.95rem; line-height: 1.5; color: #6e6e73;">Experience harmony between technology and nature. AuraNest™ provides innovative solutions for a balanced, modern lifestyle.</p>
-                            <button style="background-color: #30d158; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; margin-top: 1.5rem; border: none; cursor: pointer;">Discover More</button>
+                        <div style="background-color: #f5f5f7; color: #1d1d1f; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;">
+                            <h1 style="font-size: 1.8rem; font-weight: 800; color: #0071e3; margin-bottom: 1rem;">ToyNest™ | <span style="color: #facc15;">Phonics Play</span></h1>
+                            <h2 style="font-size: 1.2rem; color: #424245; margin-bottom: 1.5rem;">AI-Guided Reading Fun</h2>
+                            <p style="font-size: 0.95rem; line-height: 1.5; color: #6e6e73;">Help children master reading with interactive sounds and word games.</p>
+                            <button style="background-color: #facc15; color: black; padding: 0.75rem 1.5rem; border-radius: 8px; margin-top: 1.5rem; border: none; cursor: pointer;">Start Lesson</button>
                         </div>
                     `
                 },
-                { name: 'Checkout Scroll', description: 'Designed for single-item sales and embedded payment logic. ScrollCart + AutoClaim enabled.', link: '/brands/codenest/editor-checkout.html', icon: 'fas fa-shopping-cart',
+                { name: 'Emotional Storytelling Narrative', description: 'Framework for interactive stories that teach emotional intelligence.', link: '#', icon: 'fas fa-heart',
                     previewHtml: `
-                        <div style="background-color: #ffffff; color: #1d1d1f; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;">
-                            <h1 style="font-size: 1.8rem; font-weight: 800; color: #0071e3; margin-bottom: 1rem;">Fruitful™ | <span style="color: #B8860B;">PayFlow™</span></h1>
-                            <h2 style="font-size: 1.2rem; color: #4a4a4a; margin-bottom: 1.5rem;">Secure & Simple Transactions</h2>
-                            <p style="font-size: 0.95rem; line-height: 1.5; color: #6e6e73;">Streamlined process for quick, verified purchases. Integrates seamlessly with VaultPay™.</p>
-                            <button style="background-color: #30d158; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; margin-top: 1.5rem; border: none; cursor: pointer;">Proceed to Checkout</button>
+                        <div style="background-color: #f5f5f7; color: #1d1d1f; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;">
+                            <h1 style="font-size: 1.8rem; font-weight: 800; color: #0071e3; margin-bottom: 1rem;">ToyNest™ | <span style="color: #facc15;">Empathy Tales</span></h1>
+                            <h2 style="font-size: 1.2rem; color: #424245; margin-bottom: 1.5rem;">Grow Emotional Intelligence</h2>
+                            <p style="font-size: 0.95rem; line-height: 1.5; color: #6e6e73;">Stories that adapt to teach empathy and social awareness through child's choices.</p>
+                            <button style="background-color: #facc15; color: black; padding: 0.75rem 1.5rem; border-radius: 8px; margin-top: 1.5rem; border: none; cursor: pointer;">Read Story</button>
                         </div>
                     `
                 },
-                { name: 'ScrollBlog', description: 'A content-first template with VaultDNS structure for newsletters, updates, or creative serials.', link: '/brands/codenest/editor-blog.html', icon: 'fas fa-blog',
+                { name: 'Gamified Math Adventure', description: 'Design a game-based module for core math subjects with adaptive difficulty.', link: '#', icon: 'fas fa-calculator',
                     previewHtml: `
-                        <div style="background-color: #ffffff; color: #1d1d1f; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;">
-                            <h1 style="font-size: 1.8rem; font-weight: 800; color: #0071e3; margin-bottom: 1rem;">Fruitful™ | <span style="color: #B8860B;">InsightPulse™</span></h1>
-                            <h2 style="font-size: 1.2rem; color: #4a4a4a; margin-bottom: 1.5rem;">Your Daily Dose of Innovation</h2>
-                            <p style="font-size: 0.95rem; line-height: 1.5; color: #6e6e73;">Engaging layouts for articles, news, and insights. Connect with your audience.</p>
-                            <button style="background-color: #30d158; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; margin-top: 1.5rem; border: none; cursor: pointer;">Read Latest</button>
+                        <div style="background-color: #f5f5f7; color: #1d1d1f; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;">
+                            <h1 style="font-size: 1.8rem; font-weight: 800; color: #0071e3; margin-bottom: 1rem;">ToyNest™ | <span style="color: #facc15;">Math Quest</span></h1>
+                            <h2 style="font-size: 1.2rem; color: #424245; margin-bottom: 1.5rem;">Adventure in Numeracy</h2>
+                            <p style="font-size: 0.95rem; line-height: 1.5; color: #6e6e73;">Solve puzzles, collect gems, and conquer math challenges in an exciting game world.</p>
+                            <button style="background-color: #facc15; color: black; padding: 0.75rem 1.5rem; border-radius: 8px; margin-top: 1.5rem; border: none; cursor: pointer;">Play Game</button>
                         </div>
                     `
                 },
-                { name: 'Vault Microsite', description: 'Multi-page scroll micro-infrastructure. Great for portfolios, micro-brand kits, or client claim hubs.', link: '/brands/codenest/editor-microsite.html', icon: 'fas fa-cubes',
+                { name: 'AI Parental Dashboard Layout', description: 'Standard layout for displaying child progress, engagement, and AI insights.', link: '#', icon: 'fas fa-chart-bar',
                     previewHtml: `
-                        <div style="background-color: #ffffff; color: #1d1d1f; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;">
-                            <h1 style="font-size: 1.8rem; font-weight: 800; color: #0071e3; margin-bottom: 1rem;">Fruitful™ | <span style="color: #B8860B;">NexusKit™</span></h1>
-                            <h2 style="font-size: 1.2rem; color: #4a4a4a; margin-bottom: 1.5rem;">Compact & Powerful Digital Presence</h2>
-                            <p style="font-size: 0.95rem; line-height: 1.5; color: #6e6e73;">Showcase your portfolio or micro-brand with a streamlined, multi-page experience.</p>
-                            <button style="background-color: #30d158; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; margin-top: 1.5rem; border: none; cursor: pointer;">View Showcase</button>
-                        </div>
-                    `
-                },
-                { name: 'OmniDrop Hub', description: 'Template for creating an Omnidrop-enabled brand or service portal.', link: '#', icon: 'fas fa-cloud-download-alt',
-                    previewHtml: `
-                        <div style="background-color: #ffffff; color: #1d1d1f; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;">
-                            <h1 style="font-size: 1.8rem; font-weight: 800; color: #0071e3; margin-bottom: 1rem;">Fruitful™ | <span style="color: #B8860B;">DeployFlow™</span></h1>
-                            <h2 style="font-size: 1.2rem; color: #4a4a4a; margin-bottom: 1.5rem;">Instant Deployment Across The Grid</h2>
-                            <p style="font-size: 0.95rem; line-height: 1.5; color: #6e6e73;">Experience seamless distribution and activation for your digital assets.</p>
-                            <button style="background-color: #30d158; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; margin-top: 1.5rem; border: none; cursor: pointer;">Start Deployment</button>
-                        </div>
-                    `
-                },
-                { name: 'TreatyCommerce Storefront', description: 'Advanced e-commerce solution with integrated VaultPay and royalty tracking.', link: '#', icon: 'fas fa-store',
-                    previewHtml: `
-                        <div style="background-color: #ffffff; color: #1d1d1f; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;">
-                            <h1 style="font-size: 1.8rem; font-weight: 800; color: #0071e3; margin-bottom: 1rem;">Fruitful™ | <span style="color: #B8860B;">EthiMarket™</span></h1>
-                            <h2 style="font-size: 1.2rem; color: #4a4a4a; margin-bottom: 1.5rem;">Your Ethical Marketplace Solution</h2>
-                            <p style="font-size: 0.95rem; line-height: 1.5; color: #6e6e73;">Secure and transparent e-commerce built on principles of shared trust and fair royalties.</p>
-                            <button style="background-color: #30d158; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; margin-top: 1.5rem; border: none; cursor: pointer;">Browse Products</button>
+                        <div style="background-color: #f5f5f7; color: #1d1d1f; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;">
+                            <h1 style="font-size: 1.8rem; font-weight: 800; color: #0071e3; margin-bottom: 1rem;">ToyNest™ | <span style="color: #facc15;">Parental Hub</span></h1>
+                            <h2 style="font-size: 1.2rem; color: #424245; margin-bottom: 1.5rem;">Insights into Child's Growth</h2>
+                            <p style="font-size: 0.95rem; line-height: 1.5; color: #6e6e73;">Access real-time reports on academic, emotional, and social development.</p>
+                            <button style="background-color: #facc15; color: black; padding: 0.75rem 1.5rem; border-radius: 8px; margin-top: 1.5rem; border: none; cursor: pointer;">View Dashboard</button>
                         </div>
                     `
                 },
@@ -2493,8 +2298,8 @@
                 deploymentTrends: {
                     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
                     datasets: [{
-                        label: 'New Scrolls Deployed',
-                        data: [500, 650, 720, 800, 780, 920],
+                        label: 'New Learning Modules Deployed',
+                        data: [25, 30, 35, 32, 40, 45],
                         borderColor: 'rgba(0, 113, 227, 0.8)',
                         backgroundColor: 'rgba(0, 113, 227, 0.2)',
                         fill: true,
@@ -2502,49 +2307,43 @@
                     }]
                 },
                 royaltyDistribution: {
-                    labels: ['AI Logic', 'Logistics', 'Finance', 'Creative', 'Health', 'Other'],
+                    labels: ['Speech Recognition', 'Holographic Units', 'AR Books', 'Gamified Apps', 'Smart Pens'],
                     datasets: [{
-                        data: [25, 18, 15, 12, 10, 20],
-                        backgroundColor: ['#0071e3', '#30d158', '#f59e0b', '#ef4444', '#B8860B', '#6e6e73'],
+                        data: [30, 25, 20, 15, 10],
+                        backgroundColor: ['#facc15', '#0071e3', '#30d158', '#f59e0b', '#6e6e73'],
                         hoverOffset: 4
                     }]
                 },
                 userActivity: {
                     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
                     datasets: [{
-                        label: 'Active Users (Daily Average)',
-                        data: [200, 250, 230, 280, 300, 150, 120],
-                        borderColor: 'rgba(48, 209, 88, 0.8)',
-                        backgroundColor: 'rgba(48, 209, 88, 0.1)',
+                        label: 'Active Smart Toys (Daily Average)',
+                        data: [300, 350, 330, 380, 400, 250, 200],
+                        borderColor: 'rgba(0, 113, 227, 0.8)',
+                        backgroundColor: 'rgba(0, 113, 227, 0.1)',
                         tension: 0.3,
                         fill: true
                     }, {
-                        label: 'API Calls (Thousands)',
-                        data: [12, 15, 14, 18, 20, 8, 6],
-                        borderColor: 'rgba(184, 134, 11, 0.8)',
-                        backgroundColor: 'rgba(184, 134, 11, 0.1)',
+                        label: 'Learning Hours (Thousands)',
+                        data: [15, 18, 17, 20, 22, 10, 8],
+                        borderColor: 'rgba(250, 204, 21, 0.8)',
+                        backgroundColor: 'rgba(250, 204, 21, 0.1)',
                         tension: 0.3,
                         fill: true
                     }]
                 }
             },
             apiKeys: [
-                { service: "PayPal (SDK)", key: "BAAGdPecRsf6dw_nIrWqUen0GdW0UsBZapp1Gn62xkPdD-Vqc-4lqWAidKK8LOObXux8pHJGjXknZoar6Q", locations: ["Various checkout scrolls"] },
-                { service: "PayPal (Hosted Button)", key: "EMWGPGHNN8Y8E", context: "(Starter Package)", locations: ["HotStack™", "Various landing pages"] },
-                { service: "PayPal (Hosted Button)", key: "QGU3ZUQCMD49Q", context: "(Pro Package)", locations: ["HotStack™", "Larger brand sites"] },
-                { service: "PayPal (Hosted Button)", key: "9C88S44F93M5J", context: "(Enterprise Package)", locations: ["HotStack™", "Enterprise solutions"] },
-                { service: "PayPal (Hosted Button)", key: "YOUR_BANIMAL_PAYPAL_BUTTON_ID_HERE", context: "(Banimal Loop Plan - Placeholder)", locations: ["Banimal Loop Plan site"] },
-                { service: "Google Maps", key: "AIzaSyBPG8dG29cl0TvYRGyLozejGed5Wj5Ab80", locations: ["Location-based microsites"] },
-                { service: "Gemini AI", key: "AIzaSyBGSDZATtITv5iIoB3rgKHBpWx9MrufxXE", locations: ["AI-powered insights scrolls", "Baobab Terminal"] },
-                { service: "Xero (Client ID)", key: "81B3573D453040508996432C5DAD565B", locations: ["Accounting/payroll integration scrolls"] },
-                { service: "Xero (Client Secret)", key: "FIaJGmsaCcKR3Z8kWxPnQd04EhYy6_bImPmoitQDP1U6Smaq", locations: ["Accounting/payroll integration scrolls"] },
-                { service: "Xero (Redirect URI)", key: "https://seedwave.faa.zone/admin_panel_xero.html", locations: ["Xero OAuth setup"] },
-                { service: "Xero (Webhook Key)", key: "2fd5LQV0TQDI3572Er/sg66zqEbl8mFWRyfX3XkoKFZGRLK2cZPGpWV/j4yMTU7aUpbgBCfeZkuHnQIwD/0igw==", locations: ["Xero webhook configurations"] }
+                { service: "Speech-to-Text API (Child Voice)", key: "STTAPIXYZ789", locations: ["Speech Recognition Engine"] },
+                { service: "AI Cognitive Feedback Engine", key: "COGAIKEY123DEF", locations: ["Smart Learning Companions", "AI Parental Dashboard"] },
+                { service: "Holographic Projection SDK", key: "HOLOVIEWABC987", locations: ["Interactive Holographic Story Units"] },
+                { service: "AR Core Development Kit", key: "ARCDK456LMN", locations: ["AR-Enhanced Interactive Books"] },
+                { service: "VaultMint™ Certification API", key: "VAULTMINTCERTKEY", locations: ["FAA VaultMint™ Certified"] }
             ],
             royaltyAgreements: [
-                { id: 'RA-001', name: 'Standard Global License Agreement', status: 'Pending Signature', link: '#', description: 'Comprehensive agreement for global scroll deployments, 6% standard royalty.' },
-                { id: 'RA-002', name: 'Regional Partnership Treaty', status: 'Signed', link: '#', description: 'Specialized agreement for regional collaborators, 5% royalty, auto-renewal.' },
-                { id: 'RA-003', name: 'Enterprise Protocol Agreement', status: 'Pending Signature', link: '#', description: 'Tailored for large-scale enterprise integration, 10% royalty, dedicated support.' }
+                { id: 'SAAS-001-TOY', name: 'Smart Toys OmniSaaS Licensing Agreement', status: 'Signed', link: '#', description: 'Standard agreement for OmniSaaS deployment of Smart Toys content.' },
+                { id: 'SAAS-002-HOLO', name: 'Holographic Unit Content Distribution Treaty', status: 'Pending Signature', link: '#', description: 'Specialized agreement for content distribution via holographic units.' },
+                { id: 'SAAS-003-AI', name: 'AI Learning Algorithm Partnership', status: 'Signed', link: '#', description: 'Agreement for integration and revenue sharing from AI adaptive learning algorithms.' }
             ],
             // Add static color references here for Chart.js
             colors: {
@@ -2552,73 +2351,70 @@
             },
             // NEW: Domain and DNS Data
             dnsRecords: [
-                { type: 'A', name: '@', value: '192.0.2.1', ttl: 'Auto' },
+                { type: 'A', name: '@', value: '203.0.113.45', ttl: 'Auto' },
                 { type: 'CNAME', name: 'www', value: '@', ttl: 'Auto' },
-                { type: 'MX', name: '@', value: 'mx.zoho.com (Priority 10)', ttl: 'Auto' },
-                { type: 'TXT', name: '@', value: 'v=spf1 include:zoho.com ~all', ttl: 'Auto' },
+                { type: 'MX', name: '@', value: 'mail.toynest.faa.zone (Priority 10)', ttl: 'Auto' },
+                { type: 'TXT', name: '@', value: 'v=spf1 include:toynest.faa.zone ~all', ttl: 'Auto' },
             ],
             emailAccounts: [
-                { email: 'admin@examplefruitful.com', status: 'Active' },
-                { email: 'info@examplefruitful.com', status: 'Active' },
-                { email: 'support@examplefruitful.com', status: 'Suspended' },
+                { email: 'support@toynest.faa.zone', status: 'Active' },
+                { email: 'sales@toynest.faa.zone', status: 'Active' },
+                { email: 'developers@toynest.faa.zone', status: 'Suspended' },
             ],
             domains: [
-                { name: 'examplefruitful.com', type: 'Primary' },
-                { name: 'myblog.examplefruitful.com', type: 'Subdomain' },
-                { name: 'newbrand.org', type: 'Add-on (Pending)' },
+                { name: 'toynest.faa.zone', type: 'Primary' },
+                { name: 'smarttoys.faa.zone', type: 'Redirect' }, // Add redirect for original domain
+                { name: 'holograph.toynest.faa.zone', type: 'Subdomain' },
             ],
         };
 
         // Adding mock HTML content to projects for editor integration
-        appData.projects = Array.from({ length: 7038 }).map((_, i) => {
+        appData.projects = Array.from({ length: 520 }).map((_, i) => {
             const statuses = ['live', 'pending', 'draft', 'error'];
-            const regions = ['Global', 'Local', 'Regional'];
-            const types = ['Brand Landing Page', 'Checkout Scroll', 'VaultDNS Microsite', 'ScrollBlog', 'OmniDrop Hub', 'TreatyCommerce Storefront'];
+            const regions = ['Global Rollout', 'Regional Pilot', 'Beta Testing Group'];
+            const types = ['AI Language Companion', 'Holographic Story Unit', 'AR Interactive Book', 'Gamified Learning App', 'Smart Pen Module'];
             
-            const id = `CN-${1000 + i}`;
+            const id = `TOY-${1000 + i}`;
             const name = `${types[Math.floor(Math.random() * types.length)]} - ${i + 1}`;
             const status = statuses[Math.floor(Math.random() * statuses.length)];
             const region = regions[Math.floor(Math.random() * regions.length)];
-            const royalty = `${(6 + Math.random() * 4).toFixed(1)}%`; // 6.0% to 10.0%
-            const lastActivity = new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toLocaleDateString(); // Last 30 days
+            const royalty = `VaultMint™ ${['Gold', 'Silver', 'Bronze'][Math.floor(Math.random() * 3)]}`; 
+            const lastActivity = new Date(Date.now() - Math.random() * 60 * 24 * 60 * 60 * 1000).toLocaleDateString(); // Last 60 days
 
             let htmlContent = '';
-            // Assign a basic HTML structure based on simulated project type for demonstration
-            if (name.includes('Landing Page')) {
+            if (name.includes('Holographic Story Unit')) {
                 htmlContent = `
-<div style="background-color: #ffffff; color: #1d1d1f; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;">
-    <h1 style="font-size: 1.8rem; font-weight: 800; color: #0071e3; margin-bottom: 1rem;">Fruitful™ | <span style="color: #B8860B;">${name.replace('Brand Landing Page - ', '')}</span></h1>
-    <h2 style="font-size: 1.2rem; color: #4a4a4a; margin-bottom: 1.5rem;">Your solution for the future.</h2>
-    <p style="font-size: 0.95rem; line-height: 1.5; color: #6e6e73;">This is a dynamically loaded landing page content for project ID: ${id}. Edit me!</p>
-    <button style="background-color: #30d158; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; margin-top: 1.5rem; border: none; cursor: pointer;">Learn More</button>
+<div style="background-color: #f5f5f7; color: #1d1d1f; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;">
+    <h1 style="font-size: 1.8rem; font-weight: 800; color: #0071e3; margin-bottom: 1rem;">ToyNest™ | <span style="color: #facc15;">HoloTales</span></h1>
+    <p style="font-size: 0.95rem; line-height: 1.5; color: #6e6e73;">An interactive holographic storytelling experience for young learners.</p>
+    <img src="https://placehold.co/400x200/facc15/000000?text=Hologram+Scene" alt="Hologram Scene" style="width: 100%; max-width: 400px; margin-top: 1.5rem; border-radius: 4px;">
 </div>
                 `;
-            } else if (name.includes('Checkout')) {
-                htmlContent = `
-<div style="background-color: #ffffff; color: #1d1d1f; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;">
-    <h1 style="font-size: 1.8rem; font-weight: 800; color: #0071e3; margin-bottom: 1rem;">Fruitful™ | <span style="color: #B8860B;">PayFlow™</span></h1>
-    <p style="font-size: 0.95rem; line-height: 1.5; color: #6e6e73;">Item: Premium Widget. Price: $99.99. Ready to process your secure payment.</p>
-    <button style="background-color: #30d158; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; margin-top: 1.5rem; border: none; cursor: pointer;">Complete Purchase</button>
+            } else if (name.includes('AR Interactive Book')) {
+                 htmlContent = `
+<div style="background-color: #f5f5f7; color: #1d1d1f; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;">
+    <h1 style="font-size: 1.8rem; font-weight: 800; color: #0071e3; margin-bottom: 1rem;">ToyNest™ | <span style="color: #facc15;">AR-Reads</span></h1>
+    <p style="font-size: 0.95rem; line-height: 1.5; color: #6e6e73;">Augmented Reality experiences bring stories to life on the page.</p>
+    <img src="https://placehold.co/400x200/0071e3/FFFFFF?text=AR+Book+View" alt="AR Book View" style="width: 100%; max-width: 400px; margin-top: 1.5rem; border-radius: 4px;">
 </div>
                `;
-            } else if (name.includes('ScrollBlog')) {
+            } else if (name.includes('Gamified Learning App')) {
                 htmlContent = `
-<div style="background-color: #ffffff; color: #1d1d1f; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;">
-    <h1 style="font-size: 1.8rem; font-weight: 800; color: #0071e3; margin-bottom: 1rem;">Fruitful™ | <span style="color: #B8860B;">InsightPulse™</span></h1>
-    <h2 style="font-size: 1.2rem; color: #4a4a4a; margin-bottom: 1.5rem;">Your Daily Dose of Innovation</h2>
-    <p style="font-size: 0.95rem; line-height: 1.5; color: #6e6e73;">Engaging layouts for articles, news, and insights. Connect with your audience.</p>
-    <button style="background-color: #30d158; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; margin-top: 1.5rem; border: none; cursor: pointer;">Read Latest</button>
+<div style="background-color: #f5f5f7; color: #1d1d1f; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;">
+    <h1 style="font-size: 1.8rem; font-weight: 800; color: #0071e3; margin-bottom: 1rem;">ToyNest™ | <span style="color: #facc15;">Play & Learn Quest</span></h1>
+    <p style="font-size: 0.95rem; line-height: 1.5; color: #6e6e73;">Educational challenges embedded in an engaging adventure game.</p>
+    <img src="https://placehold.co/400x200/facc15/000000?text=Game+Screen" alt="Game Screen" style="width: 100%; max-width: 400px; margin-top: 1.5rem; border-radius: 4px;">
 </div>
                 `;
             } else {
                 htmlContent = `
-<div style="background-color: #ffffff; color: #1d1d1f; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;">
-    <h1 style="font-size: 1.8rem; font-weight: 800; color: #0071e3; margin-bottom: 1rem;">Fruitful™ | <span style="color: #B8860B;">${name}</span></h1>
-    <p style="font-size: 0.95rem; line-height: 1.5; color: #6e6e73;">This is dynamic content for project ID: ${id}.</p>
+<div style="background-color: #f5f5f7; color: #1d1d1f; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;">
+    <h1 style="font-size: 1.8rem; font-weight: 800; color: #0071e3; margin-bottom: 1rem;">ToyNest™ | <span style="color: #facc15;">${name}</span></h1>
+    <p style="font-size: 0.95rem; line-height: 1.5; color: #6e6e73;">This is a new smart toy project created for enhanced child learning experiences.</p>
 </div>
                 `;
             }
-            return { id, name, status, region, royalty, lastActivity: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toLocaleDateString(), htmlCode: htmlContent };
+            return { id, name, status, region, royalty, lastActivity, htmlCode: htmlContent };
         });
 
 
@@ -2730,7 +2526,10 @@
                 renderProjects();
             } else if (viewId === 'ecosystem-map') {
                 renderEcosystemMap(); // NEW: Render the ecosystem map
-            } else if (viewId === 'global-checkout') {
+            } else if (viewId === 'user-dashboards') { // NEW: Render user dashboards overview
+                renderUserDashboardsOverview();
+            }
+            else if (viewId === 'global-checkout') {
                 window.showCheckoutStep(1); // Start checkout at step 1
             }
             else if (viewId === 'templates') {
@@ -2749,14 +2548,6 @@
                 // Clear forms on view change
                 document.getElementById('loginForm')?.reset();
                 document.getElementById('signupForm')?.reset();
-            } else if (viewId === 'brands') { // Handle the new 'brands' view
-                renderBrands();
-            } else if (viewId === 'overview') { // Handle the new 'overview' view
-                // Content is static HTML, no special JS rendering needed
-            } else if (viewId === 'modules') { // Handle the new 'modules' view
-                // Content is static HTML, no special JS rendering needed
-            } else if (viewId === 'pipeline') { // Handle the new 'pipeline' view
-                // Content is static HTML, no special JS rendering needed
             }
         }
 
@@ -2764,7 +2555,7 @@
         function updateDashboardMetrics() {
             document.getElementById('totalProjectsCount').textContent = appData.dashboard.totalProjects.toLocaleString();
             document.getElementById('liveScrollsCount').textContent = appData.dashboard.liveScrolls.toLocaleString();
-            document.getElementById('monthlyRoyalties').textContent = `$${appData.dashboard.monthlyRoyalties.toFixed(2)}`;
+            document.getElementById('monthlyRoyalties').textContent = appData.dashboard.monthlyRoyalties.toLocaleString(); // Display as number, not currency
         }
 
         function renderSystemHealthChart() {
@@ -2779,19 +2570,19 @@
                         plugins: {
                             legend: {
                                 labels: {
-                                    color: 'white', /* Use colors from appData */
+                                    color: document.body.classList.contains('light-mode') ? appData.colors.textDark : 'white',
                                     font: { family: 'Inter' }
                                 }
                             }
                         },
                         scales: {
                             x: {
-                                ticks: { color: 'white' }, /* Use colors from appData */
-                                grid: { color: 'rgba(255,255,255,0.1)' } /* Use colors from appData */
+                                ticks: { color: document.body.classList.contains('light-mode') ? appData.colors.textDark : 'white' },
+                                grid: { color: document.body.classList.contains('light-mode') ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)' }
                             },
                             y: {
-                                ticks: { color: 'white' }, /* Use colors from appData */
-                                grid: { color: 'rgba(255,255,255,0.1)' } /* Use colors from appData */
+                                ticks: { color: document.body.classList.contains('light-mode') ? appData.colors.textDark : 'white' },
+                                grid: { color: document.body.classList.contains('light-mode') ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)' }
                             }
                         }
                     }
@@ -2825,28 +2616,32 @@
             projectsToRender.forEach(project => {
                 const projectCard = document.createElement('div');
                 projectCard.className = 'project-card';
+                // Adjust status display for Smart Toys context
+                let displayStatus = project.status;
+                if (project.status === 'live') displayStatus = 'Deployed';
+                if (project.status === 'pending') displayStatus = 'Testing';
+                if (project.status === 'draft') displayStatus = 'Development';
+                if (project.status === 'error') displayStatus = 'Maintenance';
+
+
                 projectCard.innerHTML = `
                     <h4 class="mb-2">${project.name}</h4>
                     <p><strong>ID:</strong> ${project.id}</p>
                     <p><strong>Region:</strong> ${project.region}</p>
-                    <p><strong>Royalty:</strong> ${project.royalty}</p>
+                    <p><strong>Certification:</strong> ${project.royalty}</p>
                     <p><strong>Last Activity:</strong> ${project.lastActivity}</p>
-                    <span class="project-status status-${project.status}">${project.status.toUpperCase()}</span>
+                    <span class="project-status status-${project.status}">${displayStatus.toUpperCase()}</span>
                     <div class="project-actions">
                         <button onclick="window.openProjectInEditor('${project.id}')">
                             <i class="fas fa-edit mr-1"></i> Editor
                         </button>
-                        <button class="secondary" onclick="window.showCustomModal('Action', 'Viewing live site for ${project.name} (ID: ${project.id})...')">
+                        <button class="secondary" onclick="window.showCustomModal('Action', 'Viewing live content for ${project.name} (ID: ${project.id})...')">
                             <i class="fas fa-globe mr-1"></i> Live
                         </button>
                         <button class="form-action-button text-xs px-3 py-2 mt-2" onclick="window.summarizeProject('${project.id}', this)">
                             ✨ Summarize Project
                         </button>
-                        <button class="form-action-button secondary text-xs px-3 py-2 mt-2" onclick="window.generateMarketingCopyForProject('${project.id}', this)">
-                            ✨ Marketing Copy
-                        </button>
                         <p id="projectSummaryStatus-${project.id}" class="text-xs text-gray-400 mt-1 hidden"></p>
-                         <p id="projectMarketingCopyStatus-${project.id}" class="text-xs text-gray-400 mt-1 hidden"></p>
                     </div>
                 `;
                 projectsListContainer.appendChild(projectCard);
@@ -2888,15 +2683,15 @@
             const statusElementId = `projectSummaryStatus-${projectId}`;
             const statusElement = document.getElementById(statusElementId);
 
-            const prompt = `Summarize the following project details concisely (max 80 words):
+            const prompt = `Summarize the following Smart Toy project details concisely (max 80 words):
             Project Name: ${project.name}
             ID: ${project.id}
             Status: ${project.status}
             Region: ${project.region}
-            Royalty: ${project.royalty}
+            Certification: ${project.royalty}
             Last Activity: ${project.lastActivity}
 
-            Highlight the project's current state and main purpose.`;
+            Highlight the project's current state and main purpose within smart toy development.`;
             
             // Using a temporary invisible element for the target, as the output goes to a modal
             const tempOutputDiv = document.createElement('div');
@@ -2913,37 +2708,6 @@
             }
             document.body.removeChild(tempOutputDiv); // Clean up the temporary element
         };
-
-        // Function to generate marketing copy for a project (NEW FEATURE)
-        window.generateMarketingCopyForProject = async function(projectId, buttonElement) {
-            const project = appData.projects.find(p => p.id === projectId);
-            if (!project) {
-                window.showCustomModal('Error', 'Project not found for marketing copy generation.');
-                return;
-            }
-
-            const statusElementId = `projectMarketingCopyStatus-${projectId}`;
-            const statusElement = document.getElementById(statusElementId);
-
-            const projectDescription = project.htmlCode ? project.htmlCode.replace(/<[^>]*>?/gm, '').substring(0, 200) + '...' : `A project about ${project.name} in the ${project.region} region.`;
-
-            const prompt = `Generate 3 short marketing taglines (e.g., tweet-length, slogans) for a project named "${project.name}" with the description: "${projectDescription}". Focus on excitement and value. Provide only the taglines as a markdown list.`;
-            
-            const tempOutputDiv = document.createElement('div');
-            tempOutputDiv.id = `tempMarketingCopyOutput-${projectId}`;
-            tempOutputDiv.style.display = 'none';
-            document.body.appendChild(tempOutputDiv);
-
-            const marketingCopy = await window.callGeminiAPI(prompt, tempOutputDiv.id, statusElementId, buttonElement, 'Generate Marketing Copy');
-
-            if (marketingCopy) {
-                window.showMarketingCopyModal(`${project.name} Marketing Copy`, marketingCopy);
-            } else {
-                window.showCustomModal('Marketing Copy Failed', 'Could not generate marketing copy. Please try again.');
-            }
-            document.body.removeChild(tempOutputDiv);
-        };
-
 
         // Event listeners for project search/filter
         document.getElementById('projectSearch')?.addEventListener('input', () => renderProjects(false));
@@ -2963,7 +2727,7 @@
 
             statusElement.textContent = "Generating...";
             statusElement.classList.remove('hidden');
-            if (targetElementId !== 'tempSimplifyOutput' && !targetElementId.startsWith('tempProjectSummaryOutput') && !targetElementId.startsWith('tempMarketingCopyOutput')) { // Don't hide the temp div used for simplification, project summary, or marketing copy
+            if (targetElementId !== 'tempSimplifyOutput' && !targetElementId.startsWith('tempProjectSummaryOutput')) { // Don't hide the temp div used for simplification or project summary
                 targetElement.classList.add('hidden'); // Hide output until ready
             }
             buttonElement.disabled = true;
@@ -3047,10 +2811,6 @@
                     originalButtonText = 'Explain DNS Type';
                 } else if (type === 'Draft Email') {
                     originalButtonText = 'Generate Draft';
-                } else if (type === 'Generate Marketing Copy') {
-                    originalButtonText = 'Marketing Copy';
-                } else if (type === 'Generate Support Response') {
-                    originalButtonText = 'Generate Support Response';
                 }
                 else {
                     originalButtonText = 'Action'; // Fallback
@@ -3072,20 +2832,29 @@
             const claim = document.getElementById('claim').value;
 
             // Simulate project creation
-            const newProjectId = `CN-${Math.floor(Math.random() * 10000)}`;
+            const newProjectId = `TOY-${Math.floor(Math.random() * 10000)}`;
+            let baseHtmlContent = '';
+            const selectedTemplate = appData.templates.find(t => t.name === template);
+            if (selectedTemplate && selectedTemplate.previewHtml) {
+                // Remove outer div from previewHtml to integrate cleanly
+                baseHtmlContent = selectedTemplate.previewHtml.replace(/<div[^>]*>|<\/div>/g, '');
+            } else {
+                baseHtmlContent = `<div style="background-color: #f5f5f7; color: #1d1d1f; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;"><h1>New Smart Toy Project: ${projectName}</h1><p>This is a new Smart Toy project created from template: ${template}.</p></div>`;
+            }
+
             const newProject = {
                 id: newProjectId,
                 name: projectName,
                 status: 'draft',
-                region: region === 'global' ? 'Global' : (region === 'local' ? 'Local' : 'Street'),
-                royalty: claim === 'yes' ? '6.0%' : 'N/A',
+                region: region === 'global' ? 'Global Rollout' : (region === 'local' ? 'Regional Pilot' : 'Beta Testing Group'),
+                royalty: claim === 'yes' ? 'VaultMint™ Gold' : 'N/A', // Updated royalty
                 lastActivity: new Date().toLocaleDateString(),
-                htmlCode: `<div style="background-color: #ffffff; color: #1d1d1f; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;"><h1>New Project: ${projectName}</h1><p>This is a new project created from template: ${template}.</p></div>`
+                htmlCode: baseHtmlContent
             };
             appData.projects.unshift(newProject); // Add to the beginning of projects array
             appData.dashboard.totalProjects++; // Update total count
 
-            window.showCustomModal('Project Created!', `Your project "${projectName}" (ID: ${newProjectId}) has been created. Status: Draft.`);
+            window.showCustomModal('Project Created!', `Your project "${projectName}" (ID: ${newProjectId}) has been created. Status: Development.`);
 
             // Optionally clear form
             this.reset();
@@ -3106,7 +2875,7 @@
                 return;
             }
 
-            const prompt = `Generate a concise and engaging project description (max 100 words, 3-4 sentences) for a web scroll named '${projectName}' of type '${templateType}' intended for a '${region}' deployment. Focus on benefits and key features.`;
+            const prompt = `Generate a concise and engaging project description (max 100 words, 3-4 sentences) for a smart toy or educational technology project named '${projectName}' of type '${templateType}' intended for a '${region}' deployment. Focus on educational goals, interactive features, and child development impact.`;
             await window.callGeminiAPI(prompt, 'description', 'descriptionStatus', button, 'AI Generate');
         });
 
@@ -3125,7 +2894,7 @@
             statusElement.classList.remove('hidden');
 
             const availableTemplates = appData.templates.map(t => t.name).join(', ');
-            const prompt = `Generate a creative project name (max 5 words), a 3-4 sentence project description highlighting benefits, and suggest one suitable template from the following list: ${availableTemplates}. The project is about: "${projectConcept}". Respond as a JSON object with keys: "projectName", "projectDescription", "suggestedTemplate".`;
+            const prompt = `Generate a creative project name (max 5 words), a 3-4 sentence project description highlighting educational and innovative benefits for a smart toy project, and suggest one suitable template from the following list: ${availableTemplates}. The project is about: "${projectConcept}". Respond as a JSON object with keys: "projectName", "projectDescription", "suggestedTemplate".`;
             
             const aiIdea = await window.callGeminiAPI(prompt, 'hiddenIdeaOutput', 'projectIdeaStatus', button, 'AI Generate', true); // Use a hidden output element, parse JSON
 
@@ -3137,10 +2906,10 @@
         });
 
 
-        // --- Scroll Builder Form Logic (with Gemini API Integration) ---
+        // --- Content Builder Form Logic (with Gemini API Integration) ---
         document.getElementById('scrollBuilderForm')?.addEventListener('submit', function(event) {
             event.preventDefault();
-            window.showCustomModal('Scroll Compiled & Saved!', 'Your scroll has been compiled and saved to your workspace. It\'s now ready for deployment via Fruitful Global.');
+            window.showCustomModal('Content Compiled & Saved!', 'Your module has been compiled and saved to your workspace. It\'s now ready for VaultMint™ certification.');
             this.reset(); // Clear form
         });
 
@@ -3151,7 +2920,7 @@
             document.getElementById('htmlExplanationOutput').classList.add('hidden'); // Hide explanation if refining
             document.getElementById('htmlReviewOutput').classList.add('hidden'); // Hide review if refining
             if (!htmlCode.trim()) { window.showCustomModal('Input Required', 'Please paste HTML code to refine.'); return; }
-            const prompt = `Refine the following HTML code for better accessibility, semantic structure, and performance. Provide the refined code only, no explanations. \n\n${htmlCode}`;
+            const prompt = `Refine the following HTML code for better accessibility, semantic structure, and performance, specifically for smart toy learning modules, interactive content, or AR/holographic display. Provide the refined code only, no explanations. \n\n${htmlCode}`;
             await window.callGeminiAPI(prompt, 'htmlCode', 'htmlRefineStatus', button, 'Refine Code');
         });
 
@@ -3161,7 +2930,7 @@
             document.getElementById('cssExplanationOutput').classList.add('hidden'); // Hide explanation if refining
             document.getElementById('cssReviewOutput').classList.add('hidden'); // Hide review if refining
             if (!cssCode.trim()) { window.showCustomModal('Input Required', 'Please paste CSS code to refine.'); return; }
-            const prompt = `Optimize the following CSS code for efficiency, readability, and modern practices. Provide the refined code only, no explanations. \n\n${cssCode}`;
+            const prompt = `Optimize the following CSS code for efficiency, readability, and modern practices, focusing on visuals for smart toy interfaces, holographic projections, or AR overlays. Provide the refined code only, no explanations. \n\n${cssCode}`;
             await window.callGeminiAPI(prompt, 'cssCode', 'cssRefineStatus', button, 'Refine Code');
         });
 
@@ -3171,7 +2940,7 @@
             document.getElementById('jsExplanationOutput').classList.add('hidden'); // Hide explanation if refining
             document.getElementById('jsReviewOutput').classList.add('hidden'); // Hide review if refining
             if (!jsCode.trim()) { window.showCustomModal('Input Required', 'Please paste JavaScript code to refine.'); return; }
-            const prompt = `Refactor and optimize the following JavaScript code for readability, performance, and best practices. Provide the refined code only, no explanations. \n\n${jsCode}`;
+            const prompt = `Refactor and optimize the following JavaScript code for readability, performance, and best practices, specifically for smart toy AI logic, adaptive learning algorithms, sensor integration, or child interaction. Provide the refined code only, no explanations. \n\n${jsCode}`;
             await window.callGeminiAPI(prompt, 'jsCode', 'jsRefineStatus', button, 'Refine Code');
         });
 
@@ -3181,7 +2950,7 @@
             const button = event.currentTarget;
             document.getElementById('htmlReviewOutput').classList.add('hidden'); // Hide review if explaining
             if (!htmlCode.trim()) { window.showCustomModal('Input Required', 'Please paste HTML code to explain.'); return; }
-            const prompt = `Explain the key components and their purpose in the following HTML code. Provide a high-level explanation. \n\n${htmlCode}`;
+            const prompt = `Explain the key components and their purpose in the following HTML code, particularly focusing on elements related to interactive smart toy content, such as learning modules or visual/audio feedback elements. Provide a high-level explanation. \n\n${htmlCode}`;
             await window.callGeminiAPI(prompt, 'htmlExplanationOutput', 'htmlRefineStatus', button, 'Explain Code');
         });
 
@@ -3190,7 +2959,7 @@
             const button = event.currentTarget;
             document.getElementById('cssReviewOutput').classList.add('hidden'); // Hide review if explaining
             if (!cssCode.trim()) { window.showCustomModal('Input Required', 'Please paste CSS code to explain.'); return; }
-            const prompt = `Explain the purpose of the main CSS rules and how they affect the layout and appearance of the page. \n\n${cssCode}`;
+            const prompt = `Explain the purpose of the main CSS rules and how they affect the layout and appearance of smart toy learning interfaces, interactive elements, or holographic/AR visuals. \n\n${cssCode}`;
             await window.callGeminiAPI(prompt, 'cssExplanationOutput', 'cssRefineStatus', button, 'Explain Code');
         });
 
@@ -3199,7 +2968,7 @@
             const button = event.currentTarget;
             document.getElementById('jsReviewOutput').classList.add('hidden'); // Hide review if explaining
             if (!jsCode.trim()) { window.showCustomModal('Input Required', 'Please paste JavaScript code to explain.'); return; }
-            const prompt = `Explain the main functions and logic of the following JavaScript code. \n\n${jsCode}`;
+            const prompt = `Explain the main functions and logic of the following JavaScript code, focusing on its interaction with smart toy AI, adaptive learning, child behavior tracking, or interactive content delivery. \n\n${jsCode}`;
             await window.callGeminiAPI(prompt, 'jsExplanationOutput', 'jsRefineStatus', button, 'Explain Code');
         });
 
@@ -3209,7 +2978,7 @@
             const button = event.currentTarget;
             document.getElementById('htmlExplanationOutput').classList.add('hidden'); // Hide explanation if reviewing
             if (!htmlCode.trim()) { window.showCustomModal('Input Required', 'Please paste HTML code to review.'); return; }
-            const prompt = `Provide a detailed code review for the following HTML. Point out potential issues, suggest improvements for accessibility, semantics, and performance, and identify any anti-patterns. Use a clear, constructive tone. \n\n${htmlCode}`;
+            const prompt = `Provide a detailed code review for the following HTML, with a focus on best practices for smart toy learning modules, interactive content, or AR/holographic display. Point out potential issues, suggest improvements for child usability, accessibility (WCAG for kids), and performance. Use a clear, constructive tone. \n\n${htmlCode}`;
             await window.callGeminiAPI(prompt, 'htmlReviewOutput', 'htmlRefineStatus', button, 'Review Code');
         });
 
@@ -3218,7 +2987,7 @@
             const button = event.currentTarget;
             document.getElementById('cssExplanationOutput').classList.add('hidden'); // Hide explanation if reviewing
             if (!cssCode.trim()) { window.showCustomModal('Input Required', 'Please paste CSS code to review.'); return; }
-            const prompt = `Provide a detailed code review for the following CSS. Suggest improvements for maintainability, efficiency, and responsiveness. Identify any redundant or conflicting styles. Use a clear, constructive tone. \n\n${cssCode}`;
+            const prompt = `Provide a detailed code review for the following CSS, with a focus on styling for smart toy interfaces, holographic projections, or AR overlays. Suggest improvements for visual clarity, responsiveness (for various toy screen sizes/projections), and child-friendly aesthetics. Identify any redundant or conflicting styles. Use a clear, constructive tone. \n\n${cssCode}`;
             await window.callGeminiAPI(prompt, 'cssReviewOutput', 'cssRefineStatus', button, 'Review Code');
         });
 
@@ -3227,7 +2996,7 @@
             const button = event.currentTarget;
             document.getElementById('jsExplanationOutput').classList.add('hidden'); // Hide explanation if reviewing
             if (!jsCode.trim()) { window.showCustomModal('Input Required', 'Please paste JavaScript code to review.'); return; }
-            const prompt = `Provide a detailed code review for the following JavaScript. Suggest improvements for performance, readability, error handling, and adherence to modern best practices. Identify potential bugs or security vulnerabilities. Use a clear, constructive tone. \n\n${jsCode}`;
+            const prompt = `Provide a detailed code review for the following JavaScript, with a focus on smart toy AI logic, adaptive learning algorithms, sensor integration, or child interaction. Suggest improvements for reliability, data privacy (COPPA/GDPR-K compliance), ethical AI considerations, performance, and adherence to best practices. Identify potential bugs or security vulnerabilities. Use a clear, constructive tone. \n\n${jsCode}`;
             await window.callGeminiAPI(prompt, 'jsReviewOutput', 'jsRefineStatus', button, 'Review Code');
         });
 
@@ -3240,7 +3009,7 @@
                 window.showCustomModal('Input Required', 'Please enter a topic to generate content ideas.');
                 return;
             }
-            const prompt = `Generate 5 creative and engaging section ideas for a web scroll about "${scrollTopic}". For each idea, provide a catchy title and a brief 1-2 sentence description. Format the output as a Markdown list.`;
+            const prompt = `Generate 5 creative and engaging content section ideas for a smart toy learning module about "${scrollTopic}". For each idea, provide a catchy title and a brief 1-2 sentence description, focusing on child engagement and learning outcomes. Format the output as a Markdown list.`;
             await window.callGeminiAPI(prompt, 'contentIdeasOutput', 'contentIdeasStatus', button, 'AI Generate');
         });
 
@@ -3358,11 +3127,11 @@
             const scrollBuilderTemplateSelect = document.querySelector('#scroll-builder-view #sbScrollType');
             if(scrollBuilderTemplateSelect) {
                 scrollBuilderTemplateSelect.innerHTML = `
-                    <option value="">Select a scroll type...</option>
-                    <option value="html">Basic HTML Page</option>
-                    <option value="component">FAA Component (Navbar, Footer, Form)</option>
-                    <option value="checkout">Single Item Checkout</option>
-                    <option value="marketing">Marketing Scroll (Promo)</option>
+                    <option value="">Select a module type...</option>
+                    <option value="phonics-module">Phonics Module</option>
+                    <option value="emotional-story">Emotional Storytelling Narrative</option>
+                    <option value="gamified-math">Gamified Math Adventure</option>
+                    <option value="parent-dashboard-layout">AI Parental Dashboard Layout</option>
                    `;
             }
         }
@@ -3398,21 +3167,27 @@
                         }
                         h1 { 
                             font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem;
-                            color: #0071e3; /* Fruitful part color */
+                            color: #0071e3; /* Primary Blue */
                         }
                         h1 span {
-                            color: #B8860B; /* Dummy Brand part color (gold) */
+                            color: #facc15; /* Accent Yellow */
                         }
                         h2 { 
-                            font-size: 1.2rem; color: ${document.body.classList.contains('light-mode') ? '#4a4a4a' : '#b0b0b0'}; margin-bottom: 1.5rem; 
+                            font-size: 1.2rem; color: ${document.body.classList.contains('light-mode') ? '#424245' : '#a0a0a5'}; margin-bottom: 1.5rem; 
                         }
                         p { 
                             font-size: 0.95rem; line-height: 1.5; 
                             color: ${document.body.classList.contains('light-mode') ? '#6e6e73' : '#b0b0b0'}; 
                         }
                         button { 
-                            background-color: #30d158; 
-                            color: white; padding: 0.75rem 1.5rem; border-radius: 8px; margin-top: 1.5rem; border: none; cursor: pointer;
+                            background-color: #facc15; 
+                            color: black; padding: 0.75rem 1.5rem; border-radius: 8px; margin-top: 1.5rem; border: none; cursor: pointer;
+                        }
+                        img {
+                            width: 80%;
+                            max-width: 400px;
+                            margin: 1.5rem auto;
+                            display: block;
                         }
                     </style>
                 </head>
@@ -3432,10 +3207,8 @@
 
             useTemplateScrollBuilderBtn.onclick = () => {
                 window.hideTemplatePreviewModal();
-                window.showCustomModal('Feature Not Fully Implemented', 'This feature is currently in development. Please select the template in the Scroll Builder manually.', true); // Informative message
+                window.showCustomModal('Feature Not Fully Implemented', 'This feature is currently in development. Please select the template in the Content Builder manually.', true); // Informative message
                 showView('scroll-builder');
-                // You might need to add specific logic here if scrollBuilder has a way to pre-load content based on template.link
-                // For now, it just navigates and informs.
             };
 
 
@@ -3527,24 +3300,15 @@
             const modalTitle = document.getElementById('emailDraftTitle');
             const emailDraftTo = document.getElementById('emailDraftTo');
             const emailPurposeInput = document.getElementById('emailPurposeInput');
-            const customerQueryInput = document.getElementById('customerQueryInput'); // NEW
             const generatedEmailDraftOutput = document.getElementById('generatedEmailDraftOutput');
             const emailDraftStatus = document.getElementById('emailDraftStatus');
-            const generateEmailDraftBtn = document.getElementById('generateEmailDraftBtn');
-            const generateSupportResponseBtn = document.getElementById('generateSupportResponseBtn'); // NEW
 
-            if (modal && modalTitle && emailDraftTo && emailPurposeInput && customerQueryInput && generatedEmailDraftOutput && emailDraftStatus && generateEmailDraftBtn && generateSupportResponseBtn) {
+            if (modal && modalTitle && emailDraftTo && emailPurposeInput && generatedEmailDraftOutput && emailDraftStatus) {
                 modalTitle.textContent = `Draft Email for ${emailAddress}`;
                 emailDraftTo.textContent = emailAddress;
                 emailPurposeInput.value = ''; // Clear previous input
-                customerQueryInput.value = ''; // Clear previous input
                 generatedEmailDraftOutput.value = ''; // Clear previous draft
                 emailDraftStatus.classList.add('hidden'); // Hide status
-
-                // Show/hide relevant buttons
-                generateEmailDraftBtn.classList.remove('hidden');
-                generateSupportResponseBtn.classList.remove('hidden');
-                
                 modal.classList.add('active');
             }
         };
@@ -3552,23 +3316,6 @@
         window.hideEmailDraftModal = function() {
             document.getElementById('emailDraftModal')?.classList.remove('active');
             currentEmailForDraft = ''; // Clear stored email
-        };
-
-        // --- Marketing Copy Modal (NEW) ---
-        window.showMarketingCopyModal = function(title, copyText) {
-            const modal = document.getElementById('marketingCopyModal');
-            const modalTitle = document.getElementById('marketingCopyModalTitle');
-            const modalText = document.getElementById('marketingCopyOutput');
-
-            if (modal && modalTitle && modalText) {
-                modalTitle.textContent = title;
-                modalText.innerHTML = copyText;
-                modal.classList.add('active');
-            }
-        };
-
-        window.hideMarketingCopyModal = function() {
-            document.getElementById('marketingCopyModal')?.classList.remove('active');
         };
 
 
@@ -3580,8 +3327,8 @@
 
             appData.licenses.forEach(license => {
                 const statusClass = license.verified ? 'status-live' : 'status-pending';
-                const buttonText = license.verified ? 'Open in Workspace' : 'Sync License Now';
-                const buttonAction = license.verified ? 'window.showCustomModal("Action", `Opening workspace for ${license.name}...`)' : 'window.showCustomModal("Sync Initiated", `Initiating sync for ${license.name}. Please check back later.`)';
+                const buttonText = license.verified ? 'Open in Workspace' : 'Certify Now';
+                const buttonAction = license.verified ? 'window.showCustomModal("Action", `Opening workspace for ${license.name} (simulated)...`)' : 'window.showCustomModal("Certification Initiated", `Initiating VaultMint™ certification for ${license.name}. Please check back later. (simulated)`)';
 
                 const licenseCard = document.createElement('div');
                 licenseCard.className = 'panel bg-gray-900 border border-gray-700';
@@ -3589,12 +3336,12 @@
                     <h4 class="mb-2">${license.name}</h4>
                     <p><strong>License ID:</strong> <span class="text-gray-400">${license.id}</span></p>
                     <p><strong>Region:</strong> <span class="text-gray-400">${license.region}</span></p>
-                    <p><strong>Royalty:</strong> <span class="text-gray-400">${license.royalty}</span></p>
+                    <p><strong>Certification:</strong> <span class="text-gray-400">${license.royalty}</span></p>
                     <p><strong>Activation Date:</strong> <span class="text-gray-400">${license.activationDate}</span></p>
-                    <p><strong>ClaimRoot Status:</strong> <span class="text-gray-400">${license.claimStatus}</span></p>
+                    <p><strong>VaultMint™ Status:</strong> <span class="text-gray-400">${license.claimStatus}</span></p>
                     <p class="project-status ${statusClass} mt-3">
                         <i class="fas ${license.verified ? 'fa-check-circle' : 'fa-hourglass-half'} mr-1"></i>
-                        ${license.verified ? 'Scroll Verified & Active' : 'Awaiting Scroll Registration'}
+                        ${license.verified ? 'Certified & Active' : 'Awaiting VaultMint™ Certification'}
                     </p>
                     <button class="form-action-button mt-4" onclick='${buttonAction}'>
                         ${buttonText}
@@ -3617,7 +3364,7 @@
                 signButton.className = 'form-action-button mt-4';
                 signButton.innerHTML = `<i class="fas ${agreement.status === 'Signed' ? 'fa-eye' : 'fa-signature'} mr-2"></i> ${buttonText}`;
                 signButton.addEventListener('click', () => { // Add event listener here
-                    window.showCustomModal("SecureSign™", `Redirecting to SecureSign™ for signature of "${agreement.name}". Please confirm in the pop-up.`, true); // Now `agreement` is scoped
+                    window.showCustomModal("SecureSign™", `Redirecting to SecureSign™ for signature of "${agreement.name}". Please confirm in the pop-up. (simulated)`, true); // Now `agreement` is scoped
                     // In a real app, this would redirect to SecureSign with agreement ID
                     // window.open('securesign_portal.html?agreementId=' + agreement.id, '_blank');
                 });
@@ -3679,10 +3426,10 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
-                        plugins: { legend: { labels: { color: 'white', font: { family: 'Inter' } } } },
+                        plugins: { legend: { labels: { color: document.body.classList.contains('light-mode') ? appData.colors.textDark : 'white', font: { family: 'Inter' } } } },
                         scales: {
-                            x: { ticks: { color: 'white' }, grid: { color: 'rgba(255,255,255,0.1)' } },
-                            y: { beginAtZero: true, ticks: { color: 'white' }, grid: { color: 'rgba(255,255,255,0.1)' } }
+                            x: { ticks: { color: document.body.classList.contains('light-mode') ? appData.colors.textDark : 'white' }, grid: { color: document.body.classList.contains('light-mode') ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)' } },
+                            y: { beginAtZero: true, ticks: { color: document.body.classList.contains('light-mode') ? appData.colors.textDark : 'white' }, grid: { color: document.body.classList.contains('light-mode') ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)' } }
                         }
                     }
                 });
@@ -3697,7 +3444,7 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
-                        plugins: { legend: { position: 'bottom', labels: { color: 'white', font: { family: 'Inter' } } } },
+                        plugins: { legend: { position: 'bottom', labels: { color: document.body.classList.contains('light-mode') ? appData.colors.textDark : 'white', font: { family: 'Inter' } } } },
                     }
                 });
             }
@@ -3711,10 +3458,10 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
-                        plugins: { legend: { labels: { color: 'white', font: { family: 'Inter' } } } },
+                        plugins: { legend: { labels: { color: document.body.classList.contains('light-mode') ? appData.colors.textDark : 'white', font: { family: 'Inter' } } } },
                         scales: {
-                            x: { ticks: { color: 'white' }, grid: { color: 'rgba(255,255,255,0.1)' } },
-                            y: { beginAtZero: true, ticks: { color: 'white' }, grid: { color: 'rgba(255,255,255,0.1)' } }
+                            x: { ticks: { color: document.body.classList.contains('light-mode') ? appData.colors.textDark : 'white' }, grid: { color: document.body.classList.contains('light-mode') ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)' } },
+                            y: { beginAtZero: true, ticks: { color: document.body.classList.contains('light-mode') ? appData.colors.textDark : 'white' }, grid: { color: document.body.classList.contains('light-mode') ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)' } }
                         }
                     }
                 });
@@ -3855,8 +3602,12 @@
             const settingsCompanySelectionGrid = document.getElementById('settingsCompanySelectionGrid');
             if (settingsCompanySelectionGrid) {
                 settingsCompanySelectionGrid.innerHTML = ''; // Clear previous selections
-                Object.keys(companyData).forEach(key => {
-                    const company = companyData[key];
+                // Filter companyData to only show companies in relevant sectors for this dashboard (education-youth, maybe mining for cross-sector ops view)
+                const relevantCompanies = Object.entries(companyData).filter(([key, company]) => 
+                    company.sector_key === "education-youth" || company.sector_key === "mining"
+                );
+
+                relevantCompanies.forEach(([key, company]) => {
                     const card = document.createElement('div');
                     card.className = 'company-select-card p-4 rounded-lg text-center shadow-md cursor-pointer bg-gray-700 hover:bg-gray-600 border border-gray-600'; // Added styling classes
                     card.innerHTML = `
@@ -3898,10 +3649,15 @@
             if (!sectorContainer) return;
             sectorContainer.innerHTML = ''; // Clear previous content
 
-            Object.keys(allSectorsData).forEach(sectorKey => {
+            // Sort sectors alphabetically by name for consistent display
+            const sortedSectorKeys = Object.keys(allSectorsData).sort((a, b) => {
+                return allSectorsData[a].name.localeCompare(allSectorsData[b].name);
+            });
+
+            sortedSectorKeys.forEach(sectorKey => {
                 const sector = allSectorsData[sectorKey];
                 const sectorDiv = document.createElement('div');
-                sectorDiv.className = 'border border-gray-700 rounded-lg p-4 mb-4 bg-gray-800'; // Added bg-gray-800 for consistency
+                sectorDiv.className = 'border border-gray-700 rounded-lg p-4 mb-4 bg-gray-800';
                 sectorDiv.innerHTML = `
                     <button class="toggle-section-btn flex justify-between items-center w-full text-left p-2 -mx-2 -my-2 rounded-md hover:bg-gray-700 transition-colors duration-200" onclick="window.toggleSection('sector-${sectorKey}')">
                         <span class="text-blue-400 text-xl font-bold">${sector.name} <span class="text-gray-400 text-sm">(${sector.baseUrl})</span></span>
@@ -3928,12 +3684,12 @@
                                     <div id="brand-${sectorKey}-${brand.name.replace(/ /g, '-')}" class="repo-content-section !border-none !bg-transparent !p-0 hidden mt-2">
                                         <div class="copy-square">
                                             <button class="copy-button" onclick="window.copyToClipboard(this)">Copy</button>
-                                            <pre class="conversation-code-block">${sector.baseUrl}/sectors/${encodeURIComponent(brand.name.toLowerCase().replace(/ /g, '-'))}/index</pre>
+                                            <pre class="conversation-code-block">${sector.baseUrl}/brands/${encodeURIComponent(brand.name.toLowerCase().replace(/ /g, '-'))}/index</pre>
                                         </div>
                                         ${brand.subnodes.map(subnode => `
                                             <div class="copy-square ml-4 mt-2">
                                                 <button class="copy-button" onclick="window.copyToClipboard(this)">Copy</button>
-                                                <pre class="conversation-code-block">${sector.baseUrl}/sectors/${encodeURIComponent(brand.name.toLowerCase().replace(/ /g, '-'))}/${encodeURIComponent(subnode.toLowerCase().replace(/ /g, '-'))}/index</pre>
+                                                <pre class="conversation-code-block">${sector.baseUrl}/brands/${encodeURIComponent(brand.name.toLowerCase().replace(/ /g, '-'))}/${encodeURIComponent(subnode.toLowerCase().replace(/ /g, '-'))}/index</pre>
                                             </div>
                                         `).join('')}
                                     </div>
@@ -3941,7 +3697,7 @@
                             `).join('')}
                         </div>
                         
-                        <h4 class="text-lg font-semibold text-yellow-400 mb-2 mt-4">Global Footer Pages:</h4>
+                        <h4 class="text-lg font-semibold text-yellow-400 mb-2 mt-4">Global Footer Pages (Example Paths):</h4>
                         <div class="space-y-2">
                             <div class="copy-square">
                                 <button class="copy-button" onclick="window.copyToClipboard(this)">Copy</button>
@@ -3952,6 +3708,7 @@ ${[
 ].map(p => `${sector.baseUrl}${p}`).join('\n')}
                                 </pre>
                             </div>
+                            <a href="#" class="footer-pages-link" onclick="window.showCustomModal('Global Footer', 'The global footer files are deployed from a dedicated repository and automatically linked.', true)">Learn more about Global Footer deployment</a>
                         </div>
                     </div>
                 `;
@@ -4001,8 +3758,8 @@ ${[
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
 
-            if (email === "test@example.com" && password === "password123") {
-                window.showCustomModal('Login Successful!', 'Welcome back, Scroll Creator!', true);
+            if (email === "smarttoys.dev@example.com" && password === "password123") {
+                window.showCustomModal('Login Successful!', 'Welcome back, Smart Toys Innovator!', true);
                 // Simulate successful login - redirect to dashboard after modal
                 setTimeout(() => {
                     showView('dashboard');
@@ -4098,7 +3855,7 @@ ${[
                 await window.callGeminiAPI(prompt, 'dnsExplanationOutput', 'dnsExplainStatus', button, 'Explain DNS Type');
             });
 
-            // Event listener for Generate Email Draft Button
+            // Event listener for Generate Email Draft Button (NEW)
             document.getElementById('generateEmailDraftBtn')?.addEventListener('click', async (event) => {
                 const emailPurpose = document.getElementById('emailPurposeInput').value.trim();
                 const button = event.currentTarget;
@@ -4110,18 +3867,6 @@ ${[
                 await window.callGeminiAPI(prompt, 'generatedEmailDraftOutput', 'emailDraftStatus', button, 'Draft Email');
             });
 
-            // Event listener for Generate Support Response Button (NEW)
-            document.getElementById('generateSupportResponseBtn')?.addEventListener('click', async (event) => {
-                const customerQuery = document.getElementById('customerQueryInput').value.trim();
-                const button = event.currentTarget;
-                if (!customerQuery) {
-                    window.showCustomModal('Input Required', 'Please enter a customer query/issue to generate a support response.');
-                    return;
-                }
-                const prompt = `Draft a helpful and polite customer support email response to the following query from a customer at "${currentEmailForDraft}": "${customerQuery}". Assume a professional yet empathetic tone. Provide only the email body.`;
-                await window.callGeminiAPI(prompt, 'generatedEmailDraftOutput', 'emailDraftStatus', button, 'Generate Support Response');
-            });
-
 
             // Event Listeners for AI buttons within the integrated editor (re-mapped IDs)
             document.getElementById('editorRefineCodeBtn')?.addEventListener('click', async (event) => {
@@ -4131,7 +3876,7 @@ ${[
                 document.getElementById('editorHtmlCssReviewOutput').classList.add('hidden');
                 document.getElementById('editorGeneratedContentOutput').classList.add('hidden'); 
                 if (!code.trim()) { window.showCustomModal('Input Required', 'Please paste code to refine.'); return; }
-                const prompt = `Refine the following HTML/CSS code for better accessibility, semantic structure, and performance. Provide the refined code only, no explanations. \n\n${code}`;
+                const prompt = `Refine the following HTML/CSS code for better accessibility, semantic structure, and performance, specifically for smart toy learning modules, interactive content, or AR/holographic display. Provide the refined code only, no explanations. \n\n${code}`;
                 await window.callGeminiAPI(prompt, 'editorHtmlCssCode', 'editorHtmlCssStatus', button, 'Refine Code');
             });
 
@@ -4141,7 +3886,7 @@ ${[
                 document.getElementById('editorHtmlCssReviewOutput').classList.add('hidden');
                 document.getElementById('editorGeneratedContentOutput').classList.add('hidden'); 
                 if (!code.trim()) { window.showCustomModal('Input Required', 'Please paste code to explain.'); return; }
-                const prompt = `Explain the key components and their purpose in the following HTML/CSS code. Provide a high-level explanation. \n\n${code}`;
+                const prompt = `Explain the key components and their purpose in the following HTML code, particularly focusing on elements related to interactive smart toy content, such as learning modules or visual/audio feedback elements. Provide a high-level explanation. \n\n${code}`;
                 await window.callGeminiAPI(prompt, 'editorHtmlCssExplanationOutput', 'editorHtmlCssStatus', button, 'Explain Code');
             });
 
@@ -4151,7 +3896,7 @@ ${[
                 document.getElementById('editorHtmlCssExplanationOutput').classList.add('hidden');
                 document.getElementById('editorGeneratedContentOutput').classList.add('hidden'); 
                 if (!code.trim()) { window.showCustomModal('Input Required', 'Please paste code to review.'); return; }
-                const prompt = `Provide a detailed code review for the following HTML/CSS. Point out potential issues, suggest improvements for accessibility, semantics, and performance, and identify any anti-patterns. Use a clear, constructive tone. \n\n${code}`;
+                const prompt = `Provide a detailed code review for the following HTML/CSS, with a focus on best practices for smart toy learning modules, interactive content, or AR/holographic display. Point out potential issues, suggest improvements for child usability, accessibility (WCAG for kids), and performance. Use a clear, constructive tone. \n\n${code}`;
                 await window.callGeminiAPI(prompt, 'editorHtmlCssReviewOutput', 'editorHtmlCssStatus', button, 'Review Code');
             });
 
@@ -4159,12 +3904,12 @@ ${[
                 const currentContent = document.getElementById('editorHtmlCssCode').value;
                 const button = event.currentTarget;
                 document.getElementById('editorHtmlCssExplanationOutput').classList.add('hidden'); 
-                document.getElementById('editorHtmlCssReviewOutput').classList.add('hidden'); 
+                document.getElementById('editorHtmlCssReviewOutput').classList.add('hidden');    
                 if (!currentContent.trim()) {
                     window.showCustomModal('Input Required', 'Please provide some content in the editor to generate a headline.');
                     return;
                 }
-                const prompt = `Generate 3 concise and catchy headlines for a landing page based on the following HTML content. Focus on appealing to users and summarizing the value proposition. Provide only the headlines as a markdown list. \n\n${currentContent}`;
+                const prompt = `Generate 3 concise and catchy headlines for a smart toy learning module based on the following HTML content. Focus on appealing to parents and children, highlighting educational and fun aspects. Provide only the headlines as a markdown list. \n\n${currentContent}`;
                 await window.callGeminiAPI(prompt, 'editorGeneratedContentOutput', 'editorContentGenStatus', button, 'Generate Headline');
             });
 
@@ -4172,12 +3917,12 @@ ${[
                 const currentContent = document.getElementById('editorHtmlCssCode').value;
                 const button = event.currentTarget;
                 document.getElementById('editorHtmlCssExplanationOutput').classList.add('hidden'); 
-                document.getElementById('editorHtmlCssReviewOutput').classList.add('hidden'); 
+                document.getElementById('editorHtmlCssReviewOutput').classList.add('hidden');    
                 if (!currentContent.trim()) {
                     window.showCustomModal('Input Required', 'Please provide some content in the editor to generate a Call to Action.');
                     return;
                 }
-                const prompt = `Generate 3 compelling and concise Calls-to-Action (CTAs) for a landing page based on the following HTML content. Make them action-oriented and encourage conversion. Provide only the CTAs as a markdown list. \n\n${currentContent}`;
+                const prompt = `Generate 3 compelling and concise Calls-to-Action (CTAs) for a smart toy learning module based on the following HTML content. Make them action-oriented and encourage engagement (e.g., "Start Learning Adventure", "Unlock New Skills"). Provide only the CTAs as a markdown list. \n\n${currentContent}`;
                 await window.callGeminiAPI(prompt, 'editorGeneratedContentOutput', 'editorContentGenStatus', button, 'Generate CTA');
             });
 
@@ -4186,12 +3931,12 @@ ${[
                 const currentContent = document.getElementById('editorHtmlCssCode').value;
                 const button = event.currentTarget;
                 document.getElementById('editorHtmlCssExplanationOutput').classList.add('hidden'); 
-                document.getElementById('editorHtmlCssReviewOutput').classList.add('hidden'); 
+                document.getElementById('editorHtmlCssReviewOutput').classList.add('hidden');    
                 if (!sectionTopic) {
                     window.showCustomModal('Input Required', 'Please enter a topic for the section content.');
                     return;
                 }
-                const prompt = `Generate a 2-3 paragraph section about "${sectionTopic}" for a landing page. Integrate it smoothly with the existing content, which is: \n\n${currentContent}\n\n Focus on compelling language and key benefits.`;
+                const prompt = `Generate a 2-3 paragraph section about "${sectionTopic}" for a smart toy learning module. Integrate it smoothly with the existing content, which is: \n\n${currentContent}\n\n Focus on compelling language, educational benefits, and interactive elements for children.`;
                 await window.callGeminiAPI(prompt, 'editorGeneratedContentOutput', 'editorContentGenStatus', button, 'Generate Section Content');
             });
 
@@ -4199,12 +3944,12 @@ ${[
                 const textToRephrase = document.getElementById('editorRephraseTextInput').value.trim();
                 const button = event.currentTarget;
                 document.getElementById('editorHtmlCssExplanationOutput').classList.add('hidden'); 
-                document.getElementById('editorHtmlCssReviewOutput').classList.add('hidden'); 
+                document.getElementById('editorHtmlCssReviewOutput').classList.add('hidden');    
                 if (!textToRephrase) {
                     window.showCustomModal('Input Required', 'Please enter text into the "Rephrase/Improve Text" field.');
                     return;
                 }
-                const prompt = `Rephrase and improve the following text for clarity, conciseness, and impact, suitable for a landing page. Provide 3 different versions as a markdown list. \n\n"${textToRephrase}"`;
+                const prompt = `Rephrase and improve the following text for clarity, conciseness, and impact, suitable for smart toy interaction or a parental dashboard. Provide 3 different versions as a markdown list. \n\n"${textToRephrase}"`;
                 await window.callGeminiAPI(prompt, 'editorGeneratedContentOutput', 'editorContentGenStatus', button, 'Rephrase/Improve');
             });
 
@@ -4241,24 +3986,30 @@ ${[
                                     box-sizing: border-box;
                                 }
                                 .generated-content-wrapper h1, .generated-content-wrapper h2 {
-                                    color: #0071e3; /* Fruitful Blue */
+                                    color: #0071e3; /* Primary Blue */
                                     margin-bottom: 0.5rem;
                                 }
                                 .generated-content-wrapper h1 span {
-                                    color: #B8860B; /* Fruitful Gold */
+                                    color: #facc15; /* Accent Yellow */
                                 }
                                 .generated-content-wrapper p {
-                                    color: #4a4a4a;
+                                    color: #424245;
                                     line-height: 1.6;
                                 }
                                 .generated-content-wrapper button {
-                                    background-color: #30d158; /* Fruitful Green */
-                                    color: white;
+                                    background-color: #facc15; /* Accent Yellow Button */
+                                    color: black;
                                     padding: 10px 20px;
                                     border-radius: 8px;
                                     margin-top: 15px;
                                     border: none;
                                     cursor: pointer;
+                                }
+                                img {
+                                    width: 100%;
+                                    max-width: 500px;
+                                    margin-top: 15px;
+                                    border-radius: 8px;
                                 }
                             </style>
                         </head>

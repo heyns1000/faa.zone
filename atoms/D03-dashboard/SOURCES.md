@@ -11,3 +11,4 @@
 | 5 | 2025-07-07 | FGP--samfox | main | `public/global_templates/codenest_desktop_dashboard.html` | `5a422b8c` | Fruitful | CodeNest™ Dashboard - Fruitful Glo | 227854 | 140 | 20 | 295.8 |
 | 6 | 2025-07-10 | FGP--samfox | main | `public/global_templates/Fruitful_media_motion_sonic_dashboard.html` | `312023d3` | Fruitful | CodeNest™ Dashboard - Motion, Medi | 235455 | 141 | 29 | 310.0 |
 | 7 | 2025-07-11 | ai-logic.seedwave.faa.zone | history | `public/dashboard.html` | `9cdc6c5e` | Fruitful | CodeNest™ Dashboard - Fruitful Glo | 238687 | 154 | 20 | 310.9 |
+| 8 | 2025-07-18 | toynest.seedwave.faa.zone | history | `public/dashboard.html` | `8377fe55` | Fruitful™ | ToyNest™ Dashboard | 229791 | 161 | 20 | 313.0 |
