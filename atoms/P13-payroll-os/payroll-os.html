@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAA Omni-Payroll Global Challenger Blueprint</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony -->
+    <!-- Application Structure Plan: This single-page application is designed as an interactive "Global Payroll Enterprise System Blueprint." It features a fixed left sidebar for primary navigation (Dashboards, Employee Management, Payroll Processing, Reporting & Analytics, Admin & Settings, HAT Book Index, FAA Global Brands, API Key Integrations). The main content area dynamically updates based on sidebar selections, simulating different "pages" or modules. This structure was chosen to demonstrate the vastness and interconnectedness of a large enterprise system within a single HTML file, allowing users to explore module-specific functionalities and a comprehensive UI element library. This addresses the user's need for a "workable product" by providing a dynamic, data-driven prototype of a complex system, rather than just static lists. -->
+    <!-- Visualization & Content Choices: Report Info -> Goal -> Viz/Presentation -> Interaction -> Justification. 1. **Dashboard Overview:** Inform/Monitor -> Bar Chart (Chart.js) + Dynamic Status Cards -> Static display with hover tooltips; cards update based on simulated data -> Provides a quick visual summary of system health and KPIs. 2. **Employee Management:** Organize/Manage -> Dynamic Filterable List + Simulated Modals -> Search input, click to view details/add employee via modal -> Simulates a large employee directory with interactive search and form submission. 3. **Payroll Processing:** Action/Monitor -> Dynamic List of Cycles + Action Buttons + Workflow Steps with progress indicators -> Click to review/start/advance workflow, updating step status visually -> Represents a core workflow with clear next steps and atom-level button mapping, simulating live progress. 4. **Reporting & Analytics:** Inform/Generate -> Lists of Standard Reports + Launch Button for Custom Builder with loading/success states -> Click to simulate generation/builder launch with visual feedback -> Shows key reporting capabilities with specific report names and realistic generation simulation. 5. **Admin & Settings:** Configure -> Lists of Configuration Areas + Action Buttons -> Click to simulate navigation -> Demonstrates system configuration points with specific tasks. 6. **HAT Book Index:** Organize/Reference -> Filterable/Searchable/Collapsible List of Buttons with nested dropdowns and simulated interaction feedback -> Search input, dropdown filters, click to expand details and trigger temporary messages -> Provides the comprehensive UI element library requested, with atom-level detail on every button, click, and dropdown option, including routes to reports, and visual confirmation of interaction. 7. **FAA Global Brands:** Inform/Explore -> Filterable/Searchable Grid of Brands -> Search input, click for simulated details -> Showcases the integration of the brand ecosystem. 8. **API Key Integrations:** Inform/Reference -> Dynamic Table -> Static display of service, locations, and actions. This provides atom-level detail on external system connections crucial for a complete blueprint. All charts use Chart.js on Canvas. All dynamic content is generated via JavaScript from structured data, adhering to NO SVG/Mermaid. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+        .sidebar {
+            width: 280px;
+            flex-shrink: 0;
+        }
+        .main-content {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 700px; /* Adjusted for wider content */
+            height: 300px;
+            max-height: 450px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .collapsible-header {
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.2s ease;
+        }
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+        .collapsible-content.open {
+            max-height: 2000px; /* Arbitrary large value to allow content to expand */
+            transition: max-height 0.7s ease-in;
+        }
+        .rotate-icon {
+            transition: transform 0.3s ease;
+        }
+        .rotate-icon.rotated {
+            transform: rotate(90deg);
+        }
+        .workflow-step-card {
+            border-left: 4px solid;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+            background-color: #ffffff;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            transition: border-color 0.3s ease;
+        }
+        .workflow-step-card.active {
+            border-color: #4f46e5; /* indigo-600 */
+        }
+        .workflow-step-card.completed {
+            border-color: #10b981; /* emerald-500 */
+        }
+        .workflow-step-card.pending {
+            border-color: #cbd5e1; /* slate-300 */
+        }
+        .message-box {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+        .message-box.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .modal-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="flex h-screen text-slate-700">
+
+    <aside class="sidebar bg-slate-800 text-white p-6 flex flex-col shadow-lg">
+        <div class="text-2xl font-bold mb-8 text-indigo-300">FAA Omni-Payroll</div>
+        <nav class="space-y-4 flex-grow">
+            <a href="#" data-page="dashboard-overview" class="nav-link flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-700 transition-colors">
+                <span class="text-xl">📊</span>
+                <span class="font-medium">Dashboard Overview</span>
+            </a>
+            <a href="#" data-page="employee-management" class="nav-link flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-700 transition-colors">
+                <span class="text-xl">👥</span>
+                <span class="font-medium">Employee Management</span>
+            </a>
+            <a href="#" data-page="payroll-processing" class="nav-link flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-700 transition-colors">
+                <span class="text-xl">💳</span>
+                <span class="font-medium">Payroll Processing & Sync</span>
+            </a>
+            <a href="#" data-page="reporting-analytics" class="nav-link flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-700 transition-colors">
+                <span class="text-xl">📈</span>
+                <span class="font-medium">Reporting & Analytics</span>
+            </a>
+            <a href="#" data-page="admin-settings" class="nav-link flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-700 transition-colors">
+                <span class="text-xl">⚙️</span>
+                <span class="font-medium">Admin & Settings</span>
+            </a>
+            <a href="#" data-page="hat-book-index" class="nav-link flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-700 transition-colors">
+                <span class="text-xl">📚</span>
+                <span class="font-medium">HAT Book Index: UI Elements</span>
+            </a>
+            <a href="#" data-page="global-brands" class="nav-link flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-700 transition-colors">
+                <span class="text-xl">🌐</span>
+                <span class="font-medium">FAA Global Brands</span>
+            </a>
+            <a href="#" data-page="api-integrations" class="nav-link flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-700 transition-colors">
+                <span class="text-xl">🔗</span>
+                <span class="font-medium">API Key Integrations & Sovereign Bridges</span>
+            </a>
+        </nav>
+        <div class="mt-8 text-sm text-slate-400">
+            <p>&copy; 2025 FAA Cosmogrid</p>
+            <p>Quantum Compensation Protocol</p>
+        </div>
+    </aside>
+
+    <main class="main-content p-8 bg-slate-50">
+        <div id="page-header" class="mb-8">
+            <h1 class="text-3xl font-bold text-slate-900" id="current-page-title"></h1>
+            <p class="text-lg text-slate-600" id="current-page-description"></p>
+        </div>
+
+        <div id="page-content" class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <!-- Dynamic content will be loaded here -->
+        </div>
+    </main>
+
+    <div id="messageBox" class="message-box"></div>
+    <div id="employeeModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="modal-close-btn" onclick="closeModal('employeeModal')">&times;</span>
+            <h3 class="text-xl font-bold mb-4">Add New Employee</h3>
+            <form id="addEmployeeForm" class="space-y-4">
+                <div>
+                    <label for="newEmployeeName" class="block text-sm font-medium text-slate-700">Full Name</label>
+                    <input type="text" id="newEmployeeName" class="mt-1 block w-full p-2 border border-slate-300 rounded-md" required>
+                </div>
+                <div>
+                    <label for="newEmployeeRole" class="block text-sm font-medium text-slate-700">Role</label>
+                    <input type="text" id="newEmployeeRole" class="mt-1 block w-full p-2 border border-slate-300 rounded-md" required>
+                </div>
+                <div>
+                    <label for="newEmployeeLocation" class="block text-sm font-medium text-slate-700">Location</label>
+                    <input type="text" id="newEmployeeLocation" class="mt-1 block w-full p-2 border border-slate-300 rounded-md" required>
+                </div>
+                <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors">Submit Employee</button>
+            </form>
+        </div>
+    </div>
+    <div id="reportModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="modal-close-btn" onclick="closeModal('reportModal')">&times;</span>
+            <h3 class="text-xl font-bold mb-4">Report Generation</h3>
+            <div id="reportModalContent" class="text-slate-700">
+                <p><span class="loading-spinner"></span> Generating report...</p>
+                <p class="mt-2 text-sm text-slate-500">This might take a few moments for complex reports.</p>
+            </div>
+        </div>
+    </div>
+    <div id="brandDetailModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="modal-close-btn" onclick="closeModal('brandDetailModal')">&times;</span>
+            <h3 class="text-xl font-bold mb-4" id="brandDetailTitle"></h3>
+            <div id="brandDetailContent" class="text-slate-700">
+                <!-- Brand details dynamically loaded here -->
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Data for each navigation page
+        const pagesData = [
+            {
+                id: "dashboard-overview",
+                title: "Dashboard Overview",
+                icon: "📊",
+                description: "Your personalized command center for real-time payroll and HR insights. Monitor key metrics, track payroll cycle status, and get proactive alerts.",
+                content: `
+                    <h3 class="text-xl font-semibold text-slate-800 mb-4">Payroll Cycle Status</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="bg-indigo-50 p-4 rounded-lg shadow-sm">
+                            <p class="text-sm text-indigo-700">Current Phase</p>
+                            <p class="text-lg font-bold text-indigo-900">Data Collection</p>
+                        </div>
+                        <div class="bg-amber-50 p-4 rounded-lg shadow-sm">
+                            <p class="text-sm text-amber-700">Next Deadline</p>
+                            <p class="text-lg font-bold text-amber-900">July 15, 2025</p>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg shadow-sm">
+                            <p class="text-sm text-green-700">Completion Rate</p>
+                            <p class="text-lg font-bold text-green-900">75%</p>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-lg shadow-sm">
+                            <p class="text-sm text-red-700">Pending Approvals</p>
+                            <p class="text-lg font-bold text-red-900">3</p>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg shadow-sm">
+                            <p class="text-sm text-blue-700">Tax Remittances Due</p>
+                            <p class="text-lg font-bold text-blue-900">2</p>
+                        </div>
+                        <div class="bg-purple-50 p-4 rounded-lg shadow-sm">
+                            <p class="text-sm text-purple-700">Active Integrations</p>
+                            <p class="text-lg font-bold text-purple-900">12</p>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-800 mb-4">Key Performance Indicators</h3>
+                    <div class="chart-container h-64 mb-6">
+                        <canvas id="dashboardKPIsChart"></canvas>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-800 mb-4">Payroll Spend Trend</h3>
+                    <div class="chart-container h-64">
+                        <canvas id="payrollSpendChart"></canvas>
+                    </div>
+                    <div class="mt-6">
+                        <h4 class="font-semibold text-slate-800 mb-2">Quick Actions</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors" onclick="showMessage('Simulating: Initiating Payroll Run process...', 'info')">Initiate Payroll Run</button>
+                            <button class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors" onclick="showMessage('Simulating: Viewing latest report...', 'info')">View Latest Report</button>
+                            <button class="bg-purple-500 text-white px-4 py-2 rounded-md hover:bg-purple-600 transition-colors" onclick="openModal('employeeModal')">Add New Employee</button>
+                            <button class="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 transition-colors" onclick="showMessage('Simulating: Reviewing Pending Approvals...', 'info')">Review Approvals</button>
+                            <button class="bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600 transition-colors" onclick="showMessage('Simulating: Launching AI Anomaly Detection...', 'info')">Run AI Anomaly Detection</button>
+                        </div>
+                    </div>
+                `,
+                chartData: {
+                    type: 'bar',
+                    labels: ['Payroll Accuracy', 'On-Time Payments', 'Compliance Rate', 'ESS Adoption'],
+                    datasets: [{
+                        label: 'Performance %',
+                        data: [99.8, 100, 99.5, 85],
+                        backgroundColor: ['rgba(75, 192, 192, 0.7)', 'rgba(153, 102, 255, 0.7)', 'rgba(255, 159, 64, 0.7)', 'rgba(54, 162, 235, 0.7)'],
+                        borderColor: ['rgb(75, 192, 192)', 'rgb(153, 102, 255)', 'rgb(255, 159, 64)', 'rgb(54, 162, 235)'],
+                        borderWidth: 1
+                    }]
+                },
+                chartData2: { // New chart data for Payroll Spend Trend
+                    type: 'line',
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Monthly Spend (USD)',
+                        data: [150000, 155000, 160000, 158000, 165000, 170000],
+                        borderColor: 'rgba(79, 70, 229, 1)', // indigo-600
+                        backgroundColor: 'rgba(79, 70, 229, 0.2)',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                }
+            },
+            {
+                id: "employee-management",
+                title: "Employee Management",
+                icon: "�",
+                description: "Manage your global workforce. Add new employees, update profiles, and oversee benefits and compensation. Features like Smart Onboarding streamline new hire integration.",
+                content: `
+                    <h3 class="text-xl font-semibold text-slate-800 mb-4">Employee Directory</h3>
+                    <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm mb-6">
+                        <input type="text" id="employeeSearch" placeholder="Search employees..." class="w-full p-2 border border-slate-300 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <div id="employeeList" class="space-y-3">
+                            <!-- Employee items will be dynamically loaded here -->
+                        </div>
+                    </div>
+                    <button class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors" onclick="openModal('employeeModal')">Add New Employee</button>
+                    <button class="bg-slate-500 text-white px-4 py-2 rounded-md hover:bg-slate-600 transition-colors ml-2" onclick="showMessage('Simulating: Importing employees from ATS...', 'info')">Import from ATS</button>
+                    <button class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors ml-2" onclick="showMessage('Simulating: Launching Smart Onboarding workflow...', 'info')">Launch Smart Onboarding</button>
+                `,
+                data: [
+                    { id: 1, name: "Alice Johnson", role: "HR Manager", status: "Active", location: "New York", hireDate: "2020-03-15", salary: "85,000" },
+                    { id: 2, name: "Bob Smith", role: "Software Engineer", status: "Active", location: "London", hireDate: "2018-07-01", salary: "95,000" },
+                    { id: 3, name: "Charlie Brown", role: "Marketing Specialist", status: "Active", location: "Sydney", hireDate: "2021-11-20", salary: "70,000" },
+                    { id: 4, name: "Diana Prince", role: "Payroll Analyst", status: "Active", location: "Berlin", hireDate: "2019-01-10", salary: "78,000" },
+                    { id: 5, name: "Eve Adams", role: "Data Scientist", status: "On Leave", location: "Paris", hireDate: "2022-05-05", salary: "105,000" },
+                    { id: 6, name: "Frank White", role: "Sales Executive", status: "Active", location: "Tokyo", hireDate: "2023-02-28", salary: "80,000" },
+                    { id: 7, name: "Grace Lee", role: "Product Manager", status: "Active", location: "San Francisco", hireDate: "2017-09-12", salary: "110,000" }
+                ]
+            },
+            {
+                id: "payroll-processing",
+                title: "Payroll Processing & Sync",
+                icon: "💳",
+                description: "Execute payroll runs, review calculations, and manage approvals. A streamlined workflow for accurate and timely payments, with cross-system synchronization.",
+                content: `
+                    <h3 class="text-xl font-semibold text-slate-800 mb-4">Payroll Sync Workflow: July 2025 - Global</h3>
+                    <div id="payrollWorkflow" class="space-y-4">
+                        <!-- Workflow steps will be dynamically loaded here -->
+                    </div>
+                    <div class="mt-6 flex flex-wrap gap-2">
+                        <button class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors" onclick="startNewPayrollRun()">Start New Payroll Run</button>
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors ml-2" onclick="showMessage('Simulating: Viewing Payroll Calendar...', 'info')">View Payroll Calendar</button>
+                        <button class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors ml-2" onclick="showMessage('Simulating: Running Compliance Checks...', 'info')">Run Compliance Checks</button>
+                        <button class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors ml-2" onclick="showMessage('Simulating: Initiating Payroll Rollback...', 'error')">Rollback Payroll</button>
+                    </div>
+                    <h4 class="font-semibold text-slate-800 mt-6 mb-2">Payroll Calendar Overview</h4>
+                    <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm">
+                        <p class="text-slate-600">Next Payroll Run: <span class="font-bold">July 25, 2025</span> (Bi-weekly cycle)</p>
+                        <p class="text-slate-600">Monthly Payroll: <span class="font-bold">July 31, 2025</span></p>
+                        <p class="text-slate-600">Tax Remittance: <span class="font-bold text-red-600">August 5, 2025</span></p>
+                    </div>
+                `,
+                workflowSteps: [
+                    {
+                        id: 'onboarding',
+                        name: '1. Employee Onboarding & Data Input',
+                        description: 'Gather and input new hire and employee data, including personal details, compensation, and benefits.',
+                        status: 'completed', // completed, active, pending
+                        buttons: [
+                            { name: 'Add employees', system: 'ADP Workforce Now', action: 'Initiates new hire addition workflow', route_or_action: '/adp/employees/add' },
+                            { name: 'Sync deductions to payroll', system: 'ADP Workforce Now', action: 'Ensures accuracy for federal, state, and local taxes', route_or_action: '/adp/payroll/deductions/sync' },
+                            { name: 'Organization Settings (gear) icon', system: 'Deel', action: 'Accesses organizational settings for entity setup', route_or_action: '/deel/settings/organization' },
+                            { name: 'Create entity', system: 'Deel', action: 'Initiates creation of a new legal entity', route_or_action: '/deel/entities/create' },
+                            { name: 'Upload Parameter Files Option', system: 'Oracle Fusion Cloud', action: 'Uploads files with flow parameter details', route_or_action: 'Opens file upload dialog' }
+                        ]
+                    },
+                    {
+                        id: 'calculation',
+                        name: '2. Gross Pay Calculation & Deductions',
+                        description: 'Automated calculation of gross pay, deductions, and net pay, with continuous monitoring for accuracy.',
+                        status: 'completed',
+                        buttons: [
+                            { name: 'Manage deductions', system: 'ADP Workforce Now', action: 'Configures and syncs payroll deductions', route_or_action: '/adp/payroll/deductions/manage' },
+                            { name: 'Generate payroll results', system: 'SAP SuccessFactors', action: 'Stores productive payroll results', route_or_action: '/sap/payroll/generate-results' },
+                            { name: 'Calculate in batch mode for pay group', system: 'Workday', action: 'Executes batch payroll calculations with single action', route_or_action: 'Triggers batch calculation' },
+                            { name: 'Submit a Flow Page', system: 'Oracle Fusion Cloud', action: 'Initiates various payroll flows including calculations', route_or_action: '/oracle/payroll/submit-flow' },
+                            { name: 'Run AI-Powered Calculation Audit', system: 'FAA Omni-Payroll', action: 'Initiates an AI-driven audit of payroll calculations for anomalies', route_or_action: 'Triggers AI audit' }
+                        ]
+                    },
+                    {
+                        id: 'review-approval',
+                        name: '3. Review & Approval',
+                        description: 'Review calculated payroll results, audit for exceptions, and obtain necessary approvals before submission.',
+                        status: 'active',
+                        buttons: [
+                            { name: 'Check Payroll Results', system: 'SAP SuccessFactors', action: 'Displays and allows review of payroll calculation results', route_or_action: '/sap/payroll/check-results' },
+                            { name: 'Review payroll', system: 'Deel', action: 'Initiates the review phase of the payroll cycle', route_or_action: '/deel/payroll/review' },
+                            { name: 'Approve payroll', system: 'Deel', action: 'Approves the payroll for submission', route_or_action: 'Approves payroll' },
+                            { name: 'Payroll Audit Exception Summary', system: 'Workday', action: 'Summarizes payroll audit exceptions in real-time', route_or_action: '/workday/payroll/audit-summary' },
+                            { name: 'Actions Menu (Roll Back Errors)', system: 'Oracle Fusion Cloud', action: 'Rolls back records with errors', route_or_action: 'Rolls back errored records' },
+                            { name: 'View AI Anomaly Report', system: 'FAA Omni-Payroll', action: 'Displays detailed report of detected payroll anomalies', route_or_action: 'Opens anomaly report' },
+                            { name: 'Submit for Final Approval', system: 'FAA Omni-Payroll', action: 'Sends payroll for final executive approval', route_or_action: 'Sends for approval' }
+                        ]
+                    },
+                    {
+                        id: 'submission-funding',
+                        name: '4. Submission & Funding',
+                        description: 'Submit payroll for processing and initiate funding of employee payments and tax remittances.',
+                        status: 'pending',
+                        buttons: [
+                            { name: 'Submit and fund payroll', system: 'Deel', action: 'Finalizes payroll submission and initiates funding', route_or_action: 'Submits and funds payroll' },
+                            { name: 'Make a same-day ACH payment', system: 'ADP Workforce Now', action: 'Initiates urgent ACH payment for final paychecks', route_or_action: 'Triggers same-day ACH' },
+                            { name: 'Release for Payroll', system: 'SAP SuccessFactors', action: 'Initiates the payroll processing cycle', route_or_action: 'Triggers payroll release' },
+                            { name: 'Submit a Flow Page', system: 'Oracle Fusion Cloud', action: 'Initiates various payroll flows including submission', route_or_action: '/oracle/payroll/submit-flow' },
+                            { name: 'Initiate Global Tax Remittance', system: 'FAA Omni-Payroll', action: 'Triggers automated remittance of taxes to relevant global authorities', route_or_action: 'Automates tax remittance' }
+                        ]
+                    },
+                    {
+                        id: 'post-processing',
+                        name: '5. Post-Processing & Archiving',
+                        description: 'Archive payroll records, generate general ledger entries, and ensure data retention for compliance.',
+                        status: 'pending',
+                        buttons: [
+                            { name: 'Automated general ledger entries you can import into your general accounting program', system: 'ADP Workforce Now', action: 'Automates general ledger entries for import', route_or_action: 'Imports GL entries' },
+                            { name: 'Exit Payroll', system: 'SAP SuccessFactors', action: 'Concludes the current payroll processing session', route_or_action: 'Exits payroll module' },
+                            { name: 'Manage Configuration Packages Task', system: 'Oracle Fusion Cloud', action: 'Exports and imports configuration packages (including flows)', route_or_action: '/oracle/admin/config-packages' },
+                            { name: 'Archive Payroll Records', system: 'FAA Omni-Payroll', action: 'Initiates long-term secure archiving of payroll data for compliance', route_or_action: 'Archives data' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "reporting-analytics",
+                title: "Reporting & Analytics",
+                icon: "📈",
+                description: "Generate comprehensive reports, analyze payroll data, and gain insights for strategic decision-making and compliance. Access a wide array of standard and custom reports.",
+                content: `
+                    <h3 class="text-xl font-semibold text-slate-800 mb-4">Standard Reports</h3>
+                    <ul class="list-disc pl-5 space-y-2 text-slate-700 mb-6">
+                        <li>Payroll Summary Report <button class="ml-2 text-indigo-600 hover:underline text-sm" onclick="generateReport('Payroll Summary Report')">Generate</button></li>
+                        <li>Tax Liability Report <button class="ml-2 text-indigo-600 hover:underline text-sm" onclick="generateReport('Tax Liability Report')">Generate</button></li>
+                        <li>Employee Earnings Report <button class="ml-2 text-indigo-600 hover:underline text-sm" onclick="generateReport('Employee Earnings Report')">Generate</button></li>
+                        <li>Workday: Payroll Register <button class="ml-2 text-indigo-600 hover:underline text-sm" onclick="generateReport('Workday Payroll Register')">Generate</button></li>
+                        <li>SAP: Form W-2 <button class="ml-2 text-indigo-600 hover:underline text-sm" onclick="generateReport('SAP Form W-2')">Generate</button></li>
+                        <li>Oracle: Statement of Earnings <button class="ml-2 text-indigo-600 hover:underline text-sm" onclick="generateReport('Oracle Statement of Earnings')">Generate</button></li>
+                        <li>Global Headcount Report <button class="ml-2 text-indigo-600 hover:underline text-sm" onclick="generateReport('Global Headcount Report')">Generate</button></li>
+                        <li>Benefit Enrollment Summary <button class="ml-2 text-indigo-600 hover:underline text-sm" onclick="generateReport('Benefit Enrollment Summary')">Generate</button></li>
+                    </ul>
+                    <h3 class="xl font-semibold text-slate-800 mb-4">Custom Report Builder</h3>
+                    <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm mb-6">
+                        <p class="text-slate-600 mb-4">Drag-and-drop fields to create your own tailored reports. Features like Workday's Report Writer provide powerful customization.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <select class="p-2 border border-slate-300 rounded-md">
+                                <option>Select Data Field</option>
+                                <option>Employee Name</option>
+                                <option>Gross Pay</option>
+                                <option>Net Pay</option>
+                                <option>Deductions</option>
+                                <option>Department</option>
+                                <option>Location</option>
+                            </select>
+                            <select class="p-2 border border-slate-300 rounded-md">
+                                <option>Select Filter</option>
+                                <option>By Department</option>
+                                <option>By Location</option>
+                                <option>By Pay Period</option>
+                            </select>
+                            <button class="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300 transition-colors" onclick="showMessage('Simulating: Adding field to custom report...', 'info')">Add Field</button>
+                        </div>
+                        <button class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors" onclick="showMessage('Simulating: Launching Custom Report Builder...', 'info')">Launch Builder</button>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-800 mb-4">Audit & Compliance Reports</h3>
+                    <ul class="list-disc pl-5 space-y-2 text-slate-700">
+                        <li>Workday: Payroll Audit Exception Summary <button class="ml-2 text-indigo-600 hover:underline text-sm" onclick="generateReport('Workday Payroll Audit Exception Summary')">View</button></li>
+                        <li>SAP: Tax Form Reconciliation <button class="ml-2 text-indigo-600 hover:underline text-sm" onclick="generateReport('SAP Tax Form Reconciliation')">Run</button></li>
+                        <li>Global Compliance Checklist <button class="ml-2 text-indigo-600 hover:underline text-sm" onclick="generateReport('Global Compliance Checklist')">Generate</button></li>
+                    </ul>
+                    <h3 class="text-xl font-semibold text-slate-800 mb-4 mt-6">Scheduled Reports</h3>
+                    <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm">
+                        <p class="text-slate-600 mb-2">Monthly Payroll Summary: Scheduled for 1st of each month.</p>
+                        <p class="text-slate-600">Quarterly Tax Report: Scheduled for end of Q1, Q2, Q3, Q4.</p>
+                        <button class="mt-3 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors" onclick="showMessage('Simulating: Managing Report Schedules...', 'info')">Manage Schedules</button>
+                    </div>
+                `
+            },
+            {
+                id: "admin-settings",
+                title: "Admin & Settings",
+                icon: "⚙️",
+                description: "Configure system settings, manage user access, and maintain compliance parameters for your enterprise. Access deep configuration tools.",
+                content: `
+                    <h3 class="text-xl font-semibold text-slate-800 mb-4">System Configuration</h3>
+                    <ul class="list-disc pl-5 space-y-2 text-slate-700 mb-6">
+                        <li><a href="#" class="text-indigo-600 hover:underline" onclick="showMessage('Simulating: Opening Tax Rules Configuration...', 'info')">Tax Rules & Compliance</a></li>
+                        <li><a href="#" class="text-indigo-600 hover:underline" onclick="showMessage('Simulating: Opening Integrations Management...', 'info')">Integrations Management</a></li>
+                        <li><a href="#" class="text-indigo-600 hover:underline" onclick="showMessage('Simulating: Opening User Roles & Permissions...', 'info')">User Roles & Permissions</a></li>
+                        <li><a href="#" class="text-indigo-600 hover:underline" onclick="showMessage('Simulating: Opening SAP PCC Configuration Workbench...', 'info')">SAP PCC Configuration Workbench (t-code PYC_CONF_WB)</a></li>
+                        <li><a href="#" class="text-indigo-600 hover:underline" onclick="showMessage('Simulating: Managing Oracle Fast Formulas...', 'info')">Oracle: Manage Fast Formulas</a></li>
+                        <li><a href="#" class="text-indigo-600 hover:underline" onclick="showMessage('Simulating: Configuring Payroll Calendars...', 'info')">Payroll Calendars</a></li>
+                        <li><a href="#" class="text-indigo-600 hover:underline" onclick="showMessage('Simulating: Setting up Approval Workflows...', 'info')">Approval Workflows</a></li>
+                    </ul>
+                    <h3 class="text-xl font-semibold text-slate-800 mb-4">User Management</h3>
+                    <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm mb-6">
+                        <p class="text-slate-600 mb-4">Manage user accounts, assign roles, and control access permissions across the system.</p>
+                        <button class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors" onclick="showMessage('Simulating: Adding New User...', 'info')">Add User</button>
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors ml-2" onclick="showMessage('Simulating: Managing User Roles...', 'info')">Manage Roles</button>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-800 mb-4">Audit Logs & Monitoring</h3>
+                    <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm mb-6">
+                        <p class="text-slate-600 mb-4">Review all system activities and changes for compliance and security. Includes SAP PCC Action/Audit Log and Oracle Process Results Details.</p>
+                        <button class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors" onclick="showMessage('Simulating: Viewing Full Audit Log...', 'info')">View Audit Log</button>
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors ml-2" onclick="showMessage('Simulating: Monitoring SAP PCC Alerts...', 'info')">Monitor PCC Alerts</button>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-800 mb-4">Integration Setup</h3>
+                    <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm">
+                        <p class="text-slate-600 mb-4">Configure and test connections with external systems like accounting software, ATS, and time tracking.</p>
+                        <button class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors" onclick="showMessage('Simulating: Adding New Integration...', 'info')">Add Integration</button>
+                        <button class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors ml-2" onclick="showMessage('Simulating: Testing All Connections...', 'info')">Test Connections</button>
+                    </div>
+                `
+            },
+            {
+                id: "hat-book-index",
+                title: "HAT Book Index: UI Elements",
+                icon: "📚",
+                description: "A comprehensive reference of all observed UI buttons, tabs, dropdowns, and keyboard shortcuts across leading global payroll systems, detailing their functions and routes. This provides atom-level verification.",
+                content: `
+                    <h3 class="text-xl font-semibold text-slate-800 mb-4">Filter & Search</h3>
+                    <div class="mb-6 flex flex-wrap gap-2">
+                        <input type="text" id="buttonSearch" placeholder="Search buttons..." class="p-2 border border-slate-300 rounded-md flex-grow focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <select id="systemFilter" class="p-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <option value="">All Systems</option>
+                            <option value="ADP Workforce Now">ADP Workforce Now</option>
+                            <option value="Workday">Workday</option>
+                            <option value="SAP SuccessFactors">SAP SuccessFactors</option>
+                            <option value="Deel">Deel</option>
+                            <option value="Oracle Fusion Cloud">Oracle Fusion Cloud</option>
+                            <option value="FAA Omni-Payroll">FAA Omni-Payroll</option>
+                            <option value="Generic">Generic</option>
+                        </select>
+                        <select id="categoryFilter" class="p-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <option value="">All Categories</option>
+                            <option value="Navigation">Navigation</option>
+                            <option value="Reporting">Reporting</option>
+                            <option value="Admin">Admin</option>
+                            <option value="ESS">ESS</option>
+                            <option value="Payroll Processing">Payroll Processing</option>
+                            <option value="Data Interaction">Data Interaction</option>
+                            <option value="Support">Support</option>
+                            <option value="Customization">Customization</option>
+                            <option value="External Link">External Link</option>
+                            <option value="Keyboard Shortcut">Keyboard Shortcut</option>
+                            <option value="Form Action">Form Action</option>
+                            <option value="Data Management">Data Management</option>
+                            <option value="Employee Management">Employee Management</option>
+                            <option value="Benefits">Benefits</option>
+                            <option value="Workflow">Workflow</option>
+                            <option value="Document Management">Document Management</option>
+                            <option value="Authentication">Authentication</option>
+                            <option value="Actions">Actions</option>
+                            <option value="Chat Interface">Chat Interface</option>
+                            <option value="Section">Section</option>
+                            <option value="Configuration">Configuration</option>
+                            <option value="Monitoring">Monitoring</option>
+                            <option value="Integration">Integration</option>
+                            <option value="Financial Analysis">Financial Analysis</option>
+                            <option value="Tax Form">Tax Form</option>
+                            <option value="Process Detail">Process Detail</option>
+                            <option value="AI/ML Integration">AI/ML Integration</option>
+                            <option value="Contract Management">Contract Management</option>
+                            <option value="Tasks">Tasks</option>
+                        </select>
+                    </div>
+                    <div id="buttonLibraryContent" class="space-y-4">
+                        <!-- Buttons will be dynamically loaded here -->
+                    </div>
+                `
+            },
+            {
+                id: "global-brands",
+                title: "FAA Global Brands",
+                icon: "🌐",
+                description: "Explore the vast ecosystem of FAA brands and their interconnected sub-nodes. This section provides an overview of the Brand Bloodline and IP Sovereignty.",
+                content: `
+                    <h3 class="text-xl font-semibold text-slate-800 mb-4">FAA Brand Ecosystem Overview</h3>
+                    <p class="text-slate-600 mb-6">The FAA™ Omni-Payroll Global Challenger integrates with a vast ecosystem of 6,612+ verified brands, each an Atom-Level™ sovereign entity. This section provides a glimpse into the Brand Bloodline and IP Sovereignty principles.</p>
+                    <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm mb-6">
+                        <input type="text" id="brandSearch" placeholder="Search brands..." class="w-full p-2 border border-slate-300 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <div id="brandList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Brand items will be dynamically loaded here -->
+                        </div>
+                    </div>
+                    <h4 class="font-semibold text-slate-800 mb-2">Key Brand Categories</h4>
+                    <ul class="list-disc pl-5 space-y-1 text-slate-700">
+                        <li>Flagship & System Brands (e.g., FAA Payroll™, OmniKey™, MONSTER OMNI™)</li>
+                        <li>Sector-Specific Brands (e.g., Food, Soil & Farming, Logistics & Packaging, AI, Logic & Grid Systems)</li>
+                        <li>Total Verified Brands: 6,612+</li>
+                    </ul>
+                `,
+                data: [
+                    { name: "FAA Payroll™", category: "Flagship", description: "Core System: Real-time sovereign payroll, quantum compensation.", details: "The central nervous system for all FAA payroll operations globally, ensuring atom-level accuracy and compliance across diverse jurisdictions. Features quantum compensation protocols and real-time ledger synchronization." },
+                    { name: "OmniKey™", category: "Flagship", description: "All-in-One Device: Payment, identity, licensing, access, ledger.", details: "A universal digital key providing seamless access across the FAA Cosmogrid. Integrates payment processing, identity verification, licensing, and secure ledger access for all authorized entities." },
+                    { name: "MONSTER OMNI™", category: "Flagship", description: "God-Level Brand Node: Crypto system rewrite, sovereign economic shield.", details: "The pinnacle of FAA's technological and economic sovereignty. A foundational crypto system designed to rewrite global economic paradigms, offering unparalleled security and an impenetrable economic shield for all FAA-linked operations." },
+                    { name: "Seadva™", category: "Commercial", description: "Core+ Commercial-grade, Immutable food traceability.", details: "Ensures end-to-end traceability for food products, leveraging immutable ledger technology to guarantee authenticity, origin, and quality from farm to consumer. Critical for global food supply chain integrity." },
+                    { name: "HotStack™", category: "Commercial", description: "Quick-Site Creator + Hosting Engine.", details: "A rapid development and hosting platform for creating secure, high-performance microsites and web applications within the FAA ecosystem. Powers streamlined digital presence for various FAA brands and partners." },
+                    { name: "AgriCore", category: "Food, Soil & Farming", description: "Core brand for agricultural operations. Nodes: SoilSync™, CropTrack™.", details: "Manages and optimizes agricultural processes, from soil health monitoring (SoilSync™) to crop yield tracking (CropTrack™), ensuring sustainable and efficient food production across FAA's agricultural ventures." },
+                    { name: "CrateLogic™", category: "Logistics & Packaging", description: "Core brand for logistics. Nodes: BoxNode™, CrateMap™.", details: "Streamlines global logistics and supply chain management. Utilizes BoxNode™ for intelligent packaging and CrateMap™ for optimized routing and real-time cargo tracking." },
+                    { name: "EduNest™", category: "Youth & Education", description: "Core brand for education. Nodes: LearnNode, ScrollSeed.", details: "A comprehensive educational platform fostering learning and knowledge dissemination. LearnNode provides adaptive learning paths, while ScrollSeed ensures secure and verifiable academic credentials." },
+                    { name: "OmniQR™", category: "Webless Tech & Nodes", description: "Core brand for QR-based tech. Nodes: QRNode, YieldPing.", details: "Specializes in advanced QR code technologies for offline and decentralized applications. QRNode enables secure data exchange, and YieldPing provides real-time asset verification without traditional web infrastructure." },
+                    { name: "MedVault™", category: "Health & Hygiene", description: "Core brand for health data. Nodes: ScanID, PatientDrop.", details: "A highly secure, immutable vault for sensitive health and hygiene data. ScanID provides instant, privacy-preserving identity verification, and PatientDrop ensures secure, on-demand data access for authorized medical personnel." },
+                    { name: "BuildNest™", category: "Housing & Infrastructure", description: "Core brand for construction. Nodes: PlotVault, GridPermit.", details: "Manages and optimizes large-scale construction and infrastructure projects. PlotVault secures land registry and property data, while GridPermit streamlines regulatory approvals and project timelines." },
+                    { name: "FrameCast™", category: "Motion, Media & Sonic", description: "Core brand for media. Nodes: VaultScene, MediaNode.", details: "Powers the creation, distribution, and secure management of motion, media, and sonic content. VaultScene ensures content authenticity and rights management, and MediaNode optimizes streaming and delivery across the Cosmogrid." },
+                    { name: "OmniLogic™", category: "AI, Logic & Grid Systems", description: "Core brand for AI logic. Nodes: LogicRoot, VaultPath.", details: "Develops and deploys advanced AI and machine learning models across the FAA ecosystem. LogicRoot provides foundational AI algorithms, and VaultPath ensures secure, auditable AI decision-making and data processing." },
+                    { name: "Banimal™", category: "Retail, Vendor & Trade", description: "Core brand for retail. Nodes: ClanMesh, VendorQR.", details: "Revolutionizes retail and vendor management with decentralized trade solutions. ClanMesh facilitates secure peer-to-peer commerce, and VendorQR enables instant product verification and supply chain transparency." },
+                    { name: "LedgerNest™", category: "Professional Services", description: "Core brand for accounting. Nodes: LedgerCore, VaultTrack.", details: "Offers immutable accounting and financial ledger services. LedgerCore provides a secure, auditable financial record system, and VaultTrack ensures real-time tracking of all financial transactions within the FAA Cosmogrid." }
+                ]
+            },
+            {
+                id: "api-integrations",
+                title: "API Key Integrations & Sovereign Bridges",
+                icon: "🔗",
+                description: "Direct access glyphs connecting the FAA™ Cosmogrid to external, legacy systems, enabling data flow, payment processing, and enhanced AI capabilities. Keys are managed securely and not displayed.",
+                content: `
+                    <h3 class="text-xl font-semibold text-slate-800 mb-4">External System Connections</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-slate-200 rounded-lg shadow-sm">
+                            <thead>
+                                <tr class="bg-slate-100 text-left text-sm font-semibold text-slate-700">
+                                    <th class="py-3 px-4 border-b border-slate-200">API/Service</th>
+                                    <th class="py-3 px-4 border-b border-slate-200">Embedded Locations</th>
+                                    <th class="py-3 px-4 border-b border-slate-200">Actions/Functions</th>
+                                    <th class="py-3 px-4 border-b border-slate-200">Status</th>
+                                    <th class="py-3 px-4 border-b border-slate-200">Management</th>
+                                </tr>
+                            </thead>
+                            <tbody id="apiIntegrationTableBody">
+                                <!-- API data will be dynamically loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-sm text-slate-500 mt-4">Note: Key/Credential Details are securely managed within the FAA™ Cosmogrid and are not displayed here for security purposes.</p>
+                    <button class="mt-6 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors" onclick="showMessage('Simulating: Launching New Integration Wizard...', 'info')">Add New Integration</button>
+                    <button class="mt-6 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors ml-2" onclick="showMessage('Simulating: Running All Connection Tests...', 'info')">Test All Connections</button>
+                `,
+                data: [
+                    {
+                        service: "PayPal (SDK)",
+                        embedded_locations: "Various checkout scrolls, main-app, fruitful-dashboard-v4, global_checkout_form",
+                        actions: "Secure Checkout, Automated Payouts, Banimal™ Loop Plan",
+                        status: "Active",
+                        management_actions: [
+                            {name: "Test Connection", action: "Tests PayPal SDK connection"},
+                            {name: "Deactivate", action: "Deactivates PayPal SDK integration"}
+                        ]
+                    },
+                    {
+                        service: "PayPal (Hosted Button) ((Starter Package))",
+                        embedded_locations: "HotStack™, Various landing pages, main-app, fruitful-dashboard-v4",
+                        actions: "Secure Checkout, Automated Payouts",
+                        status: "Active",
+                        management_actions: [
+                            {name: "Test Connection", action: "Tests PayPal Hosted Button (Starter) connection"},
+                            {name: "Deactivate", action: "Deactivates PayPal Hosted Button (Starter) integration"}
+                        ]
+                    },
+                    {
+                        service: "Google Maps",
+                        embedded_locations: "Location-based microsites, main-app, fruitful-dashboard-v4",
+                        actions: "Visualizing Vendor Genome ID™ deployment, Mapping Crate Sync events, Optimizing logistics routes",
+                        status: "Active",
+                        management_actions: [
+                            {name: "Test Connection", action: "Tests Google Maps API connection"},
+                            {name: "Deactivate", action: "Deactivates Google Maps integration"}
+                        ]
+                    },
+                    {
+                        service: "Spotify (Access Token)",
+                        embedded_locations: "Music/media scrolls, main-app, fruitful-dashboard-v4",
+                        actions: "Music Aura Systems, Motion/Media/Sonic Sector, EchoSynth™ operations",
+                        status: "Active",
+                        management_actions: [
+                            {name: "Test Connection", action: "Tests Spotify API connection"},
+                            {name: "Deactivate", action: "Deactivates Spotify integration"}
+                        ]
+                    },
+                    {
+                        service: "Gemini AI",
+                        embedded_locations: "AI-powered insights scrolls, Baobab Terminal, main-app, fruitful-dashboard-v4",
+                        actions: "Compensation AI Forecast Node, Smart Salary Optimizer™, AI Compliance Monitoring, CosmoGenesis SIM CITY, Monster Omni™",
+                        status: "Active",
+                        management_actions: [
+                            {name: "Test Connection", action: "Tests Gemini AI connection"},
+                            {name: "Deactivate", action: "Deactivates Gemini AI integration"}
+                        ]
+                    },
+                    {
+                        service: "Xero (Client ID)",
+                        embedded_locations: "Accounting/payroll integration scrolls, main-app",
+                        actions: "Legacy System Sync, Audit Trail Integration, Partner Sync & NGO Logic",
+                        status: "Active",
+                        management_actions: [
+                            {name: "Test Connection", action: "Tests Xero Client ID connection"},
+                            {name: "Deactivate", action: "Deactivates Xero Client ID integration"}
+                        ]
+                    },
+                    {
+                        service: "Xero (Webhook Key)",
+                        embedded_locations: "Accounting/payroll integration scrolls, main-app",
+                        actions: "Secure, authenticated communication for real-time updates",
+                        status: "Active",
+                        management_actions: [
+                            {name: "Test Connection", action: "Tests Xero Webhook connection"},
+                            {name: "Deactivate", action: "Deactivates Xero Webhook integration"}
+                        ]
+                    },
+                     {
+                        service: "Salesforce (CRM)",
+                        embedded_locations: "Sales & CRM insights, main-app",
+                        actions: "Automated Lead-to-Payroll Conversion, Sales Commission Sync",
+                        status: "Active",
+                        management_actions: [
+                            {name: "Test Connection", action: "Tests Salesforce CRM connection"},
+                            {name: "Deactivate", action: "Deactivates Salesforce CRM integration"}
+                        ]
+                    },
+                    {
+                        service: "Stripe (Payment Gateway)",
+                        embedded_locations: "Global Payments, Subscription Management",
+                        actions: "Direct Payouts, Automated Billing, Micro-transactions",
+                        status: "Active",
+                        management_actions: [
+                            {name: "Test Connection", action: "Tests Stripe Payment Gateway connection"},
+                            {name: "Deactivate", action: "Deactivates Stripe integration"}
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        // Data for the HAT Book Index (UI Elements)
+        const buttonLibraryData = [
+            // FAA Omni-Payroll Specific Elements (New additions based on blueprint expansion)
+            { name: "Run AI-Powered Calculation Audit", system: "FAA Omni-Payroll", category: "Payroll Processing", type: "Button", context_detail: "Payroll Processing Workflow (Calculation Step)", function: "Initiates an AI-driven audit of payroll calculations for anomalies", route_or_action: "Triggers AI audit" },
+            { name: "View AI Anomaly Report", system: "FAA Omni-Payroll", category: "Reporting/Audit", type: "Button", context_detail: "Payroll Processing Workflow (Review & Approval Step)", function: "Displays detailed report of detected payroll anomalies", route_or_action: "Opens anomaly report" },
+            { name: "Submit for Final Approval", system: "FAA Omni-Payroll", category: "Workflow", type: "Button", context_detail: "Payroll Processing Workflow (Review & Approval Step)", function: "Sends payroll for final executive approval", route_or_action: "Sends for approval" },
+            { name: "Initiate Global Tax Remittance", system: "FAA Omni-Payroll", category: "Payroll Processing", type: "Button", context_detail: "Payroll Processing Workflow (Submission & Funding Step)", function: "Triggers automated remittance of taxes to relevant global authorities", route_or_action: "Automates tax remittance" },
+            { name: "Archive Payroll Records", system: "FAA Omni-Payroll", category: "Document Management", type: "Button", context_detail: "Payroll Processing Workflow (Post-Processing Step)", function: "Initiates long-term secure archiving of payroll data for compliance", route_or_action: "Archives data" },
+            { name: "Launch Smart Onboarding", system: "FAA Omni-Payroll", category: "Employee Management", type: "Button", context_detail: "Employee Management", function: "Launches a streamlined workflow for new hire integration", route_or_action: "Initiates onboarding workflow" },
+            { name: "Review Approvals", system: "FAA Omni-Payroll", category: "Tasks", type: "Button", context_detail: "Dashboard Overview (Quick Actions)", function: "Navigates to a list of pending payroll approvals", route_or_action: "Opens approval queue" },
+            { name: "Run AI Anomaly Detection", system: "FAA Omni-Payroll", category: "AI/ML Integration", type: "Button", context_detail: "Dashboard Overview (Quick Actions)", function: "Initiates an AI scan for unusual payroll patterns or discrepancies", route_or_action: "Triggers AI scan" },
+            { name: "Global Headcount Report", system: "FAA Omni-Payroll", category: "Reporting", type: "Report Name (Implied Link)", context_detail: "Reporting & Analytics (Standard Reports)", function: "Generates a report on total employee count across all global entities", route_or_action: "Generates headcount report" },
+            { name: "Benefit Enrollment Summary", system: "FAA Omni-Payroll", category: "Reporting", type: "Report Name (Implied Link)", context_detail: "Reporting & Analytics (Standard Reports)", function: "Generates a summary of employee benefit enrollments", route_or_action: "Generates benefit report" },
+            { name: "Add Field (Custom Report Builder)", system: "FAA Omni-Payroll", category: "Reporting", type: "Button", context_detail: "Reporting & Analytics (Custom Report Builder)", function: "Adds a selected data field to the custom report", route_or_action: "Adds field to report canvas" },
+            { name: "Manage Schedules (Reports)", system: "FAA Omni-Payroll", category: "Admin", type: "Button", context_detail: "Reporting & Analytics (Scheduled Reports)", function: "Manages the scheduling and distribution of automated reports", route_or_action: "Opens report scheduling interface" },
+            { name: "Payroll Calendars (Admin)", system: "FAA Omni-Payroll", category: "Admin", type: "Link", context_detail: "Admin & Settings (System Configuration)", function: "Configures and manages payroll processing calendars", route_or_action: "Opens payroll calendar settings" },
+            { name: "Approval Workflows (Admin)", system: "FAA Omni-Payroll", category: "Admin", type: "Link", context_detail: "Admin & Settings (System Configuration)", function: "Sets up and modifies payroll approval processes", route_or_action: "Opens approval workflow configuration" },
+            { name: "Add User (Admin)", system: "FAA Omni-Payroll", category: "Admin", type: "Button", context_detail: "Admin & Settings (User Management)", function: "Adds a new user account to the system", route_or_action: "Opens new user creation form" },
+            { name: "Manage Roles (Admin)", system: "FAA Omni-Payroll", category: "Admin", type: "Button", context_detail: "Admin & Settings (User Management)", function: "Manages user roles and permissions", route_or_action: "Opens role management interface" },
+            { name: "Add Integration (Admin)", system: "FAA Omni-Payroll", category: "Admin", type: "Button", context_detail: "Admin & Settings (Integration Setup)", function: "Adds a new external system integration", route_or_action: "Opens new integration wizard" },
+            { name: "Test Connections (Integrations)", system: "FAA Omni-Payroll", category: "Admin", type: "Button", context_detail: "Admin & Settings (Integration Setup)", function: "Tests the connectivity and data flow of configured integrations", route_or_action: "Initiates connection tests" },
+            { name: "Test Connection (API)", system: "FAA Omni-Payroll", category: "Integration", type: "Button", context_detail: "API Key Integrations Table", function: "Tests the connection for a specific API service", route_or_action: "Initiates connection test for API" },
+            { name: "Deactivate (API)", system: "FAA Omni-Payroll", category: "Integration", type: "Button", context_detail: "API Key Integrations Table", function: "Deactivates a specific API service integration", route_or_action: "Deactivates API integration" },
+            { name: "Add New Integration", system: "FAA Omni-Payroll", category: "Integration", type: "Button", context_detail: "API Key Integrations Page", function: "Launches a wizard to set up a new API integration", route_or_action: "Opens new integration wizard" },
+            { name: "Test All Connections", system: "FAA Omni-Payroll", category: "Integration", type: "Button", context_detail: "API Key Integrations Page", function: "Runs connection tests for all configured API integrations", route_or_action: "Initiates bulk connection tests" },
+            { name: "Explore (Brand)", system: "FAA Omni-Payroll", category: "Navigation", type: "Button", context_detail: "FAA Global Brands List", function: "Views detailed information about a specific FAA brand", route_or_action: "Opens brand detail modal" },
+            { name: "Global Compliance Checklist", system: "FAA Omni-Payroll", category: "Reporting/Compliance", type: "Report Name (Implied Link)", context_detail: "Reporting & Analytics (Audit & Compliance Reports)", function: "Generates a report outlining compliance status across all global regions", route_or_action: "Generates compliance checklist" },
+
+
+            // ADP Workforce Now Payroll
+            { name: "Employee Login", system: "ADP Workforce Now", category: "Authentication", type: "Link/Button", context_detail: "Login Page", function: "Provides access for employees", route_or_action: "Leads to employee login form" },
+            { name: "Administrator Login", system: "ADP Workforce Now", category: "Authentication", type: "Link/Button", context_detail: "Login Page", function: "Provides access for administrators", route_or_action: "Leads to administrator login form" },
+            { name: "Accountant Login", system: "ADP Workforce Now", category: "Authentication", type: "Link/Button", context_detail: "Login Page", function: "Provides access for accountants", route_or_action: "Leads to accountant login form" },
+            { name: "Register Here", system: "ADP Workforce Now", category: "Authentication", type: "Link/Button", context_detail: "Login Page", function: "Initiates new user registration", route_or_action: "Leads to multi-step registration process" },
+            { name: "Forgot Your User ID/Password?", system: "ADP Workforce Now", category: "Authentication", type: "Link/Button", context_detail: "Login Page", function: "Initiates user ID/password recovery", route_or_action: "Leads to security question challenge" },
+            { name: "People page", system: "ADP Workforce Now", category: "Navigation", type: "Link/Tab", context_detail: "Main Navigation", function: "Navigates to employee/contractor management", route_or_action: "Displays employee lists and related tasks" },
+            { name: "To-do list", system: "ADP Workforce Now", category: "Tasks", type: "Section/Widget", context_detail: "People page", function: "Displays pending tasks for users", route_or_action: "Shows tasks requiring attention" },
+            { name: "List of new workers who need to complete onboarding", system: "ADP Workforce Now", category: "Employee Management", type: "Section/List", context_detail: "People page", function: "Displays new hires for onboarding", route_or_action: "Clicking leads to new hire onboarding details" },
+            { name: "List of active employees and contractors", system: "ADP Workforce Now", category: "Employee Management", type: "Section/List", context_detail: "People page", function: "Displays current employees/contractors", route_or_action: "Clicking leads to individual employee profile" },
+            { name: "Add employees", system: "ADP Workforce Now", category: "Employee Management", type: "Button/Link", context_detail: "Employee Management", function: "Initiates new hire addition workflow", route_or_action: "Leads to new employee data entry/onboarding" },
+            { name: "Manage deductions", system: "ADP Workforce Now", category: "Payroll Processing", type: "Button/Link", context_detail: "Payroll Run Interface", function: "Configures and syncs payroll deductions", route_or_action: "Leads to deduction setup/management screen" },
+            { name: "Run reports", system: "ADP Workforce Now", category: "Reporting", type: "Button/Link", context_detail: "Payroll Module", function: "Accesses reporting capabilities", route_or_action: "Leads to reporting dashboard/selection" },
+            { name: "Download now", system: "ADP Workforce Now", category: "Document Management", type: "Button", context_detail: "Payroll Resources Section", function: "Downloads linked documents (e.g., reports, guides)", route_or_action: "Initiates file download" },
+            { name: "Start demo", system: "ADP Workforce Now", category: "External Link", type: "Button", context_detail: "Interactive Payroll Process Tabs", function: "Launches self-guided demo", route_or_action: "Initiates interactive product demonstration" },
+            { name: "Add employees (Tab)", system: "ADP Workforce Now", category: "Navigation", type: "Tab/Link", context_detail: "Interactive Payroll Process Tabs", function: "Displays content about adding employees", route_or_action: "Shows features for employee addition" },
+            { name: "Add deductions (Tab)", system: "ADP Workforce Now", category: "Navigation", type: "Tab/Link", context_detail: "Interactive Payroll Process Tabs", function: "Displays content about managing deductions", route_or_action: "Shows features for deduction management" },
+            { name: "Run reports (Tab)", system: "ADP Workforce Now", category: "Navigation", type: "Tab/Link", context_detail: "Interactive Payroll Process Tabs", function: "Displays content about reporting", route_or_action: "Shows features for reporting" },
+            { name: "Improve accuracy (Tab)", system: "ADP Workforce Now", category: "Navigation", type: "Tab/Link", context_detail: "Interactive Payroll Process Tabs", function: "Displays content about error detection", route_or_action: "Shows features for accuracy improvement" },
+            { name: "See data in one place (Tab)", system: "ADP Workforce Now", category: "Navigation", type: "Tab/Link", context_detail: "Interactive Payroll Process Tabs", function: "Displays content about dashboard view", route_or_action: "Shows features for consolidated data view" },
+            { name: "Empower employees (Tab)", system: "ADP Workforce Now", category: "Navigation", type: "Tab/Link", context_detail: "Interactive Payroll Process Tabs", function: "Displays content about self-service", route_or_action: "Shows features for employee self-service" },
+            { name: "Schedule a custom demo", system: "ADP Workforce Now", category: "External Link", type: "Button", context_detail: "Payroll Module", function: "Requests personalized product demonstration", route_or_action: "Leads to demo request form" },
+            { name: "AI-powered chat", system: "ADP Workforce Now", category: "Support", type: "Icon/Interface", context_detail: "Employee Self-Service Portal", function: "Provides quick answers via AI", route_or_action: "Opens chat window for queries" },
+            { name: "Electronically sign, save, and submit I-9 forms", system: "ADP Workforce Now", category: "Form Action", type: "Buttons", context_detail: "Onboarding Workflow", function: "Completes and submits I-9 forms digitally", route_or_action: "Triggers e-signature and submission" },
+            { name: "Get Pricing", system: "ADP Workforce Now", category: "External Link", type: "Button", context_detail: "Various pages", function: "Initiates a price quote request", route_or_action: "Leads to pricing inquiry form" },
+            { name: "Launch Self-Guided Demo", system: "ADP Workforce Now", category: "External Link", type: "Button", context_detail: "Various pages", function: "Starts an interactive product demo", route_or_action: "Initiates product demonstration" },
+            { name: "Payroll", system: "ADP Workforce Now", category: "Navigation", type: "Link", context_detail: "Main Navigation", function: "Navigates to main payroll overview page", route_or_action: "Leads to general payroll information" },
+            { name: "Midsized to Enterprise Payroll (50-1,000+ Employees)", system: "ADP Workforce Now", category: "Navigation", type: "Link", context_detail: "Payroll Submenu", function: "Directs to payroll for specific company sizes", route_or_action: "Leads to tailored payroll solutions" },
+            { name: "Compare Packages", system: "ADP Workforce Now", category: "External Link", type: "Link/Button", context_detail: "Payroll Submenu / Footer", function: "Compares different payroll service packages", route_or_action: "Leads to package comparison page" },
+            { name: "Request a Custom Demo", system: "ADP Workforce Now", category: "External Link", type: "Button", context_detail: "Payroll Built for Your Business Section", function: "Requests personalized product demo", route_or_action: "Leads to demo request form" },
+            { name: "Talk to Sales — 800-225-5237", system: "ADP Workforce Now", category: "Support", type: "Link/Text", context_detail: "Header, Main Content, Footer", function: "Provides direct phone contact for sales", route_or_action: "Initiates phone call" },
+            { name: "Sync deductions to payroll", system: "ADP Workforce Now", category: "Payroll Processing", type: "Feature (Implied Button)", context_detail: "Deduction Management", function: "Ensures accuracy for federal, state, and local taxes", route_or_action: "Deduction Withholding" },
+            { name: "Automatically add new hires from your applicant tracking tool", system: "ADP Workforce Now", category: "Integration", type: "Feature (Implied Button)", context_detail: "Onboarding Workflow", function: "Integrates new hire data from applicant tracking to payroll", route_or_action: "Employee Onboarding" },
+            { name: "Sync payroll with industry practices", system: "ADP Workforce Now", category: "Payroll Processing", type: "Feature (Implied Button)", context_detail: "Payroll Module", function: "Reconciles multiple rates, creates certified reports, allocates compensation", route_or_action: "Payroll Processing" },
+            { name: "Simplify global payroll", system: "ADP Workforce Now", category: "Payroll Processing", type: "Feature (Implied Button)", context_detail: "Payroll Module", function: "Manages payroll for global workforce, breaks disconnected systems", route_or_action: "Global Payroll Management" },
+            { name: "Automated general ledger entries you can import into your general accounting program", system: "ADP Workforce Now", category: "Payroll Processing", type: "Feature (Implied Button)", context_detail: "Payroll Run Interface", function: "Automates general ledger entries for import", route_or_action: "Post-Payroll Accounting" },
+            { 
+                name: "Tax Reports", 
+                system: "ADP Workforce Now", 
+                category: "Reporting", 
+                type: "Dropdown", 
+                context_detail: "Reporting Module", 
+                function: "Selects tax-related reports", 
+                route_or_action: "Leads to specific tax report generation",
+                dropdownOptions: [
+                    { name: "Online Tax Forms", function: "Generates online tax forms", route_or_action: "/adp/reports/tax/online-forms", report_name: "Online Tax Forms" },
+                    { name: "Tax Compliance", function: "Provides tax compliance overview", route_or_action: "/adp/reports/tax/compliance", report_name: "Tax Compliance Report" }
+                ]
+            },
+            { 
+                name: "Payroll Summary", 
+                system: "ADP Workforce Now", 
+                category: "Reporting", 
+                type: "Dropdown", 
+                context_detail: "Reporting Module", 
+                function: "Selects payroll summary reports", 
+                route_or_action: "Leads to specific payroll summary report generation",
+                dropdownOptions: [
+                    { name: "Payroll Register", function: "Generates payroll register report", route_or_action: "/adp/reports/payroll/register", report_name: "Payroll Register" },
+                    { name: "Payroll Details", function: "Generates detailed payroll report", route_or_action: "/adp/reports/payroll/details", report_name: "Payroll Details Report" },
+                    { name: "Payroll Liability", function: "Generates payroll liability report", route_or_action: "/adp/reports/payroll/liability", report_name: "Payroll Liability Report" }
+                ]
+            },
+            { 
+                name: "Audit Reports", 
+                system: "ADP Workforce Now", 
+                category: "Reporting", 
+                type: "Dropdown", 
+                context_detail: "Reporting Module", 
+                function: "Selects audit-related reports", 
+                route_or_action: "Leads to specific audit report generation",
+                dropdownOptions: [
+                    { name: "Error Detection Report", function: "Generates report on detected payroll errors", route_or_action: "/adp/reports/audit/error-detection", report_name: "Error Detection Report" }
+                ]
+            },
+            { 
+                name: "Employee Compensation", 
+                system: "ADP Workforce Now", 
+                category: "Reporting", 
+                type: "Dropdown", 
+                context_detail: "Reporting Module", 
+                function: "Selects employee compensation reports", 
+                route_or_action: "Leads to specific compensation report generation",
+                dropdownOptions: [
+                    { name: "Employee Pay Data and History", function: "Generates report on employee pay data and history", route_or_action: "/adp/reports/employee/pay-history", report_name: "Employee Pay Data and History" }
+                ]
+            },
+            { 
+                name: "Industry-Specific", 
+                system: "ADP Workforce Now", 
+                category: "Reporting", 
+                type: "Dropdown", 
+                context_detail: "Reporting Module (via 'Sync payroll with industry practices')", 
+                function: "Selects industry-specific compliance reports", 
+                route_or_action: "Leads to specific industry report generation",
+                dropdownOptions: [
+                    { name: "Certified Payroll Reports", function: "Generates certified payroll reports", route_or_action: "/adp/reports/industry/certified-payroll", report_name: "Certified Payroll Reports" }
+                ]
+            },
+
+            // Workday Payroll
+            { name: "Play Demo (2:05)", system: "Workday", category: "External Link", type: "Button", context_detail: "Payroll Management System page", function: "Initiates a video demonstration", route_or_action: "Plays video demo" },
+            { name: "Read Datasheet", system: "Workday", category: "Document Management", type: "Button", context_detail: "Payroll Management System page", function: "Provides access to detailed product datasheet", route_or_action: "Opens PDF datasheet" },
+            { name: "Contact Sales", system: "Workday", category: "External Link", type: "Button", context_detail: "Various pages", function: "Initiates contact with sales team", route_or_action: "Leads to sales inquiry form" },
+            { name: "Payroll Management", system: "Workday", category: "Navigation", type: "Link", context_detail: "Left Sidebar Navigation", function: "Navigates to core payroll processing features", route_or_action: "Leads to payroll management overview" },
+            { name: "Payroll Reporting and Analytics", system: "Workday", category: "Navigation", type: "Link", context_detail: "Left Sidebar Navigation", function: "Navigates to reporting and analytical tools", route_or_action: "Leads to reporting/analytics section" },
+            { name: "Employee Self Service", system: "Workday", category: "Navigation", type: "Link", context_detail: "Left Sidebar Navigation", function: "Navigates to employee-facing payroll features", route_or_action: "Leads to employee self-service portal" },
+            { name: "Global Payroll & Integrations", system: "Workday", category: "Navigation", type: "Link", context_detail: "Left Sidebar Navigation", function: "Navigates to global payroll and integration details", route_or_action: "Leads to global payroll information" },
+            { name: "Workday VS. HR Payroll Systems", system: "Workday", category: "Navigation", type: "Link", context_detail: "Left Sidebar Navigation", function: "Navigates to comparison page", route_or_action: "Leads to comparison of Workday vs. other systems" },
+            { name: "Customer Stories", system: "Workday", category: "Navigation", type: "Link", context_detail: "Left Sidebar Navigation", function: "Navigates to customer testimonials/case studies", route_or_action: "Leads to customer success stories" },
+            { name: "Resource Library", system: "Workday", category: "Navigation", type: "Link", context_detail: "Left Sidebar Navigation", function: "Navigates to broader library of payroll resources", route_or_action: "Leads to resource library" },
+            { name: "All Customer Stories", system: "Workday", category: "Navigation", type: "Link", context_detail: "Customer Stories Section", function: "Navigates to comprehensive customer stories page", route_or_action: "Leads to full list of customer stories" },
+            { name: "Continuous calculations", system: "Workday", category: "Payroll Processing", type: "Feature (Implied Button)", context_detail: "KEY CAPABILITIES list", function: "Enables real-time payroll calculations", route_or_action: "System performs calculations continuously" },
+            { name: "One-click batch mode calculations", system: "Workday", category: "Payroll Processing", type: "Feature (Implied Button)", context_detail: "KEY CAPABILITIES list", function: "Executes batch payroll calculations with single action", route_or_action: "Triggers batch calculation" },
+            { name: "Single-click report export", system: "Workday", category: "Reporting", type: "Feature (Implied Button)", context_detail: "KEY CAPABILITIES list", function: "Exports reports to various formats easily", route_or_action: "Exports current report view" },
+            { name: "AI payroll prompt recommendations", system: "Workday", category: "AI/ML Integration", type: "Feature (Implied Interface)", context_detail: "KEY CAPABILITIES list", function: "Provides AI-driven suggestions for payroll", route_or_action: "Offers AI-assisted guidance" },
+            { name: "Automatic compliance updates", system: "Workday", category: "Compliance", type: "Feature (Implied Interface)", context_detail: "KEY CAPABILITIES list", function: "Ensures system compliance with latest regulations", route_or_action: "System updates compliance rules automatically" },
+            { name: "How does Workday ensure payroll compliance...?", system: "Workday", category: "Support", type: "Expandable Question", context_detail: "FREQUENTLY ASKED QUESTIONS", function: "Reveals answer to compliance query", route_or_action: "Expands/collapses answer section" },
+            { name: "Can Workday Payroll help with tax calculations...?", system: "Workday", category: "Support", type: "Expandable Question", context_detail: "FREQUENTLY ASKED QUESTIONS", function: "Reveals answer to tax calculation query", route_or_action: "Expands/collapses answer section" },
+            { name: "How does payroll auditing work...?", system: "Workday", category: "Support", type: "Expandable Question", context_detail: "FREQUENTLY ASKED QUESTIONS", function: "Reveals answer to auditing query", route_or_action: "Expands/collapses answer section" },
+            { name: "What are the benefits of automating payroll...?", system: "Workday", category: "Support", type: "Expandable Question", context_detail: "FREQUENTLY ASKED QUESTIONS", function: "Reveals answer to automation benefits query", route_or_action: "Expands/collapses answer section" },
+            { name: "Explore All Resources", system: "Workday", category: "Navigation", type: "Button", context_detail: "RESOURCES section", function: "Navigates to comprehensive resource library", route_or_action: "Leads to full resource library" },
+            { name: "eBook Evolve and Thrive: Rethinking Global Payroll", system: "Workday", category: "Document Management", type: "Link", context_detail: "RESOURCES section", function: "Opens eBook on global payroll", route_or_action: "Opens eBook" },
+            { name: "Web Page Service Bureaus vs. Workday", system: "Workday", category: "External Link", type: "Link", context_detail: "RESOURCES section", function: "Opens comparison page", route_or_action: "Opens comparison page" },
+            { name: "Infographic Payroll Heroes to the Rescue", system: "Workday", category: "Document Management", type: "Link", context_detail: "RESOURCES section", function: "Opens infographic", route_or_action: "Opens infographic" },
+            { name: "Whitepaper Moving Beyond Transactional HR and Payroll", system: "Workday", category: "Document Management", type: "Link", context_detail: "RESOURCES section", function: "Opens whitepaper", route_or_action: "Opens whitepaper" },
+            { name: "Pay Cycle Command Center", system: "Workday", category: "Dashboard", type: "Dashboard", context_detail: "Payroll Processing", function: "Central hub for managing payroll cycles", route_or_action: "Displays payroll cycle status and actions" },
+            { name: "Year-End Dashboard", system: "Workday", category: "Dashboard", type: "Dashboard", context_detail: "Year-End Processing", function: "Central hub for year-end payroll tasks", route_or_action: "Displays year-end status and forms" },
+            { name: "Payroll Audit Exception Summary", system: "Workday", category: "Reporting/Audit", type: "Report/Dashboard", context_detail: "Auditing & Compliance", function: "Summarizes payroll audit exceptions in real-time", route_or_action: "Displays list of exceptions" },
+            { name: "Payroll Audit Exceptions Report", system: "Workday", category: "Reporting/Audit", type: "Report/Link", context_detail: "Auditing & Compliance", function: "Provides detailed payroll audit exceptions", route_or_action: "Generates detailed audit report" },
+            { name: "Payroll Accounting Report", system: "Workday", category: "Reporting/Financial Analysis", type: "Report/Link", context_detail: "Financial Analysis", function: "Provides drill-down analysis into payroll accounting", route_or_action: "Generates financial payroll report" },
+            { name: "Payroll Compliance Updates Dashboard", system: "Workday", category: "Dashboard/Compliance", type: "Dashboard", context_detail: "Compliance Management", function: "Provides insight into compliance changes", route_or_action: "Displays compliance updates and actions" },
+            { name: "Employee Self-Service Dashboard", system: "Workday", category: "Dashboard/ESS", type: "Dashboard", context_detail: "Employee Self-Service", function: "Central hub for employee HR/payroll data", route_or_action: "Displays employee HR/payroll information" },
+            { name: "Mobile Payslips", system: "Workday", category: "ESS", type: "Feature (Implied Button)", context_detail: "Employee Self-Service", function: "Allows viewing payslips on mobile devices", route_or_action: "Displays payslip on mobile" },
+            { name: "Employee Pay Self-Service Dashboard", system: "Workday", category: "Dashboard/ESS", type: "Dashboard", context_detail: "Employee Self-Service", function: "Enables comparing payslips over time", route_or_action: "Displays payslip comparison tool" },
+            { name: "Model My Pay Feature", system: "Workday", category: "ESS", type: "Interactive Tool", context_detail: "Employee Self-Service", function: "Estimates pay based on hypothetical changes", route_or_action: "Provides pay estimation interface" },
+            { name: "Pay On-Demand Feature", system: "Workday", category: "ESS", type: "Interactive Tool", context_detail: "Employee Self-Service", function: "Enables requesting early access to wages", route_or_action: "Provides early wage request interface" },
+            { name: "Withholding Elections", system: "Workday", category: "ESS", type: "Link/Tab", context_detail: "Employee Self-Service", function: "Allows employees to update tax withholding", route_or_action: "Leads to tax withholding settings" },
+            { name: "Payment Elections", system: "Workday", category: "ESS", type: "Link/Tab", context_detail: "Employee Self-Service", function: "Allows employees to distribute payments", route_or_action: "Leads to payment distribution settings" },
+            { name: "New Payslip Printing Election prompt", system: "Workday", category: "ESS", type: "Prompt", context_detail: "Employee Self-Service", function: "Displays options for payslip printing", route_or_action: "Shows payslip printing options" },
+            { name: "OK", system: "Workday", category: "Form Action", type: "Button", context_detail: "Various forms/prompts", function: "Confirms action or saves changes", route_or_action: "Saves changes or proceeds" },
+            { name: "Done", system: "Workday", category: "Form Action", type: "Button", context_detail: "Various forms/prompts", function: "Completes a task or closes a window", route_or_action: "Completes task or closes window" },
+            { name: "Export", system: "Workday", category: "Reporting", type: "Button", context_detail: "Report View", function: "Exports report to Excel or PDF", route_or_action: "Downloads report in selected format" },
+            { name: "Take action on a pay calculation result", system: "Workday", category: "Payroll Processing", type: "Button/Link", context_detail: "Pay Calculation Result View", function: "Initiates action related to a pay calculation", route_or_action: "Triggers specific action on calculation result" },
+            { name: "Configure specific earnings or deductions views", system: "Workday", category: "Admin/Security", type: "Interface (Implied)", context_detail: "Security/Admin Settings", function: "Controls visibility of pay data for security groups", route_or_action: "Leads to configuration of data visibility" },
+            { name: "Give input and view results", system: "Workday", category: "Collaboration", type: "Interface (Implied)", context_detail: "Payroll Collaboration", function: "Allows business partners to contribute to payroll", route_or_action: "Provides input/review interface for non-payroll users" },
+            { name: "Cloud Connect for Third-Party Payroll", system: "Workday", category: "Integration", type: "Feature (Implied Button)", context_detail: "Payroll Solutions", function: "Connects efficiently and securely to third-party payroll applications and global payroll providers", route_or_action: "Third-Party Payroll Integration" },
+            { name: "Integrates seamlessly with other Workday modules such as HR, finance and benefits", system: "Workday", category: "Integration", type: "Feature (Implied Interface)", context_detail: "System Overview", function: "Ensures efficient data flow across integrated modules", route_or_action: "Internal Module Integration" },
+            { name: "Single system for all your data related to HR, compensation, absence, time, and payroll", system: "Workday", category: "Data Management", type: "Feature (Implied Interface)", context_detail: "System Overview", function: "Unifies all related data within one platform", route_or_action: "Data Unification" },
+            { 
+                name: "Payroll Register", 
+                system: "Workday", 
+                category: "Reporting", 
+                type: "Dropdown Option", 
+                context_detail: "Reporting Module", 
+                function: "Generates Payroll Register report", 
+                route_or_action: "/workday/reports/payroll-register", 
+                report_name: "Payroll Register" 
+            },
+            { 
+                name: "Pay Calculation Results", 
+                system: "Workday", 
+                category: "Reporting", 
+                type: "Dropdown Option", 
+                context_detail: "Reporting Module", 
+                function: "Generates Pay Calculation Results report", 
+                route_or_action: "/workday/reports/pay-calculation-results", 
+                report_name: "Pay Calculation Results" 
+            },
+            { 
+                name: "Create Audit Report (Summary/Pay Group/Worker Level)", 
+                system: "Workday", 
+                category: "Reporting/Audit", 
+                type: "Dropdown Option", 
+                context_detail: "Reporting Module (Configure Reports)", 
+                function: "Creates a custom audit report", 
+                route_or_action: "Opens custom audit report builder", 
+                report_name: "Custom Audit Report" 
+            },
+            { 
+                name: "Form W-2", 
+                system: "Workday", 
+                category: "Tax Form", 
+                type: "Dropdown Option", 
+                context_detail: "Year-End Dashboard (Manage Tax Forms)", 
+                function: "Generates Form W-2", 
+                route_or_action: "/workday/year-end/form-w2", 
+                report_name: "Form W-2" 
+            },
+
+            // Deel Payroll
+            { name: "Organization Settings (gear) icon", system: "Deel", category: "Admin", type: "Icon", context_detail: "Deel Dashboard (top-right)", function: "Accesses organizational settings", route_or_action: "Leads to settings menu" },
+            { name: "Entities", system: "Deel", category: "Admin", type: "Link", context_detail: "Left Sidebar (under Organization & security)", function: "Navigates to entity management", route_or_action: "Displays list of entities" },
+            { name: "Create entity", system: "Deel", category: "Admin", type: "Button", context_detail: "Entities Page (upper-right)", function: "Initiates creation of a new legal entity", route_or_action: "Leads to new entity setup form" },
+            { name: "Mass Pay feature", system: "Deel", category: "Payroll Processing", type: "Button/Action", context_detail: "Payment Processing", function: "Processes payments for multiple payees at once", route_or_action: "Triggers bulk payment execution" },
+            { name: "Initiate contract termination", system: "Deel", category: "Contract Management", type: "Button/Action", context_detail: "Contract Management", function: "Begins the process of ending a contract", route_or_action: "Leads to contract termination options" },
+            { name: "Edit or update agreements", system: "Deel", category: "Contract Management", type: "Button/Action", context_detail: "Contract Management", function: "Allows modification of existing contracts", route_or_action: "Leads to contract amendment interface" },
+            { name: "Try Deel", system: "Deel", category: "External Link", type: "Button", context_detail: "Key Takeaways Section", function: "Encourages users to sign up for Deel", route_or_action: "Leads to sign-up/demo request" },
+            { name: "Learn more", system: "Deel", category: "External Link", type: "Button", context_detail: "Deel Global Payroll Section", function: "Provides more information on global payroll", route_or_action: "Leads to Deel Global Payroll page" },
+            { name: "Book a demo", system: "Deel", category: "External Link", type: "Button", context_detail: "Various sections", function: "Schedules a product demonstration", route_or_action: "Leads to demo booking form" },
+            { name: "See Deel reviews on G2", system: "Deel", category: "External Link", type: "Button", context_detail: "Deel on G2 Section", function: "Navigates to Deel's reviews on G2", route_or_action: "Opens G2 review page for Deel" },
+            { name: "Sign up here instead", system: "Deel", category: "Authentication", type: "Link", context_detail: "Demo Booking Form / Footer", function: "Redirects contractors/employees to their sign-up", route_or_action: "Leads to contractor/employee sign-up page" },
+            { name: "First name (input)", system: "Deel", category: "Form/Input Field", type: "Text Input Field", context_detail: "Demo Booking Form", function: "Collects user's first name", route_or_action: "User input field" },
+            { name: "Last name (input)", system: "Deel", category: "Form/Input Field", type: "Text Input Field", context_detail: "Demo Booking Form", function: "Collects user's last name", route_or_action: "User input field" },
+            { name: "Work email (input)", system: "Deel", category: "Form/Input Field", type: "Text Input Field", context_detail: "Demo Booking Form", function: "Collects user's work email", route_or_action: "User input field" },
+            { name: "Company size (dropdown)", system: "Deel", category: "Form/Input Field", type: "Dropdown/Input Field", context_detail: "Demo Booking Form", function: "Collects information about company size", route_or_action: "User selection/input field" },
+            { name: "Headquarters (dropdown)", system: "Deel", category: "Form/Input Field", type: "Dropdown/Input Field", context_detail: "Demo Booking Form", function: "Collects information about company headquarters", route_or_action: "User selection/input field" },
+            { name: "Choose a date & time", system: "Deel", category: "Form Action", type: "Button/Link", context_detail: "Demo Booking Form", function: "Allows selection of demo schedule", route_or_action: "Opens calendar/scheduling interface" },
+            { name: "Payment methods", system: "Deel", category: "Information", type: "Link", context_detail: "Compensation for Services Section", function: "Provides more information on payment methods", route_or_action: "Leads to article on payment methods" },
+            { name: "payroll taxes", system: "Deel", category: "Information", type: "Link", context_detail: "Benefits and Liability Exclusion Section", function: "Provides more information on payroll taxes", route_or_action: "Leads to article on payroll taxes" },
+            { name: "self-employment taxes", system: "Deel", category: "Information", type: "Link", context_detail: "Benefits and Liability Exclusion Section", function: "Provides more information on self-employment taxes", route_or_action: "Leads to article on self-employment taxes" },
+            { name: "Deel Global Payroll", system: "Deel", category: "Navigation", type: "Link", context_detail: "Footer (Products)", function: "Navigates to Deel's global payroll product page", route_or_action: "Leads to global payroll product page" },
+            { name: "Deel US Payroll", system: "Deel", category: "Navigation", type: "Link", context_detail: "Footer (Products)", function: "Navigates to Deel's US payroll product page", route_or_action: "Leads to US payroll product page" },
+            { name: "Deel Compensation", system: "Deel", category: "Navigation", type: "Link", context_detail: "Footer (Products)", function: "Navigates to Deel's compensation management page", route_or_action: "Leads to compensation management page" },
+            { name: "Automate invoices and payments", system: "Deel", category: "Payroll Processing", type: "Feature (Implied Button)", context_detail: "Payment Processing", function: "Eliminates human error and ensures seamless experience", route_or_action: "Payment Automation" },
+            { name: "Integrates with several major accounting software", system: "Deel", category: "Integration", type: "Feature (Implied Interface)", context_detail: "System Overview", function: "Connects Deel with external accounting systems", route_or_action: "Third-Party Accounting Integration" },
+            { name: "One centralized platform to manage documentation, time off, payment approvals, and more", system: "Deel", category: "Data Management", type: "Feature (Implied Interface)", context_detail: "Contract Management", function: "Provides a single platform for managing various aspects of worker relationships", route_or_action: "Centralized Worker Management" },
+            { 
+                name: "Payment History", 
+                system: "Deel", 
+                category: "Reporting", 
+                type: "Dropdown", 
+                context_detail: "Reports Module (Inferred)", 
+                function: "Selects payment history reports", 
+                route_or_action: "Leads to payment history report generation",
+                dropdownOptions: [
+                    { name: "Payment History Summary", function: "Generates summary of payment history", route_or_action: "/deel/reports/payment-history-summary", report_name: "Payment History Summary" }
+                ]
+            },
+            { 
+                name: "Invoice Summary", 
+                system: "Deel", 
+                category: "Reporting", 
+                type: "Dropdown", 
+                context_detail: "Reports Module (Inferred)", 
+                function: "Selects invoice summary reports", 
+                route_or_action: "Leads to invoice summary report generation",
+                dropdownOptions: [
+                    { name: "Invoice Summary Report", function: "Generates summary of invoices", route_or_action: "/deel/reports/invoice-summary", report_name: "Invoice Summary Report" }
+                ]
+            },
+            { 
+                name: "By Contractor", 
+                system: "Deel", 
+                category: "Reporting", 
+                type: "Dropdown", 
+                context_detail: "Reports Module (Inferred)", 
+                function: "Filters reports by contractor", 
+                route_or_action: "Filters report by selected contractor",
+                dropdownOptions: [
+                    { name: "Contractor Payment Details", function: "Generates payment details report for selected contractor", route_or_action: "/deel/reports/contractor-payment-details", report_name: "Contractor Payment Details" }
+                ]
+            },
+
+            // SAP SuccessFactors Employee Central Payroll
+            { name: "Open payroll", system: "SAP SuccessFactors", category: "Payroll Processing", type: "Action/Button", context_detail: "Payroll Control Center", function: "Releases payroll control record, blocks changes", route_or_action: "Initiates payroll period opening" },
+            { name: "Generate payroll results", system: "SAP SuccessFactors", category: "Payroll Processing", type: "Action/Button", context_detail: "Payroll Control Center", function: "Stores productive payroll results", route_or_action: "Triggers payroll result generation" },
+            { name: "Simulate posting", system: "SAP SuccessFactors", category: "Payroll Processing", type: "Action/Button", context_detail: "Payroll Control Center", function: "Simulates financial posting of payroll", route_or_action: "Performs posting simulation" },
+            { name: "Initiate policies to check employees' master data and payroll data", system: "SAP SuccessFactors", category: "Payroll Processing", type: "Action/Button", context_detail: "Payroll Control Center", function: "Runs policy checks on employee data", route_or_action: "Triggers policy validation" },
+            { name: "Assign alerts and monitor the resolution of the alerts", system: "SAP SuccessFactors", category: "Monitoring", type: "Action/Button", context_detail: "Payroll Control Center", function: "Manually assigns and tracks payroll alerts", route_or_action: "Leads to alert management interface" },
+            { name: "Run payroll", system: "SAP SuccessFactors", category: "Payroll Processing", type: "Action/Button", context_detail: "Payroll Control Center", function: "Executes the production payroll run", route_or_action: "Initiates full payroll processing" },
+            { name: "One-click monitoring process", system: "SAP SuccessFactors", category: "Monitoring", type: "Button/Action", context_detail: "Payroll Control Center", function: "Executes test payroll run for early issue detection", route_or_action: "Runs pre-payroll monitoring" },
+            { name: "PCC Configuration Workbench transaction (t-code PYC_CONF_WB)", system: "SAP SuccessFactors", category: "Configuration", type: "Transaction/UI5 App", context_detail: "SAP Easy Access / Configuration Tool Folder", function: "Configures Payroll Control Center settings", route_or_action: "Opens configuration workbench" },
+            { name: "PCC Manage Configuration UI5 Application", system: "SAP SuccessFactors", category: "Configuration", type: "UI5 App", context_detail: "Configuration Tool Folder", function: "Manages PCC configurations", route_or_action: "Opens configuration management interface" },
+            { name: "PCC Manage Policies (Manager)", system: "SAP SuccessFactors", category: "Configuration", type: "UI5 App", context_detail: "Payroll Process Manager Folder", function: "Manages payroll policies for managers", route_or_action: "Opens policy management interface" },
+            { name: "PCC Manage Processes (Manager)", system: "SAP SuccessFactors", category: "Configuration", type: "UI5 App", context_detail: "Payroll Process Manager Folder", function: "Manages payroll processes for managers", route_or_action: "Opens process management interface" },
+            { name: "PCC My Processes (Manager)", system: "SAP SuccessFactors", category: "Monitoring", type: "UI5 App", context_detail: "Payroll Process Manager Folder", function: "Displays manager's own payroll processes", route_or_action: "Shows personal process list" },
+            { name: "PCC My Off Cycles (Manager)", system: "SAP SuccessFactors", category: "Payroll Processing", type: "UI5 App", context_detail: "Payroll Process Manager Folder", function: "Manages off-cycle payrolls for managers", route_or_action: "Opens off-cycle management interface" },
+            { name: "PCC My Alerts (Administrator)", system: "SAP SuccessFactors", category: "Monitoring", type: "UI5 App", context_detail: "Payroll Administrator Folder", function: "Displays alerts for administrators", route_or_action: "Shows administrator's alert list" },
+            { name: "PCC: Team Management", system: "SAP SuccessFactors", category: "Admin", type: "UI5 App", context_detail: "Team Folder", function: "Manages payroll teams", route_or_action: "Opens team management interface" },
+            { name: "PCC: My Teams (Team Configuration)", system: "SAP SuccessFactors", category: "Configuration", type: "UI5 App", context_detail: "Team Folder", function: "Configures personal teams", route_or_action: "Opens team configuration interface" },
+            { name: "PCC Action/Audit Log UI5 Application", system: "SAP SuccessFactors", category: "Reporting/Audit", type: "UI5 App", context_detail: "PCC Auditor Folder", function: "Provides action and audit logs", route_or_action: "Opens audit log viewer" },
+            { name: "PCC: Admin Transaction Conf. (t-code PYC_ADM_TRANSACTION)", system: "SAP SuccessFactors", category: "Configuration", type: "Transaction", context_detail: "PCC Administrator Folder", function: "Configures administrative transactions", route_or_action: "Opens admin transaction configuration" },
+            { name: "Personal no field", system: "SAP SuccessFactors", category: "Form/Input Field", type: "Input Field", context_detail: "Configuration Interface", function: "Enters personnel number for assignment", route_or_action: "User input field" },
+            { name: "Infotype field", system: "SAP SuccessFactors", category: "Form/Input Field", type: "Input Field", context_detail: "Configuration Interface", function: "Enters infotype for assignment", route_or_action: "User input field" },
+            { name: "Change (Pen icon)", system: "SAP SuccessFactors", category: "Data Management", type: "Icon/Button", context_detail: "Transaction Toolbar", function: "Initiates edit mode for data", route_or_action: "Enables data modification" },
+            { name: "Save changes", system: "SAP SuccessFactors", category: "Form Action", type: "Button", context_detail: "Transaction Toolbar", function: "Saves modifications to data", route_or_action: "Commits changes to system" },
+            { name: "Universal action search", system: "SAP SuccessFactors", category: "Navigation", type: "Search Bar", context_detail: "People Profile", function: "Searches for employees/actions", route_or_action: "Provides quick search functionality" },
+            { name: "Quick Card", system: "SAP SuccessFactors", category: "Information", type: "Pop-up", context_detail: "People Profile (on hover)", function: "Displays general employee information", route_or_action: "Shows brief employee details on hover" },
+            { name: "Public Profile", system: "SAP SuccessFactors", category: "Navigation", type: "Link/Tab", context_detail: "People Profile", function: "Navigates to full employee profile", route_or_action: "Leads to detailed employee profile page" },
+            { name: "Action", system: "SAP SuccessFactors", category: "Actions", type: "Button", context_detail: "People Profile", function: "Initiates transactions for an employee", route_or_action: "Opens action menu for employee" },
+            { name: "Go to", system: "SAP SuccessFactors", category: "Navigation", type: "Button", context_detail: "People Profile", function: "Navigates to a specific section of profile", route_or_action: "Jumps to selected profile section" },
+            { name: "Personal Information section", system: "SAP SuccessFactors", category: "Section", type: "Section", context_detail: "People Profile", function: "Displays non-business personal data", route_or_action: "Shows personal details" },
+            { name: "Employment Information section", system: "SAP SuccessFactors", category: "Section", type: "Section", context_detail: "People Profile", function: "Displays job-related employment data", route_or_action: "Shows employment details" },
+            { name: "Internal Job History Block", system: "SAP SuccessFactors", category: "Section", type: "Section", context_detail: "People Profile", function: "Displays summarized internal career history", route_or_action: "Shows read-only job history" },
+            { name: "Payroll Category", system: "SAP SuccessFactors", category: "Section", type: "Section", context_detail: "Full Profile (latest People Profile)", function: "New category for payroll-related info", route_or_action: "Organizes payroll cards" },
+            { name: "Pay Statement card", system: "SAP SuccessFactors", category: "ESS", type: "Card", context_detail: "Payroll Category", function: "Displays key payroll metrics (gross/net, pay date)", route_or_action: "Shows summary of pay statement" },
+            { name: "Payroll Information card", system: "SAP SuccessFactors", category: "ESS", type: "Card", context_detail: "Payroll Category", function: "Displays configured links to payroll info", route_or_action: "Shows links to detailed payroll info" },
+            { name: "Payment Details", system: "SAP SuccessFactors", category: "ESS", type: "Link", context_detail: "Pay Statement Card", function: "Navigates to detailed payment information", route_or_action: "Leads to payment details page" },
+            { name: "Pay History", system: "SAP SuccessFactors", category: "ESS", type: "Link", context_detail: "Pay Statement Card", function: "Navigates to historical payment information", route_or_action: "Leads to pay history page" },
+            { name: "Generating Tax Forms", system: "SAP SuccessFactors", category: "Reporting", type: "Button/Action", context_detail: "Tax Reporter Module", function: "Initiates generation of tax forms", route_or_action: "Triggers tax form generation process" },
+            { name: "User Preferences in Tax Reporter Generation", system: "SAP SuccessFactors", category: "Configuration", type: "Configuration Options", context_detail: "Tax Reporter Module", function: "Configures user-specific tax reporting settings", route_or_action: "Leads to tax reporter preference settings" },
+            { name: "View/ Download Magnetic Media Files", system: "SAP SuccessFactors", category: "Document Management", type: "Buttons/Links", context_detail: "Tax Reporter Module", function: "Allows viewing/downloading of tax files", route_or_action: "Opens/downloads magnetic media files" },
+            { name: "Tax Reporter Log Manager", system: "SAP SuccessFactors", category: "Monitoring", type: "Interface", context_detail: "Tax Reporter Module", function: "Manages logs for tax reporting", route_or_action: "Opens tax reporter log viewer" },
+            { name: "Display/Delete PCL4 Details (RPCTRDU0)", system: "SAP SuccessFactors", category: "Reporting/Admin", type: "Transaction/Report", context_detail: "Tax Reporter Module", function: "Displays or deletes PCL4 cluster details", route_or_action: "Executes PCL4 detail management" },
+            { name: "Tax Form Reconciliation", system: "SAP SuccessFactors", category: "Compliance", type: "Feature (Implied)", context_detail: "Tax Reporter Module", function: "Reconciles tax forms", route_or_action: "Provides tax form reconciliation tools" },
+            { name: "Running the Multiple Worksite Report", system: "SAP SuccessFactors", category: "Reporting", type: "Report Name (Implied Link)", context_detail: "Reporting Module", function: "Generates Multiple Worksite Report", route_or_action: "Leads to MWR generation" },
+            { name: "Running the Cost Center Report", system: "SAP SuccessFactors", category: "Reporting", type: "Report Name (Implied Link)", context_detail: "Reporting Module", function: "Generates Cost Center Report", route_or_action: "Leads to Cost Center Report generation" },
+            { name: "Display Online W-2 Forms Report (RPUPAYUS_ONLINE_W2_DISPLAY)", system: "SAP SuccessFactors", category: "Reporting", type: "Report Name (Implied Link)", context_detail: "Reporting Module", function: "Displays online W-2 forms", route_or_action: "Leads to online W-2 display" },
+            { name: "Business Configuration UI", system: "SAP SuccessFactors", category: "Configuration", type: "Interface", context_detail: "Configuration", function: "Configures business rules and settings", route_or_action: "Opens BCUI for system setup" },
+            { name: "Business Rules", system: "SAP SuccessFactors", category: "Configuration", type: "Interface", context_detail: "Configuration", function: "Manages system business rules", route_or_action: "Opens business rules management" },
+            { name: "Check Tool", system: "SAP SuccessFactors", category: "Configuration", type: "Interface", context_detail: "Configuration", function: "Provides system check/validation tools", route_or_action: "Opens check tool" },
+            { name: "Main Admin System Permissions", system: "SAP SuccessFactors", category: "Admin", type: "Interface", context_detail: "Permissions Management", function: "Manages main admin system permissions", route_or_action: "Opens admin permissions interface" },
+            { name: "Permissions for Foundation Objects", system: "SAP SuccessFactors", category: "Admin", type: "Interface", context_detail: "Permissions Management", function: "Manages permissions for foundation objects", route_or_action: "Opens foundation object permissions" },
+            { name: "Permissions for User Management", system: "SAP SuccessFactors", category: "Admin", type: "Interface", context_detail: "Permissions Management", function: "Manages user-specific permissions", route_or_action: "Opens user management permissions" },
+            { name: "Configure Categories and Cards in Full Profile", system: "SAP SuccessFactors", category: "Customization", type: "Interface", context_detail: "UI Configuration", function: "Customizes categories and cards in People Profile", route_or_action: "Opens UI configuration for People Profile" },
+            { 
+                name: "Take Action dropdown menu", 
+                system: "SAP SuccessFactors", 
+                category: "Actions", 
+                type: "Dropdown", 
+                context_detail: "Employment Information page", 
+                function: "Provides options to update employee records", 
+                route_or_action: "Displays list of actions for employee records",
+                dropdownOptions: [
+                    { name: "Update Employee Record", function: "Updates employee's personal and employment data", route_or_action: "/sap/employee/update" },
+                    { name: "Issue Spot Bonus", function: "Grants a one-time bonus to the employee", route_or_action: "/sap/employee/issue-bonus" },
+                    { name: "Change Benefit Plan", function: "Modifies the employee's assigned benefit plan", route_or_action: "/sap/employee/change-benefits" }
+                ]
+            },
+            { 
+                name: "Form W-2", 
+                system: "SAP SuccessFactors", 
+                category: "Tax Form", 
+                type: "Dropdown Option", 
+                context_detail: "Tax Reporter Module (Generating Tax Forms)", 
+                function: "Generates Form W-2", 
+                route_or_action: "/sap/tax-reporter/form-w2", 
+                report_name: "Form W-2" 
+            },
+            { 
+                name: "Form 941", 
+                system: "SAP SuccessFactors", 
+                category: "Tax Form", 
+                type: "Dropdown Option", 
+                context_detail: "Tax Reporter Module (Generating Tax Forms)", 
+                function: "Generates Employer's Quarterly Federal Tax Return (Form 941)", 
+                route_or_action: "/sap/tax-reporter/form-941", 
+                report_name: "Employer's Quarterly Federal Tax Return (Form 941)" 
+            },
+            { 
+                name: "Payroll Register (Implied)", 
+                system: "SAP SuccessFactors", 
+                category: "Reporting", 
+                type: "Dropdown Option", 
+                context_detail: "Payroll Control Center (PCC)", 
+                function: "Generates Payroll Register report", 
+                route_or_action: "/sap/pcc/reports/payroll-register", 
+                report_name: "Payroll Register" 
+            },
+            { 
+                name: "PCC Action/Audit Log", 
+                system: "SAP SuccessFactors", 
+                category: "Reporting/Audit", 
+                type: "Dropdown Option", 
+                context_detail: "PCC Auditor Folder", 
+                function: "Accesses PCC action and audit logs", 
+                route_or_action: "/sap/pcc/audit-log", 
+                report_name: "PCC Action/Audit Log" 
+            },
+            { 
+                name: "Pay Statement Card", 
+                system: "SAP SuccessFactors", 
+                category: "ESS", 
+                type: "Dropdown Option", 
+                context_detail: "People Profile (Payroll Category)", 
+                function: "Displays key payroll metrics for employee", 
+                route_or_action: "/sap/ess/pay-statement", 
+                report_name: "Pay Statement" 
+            },
+            { 
+                name: "Payroll Information Card", 
+                system: "SAP SuccessFactors", 
+                category: "ESS", 
+                type: "Dropdown Option", 
+                context_detail: "People Profile (Payroll Category)", 
+                function: "Displays configured links to payroll information", 
+                route_or_action: "/sap/ess/payroll-info", 
+                report_name: "Payroll Information" 
+            },
+            { 
+                name: "Payment Details (Link)", 
+                system: "SAP SuccessFactors", 
+                category: "ESS", 
+                type: "Dropdown Option", 
+                context_detail: "Payroll Information Card", 
+                function: "Navigates to detailed payment information", 
+                route_or_action: "/sap/ess/payment-details", 
+                report_name: "Payment Details" 
+            },
+            { 
+                name: "Pay History (Link)", 
+                system: "SAP SuccessFactors", 
+                category: "ESS", 
+                type: "Dropdown Option", 
+                context_detail: "Payroll Information Card", 
+                function: "Navigates to historical payment information", 
+                route_or_action: "/sap/ess/pay-history", 
+                report_name: "Pay History" 
+            },
+
+
+            // Oracle Fusion Cloud HCM Payroll
+            { name: "Submit a Flow Page", system: "Oracle Fusion Cloud", category: "Payroll Processing", type: "Page", context_detail: "Payroll Module (My Client Groups > Payroll)", function: "Initiates various payroll flows", route_or_action: "Main interface for flow submission" },
+            { name: "Context Switcher", system: "Oracle Fusion Cloud", category: "Data Interaction", type: "Dropdown", context_detail: "Submit a Flow Page (header)", function: "Selects Legislative Data Group (LDG)", route_or_action: "Filters flows by LDG" },
+            { name: "Recently Submitted Option", system: "Oracle Fusion Cloud", category: "Navigation", type: "Option", context_detail: "Submit a Flow Page", function: "Displays flows recently submitted by user", route_or_action: "Filters flow list" },
+            { name: "Search Option", system: "Oracle Fusion Cloud", category: "Navigation", type: "Option", context_detail: "Submit a Flow Page", function: "Searches for a specific flow", route_or_action: "Filters flow list" },
+            { name: "Flow Instance Name Field", system: "Oracle Fusion Cloud", category: "Form/Input Field", type: "Input Field", context_detail: "Submit a Flow Page", function: "Enters unique name for flow instance", route_or_action: "User input field" },
+            { name: "Parameters Section", system: "Oracle Fusion Cloud", category: "Section", type: "Section", context_detail: "Submit a Flow Page", function: "Displays and allows entry of flow parameters", route_or_action: "Contains parameter input fields" },
+            { name: "Schedule Section", system: "Oracle Fusion Cloud", category: "Section", type: "Section", context_detail: "Submit a Flow Page", function: "Schedules flow execution (immediate/predefined)", route_or_action: "Contains scheduling options" },
+            { name: "Linked Flows Section", system: "Oracle Fusion Cloud", category: "Section", type: "Section", context_detail: "Submit a Flow Page", function: "Links current flow to other flows", route_or_action: "Contains flow linking options" },
+            { name: "Process After Error Check Box", system: "Oracle Fusion Cloud", category: "Workflow", type: "Checkbox", context_detail: "Submit a Flow Page", function: "Allows subsequent tasks to run even if a preceding one errors", route_or_action: "Controls error handling flow" },
+            { name: "Upload Parameter Files Option", system: "Oracle Fusion Cloud", category: "Data Import/Upload", type: "Button", context_detail: "Submit a Flow Page", function: "Uploads files with flow parameter details", route_or_action: "Opens file upload dialog" },
+            { name: "Submit Related Flows Task Action", system: "Oracle Fusion Cloud", category: "Workflow", type: "Action", context_detail: "Checklist Page", function: "Submits additional tasks within an existing flow", route_or_action: "Triggers submission of related tasks" },
+            { name: "Payroll Flow Patterns Page", system: "Oracle Fusion Cloud", category: "Configuration", type: "Page", context_detail: "Payroll Module (My Client Groups > Payroll)", function: "Defines and manages payroll flow patterns", route_or_action: "Main interface for flow pattern configuration" },
+            { name: "Create Icon", system: "Oracle Fusion Cloud", category: "Configuration", type: "Icon/Button", context_detail: "Payroll Flow Patterns Page", function: "Initiates creation of a new flow pattern", route_or_action: "Leads to new flow pattern setup" },
+            { name: "Tasks Tab", system: "Oracle Fusion Cloud", category: "Navigation", type: "Tab", context_detail: "Payroll Flow Patterns Page", function: "Reviews, adds, edits, deletes tasks within flow", route_or_action: "Displays and manages flow tasks" },
+            { name: "Parameters Tab", system: "Oracle Fusion Cloud", category: "Navigation", type: "Tab", context_detail: "Payroll Flow Patterns Page", function: "Defines flow parameters and properties", route_or_action: "Displays and manages flow parameters" },
+            { name: "Outbound Integration Tab", system: "Oracle Fusion Cloud", category: "Navigation", type: "Tab", context_detail: "Payroll Flow Patterns Page", function: "Configures outbound notifications", route_or_action: "Displays and manages outbound integrations" },
+            { name: "Review Tab", system: "Oracle Fusion Cloud", category: "Navigation", type: "Tab", context_detail: "Payroll Flow Patterns Page", function: "Previews flow organization and display", route_or_action: "Shows visual flow structure" },
+            { name: "Edit Task Details: Owner and Checklist Page", system: "Oracle Fusion Cloud", category: "Configuration", type: "Page", context_detail: "Flow Pattern Task Editing", function: "Configures task-specific details", route_or_action: "Interface for task ownership/checklist settings" },
+            { name: "Owner Type Field", system: "Oracle Fusion Cloud", category: "Form/Input Field", type: "Input Field", context_detail: "Edit Task Details Page", function: "Assigns task ownership (user/group)", route_or_action: "User input field" },
+            { name: "Owner Field", system: "Oracle Fusion Cloud", category: "Form/Input Field", type: "Input Field", context_detail: "Edit Task Details Page", function: "Specifies individual/group owner", route_or_action: "User input field" },
+            { name: "Notifications Region", system: "Oracle Fusion Cloud", category: "Configuration", type: "Section", context_detail: "Edit Task Details Page", function: "Selects notification types for task owner", route_or_action: "Contains notification checkboxes" },
+            { name: "Submit Another Task Task", system: "Oracle Fusion Cloud", category: "Workflow", type: "Task", context_detail: "Flow Pattern", function: "Automatically repeats a task multiple times", route_or_action: "Configures task iteration" },
+            { name: "Roll Back All Option", system: "Oracle Fusion Cloud", category: "Workflow", type: "Option", context_detail: "Task Iterations Page", function: "Rolls back all iterations of a task", route_or_action: "Initiates rollback for all iterations" },
+            { name: "Checklist Page", system: "Oracle Fusion Cloud", category: "Monitoring", type: "Page", context_detail: "Payroll Flow Execution", function: "Monitors and manages tasks within a flow", route_or_action: "Displays flow tasks and statuses" },
+            { name: "Process Results Details Page", system: "Oracle Fusion Cloud", category: "Monitoring", type: "Page", context_detail: "Payroll Flow Execution", function: "Provides detailed info for a specific task", route_or_action: "Displays task errors, reports, logs" },
+            { name: "Errors and Warnings Page", system: "Oracle Fusion Cloud", category: "Monitoring", type: "Page", context_detail: "Process Results Details Page", function: "Displays messages related to persons/processes", route_or_action: "Shows error/warning messages" },
+            { name: "View Flows Page", system: "Oracle Fusion Cloud", category: "Monitoring", type: "Page", context_detail: "Payroll Monitoring", function: "Provides overall status of submitted/scheduled flows", route_or_action: "Displays high-level flow statuses" },
+            { name: "Process Results Summary Page", system: "Oracle Fusion Cloud", category: "Monitoring", type: "Page", context_detail: "Payroll Monitoring", function: "Displays submitted and completed processes", route_or_action: "Shows summary of process results" },
+            { name: "Person Process Results Page", system: "Oracle Fusion Cloud", category: "Monitoring", type: "Page", context_detail: "Payroll Monitoring", function: "Provides details of all processes for an employee", route_or_action: "Displays employee-specific process results" },
+            { 
+                name: "Actions Menu", 
+                system: "Oracle Fusion Cloud", 
+                category: "Workflow", 
+                type: "Dropdown", 
+                context_detail: "Checklist, Results Summary, Process Results Details", 
+                function: "Provides corrective actions for tasks", 
+                route_or_action: "Displays list of actions (e.g., Skip, Roll Back Errors, Retry)",
+                dropdownOptions: [
+                    { name: "Skip", function: "Skips the current task", route_or_action: "Skips task" },
+                    { name: "Roll Back Errors", function: "Rolls back records with errors", route_or_action: "Initiates rollback for errored records" },
+                    { name: "Roll Back All", function: "Rolls back all records in the process", route_or_action: "Initiates rollback for all records" },
+                    { name: "Mark for Retry", function: "Marks a failed task for retry", route_or_action: "Marks task for retry" },
+                    { name: "Retry", function: "Retries a failed task", route_or_action: "Retries task" },
+                    { name: "Force Resubmit", function: "Forces resubmission of a task", route_or_action: "Forces resubmission" },
+                    { name: "Submit", function: "Submits the current task", route_or_action: "Submits task" },
+                    { name: "Cancel Current and Recurring Schedule", function: "Cancels current and future scheduled runs", route_or_action: "Cancels schedule" },
+                    { name: "Cancel Recurring Schedule", function: "Cancels future scheduled runs", route_or_action: "Cancels recurring schedule" },
+                    { name: "Cancel", function: "Cancels the current operation", route_or_action: "Cancels operation" }
+                ]
+            },
+            { name: "Corrective Actions Icon", system: "Oracle Fusion Cloud", category: "Workflow", type: "Icon", context_detail: "Rollback Relationship Group window", function: "Opens window for rollback details", route_or_action: "Displays rollback details" },
+            { name: "Status Tiles", system: "Oracle Fusion Cloud", category: "Monitoring", type: "Display Element", context_detail: "Process Results Details Page", function: "Displays record counts by status", route_or_action: "Shows counts for Total, Failed, Pending, Ignored, Success" },
+            { 
+                name: "View By Field", 
+                system: "Oracle Fusion Cloud", 
+                category: "Reporting", 
+                type: "Dropdown", 
+                context_detail: "Person Process Results Page", 
+                function: "Filters results by 'Process' or 'Report'", 
+                route_or_action: "Filters report display",
+                dropdownOptions: [
+                    { name: "Process", function: "Filters results to show processes", route_or_action: "Shows process results" },
+                    { name: "Report", function: "Filters results to show reports", route_or_action: "Shows report results" }
+                ]
+            },
+            { name: "Process Date Field", system: "Oracle Fusion Cloud", category: "Form/Input Field", type: "Input Field", context_detail: "Person Process Results Page", function: "Filters results for a specific date range", route_or_action: "User input for date filter" },
+            { 
+                name: "Filter Option", 
+                system: "Oracle Fusion Cloud", 
+                category: "Data Interaction", 
+                type: "Dropdown", 
+                context_detail: "Person Process Results Page", 
+                function: "Filters process results by payroll activities", 
+                route_or_action: "Filters by Calculation, Accounting, Payments",
+                dropdownOptions: [
+                    { name: "Calculation", function: "Filters by payroll calculation activities", route_or_action: "Filters by Calculation" },
+                    { name: "Accounting", function: "Filters by payroll accounting activities", route_or_action: "Filters by Accounting" },
+                    { name: "Payments", function: "Filters by payroll payment activities", route_or_action: "Filters by Payments" }
+                ]
+            },
+            { name: "Upload File Button", system: "Oracle Fusion Cloud", category: "Data Import/Upload", type: "Button", context_detail: "Submit a Flow Page (Parameters)", function: "Uploads data to Oracle WebCenter Content Server", route_or_action: "Opens file upload dialog" },
+            { name: "Translation Editor Icon", system: "Oracle Fusion Cloud", category: "Admin/Localization", type: "Icon", context_detail: "Flow Pattern Setup Page", function: "Translates flow name/description", route_or_action: "Opens translation editor" },
+            { name: "Run BI Publisher Report Task", system: "Oracle Fusion Cloud", category: "Reporting", type: "Task", context_detail: "Flow Pattern", function: "Generates output file based on BI Publisher template", route_or_action: "Triggers report generation" },
+            { name: "Flow Pattern Type Field", system: "Oracle Fusion Cloud", category: "Configuration", type: "Input Field", context_detail: "QuickPay Flow Setup", function: "Sets flow as 'QuickPay' or 'QuickPay with Parameters'", route_or_action: "Configures QuickPay flow type" },
+            { name: "Parameter Input Page", system: "Oracle Fusion Cloud", category: "Form/Input Field", type: "Page", context_detail: "QuickPay Submission", function: "Defines additional task parameters for QuickPay", route_or_action: "Interface for QuickPay parameters" },
+            { name: "Process Configuration Group Parameter", system: "Oracle Fusion Cloud", category: "Configuration", type: "Input Field", context_detail: "QuickPay Submission Page", function: "Selects a process configuration group", route_or_action: "User input/selection field" },
+            { name: "Enable QuickPay Daemon", system: "Oracle Fusion Cloud", category: "Configuration", type: "Action Parameter", context_detail: "Pay Daemon Group Process Config", function: "Enables payroll background process for QuickPay", route_or_action: "Activates QuickPay background process" },
+            { name: "Upload logs for Payroll Background Process to the UCM server", system: "Oracle Fusion Cloud", category: "Monitoring", type: "Action Parameter", context_detail: "QuickPay Submission", function: "Enables logging for diagnostic purposes", route_or_action: "Activates diagnostic logging" },
+            { name: "Payroll User Interface Configuration Formula Type", system: "Oracle Fusion Cloud", category: "Configuration", type: "Formula Type", context_detail: "Fast Formulas Page", function: "Controls configurable payment preferences", route_or_action: "Defines UI configuration logic" },
+            { name: "Fast Formulas page", system: "Oracle Fusion Cloud", category: "Configuration", type: "Page", context_detail: "Setup and Maintenance", function: "Creates and manages fast formulas", route_or_action: "Main interface for formula creation" },
+            { name: "PAYROLL_USER_INTERFACE_CONFIGURATION user-defined table", system: "Oracle Fusion Cloud", category: "Configuration", type: "Table (Implied UI)", context_detail: "Configuration", function: "Attaches formulas to control UI preferences", route_or_action: "Interface for formula attachment" },
+            { name: "Manage Administrator Profile Options Task", system: "Oracle Fusion Cloud", category: "Admin", type: "Task/Link", context_detail: "Setup and Maintenance", function: "Enables or configures profile options", route_or_action: "Leads to profile options management" },
+            { name: "Manage Common Lookups Task", system: "Oracle Fusion Cloud", category: "Admin", type: "Task/Link", context_detail: "Setup and Maintenance", function: "Creates and manages lookups", route_or_action: "Leads to lookups management" },
+            { name: "Manage Fast Formulas Task", system: "Oracle Fusion Cloud", category: "Admin", type: "Task/Link", context_detail: "Setup and Maintenance", function: "Creates and manages fast formulas", route_or_action: "Leads to fast formulas management" },
+            { name: "Manage Configuration Packages Task", system: "Oracle Fusion Cloud", category: "Admin", type: "Task/Link", context_detail: "Setup and Maintenance", function: "Migrates payroll flows and setup data", route_or_action: "Leads to configuration package management" },
+            { name: "Payroll Process Configuration Task", system: "Oracle Fusion Cloud", category: "Admin", type: "Task/Link", context_detail: "Quick Actions", function: "Monitors and optimizes payroll process parameters", route_or_action: "Leads to process configuration" },
+            { 
+                name: "Statement of Earnings", 
+                system: "Oracle Fusion Cloud", 
+                category: "Reporting", 
+                type: "Dropdown Option", 
+                context_detail: "Person Process Results Page (View By Field: Report)", 
+                function: "Generates Statement of Earnings", 
+                route_or_action: "/oracle/reports/statement-of-earnings", 
+                report_name: "Statement of Earnings" 
+            },
+            { 
+                name: "Payslip", 
+                system: "Oracle Fusion Cloud", 
+                category: "Reporting", 
+                type: "Dropdown Option", 
+                context_detail: "Person Process Results Page (View By Field: Report)", 
+                function: "Generates Payslip", 
+                route_or_action: "/oracle/reports/payslip", 
+                report_name: "Payslip" 
+            },
+            { 
+                name: "Calculation Report (Inferred)", 
+                system: "Oracle Fusion Cloud", 
+                category: "Reporting", 
+                type: "Dropdown Option", 
+                context_detail: "Person Process Results Page (Filter Option: Calculation)", 
+                function: "Generates report on payroll calculation activities", 
+                route_or_action: "/oracle/reports/process-detail/calculation", 
+                report_name: "Calculation Report" 
+            },
+            { 
+                name: "Accounting Report (Inferred)", 
+                system: "Oracle Fusion Cloud", 
+                category: "Reporting", 
+                type: "Dropdown Option", 
+                context_detail: "Person Process Results Page (Filter Option: Accounting)", 
+                function: "Generates report on payroll accounting activities", 
+                route_or_action: "/oracle/reports/process-detail/accounting", 
+                report_name: "Accounting Report" 
+            },
+            { 
+                name: "Payments Report (Inferred)", 
+                system: "Oracle Fusion Cloud", 
+                category: "Reporting", 
+                type: "Dropdown Option", 
+                context_detail: "Person Process Results Page (Filter Option: Payments)", 
+                function: "Generates report on payroll payment activities", 
+                route_or_action: "/oracle/reports/process-detail/payments", 
+                report_name: "Payments Report" 
+            },
+            { 
+                name: "Generated BI Publisher Report", 
+                system: "Oracle Fusion Cloud", 
+                category: "Reporting", 
+                type: "Dropdown Option", 
+                context_detail: "Payroll Flow Patterns Page (Run BI Publisher Report Task)", 
+                function: "Generates output file based on BI Publisher template", 
+                route_or_action: "/oracle/reports/bi-publisher", 
+                report_name: "BI Publisher Report" 
+            }
+        ];
+
+        let currentChart = null;
+        let currentChart2 = null; // New chart instance for the second chart
+        let currentWorkflowPage = 0; 
+
+        /**
+         * Displays a temporary message box at the bottom right of the screen.
+         * @param {string} message - The message to display.
+         * @param {string} type - The type of message ('info', 'success', 'error'). Affects background color.
+         */
+        function showMessage(message, type = 'info') {
+            const msgBox = document.getElementById('messageBox');
+            msgBox.textContent = message;
+            // Set background color based on type
+            let bgColorClass;
+            if (type === 'error') {
+                bgColorClass = 'bg-red-700';
+            } else if (type === 'success') {
+                bgColorClass = 'bg-green-700';
+            } else {
+                bgColorClass = 'bg-gray-700';
+            }
+            msgBox.className = `message-box show ${bgColorClass}`; // Apply show class and background color
+            setTimeout(() => {
+                msgBox.classList.remove('show');
+            }, 3000); // Message disappears after 3 seconds
+        }
+
+        /**
+         * Opens a modal dialog.
+         * @param {string} modalId - The ID of the modal element to open.
+         */
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+            document.getElementById(modalId).classList.add('flex'); // Use flex to center content
+        }
+
+        /**
+         * Closes a modal dialog.
+         * @param {string} modalId - The ID of the modal element to close.
+         */
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+            document.getElementById(modalId).classList.remove('flex');
+        }
+
+        // Handle Add Employee Form Submission
+        document.getElementById('addEmployeeForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            const name = document.getElementById('newEmployeeName').value;
+            const role = document.getElementById('newEmployeeRole').value;
+            const location = document.getElementById('newEmployeeLocation').value;
+
+            // Get current date for hireDate
+            const today = new Date();
+            const hireDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+            const salary = "N/A"; // Default salary for new entries
+
+            // Create a new employee object
+            const newEmployee = {
+                id: pagesData.find(p => p.id === "employee-management").data.length + 1, // Simple ID generation
+                name: name,
+                role: role,
+                status: "Active", // Default status for new employees
+                location: location,
+                hireDate: hireDate,
+                salary: salary
+            };
+            // Add new employee to the data array
+            pagesData.find(p => p.id === "employee-management").data.push(newEmployee);
+            renderPage('employee-management'); // Re-render employee list to show the new employee
+            closeModal('employeeModal'); // Close the modal
+            showMessage(`Employee '${name}' added successfully!`, 'success'); // Show success message
+            this.reset(); // Clear form fields
+        });
+
+        /**
+         * Simulates the generation of a report.
+         * @param {string} reportName - The name of the report to simulate.
+         */
+        function generateReport(reportName) {
+            openModal('reportModal'); // Open the report generation modal
+            const reportModalContent = document.getElementById('reportModalContent');
+            reportModalContent.innerHTML = `<p><span class="loading-spinner"></span> Generating ${reportName}...</p><p class="mt-2 text-sm text-slate-500">This might take a few moments for complex reports.</p>`;
+
+            setTimeout(() => {
+                // After a delay, show success message and download link
+                reportModalContent.innerHTML = `
+                    <p class="text-green-600 font-bold">✅ ${reportName} generated successfully!</p>
+                    <p class="mt-2">Simulated download link: <a href="#" class="text-blue-600 hover:underline" onclick="showMessage('Simulating: Downloading ${reportName}...', 'info'); closeModal('reportModal'); return false;">Download ${reportName}.pdf</a></p>
+                `;
+            }, 2000); // Simulate 2-second generation time
+        }
+
+        /**
+         * Advances the payroll workflow to the next step.
+         * @param {number} stepIndex - The index of the step that was just completed.
+         */
+        function advanceWorkflowStep(stepIndex) {
+            const workflowSteps = pagesData.find(p => p.id === "payroll-processing").workflowSteps;
+            
+            // Ensure the current step is valid and not already completed (to prevent double-completion)
+            if (stepIndex < workflowSteps.length && workflowSteps[stepIndex].status === 'active') {
+                // Mark current step as completed
+                workflowSteps[stepIndex].status = 'completed';
+                showMessage(`Step '${workflowSteps[stepIndex].name}' completed.`, 'success');
+
+                // Activate next step if available
+                if (stepIndex + 1 < workflowSteps.length) {
+                    workflowSteps[stepIndex + 1].status = 'active';
+                    showMessage(`Next step: '${workflowSteps[stepIndex + 1].name}' is now active.`, 'info');
+                } else {
+                    showMessage('Payroll workflow completed successfully!', 'success');
+                }
+                renderPage('payroll-processing'); // Re-render workflow to show status changes
+            } else if (stepIndex < workflowSteps.length && workflowSteps[stepIndex].status === 'completed') {
+                showMessage(`Step '${workflowSteps[stepIndex].name}' is already completed.`, 'info');
+            } else {
+                showMessage('Cannot advance workflow: Invalid step or workflow already finished.', 'error');
+            }
+        }
+
+        /**
+         * Resets the payroll workflow to its initial state, starting a new run.
+         */
+        function startNewPayrollRun() {
+            const workflowSteps = pagesData.find(p => p.id === "payroll-processing").workflowSteps;
+            workflowSteps.forEach((step, index) => {
+                step.status = (index === 0) ? 'active' : 'pending'; // First step active, others pending
+            });
+            currentWorkflowPage = 0; // Reset active step index (if used for linear tracking)
+            renderPage('payroll-processing'); // Re-render the payroll processing page
+            showMessage('New Payroll Run initiated. Starting workflow from Employee Onboarding.', 'success');
+        }
+
+        /**
+         * Displays detailed information about a specific brand in a modal.
+         * @param {string} brandName - The name of the brand to display details for.
+         */
+        function showBrandDetails(brandName) {
+            const brand = pagesData.find(p => p.id === "global-brands").data.find(b => b.name === brandName);
+            if (!brand) {
+                showMessage('Brand details not found.', 'error');
+                return;
+            }
+            document.getElementById('brandDetailTitle').textContent = brand.name;
+            document.getElementById('brandDetailContent').innerHTML = `
+                <p class="text-sm text-slate-600 mb-2"><strong>Category:</strong> ${brand.category}</p>
+                <p class="text-slate-700">${brand.details}</p>
+            `;
+            openModal('brandDetailModal');
+        }
+
+
+        /**
+         * Renders the content for the selected page.
+         * @param {string} pageId - The ID of the page to render.
+         */
+        function renderPage(pageId) {
+            const page = pagesData.find(p => p.id === pageId);
+            if (!page) return; // Exit if page data not found
+
+            // Update page header
+            document.getElementById('current-page-title').textContent = page.title;
+            document.getElementById('current-page-description').textContent = page.description;
+            document.getElementById('page-content').innerHTML = page.content; // Load page-specific HTML content
+
+            // Destroy existing Chart.js instances to prevent memory leaks and conflicts
+            if (currentChart) {
+                currentChart.destroy();
+                currentChart = null;
+            }
+            if (currentChart2) {
+                currentChart2.destroy();
+                currentChart2 = null;
+            }
+
+            // Render specific content based on page ID
+            if (pageId === "dashboard-overview") {
+                // Initialize Chart.js for Dashboard KPIs
+                const ctx1 = document.getElementById('dashboardKPIsChart').getContext('2d');
+                currentChart = new Chart(ctx1, {
+                    type: page.chartData.type,
+                    data: page.chartData.data,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100, // Max value for percentage-based KPIs
+                                ticks: {
+                                    callback: value => value + '%' // Add '%' to y-axis labels
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false // Hide legend for cleaner look
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        label += context.raw + '%'; // Add '%' to tooltip labels
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Initialize second chart for Payroll Spend Trend
+                const ctx2 = document.getElementById('payrollSpendChart').getContext('2d');
+                currentChart2 = new Chart(ctx2, {
+                    type: page.chartData2.type,
+                    data: page.chartData2.data,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value, index, ticks) {
+                                        return '$' + value.toLocaleString(); // Format as currency
+                                    }
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+
+            } else if (pageId === "employee-management") {
+                // Render employee list and setup search functionality
+                const employeeListDiv = document.getElementById('employeeList');
+                const employeeSearchInput = document.getElementById('employeeSearch');
+
+                /**
+                 * Displays employees based on a filter text.
+                 * @param {string} filterText - The text to filter employees by name, role, or location.
+                 */
+                function displayEmployees(filterText = '') {
+                    employeeListDiv.innerHTML = ''; // Clear current list
+                    const filteredEmployees = page.data.filter(emp =>
+                        emp.name.toLowerCase().includes(filterText.toLowerCase()) ||
+                        emp.role.toLowerCase().includes(filterText.toLowerCase()) ||
+                        emp.location.toLowerCase().includes(filterText.toLowerCase())
+                    );
+                    if (filteredEmployees.length === 0) {
+                        employeeListDiv.innerHTML = '<p class="text-slate-500 text-center">No employees found.</p>';
+                        return;
+                    }
+                    filteredEmployees.forEach(emp => {
+                        const employeeCard = document.createElement('div');
+                        employeeCard.className = 'flex items-center justify-between p-3 bg-slate-50 rounded-md border border-slate-200 shadow-sm';
+                        employeeCard.innerHTML = `
+                            <div>
+                                <p class="font-semibold text-slate-900">${emp.name}</p>
+                                <p class="text-sm text-slate-600">${emp.role} - ${emp.location}</p>
+                                <p class="text-xs text-slate-500">Hire Date: ${emp.hireDate} | Salary: $${emp.salary}</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600 transition-colors" onclick="showMessage('Simulating: Viewing profile for ${emp.name}', 'info')">View Profile</button>
+                                <button class="bg-yellow-500 text-white px-3 py-1 rounded-md text-sm hover:bg-yellow-600 transition-colors" onclick="showMessage('Simulating: Editing profile for ${emp.name}', 'info')">Edit</button>
+                                <button class="bg-red-500 text-white px-3 py-1 rounded-md text-sm hover:bg-red-600 transition-colors" onclick="showMessage('Simulating: Deleting ${emp.name}', 'error')">Delete</button>
+                            </div>
+                        `;
+                        employeeListDiv.appendChild(employeeCard);
+                    });
+                }
+                displayEmployees(); // Initial display of all employees
+                employeeSearchInput.addEventListener('input', (e) => displayEmployees(e.target.value)); // Live search
+            } else if (pageId === "payroll-processing") {
+                // Render payroll workflow steps
+                const workflowDiv = document.getElementById('payrollWorkflow');
+                workflowDiv.innerHTML = ''; // Clear current workflow display
+                page.workflowSteps.forEach((step, index) => {
+                    const stepCard = document.createElement('div');
+                    stepCard.className = `workflow-step-card ${step.status}`; // Add status class for styling
+                    // Generate buttons for each step, disabling if not active
+                    let buttonsHtml = step.buttons.map(btn => `
+                        <button class="bg-indigo-500 text-white px-3 py-1 rounded-md text-sm hover:bg-indigo-600 transition-colors" 
+                                onclick="showMessage('Simulating: ${btn.action} (System: ${btn.system})\\nRoute: ${btn.route_or_action || 'N/A'}', 'info'); advanceWorkflowStep(${index});"
+                                ${step.status !== 'active' ? 'disabled' : ''}>
+                            ${btn.name}
+                        </button>
+                    `).join('');
+                    stepCard.innerHTML = `
+                        <h4 class="font-semibold text-slate-900 mb-2">${step.name}</h4>
+                        <p class="text-sm text-slate-600 mb-3">${step.description}</p>
+                        <div class="flex flex-wrap gap-2">${buttonsHtml}</div>
+                    `;
+                    workflowDiv.appendChild(stepCard);
+                });
+            } else if (pageId === "hat-book-index") {
+                // Render UI element library with search and filters
+                const buttonLibraryContentDiv = document.getElementById('buttonLibraryContent');
+                const buttonSearchInput = document.getElementById('buttonSearch');
+                const systemFilterSelect = document.getElementById('systemFilter');
+                const categoryFilterSelect = document.getElementById('categoryFilter');
+
+                /**
+                 * Displays UI elements based on search term and filters.
+                 */
+                function displayButtons() {
+                    buttonLibraryContentDiv.innerHTML = ''; // Clear current display
+                    const searchTerm = buttonSearchInput.value.toLowerCase();
+                    const selectedSystem = systemFilterSelect.value;
+                    const selectedCategory = categoryFilterSelect.value;
+
+                    const filteredButtons = buttonLibraryData.filter(button => {
+                        const matchesSearch = button.name.toLowerCase().includes(searchTerm) ||
+                                              button.function.toLowerCase().includes(searchTerm) ||
+                                              (button.route_or_action && button.route_or_action.toLowerCase().includes(searchTerm)) ||
+                                              (button.context_detail && button.context_detail.toLowerCase().includes(searchTerm));
+                        const matchesSystem = selectedSystem === '' || button.system === selectedSystem;
+                        const matchesCategory = selectedCategory === '' || button.category === selectedCategory;
+                        return matchesSearch && matchesSystem && matchesCategory;
+                    });
+
+                    if (filteredButtons.length === 0) {
+                        buttonLibraryContentDiv.innerHTML = '<p class="text-slate-500 text-center">No matching UI elements found.</p>';
+                        return;
+                    }
+
+                    filteredButtons.forEach(button => {
+                        const buttonCard = document.createElement('div');
+                        buttonCard.className = 'border border-slate-200 rounded-lg';
+                        let dropdownOptionsHtml = '';
+                        // If the button has dropdown options, generate HTML for them
+                        if (button.dropdownOptions && button.dropdownOptions.length > 0) {
+                            dropdownOptionsHtml = `
+                                <p class="mt-2 text-xs font-semibold text-slate-700">Dropdown Options:</p>
+                                <ul class="list-disc pl-5 text-xs text-slate-600 space-y-1">
+                                    ${button.dropdownOptions.map(opt => `
+                                        <li>
+                                            <strong>${opt.name}:</strong> ${opt.function} 
+                                            <code class="bg-slate-100 p-0.5 rounded">${opt.route_or_action || 'N/A'}</code>
+                                            ${opt.report_name ? ` (Report: ${opt.report_name})` : ''}
+                                            <button class="ml-2 text-blue-600 hover:underline text-xs" onclick="showMessage('Simulating: Selecting dropdown option \\'${opt.name}\\' for ${button.name}. Route: ${opt.route_or_action || 'N/A'}', 'info')">Select</button>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            `;
+                        }
+
+                        buttonCard.innerHTML = `
+                            <div class="collapsible-header flex items-center justify-between p-4 bg-slate-50 hover:bg-slate-100 rounded-t-lg">
+                                <h4 class="text-md font-semibold text-slate-900">${button.name} <span class="text-sm text-slate-500">(${button.system})</span></h4>
+                                <span class="rotate-icon text-slate-500 text-xl">+</span>
+                            </div>
+                            <div class="collapsible-content p-4 text-sm text-slate-700">
+                                <p><strong>Type:</strong> ${button.type}</p>
+                                <p><strong>Category:</strong> ${button.category}</p>
+                                <p><strong>Context:</strong> ${button.context_detail || 'N/A'}</p>
+                                <p><strong>Function:</strong> ${button.function}</p>
+                                <p><strong>Route/Action:</strong> <code class="bg-slate-100 p-1 rounded">${button.route_or_action || 'N/A'}</code></p>
+                                ${dropdownOptionsHtml}
+                                <button class="mt-3 bg-gray-200 text-gray-800 px-3 py-1 rounded-md text-xs hover:bg-gray-300 transition-colors" 
+                                        onclick="showMessage('Simulating: Clicking \\'${button.name}\\' (Type: ${button.type}). Route: ${button.route_or_action || 'N/A'}', 'info')">
+                                    Simulate Click
+                                </button>
+                            </div>
+                        `;
+                        buttonLibraryContentDiv.appendChild(buttonCard);
+                    });
+
+                    // Re-attach event listeners for newly created collapsible headers
+                    buttonLibraryContentDiv.querySelectorAll('.collapsible-header').forEach(header => {
+                        header.addEventListener('click', (e) => {
+                            const content = header.nextElementSibling; // Get the content div
+                            const icon = header.querySelector('.rotate-icon'); // Get the icon
+                            if (content.classList.contains('open')) {
+                                content.classList.remove('open');
+                                icon.classList.remove('rotated');
+                                icon.textContent = '+';
+                            } else {
+                                content.classList.add('open');
+                                icon.classList.add('rotated');
+                                icon.textContent = '-';
+                            }
+                        });
+                    });
+                }
+                // Attach event listeners for search and filter inputs
+                buttonSearchInput.addEventListener('input', displayButtons);
+                systemFilterSelect.addEventListener('change', displayButtons);
+                categoryFilterSelect.addEventListener('change', displayButtons);
+                displayButtons(); // Initial render of the button library
+            } else if (pageId === "global-brands") {
+                // Render global brands list with search
+                const brandListDiv = document.getElementById('brandList');
+                const brandSearchInput = document.getElementById('brandSearch');
+
+                /**
+                 * Displays brands based on a filter text.
+                 * @param {string} filterText - The text to filter brands by name, category, or description.
+                 */
+                function displayBrands(filterText = '') {
+                    brandListDiv.innerHTML = ''; // Clear current list
+                    const filteredBrands = page.data.filter(brand =>
+                        brand.name.toLowerCase().includes(filterText.toLowerCase()) ||
+                        brand.category.toLowerCase().includes(filterText.toLowerCase()) ||
+                        brand.description.toLowerCase().includes(filterText.toLowerCase())
+                    );
+                    if (filteredBrands.length === 0) {
+                        brandListDiv.innerHTML = '<p class="text-slate-500 text-center col-span-full">No brands found.</p>';
+                        return;
+                    }
+                    filteredBrands.forEach(brand => {
+                        const brandCard = document.createElement('div');
+                        brandCard.className = 'bg-slate-50 p-4 rounded-lg border border-slate-200 shadow-sm';
+                        brandCard.innerHTML = `
+                            <h4 class="font-semibold text-slate-900">${brand.name}</h4>
+                            <p class="text-sm text-slate-600">${brand.category}</p>
+                            <p class="text-xs text-slate-500 mt-2">${brand.description}</p>
+                            <button class="mt-3 bg-indigo-500 text-white px-3 py-1 rounded-md text-sm hover:bg-indigo-600 transition-colors" onclick="showBrandDetails('${brand.name}')">Explore</button>
+                        `;
+                        brandListDiv.appendChild(brandCard);
+                    });
+                }
+                displayBrands(); // Initial display of all brands
+                brandSearchInput.addEventListener('input', (e) => displayBrands(e.target.value)); // Live search
+            } else if (pageId === "api-integrations") {
+                // Render API integrations table
+                const apiIntegrationTableBody = document.getElementById('apiIntegrationTableBody');
+                apiIntegrationTableBody.innerHTML = ''; // Clear current table body
+                page.data.forEach(api => {
+                    const row = document.createElement('tr');
+                    row.className = 'border-b border-slate-100 last:border-b-0'; // Add border for rows
+                    let managementButtonsHtml = api.management_actions.map(action => `
+                        <button class="bg-gray-200 text-gray-800 px-2 py-1 rounded-md text-xs hover:bg-gray-300 transition-colors"
+                                onclick="showMessage('Simulating: ${action.action} for ${api.service}', 'info')">
+                            ${action.name}
+                        </button>
+                    `).join(' ');
+                    row.innerHTML = `
+                        <td class="py-3 px-4 text-sm text-slate-800">${api.service}</td>
+                        <td class="py-3 px-4 text-sm text-slate-600">${api.embedded_locations}</td>
+                        <td class="py-3 px-4 text-sm text-slate-600">${api.actions}</td>
+                        <td class="py-3 px-4 text-sm text-slate-600">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${api.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                                ${api.status}
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-sm text-slate-600">
+                            <div class="flex flex-wrap gap-1">
+                                ${managementButtonsHtml}
+                            </div>
+                        </td>
+                    `;
+                    apiIntegrationTableBody.appendChild(row);
+                });
+            }
+        }
+
+        // Add event listeners to all navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent default link behavior
+                const pageId = e.currentTarget.dataset.page; // Get the page ID from data-page attribute
+                renderPage(pageId); // Render the selected page
+
+                // Update active link styling
+                document.querySelectorAll('.nav-link').forEach(nav => {
+                    nav.classList.remove('bg-slate-700', 'text-indigo-300'); // Remove active classes
+                    nav.classList.add('text-white'); // Ensure default text color
+                });
+                e.currentTarget.classList.add('bg-slate-700', 'text-indigo-300'); // Add active classes to clicked link
+                e.currentTarget.classList.remove('text-white'); // Remove default text color from active link
+            });
+        });
+
+        // Initial page load: Render the dashboard overview and set its link as active
+        renderPage('dashboard-overview');
+        document.querySelector('.nav-link[data-page="dashboard-overview"]').classList.add('bg-slate-700', 'text-indigo-300');
+        document.querySelector('.nav-link[data-page="dashboard-overview"]').classList.remove('text-white');
+    </script>
+</body>
+</html>
