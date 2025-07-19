@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-07-18 | payroll | history | `index.html` | `2b2bb401` | FAA Omni-Payroll Global Challenger Blueprint | 171636 | 14 | 11 | 54.2 |
+| 2 | 2025-07-19 | payroll | history | `index.html` | `dca47f37` | 🧬 FAA™ Payroll OS — Master Index | 213385 | 26 | 11 | 70.3 |
