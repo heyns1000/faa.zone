@@ -3,1232 +3,1936 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌐 VaultMesh™ | AgroChain™ Core Protocol Overview - MindLift™ Theme</title>
-    <script
-      src="https://www.paypal.com/sdk/js?client-id=BAAGdPecRsf6dw_nIrWqUen0GdW0UsBZapp1Gn62xkPdD-Vqc-4lqWAidKK8LOObXux8pHJGjXknZoar6Q&components=hosted-buttons&disable-funding=venmo&currency=USD">
-    </script>
+    <title>VaultMesh™ - Secure Data Integrity & Distributed Solutions</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <!-- Inter Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <style>
-        /* Base Styles - Consistent with FAA.zone theme, optimized for product page */
-        :root {
-            --text-color-light: #1d1d1f;
-            --text-color-dark: #f5f5f7;
-            --bg-color-light: #f5f5f7;
-            --bg-color-dark: #1a1a1c;
-            --card-bg-light: #ffffff;
-            --card-bg-dark: #2a2a2e;
-            --border-color-light: #e8e8ed;
-            --border-color-dark: #3a3a3e;
-            --primary-color: #0071e3; /* Apple Blue */
-            --mindlift-color: #7B68EE; /* MediumPurple for MindLift theme */
-            --mindlift-accent-color: #9370DB; /* Brighter purple */
-            --muted-text-light: #6e6e73;
-            --muted-text-dark: #a0a0a5;
-
-            /* New: Custom colors for Pro and Enterprise cards */
-            --pro-card-bg-light: #f0e6fa; /* Light purple for Pro light mode */
-            --pro-card-bg-dark: #3c3c42; /* Darker grey for Pro dark mode */
-            --pro-border-light: #c2a7e7;
-            --pro-border-dark: #5c5c63;
-            --pro-button-color: #8A2BE2; /* BlueViolet for Pro button */
-            --pro-button-hover-color: #6A1FB8; /* Darker BlueViolet */
-
-            --enterprise-card-bg-light: #e6f0ff; /* Very light blue for Enterprise light mode */
-            --enterprise-card-bg-dark: #222225; /* Even darker grey for Enterprise dark mode */
-            --enterprise-border-light: #a0c3ff;
-            --enterprise-border-dark: #4a4a50;
-            --enterprise-button-color: #483D8B; /* DarkSlateBlue for Enterprise button */
-            --enterprise-button-hover-color: #382D7B; /* Darker DarkSlateBlue */
-        }
-
+        /* Global CSS variables for consistent styling */
         body {
             font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            background-color: #f5f5f7; /* Very light gray, almost white */
+            color: #1d1d1f; /* Near black for primary text */
+            line-height: 1.4;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
-            /* Ensure main body background matches light/dark mode */
-            background-color: var(--bg-color-light); 
-            color: var(--text-color-light);
+        }
+        :root {
+            --bg-color-light: #fdfdfd; /* A slightly lighter background for sections */
+            --card-bg-light: #ffffff;
+            --text-color-light: #1d1d1f;
+            --muted-text-light: #6e6e73;
+            --border-color-light: #e8e8ed;
+            --primary-color: #0071e3; /* Apple blue */
+
+            /* Design Hub Specific Colors */
+            --design-hub-bg: #1a1a2e; /* Dark blue-purple */
+            --design-hub-card-bg: #22223b; /* Slightly lighter dark blue */
+            --design-hub-text-primary: #e0e0e8; /* Light text for dark background */
+            --design-hub-text-secondary: #908cba; /* Muted text */
+            --design-hub-accent: #8e44ad; /* Purple accent */
+            --design-hub-border: #3b3b5c; /* Darker border */
+            --design-hub-success: #00e393; /* Green for success/compliance */
+            --design-hub-error: #e74c3c; /* Red for error */
         }
 
-        .dark-mode {
-            background-color: var(--bg-color-dark);
-            color: var(--text-color-dark);
+        /* Header - Minimalist and clean */
+        .header-style {
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+            backdrop-filter: blur(10px); /* Frosted glass effect */
+            border-bottom: 1px solid #e8e8ed; /* Subtle bottom border */
+            box-shadow: 0 1px 0 rgba(0,0,0,0.05); /* Very subtle shadow */
+            position: sticky;
+            top: 0;
+            z-index: 50;
         }
-
-        .container {
-            max-width: 1200px; /* Original container width for main content */
-            margin: 0 auto;
-            padding: 0 20px;
+        .header-style h1 {
+            color: var(--text-color-light); /* Dark text for logo */
+            font-weight: 700; /* Bolder logo */
+            font-size: 1.5rem; /* Slightly smaller logo */
+            letter-spacing: -0.02em; /* Tighter letter spacing */
         }
-
-        /* Specific styles for manual content area to maintain original site design flow */
-        .manual-container {
-            max-width: 900px; /* Slightly narrower for manual readability */
-            margin: 0 auto;
-            padding: 40px 20px;
-            background-color: var(--card-bg-light); /* Matches your site's card background */
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            border-radius: 12px;
-            margin-top: 40px;
-            margin-bottom: 40px;
-            border: 1px solid var(--border-color-light); /* Add border for definition */
+        .nav-link-style {
+            color: #424245; /* Muted gray for nav links */
+            font-size: 0.9rem; /* Smaller nav links */
+            font-weight: 500;
+            padding: 0.5rem 0.8rem; /* Adjusted padding */
+            border-radius: 6px; /* Subtle rounding */
+            transition: all 0.2s ease-in-out;
+            text-decoration: none; /* Remove underline */
+            flex-shrink: 0; /* Prevent links from shrinking */
         }
-        .dark-mode .manual-container {
-            background-color: var(--card-bg-dark);
-            border-color: var(--border-color-dark);
+        .nav-link-style:hover {
+            color: var(--primary-color); /* Apple blue on hover */
+            background-color: rgba(0, 0, 0, 0.03); /* Very subtle background on hover */
         }
-
-        /* Manual specific typography to match site theme */
-        .manual-container h1, .manual-container h2, .manual-container h3, .manual-container h4 {
-            color: var(--text-color-light);
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-        .dark-mode .manual-container h1, .dark-mode .manual-container h2, .dark-mode .manual-container h3, .dark-mode .manual-container h4 {
-            color: var(--text-color-dark);
-        }
-
-        .manual-container h1 { font-size: 2.5rem; text-align: center; margin-bottom: 30px; }
-        .manual-container h2 { font-size: 2rem; margin-top: 40px; }
-        .manual-container h3 { font-size: 1.5rem; margin-top: 30px; }
-        .manual-container h4 { font-size: 1.2rem; margin-top: 20px; }
-
-        .manual-container p, .manual-container ul, .manual-container ol, .manual-container li {
-            color: var(--muted-text-light);
-            line-height: 1.6;
-            margin-bottom: 10px;
-        }
-        .dark-mode .manual-container p, .dark-mode .manual-container ul, .dark-mode .manual-container ol, .dark-mode .manual-container li {
-            color: var(--muted-text-dark);
-        }
-
-        .manual-container strong {
-            color: var(--text-color-light);
+        .button-style-original {
+            background-color: transparent; /* No background for SecureSign type */
+            color: #424245; /* Muted gray for text */
             font-weight: 600;
+            border: 1px solid #dcdcdc; /* Fixed for visibility */
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            box-shadow: none;
         }
-        .dark-mode .manual-container strong {
-            color: var(--text-color-dark);
-        }
-
-        .manual-container code {
-            background-color: rgba(0,0,0,0.05);
-            padding: 2px 4px;
-            border-radius: 4px;
-            font-family: monospace;
-            font-size: 0.9em;
-            color: var(--text-color-light);
-        }
-        .dark-mode .manual-container code {
-            background-color: rgba(255,255,255,0.1);
-            color: var(--text-color-dark);
+        .button-style-original:hover {
+            background-color: rgba(0, 0, 0, 0.03); /* Subtle hover background */
+            color: var(--primary-color); /* Apple blue on hover */
+            transform: none; /* No lift */
+            box-shadow: none;
         }
 
-        .manual-container pre code {
-            display: block;
-            background-color: var(--card-bg-dark); /* Darker background for code blocks */
-            color: var(--text-color-dark); /* Light text for code blocks */
-            padding: 15px;
-            border-radius: 8px;
-            overflow-x: auto;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-        .dark-mode .manual-container pre code {
-            background-color: #1c1c1e;
-        }
-
-        .manual-container a {
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-        .manual-container a:hover {
-            text-decoration: underline;
-        }
-
-        .manual-container ol, .manual-container ul {
-            padding-left: 20px;
-        }
-        .manual-container ul { list-style-type: disc; }
-        .manual-container ol { list-style-type: decimal; }
-
-        .manual-container .note {
-            background-color: var(--pro-card-bg-light); /* Use a soft theme color */
-            border-left: 5px solid var(--mindlift-color);
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 4px;
-            color: var(--text-color-light);
-        }
-        .dark-mode .manual-container .note {
-            background-color: var(--pro-card-bg-dark);
-            border-left-color: var(--mindlift-accent-color);
-            color: var(--text-color-dark);
-        }
-
-        .highlight-large {
-            font-size: 1.5rem; /* Extra large text */
-            font-weight: 700;
-            color: var(--primary-color);
-            word-break: break-all;
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
-        .dark-mode .highlight-large {
-            color: var(--mindlift-accent-color);
-        }
-
-        /* Footer for the manual itself, if it were a separate page */
-        .footer-manual {
-            text-align: center;
-            padding: 30px 20px;
-            margin-top: 50px;
-            background-color: var(--card-bg-light);
-            border-top: 1px solid var(--border-color-light);
-            color: var(--muted-text-light);
-        }
-        .dark-mode .footer-manual {
-            background-color: var(--card-bg-dark);
-            border-top-color: var(--border-color-dark);
-            color: var(--muted-text-dark);
-        }
-
-        /* --- Existing website styles (copied from previous code) --- */
-        /* Header styles removed as the header element is removed */
-        /* Section Styling */
-        .section-padding {
-            padding: 80px 20px;
-            background-color: var(--card-bg-light);
-            border-bottom: 1px solid var(--border-color-light);
-            border-top: 1px solid var(--border-color-light);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-        .dark-mode .section-padding {
-            background-color: var(--card-bg-dark);
-            border-bottom-color: var(--border-color-dark);
-            border-top-color: var(--border-color-dark);
-        }
-        .section-padding:last-of-type {
-            border-bottom: none;
-        }
-
-        .section-title {
-            font-size: 2.2rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 50px;
-            color: var(--text-color-light);
-            transition: color 0.3s ease;
-        }
-        .dark-mode .section-title {
-            color: var(--text-color-dark);
-        }
-
-        /* MindLift Specific Styles for Hero */
-        .mindlift-hero {
-            text-align: center;
-            padding: 100px 20px;
-            background: linear-gradient(135deg, var(--mindlift-color) 0%, var(--mindlift-accent-color) 100%);
+        .button-style-main { /* Sign Up button as the primary button */
+            background-color: var(--primary-color); /* Apple blue */
             color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .button-style-main:hover {
+            background-color: #0077ed; /* Slightly lighter blue on hover */
+            transform: translateY(-1px); /* Subtle lift */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        @media (min-width: 768px) {
+            .header-nav {
+                gap: 0; /* Reset gap for individual margin control on larger screens */
+            }
+            .header-nav a:not(.button-style-original):not(.button-style-main) {
+                margin-right: 1.5rem; /* Standard spacing for regular nav items */
+            }
+            .header-nav .login-button { /* Specific margin for Login button on larger screens */
+                margin-left: auto; /* Pushes Login, SecureSign, Sign Up to the right */
+            }
+            .header-nav .button-style-original { /* SecureSign button next to Login */
+                margin-left: 1rem; /* Space between Login and SecureSign */
+                margin-right: 0.5rem; /* Space between SecureSign and Sign Up */
+            }
+            .header-nav .button-style-main { /* Sign Up button */
+                margin-left: 0; /* No left margin, follows SecureSign directly */
+            }
+        }
+
+        /* Hero Section - Clean, bold, and inviting */
+        .hero-section {
+            background-color: white;
+            min-height: 70vh;
+            padding: 6rem 1.5rem;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            box-shadow: none;
+            color: var(--text-color-light);
             position: relative;
             overflow: hidden;
-            border-radius: 12px;
-            margin: 20px auto; /* Centered with margin */
-            max-width: 1200px; /* Constrain width like container */
-            box-shadow: 0 10px 30px rgba(123, 104, 238, 0.4);
-        }
-        .mindlift-hero h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            letter-spacing: -0.05em;
-            color: white;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-        }
-        .mindlift-hero p {
-            font-size: 1.5rem;
-            max-width: 900px;
-            margin: 0 auto 40px;
-            line-height: 1.5;
-            color: rgba(255, 255, 255, 0.9);
-        }
-        .mindlift-hero .cta-button {
-            background-color: white;
-            color: var(--mindlift-color);
-            padding: 15px 40px;
-            font-size: 1.1rem;
-            border-radius: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        .mindlift-hero .cta-button:hover {
-            background-color: #f0f0f0;
-            color: var(--mindlift-accent-color);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
-
-        /* Feature Grid Layout */
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-        .feature-card {
-            background-color: var(--card-bg-light);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            border: 1px solid var(--border-color-light);
-            text-align: left;
-            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .dark-mode .feature-card {
-            background-color: var(--card-bg-dark);
-            border-color: var(--border-color-dark);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-        .feature-card .icon {
-            font-size: 2.5rem;
-            color: var(--mindlift-color);
-            margin-bottom: 15px;
-        }
-        .feature-card h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--text-color-light);
-        }
-        .dark-mode .feature-card h3 {
-            color: var(--text-color-dark);
-        }
-        .feature-card p {
-            font-size: 1rem;
-            color: var(--muted-text-light);
-            line-height: 1.6;
-        }
-        .dark-mode .feature-card p {
-            color: var(--muted-text-dark);
-        }
-        .feature-card ul {
-            list-style: none;
-            padding: 0;
-            margin-top: 15px;
-        }
-        .feature-card ul li {
-            font-size: 0.95rem;
-            color: var(--muted-text-light);
-            margin-bottom: 5px;
-        }
-        .dark-mode .feature-card ul li {
-            color: var(--muted-text-dark);
-        }
-        .feature-card ul li strong {
-            color: var(--text-color-light);
-        }
-        .dark-mode .feature-card ul li strong {
-            color: var(--text-color-dark);
-        }
-
-        /* Pricing Section */
-        .pricing-section {
-            padding: 80px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             text-align: center;
         }
-        .dark-mode .pricing-section {
-            background-color: var(--bg-color-dark);
-        }
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Wider cards */
-            gap: 30px;
-            margin-top: 50px;
-            align-items: start;
-            justify-content: center; /* Center the grid items */
-        }
-        .pricing-card {
-            background-color: var(--card-bg-light);
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            border: 1px solid var(--border-color-light);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
-            height: 100%; /* Ensure cards fill their grid cell height */
-            text-align: left; /* Align content to the left within the card */
-            max-width: 450px; /* Cap max width for very large screens */
-            margin: 0 auto; /* Center individual cards within their grid cells */
-        }
-        .dark-mode .pricing-card {
-            background-color: var(--card-bg-dark);
-            border-color: var(--border-color-dark);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-        }
-        .pricing-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-        .dark-mode .pricing-card:hover {
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-        }
-        .pricing-card.highlight {
-            border-color: var(--mindlift-color);
-            box-shadow: 0 8px 25px rgba(123, 104, 238, 0.3);
-            transform: translateY(-8px);
-        }
-        .pricing-card.highlight .price-button {
-            background-color: var(--mindlift-color);
-        }
-        .pricing-card.highlight .price-button:hover {
-            background-color: var(--mindlift-accent-color);
-        }
-
-        /* Specific styles for Pro Card */
-        .pricing-card.pro-card {
-            background-color: var(--pro-card-bg-light);
-            border-color: var(--pro-border-light);
-        }
-        .dark-mode .pricing-card.pro-card {
-            background-color: var(--pro-card-dark);
-            border-color: var(--pro-border-dark);
-        }
-        .pricing-card.pro-card .price-button {
-            background-color: var(--pro-button-color);
-        }
-        .pricing-card.pro-card .price-button:hover {
-            background-color: var(--pro-button-hover-color);
-        }
-        .pricing-card.pro-card .price {
-             color: var(--pro-button-color); /* Match price color to button for consistency */
-        }
-        .dark-mode .pricing-card.pro-card .price {
-             color: var(--pro-button-color);
-        }
-
-        /* Specific styles for Enterprise Card */
-        .pricing-card.enterprise-card {
-            background-color: var(--enterprise-card-bg-light);
-            border-color: var(--enterprise-border-light);
-        }
-        .dark-mode .pricing-card.enterprise-card {
-            background-color: var(--enterprise-card-dark);
-            border-color: var(--enterprise-border-dark);
-        }
-        .pricing-card.enterprise-card .price-button {
-            background-color: var(--enterprise-button-color);
-        }
-        .pricing-card.enterprise-card .price-button:hover {
-            background-color: var(--enterprise-button-hover-color);
-        }
-        .pricing-card.enterprise-card .price {
-             color: var(--enterprise-button-color); /* Match price color to button for consistency */
-        }
-        .dark-mode .pricing-card.enterprise-card .price {
-             color: var(--enterprise-button-color);
-        }
-
-
-        .pricing-card h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: var(--text-color-light);
-            text-align: center; /* Center heading within the card */
-        }
-        .dark-mode .pricing-card h3 {
-            color: var(--text-color-dark);
-        }
-        .pricing-card .price {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 15px;
-            text-align: center; /* Center price within the card */
-            /* Removed fixed color to use custom card colors */
-        }
-        .dark-mode .pricing-card .price {
-            /* Removed fixed color to use custom card colors */
-        }
-        .pricing-card .price-description {
-            font-size: 0.95rem;
-            color: var(--muted-text-light);
-            margin-bottom: 15px;
-            text-align: center; /* Center description within the card */
-        }
-        .dark-mode .pricing-card .price-description {
-            color: var(--muted-text-dark);
-        }
-        .pricing-card ul {
-            list-style: none;
-            padding: 0;
-            margin-bottom: 20px;
-            text-align: left; /* Keep list items left-aligned */
+        .hero-section canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            flex-grow: 1; /* Allow list to take available space */
+            height: 100%;
+            display: block;
+            z-index: 0;
+            background-color: transparent;
         }
-        .pricing-card ul li {
-            font-size: 0.95rem;
-            color: var(--muted-text-light);
-            margin-bottom: 8px;
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-section h2 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--text-color-light);
+            line-height: 1.1;
+        }
+        .hero-section h2 span {
+            color: var(--primary-color);
+        }
+        .hero-section p {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #424245;
+            margin-top: 1.5rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.5;
+        }
+        /* CTA button styling for primary button (Explore Ecosystem) */
+        .cta-button-base {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             display: flex;
             align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            height: 50px;
+            box-sizing: border-box;
+            flex-shrink: 0;
+            flex-grow: 0;
+            min-width: 160px; /* Adjusted to fit content better */
         }
-        .dark-mode .pricing-card ul li {
-            color: var(--muted-text-dark);
+        .cta-button-base:hover {
+            background-color: #0077ed;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
         }
-        .pricing-card ul li i {
-            color: var(--mindlift-color);
-            margin-right: 10px;
-        }
-        .dark-mode .pricing-card ul li i {
-            color: var(--mindlift-accent-color); /* Ensure icons are visible in dark mode */
-        }
-        /* Override checkmark icon color for Pro/Enterprise cards */
-        .pricing-card.pro-card ul li i {
-            color: var(--pro-button-color);
-        }
-        .pricing-card.enterprise-card ul li i {
-            color: var(--enterprise-button-color);
+        .cta-button-base span {
+            display: none; /* Hidden for icon-only buttons if any */
         }
 
-        /* Style for the direct URL link, made to look like a button */
-        /* Note: This styling is applied to the raw URL text,
-           not a distinct button element or div. */
-        .direct-url-text {
-            display: block; /* To make it take its own line */
-            text-align: center; /* To center the text */
-            color: blue; /* Default link color, can be styled */
-            text-decoration: underline; /* Default link underline, can be styled */
-            margin-top: 15px; /* Spacing below content */
-            word-break: break-all; /* Break long URLs */
-        }
-
-
-        /* Disclaimer Section */
-        .disclaimer-section {
-            background-color: var(--bg-color-light);
-            padding: 40px 20px;
+        /* Secondary CTA button style */
+        .cta-button-secondary-style {
+            background-color: #f0f0f0;
+            color: #424245;
+            box-shadow: none;
+            border: 1px solid #dcdcdc;
+            padding: 0.8rem 1.8rem;
+            font-size: 1rem;
+            border-radius: 20px;
+            height: 50px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            font-size: 0.9rem;
-            color: #cc0000;
-            border-top: 1px solid var(--border-color-light);
-            margin-top: 40px;
+            line-height: 1.2;
+            flex-shrink: 0;
+            flex-grow: 0;
+            min-width: 160px; /* Adjusted to fit content better */
         }
-        .dark-mode .disclaimer-section {
-            background-color: var(--bg-color-dark);
-            border-top-color: var(--border-color-dark);
+        .cta-button-secondary-style:hover {
+            background-color: #e8e8ed;
+            color: var(--text-color-light);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
-        .disclaimer-section p strong {
+
+        /* Sections - Clean, defined blocks */
+        .section-style {
+            padding: 8rem 2rem;
+            background-color: var(--bg-color-light);
+            box-shadow: none;
+            border-bottom: 1px solid var(--border-color-light);
+            text-align: center;
+        }
+        .section-style:last-of-type {
+            border-bottom: none;
+        }
+        .section-style h2, .section-style h3 {
+            color: var(--text-color-light);
             font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 2rem;
+            font-size: 2.2rem;
         }
-
-
-        /* Metadata Metrics Section */
-        .metadata-metrics-section {
-            background-color: var(--card-bg-light);
-            padding: 80px 20px;
-            text-align: center;
-        }
-        .dark-mode .metadata-metrics-section {
-            background-color: var(--card-bg-dark);
-        }
-        .metadata-metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-        .metadata-card {
-            background-color: var(--bg-color-light);
-            padding: 30px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color-light);
-            text-align: left;
-            box-shadow: 0 1px 5px rgba(0,0,0,0.05);
-        }
-        .dark-mode .metadata-card {
-            background-color: var(--bg-color-dark);
-            border-color: var(--border-color-dark);
-            box-shadow: 0 1px 5px rgba(0,0,0,0.15);
-        }
-        .metadata-card h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-        .dark-mode .metadata-card h3 {
-            color: var(--text-color-dark);
-        }
-        .metadata-card ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .metadata-card ul li {
-            font-size: 0.95rem;
-            color: var(--muted-text-light);
-            margin-bottom: 8px;
+        .section-style p {
+            color: #424245;
+            font-size: 1.1rem;
             line-height: 1.5;
         }
-        .dark-mode .metadata-card ul li {
-            color: var(--muted-text-dark);
-        }
-        .metadata-card ul li strong {
-            color: var(--text-color-light);
-        }
-        .dark-mode .metadata-card ul li strong {
-            color: var(--text-color-dark);
-        }
 
-        /* Footer */
-        .main-footer {
-            background-color: var(--card-bg-light);
-            border-top: 1px solid var(--border-color-light);
-            padding: 40px 0;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-            margin-top: auto;
+        /* Feature Cards - Minimalist and informative */
+        .feature-card-style {
+            background-color: var(--bg-color-light);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            border: 1px solid var(--border-color-light);
+            text-align: left;
         }
-        .dark-mode .main-footer {
-            background-color: var(--card-bg-dark);
-            border-top-color: var(--border-color-dark);
+        .feature-card-style:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.12);
         }
-
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 30px;
+        .feature-card-style div:first-child {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
         }
-
-        .footer-brand {
-            flex: 1 1 300px;
-        }
-
-        .footer-brand .logo {
-            margin-bottom: 15px;
-        }
-
-        .copyright {
-            font-size: 0.8rem;
-            color: var(--muted-text-light);
-            line-height: 1.4;
-            transition: color 0.3s ease;
-        }
-        .dark-mode .copyright {
-            color: var(--muted-text-dark);
-        }
-
-        .footer-links {
-            display: flex;
-            flex: 2 1 500px;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .footer-column {
-            flex: 1 1 150px;
-        }
-
-        .footer-column h4 {
-            font-size: 1rem;
+        .feature-card-style h4 {
+            font-size: 1.2rem;
             font-weight: 600;
-            margin-bottom: 15px;
             color: var(--text-color-light);
-            transition: color 0.3s ease;
+            margin-bottom: 0.5rem;
         }
-        .dark-mode .footer-column h4 {
-            color: var(--text-color-dark);
-        }
-
-        .footer-column ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .footer-column a {
-            text-decoration: none;
-            font-size: 0.9rem;
+        .feature-card-style p {
+            font-size: 0.95rem;
             color: var(--muted-text-light);
-            margin-bottom: 8px;
-            display: block;
-            transition: color 0.3s ease;
-        }
-        .footer-column a:hover {
-            color: var(--primary-color);
-        }
-        .dark-mode .footer-column a {
-            color: var(--muted-text-dark);
-        }
-        .dark-mode .footer-column a:hover {
-            color: var(--primary-color);
         }
 
-        /* Responsive Adjustments */
+        /* Share Signal Section - Clean data display */
+        .shareprice-section {
+            background-color: var(--card-bg-light);
+            color: var(--text-color-light);
+            padding: 4rem 1.5rem;
+            border-bottom: 1px solid var(--border-color-light);
+        }
+        .shareprice-section h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .shareprice-section .price-display {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            letter-spacing: -0.02em;
+        }
+        .shareprice-section .timestamp-display {
+            color: var(--muted-text-light);
+            font-size: 0.85rem;
+        }
+
+        /* Seedwave Growth - Integrated chart */
+        .seedwave-section {
+            background-color: var(--bg-color-light);
+            padding: 6rem 1.5rem;
+            border-bottom: 1px solid var(--border-color-light);
+        }
+        .seedwave-section h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--text-color-light);
+        }
+        .seedwave-chart-container {
+            background-color: #fcfcfc;
+            border: 1px solid var(--border-color-light);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* Founder's Note - Elegant text block */
+        .founders-note-section {
+            background-color: var(--card-bg-light);
+            color: var(--text-color-light);
+            padding: 6rem 2rem;
+            border-bottom: 1px solid var(--border-color-light);
+        }
+        .founders-note-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-color-light);
+        }
+        .founders-note-section p {
+            font-size: 1.1rem;
+            color: #424245;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .founders-note-section p.italic-style {
+            color: var(--muted-text-light);
+            font-style: italic;
+        }
+        .founders-note-section p.font-semibold-style {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-top: 2rem;
+        }
+
+        /* Vault Terminal Access - Clean buttons */
+        .vault-access-section {
+            background-color: var(--bg-color-light);
+            padding: 6rem 2rem;
+            border-bottom: 1px solid var(--border-color-light);
+        }
+        .vault-access-section h3 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--text-color-light);
+            margin-bottom: 2.5rem;
+        }
+        .vault-frame-container {
+            background-color: #f0f0f0;
+            border: 1px solid #dcdcdc;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        .terminal-btn {
+            background-color: #f0f0f0;
+            color: #424245;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #dcdcdc;
+            cursor: pointer;
+        }
+        .terminal-btn:hover {
+            background-color: #e8e8ed;
+            color: var(--text-color-light);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .terminal-btn.ring-active {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px var(--primary-color);
+        }
+
+        /* Sector Scrolls - Clean link grid */
+        .sector-scrolls-section {
+            background-color: var(--card-bg-light);
+            padding: 6rem 2rem;
+            border-bottom: 1px solid var(--border-color-light);
+        }
+        .sector-scrolls-section h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--text-color-light);
+            margin-bottom: 2.5rem;
+        }
+        .glyph-button {
+            background-color: var(--bg-color-light);
+            color: #424245;
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color-light);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .glyph-button:hover {
+            background-color: #f0f0f0;
+            color: var(--text-color-light);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Treaty Section - Elegant quote */
+        .treaty-section {
+            background-color: var(--bg-color-light);
+            padding: 6rem 2rem;
+            border-bottom: 1px solid var(--border-color-light);
+        }
+        .treaty-section h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--text-color-light);
+            margin-bottom: 1.5rem;
+        }
+        .treaty-section p {
+            color: #424245;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+        .treaty-section blockquote {
+            font-size: 1.5rem;
+            color: var(--text-color-light);
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        .treaty-section blockquote::before, .treaty-section blockquote::after {
+            content: '“';
+            font-size: 2.5em;
+            line-height: 0.1;
+            vertical-align: -0.4em;
+            color: #dcdcdc;
+            margin-right: 0.1em;
+        }
+        .treaty-section blockquote::after {
+            content: '”';
+            margin-left: 0.05em;
+        }
+
+        /* Signal Packet - Developer focused, clean code block */
+        .signal-packet-section {
+            background-color: #1d1d1f;
+            color: #00e393;
+            padding: 4rem 1.5rem;
+            border-bottom: 1px solid #333;
+        }
+        .signal-packet-section pre {
+            background-color: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        /* VaultMesh Executive Summary - Structured and readable */
+        .vaultmesh-summary-section {
+            background-color: var(--card-bg-light);
+            padding: 6rem 2rem;
+            color: var(--text-color-light);
+            border-bottom: 1px solid var(--border-color-light);
+        }
+        .vaultmesh-summary-section h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--text-color-light);
+            margin-bottom: 1.5rem;
+        }
+        .vaultmesh-summary-section h2.text-purple-400-style { /* Specific override for purple */
+            color: var(--primary-color); /* Overwriting to primary for consistency with theme */
+        }
+        .vaultmesh-summary-section h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-color-light);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .vaultmesh-summary-section p {
+            font-size: 1.05rem;
+            color: #424245;
+            line-height: 1.5;
+        }
+        .vaultmesh-summary-section ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            color: #424245;
+        }
+        .vaultmesh-summary-section ul li {
+            font-size: 1.05rem;
+            margin-bottom: 0.5rem;
+        }
+        .vaultmesh-summary-section ul.list-decimal {
+            list-style-type: decimal;
+        }
+        .vaultmesh-summary-section code {
+            background-color: #e8e8ed;
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+            color: var(--text-color-light);
+        }
+
+        /* About Section - Simple and clear */
+        .about-section {
+            background-color: var(--bg-color-light);
+            padding: 6rem 2rem;
+            color: var(--text-color-light);
+            border-bottom: 1px solid var(--border-color-light);
+        }
+        .about-section h3 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--text-color-light);
+            margin-bottom: 1.5rem;
+        }
+        .about-section p {
+            font-size: 1.1rem;
+            color: #424245;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Call to Action Section - Prominent and inviting */
+        .cta-section-footer {
+            background: var(--card-bg-light);
+            padding: 6rem 2rem;
+            color: var(--text-color-light);
+            text-align: center;
+        }
+        .cta-section-footer h3 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-color-light);
+            margin-bottom: 1.5rem;
+        }
+        .cta-section-footer p {
+            font-size: 1.2rem;
+            color: #424245;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 2.5rem;
+        }
+
+        /* Footer - Minimalist */
+        .footer-style {
+            background-color: var(--card-bg-light);
+            color: var(--muted-text-light);
+            padding: 2rem;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color-light);
+            text-align: center;
+        }
+        .footer-style a {
+            color: var(--muted-text-light);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .footer-style a:hover {
+            color: var(--text-color-light);
+        }
+
+        /* Responsive adjustments */
         @media (max-width: 768px) {
-            .main-nav {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 70px;
-                left: 0;
-                width: 100%;
-                background-color: var(--card-bg-light);
-                border-bottom: 1px solid var(--border-color-light);
-                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-                padding: 20px 0;
-                z-index: 999;
+            .hero-section h2 {
+                font-size: 2.8rem;
             }
-            .dark-mode .main-nav {
-                background-color: var(--card-bg-dark);
-                border-bottom-color: var(--border-color-dark);
+            .hero-section p {
+                font-size: 1rem;
             }
-            .main-nav.active {
-                display: flex;
+            .cta-button-base, .cta-button-secondary-style {
+                width: calc(50% - 0.5rem); /* Two buttons per row, with gap */
+                height: auto; /* Allow height to adjust based on content wrapping */
+                padding: 0.7rem 0.5rem; /* Adjust padding for smaller width */
+                font-size: 0.9rem; /* Smaller font size for mobile */
+                margin: 0.25rem; /* Smaller margin for wrapping */
             }
-            .nav-list {
-                flex-direction: column;
-                text-align: center;
-                width: 100%;
-            }
-            .nav-list li {
-                width: 100%;
-            }
-            .nav-list a {
-                display: block;
-                padding: 10px 0;
-            }
-            .nav-actions {
-                flex-direction: column;
-                gap: 10px;
-                width: 100%;
-                padding-top: 10px;
-                border-top: 1px solid var(--border-color-light);
-            }
-            .dark-mode .nav-actions {
-                border-top-color: var(--border-color-dark);
-            }
-            .nav-actions .cta-button {
-                width: calc(100% - 40px);
-                margin: 0 20px;
-                text-align: center;
+            .hero-content > div { /* Target the flex container for hero buttons */
+                flex-wrap: wrap; /* Ensure buttons wrap to next line */
+                justify-content: center; /* Center wrapped buttons */
+                gap: 0.5rem; /* Gap between buttons */
             }
 
-            .hamburger-menu {
-                display: block;
+            .header-nav {
+                flex-wrap: wrap; /* Allow nav items to wrap */
+                justify-content: center;
+                margin-top: 1rem;
+            }
+            .header-nav .nav-link-style {
+                margin: 0.25rem 0.5rem;
+            }
+            .header-nav .nav-link-style:not(.button-style-original):not(.button-style-main),
+            .header-nav .button-style-original,
+            .header-nav .button-style-main,
+            .header-nav .login-button {
+                margin-left: 0.25rem; /* Closer spacing for mobile */
+                margin-right: 0.25rem;
+            }
+            .header-nav .login-button.ml-auto-override { /* Override ml-auto for mobile so it doesn't push to right */
+                margin-left: 0.25rem; /* Reset to match other links */
             }
 
-            .mindlift-hero h1 {
-                font-size: 3rem;
+            .section-style {
+                padding: 4rem 1.5rem;
             }
-            .mindlift-hero p {
+            .section-style h2, .section-style h3 {
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+            }
+            .section-style p {
+                font-size: 1rem;
+            }
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            .shareprice-section h2 {
+                font-size: 1.5rem;
+            }
+            .shareprice-section .price-display {
+                font-size: 2.5rem;
+            }
+            .vault-frame-container {
+                height: 500px;
+            }
+            .terminal-btn {
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+            .treaty-section blockquote {
                 font-size: 1.2rem;
             }
-            .section-title {
+            .vaultmesh-summary-section h2, .vaultmesh-summary-section h3 {
                 font-size: 1.8rem;
             }
-            .pricing-grid {
-                /* On smaller screens, allow all cards to be full width */
-                grid-template-columns: 1fr;
+            .vaultmesh-summary-section p, .vaultmesh-summary-section ul li {
+                font-size: 0.95rem;
             }
-            .metadata-metrics-grid {
-                grid-template-columns: 1fr;
+            .cta-section-footer h3 {
+                font-size: 2rem;
+            }
+            .cta-section-footer p {
+                font-size: 1.rem;
             }
         }
     </style>
 </head>
-<body>
-    <div class="manual-container">
-        <h1>Comprehensive Training Manual:<br>Managing Product Offerings & PayPal Integration</h1>
-        <p>
-            This manual provides a step-by-step guide for updating product details, generating PayPal buttons, and integrating them into your existing website template.
-        </p>
-
-        <h2>1. Website Structure Overview (for Admin Panel Integration)</h2>
-        <p>
-            Your website's pricing section (`&lt;section id="pricing"&gt;`) is designed to dynamically render PayPal buttons based on unique "Hosted Button IDs."
-        </p>
-
-        <h3>1.1. Global PayPal SDK (Part 1: Head Script)</h3>
-        <p>
-            This script loads the core PayPal functionality and is placed **ONCE** in the `&lt;head&gt;` section of your `index.html`. It is essential for PayPal's features to function across your page.
-        </p>
-        <pre><code>
-&lt;script
-  src=&quot;https://www.paypal.com/sdk/js?client-id=BAAGdPecRsf6dw_nIrWqUen0GdW0UsBZapp1Gn62xkPdD-Vqc-4lqWAidKK8LOObXux8pHJGjXknZoar6Q&amp;components=hosted-buttons&amp;disable-funding=venmo&amp;currency=USD&quot;&gt;
-&lt;/script&gt;
-        </code></pre>
-        <p class="note">
-            **Admin Panel Placement (Conceptual):** If your Admin Panel has a global "Header Scripts" or "Custom Code" section, this code would go there. It is a one-time setup and does not need to be repeated on every page if it's placed globally.
-        </p>
-
-        <h3>1.2. Product-Specific PayPal Buttons (Part 2: Body Code)</h3>
-        <p>
-            Each pricing package has a dedicated section in the `&lt;body&gt;` of `index.html`. Within each section, a `div` container and a small JavaScript snippet render the PayPal button for that specific product.
-        </p>
-        <p>
-            **Important:** These snippets should be placed directly inside each `&lt;div class="pricing-card"&gt;` for the respective product.
-        </p>
-        <pre><code>
-&lt;div id=&quot;paypal-container-YOUR_HOSTED_ID&quot;&gt;&lt;/div&gt;
-&lt;script&gt;
-  paypal.HostedButtons({
-    hostedButtonId: &quot;YOUR_HOSTED_ID&quot;,
-  }).render(&quot;#paypal-container-YOUR_HOSTED_ID&quot;)
-&lt;/script&gt;
-        </code></pre>
-        <div class="note">
-            <h4>Live File Paths & URLs:</h4>
-            <p>Your main pricing template file is located at:</p>
-            <p class="highlight-large">
-                GitHub Pages Path: `seedwave/public/sectors/agriculture-biotech/agrichain/paypal/pricing.html`
-            </p>
-            <p class="highlight-large">
-                Actual Live URL: `<a href="https://seedwave.faa.zone/sectors/agriculture-biotech/agrichain/paypal/pricing.html" target="_blank">https://seedwave.faa.zone/sectors/agriculture-biotech/agrichain/paypal/pricing.html</a>`
-            </p>
-            <p>This training manual file (`manual.html`) is located at:</p>
-            <p class="highlight-large">
-                Manual URL: `<a href="https://faa.zone/legal/public/legal/sectors/agriculture-biotech/agrichain/starter/paypal/manual.html" target="_blank">https://faa.zone/legal/public/legal/sectors/agriculture-biotech/agrichain/starter/paypal/manual.html</a>`
-            </p>
-        </div>
-
-        <h2>2. Product Details & Hosted IDs</h2>
-        <p>
-            Here are the specific details and PayPal Hosted IDs for your products. You will use these when updating product information in PayPal.
-        </p>
-
-        <ul style="list-style-type: none; padding-left: 0;">
-            <li style="margin-bottom: 15px;">
-                <strong style="color: var(--text-color-light);">Product Name:</strong> 🌱 Agriculture & Biotech Starter Package<br>
-                <strong style="color: var(--text-color-light);">Current Price:</strong> $30.52 USD<br>
-                <strong style="color: var(--text-color-light);">Hosted Button ID:</strong> `EMWGPGHNN8Y8E`<br>
-                <strong style="color: var(--text-color-light);">Product Link:</strong> `<a href="https://www.paypal.com/ncp/payment/EMWGPGHNN8Y8E">https://www.paypal.com/ncp/payment/EMWGPGHNN8Y8E</a>`<br>
-                <strong style="color: var(--text-color-light);">Description:</strong> Basic API Access, Standard Analytics Dashboard, Community Support, Up to 5 Users, 50 GB Data Storage.
-            </li>
-            <li style="margin-bottom: 15px;">
-                <strong style="color: var(--text-color-light);">Product Name:</strong> 🌱 Agriculture & Biotech Pro Package<br>
-                <strong style="color: var(--text-color-light);">Current Price:</strong> $76.30 USD<br>
-                <strong style="color: var(--text-color-light);">Hosted Button ID:</strong> `QGU3ZUQCMD49Q`<br>
-                <strong style="color: var(--text-color-light);">Product Link:</strong> `<a href="https://www.paypal.com/ncp/payment/QGU3ZUQCMD49Q">https://www.paypal.com/ncp/payment/QGU3ZUQCMD49Q</a>`<br>
-                <strong style="color: var(--text-color-light);">Description:</strong> Advanced API Access, Premium Analytics & Reporting, Dedicated Priority Support, Unlimited Users, Custom Data Integrations.
-            </li>
-            <li style="margin-bottom: 15px;">
-                <strong style="color: var(--text-color-light);">Product Name:</strong> 🌱 Agriculture & Biotech Enterprise Package<br>
-                <strong style="color: var(--text-color-light);">Current Price:</strong> $152.60 USD<br>
-                <strong style="color: var(--text-color-light);">Hosted Button ID:</strong> `9C88S44F93M5J`<br>
-                <strong style="color: var(--text-color-light);">Product Link:</strong> `<a href="https://www.paypal.com/ncp/payment/9C88S44F93M5J">https://www.paypal.com/ncp/payment/9C88S44F93M5J</a>`<br>
-                <strong style="color: var(--text-color-light);">Description:</strong> All Business Package Features, Dedicated Account Manager, 24/7 Phone Support, Enhanced Custom Integrations, On-site Training & Setup, Active Users: Unlimited, API Calls/Month: Custom, Storage: Custom.
-            </li>
-        </ul>
-
-        <h2>3. Step-by-Step Guide: Generating & Integrating PayPal Buttons</h2>
-        <p>
-            Follow these steps to update product details and ensure your PayPal buttons are correctly integrated.
-        </p>
-
-        <h3>3.1. Update Product Details in PayPal (PayPal Account)</h3>
-        <ol>
-            <li>Log in to your **PayPal Business Account** (<a href="https://www.paypal.com/ncp/links" target="_blank">https://www.paypal.com/ncp/links</a>).</li>
-            <li>Navigate to **Tools** > **PayPal Buttons** > **"Manage Saved Links and Buttons"**.</li>
-            <li>Find the product package you wish to update (e.g., "Agriculture & Biotech Starter Package").</li>
-            <li>Click **"Edit"** next to the corresponding button.</li>
-            <li>**Update the Price, Description, and any other product details.** Ensure the price exactly matches the price displayed on your website.</li>
-            <li>**Crucially, ensure the "Listing type" is set to "One set price" and under "Button specs," "Stacked buttons: Vertical" is selected** if you want the Yellow PayPal + Black Checkout button display.</li>
-            <li>**Save Changes** in your PayPal account.</li>
-        </ol>
-
-        <h3>3.2. Retrieve PayPal Button Code (PayPal Account)</h3>
-        <ol>
-            <li>After saving your changes in PayPal, return to **"Manage Saved Links and Buttons"**.</li>
-            <li>Find your updated product button and click **"Open"** to view its code snippets.</li>
-            <li>**Copy the "Part 2" code snippet.** This includes both the `&lt;div id="paypal-container-..."&gt;` and its immediately following `&lt;script&gt;...&lt;/script&gt;` block. This is the code you will paste into your website.</li>
-        </ol>
-
-        <h3>3.3. Update Your Website's HTML (Admin Panel)</h3>
-        <ol>
-            <li>Access your website's `index.html` file through your **Admin Panel's code editor**.</li>
-            <li>**Verify Global PayPal SDK (Part 1):** In the `&lt;head&gt;` section of `index.html`. Ensure it matches the latest "Part 1" code from PayPal (provided in Section 1.1 of this manual). This script needs to be present **only once**.</li>
-            <li>**Locate Product Pricing Cards:** Scroll down to the `&lt;section id="pricing" ...&gt;` area in the `&lt;body&gt;`. Each pricing package is contained within a `&lt;div class="pricing-card"&gt;`.</li>
-            <li>**Update Product Details (Text):** Manually update the price (`&lt;p class="price"&gt;`) and descriptive text (`&lt;p class="price-description"&gt;`, `&lt;ul&gt;` list items) within each product card to reflect any changes you made in PayPal.</li>
-            <li>**Replace PayPal Button Code (CRITICAL STEP):**
-                <ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
-                    <li>For each product card (Starter, Pro, Enterprise), find the existing `&lt;div&gt;` and `&lt;script&gt;` block for its PayPal button.</li>
-                    <li>**Replace the entire existing PayPal `div` and `script` block** with the new "Part 2" code snippet you copied directly from PayPal in Step 3.2. Ensure the `id` of the `div` and the `hostedButtonId` in the script are specific to the correct package.</li>
-                </ul>
-            </li>
-            <li>**Save** your `index.html` file in your Admin Panel.</li>
-            <li>**Clear Website Cache:** If your website platform has caching, clear it to ensure the changes appear live.</li>
-        </ol>
-
-        <h2>4. Managing QR Codes</h2>
-        <p>
-            QR codes provide a fast way for customers to access product payment links.
-        </p>
-
-        <h3>4.1. QR Code Details & Naming Convention</h3>
-        <p>
-            You have provided the Enterprise QR code details, and indicated a new sector: `agriculture-biotech`.
-        </p>
-        <ul style="list-style-type: none; padding-left: 0;">
-            <li style="margin-bottom: 8px;"><strong style="color: var(--text-color-light);">Enterprise QR Code (Link):</strong> `<a href="https://www.paypal.com/ncp/payment/9C88S44F93M5J" target="_blank">https://www.paypal.com/ncp/payment/9C88S44F93M5J</a>`<br>
-            </li>
-        </ul>
-        <p>
-            **Recommended Naming for Uploaded QR Images (for 7000+ products):**
-            <br>`https://seedwave.faa.zone/sectors/agriculture-biotech/agrichain/package_name/paypal/agriqr_XX.png`
-            <br>Where `XX` is `01` for Starter, `02` for Pro, `03` for Enterprise, and so on.
-            <br>Example for Starter: `<a href="https://seedwave.faa.zone/sectors/agriculture-biotech/agrichain/starter/paypal/agriqr_01.png" target="_blank">https://seedwave.faa.zone/sectors/agriculture-biotech/agrichain/starter/paypal/agriqr_01.png</a>`
-        </p>
-        <p>
-            You will need to generate and upload QR codes for **Pro** and **Starter** packages from your PayPal account as well, following the same pattern for naming and storage.
-        </p>
-
-        <h3>4.2. Integrating QR Codes (HTML)</h3>
-        <p>
-            To display QR codes on your page, use standard `&lt;img&gt;` tags. You can add these inside your product cards or in a dedicated section. Ensure your Admin Panel allows for direct HTML insertion or image uploads.
-        </p>
-        <pre><code>
-&lt;div class=&quot;qr-code-display&quot;&gt;
-    &lt;p&gt;Scan to purchase:&lt;/p&gt;
-    &lt;img src=&quot;https://seedwave.faa.zone/sectors/agriculture-biotech/agrichain/starter/paypal/agriqr_01.png&quot; alt=&quot;Starter Package QR Code&quot; style=&quot;width:150px; height:150px;&quot;&gt;
-&lt;/div&gt;
-        </code></pre>
-        <p>
-            **Admin Panel Placement (Conceptual):** If your Admin Panel allows image uploads or direct HTML insertion, you would add these `&lt;img&gt;` tags where appropriate. Remember to upload the QR code image files to your hosting server first following the naming convention.
-        </p>
-
-        <h2>5. How to Instruct This AI for Future Tasks (10 Prompts Example)</h2>
-        <p>
-            When requesting code assistance from this AI, be as precise as possible. Follow these types of prompts for effective results:
-        </p>
-        <ol>
-            <li>"Update the price for the Pro Package to `$80.00 USD` on the website and provide the full HTML."</li>
-            <li>"Add a new section for 'Customer Testimonials' right above the Footer. Provide the HTML with 3 placeholder testimonials."</li>
-            <li>"Change the background color of all pricing cards to `#F0F0F0` in light mode. Provide only the updated CSS."</li>
-            <li>"My PayPal button for the Enterprise Package is not showing. Here is my current HTML [paste full HTML]. Please fix the Enterprise PayPal button. The Hosted ID is `9C88S44F93M5J`."</li>
-            <li>"I need to add a dropdown for subscription terms (Monthly/Annual) to the Starter Package. Update the HTML for the quantity selector. Do NOT change any PayPal code."</li>
-            <li>"The copyright year needs to be dynamic. Update the footer HTML to automatically display the current year using JavaScript."</li>
-            <li>"I want to add a new 'FAQ' link to the main navigation. Show me how to add it and create a placeholder section for FAQs."</li>
-            <li>"I have a new product, 'YieldBoost Add-on'. Add a new pricing card for it in the pricing grid. It costs `$25.00 USD` and its PayPal Hosted ID is `NEW_YIELD_BOOST_ID`. Provide the full HTML."</li>
-            <li>"My website has an issue on mobile where sections overlap. Please review the CSS and suggest responsive adjustments for the `.feature-grid` layout. Provide only the relevant CSS changes."</li>
-            <li>"I want to replace the `+more` text with an actual icon next to the PayPal/Visa/Mastercard logos for the QR code display. Provide the updated HTML for the QR code image block."</li>
-        </ol>
+<body class="min-h-screen bg-gray-50 font-inter text-gray-800 flex flex-col items-center">
+    <div id="app-root" class="w-full">
+        <!-- Content will be rendered here by JavaScript -->
     </div>
 
-    <main>
-        <section id="overview" class="mindlift-hero">
-            <div class="container">
-                <h1>VaultMesh™ | AgroChain™ Core Protocol</h1>
-                <p>AgroChain™ is a powerful FAA.zone™ framework empowering the Agriculture & Biotech sector with advanced automation and data management. It connects effortlessly to the PulseGrid™ for optimized workflow and compliance.</p>
-                <a href="#pricing" class="cta-button">View Pricing &rarr;</a>
-            </div>
-        </section>
-
-        <section id="features" class="section-padding">
-            <div class="container">
-                <h2 class="section-title">Key Features</h2>
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <i class="fas fa-link icon"></i>
-                        <h3>Direct Integration</h3>
-                        <p>Direct integration with FAA 🧾 Professional Services Mesh™.</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-sync-alt icon"></i>
-                        <h3>Advanced Data Sync</h3>
-                        <p>Real-time data synchronization with YieldNode™ for up-to-the-minute insights into your agricultural operations.</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-shield-alt icon"></i>
-                        <h3>Real-time Compliance</h3>
-                        <p>Ensure robust regulatory adherence with VaultLink™ (agriculture specific) for continuous monitoring and effortless reporting.</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-expand-arrows-alt icon"></i>
-                        <h3>Scalable Architecture</h3>
-                        <p>Unleash massive scalability for x21 power expansion, ensuring your system grows seamlessly with your agricultural demands.</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-chart-line icon"></i>
-                        <h3>Predictive Analytics</h3>
-                        <p>Leverage our advanced predictive analytics module for AgroChain™ performance, anticipating harvest trends and optimizing resource allocation.</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-puzzle-piece icon"></i>
-                        <h3>Open API Access</h3>
-                        <p>Gain full API access for seamless interoperability, allowing custom integrations and extending functionality to fit your unique needs.</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-lock icon"></i>
-                        <h3>Blockchain Security</h3>
-                        <p>Benefit from immutable, blockchain-secured data provenance, ensuring transparency and trust across your entire supply chain from farm to market.</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-file-invoice icon"></i>
-                        <h3>One-click Reporting</h3>
-                        <p>Generate comprehensive regulatory reports and detailed audit trails effortlessly, ensuring compliance with local and international agricultural standards.</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-network-wired icon"></i>
-                        <h3>Self-optimizing Nodes</h3>
-                        <p>Achieve peak operational efficiency with intelligent, self-optimizing node distribution that dynamically adapts to demand across your agricultural network.</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-brain icon"></i>
-                        <h3>Secure Multi-party Computation</h3>
-                        <p>Enable secure, collaborative data analysis with multiple stakeholders while preserving privacy and protecting sensitive agricultural data assets.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section-padding">
-            <div class="container">
-                <h2 class="section-title">Why Trust 🌐 VaultMesh™?</h2>
-                <p class="text-lg mb-4 max-w-2xl mx-auto" style="color: var(--muted-text-light);">
-                    At <strong>VaultMesh™</strong>, we are the architects of the core infrastructure that powers the entire FAA.zone™ ecosystem. Our purpose is to provide a <strong>robust, immutable, and universally accessible fabric</strong> for critical information and distributed processes, enabling global compliance, efficiency, and innovation across heavily regulated sectors.
-                </p>
-                <p class="text-lg mb-4 max-w-2xl mx-auto" style="color: var(--muted-text-light);">
-                    We specialize in <strong>Decentralized Data Integrity</strong>, <strong>Secure Data Orchestration</strong>, and building <strong>Scalable & Resilient Infrastructure</strong>. Our solutions offer <strong>Verifiable Trust & Identity</strong> and comprehensive <strong>Compliance & Audit Trails</strong>.
-                </p>
-                <div class="text-center mt-6">
-                    <p class="text-lg font-semibold" style="color: var(--text-color-light);">Built on principles by:</p>
-                    <p class="text-xl font-bold mt-1" style="color: var(--mindlift-color);">Heyns Schoeman™</p>
-                    <p class="text-md" style="color: var(--muted-text-light);">Founder | FAA Global™ | FAA.zone™ 🌍<br>"Sustain. Protect. Empower."</p>
-                    <a href="vaultmesh-about-us-page.html" class="cta-button">Learn More About Us</a>
-                </div>
-            </div>
-        </section>
-
-        <section class="section-padding">
-            <div class="container">
-                <h2 class="section-title">VaultMesh™ Subnodes</h2>
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <i class="fas fa-seedling icon"></i>
-                        <h3>YieldNode™</h3>
-                        <p>Specialized nodes for optimizing agricultural yield data processing, ensuring maximum productivity and resource utilization.</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-search-location icon"></i>
-                        <h3>SoilScan™</h3>
-                        <p>Advanced subnode for granular soil analysis and real-time environmental data collection, enabling precision agriculture.</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-bug icon"></i>
-                        <h3>PestDetect™</h3>
-                        <p>Intelligent detection and tracking of agricultural pests with AI-driven insights, minimizing crop damage and chemical use.</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-barcode icon"></i>
-                        <h3>CropTrace™</h3>
-                        <p>Comprehensive traceability for crop origin and lifecycle management, providing transparent, farm-to-fork insights for consumers and regulators.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="metadata-metrics-section section-padding">
-            <div class="container">
-                <h2 class="section-title">FAA Metadata & Real-Time Metrics</h2>
-                <div class="metadata-metrics-grid">
-                    <div class="metadata-card">
-                        <h3>FAA Metadata & Compliance</h3>
-                        <ul>
-                            <li><strong>Product ID:</strong> AGROC-2537</li>
-                            <li><strong>VaultID:</strong> VAULT-9869</li>
-                            <li><strong>Signal Echo Layer:</strong> Layer Beta v4.3</li>
-                            <li><strong>Deployment Zone:</strong> Zone E 8</li>
-                            <li><strong>Security Rating:</strong> FAA-SEC B+</li>
-                            <li><strong>Active Nodes:</strong> 493</li>
-                            <li><strong>Last Audit:</strong> 2025-08-04</li>
-                            <li><strong>Compliance Status:</strong> Active & Certified</li>
-                        </ul>
-                    </div>
-                    <div class="metadata-card">
-                        <h3>Real-Time Metrics Overview</h3>
-                        <ul>
-                            <li><strong>Current Pulse Activity:</strong> 65.08 pulses/sec</li>
-                            <li><strong>Data Volume Processed (24h):</strong> 108.02 TB</li>
-                            <li><strong>Latency Average:</strong> 40.82 ms</li>
-                        </ul>
-                        <h4 style="margin-top: 20px; font-size: 1.2rem; color: var(--text-color-light);">VaultTrace™ Ledger Entries:</h4>
-                        <ul>
-                            <li>#7756 - AGROC Pulse Tx - Confirmed</li>
-                            <li>#6954 - AGRIC Data Sync - Completed</li>
-                            <li>#7848 - Node Activation Confirm - Offline</li>
-                            <li>#3206 - VaultTrace™ Audit - Passed</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="pricing" class="pricing-section section-padding">
-            <div class="container">
-                <h2 class="section-title">Flexible Pricing for Every Operation</h2>
-                <div class="pricing-grid">
-                    <div class="pricing-card">
-                        <h3>🌱 Agriculture & Biotech Starter Package</h3>
-                        <p class="price">$30.52</p>
-                        <p class="price-description">
-                            Unlock powerful features for Starter success.
-                        </p>
-                        <ul>
-                            <li><i class="fas fa-check-circle"></i> Basic API Access</li>
-                            <li><i class="fas fa-check-circle"></i> Standard Analytics Dashboard</li>
-                            <li><i class="fas fa-check-circle"></i> Community Support</li>
-                            <li><i class="fas fa-check-circle"></i> Up to 5 Users</li>
-                            <li><i class="fas fa-check-circle"></i> 50 GB Data Storage</li>
-                        </ul>
-                        <div class="quantity-selector">
-                            <label for="starter-quantity">Quantity:</label>
-                            <select id="starter-quantity">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                        </div>
-                        <div id="paypal-container-EMWGPGHNN8Y8E"></div>
-                        <script>
-                          paypal.HostedButtons({
-                            hostedButtonId: "EMWGPGHNN8Y8E",
-                          }).render("#paypal-container-EMWGPGHNN8Y8E")
-                        </script>
-                    </div>
-
-                    <div class="pricing-card highlight pro-card">
-                        <h3>🌱 Agriculture & Biotech Pro Package</h3>
-                        <p class="price">$76.30</p>
-                        <p class="price-description">
-                            Unlock powerful features for Pro success.
-                        </p>
-                        <ul>
-                            <li><i class="fas fa-check-circle"></i> Advanced API Access</li>
-                            <li><i class="fas fa-check-circle"></i> Premium Analytics & Reporting</li>
-                            <li><i class="fas fa-check-circle"></i> Dedicated Priority Support</li>
-                            <li><i class="fas fa-check-circle"></i> Unlimited Users</li>
-                            <li><i class="fas fa-check-circle"></i> Custom Data Integrations</li>
-                        </ul>
-                        <div class="quantity-selector">
-                            <label for="pro-quantity">Quantity:</label>
-                            <select id="pro-quantity">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                        </div>
-                        <div id="paypal-container-QGU3ZUQCMD49Q"></div>
-                        <script>
-                          paypal.HostedButtons({
-                            hostedButtonId: "QGU3ZUQCMD49Q",
-                          }).render("#paypal-container-QGU3ZUQCMD49Q")
-                        </script>
-                    </div>
-
-                    <div class="pricing-card enterprise-card">
-                        <h3>🌱 Agriculture & Biotech Enterprise Package</h3>
-                        <p class="price">$152.60</p>
-                        <p class="price-description">
-                            Unlock powerful features for Enterprise success.
-                        </p>
-                        <ul>
-                            <li><i class="fas fa-check-circle"></i> All Business Package Features</li>
-                            <li><i class="fas fa-check-circle"></i> Dedicated Account Manager</li>
-                            <li><i class="fas fa-check-circle"></i> 24/7 Phone Support</li>
-                            <li><i class="fas fa-check-circle"></i> Enhanced Custom Integrations</li>
-                            <li><i class="fas fa-check-circle"></i> On-site Training & Setup</li>
-                        </ul>
-                        <div class="quantity-selector">
-                            <label for="enterprise-quantity">Quantity:</label>
-                            <select id="enterprise-quantity">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                        </div>
-                        <div id="paypal-container-9C88S44F93M5J"></div>
-                        <script>
-                          paypal.HostedButtons({
-                            hostedButtonId: "9C88S44F93M5J",
-                          }).render("#paypal-container-9C88S44F93M5J")
-                        </script>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="disclaimer-section">
-            <div class="container">
-                <p><strong>Disclaimer:</strong> This page is a static HTML demonstration. It does NOT process any real financial transactions, exchange real currency, or interact with live payment gateways or cryptocurrency networks. All displayed prices, rates, and transaction statuses are simulated for illustrative purposes only. Do NOT enter any real personal or financial information. For actual FAA.zone™ services and transactions, please refer to our official and secure platforms.</p>
-            </div>
-        </section>
-    </main>
-
-    <footer class="main-footer">
-        <div class="container footer-content">
-            <div class="logo">
-                <span class="logo-faa">FAA.zone™</span> / <span class="logo-buildnest">VaultMesh™</span>
-            </div>
-            <p class="copyright">&copy; 2025 Fruitful Holdings (Pty) Ltd. All systems, symbols, and brand echoes protected by the Omni Present Copyright™.</p>
-        </div>
-        <div class="footer-links">
-            <div class="footer-column">
-                <h4>BuildNest™</h4>
-                <ul>
-                    <li><a href="index.html#features">Features</a></li>
-                    <li><a href="index.html#use-cases">Use Cases</a></li>
-                    <li><a href="index.html#pricing">Pricing</a></li>
-                    <li><a href="plotvault.html">Modules</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>FAA.zone™</h4>
-                <ul>
-                    <li><a href="about-faa.html">About FAA Systems™</a></li>
-                    <li><a href="index.html">Omni Grid™</a></li>
-                    <li><a href="baobab-archive.html">Baobab Archive™</li>
-                    <li><a href="compliance.html">Compliance</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Connect</h4>
-                <ul>
-                    <li><a href="contact-support.html">Contact Support</a></li>
-                    <li><a href="partner-program.html">Partner Program</a></li>
-                    <li><a href="developer-api.html">Developer API</a></li>
-                    <li><a href="legal-privacy.html">Legal & Privacy</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
-
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Quantity selector logic (remains as is)
-            const quantitySelects = document.querySelectorAll('.quantity-selector select');
-            quantitySelects.forEach(select => {
-                select.addEventListener('change', (event) => {
-                    const selectedQuantity = event.target.value;
-                    console.log(`Selected quantity: ${selectedQuantity}`);
-                });
+        // Global state variables
+        let currentPage = 'vaultmesh';
+        let selectedPlan = null;
+        let productType = null;
+
+        let sharePrice = '$88.88';
+        let shareTimestamp = 'Live';
+        let vaultFrameSrc = '';
+        let activeTerminalButton = '';
+        let sectorContent = ''; // Stores HTML string for sector content
+
+        // References for canvas and chart
+        let rhythmicCanvas = null;
+        let chartInstance = null; // To hold the Chart.js instance
+
+        // Sector List and Map (moved from React component)
+        const sectorList = {
+            "agriculture": "🌱 Agriculture & Biotech",
+            "fsf": "🥦 Food, Soil & Farming",
+            "banking": "🏦 Banking & Finance",
+            "creative": "🖋️ Creative Tech",
+            "logistics": "📦 Logistics & Packaging",
+            "education": "📚 Education & IP",
+            "fashion": "✂ Fashion & Identity",
+            "gaming": "🎮 Gaming & Simulation",
+            "health-hygiene": "🧴 Health & Hygiene",
+            "housing": "🏛️ Housing & Infrastructure",
+            "justice": "⚖ Justice & Ethics",
+            "knowledge": "🧠 Knowledge & Archives",
+            "micromesh": "☰ Micro-Mesh Logistics",
+            "media": "🎬 Motion, Media & Sonic",
+            "nutrition": "✿ Nutrition & Food Chain",
+            "packaging": "📦 Packaging & Materials",
+            "quantum": "✴️ Quantum Protocols",
+            "ritual": "☯ Ritual & Culture",
+            "saas": "🔑 SaaS & Licensing",
+            "trade": "🧺 Trade Systems",
+            "utilities": "🔋 Utilities & Energy",
+            "voice": "🎙️️ Voice & Audio",
+            "webless": "📡 Webless Tech & Nodes",
+            "nft": "🔁 NFT & Ownership",
+            "zerowaste": "♻️ Zero Waste",
+            "professional": "🧾 Professional Services",
+            "ai-logic": "🧠 AI, Logic & Grid Systems",
+            "mining": "⛏️ Mining & Resources",
+            "payroll": "💰 Payroll Core Systems",
+            "wildlife": "🚁 Wildlife Sector",
+            "admin": "⚙️ Admin & Manual Sync Panel",
+            "global-index": "🌐 Global Brand Index"
+        };
+
+        const sectorMap = {};
+        for (const slug in sectorList) {
+            if (slug !== 'admin' && slug !== 'global-index') {
+                const fileName = (slug === 'wildlife') ? 'dashboard.html' : 'index.html';
+                sectorMap[slug] = `/public/sectors/${slug}/${fileName}`;
+            }
+        }
+
+        // --- Utility Functions ---
+        function attachEventListeners() {
+            // Header navigation buttons
+            document.querySelectorAll('#main-header button').forEach(button => {
+                const page = button.dataset.page;
+                const plan = button.dataset.plan ? JSON.parse(button.dataset.plan) : null;
+                const type = button.dataset.type;
+                if (page) {
+                    button.onclick = () => navigateTo(page, plan, type);
+                }
             });
-        });
+            // Header anchor links
+            document.querySelectorAll('#main-header a[href^="#"]').forEach(link => {
+                link.onclick = (e) => {
+                    e.preventDefault();
+                    document.getElementById(link.getAttribute('href').substring(1)).scrollIntoView({ behavior: 'smooth' });
+                };
+            });
+            // Specific buttons that navigate without data-page
+            const signUpButton = document.querySelector('#main-header .button-style-main');
+            if (signUpButton) {
+                 // Ensure the 'Sign Up' button in the header explicitly navigates to purchase for TaxNova
+                signUpButton.onclick = (e) => {
+                    e.preventDefault(); // Prevent default anchor behavior
+                    navigateTo('purchase', null, 'taxnova');
+                };
+            }
+
+
+            // VaultMesh Home Page specific listeners
+            if (currentPage === 'vaultmesh') {
+                initRhythmicCanvas();
+                initSharePriceUpdates();
+                initBrandChart();
+
+                document.querySelectorAll('.terminal-btn').forEach(button => {
+                    const url = button.dataset.url;
+                    const slug = button.dataset.slug;
+                    button.onclick = () => loadTerminal(url, slug);
+                });
+
+                document.querySelectorAll('.sector-scrolls-section .glyph-button').forEach(button => {
+                    const slug = button.dataset.slug;
+                    button.onclick = () => handleSectorGlyphClick(slug);
+                });
+
+                // Hero section CTA buttons
+                document.querySelectorAll('.hero-content .cta-button-base').forEach(button => {
+                    if (button.textContent.includes('Sign Up Now')) {
+                        button.onclick = () => navigateTo('purchase', null, 'taxnova');
+                    }
+                });
+
+                // Footer CTA button
+                const footerCtaButton = document.querySelector('.cta-section-footer .cta-button-base');
+                if (footerCtaButton) {
+                    footerCtaButton.onclick = () => navigateTo('purchase', null, 'taxnova');
+                }
+            }
+
+            // TaxNova Product Page specific listeners
+            if (currentPage === 'taxnova') {
+                document.querySelectorAll('#taxnova-protocol .md\\:grid-cols-3 button').forEach(button => {
+                    const planData = JSON.parse(button.dataset.plan);
+                    button.onclick = () => navigateTo('purchase', planData, 'taxnova');
+                });
+                const taxNovaCta = document.querySelector('#taxnova-protocol .text-center button');
+                if(taxNovaCta) {
+                    taxNovaCta.onclick = () => navigateTo('purchase', null, 'taxnova');
+                }
+            }
+
+            // Design Hub Page specific listeners
+            if (currentPage === 'designhub') {
+                document.querySelectorAll('.design-hub-plans button').forEach(button => {
+                    const planData = JSON.parse(button.dataset.plan);
+                    button.onclick = () => navigateTo('purchase', planData, 'designhub');
+                });
+            }
+
+            // Purchase Page specific listeners
+            if (currentPage === 'purchase') {
+                document.querySelectorAll('.purchase-plan-button').forEach(button => {
+                    const planData = JSON.parse(button.dataset.plan);
+                    button.onclick = () => navigateTo('payment', planData);
+                });
+                document.querySelector('.purchase-page-back-button').onclick = () => navigateTo('vaultmesh');
+            }
+
+            // Payment Page specific listeners
+            if (currentPage === 'payment') {
+                const processPaymentButton = document.getElementById('process-payment-button');
+                if (processPaymentButton) {
+                    processPaymentButton.onclick = handlePayment;
+                }
+                const retryPaymentButton = document.getElementById('retry-payment-button');
+                if (retryPaymentButton) {
+                    retryPaymentButton.onclick = () => {
+                        paymentStatus = 'pending'; // Reset status
+                        navigateTo('payment', selectedPlan); // Re-render payment page
+                    };
+                }
+                document.querySelector('.payment-page-back-button').onclick = () => navigateTo('purchase', selectedPlan, productType);
+            }
+
+            // Download Page specific listeners
+            if (currentPage === 'download') {
+                document.querySelector('.download-page-return-home').onclick = () => navigateTo('vaultmesh');
+            }
+        }
+
+        // --- Navigation Function ---
+        function navigateTo(page, plan = null, type = null) {
+            currentPage = page;
+            selectedPlan = plan;
+            productType = type;
+            renderPage();
+            window.scrollTo(0, 0); // Scroll to top
+        }
+
+        // --- Header HTML ---
+        function createHeaderHtml() {
+            return `
+                <header id="main-header" class="header-style py-4 px-6 md:px-12 flex flex-col sm:flex-row justify-between items-center w-full">
+                    <h1 class="text-2xl font-extrabold tracking-tight mb-4 sm:mb-0">🌐 VaultMesh™</h1>
+                    <nav class="header-nav flex flex-wrap justify-center sm:justify-end items-center gap-x-1 sm:gap-x-0">
+                        <button data-page="vaultmesh" class="nav-link-style">Home</button>
+                        <button data-page="taxnova" class="nav-link-style">TaxNova™</button>
+                        <button data-page="designhub" class="nav-link-style">Design Hub</button>
+                        <a href="#features" class="nav-link-style">Features</a>
+                        <a href="#shareprice" class="nav-link-style">Signal</a>
+                        <a href="#vault-access" class="nav-link-style">Vault</a>
+                        <a href="#treaty" class="nav-link-style">Treaty</a>
+                        <a href="#vaultmesh" class="nav-link-style">VaultMesh</a>
+                        <a href="#about" class="nav-link-style">About</a>
+                        <a href="https://faa.zone/careers/hiring-homepage.html" target="_blank" rel="noopener noreferrer" class="nav-link-style">Careers</a>
+                        <a href="https://seedwave.faa.zone/login.html" target="_blank" rel="noopener noreferrer" class="nav-link-style button-style-original login-button ml-auto-override sm:ml-auto">Login</a>
+                        <a href="https://faa.zone/legal/securesign.html" target="_blank" rel="noopener noreferrer" class="nav-link-style font-semibold px-4 py-2 rounded-full border border-gray-300 hover:bg-gray-100 hover:text-gray-900 button-style-original">SecureSign</a>
+                        <button data-page="purchase" data-type="taxnova" class="button-style-main nav-link-style">Sign Up</button>
+                    </nav>
+                </header>
+            `;
+        }
+
+        // --- VaultMesh Home Page HTML & Logic ---
+        function createVaultMeshHomePageHtml() {
+            return `
+                ${createHeaderHtml()}
+                <!-- Hero Section -->
+                <section class="hero-section w-full">
+                    <canvas id="rhythmicCanvas"></canvas>
+                    <div class="hero-content">
+                        <h2 class="text-5xl md:text-6xl font-extrabold mb-6 leading-tight">
+                            Welcome to <span class="text-blue-600">VaultMesh™</span>
+                        </h2>
+                        <p class="text-xl md:text-2xl mb-10 max-w-2xl mx-auto">
+                            Your secure and scalable platform for data integrity and distributed solutions.
+                            Explore our cutting-edge technologies designed to empower your digital infrastructure.
+                        </p>
+                        <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                            <a href="omnigrid.html" class="cta-button-base">
+                                Explore Ecosystem
+                            </a>
+                            <a href="https://baobab.faa.zone" target="_blank" rel="noopener noreferrer" class="cta-button-base cta-button-secondary-style">
+                                Baobab Network
+                            </a>
+                            <a href="https://fruitfulcratedance.com/" target="_blank" rel="noopener noreferrer" class="cta-button-base cta-button-secondary-style">
+                                Fruitful Crate Dance
+                            </a>
+                            <a href="https://seedwave.faa.zone/login.html" target="_blank" rel="noopener noreferrer" class="cta-button-base cta-button-secondary-style">
+                                Admin Login
+                            </a>
+                            <a href="contact-us.html" target="_blank" rel="noopener noreferrer" class="cta-button-base cta-button-secondary-style">
+                                Contact Us
+                            </a>
+                            <a href="sector_index_page.html" target="_blank" rel="noopener noreferrer" class="cta-button-base cta-button-secondary-style">
+                                Enter Index
+                            </a>
+                            <a href="https://sellers.takealot.com/" target="_blank" rel="noopener noreferrer" class="cta-button-base cta-button-secondary-style">
+                                Takealot Seller
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Features Section -->
+                <section id="features" class="section-style py-16 md:py-24 px-6 md:px-12 w-full">
+                    <div class="max-w-6xl mx-auto">
+                        <h3 class="text-4xl font-bold text-center mb-16">
+                            Unlock Your Potential with Our Core Features
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 feature-grid">
+                            <div class="feature-card-style">
+                                <div>💡</div>
+                                <h4>AI-Powered Insights</h4>
+                                <p>
+                                    Leverage advanced AI to gain deep insights, optimize operations, and make smarter decisions.
+                                </p>
+                            </div>
+                            <div class="feature-card-style">
+                                <div>🤝</div>
+                                <h4>Global Collaboration</h4>
+                                <p>
+                                    Connect with thousands of independent brands and partners worldwide, fostering a network of mutual growth.
+                                </p>
+                            </div>
+                            <div class="feature-card-style">
+                                <div>🌱</div>
+                                <h4>Sustainable Solutions</h4>
+                                <p>
+                                    Champion eco-friendly practices and contribute to a healthier planet through our curated marketplace.
+                                </p>
+                            </div>
+                            <div class="feature-card-style">
+                                <div>🔒</div>
+                                <h4>Secure VaultMesh™</h4>
+                                <p>
+                                    Protect your data and transactions with our state-of-the-art blockchain-inspired security protocols.
+                                </p>
+                            </div>
+                            <div class="feature-card-style">
+                                <div>📈</div>
+                                <h4>Real-time Analytics</h4>
+                                <p>
+                                    Monitor your progress and impact with intuitive dashboards and real-time performance metrics.
+                                </p>
+                            </div>
+                            <div class="feature-card-style">
+                                <div>🌐</div>
+                                <h4>OmniScroll Integration</h4>
+                                <p>
+                                    Seamlessly integrate with our OmniScroll ledger for transparent and efficient record-keeping.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FAA™ Share Signal Section -->
+                <section id="shareprice" class="shareprice-section py-12 text-center w-full">
+                    <h2 class="text-3xl font-semibold mb-2">FAA™ Share Signal</h2>
+                    <div id="price-display" class="price-display text-5xl font-bold">${sharePrice}</div>
+                    <div class="timestamp-display text-sm text-gray-400 mt-1">Last updated: <span id="timestamp">${shareTimestamp}</span></div>
+                </section>
+
+                <!-- Seedwave Brand Growth Section -->
+                <section id="seedwave" class="seedwave-section py-16 px-6 text-center w-full">
+                    <h2 class="text-4xl font-bold mb-8">🌱 Seedwave Brand Growth 🌱</h2>
+                    <div class="seedwave-chart-container w-full max-w-4xl mx-auto">
+                        <canvas id="brandChart"></canvas>
+                    </div>
+                </section>
+
+                <!-- Founder's Glyph™ Section -->
+                <section class="founders-note-section py-16 px-6 text-center w-full">
+                    <h2 class="text-4xl font-bold mb-8">🧬 Founder's Glyph™</h2>
+                    <p class="max-w-3xl mx-auto text-xl leading-relaxed">
+                        FAA™ wasn’t built like a typical startup. It emerged — out of silence, out of signal, out of glyphs and patterns that refused to be ignored.
+                        What you're seeing isn't a site. It’s a vault interface. A codebase of culture. A trust-machine powered by real human intelligence.
+                    </p>
+                    <p class="mt-6 max-w-2xl mx-auto italic-style">
+                        Where others scale with speed, we scale with meaning. Every brand here agreed to something deeper than growth — they signed a Treaty.
+                        That’s why this isn’t eCommerce. It’s TreatyCommerce™.
+                    </p>
+                    <p class="mt-6 font-semibold-style">— Written from the edge of code & culture 🌍 FAA.Zone Founder Glyph Activated™</p>
+                </section>
+
+                <!-- Vault Terminal Access Section -->
+                <section id="vault-access" class="vault-access-section py-16 px-6 w-full">
+                    <h3 class="text-4xl font-bold text-center mb-10">🔐 Sector Terminals</h3>
+                    <div class="w-full max-w-6xl mx-auto mb-10">
+                        <div class="vault-frame-container w-full h-[800px] border-4 rounded-xl shadow-2xl overflow-hidden">
+                            <iframe
+                                id="vault-frame"
+                                src="${vaultFrameSrc}"
+                                class="w-full h-full rounded-xl"
+                                frameBorder="0"
+                                title="VaultMaster Terminal"
+                                sandbox="allow-scripts allow-same-origin allow-forms"
+                            ></iframe>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                        <button data-url="vault-master.html" data-slug="vault-master" class="terminal-btn p-6 ${activeTerminalButton === 'vault-master' ? 'ring-active' : ''}">
+                            🦍 VaultMaster Terminal
+                        </button>
+                        <button data-url="cube-lattice.html" data-slug="cube-lattice" class="terminal-btn p-6 ${activeTerminalButton === 'cube-lattice' ? 'ring-active' : ''}">
+                            🧱 Cube Lattice GPT
+                        </button>
+                        <button data-url="global-view.html" data-slug="global-view" class="terminal-btn p-6 ${activeTerminalButton === 'global-view' ? 'ring-active' : ''}">
+                            🌍 Global View GPT
+                        </button>
+                        <button data-url="freight-ops.html" data-slug="freight-ops" class="terminal-btn p-6 ${activeTerminalButton === 'freight-ops' ? 'ring-active' : ''}">
+                            🚚 Freight Ops GPT
+                        </button>
+                        <button data-url="loop-watch.html" data-slug="loop-watch" class="terminal-btn p-6 ${activeTerminalButton === 'loop-watch' ? 'ring-active' : ''}">
+                            ♻️ Loop Watch GPT
+                        </button>
+                        <button data-url="seedwave.html" data-slug="seedwave" class="terminal-btn p-6 ${activeTerminalButton === 'seedwave' ? 'ring-active' : ''}">
+                            🌱 Seedwave GPT
+                        </button>
+                        <button data-url="distribution.html" data-slug="distribution" class="terminal-btn p-6 ${activeTerminalButton === 'distribution' ? 'ring-active' : ''}">
+                            📦 Distribution GPT
+                        </button>
+                        <button data-url="signal.html" data-slug="signal" class="terminal-btn p-6 ${activeTerminalButton === 'signal' ? 'ring-active' : ''}">
+                            🔐 Signal GPT
+                        </button>
+                        <button data-url="faa-brands.html" data-slug="faa-brands" class="terminal-btn p-6 ${activeTerminalButton === 'faa-brands' ? 'ring-active' : ''}">
+                            📦 7038 FAA Brands
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Sector Scrolls Section -->
+                <section class="sector-scrolls-section py-16 px-6 text-center w-full">
+                    <h2 class="text-4xl font-bold mb-8">🧬 Sector Scrolls</h2>
+                    <div id="sector-glyphs-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
+                        ${Object.keys(sectorList)
+                            .filter(slug => slug !== 'admin' && slug !== 'global-index')
+                            .sort((a, b) => sectorList[a].localeCompare(sectorList[b]))
+                            .map(slug => `
+                                <button data-slug="${slug}" class="glyph-button">
+                                    ${sectorList[slug]}
+                                </button>
+                            `).join('')}
+                    </div>
+                    <div id="sector-content-container" class="mt-10 px-6 max-w-6xl mx-auto">
+                        ${sectorContent}
+                    </div>
+                </section>
+
+                <!-- Treaty System™ Section -->
+                <section id="treaty" class="treaty-section py-16 px-6 text-center w-full">
+                    <h2 class="text-4xl font-bold mb-6">📜 Treaty System™</h2>
+                    <p class="max-w-2xl mx-auto text-lg mb-8">The FAA™ Treaty Layer binds interface to intention. This is not UI. This is glyph-encoded law.</p>
+                    <blockquote class="text-2xl italic font-semibold">"FAA™ isn't a site. It's the shape of alignment — and 🦍 holds the flame."</blockquote>
+                </section>
+
+                <!-- Signal Packet Section -->
+                <section class="signal-packet-section py-10 text-xs text-center w-full">
+                    <pre class="max-w-2xl mx-auto p-4 rounded-lg overflow-auto"><code>{\n    "signal": "omnidrop",\n    "origin": "If you dont like the fruits you are growing, change the seed™ / FAA Vault Layer",\n    "payload": {\n        "type": "scroll",\n        "value": "homepage + VaultRouter + all terminal iframe buttons live + Treaty Grid"\n    }\n}</code></pre>
+                </section>
+
+                <!-- VaultMesh™ Executive Summary Section -->
+                <section id="vaultmesh" class="vaultmesh-summary-section py-20 px-6 w-full">
+                    <div class="max-w-4xl mx-auto text-left space-y-6">
+                        <h2 class="text-4xl font-bold text-purple-400-style">🧠 VaultMesh™: Executive Summary</h2>
+                        <p>VaultMesh™ is an intelligent data orchestration framework designed for the segmentation, synchronization, and secure deployment of high-value digital assets—referred to as scrolls—across decentralized and permissioned networks such as FAA.Zone™.</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li>Captures metadata-rich content streams (chats, code, brands, assets)</li>
+                            <li>Assigns them to programmable claim structures (ScrollClaims™)</li>
+                            <li>Secures their lineage using OmniSignal™, PulseGrid™, and GhostTrace™ layers</li>
+                            <li>Enforces royalty logic, scroll integrity, and traceability on-chain and off-grid</li>
+                        </ul>
+                        <p>VaultMesh™ powers high-tier operations like HSOMNI9000™, enabling Diamond-tier deployments, cross-sector scroll claims, and enterprise-scale content monetization with full compliance and provenance.</p>
+                        <p>The framework is deeply integrated with platforms such as <code>vault.faa.zone™</code>, where scrolls tied to brands like Fruitful Global Planet™ are securely hosted, organized into structured sectors, and deployed through FAA.Zone™-compliant channels.</p>
+                        <p>A critical operator in this ecosystem is HSOMNI9000™, the certified scroll class which governs Diamond-tier logic, enforces 10–11% royalty triggers, and auto-deploys ScrollClaims™ with real-time ClaimRoot™ verification.</p>
+                        <h3 class="text-2xl font-semibold mt-10">📖 VaultMesh™ Index</h3>
+                        <ul class="list-decimal ml-6 space-y-2">
+                            <li>Introduction to VaultMesh™</li>
+                            <li>Core System Components</li>
+                            <li>ScrollClaim™ Infrastructure</li>
+                            <li>Data Flow and Claim Lifecycle</li>
+                            <li>Tiering, Royalties, and Compliance</li>
+                            <li>Integration with FAA.Zone™</li>
+                            <li>Market Segments & Use Cases</li>
+                            <li>Revenue Streams & Monetization</li>
+                            <li>Technology Roadmap</li>
+                            <li>Team & Governance</li>
+                        </ul>
+                        <h3 class="text-xl font-bold mt-10">☑️ 1. Introduction to VaultMesh™</h3>
+                        <p>VaultMesh™ transforms disorganized digital content into claimable, trackable assets. It bridges enterprise content systems, decentralized data vaults, and monetization layers through FAA-compliant infrastructure.</p>
+                        <h3 class="text-xl font-bold mt-10">⚒️ 2. Core System Components</h3>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li>VaultDNA™: Immutable identifiers for scroll content</li>
+                            <li>ClaimRoot™: Origin anchor & timestamp</li>
+                            <li>ScrollClaim™ Contracts: Programmable wrappers</li>
+                            <li>PulseGrid™ Sync: Real-time scroll presence & sync</li>
+                            <li>OmniSignal™: Global scroll verification</li>
+                            <li>GhostTrace™ Gen2: Scroll interaction backtrace</li>
+                        </ul>
+                        <h3 class="text-xl font-bold mt-10">🛠️ 3. ScrollClaim™ Infrastructure</h3>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li>Set tier access (e.g., Diamond)</li>
+                            <li>Define royalty logic (10–11%)</li>
+                            <li>Lock scrolls with PulseGrid™ sync and OmniSignal™</li>
+                            <li>Deploy via FAA.Zone™ with compliant ZIP bundles</li>
+                        </ul>
+                        <h3 class="text-xl font-bold mt-10">📀 4. Data Flow and Claim Lifecycle</h3>
+                        <ul class="list-decimal ml-6 space-y-1">
+                            <li>Ingest — content enters VaultMesh™</li>
+                            <li>Encode — metadata & VaultDNA™ attached</li>
+                            <li>Wrap — ScrollClaim™ smart-wrapped</li>
+                            <li>Deploy — FAA.Zone™ push (ZIP, manifest, HTML)</li>
+                            <li>Sync — PulseGrid™ status & OmniSignal™ locked</li>
+                            <li>Enforce — Royalties, access & scroll activity logged via GhostTrace™</li>
+                        </ul>
+                        <h3 class="text-xl font-bold mt-10">💸 5. Tiering, Royalties, and Compliance</h3>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li>Diamond Tier: 10–11% royalty enforced</li>
+                            <li>SmartWallet Integration: ScrollClaim™ payments and transfers</li>
+                            <li>VaultPay™ Tier III: Required for commercial deployments</li>
+                            <li>Compliance: FAA scroll ID, ClaimRoot™ hash, and royalty schema</li>
+                        </ul>
+                        <h3 class="text-xl font-bold mt-10">📡 6. Integration with FAA.Zone™</h3>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li>Native support for /public/diamond/ structure</li>
+                            <li>ZIP, HTML, Manifest deployment bundles</li>
+                            <li>ClaimRoot™ timestamp validation</li>
+                            <li>Seamless PulseGrid™ auto-sync for live claim state</li>
+                            <li>Brand hosting via vault.faa.zone™</li>
+                        </ul>
+                        <h3 class="text-xl font-bold mt-10">🏢 7. Market Segments & Use Cases</h3>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li>GPT Conversations & Expert Threads</li>
+                            <li>Knowledge/Training Archives</li>
+                            <li>Creative IP Scrolls (music, literature, visuals)</li>
+                            <li>GeoSector Deployment Archives</li>
+                            <li>Enterprise Scroll Logs & Audit Trails</li>
+                        </ul>
+                        <h3 class="text-xl font-bold mt-10">💰 8. Revenue Streams & Monetization</h3>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li>Diamond Royalties (10–11%)</li>
+                            <li>Scroll Packaging Fees</li>
+                            <li>VaultMesh™ API Subscriptions</li>
+                            <li>PulseGrid™ and OmniSignal™ Licensing</li>
+                        </ul>
+                        <h3 class="text-xl font-bold mt-10">⚖️ 9. Technology Roadmap</h3>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li>Q2 2025: ScrollClaim™ v2.2 with multi-claim staking</li>
+                            <li>Q3 2025: GhostTrace™ Gen3 with forensic backtrace tooling</li>
+                            <li>Q4 2025: Autonomous AI Sector Agents</li>
+                            <li>Q1 2026: Inter-vault Federation</li>
+                        </ul>
+                        <h3 class="text-xl font-bold mt-10">🔧 10. Team & Governance</h3>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li>FAA-certified engineers (scroll claimers)</li>
+                            <li>Scroll Ministers: Compliance + tiering</li>
+                            <li>Vault Admins: Metadata + ClaimRoot™ enforcement</li>
+                            <li>HSOMNI9000™ Operators: Diamond-tier execution agents</li>
+                        </ul>
+                        <p class="text-sm mt-10">📎 This plan can now be exported as HTML, PDF, or ZIP.</p>
+                    </div>
+                </section>
+
+                <!-- About Section -->
+                <section id="about" class="about-section py-16 md:py-24 px-6 md:px-12 text-center w-full">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-4xl font-bold mb-8">About Fruitful Innovations</h3>
+                        <p class="text-lg leading-relaxed mb-6">
+                            At Fruitful, we believe in a future where technology empowers positive change. Our platform is designed to break down traditional barriers, fostering a collaborative ecosystem where businesses and individuals can thrive while making a meaningful impact on the world.
+                        </p>
+                        <p class="text-lg leading-relaxed">
+                            We are committed to transparency, sustainability, and innovation, driven by a powerful AI that ensures fairness, efficiency, and personalized experiences for every user. Join us in building a more fruitful planet.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Call to Action Section (Footer CTA) -->
+                <section id="cta" class="cta-section-footer py-16 md:py-24 px-6 md:px-12 text-center w-full">
+                    <div class="max-w-3xl mx-auto">
+                        <h3 class="text-4xl font-extrabold mb-8 leading-tight">
+                            Ready to Transform Your Future?
+                        </h3>
+                        <p class="text-xl mb-10">
+                            Join the Fruitful community today and start your journey towards innovation, connection, and a sustainable tomorrow.
+                        </p>
+                        <button data-page="purchase" data-type="taxnova" class="cta-button-base">
+                            Sign Up Now
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Footer -->
+                <footer class="footer-style py-8 px-6 md:px-12 text-center w-full">
+                    © 2025 FAA™ Treaty System™. All Rights Reserved. Powered by 🦍 glyphs + Vault API. Synced with Seedwave™.
+                </footer>
+            `;
+        }
+
+        // Rhythmic Canvas Animation Logic
+        function initRhythmicCanvas() {
+            rhythmicCanvas = document.getElementById('rhythmicCanvas');
+            if (!rhythmicCanvas) return;
+            const ctx = rhythmicCanvas.getContext('2d');
+            let animationFrameId;
+            let lineAmplitude;
+
+            const resizeCanvas = () => {
+                rhythmicCanvas.width = rhythmicCanvas.offsetWidth;
+                rhythmicCanvas.height = rhythmicCanvas.offsetHeight;
+                lineAmplitude = rhythmicCanvas.height / 4;
+            };
+
+            window.removeEventListener('resize', resizeCanvas); // Remove previous listener to prevent duplicates
+            window.addEventListener('resize', resizeCanvas, false);
+            resizeCanvas();
+
+            let time = 0;
+            const numLines = 30;
+            const lineFrequency = 0.02;
+            const lineSpeed = 0.003;
+            const colorSpeed = 50;
+
+            function drawGlyph() {
+                ctx.clearRect(0, 0, rhythmicCanvas.width, rhythmicCanvas.height);
+                time += lineSpeed;
+                for (let i = 0; i < numLines; i++) {
+                    ctx.beginPath();
+                    const offset = i * (Math.PI * 2 / numLines);
+                    const colorHue = (time * colorSpeed + i * 10) % 360;
+                    ctx.strokeStyle = `hsla(${colorHue}, 70%, 50%, 0.2)`;
+                    ctx.lineWidth = 1.5;
+                    for (let x = 0; x <= rhythmicCanvas.width; x += 10) {
+                        const y = Math.sin(x * lineFrequency + time + offset) * lineAmplitude + rhythmicCanvas.height / 2;
+                        if (x === 0) {
+                            ctx.moveTo(x, y);
+                        } else {
+                            ctx.lineTo(x, y);
+                        }
+                    }
+                    ctx.stroke();
+                }
+                animationFrameId = requestAnimationFrame(drawGlyph);
+            }
+
+            // Clear any existing animation frame before starting a new one
+            if (rhythmicCanvas.animationFrameId) {
+                cancelAnimationFrame(rhythmicCanvas.animationFrameId);
+            }
+            rhythmicCanvas.animationFrameId = animationFrameId; // Store for cleanup
+            drawGlyph();
+        }
+
+        // Share Price Update Logic
+        let sharePriceIntervalId;
+        function initSharePriceUpdates() {
+            // Clear any existing interval to prevent duplicates
+            if (sharePriceIntervalId) {
+                clearInterval(sharePriceIntervalId);
+            }
+
+            const updatePrice = () => {
+                const mockPrice = (80 + Math.random() * 10).toFixed(2);
+                sharePrice = `$${mockPrice}`;
+                shareTimestamp = new Date().toLocaleTimeString();
+
+                const priceDisplay = document.getElementById('price-display');
+                const timestampDisplay = document.getElementById('timestamp');
+                if (priceDisplay && timestampDisplay) {
+                    priceDisplay.textContent = sharePrice;
+                    timestampDisplay.textContent = shareTimestamp;
+                }
+            };
+
+            sharePriceIntervalId = setInterval(updatePrice, 9000);
+            updatePrice(); // Initial call
+        }
+
+        // Chart.js Initialization for Seedwave Growth
+        function initBrandChart() {
+            const chartCanvas = document.getElementById('brandChart');
+            if (!chartCanvas) return;
+
+            if (chartInstance) {
+                chartInstance.destroy(); // Destroy existing chart if it exists
+            }
+
+            chartInstance = new Chart(chartCanvas, {
+                type: 'line',
+                data: {
+                    labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+                    datasets: [{
+                        label: 'Treaty Brands Activated',
+                        data: [3, 7, 13, 21],
+                        borderWidth: 2,
+                        borderColor: 'var(--primary-color)',
+                        tension: 0.4,
+                        fill: true,
+                        backgroundColor: 'rgba(0, 113, 227, 0.1)',
+                        pointRadius: 4,
+                        pointBackgroundColor: 'var(--primary-color)',
+                        pointBorderColor: '#fff',
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: '#e8e8ed',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#6e6e73'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: '#e8e8ed',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#6e6e73'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                            labels: {
+                                color: '#424245'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Function to load terminal content into the iframe
+        function loadTerminal(url, slug) {
+            vaultFrameSrc = url;
+            activeTerminalButton = slug;
+            const vaultFrame = document.getElementById('vault-frame');
+            if (vaultFrame) {
+                vaultFrame.src = vaultFrameSrc;
+                // Update button styles
+                document.querySelectorAll('.terminal-btn').forEach(btn => {
+                    if (btn.dataset.slug === slug) {
+                        btn.classList.add('ring-active');
+                    } else {
+                        btn.classList.remove('ring-active');
+                    }
+                });
+            }
+            console.log("🧬 Terminal loaded:", url);
+        }
+
+        // Handler for sector glyph clicks
+        function handleSectorGlyphClick(slug) {
+            const iframeUrl = sectorMap[slug];
+            const loadingMessageText = sectorList[slug] || slug.charAt(0).toUpperCase() + slug.slice(1).replace('-', ' ');
+            const sectorContentContainer = document.getElementById('sector-content-container');
+
+            if (iframeUrl && sectorContentContainer) {
+                sectorContent = `
+                    <div class="text-gray-600 text-sm mb-2">🔄 Loading sector: ${loadingMessageText}...</div>
+                    <iframe src="${iframeUrl}" class="w-full h-[900px] border-none rounded-xl bg-gray-100" title="Sector: ${loadingMessageText}"></iframe>
+                `;
+                sectorContentContainer.innerHTML = sectorContent;
+            } else if (sectorContentContainer) {
+                sectorContent = `
+                    <div class="text-red-500 text-sm mb-2">Error: Sector URL not found for ${slug}.</div>
+                `;
+                sectorContentContainer.innerHTML = sectorContent;
+            }
+        }
+
+        // --- TaxNova Product Page HTML ---
+        function createTaxNovaProductPageHtml() {
+            const taxNovaPlans = [
+                { name: 'Starter Node', price: 'FCU 82/mo', description: 'Ideal for small teams and pilot projects. Focuses on core features and secure blockchain synchronization.', key: 'taxnova-starter' },
+                { name: 'Pro Grid', price: 'FCU 211/mo', description: 'Designed for growing firms needing enhanced capabilities. Includes 8 core features and enhanced performance.', key: 'taxnova-pro' },
+                { name: 'Enterprise Omni-Sync', price: 'Custom pricing', description: 'For large organizations requiring full customisation, access, custom integrations, and dedicated resources.', key: 'taxnova-enterprise' },
+            ];
+
+            return `
+                ${createHeaderHtml()}
+                <section id="taxnova-protocol" class="section-style bg-white py-16 px-6 w-full">
+                    <div class="max-w-6xl mx-auto">
+                        <h2 class="text-4xl sm:text-5xl font-extrabold text-blue-800 mb-6 text-center">TaxNova™ Core Protocol: Your Financial Compliance Solution</h2>
+                        <p class="text-lg sm:text-xl text-gray-600 text-center mb-12">
+                            TaxNova™ is an innovative FAA ZONE protocol, specifically engineered for the demands of the Banking & Finance industry. Its deep
+                            integration with the PulseGrid ensures secure, real-time data flows and enhanced decision-making.
+                        </p>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                            <!-- Key Features -->
+                            <div class="bg-blue-50 p-6 rounded-lg shadow-inner">
+                                <h3 class="text-2xl font-bold text-blue-700 mb-4 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    Key Features
+                                </h3>
+                                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                    <li>Direct integration with FAA™ Professional Services Mesh.</li>
+                                    <li>Advanced data sync with Ark Model.</li>
+                                    <li>Real-time compliance validation via VaultLink™ (banking specific).</li>
+                                    <li>Scalable architecture for x33 node expansion.</li>
+                                    <li>Predictive analytics module for TaxNova performance.</li>
+                                    <li>API access for seamless interoperability.</li>
+                                    <li>AI-driven anomaly detection and fraud prevention.</li>
+                                    <li>Blockchain-secured data provenance.</li>
+                                    <li>Secure multi-party computation support.</li>
+                                    <li>Dynamic resource allocation for fluctuating demands.</li>
+                                    <li>Subnode: Ark Model</li>
+                                    <li>Subnode: Node Gate</li>
+                                    <li>Subnode: Veritas Sync</li>
+                                    <li>Subnode: Cage Mapper</li>
+                                    <li>Subnode: Core Trace</li>
+                                    <li>Subnode: Sky Sweep</li>
+                                    <li>Subnode: Mint Grid</li>
+                                    <li>Subnode: Orbit Channel</li>
+                                    <li>Subnode: Hash Clear</li>
+                                    <li>Subnode: Micro Chain</li>
+                                    <li class="text-sm italic">(* Added subnode features here *)</li>
+                                </ul>
+                            </div>
+
+                            <!-- FAA Metadata & Compliance -->
+                            <div class="bg-green-50 p-6 rounded-lg shadow-inner">
+                                <h3 class="text-2xl font-bold text-green-700 mb-4 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    FAA Metadata & Compliance
+                                </h3>
+                                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                    <li>Product ID: TAX-BAN-3841</li>
+                                    <li>VaultID: VAULT-R2EA</li>
+                                    <li>Signal Echo Layer: Beta v2.4</li>
+                                    <li>Deployment Zone: Zone A 5</li>
+                                    <li>Security Rating: <span class="font-semibold text-red-600">FAA-SEC A</span></li>
+                                    <li>Active Nodes: 3,616</li>
+                                    <li>Last Audit: 2025-05-16</li>
+                                    <li>Compliance Status: <span class="font-semibold text-green-600">Active & Certified</span></li>
+                                </ul>
+
+                                <h4 class="text-xl font-bold text-green-700 mt-6 mb-3 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                    </svg>
+                                    Real-Time Metrics Overview:
+                                </h4>
+                                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                    <li>Current Pulse Authority: 22,802 pulses/sec</li>
+                                    <li>Data Volume Processed (24H): 44.56 TB</li>
+                                    <li>Latency Average: 101 ms</li>
+                                </ul>
+
+                                <h4 class="text-xl font-bold text-green-700 mt-6 mb-3 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                                    </svg>
+                                    VaultTrace™ Ledger Entries:
+                                </h4>
+                                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                    <li>#9878 - TAXNO Pulse Tx - Confirmed</li>
+                                    <li>#4875 - Basel Data Sync - Error</li>
+                                    <li>#3444 - Node Federation Commit - Active</li>
+                                    <li>#698 - VaultTrace Audit - Passed</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Pricing Structure Section -->
+                        <div class="mb-12">
+                            <h3 class="text-3xl font-bold text-center text-blue-800 mb-6">TaxNova™ Pricing Structure</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                ${taxNovaPlans.map(plan => `
+                                    <!-- ${plan.name} Plan -->
+                                    <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-8 rounded-lg shadow-xl flex flex-col items-center text-center transform hover:scale-105 transition duration-300 ease-in-out">
+                                        <h4 class="text-3xl font-bold mb-4">${plan.name}</h4>
+                                        <p class="text-4xl font-extrabold mb-6">${plan.price}</p>
+                                        <p class="mb-6 text-blue-100">${plan.description}</p>
+                                        <ul class="text-left w-full space-y-2 mb-8">
+                                            <li class="flex items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                                </svg>
+                                                Essential features
+                                            </li>
+                                            <li class="flex items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                                </svg>
+                                                Basic data sync
+                                            </li>
+                                            <li class="flex items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                                </svg>
+                                                Community support
+                                            </li>
+                                        </ul>
+                                        <button
+                                            data-plan='${JSON.stringify({ name: plan.name, price: plan.price, description: plan.description, key: plan.key })}'
+                                            class="bg-white text-blue-600 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-blue-100 transition duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-blue-300"
+                                        >
+                                            ${plan.name.includes('Enterprise') ? 'Contact Sales' : `Get ${plan.name}`}
+                                        </button>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div class="text-center mt-12">
+                            <button
+                                data-page="purchase" data-type="taxnova"
+                                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-12 rounded-full shadow-lg text-xl transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300"
+                            >
+                                Secure Your TaxNova™ Protocol Now
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        // --- Design Hub Page HTML ---
+        function createDesignHubPageHtml() {
+            const designHubPlans = [
+                { name: 'Design Node', price: '€500.00 /month', description: 'Ideal for individual designers and small studios focusing on creative asset generation.', key: 'designhub-designnode' },
+                { name: 'Pro Grid', price: '€1,400.00 /month', description: 'For growing teams requiring enhanced tools and collaborative features.', key: 'designhub-progrid' },
+                { name: 'Enterprise Omni-Sync', price: '€3,500.00 /month', description: 'Comprehensive solution for large enterprises with custom integration needs.', key: 'designhub-enterprise' },
+            ];
+
+            return `
+                ${createHeaderHtml()}
+                <div class="min-h-screen w-full bg-[var(--design-hub-bg)] text-[var(--design-hub-text-primary)] font-inter py-8 px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-7xl mx-auto rounded-xl shadow-lg p-6 sm:p-8 lg:p-10">
+                        <!-- Header -->
+                        <header class="mb-8 text-center sm:text-left">
+                            <h1 class="text-3xl sm:text-4xl font-extrabold text-[var(--design-hub-accent)] mb-2">
+                                / FAA / Creative Tech Dashboard
+                            </h1>
+                        </header>
+
+                        <!-- DesignHub Core Protocol Overview & FAA Data Compliance -->
+                        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                            <!-- DesignHub Core Protocol Overview -->
+                            <div class="bg-[var(--design-hub-card-bg)] p-6 rounded-lg shadow-inner border border-[var(--design-hub-border)]">
+                                <h2 class="text-2xl font-bold text-[var(--design-hub-text-primary)] mb-4 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-[var(--design-hub-accent)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.515-1.373 2.062-1.373 2.576 0l2.158 5.766a2 2 0 001.555 1.555l5.766 2.158c1.373.515 1.373 2.062 0 2.576l-5.766 2.158a2 2 0 00-1.555 1.555l-2.158 5.766c-.515 1.373-2.062 1.373-2.576 0l-2.158-5.766a2 2 0 00-1.555-1.555L.527 12.441c-1.373-.515-1.373-2.062 0-2.576l5.766-2.158a2 2 0 001.555-1.555L10.325 4.317z" />
+                                    </svg>
+                                    DesignHub Core Protocol Overview
+                                </h2>
+                                <p class="text-[var(--design-hub-text-secondary)] mb-4">
+                                    DesignHub™ is an FAA ZONE-aligned design protocol engineered for the Creative Tech sector. It seamlessly integrates with the Global PulseGrid to deliver unparalleled performance with data integrity.
+                                </p>
+                                <h3 class="text-xl font-bold text-[var(--design-hub-text-primary)] mb-3 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-[var(--design-hub-accent)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    Key Features
+                                </h3>
+                                <ul class="list-disc list-inside text-[var(--design-hub-text-secondary)] space-y-2">
+                                    <li>Direct integration with FAA Professional Services Mesh.</li>
+                                    <li>Advanced data sync with Seedwave.</li>
+                                    <li>Real-time compliance validation via VAULT-MESH (Creative-specific).</li>
+                                    <li>Scalable architecture for x18 node expansion.</li>
+                                    <li>Predictive analytics module for DesignGrid performance.</li>
+                                    <li>API access for seamless interoperability.</li>
+                                    <li>One-click regulatory reporting and audit trails.</li>
+                                    <li>Dynamic resource allocation for fluctuating demands.</li>
+                                    <li>Self-optimizing node distribution for peak efficiency.</li>
+                                </ul>
+                                <h3 class="text-xl font-bold text-[var(--design-hub-text-primary)] mt-6 mb-3 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-[var(--design-hub-accent)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 011-1h1a2 2 0 100-4H7a1 1 0 01-1-1V7a1 1 0 011-1h3a1 1 0 011-1V4z" />
+                                    </svg>
+                                    Subnodes
+                                </h3>
+                                <ul class="list-disc list-inside text-[var(--design-hub-text-secondary)] space-y-2">
+                                    <li>DesignGrid</li>
+                                    <li>CanvasFlow</li>
+                                    <li>AssetForge</li>
+                                    <li>BrandSynth</li>
+                                    <li>GlyphTrace</li>
+                                    <li>VectorCore</li>
+                                    <li>ShadeMesh</li>
+                                    <li>RenderLoop</li>
+                                    <li>PaletteShift</li>
+                                    <li>AnimPulse</li>
+                                    <li>TextureFlow</li>
+                                    <li>QuantumCanvas</li>
+                                </ul>
+                            </div>
+
+                            <!-- FAA Data & Compliance -->
+                            <div class="bg-[var(--design-hub-card-bg)] p-6 rounded-lg shadow-inner border border-[var(--design-hub-border)]">
+                                <h2 class="text-2xl font-bold text-[var(--design-hub-text-primary)] mb-4 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-[var(--design-hub-success)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    FAA Data & Compliance
+                                </h2>
+                                <ul class="list-disc list-inside text-[var(--design-hub-text-secondary)] space-y-2">
+                                    <li>Product ID: DHSG-1996</li>
+                                    <li>VaultID: VAULT-BHES</li>
+                                    <li>Signal Echo Layer: Laser Alpha v9.4</li>
+                                    <li>Deployment Zone: Zone B 9</li>
+                                    <li>Security Rating: <span class="font-semibold text-[var(--design-hub-success)]">FAA-SEC C</span></li>
+                                    <li>Active Nodes: 872</li>
+                                    <li>Last Audit: 2025-11-04</li>
+                                    <li>Compliance Status: <span class="font-semibold text-[var(--design-hub-error)]">Pending Review</span></li>
+                                </ul>
+
+                                <h3 class="text-xl font-bold text-[var(--design-hub-text-primary)] mt-6 mb-3 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-[var(--design-hub-success)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                    </svg>
+                                    Real-Time Metrics
+                                </h3>
+                                <ul class="list-disc list-inside text-[var(--design-hub-text-secondary)] space-y-2">
+                                    <li>Current Pulse Activity: 9,733 pulses/sec</li>
+                                    <li>Data Volume Processed (24H): 120.37 TB</li>
+                                    <li>Latency Average: 85.22 ms</li>
+                                </ul>
+
+                                <h3 class="text-xl font-bold text-[var(--design-hub-text-primary)] mt-6 mb-3 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-[var(--design-hub-success)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                                    </svg>
+                                    VaultTrace™ Ledger Entries
+                                </h3>
+                                <ul class="list-disc list-inside text-[var(--design-hub-text-secondary)] space-y-2">
+                                    <li>+2289 - DESIGN Pulse Tx - Confirmed</li>
+                                    <li>+7890 - CANVAS Sync - Completed</li>
+                                    <li>+9876 - Node Activation Confirm - Offline</li>
+                                    <li>+3456 - VaultTrace Audit - Passed</li>
+                                </ul>
+                            </div>
+                        </section>
+
+                        <!-- Pricing Structure Section -->
+                        <section class="mb-12">
+                            <h2 class="text-3xl font-bold text-center text-[var(--design-hub-text-primary)] mb-6">Pricing Structure <span class="text-[var(--design-hub-text-secondary)]">(Derived from Sector Tier Pricing)</span></h2>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 design-hub-plans">
+                                ${designHubPlans.map(plan => `
+                                    <!-- ${plan.name} Plan -->
+                                    <div class="bg-[var(--design-hub-card-bg)] text-[var(--design-hub-text-primary)] p-8 rounded-lg shadow-xl flex flex-col items-center text-center transform hover:scale-105 transition duration-300 ease-in-out border border-[var(--design-hub-border)]">
+                                        <h3 class="text-3xl font-bold mb-4">${plan.name}</h3>
+                                        <p class="text-4xl font-extrabold mb-6">${plan.price}</p>
+                                        <p class="mb-6 text-[var(--design-hub-text-secondary)]">${plan.description}</p>
+                                        <ul class="text-left w-full space-y-2 mb-8 text-[var(--design-hub-text-secondary)]">
+                                            <li class="flex items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-[var(--design-hub-success)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                                </svg>
+                                                Basic AssetForge Access
+                                            </li>
+                                            <li class="flex items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-[var(--design-hub-success)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                                </svg>
+                                                Community Support
+                                            </li>
+                                            <li class="flex items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-[var(--design-hub-success)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                                </svg>
+                                                Standard Glyph Library
+                                            </li>
+                                        </ul>
+                                        <button
+                                            data-plan='${JSON.stringify({ name: plan.name, price: plan.price, description: plan.description, key: plan.key })}'
+                                            class="bg-[var(--design-hub-accent)] text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-opacity-80 transition duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-[var(--design-hub-accent)]"
+                                        >
+                                            ${plan.name.includes('Enterprise') ? 'Contact Sales' : 'Get Started'}
+                                        </button>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- Purchase Page HTML & Logic ---
+        function createPurchasePageHtml() {
+            const taxNovaPlans = [
+                { name: 'Starter Node', price: 'FCU 82/mo', description: 'Basic features for small teams.', key: 'taxnova-starter' },
+                { name: 'Pro Grid', price: 'FCU 211/mo', description: 'Enhanced capabilities for growing firms.', key: 'taxnova-pro' },
+                { name: 'Enterprise Omni-Sync', price: 'Custom pricing', description: 'Full customization and dedicated resources for large organizations.', key: 'taxnova-enterprise' },
+            ];
+
+            const designHubPlans = [
+                { name: 'Design Node', price: '€500.00 /month', description: 'Basic Design Hub access.', key: 'designhub-designnode' },
+                { name: 'Pro Grid', price: '€1,400.00 /month', description: 'Enhanced Design Hub features.', key: 'designhub-progrid' },
+                { name: 'Enterprise Omni-Sync', price: '€3,500.00 /month', description: 'Enterprise-level Design Hub solution.', key: 'designhub-enterprise' },
+            ];
+
+            const plansToDisplay = productType === 'designhub' ? designHubPlans : taxNovaPlans;
+            const pageTitle = productType === 'designhub' ? 'Choose Your Design Hub Plan' : 'Choose Your TaxNova™ Plan';
+
+            return `
+                ${createHeaderHtml()}
+                <div class="bg-white rounded-xl shadow-lg p-6 sm:p-8 lg:p-10 max-w-4xl w-full text-center my-8">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-800 mb-6">${pageTitle}</h2>
+                    <p class="text-lg text-gray-600 mb-8">Select the plan that best fits your organization's needs.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        ${plansToDisplay.map((plan) => `
+                            <div
+                                class="bg-blue-50 p-6 rounded-lg shadow-md flex flex-col items-center text-center border-2 border-transparent hover:border-blue-500 transition duration-300 ease-in-out"
+                            >
+                                <h3 class="text-2xl font-bold text-blue-700 mb-2">${plan.name}</h3>
+                                <p class="text-3xl font-extrabold text-blue-900 mb-4">${plan.price}</p>
+                                <p class="text-gray-700 mb-6 flex-grow">${plan.description}</p>
+                                <button
+                                    data-plan='${JSON.stringify(plan)}'
+                                    class="purchase-plan-button bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-blue-300"
+                                >
+                                    Select Plan
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <button
+                        class="purchase-page-back-button text-blue-600 hover:text-blue-800 font-semibold py-2 px-4 rounded-md transition duration-300 ease-in-out"
+                    >
+                        &larr; Back to Home
+                    </button>
+                </div>
+            `;
+        }
+
+        // --- Payment Page HTML & Logic ---
+        let paymentStatus = 'pending'; // 'pending', 'processing', 'completed', 'failed'
+
+        function handlePayment() {
+            paymentStatus = 'processing';
+            renderPage(); // Re-render to show processing state
+
+            // Simulate API call for payment processing
+            setTimeout(() => {
+                const success = Math.random() > 0.1; // 90% success rate
+                if (success) {
+                    paymentStatus = 'completed';
+                    navigateTo('download');
+                } else {
+                    paymentStatus = 'failed';
+                    renderPage(); // Re-render to show failed state
+                }
+            }, 2000); // Simulate 2-second processing time
+        }
+
+        function createPaymentPageHtml() {
+            let planDisplay = '';
+            if (selectedPlan) {
+                planDisplay = `
+                    <div class="bg-blue-50 p-4 rounded-lg mb-6 shadow-inner">
+                        <p class="text-xl font-semibold text-blue-700">You selected: ${selectedPlan.name}</p>
+                        <p class="text-2xl font-bold text-blue-900">${selectedPlan.price}</p>
+                    </div>
+                `;
+            }
+
+            let mainContent = '';
+            if (paymentStatus === 'pending') {
+                mainContent = `
+                    <p class="text-lg text-gray-600 mb-8">
+                        Please click the button below to simulate the payment process for your selected plan.
+                    </p>
+                    <button
+                        id="process-payment-button"
+                        class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full shadow-lg text-lg transition duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-green-300"
+                    >
+                        Process Payment
+                    </button>
+                `;
+            } else if (paymentStatus === 'processing') {
+                mainContent = `
+                    <div class="flex items-center justify-center space-x-3 text-blue-600 text-xl font-semibold">
+                        <svg class="animate-spin h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span>Processing Payment...</span>
+                    </div>
+                `;
+            } else if (paymentStatus === 'failed') {
+                mainContent = `
+                    <div class="text-red-600 text-xl font-semibold">
+                        <p class="mb-4">Payment Failed! Please try again.</p>
+                        <button
+                            id="retry-payment-button"
+                            class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-full shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-red-300"
+                        >
+                            Retry Payment
+                        </button>
+                    </div>
+                `;
+            }
+
+            return `
+                ${createHeaderHtml()}
+                <div class="bg-white rounded-xl shadow-lg p-6 sm:p-8 lg:p-10 max-w-2xl w-full text-center my-8">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-800 mb-6">Complete Your Purchase</h2>
+                    ${planDisplay}
+                    ${mainContent}
+                    <button
+                        class="payment-page-back-button mt-8 text-blue-600 hover:text-blue-800 font-semibold py-2 px-4 rounded-md transition duration-300 ease-in-out"
+                    >
+                        &larr; Back to Plan Selection
+                    </button>
+                </div>
+            `;
+        }
+
+        // --- Download Page HTML ---
+        function createDownloadPageHtml() {
+            return `
+                ${createHeaderHtml()}
+                <div class="bg-white rounded-xl shadow-lg p-6 sm:p-8 lg:p-10 max-w-2xl w-full text-center my-8">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-green-700 mb-6">Purchase Complete!</h2>
+                    <p class="text-lg text-gray-700 mb-8">
+                        Thank you for your purchase of Protocol. Your transaction was successful.
+                    </p>
+
+                    <div class="flex justify-center mb-8">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-green-500 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+
+                    <a
+                        href="#"
+                        download="Protocol_Installer.zip"
+                        class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-12 rounded-full shadow-lg text-xl transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l3-3m-3 3l-3-3m2.842-8.204a24.024 24.024 0 00-4.004-2.863 8.974 8.974 0 00-2.316-.762C5.46 3 3 5.46 3 8.528V14.5a3 3 0 003 3h12a3 3 0 003-3V8.528C21 5.46 18.54 3 15.178 3a8.974 8.974 0 00-2.316.762z" />
+                        </svg>
+                        Download Protocol
+                    </a>
+
+                    <button
+                        class="download-page-return-home mt-8 text-blue-600 hover:text-blue-800 font-semibold py-2 px-4 rounded-md transition duration-300 ease-in-out"
+                    >
+                        Return to Home
+                    </button>
+                </div>
+            `;
+        }
+
+        // --- Main Render Function ---
+        function renderPage() {
+            const appRoot = document.getElementById('app-root');
+            let htmlContent = '';
+
+            // Clean up old listeners/intervals/charts before rendering new content
+            if (rhythmicCanvas && rhythmicCanvas.animationFrameId) {
+                cancelAnimationFrame(rhythmicCanvas.animationFrameId);
+                rhythmicCanvas.animationFrameId = null;
+            }
+            if (sharePriceIntervalId) {
+                clearInterval(sharePriceIntervalId);
+                sharePriceIntervalId = null;
+            }
+            if (chartInstance) {
+                chartInstance.destroy();
+                chartInstance = null;
+            }
+
+
+            switch (currentPage) {
+                case 'vaultmesh':
+                    htmlContent = createVaultMeshHomePageHtml();
+                    break;
+                case 'taxnova':
+                    htmlContent = createTaxNovaProductPageHtml();
+                    break;
+                case 'designhub':
+                    htmlContent = createDesignHubPageHtml();
+                    break;
+                case 'purchase':
+                    htmlContent = createPurchasePageHtml();
+                    break;
+                case 'payment':
+                    htmlContent = createPaymentPageHtml();
+                    break;
+                case 'download':
+                    htmlContent = createDownloadPageHtml();
+                    break;
+                default:
+                    htmlContent = createVaultMeshHomePageHtml();
+            }
+            appRoot.innerHTML = htmlContent;
+            attachEventListeners(); // Re-attach event listeners after rendering new HTML
+        }
+
+        // Initial page load
+        window.onload = () => {
+            renderPage();
+        };
     </script>
 </body>
 </html>
