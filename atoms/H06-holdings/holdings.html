@@ -4,21 +4,175 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fruitful Holdings | Repository & Legal Hub</title>
-    <link rel="icon" href="/favicon.ico">
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
-    <!-- External CSS for global styling -->
-    <link rel="stylesheet" href="../css/style.css"> 
     <style>
-        /* Specific styles for Legal Index, adapting from global style.css */
+        /* Base Styles - Consistent with FAA.zone theme, optimized for product page */
+        :root {
+            --text-color-light: #1d1d1f;
+            --text-color-dark: #f5f5f7;
+            --bg-color-light: #f5f5f7;
+            --bg-color-dark: #1a1a1c;
+            --card-bg-light: #ffffff;
+            --card-bg-dark: #2a2a2e;
+            --border-color-light: #e8e8ed;
+            --border-color-dark: #3a3a3e;
+            --primary-color: #0071e3; /* Apple Blue */
+            --mindlift-color: #7B68EE; /* MediumPurple for MindLift theme */
+            --mindlift-accent-color: #9370DB; /* Brighter purple */
+            --muted-text-light: #6e6e73;
+            --muted-text-dark: #a0a0a5;
+
+            /* The specific green from your MindLift code for FCU/currency sections (used as the header green) */
+            --fcu-color: #4CAF50; /* Green for currency */
+            --fcu-accent-color: #66BB6A; /* Lighter green */
+
+            /* SecureSign button colors (from your previous instruction, integrated into MindLift theme) */
+            --secure-sign-purple: #8A2BE2;
+            --secure-sign-blue: #4169E1;
+            --secure-sign-purple-hover: #7b27cb;
+            --secure-sign-blue-hover: #375ac7;
+
+            /* New: Dynamic properties based on JS for header positioning */
+            --announcement-bar-height: 0px; /* Default to 0, adjusted by JS if visible */
+            --header-height: 80px; /* Example initial height, will be calculated by JS */
+
+            /* New: Hyper Mode colors - UPDATED */
+            --hyper-bg-color: #0D001F; /* Deep dark purple-blue */
+            --hyper-text-color: #00FFFF; /* Cyan */
+            --hyper-card-bg: #1A0033; /* Slightly lighter dark purple-blue */
+            --hyper-border-color: #330066; /* Purple */
+            --hyper-primary-color: #FF00FF; /* Magenta */
+            --hyper-accent-color: #00FF00; /* Neon Green */
+
+            /* Legal Document Section Colors */
+            --legal-item-bg: #2a2a2e; /* card-bg-dark */
+            --legal-item-border: #3a3a3e; /* border-color-dark */
+            --legal-item-shadow: rgba(0,0,0,0.3);
+            --legal-icon-color: #4f46e5; /* indigo-600 from your legal index */
+            --legal-text-color: #f5f5f7; /* text-color-dark */
+            --legal-muted-text: #a0a0a5; /* muted-text-dark */
+            --legal-link-color: #60a5fa; /* blue-400 */
+        }
+
+        /* Adjustments for light mode to ensure legal section looks good */
+        body.light-mode {
+            --legal-item-bg: #ffffff; /* white */
+            --legal-item-border: #e2e8f0; /* slate-200 */
+            --legal-item-shadow: rgba(0,0,0,0.05);
+            --legal-text-color: #1e293b; /* slate-900 */
+            --legal-muted-text: #475569; /* slate-600 */
+            --legal-link-color: #4f46e5; /* indigo-600 */
+        }
+
         body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color-dark);
+            color: var(--text-color-dark);
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* NEW: Hyper Mode styles */
+        body.hyper-mode {
+            background-color: var(--hyper-bg-color);
+            color: var(--hyper-text-color);
+            /* Hyper mode specific for legal section */
+            --legal-item-bg: var(--hyper-card-bg);
+            --legal-item-border: var(--hyper-border-color);
+            --legal-item-shadow: rgba(0,0,0,0.5);
+            --legal-icon-color: var(--hyper-primary-color);
+            --legal-text-color: var(--hyper-text-color);
+            --legal-muted-text: #AA44AA; /* Adjusted for hyper contrast */
+            --legal-link-color: var(--hyper-accent-color);
+        }
+        .hyper-mode .app-header {
+            background-color: var(--hyper-primary-color);
+            box-shadow: 0 10px 30px rgba(255, 0, 255, 0.4);
+        }
+        .hyper-mode .app-card {
+            background-color: var(--hyper-card-bg);
+            border-color: var(--hyper-border-color);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        }
+        .hyper-mode .app-card h2,
+        .hyper-mode .app-card h3 {
+            color: var(--hyper-text-color);
+        }
+        .hyper-mode .app-card h3 i {
+            color: var(--hyper-accent-color);
+        }
+        .hyper-mode .form-label {
+            color: var(--hyper-text-color);
+        }
+        .hyper-mode .form-input, .hyper-mode .form-select {
+            background-color: #000022;
+            border-color: var(--hyper-border-color);
+            color: var(--hyper-text-color);
+        }
+        .hyper-mode .form-input::placeholder {
+            color: #00AAAA; /* Updated placeholder color for hyper mode */
+        }
+        .hyper-mode .app-footer {
+            background-color: var(--hyper-card-bg);
+            border-top-color: var(--hyper-border-color);
+        }
+
+        .light-mode {
+            background-color: var(--bg-color-light);
+            color: var(--text-color-light);
+        }
+
+        .dark-mode {
             background-color: var(--bg-color-dark);
             color: var(--text-color-dark);
         }
+
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        #announcement-bar {
+            background-color: var(--fcu-color);
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            position: sticky;
+            top: 0;
+            z-index: 1001;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #announcement-bar .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        #announcement-bar.hidden {
+            display: none;
+        }
+
         .app-header {
-            background-color: var(--fcu-color); /* Green header, consistent with your previous output */
+            background-color: var(--fcu-color);
             color: white;
             min-height: 150px;
             padding: 20px;
@@ -30,8 +184,18 @@
             justify-content: center;
             align-items: center;
             position: sticky;
-            top: 0;
+            top: var(--announcement-bar-height);
             z-index: 1000;
+        }
+        .app-header .header-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            max-width: 1000px;
+            width: 100%;
+            padding: 0;
+            text-align: center;
         }
         .app-header h1 {
             font-family: 'Inter', sans-serif;
@@ -53,11 +217,13 @@
             line-height: 1.5;
             max-width: 800px;
         }
+
         .main-content-area {
             flex-grow: 1;
             padding: 40px 20px;
             background-color: var(--bg-color-dark);
         }
+
         .app-card {
             background-color: var(--card-bg-dark);
             border-radius: 12px;
@@ -83,10 +249,11 @@
             align-items: center;
         }
         .app-card h3 i {
-            color: var(--mindlift-accent-color); /* Assuming mindlift colors are defined globally or here */
+            color: var(--mindlift-accent-color);
             margin-right: 15px;
             font-size: 1.8rem;
         }
+
         .form-label {
             display: block;
             margin-bottom: 8px;
@@ -112,6 +279,7 @@
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.2);
         }
+
         .app-action-button {
             display: block;
             width: 100%;
@@ -128,11 +296,287 @@
             justify-content: center;
             text-decoration: none;
         }
-        .app-action-button.purple { background-color: #8A2BE2; }
-        .app-action-button.purple:hover { background-color: #7b27cb; transform: translateY(-2px); }
-        .app-action-button.blue { background-color: #4169E1; }
-        .app-action-button.blue:hover { background-color: #375ac7; transform: translateY(-2px); }
 
+        .app-action-button.purple {
+            background-color: var(--secure-sign-purple);
+        }
+        .app-action-button.purple:hover {
+            background-color: var(--secure-sign-purple-hover);
+            transform: translateY(-2px);
+        }
+
+        .app-action-button.blue {
+            background-color: var(--secure-sign-blue);
+        }
+        .app-action-button.blue:hover {
+            background-color: var(--secure-sign-blue-hover);
+            transform: translateY(-2px);
+        }
+
+        #planet-text {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            color: var(--mindlift-color);
+            overflow: hidden;
+            white-space: nowrap;
+            animation: pulse-glow 3s infinite alternate;
+            transition: all 0.5s ease-in-out;
+            text-shadow: none;
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.05);
+                opacity: 0.9;
+            }
+        }
+
+        .theme-controls button {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+
+        .theme-controls #theme-day-btn {
+            background-color: var(--card-bg-light);
+            color: var(--text-color-light);
+            border-color: var(--border-color-light);
+        }
+        .light-mode .theme-controls #theme-day-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        .light-mode .theme-controls #theme-night-btn,
+        .light-mode .theme-controls #theme-hyper-btn {
+            background-color: var(--card-bg-light);
+            color: var(--muted-text-light);
+            border-color: var(--border-color-light);
+        }
+
+        .theme-controls #theme-night-btn {
+            background-color: var(--card-bg-dark);
+            color: var(--text-color-dark);
+            border-color: var(--border-color-dark);
+        }
+        .dark-mode .theme-controls #theme-night-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        .dark-mode .theme-controls #theme-day-btn,
+        .dark-mode .theme-controls #theme-hyper-btn {
+            background-color: var(--card-bg-dark);
+            color: var(--muted-text-dark);
+            border-color: var(--border-color-dark);
+        }
+
+        .theme-controls #theme-hyper-btn {
+            background-color: var(--hyper-card-bg);
+            color: var(--hyper-text-color);
+            border-color: var(--hyper-border-color);
+        }
+        .hyper-mode .theme-controls #theme-hyper-btn.active {
+            background-color: var(--hyper-primary-color);
+            color: white;
+            border-color: var(--hyper-primary-color);
+        }
+        .hyper-mode .theme-controls #theme-day-btn,
+        .hyper-mode .theme-controls #theme-night-btn {
+            background-color: var(--hyper-card-bg);
+            color: var(--muted-text-dark);
+            border-color: var(--hyper-border-color);
+        }
+
+        .theme-controls #languageSwitcher {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid var(--border-color-dark);
+            background-color: var(--card-bg-dark);
+            color: var(--text-color-dark);
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1.5em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23a0a0a5'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
+            padding-right: 2.5rem;
+            width: fit-content;
+            min-width: 120px;
+            max-width: 180px;
+            flex-grow: 0;
+            flex-shrink: 1;
+        }
+
+        .light-mode .theme-controls #languageSwitcher {
+            background-color: var(--card-bg-light);
+            color: var(--text-color-light);
+            border-color: var(--border-color-light);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%236e6e73'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        .hyper-mode .theme-controls #languageSwitcher {
+            background-color: var(--hyper-card-bg);
+            color: var(--hyper-text-color);
+            border-color: var(--hyper-border-color);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%2300FFFF'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        #generatedTextOutput {
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .app-footer {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        @media (min-width: 768px) {
+            .app-footer {
+                padding-left: 5rem;
+                padding-right: 5rem;
+            }
+        }
+
+        .app-footer-content {
+            max-width: 48rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .app-footer-content h1 {
+            font-size: 2rem;
+            line-height: 1.25;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .app-footer-content h1 {
+                font-size: 2.25rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .app-footer-content h1 {
+                font-size: 3rem;
+            }
+        }
+
+        .app-footer-content .text-blue-400 {
+            color: #60a5fa;
+        }
+
+        .app-footer-content p {
+            font-size: 1rem;
+            line-height: 1.625;
+            color: #d1d5db;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .app-footer-content p {
+                font-size: 1.125rem;
+            }
+        }
+
+        .app-footer .cta-button {
+            background-color: #3b82f6;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition-property: background-color;
+            transition-duration: 0.2s;
+            text-decoration: none;
+        }
+
+        .app-footer .cta-button:hover {
+            background-color: #2563eb;
+        }
+
+        .app-footer .cta-button .ml-2 {
+            margin-left: 0.5rem;
+        }
+
+        .copyright {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: 2rem;
+        }
+
+        .copyright a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        .copyright a:hover {
+            text-decoration: underline;
+        }
+
+        /* Styles for Repository List */
+        .repository-item {
+            display: flex;
+            align-items: center;
+            background-color: var(--card-bg-dark);
+            border: 1px solid var(--border-color-dark);
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            cursor: pointer;
+        }
+        .repository-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+        }
+        .repository-item.selected {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.4);
+        }
+        .repository-item i {
+            font-size: 1.5rem;
+            color: var(--mindlift-color);
+            margin-right: 15px;
+        }
+        .repository-item .repo-name {
+            font-weight: 600;
+            color: var(--text-color-dark);
+            flex-grow: 1;
+        }
+        .repository-item .repo-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .repository-item .repo-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Loading spinner for repositories */
         .loading-spinner {
             border: 4px solid rgba(255, 255, 255, 0.3);
             border-top: 4px solid var(--primary-color);
@@ -142,13 +586,14 @@
             animation: spin 1s linear infinite;
             margin: 20px auto;
         }
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
-        /* Legal Document Item Styles */
-        .document-item, .repository-item {
+        /* Legal Document Item Styles - Adapted from your index.html */
+        .document-item {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
@@ -161,221 +606,215 @@
             transition: all 0.2s ease-in-out;
             text-align: left;
             width: 100%;
-            cursor: pointer;
+            cursor: pointer; /* Indicate clickable */
         }
         @media (min-width: 640px) {
-            .document-item, .repository-item {
+            .document-item {
                 flex-direction: row;
                 align-items: flex-start;
                 gap: 1rem;
                 padding: 1rem;
             }
         }
-        .document-item:hover, .repository-item:hover {
+        .document-item:hover {
             box-shadow: 0 4px 10px var(--legal-item-shadow);
             transform: translateY(-2px);
-            border-color: var(--primary-color);
+            border-color: var(--primary-color); /* Use primary color for hover highlight */
         }
-        .document-item.selected, .repository-item.selected {
+        .document-item.selected {
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.4);
         }
-        .document-item .icon, .repository-item i {
+        .document-item .icon {
             flex-shrink: 0;
             font-size: 2.5rem;
             color: var(--legal-icon-color);
         }
-        .document-item-content, .repository-item .repo-name {
-            flex-grow: 1;
+        @media (min-width: 640px) {
+            .document-item .icon {
+                font-size: 2.5rem;
+            }
         }
-        .document-item-content h3, .repository-item .repo-name {
+        .document-item-content {
+            flex-grow: 1; /* Allow content to take available space */
+        }
+        .document-item-content h3 {
             font-size: 1.25rem;
             font-weight: 600;
             color: var(--legal-text-color);
             margin-bottom: 0.25rem;
+        }
+        @media (min-width: 640px) {
+            .document-item-content h3 {
+                font-size: 1.125rem;
+            }
         }
         .document-item-content p {
             font-size: 0.95rem;
             color: var(--legal-muted-text);
             margin-bottom: 0.5rem;
         }
-        .document-item-content a, .repository-item .repo-link {
+        @media (min-width: 640px) {
+            .document-item-content p {
+                font-size: 0.95rem;
+            }
+        }
+        .document-item-content a {
             color: var(--legal-link-color);
             font-weight: 500;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
         }
-        .document-item-content a:hover, .repository-item .repo-link:hover {
+        .document-item-content a:hover {
             text-decoration: underline;
         }
         .document-item-content a svg {
             margin-left: 0.25rem;
         }
-        #selectedLegalDocDetails, #selectedRepoDetails {
+
+        /* Styles for the selected legal document details */
+        #selectedLegalDocDetails {
             margin-top: 20px;
             padding: 15px;
             border-radius: 8px;
-            background-color: var(--card-bg-dark);
+            background-color: var(--card-bg-dark); /* Using existing card background */
             border: 1px solid var(--border-color-dark);
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            color: var(--text-color-dark);
         }
-        #selectedLegalDocDetails p, #selectedRepoDetails p {
+        #selectedLegalDocDetails p {
             margin-bottom: 5px;
             color: var(--text-color-dark);
         }
-        #selectedLegalDocDetails .text-sm, #selectedRepoDetails .text-sm {
+        #selectedLegalDocDetails .text-sm {
             color: var(--muted-text-dark);
         }
-        #selectedLegalDocDetails a, #selectedRepoDetails a {
+        #selectedLegalDocDetails a {
             color: var(--primary-color);
             text-decoration: underline;
         }
-        #selectedLegalDocDetails.hidden, #selectedRepoDetails.hidden {
+        #selectedLegalDocDetails.hidden {
             display: none;
         }
-        .app-footer { /* Reusing the new-footer from previous output */
-            background-color: #1a1a1a;
-            color: white;
-            padding: 2rem 1.5rem;
-            text-align: center;
-            margin-top: auto; /* Pushes footer to bottom */
-        }
-        @media (min-width: 768px) {
-            .app-footer { padding-left: 5rem; padding-right: 5rem; }
-        }
-        .app-footer-content h1 {
-            font-size: 2rem; line-height: 1.25; font-weight: 800; color: #ffffff; margin-bottom: 0.5rem;
-        }
-        @media (min-width: 768px) { .app-footer-content h1 { font-size: 2.25rem; } }
-        @media (min-width: 1024px) { .app-footer-content h1 { font-size: 3rem; } }
-        .app-footer-content .text-blue-400 { color: #60a5fa; }
-        .app-footer-content p {
-            font-size: 1rem; line-height: 1.625; color: #d1d5db; margin-bottom: 1.5rem;
-        }
-        @media (min-width: 768px) { .app-footer-content p { font-size: 1.125rem; } }
-        .cta-button {
-            background-color: #3b82f6; color: #ffffff; font-weight: 600; padding: 0.75rem 1.5rem;
-            border-radius: 9999px; display: inline-flex; align-items: center; justify-content: center;
-            transition-property: background-color; transition-duration: 0.2s; text-decoration: none;
-        }
-        .cta-button:hover { background-color: #2563eb; }
-        .cta-button .ml-2 { margin-left: 0.5rem; }
-        .copyright { font-size: 0.875rem; color: #6b7280; margin-top: 2rem; }
-        .copyright a { color: #60a5fa; text-decoration: none; }
-        .copyright a:hover { text-decoration: underline; }
+
     </style>
 </head>
-<body>
+<body lang="en" class="dark-mode">
 
-    <header class="py-4 px-6 md:px-12 flex justify-between items-center text-white">
-        <h1 class="text-2xl font-extrabold tracking-tight">Fruitful Holdings</h1>
-        <nav class="flex items-center space-x-4">
-            <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" id="legalHomeLink">Home</a>
-            <a href="https://faa.zone/careers/hiring-homepage.html" class="transition-colors duration-200">Careers</a>
-            <a href="https://faa.zone/legal/securesign.html" class="transition-colors duration-200 font-semibold px-4 py-2 rounded-full header-sign-up">SecureSign</a>
-            <a href="javascript:void(0)" class="px-4 py-2 rounded-full font-semibold transition-colors duration-200 header-sign-up" id="legalSignUpLink">Sign Up</a>
-            <a href="javascript:void(0)" class="transition-colors duration-200" id="legalSignInLink">Sign In</a>
-            <a href="javascript:void(0)" class="transition-colors duration-200" id="legalDashboardLink">Dashboard</a>
-        </nav>
+    <!-- NEW: Announcement Bar -->
+    <div id="announcement-bar" class="bg-fcu-color text-white text-center p-2 text-sm relative z-50">
+        <div class="container flex justify-center items-center">
+            <span data-lang-key="announcement-text"></span>
+            <button class="close-btn text-white text-lg ml-4" aria-label="Close Announcement">&times;</button>
+        </div>
+    </div>
+
+    <!-- Header Section (MindLift FCU Hero style) - Adapted for Repository -->
+    <header class="app-header" id="main-header">
+        <div class="header-content-wrapper">
+            <h1 class="text-white">Fruitful Holdings (Pty) Ltd</h1>
+            <p class="slogan">Repository global growth</p>
+            <!-- Back link removed as it's not relevant for a repository page -->
+        </div>
     </header>
 
     <main class="main-content-area">
         <div class="container max-w-3xl mx-auto">
             <div class="app-card">
-                <h2 id="main-heading">Our Enterprise Hub</h2>
+                <h2 data-lang-key="main-heading"></h2>
 
                 <!-- Repository Search and List Section -->
                 <section class="mb-8">
-                    <h3 id="find-repo-heading"><i class="fas fa-search"></i> Find a Repository</h3>
+                    <h3 data-lang-key="find-repo-heading"><i class="fas fa-search"></i></h3>
                     <div class="mb-4">
-                        <label for="repoSearchInput" class="form-label">Search Repository:</label>
-                        <input type="text" id="repoSearchInput" class="form-input" placeholder="e.g., faa.zone or baobab">
+                        <label for="repoSearchInput" class="form-label" data-lang-key="search-repo-label"></label>
+                        <input type="text" id="repoSearchInput" class="form-input" data-lang-key="search-repo-placeholder">
                     </div>
                     <div id="repositoryList" class="space-y-4">
+                        <!-- Repositories will be dynamically loaded here -->
                         <div id="repoLoadingIndicator" class="loading-spinner hidden"></div>
-                        <p id="noReposMessage" class="text-center text-muted-text-dark hidden">No repositories found matching your search.</p>
+                        <p id="noReposMessage" class="text-center text-muted-text-dark hidden" data-lang-key="no-repos-found"></p>
                     </div>
                     <div id="selectedRepoDetails" class="mt-4 p-4 rounded-lg border border-gray-600 bg-gray-700 hidden">
-                        <p class="text-sm text-gray-400">Selected Repository:</p>
+                        <p class="text-sm text-gray-400" data-lang-key="selected-repo-name-label"></p>
                         <p id="displaySelectedRepoName" class="font-semibold text-lg"></p>
-                        <p class="text-sm text-gray-400 mt-2">URL:</p>
+                        <p class="text-sm text-gray-400 mt-2" data-lang-key="selected-repo-url-label"></p>
                         <p id="displaySelectedRepoUrl" class="text-blue-400 break-words"></p>
                     </div>
                 </section>
 
                 <!-- Add New Repository Section -->
                 <section class="app-card mt-8">
-                    <h3 id="add-new-repo-heading"><i class="fas fa-plus-circle"></i> Add New Code Repository</h3>
+                    <h3 data-lang-key="add-new-repo-heading"><i class="fas fa-plus-circle"></i></h3>
                     <div class="space-y-4">
                         <div>
-                            <label for="newRepoName" class="form-label">Repository Name (e.g., heyns1000/my-new-project)</label>
-                            <input type="text" id="newRepoName" class="form-input" placeholder="e.g., heyns1000/new-awesome-project">
+                            <label for="newRepoName" class="form-label" data-lang-key="new-repo-name-label"></label>
+                            <input type="text" id="newRepoName" class="form-input" data-lang-key="new-repo-name-placeholder">
                         </div>
                         <div>
-                            <label for="newRepoUrl" class="form-label">Repository URL (e.g., https://github.com/heyns1000/my-new-project)</label>
-                            <input type="text" id="newRepoUrl" class="form-input" placeholder="e.g., https://github.com/heyns1000/new-awesome-project">
+                            <label for="newRepoUrl" class="form-label" data-lang-key="new-repo-url-label"></label>
+                            <input type="text" id="newRepoUrl" class="form-input" data-lang-key="new-repo-url-placeholder">
                         </div>
-                        <button id="addRepoBtn" class="app-action-button purple mt-4">Add Repository</button>
+                        <button id="addRepoBtn" class="app-action-button purple mt-4" data-lang-key="add-repo-button"></button>
                         <div id="addRepoMessage" class="hidden text-center mt-2"></div>
                     </div>
                 </section>
 
                 <!-- Legal & Documentation Hub Section -->
                 <section class="app-card mt-8">
-                    <h3 id="legal-hub-heading"><i class="fas fa-balance-scale"></i> Legal & Documentation Hub</h3>
-                    <p class="text-sm mb-4 text-center text-muted-text-dark">Access essential legal documents, setup guides, and critical information for the FAA.ZONE™ ecosystem.</p>
+                    <h3 data-lang-key="legal-hub-heading"><i class="fas fa-balance-scale"></i></h3>
+                    <p class="text-sm mb-4 text-center text-muted-text-dark" data-lang-key="legal-hub-slogan"></p>
                     <div id="legalDocumentList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Legal documents will be dynamically loaded here -->
                         <div id="legalLoadingIndicator" class="loading-spinner hidden"></div>
-                        <p id="noLegalDocsMessage" class="text-center text-muted-text-dark hidden">No legal documents found matching your search.</p>
+                        <p id="noLegalDocsMessage" class="text-center text-muted-text-dark hidden" data-lang-key="no-legal-docs-found"></p>
                     </div>
                     <div id="selectedLegalDocDetails" class="mt-4 p-4 rounded-lg hidden">
-                        <p class="text-sm text-gray-400">Selected Document:</p>
+                        <p class="text-sm text-gray-400" data-lang-key="selected-doc-title-label">Selected Document:</p>
                         <p id="displaySelectedLegalDocTitle" class="font-semibold text-lg"></p>
-                        <p class="text-sm text-gray-400 mt-2">Description:</p>
+                        <p class="text-sm text-gray-400 mt-2" data-lang-key="selected-doc-desc-label">Description:</p>
                         <p id="displaySelectedLegalDocDesc" class="text-base"></p>
-                        <p class="text-sm text-gray-400 mt-2">URL:</p>
+                        <p class="text-sm text-gray-400 mt-2" data-lang-key="selected-doc-url-label">URL:</p>
                         <a id="displaySelectedLegalDocUrl" href="#" target="_blank" rel="noopener noreferrer" class="text-blue-400 break-words"></a>
                     </div>
                 </section>
 
                 <!-- Add New Legal Document Section -->
                 <section class="app-card mt-8">
-                    <h3 id="add-new-legal-doc-heading"><i class="fas fa-file-invoice"></i> Add New Legal Document</h3>
+                    <h3 data-lang-key="add-new-legal-doc-heading"><i class="fas fa-file-invoice"></i></h3>
                     <div class="space-y-4">
                         <div>
-                            <label for="newLegalDocTitle" class="form-label">Document Title</label>
-                            <input type="text" id="newLegalDocTitle" class="form-input" placeholder="e.g., Fruitful Holdings NDA">
+                            <label for="newLegalDocTitle" class="form-label" data-lang-key="new-legal-doc-title-label"></label>
+                            <input type="text" id="newLegalDocTitle" class="form-input" data-lang-key="new-legal-doc-title-placeholder">
                         </div>
                         <div>
-                            <label for="newLegalDocUrl" class="form-label">Document URL</label>
-                            <input type="text" id="newLegalDocUrl" class="form-input" placeholder="e.g., /legal/nda.pdf or https://example.com/doc.html">
+                            <label for="newLegalDocUrl" class="form-label" data-lang-key="new-legal-doc-url-label"></label>
+                            <input type="text" id="newLegalDocUrl" class="form-input" data-lang-key="new-legal-doc-url-placeholder">
                         </div>
                         <div>
-                            <label for="newLegalDocDescription" class="form-label">Description</label>
-                            <textarea id="newLegalDocDescription" class="form-input" rows="3" placeholder="Brief description of the document."></textarea>
+                            <label for="newLegalDocDescription" class="form-label" data-lang-key="new-legal-doc-desc-label"></label>
+                            <textarea id="newLegalDocDescription" class="form-input" rows="3" data-lang-key="new-legal-doc-desc-placeholder"></textarea>
                         </div>
                         <div>
-                            <label for="newLegalDocIcon" class="form-label">Icon (Emoji or FontAwesome Class)</label>
-                            <input type="text" id="newLegalDocIcon" class="form-input" placeholder="e.g., 📚 or fas fa-file-alt">
+                            <label for="newLegalDocIcon" class="form-label" data-lang-key="new-legal-doc-icon-label"></label>
+                            <input type="text" id="newLegalDocIcon" class="form-input" data-lang-key="new-legal-doc-icon-placeholder">
                         </div>
-                        <button id="addLegalDocBtn" class="app-action-button blue mt-4">Add Legal Document</button>
+                        <button id="addLegalDocBtn" class="app-action-button blue mt-4" data-lang-key="add-legal-doc-button"></button>
                         <div id="addLegalDocMessage" class="hidden text-center mt-2"></div>
                     </div>
                 </section>
 
                 <!-- AI-Powered Help/FAQ Section -->
                 <section class="app-card mt-8">
-                    <h3 id="ai-help-heading"><i class="fas fa-question-circle"></i> AI Help & FAQ Answers</h3>
-                    <p class="text-sm mb-4 text-center text-muted-text-dark">Ask your question about Fruitful Holdings or our operations, and our AI will answer.</p>
+                    <h3 data-lang-key="ai-help-heading"><i class="fas fa-question-circle"></i></h3>
+                    <p class="text-sm mb-4 text-center text-muted-text-dark" data-lang-key="ai-help-slogan"></p>
                     <div class="form-group">
-                        <label for="faqPromptInput" class="form-label">Your Question:</label>
-                        <textarea id="faqPromptInput" class="form-input" rows="4" placeholder="e.g., What is Fruitful Holdings?"></textarea>
+                        <label for="faqPromptInput" class="form-label" data-lang-key="your-question-label"></label>
+                        <textarea id="faqPromptInput" class="form-input" rows="4" data-lang-key="faq-placeholder"></textarea>
                     </div>
-                    <button id="getFaqAnswerBtn" class="app-action-button purple mt-4">Get Answer ✨</button>
+                    <button id="getFaqAnswerBtn" class="app-action-button purple mt-4" data-lang-key="get-answer-button"></button>
                     <div id="faqLoadingIndicator" class="hidden text-center mt-2 text-blue-400">
-                        <i class="fas fa-spinner fa-spin mr-2"></i> <span>Generating answer...</span>
+                        <i class="fas fa-spinner fa-spin mr-2"></i> <span data-lang-key="generating-answer-loading"></span>
                     </div>
                     <p id="faqAnswerOutput" class="result-text mt-4 whitespace-pre-wrap"></p>
                 </section>
@@ -384,34 +823,33 @@
     </main>
 
     <!-- Planet Pulse Text -->
-    <p id="planet-text" class="text-center text-xl font-bold mt-8 mb-8">fruchtbarer.planet.wandel</p>
+    <p id="planet-text" class="text-center text-xl font-bold mt-8 mb-8" data-lang-key="planet-pulse-text"></p>
 
     <!-- User ID Display -->
     <div class="text-center text-sm text-gray-500 mb-4">
         User ID: <span id="displayUserId">Loading...</span>
     </div>
 
+    <!-- === CONSOLIDATED FOOTER SECTION === -->
     <footer class="app-footer">
         <div class="app-footer-content text-center max-w-2xl mx-auto">
             <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight text-white mb-2">
-                <span>Fruitful Holdings:</span> <br>
-                <span class="text-blue-400">Repository Global Growth</span>
+                <span data-lang-key="footer-heading"></span> <br>
+                <span class="text-blue-400" data-lang-key="footer-slogan"></span>
             </h1>
-            <p class="text-base md:text-lg text-gray-300 leading-relaxed mb-6">
-                Fruitful Holdings (Pty) Ltd is dedicated to fostering innovation and growth across various sectors. Our open-source initiatives aim to contribute to global progress, alongside transparent legal and operational documentation.
-            </p>
-            <a href="javascript:void(0)" class="cta-button" id="footerExploreButton">
-                Explore Our World <i class="fas fa-arrow-right ml-2"></i>
+            <p class="text-base md:text-lg text-gray-300 leading-relaxed mb-6" data-lang-key="footer-text"></p>
+            <a href="#" class="cta-button">
+                <span data-lang-key="explore-button"></span> <i class="fas fa-arrow-right ml-2"></i>
             </a>
         </div>
-        <p class="copyright text-sm text-gray-500 mt-8">&copy; 2025 Fruitful Holdings (Pty) Ltd. All rights reserved.</p>
-        <p class="copyright text-sm text-gray-500">A proud initiative of <a href="https://fruitful.faa.zone/" target="_blank" class="text-blue-400 hover:underline">Fruitful™ Treaty System™</a></p>
+        <p class="copyright text-sm text-gray-500 mt-8" data-lang-key="copyright-text-footer"></p>
+        <p class="copyright text-sm text-gray-500" data-lang-key="powered-by-text"></p>
 
         <!-- Theme & Language Controls in Footer -->
         <div class="theme-controls flex items-center justify-center space-x-4 mt-4 flex-wrap gap-2">
-            <button id="theme-day-btn">Light Mode</button>
-            <button id="theme-night-btn">Dark Mode</button>
-            <button id="theme-hyper-btn">Hyper Mode</button>
+            <button id="theme-day-btn" data-lang-key="light-mode-button"></button>
+            <button id="theme-night-btn" data-lang-key="dark-mode-button"></button>
+            <button id="theme-hyper-btn" data-lang-key="hyper-mode-button"></button>
             <select id="languageSwitcher" class="form-select">
                 <!-- Options populated dynamically by JS -->
             </select>
@@ -424,155 +862,574 @@
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, query, onSnapshot, addDoc, serverTimestamp, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Global translations object (will be populated by global_js_definitions.js)
-        window.translations = {}; // Ensure it's initialized
+        // Object to hold all translations
+        const translations = {
+            en: {
+                "lang-name": "English",
+                "announcement-text": "Welcome to Fruitful Holdings Repository! Explore our open-source projects.",
+                "main-heading": "Our Enterprise Hub", /* New general heading for the main card */
+                "repository-heading": "Code Repositories",
+                "find-repo-heading": "Find a Repository",
+                "search-repo-label": "Search Repository:",
+                "search-repo-placeholder": "e.g., faa.zone or baobab",
+                "no-repos-found": "No repositories found matching your search.",
+                "selected-repo-name-label": "Selected Repository:",
+                "selected-repo-url-label": "URL:",
+                "add-new-repo-heading": "Add New Code Repository",
+                "new-repo-name-label": "Repository Name (e.g., heyns1000/my-new-project)",
+                "new-repo-name-placeholder": "e.g., heyns1000/new-awesome-project",
+                "new-repo-url-label": "Repository URL (e.g., https://github.com/heyns1000/my-new-project)",
+                "new-repo-url-placeholder": "e.g., https://github.com/heyns1000/new-awesome-project",
+                "add-repo-button": "Add Repository",
+                "add-repo-success": "Repository added successfully!",
+                "add-repo-error": "Error adding repository:",
+                "add-repo-validation-error": "Please enter both repository name and a valid URL.",
+                "legal-hub-heading": "Legal & Documentation Hub",
+                "legal-hub-slogan": "Access essential legal documents, setup guides, and critical information for the FAA.ZONE™ ecosystem.",
+                "no-legal-docs-found": "No legal documents found matching your search.",
+                "selected-doc-title-label": "Selected Document:",
+                "selected-doc-desc-label": "Description:",
+                "selected-doc-url-label": "URL:",
+                "add-new-legal-doc-heading": "Add New Legal Document",
+                "new-legal-doc-title-label": "Document Title",
+                "new-legal-doc-title-placeholder": "e.g., Fruitful Holdings NDA",
+                "new-legal-doc-url-label": "Document URL",
+                "new-legal-doc-url-placeholder": "e.g., /legal/nda.pdf or https://example.com/doc.html",
+                "new-legal-doc-desc-label": "Description",
+                "new-legal-doc-desc-placeholder": "Brief description of the document.",
+                "new-legal-doc-icon-label": "Icon (Emoji or FontAwesome Class)",
+                "new-legal-doc-icon-placeholder": "e.g., 📚 or fas fa-file-alt",
+                "add-legal-doc-button": "Add Legal Document",
+                "add-legal-doc-success": "Legal document added successfully!",
+                "add-legal-doc-error": "Error adding legal document:",
+                "add-legal-doc-validation-error": "Please fill in all fields for the legal document.",
+                "ai-help-heading": "AI Help & FAQ Answers",
+                "ai-help-slogan": "Ask your question about Fruitful Holdings or our operations, and our AI will answer.",
+                "your-question-label": "Your Question:",
+                "faq-placeholder": "e.g., What is Fruitful Holdings?",
+                "get-answer-button": "Get Answer ✨",
+                "generating-answer-loading": "Generating answer...",
+                "error-no-ai-answer": "Error: No answer from AI. Please try again later.",
+                "reason": "Reason:",
+                "error-ai-connection": "Error: Could not connect to language model. Check console for network issues.",
+                "please-enter-question": "Please enter a question to get an answer.",
+                "planet-pulse-text": "fruchtbarer.planet.wandel",
+                "footer-heading": "Fruitful Holdings:",
+                "footer-slogan": "Repository Global Growth",
+                "footer-text": "Fruitful Holdings (Pty) Ltd is dedicated to fostering innovation and growth across various sectors. Our open-source initiatives aim to contribute to global progress, alongside transparent legal and operational documentation.",
+                "explore-button": "Explore Our World",
+                "copyright-text-footer": "&copy; 2025 Fruitful Holdings (Pty) Ltd. All rights reserved.",
+                "powered-by-text": "A proud initiative of Fruitful™ Treaty System™",
+                "light-mode-button": "Light Mode",
+                "dark-mode-button": "Dark Mode",
+                "hyper-mode-button": "Hyper Mode"
+            },
+            lb: { // Luxembourgish translations - placeholder for brevity, would be full translations
+                "lang-name": "Lëtzebuergesch",
+                "announcement-text": "Wëllkomm bei Fruitful Holdings Repository! Entdeckt eis Open-Source Projeten.",
+                "main-heading": "Eis Enterprise Hub",
+                "repository-heading": "Code Repositories",
+                "find-repo-heading": "E Repositorium fannen",
+                "search-repo-label": "Sich Repositorium:",
+                "search-repo-placeholder": "z.B. faa.zone oder baobab",
+                "no-repos-found": "Keng Repositories fonnt déi Ärer Sich entspriechen.",
+                "selected-repo-name-label": "Ausgewielte Repositorium:",
+                "selected-repo-url-label": "URL:",
+                "add-new-repo-heading": "Nei Code Repositorium derbäisetzen",
+                "new-repo-name-label": "Repositorium Numm (z.B. heyns1000/my-new-project)",
+                "new-repo-name-placeholder": "z.B. heyns1000/neit-fantastescht-projet",
+                "new-repo-url-label": "Repositorium URL (z.B. https://github.com/heyns1000/my-new-project)",
+                "new-repo-url-placeholder": "z.B. https://github.com/heyns1000/neit-fantastescht-projet",
+                "add-repo-button": "Repositorium derbäisetzen",
+                "add-repo-success": "Repositorium erfollegräich derbäigesat!",
+                "add-repo-error": "Feeler beim derbäisetzen vum Repositorium:",
+                "add-repo-validation-error": "Gitt w.e.g. béid Repositorium Numm an eng gëlteg URL an.",
+                "legal-hub-heading": "Legal & Dokumentatioun Hub",
+                "legal-hub-slogan": "Zougang zu wesentleche legale Dokumenter, Setup Guiden a kriteschen Informatioune fir de FAA.ZONE™ Ökosystem.",
+                "no-legal-docs-found": "Keng legal Dokumenter fonnt déi Ärer Sich entspriechen.",
+                "selected-doc-title-label": "Ausgewielte Dokument:",
+                "selected-doc-desc-label": "Beschreiwung:",
+                "selected-doc-url-label": "URL:",
+                "add-new-legal-doc-heading": "Nei Legal Dokument derbäisetzen",
+                "new-legal-doc-title-label": "Dokument Titel",
+                "new-legal-doc-title-placeholder": "z.B. Fruitful Holdings NDA",
+                "new-legal-doc-url-label": "Dokument URL",
+                "new-legal-doc-url-placeholder": "z.B. /legal/nda.pdf oder https://example.com/doc.html",
+                "new-legal-doc-desc-label": "Beschreiwung",
+                "new-legal-doc-desc-placeholder": "Kuerz Beschreiwung vum Dokument.",
+                "new-legal-doc-icon-label": "Ikon (Emoji oder FontAwesome Klass)",
+                "new-legal-doc-icon-placeholder": "z.B. 📚 oder fas fa-file-alt",
+                "add-legal-doc-button": "Legal Dokument derbäisetzen",
+                "add-legal-doc-success": "Legal Dokument erfollegräich derbäigesat!",
+                "add-legal-doc-error": "Feeler beim derbäisetzen vum legalen Dokument:",
+                "add-legal-doc-validation-error": "Fëllt w.e.g. all Felder fir d'legal Dokument aus.",
+                "ai-help-heading": "AI Hëllef & FAQ Äntwerten",
+                "ai-help-slogan": "Stellt Är Fro iwwer Fruitful Holdings oder eis Operatiounen, an eis KI äntwert.",
+                "your-question-label": "Är Fro:",
+                "faq-placeholder": "z.B. Wat ass Fruitful Holdings?",
+                "get-answer-button": "Kritt Äntwert ✨",
+                "generating-answer-loading": "Äntwert gëtt generéiert...",
+                "error-no-ai-answer": "Feeler: Keng Äntwert vun der KI. Probéiert et w.e.g. méi spéit nach eng Kéier.",
+                "reason": "Grond:",
+                "error-ai-connection": "Feeler: Konnt net mat der Sproochemodell verbannen. Kuckt d'Konsol fir Netzproblemer.",
+                "please-enter-question": "Gitt w.e.g. eng Fro an, fir eng Äntwert ze kréien.",
+                "planet-pulse-text": "fruchtbarer.planet.wandel",
+                "footer-heading": "Fruitful Holdings:",
+                "footer-slogan": "Repository Global Wuesstem",
+                "footer-text": "Fruitful Holdings (Pty) Ltd ass engagéiert fir Innovatioun a Wuesstem a verschiddene Secteuren ze förderen. Eis Open-Source Initiativen zielen dozou bäizedroen, de globale Fortschrëtt ze förderen, zesumme mat transparenter legaler an operationeller Dokumentatioun.",
+                "explore-button": "Entdeckt Eis Welt",
+                "copyright-text-footer": "&copy; 2025 Fruitful Holdings (Pty) Ltd. All Rechter reservéiert.",
+                "powered-by-text": "A proud initiative of Fruitful™ Treaty System™"
+            },
+            es: { // Spanish translations
+                "lang-name": "Español",
+                "announcement-text": "¡Bienvenido al Repositorio de Fruitful Holdings! Explora nuestros proyectos de código abierto.",
+                "main-heading": "Nuestro Centro Empresarial",
+                "repository-heading": "Repositorios de Código",
+                "find-repo-heading": "Buscar un Repositorio",
+                "search-repo-label": "Buscar Repositorio:",
+                "search-repo-placeholder": "Ejemplo: faa.zone o baobab",
+                "no-repos-found": "No se encontraron repositorios que coincidan con tu búsqueda.",
+                "selected-repo-name-label": "Repositorio Seleccionado:",
+                "selected-repo-url-label": "URL:",
+                "add-new-repo-heading": "Agregar Nuevo Repositorio de Código",
+                "new-repo-name-label": "Nombre del Repositorio (Ej. heyns1000/my-new-project)",
+                "new-repo-name-placeholder": "Ej. heyns1000/nuevo-proyecto-increíble",
+                "new-repo-url-label": "URL del Repositorio (Ej. https://github.com/heyns1000/my-new-project)",
+                "new-repo-url-placeholder": "Ej. https://github.com/heyns1000/nuevo-proyecto-increíble",
+                "add-repo-button": "Agregar Repositorio",
+                "add-repo-success": "Repositorio agregado exitosamente!",
+                "add-repo-error": "Error al agregar repositorio:",
+                "add-repo-validation-error": "Por favor, ingresa tanto el nombre del repositorio como una URL válida.",
+                "legal-hub-heading": "Centro Legal y de Documentación",
+                "legal-hub-slogan": "Accede a documentos legales esenciales, guías de configuración e información crítica para el ecosistema FAA.ZONE™.",
+                "no-legal-docs-found": "No se encontraron documentos legales que coincidan con tu búsqueda.",
+                "selected-doc-title-label": "Documento Seleccionado:",
+                "selected-doc-desc-label": "Descripción:",
+                "selected-doc-url-label": "URL:",
+                "add-new-legal-doc-heading": "Agregar Nuevo Documento Legal",
+                "new-legal-doc-title-label": "Título del Documento",
+                "new-legal-doc-title-placeholder": "Ej. Acuerdo de confidencialidad de Fruitful Holdings",
+                "new-legal-doc-url-label": "URL del Documento",
+                "new-legal-doc-url-placeholder": "Ej. /legal/nda.pdf o https://example.com/doc.html",
+                "new-legal-doc-desc-label": "Descripción",
+                "new-legal-doc-desc-placeholder": "Breve descripción del documento.",
+                "new-legal-doc-icon-label": "Icono (Emoji o Clase FontAwesome)",
+                "new-legal-doc-icon-placeholder": "Ej. 📚 o fas fa-file-alt",
+                "add-legal-doc-button": "Agregar Documento Legal",
+                "add-legal-doc-success": "¡Documento legal agregado exitosamente!",
+                "add-legal-doc-error": "Error al agregar documento legal:",
+                "add-legal-doc-validation-error": "Por favor, completa todos los campos del documento legal.",
+                "ai-help-heading": "Ayuda de IA y Preguntas Frecuentes",
+                "ai-help-slogan": "Haz tu pregunta sobre Fruitful Holdings o nuestras operaciones, y nuestra IA te responderá.",
+                "your-question-label": "Tu Pregunta:",
+                "faq-placeholder": "Ejemplo: ¿Qué es Fruitful Holdings?",
+                "get-answer-button": "Obtener Respuesta ✨",
+                "generating-answer-loading": "Generando respuesta...",
+                "error-no-ai-answer": "Error: No hay respuesta de la IA. Por favor, inténtalo de nuevo más tarde.",
+                "reason": "Razón:",
+                "error-ai-connection": "Error: No se pudo conectar al modelo de lenguaje. Verifica la consola por problemas de red.",
+                "please-enter-question": "Por favor, introduce una pregunta para obtener una respuesta.",
+                "planet-pulse-text": "fruchtbarer.planet.wandel",
+                "footer-heading": "Fruitful Holdings:",
+                "footer-slogan": "Crecimiento Global del Repositorio",
+                "footer-text": "Fruitful Holdings (Pty) Ltd se dedica a fomentar la innovación y el crecimiento en varios sectores. Nuestras iniciativas de código abierto tienen como objetivo contribuir al progreso global, junto con una documentación legal y operativa transparente.",
+                "explore-button": "Explora Nuestro Mundo",
+                "copyright-text-footer": "&copy; 2025 Fruitful Holdings (Pty) Ltd. Todos los derechos reservados.",
+                "powered-by-text": "Una orgullosa iniciativa de Fruitful™ Treaty System™"
+            },
+            fr: { // French translations
+                "lang-name": "Français",
+                "announcement-text": "Bienvenue au dépôt de Fruitful Holdings ! Explorez nos projets open-source.",
+                "main-heading": "Notre Pôle d'Entreprise",
+                "repository-heading": "Dépôts de Code",
+                "find-repo-heading": "Trouver un Dépôt",
+                "search-repo-label": "Rechercher un Dépôt :",
+                "search-repo-placeholder": "Ex: faa.zone ou baobab",
+                "no-repos-found": "Aucun dépôt trouvé correspondant à votre recherche.",
+                "selected-repo-name-label": "Dépôt sélectionné :",
+                "selected-repo-url-label": "URL :",
+                "add-new-repo-heading": "Ajouter un nouveau dépôt de code",
+                "new-repo-name-label": "Nom du dépôt (Ex: heyns1000/my-new-project)",
+                "new-repo-name-placeholder": "Ex: heyns1000/nouveau-projet-génial",
+                "new-repo-url-label": "URL du dépôt (Ex: https://github.com/heyns1000/my-new-project)",
+                "new-repo-url-placeholder": "Ex: https://github.com/heyns1000/nouveau-projet-génial",
+                "add-repo-button": "Ajouter le dépôt",
+                "add-repo-success": "Dépôt ajouté avec succès !",
+                "add-repo-error": "Erreur lors de l'ajout du dépôt :",
+                "add-repo-validation-error": "Veuillez entrer le nom du dépôt et une URL valide.",
+                "legal-hub-heading": "Pôle Juridique & Documentation",
+                "legal-hub-slogan": "Accédez aux documents juridiques essentiels, aux guides de configuration et aux informations critiques pour l'écosystème FAA.ZONE™.",
+                "no-legal-docs-found": "Aucun document juridique trouvé correspondant à votre recherche.",
+                "selected-doc-title-label": "Document sélectionné :",
+                "selected-doc-desc-label": "Description :",
+                "selected-doc-url-label": "URL :",
+                "add-new-legal-doc-heading": "Ajouter un nouveau document juridique",
+                "new-legal-doc-title-label": "Titre du document",
+                "new-legal-doc-title-placeholder": "Ex: NDA Fruitful Holdings",
+                "new-legal-doc-url-label": "URL du document",
+                "new-legal-doc-url-placeholder": "Ex: /legal/nda.pdf ou https://example.com/doc.html",
+                "new-legal-doc-desc-label": "Description",
+                "new-legal-doc-desc-placeholder": "Brève description du document.",
+                "new-legal-doc-icon-label": "Icône (Emoji ou Classe FontAwesome)",
+                "new-legal-doc-icon-placeholder": "Ex: 📚 ou fas fa-file-alt",
+                "add-legal-doc-button": "Ajouter un document juridique",
+                "add-legal-doc-success": "Document juridique ajouté avec succès !",
+                "add-legal-doc-error": "Erreur lors de l'ajout du document juridique :",
+                "add-legal-doc-validation-error": "Veuillez remplir tous les champs du document juridique.",
+                "ai-help-heading": "Aide IA & Réponses FAQ",
+                "ai-help-slogan": "Posez votre question sur Fruitful Holdings ou nos opérations, et notre IA vous répondra.",
+                "your-question-label": "Votre Question :",
+                "faq-placeholder": "Ex: Qu'est-ce que Fruitful Holdings ?",
+                "get-answer-button": "Obtenir la Réponse ✨",
+                "generating-answer-loading": "Génération de la réponse...",
+                "error-no-ai-answer": "Erreur : Pas de réponse de l'IA. Veuillez réessayer plus tard.",
+                "reason": "Raison :",
+                "error-ai-connection": "Erreur : Impossible de se connecter au modèle de langage. Vérifiez la console pour les problèmes de réseau.",
+                "please-enter-question": "Veuillez saisir une question pour obtenir une réponse.",
+                "planet-pulse-text": "fruchtbarer.planet.wandel",
+                "footer-heading": "Fruitful Holdings :",
+                "footer-slogan": "Croissance Mondiale du Dépôt",
+                "footer-text": "Fruitful Holdings (Pty) Ltd se consacre à la promotion de l'innovation et de la croissance dans divers secteurs. Nos initiatives open-source visent à contribuer au progrès mondial, ainsi qu'à une documentation juridique et opérationnelle transparente.",
+                "explore-button": "Explorer Notre Monde",
+                "copyright-text-footer": "&copy; 2025 Fruitful Holdings (Pty) Ltd. Tous droits réservés.",
+                "powered-by-text": "Une fière initiative de Fruitful™ Treaty System™"
+            },
+            de: { // German translations
+                "lang-name": "Deutsch",
+                "announcement-text": "Willkommen im Fruitful Holdings Repository! Entdecken Sie unsere Open-Source-Projekte.",
+                "main-heading": "Unser Unternehmens-Hub",
+                "repository-heading": "Code-Repositories",
+                "find-repo-heading": "Ein Repository finden",
+                "search-repo-label": "Repository suchen:",
+                "search-repo-placeholder": "z.B. faa.zone oder baobab",
+                "no-repos-found": "Keine Repositories gefunden, die Ihrer Suche entsprechen.",
+                "selected-repo-name-label": "Ausgewähltes Repository:",
+                "selected-repo-url-label": "URL:",
+                "add-new-repo-heading": "Neues Code-Repository hinzufügen",
+                "new-repo-name-label": "Repository Name (z.B. heyns1000/my-new-project)",
+                "new-repo-name-placeholder": "z.B. heyns1000/neues-fantastisches-projekt",
+                "new-repo-url-label": "Repository URL (z.B. https://github.com/heyns1000/my-new-project)",
+                "new-repo-url-placeholder": "z.B. https://github.com/heyns1000/neues-fantastisches-projekt",
+                "add-repo-button": "Repository hinzufügen",
+                "add-repo-success": "Repository erfolgreich hinzugefügt!",
+                "add-repo-error": "Fehler beim Hinzufügen des Repositorys:",
+                "add-repo-validation-error": "Bitte geben Sie sowohl den Repository-Namen als auch eine gültige URL ein.",
+                "legal-hub-heading": "Rechts- & Dokumentations-Hub",
+                "legal-hub-slogan": "Greifen Sie auf wesentliche Rechtsdokumente, Einrichtungsanleitungen und kritische Informationen für das FAA.ZONE™ Ökosystem zu.",
+                "no-legal-docs-found": "Keine Rechtsdokumente gefunden, die Ihrer Suche entsprechen.",
+                "selected-doc-title-label": "Ausgewähltes Dokument:",
+                "selected-doc-desc-label": "Beschreibung:",
+                "selected-doc-url-label": "URL:",
+                "add-new-legal-doc-heading": "Neues Rechtsdokument hinzufügen",
+                "new-legal-doc-title-label": "Dokumenttitel",
+                "new-legal-doc-title-placeholder": "z.B. Fruitful Holdings NDA",
+                "new-legal-doc-url-label": "Dokument-URL",
+                "new-legal-doc-url-placeholder": "z.B. /legal/nda.pdf oder https://example.com/doc.html",
+                "new-legal-doc-desc-label": "Beschreibung",
+                "new-legal-doc-desc-placeholder": "Kurze Beschreibung des Dokuments.",
+                "new-legal-doc-icon-label": "Symbol (Emoji oder FontAwesome Klasse)",
+                "new-legal-doc-icon-placeholder": "z.B. 📚 oder fas fa-file-alt",
+                "add-legal-doc-button": "Rechtsdokument hinzufügen",
+                "add-legal-doc-success": "Rechtsdokument erfolgreich hinzugefügt!",
+                "add-legal-doc-error": "Fehler beim Hinzufügen des Rechtsdokuments:",
+                "add-legal-doc-validation-error": "Bitte füllen Sie alle Felder für das Rechtsdokument aus.",
+                "ai-help-heading": "KI-Hilfe & FAQ-Antworten",
+                "ai-help-slogan": "Stellen Sie Ihre Frage zu Fruitful Holdings oder unseren Operationen, und unsere KI wird antworten.",
+                "your-question-label": "Ihre Frage:",
+                "faq-placeholder": "z.B. Was ist Fruitful Holdings?",
+                "get-answer-button": "Antwort erhalten ✨",
+                "generating-answer-loading": "Antwort wird generiert...",
+                "error-no-ai-answer": "Fehler: Keine Antwort von der KI. Bitte versuchen Sie es später noch einmal.",
+                "reason": "Grund:",
+                "error-ai-connection": "Fehler: Verbindung zum Sprachmodell konnte nicht hergestellt werden. Überprüfen Sie die Konsole auf Netzwerkprobleme.",
+                "please-enter-question": "Bitte geben Sie eine Frage ein, um eine Antwort zu erhalten.",
+                "planet-pulse-text": "fruchtbarer.planet.wandel",
+                "footer-heading": "Fruitful Holdings:",
+                "footer-slogan": "Repository Globales Wachstum",
+                "footer-text": "Fruitful Holdings (Pty) Ltd widmet sich der Förderung von Innovation und Wachstum in verschiedenen Sektoren. Unsere Open-Source-Initiativen sollen zum globalen Fortschritt beitragen, zusammen mit transparenter rechtlicher und operativer Dokumentation.",
+                "explore-button": "Entdecken Sie unsere Welt",
+                "copyright-text-footer": "&copy; 2025 Fruitful Holdings (Pty) Ltd. Alle Rechte vorbehalten.",
+                "powered-by-text": "Eine stolze Initiative von Fruitful™ Treaty System™"
+            },
+            zh: { // Chinese Simplified translations
+                "lang-name": "简体中文",
+                "announcement-text": "欢迎来到 Fruitful Holdings 仓库！探索我们的开源项目。",
+                "main-heading": "我们的企业中心",
+                "repository-heading": "代码仓库",
+                "find-repo-heading": "查找仓库",
+                "search-repo-label": "搜索仓库：",
+                "search-repo-placeholder": "例如：faa.zone 或 baobab",
+                "no-repos-found": "未找到与您的搜索匹配的仓库。",
+                "selected-repo-name-label": "已选择的仓库：",
+                "selected-repo-url-label": "URL：",
+                "add-new-repo-heading": "添加新代码仓库",
+                "new-repo-name-label": "仓库名称（例如：heyns1000/my-new-project）",
+                "new-repo-name-placeholder": "例如：heyns1000/新的优秀项目",
+                "new-repo-url-label": "仓库 URL（例如：https://github.com/heyns1000/my-new-project）",
+                "new-repo-url-placeholder": "例如：https://github.com/heyns1000/新的优秀项目",
+                "add-repo-button": "添加仓库",
+                "add-repo-success": "仓库添加成功！",
+                "add-repo-error": "添加仓库时出错：",
+                "add-repo-validation-error": "请输入仓库名称和有效的 URL。",
+                "legal-hub-heading": "法律与文档中心",
+                "legal-hub-slogan": "访问 FAA.ZONE™ 生态系统的重要法律文档、设置指南和关键信息。",
+                "no-legal-docs-found": "未找到与您的搜索匹配的法律文档。",
+                "selected-doc-title-label": "已选择的文档：",
+                "selected-doc-desc-label": "描述：",
+                "selected-doc-url-label": "URL：",
+                "add-new-legal-doc-heading": "添加新法律文档",
+                "new-legal-doc-title-label": "文档标题",
+                "new-legal-doc-title-placeholder": "例如：Fruitful Holdings 保密协议",
+                "new-legal-doc-url-label": "文档 URL",
+                "new-legal-doc-url-placeholder": "例如：/legal/nda.pdf 或 https://example.com/doc.html",
+                "new-legal-doc-desc-label": "描述",
+                "new-legal-doc-desc-placeholder": "文档的简要描述。",
+                "new-legal-doc-icon-label": "图标（表情符号或 FontAwesome 类）",
+                "new-legal-doc-icon-placeholder": "例如：📚 或 fas fa-file-alt",
+                "add-legal-doc-button": "添加法律文档",
+                "add-legal-doc-success": "法律文档添加成功！",
+                "add-legal-doc-error": "添加法律文档时出错：",
+                "add-legal-doc-validation-error": "请填写法律文档的所有字段。",
+                "ai-help-heading": "AI 帮助和常见问题解答",
+                "ai-help-slogan": "提出您关于 Fruitful Holdings 或我们运营的问题，我们的 AI 将为您解答。",
+                "your-question-label": "您的问题：",
+                "faq-placeholder": "例如：什么是 Fruitful Holdings？",
+                "get-answer-button": "获取答案 ✨",
+                "generating-answer-loading": "正在生成答案...",
+                "error-no-ai-answer": "错误：AI 没有返回答案。请稍后再试。",
+                "reason": "原因：",
+                "error-ai-connection": "错误：无法连接到语言模型。请检查控制台以查看网络问题。",
+                "please-enter-question": "请输入问题以获取答案。",
+                "planet-pulse-text": "fruchtbarer.planet.wandel",
+                "footer-heading": "Fruitful Holdings：",
+                "footer-slogan": "仓库全球增长",
+                "footer-text": "Fruitful Holdings (Pty) Ltd 致力于促进各行各业的创新和增长。我们的开源计划旨在为全球进步做出贡献，并提供透明的法律和运营文档。",
+                "explore-button": "探索我们的世界",
+                "copyright-text-footer": "&copy; 2025 Fruitful Holdings (Pty) Ltd。保留所有权利。",
+                "powered-by-text": "Fruitful™ Treaty System™ 的一项自豪倡议"
+            },
+            hi: { // Hindi translations
+                "lang-name": "हिंदी",
+                "announcement-text": "फ्रूटफुल होल्डिंग्स रिपोजिटरी में आपका स्वागत है! हमारे ओपन-सोर्स प्रोजेक्ट देखें।",
+                "main-heading": "हमारा एंटरप्राइज़ हब",
+                "repository-heading": "कोड रिपोजिटरी",
+                "find-repo-heading": "एक रिपोजिटरी ढूंढें",
+                "search-repo-label": "रिपोजिटरी खोजें:",
+                "search-repo-placeholder": "जैसे, faa.zone या baobab",
+                "no-repos-found": "आपकी खोज से मेल खाने वाली कोई रिपोजिटरी नहीं मिली।",
+                "selected-repo-name-label": "चयनित रिपोजिटरी:",
+                "selected-repo-url-label": "यूआरएल:",
+                "add-new-repo-heading": "नई कोड रिपोजिटरी जोड़ें",
+                "new-repo-name-label": "रिपोजिटरी नाम (जैसे, heyns1000/my-new-project)",
+                "new-repo-name-placeholder": "जैसे, heyns1000/नया-शानदार-प्रोजेक्ट",
+                "new-repo-url-label": "रिपोजिटरी यूआरएल (जैसे, https://github.com/heyns1000/my-new-project)",
+                "new-repo-url-placeholder": "जैसे, https://github.com/heyns1000/नया-शानदार-प्रोजेक्ट",
+                "add-repo-button": "रिपोजिटरी जोड़ें",
+                "add-repo-success": "रिपोजिटरी सफलतापूर्वक जोड़ी गई!",
+                "add-repo-error": "रिपोजिटरी जोड़ने में त्रुटि:",
+                "add-repo-validation-error": "कृपया रिपोजिटरी का नाम और एक वैध यूआरएल दोनों दर्ज करें।",
+                "legal-hub-heading": "कानूनी और दस्तावेज़ीकरण हब",
+                "legal-hub-slogan": "FAA.ZONE™ इकोसिस्टम के लिए आवश्यक कानूनी दस्तावेजों, सेटअप गाइडों और महत्वपूर्ण जानकारी तक पहुंच प्राप्त करें।",
+                "no-legal-docs-found": "आपकी खोज से मेल खाने वाले कोई कानूनी दस्तावेज नहीं मिले।",
+                "selected-doc-title-label": "चयनित दस्तावेज़:",
+                "selected-doc-desc-label": "विवरण:",
+                "selected-doc-url-label": "यूआरएल:",
+                "add-new-legal-doc-heading": "नया कानूनी दस्तावेज़ जोड़ें",
+                "new-legal-doc-title-label": "दस्तावेज़ शीर्षक",
+                "new-legal-doc-title-placeholder": "जैसे, फ्रूटफुल होल्डिंग्स एनडीए",
+                "new-legal-doc-url-label": "दस्तावेज़ यूआरएल",
+                "new-legal-doc-url-placeholder": "जैसे, /legal/nda.pdf या https://example.com/doc.html",
+                "new-legal-doc-desc-label": "विवरण",
+                "new-legal-doc-desc-placeholder": "दस्तावेज़ का संक्षिप्त विवरण।",
+                "new-legal-doc-icon-label": "आइकॉन (इमोजी या फॉन्टऑसम क्लास)",
+                "new-legal-doc-icon-placeholder": "जैसे, 📚 या fas fa-file-alt",
+                "add-legal-doc-button": "कानूनी दस्तावेज़ जोड़ें",
+                "add-legal-doc-success": "कानूनी दस्तावेज़ सफलतापूर्वक जोड़ा गया!",
+                "add-legal-doc-error": "कानूनी दस्तावेज़ जोड़ने में त्रुटि:",
+                "add-legal-doc-validation-error": "कृपया कानूनी दस्तावेज़ के लिए सभी फ़ील्ड भरें।",
+                "ai-help-heading": "एआई मदद और अक्सर पूछे जाने वाले प्रश्न",
+                "ai-help-slogan": "फ्रूटफुल होल्डिंग्स या हमारे संचालन के बारे में अपना प्रश्न पूछें, और हमारी एआई जवाब देगी।",
+                "your-question-label": "आपका प्रश्न:",
+                "faq-placeholder": "उदाहरण के लिए, फ्रूटफुल होल्डिंग्स क्या है?",
+                "get-answer-button": "उत्तर प्राप्त करें ✨",
+                "generating-answer-loading": "उत्तर उत्पन्न हो रहा है...",
+                "error-no-ai-answer": "त्रुटि: एआई से कोई जवाब नहीं। कृपया बाद में पुनः प्रयास करें।",
+                "reason": "कारण:",
+                "error-ai-connection": "त्रुटि: भाषा मॉडल से कनेक्ट नहीं हो सका। नेटवर्क समस्याओं के लिए कंसोल जांचें।",
+                "please-enter-question": "कृपया उत्तर प्राप्त करने के लिए एक प्रश्न दर्ज करें।",
+                "planet-pulse-text": "fruchtbarer.planet.wandel",
+                "footer-heading": "फ्रूटफुल होल्डिंग्स:",
+                "footer-slogan": "रिपोजिटरी वैश्विक विकास",
+                "footer-text": "फ्रूटफुल होल्डिंग्स (पीटीवाई) लिमिटेड विभिन्न क्षेत्रों में नवाचार और विकास को बढ़ावा देने के लिए समर्पित है। हमारी ओपन-सोर्स पहल का उद्देश्य वैश्विक प्रगति में योगदान करना है, साथ ही पारदर्शी कानूनी और परिचालन दस्तावेज़ भी प्रदान करना है।",
+                "explore-button": "हमारी दुनिया का अन्वेषण करें",
+                "copyright-text-footer": "&copy; 2025 फ्रूटफुल होल्डिंग्स (पीटीवाई) लिमिटेड। सभी अधिकार सुरक्षित।",
+                "powered-by-text": "फ्रूटफुल™ ट्रीटी सिस्टम™ की एक गर्वपूर्ण पहल"
+            },
+            ar: { // Arabic translations
+                "lang-name": "العربية",
+                "announcement-text": "مرحبًا بك في مستودع Fruitful Holdings! استكشف مشاريعنا مفتوحة المصدر.",
+                "main-heading": "مركز المؤسسة الخاص بنا",
+                "repository-heading": "مستودعات الكود",
+                "find-repo-heading": "ابحث عن مستودع",
+                "search-repo-label": "ابحث في المستودع:",
+                "search-repo-placeholder": "مثال: faa.zone أو baobab",
+                "no-repos-found": "لم يتم العثور على مستودعات مطابقة لبحثك.",
+                "selected-repo-name-label": "المستودع المحدد:",
+                "selected-repo-url-label": "الرابط:",
+                "add-new-repo-heading": "أضف مستودع كود جديد",
+                "new-repo-name-label": "اسم المستودع (مثال: heyns1000/my-new-project)",
+                "new-repo-name-placeholder": "مثال: heyns1000/مشروع-جديد-رائع",
+                "new-repo-url-label": "رابط المستودع (مثال: https://github.com/heyns1000/my-new-project)",
+                "new-repo-url-placeholder": "مثال: https://github.com/heyns1000/مشروع-جديد-رائع",
+                "add-repo-button": "أضف مستودعًا",
+                "add-repo-success": "تمت إضافة المستودع بنجاح!",
+                "add-repo-error": "خطأ في إضافة المستودع:",
+                "add-repo-validation-error": "الرجاء إدخال اسم المستودع ورابط صالح.",
+                "legal-hub-heading": "المركز القانوني والوثائق",
+                "legal-hub-slogan": "الوصول إلى الوثائق القانونية الأساسية، وأدلة الإعداد، والمعلومات الهامة لنظام FAA.ZONE™ البيئي.",
+                "no-legal-docs-found": "لم يتم العثور على وثائق قانونية مطابقة لبحثك.",
+                "selected-doc-title-label": "المستند المحدد:",
+                "selected-doc-desc-label": "الوصف:",
+                "selected-doc-url-label": "الرابط:",
+                "add-new-legal-doc-heading": "أضف مستندًا قانونيًا جديدًا",
+                "new-legal-doc-title-label": "عنوان المستند",
+                "new-legal-doc-title-placeholder": "مثال: اتفاقية عدم الإفصاح لـ Fruitful Holdings",
+                "new-legal-doc-url-label": "رابط المستند",
+                "new-legal-doc-url-placeholder": "مثال: /legal/nda.pdf أو https://example.com/doc.html",
+                "new-legal-doc-desc-label": "الوصف",
+                "new-legal-doc-desc-placeholder": "وصف موجز للمستند.",
+                "new-legal-doc-icon-label": "الأيقونة (Emoji أو فئة FontAwesome)",
+                "new-legal-doc-icon-placeholder": "مثال: 📚 أو fas fa-file-alt",
+                "add-legal-doc-button": "أضف مستندًا قانونيًا",
+                "add-legal-doc-success": "تمت إضافة المستند القانوني بنجاح!",
+                "add-legal-doc-error": "خطأ في إضافة المستند القانوني:",
+                "add-legal-doc-validation-error": "الرجاء ملء جميع الحقول للمستند القانوني.",
+                "ai-help-heading": "مساعدة الذكاء الاصطناعي والإجابات الشائعة",
+                "ai-help-slogan": "اطرح سؤالك حول Fruitful Holdings أو عملياتنا، وسيقوم الذكاء الاصطناعي لدينا بالإجابة.",
+                "your-question-label": "سؤالك:",
+                "faq-placeholder": "مثال: ما هي Fruitful Holdings؟",
+                "get-answer-button": "احصل على الإجابة ✨",
+                "generating-answer-loading": "جارٍ إنشاء الإجابة...",
+                "error-no-ai-answer": "خطأ: لا توجد إجابة من الذكاء الاصطناعي. يرجى المحاولة مرة أخرى لاحقًا.",
+                "reason": "السبب:",
+                "error-ai-connection": "خطأ: لم يتمكن من الاتصال بنموذج اللغة. تحقق من وحدة التحكم لمشاكل الشبكة.",
+                "please-enter-question": "الرجاء إدخال سؤال للحصول على إجابة.",
+                "planet-pulse-text": "fruchtbarer.planet.wandel",
+                "footer-heading": "Fruitful Holdings:",
+                "footer-slogan": "نمو المستودعات العالمي",
+                "footer-text": "تلتزم Fruitful Holdings (Pty) Ltd بتعزيز الابتكار والنمو في مختلف القطاعات. تهدف مبادراتنا مفتوحة المصدر إلى المساهمة في التقدم العالمي، بالإضافة إلى توفير الوثائق القانونية والتشغيلية الشفافة.",
+                "explore-button": "استكشف عالمنا",
+                "copyright-text-footer": "&copy; 2025 Fruitful Holdings (Pty) Ltd. جميع الحقوق محفوظة.",
+                "powered-by-text": "مبادرة فخرية من Fruitful™ Treaty System™"
+            }
+        };
+
+        // Firebase variables - will be initialized after DOM content loaded
+        let app, db, auth;
+        let userId;
 
         // Function to set the current language and update all translatable elements
         function setLanguage(lang) {
-            document.body.lang = lang;
-            localStorage.setItem('selectedLanguage', lang);
+            document.body.lang = lang; // Update the HTML body's lang attribute
+            localStorage.setItem('selectedLanguage', lang); // Save user preference
 
+            // Update all elements with data-lang-key
             document.querySelectorAll('[data-lang-key]').forEach(element => {
                 const key = element.getAttribute('data-lang-key');
-                if (window.translations[lang] && window.translations[lang][key] !== undefined) {
+                if (translations[lang] && translations[lang][key] !== undefined) {
                     if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                        element.placeholder = window.translations[lang][key];
-                    } else if (['get-answer-button', 'explore-button', 'add-repo-button', 'add-legal-doc-button', 'footerExploreButton'].includes(key)) {
+                        element.placeholder = translations[lang][key];
+                    } else if (['get-answer-button', 'explore-button', 'add-repo-button', 'add-legal-doc-button'].includes(key)) {
                         const iconHtml = element.innerHTML.match(/<i class=".*"><\/i>/);
                         if (iconHtml) {
-                            element.innerHTML = window.translations[lang][key] + ' ' + iconHtml[0];
+                            element.innerHTML = translations[lang][key] + ' ' + iconHtml[0];
                         } else {
-                            element.textContent = window.translations[lang][key];
+                            element.textContent = translations[lang][key];
                         }
-                    } else if (['main-heading', 'repository-heading', 'find-repo-heading', 'ai-help-heading', 'add-new-repo-heading', 'legal-hub-heading', 'add-new-legal-doc-heading', 'footer-heading'].includes(key)) {
-                        const iconMatch = element.innerHTML.match(/(<i class=".*"><\/i>|.)/);
-                        const textPart = window.translations[lang][key];
-                        if (iconMatch && iconMatch[0] !== undefined) {
-                            if (iconMatch[0].length === 2 && /\p{Emoji}/u.test(iconMatch[0])) {
-                                element.innerHTML = iconMatch[0] + ' ' + textPart;
-                            } else if (iconMatch[0].startsWith('<i')) {
-                                element.innerHTML = iconMatch[0] + ' ' + textPart;
-                            } else {
+                    } else if (['main-heading', 'repository-heading', 'find-repo-heading', 'ai-help-heading', 'add-new-repo-heading', 'legal-hub-heading', 'add-new-legal-doc-heading'].includes(key)) {
+                        const iconHtml = element.innerHTML.match(/(<i class=".*"><\/i>|.)/); // Capture icon or any single char for emojis
+                        if (iconHtml && iconHtml[0] !== undefined) { // Check if iconHtml is not null/undefined and has content
+                            const textPart = translations[lang][key];
+                            // If it's an emoji, ensure it's not duplicated
+                            if (iconHtml[0].length === 2 && /\p{Emoji}/u.test(iconHtml[0])) { // Simple check for single emoji
+                                element.innerHTML = iconHtml[0] + ' ' + textPart;
+                            } else if (iconHtml[0].startsWith('<i')) { // FontAwesome icon
+                                element.innerHTML = iconHtml[0] + ' ' + textPart;
+                            } else { // Fallback if no icon or complex case, just use text
                                 element.textContent = textPart;
                             }
                         } else {
-                            element.textContent = textPart;
+                            element.textContent = translations[lang][key];
                         }
-                    } else if (['light-mode-button', 'dark-mode-button', 'hyper-mode-button'].includes(key)) {
-                        element.textContent = window.translations[lang][key];
                     } else {
-                        element.textContent = window.translations[lang][key];
+                        element.textContent = translations[lang][key];
                     }
                 } else {
-                    console.warn(`Missing translation for key '${key}' in language '${lang}'. Falling back to English.`);
-                    if (window.translations['en'] && window.translations['en'][key] !== undefined) {
-                         if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                            element.placeholder = window.translations['en'][key];
-                        } else if (['get-answer-button', 'explore-button', 'add-repo-button', 'add-legal-doc-button', 'footerExploreButton'].includes(key)) {
+                    console.warn(`Missing translation for key '${key}' in language '${lang}'`);
+                    // Fallback to English if translation is missing
+                    if (translations['en'] && translations['en'][key] !== undefined) {
+                        if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                            element.placeholder = translations['en'][key];
+                        } else if (['get-answer-button', 'explore-button', 'add-repo-button', 'add-legal-doc-button'].includes(key)) {
                             const iconHtml = element.innerHTML.match(/<i class=".*"><\/i>/);
                             if (iconHtml) {
-                                element.innerHTML = window.translations['en'][key] + ' ' + iconHtml[0];
+                                element.innerHTML = translations['en'][key] + ' ' + iconHtml[0];
                             } else {
-                                element.textContent = window.translations['en'][key];
+                                element.textContent = translations['en'][key];
                             }
-                        } else if (['main-heading', 'repository-heading', 'find-repo-heading', 'ai-help-heading', 'add-new-repo-heading', 'legal-hub-heading', 'add-new-legal-doc-heading', 'footer-heading'].includes(key)) {
-                            const iconMatch = element.innerHTML.match(/(<i class=".*"><\/i>|.)/);
-                            const textPart = window.translations['en'][key];
-                            if (iconMatch && iconMatch[0] !== undefined) {
-                                if (iconMatch[0].length === 2 && /\p{Emoji}/u.test(iconMatch[0])) {
-                                    element.innerHTML = iconMatch[0] + ' ' + textPart;
-                                } else if (iconMatch[0].startsWith('<i')) {
-                                    element.innerHTML = iconMatch[0] + ' ' + textPart;
+                        } else if (['main-heading', 'repository-heading', 'find-repo-heading', 'ai-help-heading', 'add-new-repo-heading', 'legal-hub-heading', 'add-new-legal-doc-heading'].includes(key)) {
+                            const iconHtml = element.innerHTML.match(/(<i class=".*"><\/i>|.)/);
+                            if (iconHtml && iconHtml[0] !== undefined) {
+                                if (iconHtml[0].length === 2 && /\p{Emoji}/u.test(iconHtml[0])) {
+                                    element.innerHTML = iconHtml[0] + ' ' + translations['en'][key];
+                                } else if (iconHtml[0].startsWith('<i')) {
+                                    element.innerHTML = iconHtml[0] + ' ' + translations['en'][key];
                                 } else {
-                                    element.textContent = textPart;
+                                    element.textContent = translations['en'][key];
                                 }
                             } else {
-                                element.textContent = textPart;
+                                element.textContent = translations['en'][key];
                             }
-                        } else if (['light-mode-button', 'dark-mode-button', 'hyper-mode-button'].includes(key)) {
-                            element.textContent = window.translations['en'][key];
-                        }
-                        else {
-                            element.textContent = window.translations['en'][key];
+                        } else {
+                            element.textContent = translations['en'][key];
                         }
                     }
                 }
             });
 
+
+            // Update AI response area message if it's an error/prompt message
             const faqAnswerOutput = document.getElementById('faqAnswerOutput');
             const faqPromptInput = document.getElementById('faqPromptInput');
             if (faqAnswerOutput && faqPromptInput) {
-                if (!faqPromptInput.value.trim() && faqAnswerOutput.textContent === (window.translations['en']['please-enter-question'] || '')) {
-                    faqAnswerOutput.textContent = window.translations[lang]['please-enter-question'];
+                if (!faqPromptInput.value.trim() && faqAnswerOutput.textContent === translations['en']['please-enter-question']) {
+                    faqAnswerOutput.textContent = translations[lang]['please-enter-question'];
                 }
-                if (faqAnswerOutput.textContent.startsWith(window.translations['en']['error-no-ai-answer'] || '')) {
-                    faqAnswerOutput.textContent = window.translations[lang]['error-no-ai-answer'];
-                } else if (faqAnswerOutput.textContent.startsWith(window.translations['en']['error-ai-connection'] || '')) {
-                    faqAnswerOutput.textContent = window.translations[lang]['error-ai-connection'];
+                if (faqAnswerOutput.textContent.startsWith(translations['en']['error-no-ai-answer'])) {
+                    faqAnswerOutput.textContent = translations[lang]['error-no-ai-answer'];
+                } else if (faqAnswerOutput.textContent.startsWith(translations['en']['error-ai-connection'])) {
+                    faqAnswerOutput.textContent = translations[lang]['error-ai-connection'];
                 }
             }
         }
 
 
         document.addEventListener('DOMContentLoaded', async () => {
-            // Define translations (should eventually be loaded from global_js_definitions.js)
-            window.translations = {
-                en: {
-                    "lang-name": "English", "announcement-text": "Welcome to Fruitful Holdings Repository! Explore our open-source projects.",
-                    "main-heading": "Our Enterprise Hub", "repository-heading": "Code Repositories",
-                    "find-repo-heading": "Find a Repository", "search-repo-label": "Search Repository:",
-                    "search-repo-placeholder": "e.g., faa.zone or baobab", "no-repos-found": "No repositories found matching your search.",
-                    "selected-repo-name-label": "Selected Repository:", "selected-repo-url-label": "URL:",
-                    "add-new-repo-heading": "Add New Code Repository", "new-repo-name-label": "Repository Name (e.g., heyns1000/my-new-project)",
-                    "new-repo-name-placeholder": "e.g., heyns1000/new-awesome-project", "new-repo-url-label": "Repository URL (e.g., https://github.com/heyns1000/my-new-project)",
-                    "new-repo-url-placeholder": "e.g., https://github.com/heyns1000/new-awesome-project",
-                    "add-repo-button": "Add Repository", "add-repo-success": "Repository added successfully!",
-                    "add-repo-error": "Error adding repository:", "add-repo-validation-error": "Please enter both repository name and a valid URL.",
-                    "legal-hub-heading": "Legal & Documentation Hub",
-                    "legal-hub-slogan": "Access essential legal documents, setup guides, and critical information for the FAA.ZONE™ ecosystem.",
-                    "no-legal-docs-found": "No legal documents found matching your search.",
-                    "selected-doc-title-label": "Selected Document:", "selected-doc-desc-label": "Description:",
-                    "selected-doc-url-label": "URL:", "add-new-legal-doc-heading": "Add New Legal Document",
-                    "new-legal-doc-title-label": "Document Title", "new-legal-doc-title-placeholder": "e.g., Fruitful Holdings NDA",
-                    "new-legal-doc-url-label": "Document URL", "new-legal-doc-url-placeholder": "e.g., /legal/nda.pdf or https://example.com/doc.html",
-                    "new-legal-doc-desc-label": "Description", "new-legal-doc-desc-placeholder": "Brief description of the document.",
-                    "new-legal-doc-icon-label": "Icon (Emoji or FontAwesome Class)", "new-legal-doc-icon-placeholder": "e.g., 📚 or fas fa-file-alt",
-                    "add-legal-doc-button": "Add Legal Document", "add-legal-doc-success": "Legal document added successfully!",
-                    "add-legal-doc-error": "Error adding legal document:", "add-legal-doc-validation-error": "Please fill in all fields for the legal document.",
-                    "ai-help-heading": "AI Help & FAQ Answers",
-                    "ai-help-slogan": "Ask your question about Fruitful Holdings or our operations, and our AI will answer.",
-                    "your-question-label": "Your Question:", "faq-placeholder": "e.g., What is Fruitful Holdings?",
-                    "get-answer-button": "Get Answer ✨", "generating-answer-loading": "Generating answer...",
-                    "error-no-ai-answer": "Error: No answer from AI. Please try again later.",
-                    "reason": "Reason:", "error-ai-connection": "Error: Could not connect to language model. Check console for network issues.",
-                    "please-enter-question": "Please enter a question to get an answer.",
-                    "planet-pulse-text": "fruchtbarer.planet.wandel",
-                    "footer-heading": "Fruitful Holdings:", "footer-slogan": "Repository Global Growth",
-                    "footer-text": "Fruitful Holdings (Pty) Ltd is dedicated to fostering innovation and growth across various sectors. Our open-source initiatives aim to contribute to global progress, alongside transparent legal and operational documentation.",
-                    "explore-button": "Explore Our World",
-                    "copyright-text-footer": "&copy; 2025 Fruitful Holdings (Pty) Ltd. All rights reserved.",
-                    "powered-by-text": "A proud initiative of Fruitful™ Treaty System™",
-                    "light-mode-button": "Light Mode", "dark-mode-button": "Dark Mode", "hyper-mode-button": "Hyper Mode",
-                    "view-document-link": "View Document"
-                },
-                lb: { /* ... Luxembourgish translations ... */ },
-                es: { /* ... Spanish translations ... */ },
-                fr: { /* ... French translations ... */ },
-                hi: { /* ... Hindi translations ... */ },
-                ar: { /* ... Arabic translations ... */ }
-            };
-
-
-            const mainHeader = document.querySelector('header');
+            const body = document.body;
+            const mainHeader = document.getElementById('main-header');
             const announcementBar = document.getElementById('announcement-bar');
             const displayUserId = document.getElementById('displayUserId');
 
+
+            // Function to update header top position based on announcement bar visibility
             const updateHeaderTop = () => {
                 const announcementHeight = announcementBar && !announcementBar.classList.contains('hidden') ? announcementBar.offsetHeight : 0;
                 document.documentElement.style.setProperty('--announcement-bar-height', `${announcementHeight}px`);
                 document.documentElement.style.setProperty('--header-height', `${mainHeader.offsetHeight}px`);
             };
 
+            // --- Announcement Bar Close Button ---
             if (announcementBar && announcementBar.querySelector('.close-btn')) {
                 announcementBar.querySelector('.close-btn').addEventListener('click', () => {
                     announcementBar.classList.add('hidden');
@@ -581,6 +1438,7 @@
                 });
             }
 
+            // --- Theme Switching Logic ---
             const themeDayBtn = document.getElementById('theme-day-btn');
             const themeNightBtn = document.getElementById('theme-night-btn');
             const themeHyperBtn = document.getElementById('theme-hyper-btn');
@@ -613,12 +1471,13 @@
                 setTheme(savedTheme);
             }
 
+            // --- Language Switcher Logic ---
             const languageSwitcher = document.getElementById('languageSwitcher');
             if (languageSwitcher) {
-                for (const langCode in window.translations) {
+                for (const langCode in translations) {
                     const option = document.createElement('option');
                     option.value = langCode;
-                    option.textContent = window.translations[langCode]["lang-name"] || langCode.toUpperCase();
+                    option.textContent = translations[langCode]["lang-name"] || langCode.toUpperCase();
                     languageSwitcher.appendChild(option);
                 }
 
@@ -633,6 +1492,8 @@
                 setLanguage(initialLang);
             }
 
+
+            // --- On Load Initializations (for announcement bar and header position) ---
             window.addEventListener('DOMContentLoaded', () => {
                 if (announcementBar && mainHeader) {
                     if (localStorage.getItem('hideAnnouncementBar') === 'true') {
@@ -647,6 +1508,7 @@
                 }
             });
 
+            // --- Planet Pulse Text Logic ---
             const planetTextElement = document.getElementById('planet-text');
             const planetPhrases = [
                 { text: "fruchtbarer.planet.wandel", lang: "de" }
@@ -656,7 +1518,7 @@
             function updatePlanetText() {
                 if (planetTextElement) {
                     planetTextElement.classList.remove('pulse-animation');
-                    void planetTextElement.offsetWidth;
+                    void planetTextElement.offsetWidth; // Trigger reflow
 
                     currentPhraseIndex = (currentPhraseIndex + 1) % planetPhrases.length;
                     const nextPhrase = planetPhrases[currentPhraseIndex];
@@ -672,48 +1534,37 @@
                 updatePlanetText();
             }
 
-            // Firebase Initialization (only if __firebase_config is available)
+            // --- Firebase Initialization ---
             const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
             const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-
-            let app, db, auth;
-            let userId;
 
             if (Object.keys(firebaseConfig).length > 0) {
                 app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
 
+                // Authenticate anonymously or with custom token
                 if (typeof __initial_auth_token !== 'undefined') {
                     try {
-                        signInWithCustomToken(auth, __initial_auth_token).then(() => {
-                            userId = auth.currentUser?.uid;
-                            if(displayUserId) displayUserId.textContent = userId;
-                            console.log("Signed in with custom token:", userId);
-                        }).catch((error) => {
-                            console.error("Error signing in with custom token:", error);
-                            signInAnonymously(auth).then(() => {
-                                userId = auth.currentUser?.uid;
-                                if(displayUserId) displayUserId.textContent = userId;
-                                console.log("Signed in anonymously due to token error:", userId);
-                            });
-                        });
-                    } catch (error) {
-                        console.error("Error during custom token sign-in setup:", error);
-                        signInAnonymously(auth).then(() => {
-                            userId = auth.currentUser?.uid;
-                            if(displayUserId) displayUserId.textContent = userId;
-                            console.log("Signed in anonymously due to setup error:", userId);
-                        });
-                    }
-                } else {
-                    signInAnonymously(auth).then(() => {
+                        await signInWithCustomToken(auth, __initial_auth_token);
                         userId = auth.currentUser?.uid;
                         if(displayUserId) displayUserId.textContent = userId;
-                        console.log("Signed in anonymously:", userId);
-                    });
+                        console.log("Signed in with custom token:", userId);
+                    } catch (error) {
+                        console.error("Error signing in with custom token:", error);
+                        await signInAnonymously(auth);
+                        userId = auth.currentUser?.uid;
+                        if(displayUserId) displayUserId.textContent = userId;
+                        console.log("Signed in anonymously due to token error:", userId);
+                    }
+                } else {
+                    await signInAnonymously(auth);
+                    userId = auth.currentUser?.uid;
+                    if(displayUserId) displayUserId.textContent = userId;
+                    console.log("Signed in anonymously:", userId);
                 }
 
+                // Add a listener to ensure userId is always up-to-date
                 onAuthStateChanged(auth, (user) => {
                     if (user) {
                         userId = user.uid;
@@ -722,6 +1573,7 @@
                         userId = null;
                         if(displayUserId) displayUserId.textContent = "Not authenticated";
                     }
+                    // Only load repositories and legal docs once auth state is confirmed
                     if (userId) {
                         loadRepositories();
                         loadLegalDocuments();
@@ -736,9 +1588,11 @@
                 document.getElementById('legalLoadingIndicator').classList.add('hidden');
                 document.getElementById('noLegalDocsMessage').textContent = "Firebase is not configured. Cannot load legal documents.";
                 document.getElementById('noLegalDocsMessage').classList.remove('hidden');
-                if(displayUserId) displayUserId.textContent = "Firebase not configured";
+                 if(displayUserId) displayUserId.textContent = "Firebase not configured";
             }
 
+
+            // --- Repository Loading and Search Logic ---
             const repoSearchInput = document.getElementById('repoSearchInput');
             const repositoryListDiv = document.getElementById('repositoryList');
             const repoLoadingIndicator = document.getElementById('repoLoadingIndicator');
@@ -747,8 +1601,10 @@
             const displaySelectedRepoName = document.getElementById('displaySelectedRepoName');
             const displaySelectedRepoUrl = document.getElementById('displaySelectedRepoUrl');
 
-            let allRepositories = [];
-            let selectedRepository = null;
+
+            let allRepositories = []; // To store all fetched repositories
+            let selectedRepository = null; // To store the currently selected repository object
+
 
             async function loadRepositories() {
                 if (!db || !userId) {
@@ -758,38 +1614,80 @@
 
                 repoLoadingIndicator.classList.remove('hidden');
                 noReposMessage.classList.add('hidden');
-                repositoryListDiv.innerHTML = '<div id="repoLoadingIndicator" class="loading-spinner"></div>';
+                repositoryListDiv.innerHTML = '<div id="repoLoadingIndicator" class="loading-spinner"></div>'; // Clear and show spinner
 
                 try {
+                    // Public collection for repositories
                     const q = query(collection(db, `artifacts/${appId}/public/data/repositories`));
 
                     onSnapshot(q, (snapshot) => {
-                        allRepositories = [];
+                        allRepositories = []; // Clear previous data
                         snapshot.forEach((doc) => {
                             allRepositories.push({ id: doc.id, ...doc.data() });
                         });
                         console.log("Fetched repositories:", allRepositories);
-                        filterAndDisplayRepositories();
+                        filterAndDisplayRepositories(); // Display after fetching
                         repoLoadingIndicator.classList.add('hidden');
                     }, (error) => {
                         console.error("Error listening to repositories:", error);
-                        repositoryListDiv.innerHTML = `<p class="text-red-500 text-center">${window.translations[document.body.lang]['error-ai-connection']} Error: ${error.message}</p>`;
+                        repositoryListDiv.innerHTML = `<p class="text-red-500 text-center">${translations[document.body.lang]['error-ai-connection']} Error: ${error.message}</p>`;
                         repoLoadingIndicator.classList.add('hidden');
                     });
 
-                    const initialRepos = await getDocs(collection(db, `artifacts/${appId}/public/data/repositories`));
-                    if (initialRepos.empty) {
+                    // Add some initial dummy data if the collection is empty (for first run)
+                    const initialDocs = await getDocs(collection(db, `artifacts/${appId}/public/data/repositories`));
+                    if (initialDocs.empty) {
                         console.log("Adding initial dummy repository data...");
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), { name: "heyns1000/faa.zone", url: "https://github.com/heyns1000/faa.zone", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), { name: "heyns1000/seedwave", url: "https://github.com/heyns1000/seedwave", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), { name: "heyns1000/vaultmesh", url: "https://github.com/heyns1000/vaultmesh", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), { name: "heyns1000/baobab", url: "https://github.com/heyns1000/baobab", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), { name: "heyns1000/fruitful", url: "https://github.com/heyns1000/fruitful", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), { name: "heyns1000/samfox", url: "https://github.com/heyns1000/samfox", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), { name: "heyns1000/portal", url: "https://github.com/heyns1000/portal", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), { name: "heyns1000/faa-zone-admin-portal", url: "https://github.com/heyns1000/faa-zone-admin-portal", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), { name: "heyns1000/astrowind", url: "https://github.com/heyns1000/astrowind", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), { name: "heyns1000/cloudflare-docs", url: "https://github.com/heyns1000/cloudflare-docs", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), {
+                            name: "heyns1000/faa.zone",
+                            url: "https://github.com/heyns1000/faa.zone",
+                            createdAt: serverTimestamp()
+                        });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), {
+                            name: "heyns1000/seedwave",
+                            url: "https://github.com/heyns1000/seedwave",
+                            createdAt: serverTimestamp()
+                        });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), {
+                            name: "heyns1000/vaultmesh",
+                            url: "https://github.com/heyns1000/vaultmesh",
+                            createdAt: serverTimestamp()
+                        });
+                         await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), {
+                            name: "heyns1000/baobab",
+                            url: "https://github.com/heyns1000/baobab",
+                            createdAt: serverTimestamp()
+                        });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), {
+                            name: "heyns1000/fruitful",
+                            url: "https://github.com/heyns1000/fruitful",
+                            createdAt: serverTimestamp()
+                        });
+                         await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), {
+                            name: "heyns1000/samfox",
+                            url: "https://github.com/heyns1000/samfox",
+                            createdAt: serverTimestamp()
+                        });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), {
+                            name: "heyns1000/portal",
+                            url: "https://github.com/heyns1000/portal",
+                            createdAt: serverTimestamp()
+                        });
+                         await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), {
+                            name: "heyns1000/faa-zone-admin-portal",
+                            url: "https://github.com/heyns1000/faa-zone-admin-portal",
+                            createdAt: serverTimestamp()
+                        });
+                         await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), {
+                            name: "heyns1000/astrowind",
+                            url: "https://github.com/heyns1000/astrowind",
+                            createdAt: serverTimestamp()
+                        });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/repositories`), {
+                            name: "heyns1000/cloudflare-docs",
+                            url: "https://github.com/heyns1000/cloudflare-docs",
+                            createdAt: serverTimestamp()
+                        });
                         console.log("Initial dummy repository data added.");
                     }
 
@@ -804,21 +1702,21 @@
                 const searchTerm = repoSearchInput.value.toLowerCase().trim();
                 const filteredRepos = allRepositories.filter(repo =>
                     repo.name.toLowerCase().includes(searchTerm)
-                ).sort((a, b) => a.name.localeCompare(b.name));
+                ).sort((a, b) => a.name.localeCompare(b.name)); // Sort alphabetically
 
-                repositoryListDiv.innerHTML = '';
+                repositoryListDiv.innerHTML = ''; // Clear current list
 
                 if (filteredRepos.length === 0) {
                     noReposMessage.classList.remove('hidden');
                 } else {
                     noReposMessage.classList.add('hidden');
                     filteredRepos.forEach(repo => {
-                        const repoItem = document.createElement('div');
+                        const repoItem = document.createElement('div'); // Changed to div for easier selection
                         repoItem.classList.add('repository-item');
                         if (selectedRepository && selectedRepository.id === repo.id) {
                             repoItem.classList.add('selected');
                         }
-                        repoItem.dataset.repoId = repo.id;
+                        repoItem.dataset.repoId = repo.id; // Store Firestore document ID
                         repoItem.innerHTML = `
                             <i class="fas fa-code-branch"></i>
                             <span class="repo-name">${repo.name}</span>
@@ -827,11 +1725,13 @@
                             </a>
                         `;
                         repoItem.addEventListener('click', () => {
+                            // Remove 'selected' from all items
                             document.querySelectorAll('.repository-item').forEach(item => {
                                 item.classList.remove('selected');
                             });
+                            // Add 'selected' to clicked item
                             repoItem.classList.add('selected');
-                            selectedRepository = repo;
+                            selectedRepository = repo; // Set the selected repository object
                             displaySelectedRepo();
                         });
                         repositoryListDiv.appendChild(repoItem);
@@ -853,6 +1753,7 @@
                 repoSearchInput.addEventListener('input', filterAndDisplayRepositories);
             }
 
+            // --- Add New Repository Logic ---
             const newRepoNameInput = document.getElementById('newRepoName');
             const newRepoUrlInput = document.getElementById('newRepoUrl');
             const addRepoBtn = document.getElementById('addRepoBtn');
@@ -863,8 +1764,8 @@
                     const name = newRepoNameInput.value.trim();
                     const url = newRepoUrlInput.value.trim();
 
-                    if (!name || !url || (!url.startsWith('http') && !url.startsWith('/'))) {
-                        addRepoMessage.textContent = window.translations[document.body.lang]['add-repo-validation-error'];
+                    if (!name || !url || !url.startsWith('http')) {
+                        addRepoMessage.textContent = translations[document.body.lang]['add-repo-validation-error'];
                         addRepoMessage.style.color = "red";
                         addRepoMessage.classList.remove('hidden');
                         return;
@@ -879,14 +1780,14 @@
                             url: url,
                             createdAt: serverTimestamp()
                         });
-                        addRepoMessage.textContent = window.translations[document.body.lang]['add-repo-success'];
+                        addRepoMessage.textContent = translations[document.body.lang]['add-repo-success'];
                         addRepoMessage.style.color = "green";
                         addRepoMessage.classList.remove('hidden');
                         newRepoNameInput.value = '';
                         newRepoUrlInput.value = '';
                     } catch (error) {
                         console.error("Error adding document: ", error);
-                        addRepoMessage.textContent = `${window.translations[document.body.lang]['add-repo-error']} ${error.message}`;
+                        addRepoMessage.textContent = `${translations[document.body.lang]['add-repo-error']} ${error.message}`;
                         addRepoMessage.style.color = "red";
                         addRepoMessage.classList.remove('hidden');
                     } finally {
@@ -895,6 +1796,7 @@
                 });
             }
 
+            // --- Legal Document Loading and Selection Logic ---
             const legalDocumentListDiv = document.getElementById('legalDocumentList');
             const legalLoadingIndicator = document.getElementById('legalLoadingIndicator');
             const noLegalDocsMessage = document.getElementById('noLegalDocsMessage');
@@ -914,7 +1816,7 @@
 
                 legalLoadingIndicator.classList.remove('hidden');
                 noLegalDocsMessage.classList.add('hidden');
-                legalDocumentListDiv.innerHTML = '<div id="legalLoadingIndicator" class="loading-spinner"></div>';
+                legalDocumentListDiv.innerHTML = '<div id="legalLoadingIndicator" class="loading-spinner"></div>'; // Clear and show spinner
 
                 try {
                     const q = query(collection(db, `artifacts/${appId}/public/data/legal_documents`));
@@ -925,47 +1827,155 @@
                             allLegalDocuments.push({ id: doc.id, ...doc.data() });
                         });
                         console.log("Fetched legal documents:", allLegalDocuments);
-                        displayLegalDocuments();
+                        displayLegalDocuments(); // Display after fetching
                         legalLoadingIndicator.classList.add('hidden');
                     }, (error) => {
                         console.error("Error listening to legal documents:", error);
-                        legalDocumentListDiv.innerHTML = `<p class="text-red-500 text-center">${window.translations[document.body.lang]['error-ai-connection']} Error: ${error.message}</p>`;
+                        legalDocumentListDiv.innerHTML = `<p class="text-red-500 text-center">${translations[document.body.lang]['error-ai-connection']} Error: ${error.message}</p>`;
                         legalLoadingIndicator.classList.add('hidden');
                     });
 
+                    // Add initial dummy data for legal documents if empty
                     const initialDocs = await getDocs(collection(db, `artifacts/${appId}/public/data/legal_documents`));
                     if (initialDocs.empty) {
                         console.log("Adding initial dummy legal document data...");
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Fruitful™ & Seedwave™ Deployment Manual", description: "Comprehensive guide detailing the design philosophy, visual specifications, Git workflow, file structure, and Node packing strategies for the Fruitful™ & Seedwave™ Global Portal.", url: "/legal/fruitful_seedwave_deployment_manual.html", icon: "📚", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Xero Integration Setup Minutes", description: "Detailed setup and troubleshooting for Xero OAuth 2.0 integration with the Seedwave Admin Panel.", url: "/legal/xero_integration_minutes.html", icon: "📊", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Firebase Core Setup Minutes", description: "Minutes documenting the foundational Firebase project setup: Authentication, Cloud Firestore, and Google Analytics.", url: "/legal/firebase_core_minutes.html", icon: "🔥", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Firebase Scalable Admin Panel (7000 Sites)", description: "Comprehensive guide for setting up scalable Firebase Authentication, Firestore, and Hosting for a large-scale (7000 sites) admin panel.", url: "/legal/firebase_scale_7000_minutes.html", icon: "🚀", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Fruitful™ Holdings NDA", description: "Standard Non-Disclosure Agreement for collaborations with Fruitful™ Holdings.", url: "/legal/fruitful_holdings_nda.pdf", icon: "📜", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Secure Sign Application", description: "Portal for securely submitting comprehensive NDA applications with Atom-Level Verification™ Protocols.", url: "/legal/securesign.html", icon: "✍️", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "PayPal Subscriptions Setup Manual", description: "Detailed guide for configuring and deploying PayPal subscription payments within the FAA.ZONE™ Admin Portal.", url: "/legal/paypal_setup.html", icon: "💳", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "FAA™ Seedwave Admin Portal Setup Manual", description: "Comprehensive blueprint for setting up the central Seedwave Admin Portal, detailing serverless architecture and Zoho OAuth integration.", url: "/legal/seedwave.html", icon: "⚙️", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "NDA SecureSign Portal Setup Manual (Page 1)", description: "Guide for installing and configuring the local Node.js server for the SecureSign NDA portal.", url: "/legal/setup.html", icon: "📖", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Setup Guide (Page 2)", description: "Part 2 of the comprehensive setup instructions for FAA.ZONE systems. (Placeholder)", url: "/legal/setup2.html", icon: "📄", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Setup Guide (Page 3)", description: "Part 3 of the comprehensive setup instructions for FAA.ZONE systems. (Placeholder)", url: "/legal/setup3.html", icon: "📃", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Setup Guide (Page 4)", description: "Part 4 of the comprehensive setup instructions for FAA.ZONE systems. (Placeholder)", url: "/legal/setup4.html", icon: "📜", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Setup Guide (Page 5)", description: "Part 5 of the comprehensive setup instructions for FAA.ZONE systems. (Placeholder)", url: "/legal/setup5.html", icon: "📑", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "USA Information", description: "General information pertinent to USA operations and legalities within the FAA.ZONE™ ecosystem.", url: "/legal/usa.html", icon: "🇺🇸", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Setup USA Guide", description: "Specific setup instructions and guidelines for USA-based FAA.ZONE™ operations. (Placeholder)", url: "/legal/setupusa.html", icon: "🗺️", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Baobab Security Network™ Business Package README", description: "Overview of The Baobab Security Network™ Business Package, including conceptual model and usage instructions.", url: "/legal/baobab.html", icon: "🌳", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "King Price™ Pricing & Plans", description: "Information regarding King Price insurance pricing and various plans offered by the FAA.ZONE™ partner.", url: "/legal/pricing.html", icon: "💰", createdAt: serverTimestamp() });
-                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), { title: "Index Transdata", description: "A reference document for data transformation and indexing within the FAA.ZONE™ Transdata framework. (Placeholder)", url: "/legal/index_transdata.html", icon: "📊", createdAt: serverTimestamp() });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), {
+                            title: "Fruitful™ & Seedwave™ Deployment Manual",
+                            description: "Comprehensive guide detailing the design philosophy, visual specifications, Git workflow, file structure, and Node packing strategies for the Fruitful™ & Seedwave™ Global Portal.",
+                            url: "fruitful_seedwave_deployment_manual.html",
+                            icon: "📚",
+                            createdAt: serverTimestamp()
+                        });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), {
+                            title: "Xero Integration Setup Minutes",
+                            description: "Detailed setup and troubleshooting for Xero OAuth 2.0 integration with the Seedwave Admin Panel.",
+                            url: "/legal/xero_integration_minutes.html",
+                            icon: "📊",
+                            createdAt: serverTimestamp()
+                        });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), {
+                            title: "Firebase Core Setup Minutes",
+                            description: "Minutes documenting the foundational Firebase project setup: Authentication, Cloud Firestore, and Google Analytics.",
+                            url: "/legal/firebase_core_minutes.html",
+                            icon: "🔥",
+                            createdAt: serverTimestamp()
+                        });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), {
+                            title: "Firebase Scalable Admin Panel (7000 Sites)",
+                            description: "Comprehensive guide for setting up scalable Firebase Authentication, Firestore, and Hosting for a large-scale (7000 sites) admin panel.",
+                            url: "/legal/firebase_scale_7000_minutes.html",
+                            icon: "🚀",
+                            createdAt: serverTimestamp()
+                        });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), {
+                            title: "Fruitful™ Holdings NDA",
+                            description: "Standard Non-Disclosure Agreement for collaborations with Fruitful™ Holdings.",
+                            url: "/legal/fruitful_holdings_nda.pdf",
+                            icon: "📜",
+                            createdAt: serverTimestamp()
+                        });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), {
+                            title: "Secure Sign Application",
+                            description: "Portal for securely submitting comprehensive NDA applications with Atom-Level Verification™ Protocols.",
+                            url: "/legal/securesign.html",
+                            icon: "✍️",
+                            createdAt: serverTimestamp()
+                        });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), {
+                            title: "PayPal Subscriptions Setup Manual",
+                            description: "Detailed guide for configuring and deploying PayPal subscription payments within the FAA.ZONE™ Admin Portal.",
+                            url: "/legal/paypal_setup.html",
+                            icon: "💳",
+                            createdAt: serverTimestamp()
+                        });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), {
+                            title: "FAA™ Seedwave Admin Portal Setup Manual",
+                            description: "Comprehensive blueprint for setting up the central Seedwave Admin Portal, detailing serverless architecture and Zoho OAuth integration.",
+                            url: "/legal/seedwave.html",
+                            icon: "⚙️",
+                            createdAt: serverTimestamp()
+                        });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), {
+                            title: "NDA SecureSign Portal Setup Manual (Page 1)",
+                            description: "Guide for installing and configuring the local Node.js server for the SecureSign NDA portal.",
+                            url: "/legal/setup.html",
+                            icon: "📖",
+                            createdAt: serverTimestamp()
+                        });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), {
+                            title: "Setup Guide (Page 2)",
+                            description: "Part 2 of the comprehensive setup instructions for FAA.ZONE systems. (Placeholder)",
+                            url: "/legal/setup2.html",
+                            icon: "📄",
+                            createdAt: serverTimestamp()
+                        });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), {
+                            title: "Setup Guide (Page 3)",
+                            description: "Part 3 of the comprehensive setup instructions for FAA.ZONE systems. (Placeholder)",
+                            url: "/legal/setup3.html",
+                            icon: "📃",
+                            createdAt: serverTimestamp()
+                        });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), {
+                            title: "Setup Guide (Page 4)",
+                            description: "Part 4 of the comprehensive setup instructions for FAA.ZONE systems. (Placeholder)",
+                            url: "/legal/setup4.html",
+                            icon: "📜",
+                            createdAt: serverTimestamp()
+                        });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), {
+                            title: "Setup Guide (Page 5)",
+                            description: "Part 5 of the comprehensive setup instructions for FAA.ZONE systems. (Placeholder)",
+                            url: "/legal/setup5.html",
+                            icon: "📑",
+                            createdAt: serverTimestamp()
+                        });
+                         await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), {
+                            title: "USA Information",
+                            description: "General information pertinent to USA operations and legalities within the FAA.ZONE™ ecosystem.",
+                            url: "/legal/usa.html",
+                            icon: "🇺�",
+                            createdAt: serverTimestamp()
+                        });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), {
+                            title: "Setup USA Guide",
+                            description: "Specific setup instructions and guidelines for USA-based FAA.ZONE™ operations. (Placeholder)",
+                            url: "/legal/setupusa.html",
+                            icon: "🗺️",
+                            createdAt: serverTimestamp()
+                        });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), {
+                            title: "Baobab Security Network™ Business Package README",
+                            description: "Overview of The Baobab Security Network™ Business Package, including conceptual model and usage instructions.",
+                            url: "/legal/baobab.html",
+                            icon: "🌳",
+                            createdAt: serverTimestamp()
+                        });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), {
+                            title: "King Price™ Pricing & Plans",
+                            description: "Information regarding King Price insurance pricing and various plans offered by the FAA.ZONE™ partner.",
+                            url: "/legal/pricing.html",
+                            icon: "💰",
+                            createdAt: serverTimestamp()
+                        });
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/legal_documents`), {
+                            title: "Index Transdata",
+                            description: "A reference document for data transformation and indexing within the FAA.ZONE™ Transdata framework. (Placeholder)",
+                            url: "/legal/index_transdata.html",
+                            icon: "📊",
+                            createdAt: serverTimestamp()
+                        });
                         console.log("Initial dummy legal document data added.");
                     }
-
                 } catch (error) {
                     console.error("Error setting up Firestore listener or adding initial data (legal docs):", error);
-                    legalDocumentListDiv.innerHTML = `<p class="text-red-500 text-center">${window.translations[document.body.lang]['error-ai-connection']} Error: ${error.message}</p>`;
+                    legalDocumentListDiv.innerHTML = `<p class="text-red-500 text-center">Failed to load legal documents. Error: ${error.message}</p>`;
                     legalLoadingIndicator.classList.add('hidden');
                 }
             }
 
             function displayLegalDocuments() {
-                legalDocumentListDiv.innerHTML = '';
+                legalDocumentListDiv.innerHTML = ''; // Clear current list
 
                 if (allLegalDocuments.length === 0) {
                     noLegalDocsMessage.classList.remove('hidden');
@@ -984,7 +1994,7 @@
                                 <h3>${doc.title}</h3>
                                 <p>${doc.description}</p>
                                 <a href="${doc.url || '#'}" target="_blank" rel="noopener noreferrer">
-                                    <span>${window.translations[document.body.lang]['view-document-link']}</span>
+                                    <span data-lang-key="view-document-link">View Document</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                     </svg>
@@ -1016,6 +2026,7 @@
                 }
             }
 
+            // --- Add New Legal Document Logic ---
             const newLegalDocTitleInput = document.getElementById('newLegalDocTitle');
             const newLegalDocUrlInput = document.getElementById('newLegalDocUrl');
             const newLegalDocDescriptionInput = document.getElementById('newLegalDocDescription');
@@ -1030,8 +2041,8 @@
                     const description = newLegalDocDescriptionInput.value.trim();
                     const icon = newLegalDocIconInput.value.trim();
 
-                    if (!title || !url || (!url.startsWith('http') && !url.startsWith('/')) || !description || !icon) {
-                        addLegalDocMessage.textContent = window.translations[document.body.lang]['add-legal-doc-validation-error'];
+                    if (!title || !url || !url.startsWith('http') && !url.startsWith('/') || !description || !icon) {
+                        addLegalDocMessage.textContent = translations[document.body.lang]['add-legal-doc-validation-error'];
                         addLegalDocMessage.style.color = "red";
                         addLegalDocMessage.classList.remove('hidden');
                         return;
@@ -1048,7 +2059,7 @@
                             icon: icon,
                             createdAt: serverTimestamp()
                         });
-                        addLegalDocMessage.textContent = window.translations[document.body.lang]['add-legal-doc-success'];
+                        addLegalDocMessage.textContent = translations[document.body.lang]['add-legal-doc-success'];
                         addLegalDocMessage.style.color = "green";
                         addLegalDocMessage.classList.remove('hidden');
                         newLegalDocTitleInput.value = '';
@@ -1057,7 +2068,7 @@
                         newLegalDocIconInput.value = '';
                     } catch (error) {
                         console.error("Error adding legal document: ", error);
-                        addLegalDocMessage.textContent = `${window.translations[document.body.lang]['add-legal-doc-error']} ${error.message}`;
+                        addLegalDocMessage.textContent = `${translations[document.body.lang]['add-legal-doc-error']} ${error.message}`;
                         addLegalDocMessage.style.color = "red";
                         addLegalDocMessage.classList.remove('hidden');
                     } finally {
@@ -1066,6 +2077,8 @@
                 });
             }
 
+
+            // --- Gemini API Text Generation Logic (AI Help/FAQ) ---
             const getFaqAnswerBtn = document.getElementById('getFaqAnswerBtn');
             const faqPromptInput = document.getElementById('faqPromptInput');
             const faqAnswerOutput = document.getElementById('faqAnswerOutput');
@@ -1075,7 +2088,7 @@
                 getFaqAnswerBtn.addEventListener('click', async () => {
                     const prompt = faqPromptInput.value.trim();
                     if (!prompt) {
-                        faqAnswerOutput.textContent = window.translations[document.body.lang]['please-enter-question'];
+                        faqAnswerOutput.textContent = translations[document.body.lang]['please-enter-question'];
                         faqAnswerOutput.style.color = "red";
                         return;
                     }
@@ -1087,22 +2100,26 @@
 
                     try {
                         const currentLang = document.body.lang;
+                        // Craft the prompt carefully to guide the AI
                         const fullPrompt = `You are an AI assistant for "Fruitful Holdings (Pty) Ltd" repository and legal documentation page.
                         Answer the user's question as concisely and accurately as possible, specifically regarding "Fruitful Holdings (Pty) Ltd" operations, its open-source repositories, or its legal and documentation initiatives.
                         If the question is not directly related to these topics, or if you don't have enough information, politely state that you can only answer questions about Fruitful Holdings, its repositories, and its legal/documentation.
                         Translate the response into the user's current language, which is "${currentLang}".
+
                         User's question: "${prompt}"
+
                         Context for Fruitful Holdings:
                         - Name: Fruitful Holdings (Pty) Ltd
                         - Mission/Slogan: Repository global growth, transparent legal and operational documentation.
                         - Activities: Fostering innovation and growth across various sectors, open-source initiatives to contribute to global progress, providing essential legal documents and setup guides.
                         - Associated terms/projects: faa.zone, seedwave, vaultmesh, baobab, fruitful, samfox, portal, faa-zone-admin-portal, astrowind, cloudflare-docs, Xero integration, Firebase setup, Secure Sign, PayPal Subscriptions, NDA, legal guides, USA operations.
+
                         Answer:`;
 
                         let chatHistory = [];
                         chatHistory.push({ role: "user", parts: [{ text: fullPrompt }] });
                         const payload = { contents: chatHistory };
-                        const apiKey = window.API_KEYS.GEMINI_API_KEY;
+                        const apiKey = ""; // Canvas will automatically provide this during runtime
                         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                         console.log("Attempting to call Gemini API with prompt:", fullPrompt);
@@ -1123,16 +2140,16 @@
                             console.log("Extracted Generated Text:", text);
                             faqAnswerOutput.textContent = text;
                         } else {
-                            faqAnswerOutput.textContent = window.translations[document.body.lang]['error-no-ai-answer'];
+                            faqAnswerOutput.textContent = translations[document.body.lang]['error-no-ai-answer'];
                             faqAnswerOutput.style.color = "red";
                             console.error("Gemini API response was unexpected or missing content:", result);
                             if (result.error && result.error.message) {
-                                faqAnswerOutput.textContent += ` ${window.translations[document.body.lang]['reason']} ${result.error.message}`;
+                                faqAnswerOutput.textContent += ` ${translations[document.body.lang]['reason']} ${result.error.message}`;
                             }
                         }
 
                     } catch (error) {
-                        faqAnswerOutput.textContent = window.translations[document.body.lang]['error-ai-connection'];
+                        faqAnswerOutput.textContent = translations[document.body.lang]['error-ai-connection'];
                         faqAnswerOutput.style.color = "red";
                         console.error("Error calling Gemini API:", error);
                     } finally {

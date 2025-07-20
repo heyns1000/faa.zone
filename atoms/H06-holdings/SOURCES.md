@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-07-02 | interns.seedwave.faa.zone | history | `public/respitories.html` | `be8daef5` | Fruitful Holdings | Repository & Legal Hub | 71363 | 29 | 9 | 68.5 |
+| 2 | 2025-07-20 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/legal-main/public/respitories/index.html` | `78425c4b` | Fruitful Holdings | Repository & Legal Hub | 126120 | 1 | 9 | 38.6 |
