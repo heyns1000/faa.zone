@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-07-20 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/legal-main/public/fruitful_seedwave_deployment_manual.html` | `8047d5ef` | Fruitful™ & Seedwave™ Deployment Manual | 66646 | 32 | 0 | 63.7 |
+| 2 | 2025-07-20 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/legal-main/public/global_brands_setup.html` | `491aff56` | Fruitful™ & Seedwave™ Deployment Manual | 41460 | 29 | 0 | 58.1 |
