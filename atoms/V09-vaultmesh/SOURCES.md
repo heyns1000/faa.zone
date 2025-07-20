@@ -15,3 +15,4 @@
 | 9 | 2025-06-23 | FGP--samfox | main | `public/Templates/global_header_body_toggles_footer.html` | `e2002f35` | 🌐 VaultMesh™ | AgroChain™ Core Protocol Overv | 167114 | 46 | 15 | 118.7 |
 | 10 | 2025-06-23 | FGP--samfox | main | `public/Templates/global_payment_paypal_product_page.html` | `5b81c614` | 🌐 VaultMesh™ | AgroChain™ Core Protocol Overv | 104826 | 38 | 3 | 84.5 |
 | 11 | 2025-06-23 | FGP--samfox | main | `public/Templates/global_payment_paypal_product_pages.html` | `93b97f5f` | 🌐 VaultMesh™ | AgroChain™ Core Protocol Overv | 168525 | 35 | 16 | 111.5 |
+| 12 | 2025-07-20 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/legal-main/public/manual.html` | `d18a5ae2` | 🌐 VaultMesh™ | AgroChain™ Core Protocol Overv | 58730 | 55 | 1 | 87.9 |
