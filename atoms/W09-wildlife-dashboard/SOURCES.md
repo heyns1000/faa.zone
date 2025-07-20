@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-07-19 | wildlife.seedwave.faa.zone | history | `index.html` | `77802608` | FAA Wildlife Dashboard | 119592 | 5 | 39 | 124.0 |
+| 2 | 2025-07-20 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/legal-main/public/wildlife.html` | `561e37e5` | FAA Wildlife Dashboard - Project Journey | 45830 | 27 | 0 | 37.1 |
