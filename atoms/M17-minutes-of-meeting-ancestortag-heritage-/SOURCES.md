@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-06-24 | faa.zone | history | `public/legal/sector_ritual_ancestortag_heritage_portal_meeting.html` | `50304034` | FAA.ZONE™ Minutes of Meeting: AncestorTag™ He | 84799 | 26 | 19 | 104.5 |
+| 2 | 2025-07-20 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/legal-main/public/sector_ritual_ancestortag_heritage_portal_meeting.html` | `67159bf2` | FAA.ZONE™ Minutes of Meeting: AncestorTag™ He | 84807 | 26 | 19 | 104.5 |
