@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-06-23 | FGP--samfox | main | `public/Templates/dashboardv3.0.html` | `3031aa4f` | Fruitful Dashboard v3.0 | 61600 | 72 | 5 | 122.1 |
+| 2 | 2025-07-20 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/interns.seedwave.faa.zone-main/public/fruitful_dashboard_work_in_progress.html` | `6d5c2874` | Fruitful Planet Dashboard - Master API Templa | 195892 | 81 | 19 | 174.1 |
