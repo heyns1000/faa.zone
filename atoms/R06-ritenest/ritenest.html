@@ -752,19 +752,22 @@
             border-radius: 0.5rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.2s ease, color 0.2s ease;
             white-space: nowrap;
-            background-color: var(--ritenest-card-bg);
-            color: var(--ritenest-dark-text);
-            border: 1px solid var(--ritenest-border);
+            background-color: var(--ritenest-card-bg); /* Default background */
+            color: var(--ritenest-dark-text); /* Default text color */
+            border: 1px solid var(--ritenest-border); /* Default border */
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+        #ritenest-dashboard-wrapper .tab-nav-item:hover {
+            background-color: #a7f3d0; /* Lighter green on hover */
+            color: var(--ritenest-primary); /* Darker text on hover */
         }
         #ritenest-dashboard-wrapper .tab-nav-item.active {
-            background-color: var(--ritenest-primary);
-            color: white;
-        }
-        #ritenest-dashboard-wrapper .tab-nav-item:not(.active):hover {
-            background-color: var(--ritenest-card-bg);
-            color: var(--ritenest-primary);
+            background-color: var(--ritenest-primary); /* Active background */
+            color: white; /* Active text color */
+            border-color: var(--ritenest-primary); /* Active border */
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         #ritenest-dashboard-wrapper .tab-content {
             display: none;
@@ -837,19 +840,50 @@
             color: var(--ritenest-dark-text);
             border-bottom: 1px solid var(--ritenest-border);
             box-shadow: inset 0 5px 20px rgba(0,0,0,0.05);
+            position: relative; /* Needed for canvas positioning */
+            overflow: hidden; /* Hide overflowing canvas particles */
+            height: 100vh; /* Take full viewport height */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
         }
         #banimal-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             opacity: 0.5; /* More subtle */
+            z-index: 0;
+        }
+        .banimal-hero-content {
+            position: relative;
+            z-index: 1; /* Ensure content is above canvas */
+            max-width: 800px;
+            margin: 0 auto;
         }
         .banimal-hero-content h1 {
             color: var(--ritenest-primary); /* Deep green for Banimal™ */
             text-shadow: 0 4px 10px rgba(4, 120, 87, 0.1);
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1rem;
         }
         .banimal-hero-content h1 span {
             color: var(--ritenest-secondary); /* Medium green for slogan */
+            display: block;
+            font-size: 0.7em;
+            font-weight: 700;
         }
         .banimal-hero-content p {
             color: var(--ritenest-muted-text);
+            font-size: 1.15rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
         }
         .shop-now-button {
             background: linear-gradient(45deg, #fcd34d, #f97316); /* Yellow/Orange for contrast */
@@ -862,6 +896,266 @@
             box-shadow: 0 10px 30px rgba(252, 211, 77, 0.6);
             border-color: rgba(252, 211, 77, 0.8);
         }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background-color: var(--ritenest-card-bg);
+            margin: auto;
+            padding: 20px;
+            border: 1px solid var(--ritenest-border);
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            text-align: center;
+            position: relative;
+        }
+        .close-button {
+            color: var(--ritenest-dark-text);
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: var(--ritenest-primary);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Settings Tab Navigation - RiteNest Themed */
+        #settings .settings-tab-btn {
+            padding: 0.75rem 1.25rem;
+            background-color: var(--ritenest-card-bg); /* Lighter green for default tab */
+            border: 1px solid var(--ritenest-border);
+            color: var(--ritenest-dark-text);
+            font-weight: 500;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+            border-radius: 8px 8px 0 0; /* Rounded top corners */
+        }
+        #settings .settings-tab-btn:hover {
+            color: var(--ritenest-primary);
+            background-color: #a7f3d0; /* Even lighter green on hover */
+            border-color: var(--ritenest-primary);
+        }
+        #settings .settings-tab-btn.active {
+            color: white;
+            background-color: var(--ritenest-primary); /* Deep green for active tab */
+            border-color: var(--ritenest-primary);
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Settings Panel Styling - RiteNest Themed */
+        #settings .panel {
+            background-color: var(--ritenest-card-bg); /* Lighter green for panels */
+            border: 1px solid var(--ritenest-border);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            color: var(--ritenest-dark-text);
+        }
+        #settings .panel h3, #settings .panel h4 {
+            color: var(--ritenest-primary); /* Deep green for headings */
+        }
+        #settings .panel p {
+            color: var(--ritenest-muted-text);
+        }
+
+        /* Form Controls - RiteNest Themed */
+        #settings .form-control label {
+            color: var(--ritenest-dark-text);
+        }
+        #settings .form-control input[type="text"],
+        #settings .form-control input[type="email"],
+        #settings .form-control input[type="password"],
+        #settings .form-control select,
+        #settings .form-control textarea,
+        #settings .form-control input[type="number"] {
+            background-color: #ecfdf5; /* Very light green for input fields */
+            border: 1px solid var(--ritenest-border);
+            color: var(--ritenest-dark-text);
+        }
+        #settings .form-control input:focus,
+        #settings .form-control select:focus,
+        #settings .form-control textarea:focus {
+            border-color: var(--ritenest-accent); /* Teal green focus */
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
+        }
+        #settings .form-action-button {
+            background-color: var(--ritenest-secondary); /* Medium green button */
+            color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        #settings .form-action-button:hover {
+            background-color: var(--ritenest-primary); /* Darker green on hover */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        /* API Key Table - RiteNest Themed */
+        #settings .api-key-table th {
+            background-color: #c6f6d5; /* Lightest green for table header */
+            color: var(--ritenest-primary); /* Deep green for header text */
+        }
+        #settings .api-key-table td {
+            color: var(--ritenest-dark-text);
+        }
+        #settings .api-key-table tr:hover {
+            background-color: #e0fdf0; /* Slightly different light green on hover */
+        }
+        #settings .api-key-value {
+            color: var(--ritenest-muted-text);
+        }
+        #settings .security-note {
+            background-color: #fef2f2; /* Light red for warning */
+            border-left-color: #dc2626; /* Stronger red border */
+            color: #dc2626; /* Stronger red text */
+        }
+
+        /* Company Selection Card - RiteNest Themed */
+        #settings .company-select-card {
+            background-color: #ecfdf5; /* Very light green for company cards */
+            border: 1px solid var(--ritenest-border);
+            color: var(--ritenest-dark-text);
+        }
+        #settings .company-select-card:hover {
+            background-color: #dcfce7; /* Lighter green on hover */
+        }
+        #settings .company-select-card h3 {
+            color: var(--ritenest-primary); /* Deep green for company name */
+        }
+        #settings .company-select-card p {
+            color: var(--ritenest-muted-text);
+        }
+        #settings .company-details-section {
+            background-color: #ecfdf5; /* Very light green for details section */
+            border: 1px solid var(--ritenest-border);
+            color: var(--ritenest-dark-text);
+        }
+        #settings .company-details-section h4 {
+            color: var(--ritenest-primary); /* Deep green for details heading */
+        }
+        #settings .company-details-section strong {
+            color: var(--ritenest-accent); /* Teal green for detail keys */
+        }
+        #settings .copy-square {
+            background-color: #ecfdf5; /* Very light green for copy squares */
+            border: 1px solid var(--ritenest-border);
+        }
+        #settings .copy-square pre {
+            color: var(--ritenest-dark-text);
+        }
+        #settings .copy-square .copy-button {
+            background-color: var(--ritenest-secondary); /* Medium green copy button */
+        }
+        #settings .copy-square .copy-button:hover {
+            background-color: var(--ritenest-primary); /* Darker green on hover */
+        }
+        #settings .loading-spinner {
+            border-top-color: var(--ritenest-primary); /* Deep green spinner */
+        }
+        #settings .text-green-500 {
+            color: var(--ritenest-accent); /* Teal green for success icons */
+        }
+        #settings .text-yellow-500 {
+            color: #facc15; /* Yellow for pending icons */
+        }
+        #settings .text-red-500 {
+            color: #ef4444; /* Red for error icons */
+        }
+        #settings .bg-purple-600 {
+            background-color: #7c3aed; /* Purple for AI buttons */
+        }
+        #settings .hover:bg-purple-700:hover {
+            background-color: #6d28d9; /* Darker purple on hover */
+        }
+        #settings .bg-blue-600 {
+            background-color: #2563eb; /* Blue for deploy button */
+        }
+        #settings .hover:bg-blue-700:hover {
+            background-color: #1d4ed8; /* Darker blue on hover */
+        }
+        #settings .text-blue-500 {
+            color: #3b82f6; /* Blue for edit/delete buttons */
+        }
+        #settings .hover:text-blue-700:hover {
+            color: #1d4ed8; /* Darker blue on hover */
+        }
+
+        /* Email Draft Modal specific styling */
+        .custom-modal-overlay {
+            background-color: rgba(0,0,0,0.6); /* Darker overlay */
+        }
+        .custom-modal-content {
+            background-color: var(--ritenest-card-bg); /* Lighter green background */
+            color: var(--ritenest-dark-text); /* Dark text */
+            border: 1px solid var(--ritenest-border); /* Green border */
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3); /* Darker shadow */
+        }
+        .custom-modal-content h3 {
+            color: var(--ritenest-primary); /* Deep green title */
+        }
+        .custom-modal-content .close-preview-btn {
+            color: var(--ritenest-dark-text); /* Dark text for close button */
+        }
+        .custom-modal-content .close-preview-btn:hover {
+            color: var(--ritenest-primary); /* Darker green on hover */
+        }
+        .custom-modal-content .template-preview-body p {
+            color: var(--ritenest-muted-text); /* Muted text for body */
+        }
+        .custom-modal-content .form-control input,
+        .custom-modal-content .form-control textarea {
+            background-color: #ecfdf5; /* Very light green for inputs */
+            border: 1px solid var(--ritenest-border);
+            color: var(--ritenest-dark-text);
+        }
+        .custom-modal-content .form-action-button {
+            background-color: var(--ritenest-secondary); /* Medium green button */
+            color: white;
+        }
+        .custom-modal-content .form-action-button:hover {
+            background-color: var(--ritenest-primary); /* Darker green on hover */
+        }
+        .custom-modal-content .btn-primary {
+            background-color: var(--ritenest-accent); /* Teal green for primary action */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+        }
+        .custom-modal-content .btn-primary:hover {
+            background-color: var(--ritenest-primary); /* Darker green on hover */
+        }
+        .custom-modal-content .btn-secondary {
+            background-color: #cbd5e1; /* Light gray for secondary action */
+            color: var(--ritenest-dark-text);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+        }
+        .custom-modal-content .btn-secondary:hover {
+            background-color: #a0aec0; /* Darker gray on hover */
+        }
+
     </style>
 </head>
 <body>
@@ -875,14 +1169,13 @@
             <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" onclick="window.showMainSection('vault-access')">Vault</a>
             <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" onclick="window.showMainSection('treaty')">Treaty</a>
             <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" onclick="window.showMainSection('vaultmesh')">VaultMesh</a>
-            <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" onclick="window.showMainSection('about')">About</a>
             <a href="javascript:void(0)" class="header-nav-item primary-btn" onclick="window.showMainSection('ritenest-dashboard-wrapper')">Dashboard</a>
             <a href="javascript:void(0)" class="header-nav-item transition-colors duration-200" onclick="window.showMainSection('banimal-landing-page')">Banimal</a>
         </nav>
     </header>
 
     <!-- Landing Page Sections -->
-    <section id="hero-section" class="landing-section text-center">
+    <section id="hero-section" class="landing-section text-center hidden">
         <div class="hero-content">
             <h2 class="text-5xl md:text-6xl font-extrabold mb-6 leading-tight">
                 Preserve. Connect. <span class="text-yellow-300">Flourish.</span>
@@ -896,7 +1189,7 @@
         </div>
     </section>
 
-    <section id="features" class="landing-section py-16 md:py-24 px-6 md:px-12 text-center">
+    <section id="features" class="landing-section py-16 md:py-24 px-6 md:px-12 text-center hidden">
         <div class="max-w-6xl mx-auto">
             <h3 class="text-4xl font-bold text-center mb-16">
                 Core Features of RiteNest™
@@ -948,31 +1241,33 @@
         </div>
     </section>
 
-    <section id="shareprice" class="landing-section py-12 text-center">
+    <section id="shareprice" class="landing-section py-12 text-center hidden">
         <h2 class="text-3xl font-semibold mb-2">🌿 RiteNest™ Signal</h2>
         <div id="price" class="text-5xl font-bold">$88.88</div>
         <div class="text-sm text-gray-400 mt-1">Last updated: <span id="timestamp">Live</span></div>
     </section>
 
-    <section id="seedwave" class="landing-section py-16 px-6 text-center">
+    <section id="seedwave" class="landing-section py-16 px-6 text-center hidden">
         <h2 class="text-4xl font-bold mb-8">🌱 RiteNest™ Growth & Impact 🌱</h2>
         <div class="w-full max-w-4xl mx-auto p-6 rounded-xl shadow-lg">
             <canvas id="brandChart"></canvas>
         </div>
     </section>
 
-    <section id="founder-glyph" class="landing-section py-16 px-6 text-center bg-gray-700">
-        <h2 class="text-4xl font-bold mb-6">🌿 Founder's Vision</h2>
-        <p class="max-w-3xl mx-auto text-xl leading-relaxed">
-            RiteNest™ emerged from a deep respect for ancestral wisdom and the power of digital preservation. We believe in creating a living archive, where tradition meets technology to ensure cultural continuity.
-        </p>
-        <p class="mt-6 max-w-2xl mx-auto italic">
-            This isn't just about data; it's about the soul of humanity, meticulously preserved and made accessible for future generations. Our protocols ensure integrity, authenticity, and profound connection.
-        </p>
-        <p class="mt-6 font-semibold">— From the Guardians of Heritage 🌍 RiteNest™ Protocol Activated™</p>
+    <section id="founder-glyph" class="landing-section py-16 px-6 text-center bg-gray-700 hidden">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-4xl font-bold mb-6">🌿 Founder's Vision</h2>
+            <p class="text-xl leading-relaxed">
+                RiteNest™ emerged from a deep respect for ancestral wisdom and the power of digital preservation. We believe in creating a living archive, where tradition meets technology to ensure cultural continuity.
+            </p>
+            <p class="mt-6 italic">
+                This isn't just about data; it's about the soul of humanity, meticulously preserved and made accessible for future generations. Our protocols ensure integrity, authenticity, and profound connection.
+            </p>
+            <p class="mt-6 font-semibold">— From the Guardians of Heritage 🌍 RiteNest™ Protocol Activated™</p>
+        </div>
     </section>
 
-    <section id="vault-access" class="landing-section py-16 px-6">
+    <section id="vault-access" class="landing-section py-16 px-6 hidden">
         <h3 class="text-4xl font-bold text-center mb-10">🔐 RiteNest™ Vault Access</h3>
 
         <div class="w-full max-w-6xl mx-auto mb-10">
@@ -1001,25 +1296,25 @@
         </div>
     </section>
 
-    <section id="sector-scrolls" class="landing-section py-16 px-6 text-center bg-gray-800">
+    <section id="sector-scrolls" class="landing-section py-16 px-6 text-center hidden">
         <h2 class="text-4xl font-bold mb-8">🧬 Ritual & Culture Sectors</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
-            <a href="javascript:void(0)" class="glyph" data-vault="payroll" onclick="alert('Simulating: Navigating to Payroll Sector.')">💰 Payroll Core Systems</a>
-            <a href="javascript:void(0)" class="glyph" data-vault="retail" onclick="alert('Simulating: Navigating to Retail Sector.')">🛍️ Retail, Vendor & Trade</a>
-            <a href="javascript:void(0)" class="glyph" data-vault="ai-logic" onclick="alert('Simulating: Navigating to AI, Logic & Grid Systems Sector.')">🧠 AI, Logic & Grid Systems</a>
-            <a href="javascript:void(0)" class="glyph" data-vault="design" onclick="alert('Simulating: Navigating to Creative & Design Systems Sector.')">✒️ Creative & Design Systems</a>
-            <a href="javascript:void(0)" class="glyph" data-vault="finance" onclick="alert('Simulating: Navigating to Finance & Token Yield Sector.')">₿ Finance & Token Yield</a>
-            <a href="javascript:void(0)" class="glyph" data-vault="webless" onclick="alert('Simulating: Navigating to Webless Tech & Nodes Sector.')">⚙️ Webless Tech & Nodes</a>
-            <a href="javascript:void(0)" class="glyph" data-vault="logistics" onclick="alert('Simulating: Navigating to Logistics & Packaging Sector.')">📦 Logistics & Packaging</a>
-            <a href="javascript:void(0)" class="glyph" data-vault="food" onclick="alert('Simulating: Navigating to Food, Soil & Farming Sector.')">🥦 Food, Soil & Farming</a>
-            <a href="javascript:void(0)" class="glyph" data-vault="education" onclick="alert('Simulating: Navigating to Youth & Education Sector.')">🧒 Youth & Education</a>
-            <a href="javascript:void(0)" class="glyph" data-vault="health" onclick="alert('Simulating: Navigating to Health & Hygiene Sector.')">🧴 Health & Hygiene</a>
-            <a href="javascript:void(0)" class="glyph" data-vault="culture" onclick="alert('Simulating: Navigating to Aura, Ritual & Culture Sector.')">🪷 Aura, Ritual & Culture</a>
-            <a href="javascript:void(0)" class="glyph" data-vault="housing" onclick="alert('Simulating: Navigating to Housing & Infrastructure Sector.')">🏛️ Housing & Infrastructure</a>
-            <a href="javascript:void(0)" class="glyph" data-vault="nft" onclick="alert('Simulating: Navigating to NFT, IP, Ownership Grid Sector.')">🪪 NFT, IP, Ownership Grid</a>
-            <a href="javascript:void(0)" class="glyph" data-vault="media" onclick="alert('Simulating: Navigating to Motion, Media, Sonic Sector.')">🌐 Motion, Media, Sonic</a>
-            <a href="javascript:void(0)" class="glyph" data-vault="mining" onclick="alert('Simulating: Navigating to Mining & Material Yields Sector.')">⛏️ Mining & Material Yields</a>
-            <a href="javascript:void(0)" class="glyph" data-vault="wildlife" onclick="alert('Simulating: Navigating to Wildlife Sector.')">🚁 Wildlife Sector</a>
+            <a href="javascript:void(0)" class="glyph" data-vault="payroll" onclick="window.showMessage('Simulating: Navigating to Payroll Sector.')">💰 Payroll Core Systems</a>
+            <a href="javascript:void(0)" class="glyph" data-vault="retail" onclick="window.showMessage('Simulating: Navigating to Retail Sector.')">🛍️ Retail, Vendor & Trade</a>
+            <a href="javascript:void(0)" class="glyph" data-vault="ai-logic" onclick="window.showMessage('Simulating: Navigating to AI, Logic & Grid Systems Sector.')">🧠 AI, Logic & Grid Systems</a>
+            <a href="javascript:void(0)" class="glyph" data-vault="design" onclick="window.showMessage('Simulating: Navigating to Creative & Design Systems Sector.')">✒️ Creative & Design Systems</a>
+            <a href="javascript:void(0)" class="glyph" data-vault="finance" onclick="window.showMessage('Simulating: Navigating to Finance & Token Yield Sector.')">₿ Finance & Token Yield</a>
+            <a href="javascript:void(0)" class="glyph" data-vault="webless" onclick="window.showMessage('Simulating: Navigating to Webless Tech & Nodes Sector.')">⚙️ Webless Tech & Nodes</a>
+            <a href="javascript:void(0)" class="glyph" data-vault="logistics" onclick="window.showMessage('Simulating: Navigating to Logistics & Packaging Sector.')">📦 Logistics & Packaging</a>
+            <a href="javascript:void(0)" class="glyph" data-vault="food" onclick="window.showMessage('Simulating: Navigating to Food, Soil & Farming Sector.')">🥦 Food, Soil & Farming</a>
+            <a href="javascript:void(0)" class="glyph" data-vault="education" onclick="window.showMessage('Simulating: Navigating to Youth & Education Sector.')">🧒 Youth & Education</a>
+            <a href="javascript:void(0)" class="glyph" data-vault="health" onclick="window.showMessage('Simulating: Navigating to Health & Hygiene Sector.')">🧴 Health & Hygiene</a>
+            <a href="javascript:void(0)" class="glyph" data-vault="culture" onclick="window.showMessage('Simulating: Navigating to Aura, Ritual & Culture Sector.')">🪷 Aura, Ritual & Culture</a>
+            <a href="javascript:void(0)" class="glyph" data-vault="housing" onclick="window.showMessage('Simulating: Navigating to Housing & Infrastructure Sector.')">🏛️ Housing & Infrastructure</a>
+            <a href="javascript:void(0)" class="glyph" data-vault="nft" onclick="window.showMessage('Simulating: Navigating to NFT, IP, Ownership Grid Sector.')">🪪 NFT, IP, Ownership Grid</a>
+            <a href="javascript:void(0)" class="glyph" data-vault="media" onclick="window.showMessage('Simulating: Navigating to Motion, Media, Sonic Sector.')">🌐 Motion, Media, Sonic</a>
+            <a href="javascript:void(0)" class="glyph" data-vault="mining" onclick="window.showMessage('Simulating: Navigating to Mining & Material Yields Sector.')">⛏️ Mining & Material Yields</a>
+            <a href="javascript:void(0)" class="glyph" data-vault="wildlife" onclick="window.showMessage('Simulating: Navigating to Wildlife Sector.')">🚁 Wildlife Sector</a>
         </div>
     </section>
 
@@ -1068,7 +1363,10 @@
         </div>
         <div id="embedded-culture-snapshot" class="brand-snapshot hidden">
             <h4 class="text-xl font-bold mb-2 text-ritenest-dark-text">Aura, Ritual & Culture Snapshot</h4>
-            <p class="text-ritenest-muted-text">Cultural trends and community engagement. [Mock Data]</p>
+            <div class="scroll-cards flex flex-col space-y-6">
+                <!-- Media scroll profiles will load here dynamically -->
+                <p class="text-ritenest-muted-text">Loading media scroll profiles...</p>
+            </div>
         </div>
         <div id="embedded-housing-snapshot" class="brand-snapshot hidden">
             <h4 class="text-xl font-bold mb-2 text-ritenest-dark-text">Housing & Infrastructure Snapshot</h4>
@@ -1096,13 +1394,13 @@
     </div>
 
 
-    <section id="treaty" class="landing-section py-16 px-6 text-center">
+    <section id="treaty" class="landing-section py-16 px-6 text-center hidden">
         <h2 class="text-4xl font-bold mb-6">📜 Treaty System™</h2>
         <p class="max-w-2xl mx-auto text-lg mb-8">The FAA™ Treaty Layer binds interface to intention. This is not UI. This is glyph-encoded law.</p>
         <blockquote class="text-2xl italic font-semibold">"RiteNest™ isn't a site. It's the shape of alignment — and 🌿 holds the flame."</blockquote>
     </section>
 
-    <section id="signal-packet" class="landing-section py-10 text-xs text-center">
+    <section id="signal-packet" class="landing-section py-10 text-xs text-center hidden">
         <pre class="max-w-2xl mx-auto p-4 rounded-lg overflow-auto"><code>{
     "signal": "omnidrop",
     "origin": "If you don't like the fruits you are growing, change the seed™ / FAA Vault Layer",
@@ -1113,7 +1411,7 @@
 }</code></pre>
     </section>
 
-    <section id="vaultmesh" class="landing-section py-20 px-6">
+    <section id="vaultmesh" class="landing-section py-20 px-6 hidden">
         <div class="max-w-4xl mx-auto text-left space-y-6">
 
             <h2 class="text-4xl font-bold">🧠 VaultMesh™: Executive Summary</h2>
@@ -1233,7 +1531,7 @@
         </div>
     </section>
 
-    <section id="about" class="landing-section py-16 md:py-24 px-6 md:px-12 text-center">
+    <section id="about" class="landing-section py-16 md:py-24 px-6 md:px-12 text-center hidden">
         <div class="max-w-4xl mx-auto">
             <h3 class="text-4xl font-bold mb-8">About RiteNest™</h3>
             <p class="text-lg leading-relaxed mb-6">
@@ -1245,7 +1543,7 @@
         </div>
     </section>
 
-    <section id="cta-landing" class="landing-section py-16 md:py-24 px-6 md:px-12 text-center">
+    <section id="cta-landing" class="landing-section py-16 md:py-24 px-6 md:px-12 text-center hidden">
         <div class="max-w-3xl mx-auto">
             <h3 class="text-4xl font-extrabold mb-8 leading-tight">
                 Ready to Preserve Your Heritage?
@@ -1259,8 +1557,8 @@
         </div>
     </section>
 
-    <!-- RiteNest Dashboard Content (initially hidden) -->
-    <div id="ritenest-dashboard-wrapper" class="hidden flex-grow dashboard-main-content-bg">
+    <!-- RiteNest Dashboard Content (initially visible) -->
+    <div id="ritenest-dashboard-wrapper" class="flex flex-grow dashboard-main-content-bg">
         <div class="flex flex-grow dashboard-container">
             <nav class="dashboard-sidebar-bg dashboard-sidebar">
                 <h2 class="text-xl font-semibold dashboard-primary-text mb-4">RiteNest Navigation</h2>
@@ -1359,7 +1657,7 @@
                             <p class="dashboard-muted-text mb-4">
                                 A powerful ceremonial practice from the Xhosa people, performed to invoke rain and ensure bountiful harvests. Documented with intricate details, elder interviews, and historical context.
                             </p>
-                            <button class="primary-btn px-6 py-3 rounded-lg text-lg font-semibold" onclick="alert('Simulating: Viewing full details of the Rain Dance ritual.')">
+                            <button class="primary-btn px-6 py-3 rounded-lg text-lg font-semibold" onclick="window.showMessage('Simulating: Viewing full details of the Rain Dance ritual.')">
                                 View Full Ritual Details
                             </button>
                         </div>
@@ -1414,23 +1712,23 @@
                     <section class="mb-12 grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div class="dashboard-card p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
                             <i class="fas fa-tasks text-5xl text-accent mb-4"></i>
-                            <p class="dashboard-muted-text text-lg">Total Entries</p>
+                            <p class="text-gray-600 text-lg">Total Entries</p>
                             <p class="text-5xl font-bold text-accent" id="docProgressTotalEntries">0</p>
                         </div>
                         <div class="dashboard-card p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
                             <i class="fas fa-hourglass-half text-5xl text-accent mb-4"></i>
-                            <p class="dashboard-muted-text text-lg">In Progress</p>
+                            <p class="text-gray-600 text-lg">In Progress</p>
                             <p class="text-5xl font-bold text-accent" id="docProgressInProgress">0</p>
                         </div>
                         <div class="dashboard-card p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
                             <i class="fas fa-check-circle text-5xl text-accent mb-4"></i>
-                            <p class="dashboard-muted-text text-lg">Completed & Verified</p>
+                            <p class="text-gray-600 text-lg">Completed & Verified</p>
                             <p class="text-5xl font-bold text-accent" id="docProgressCompletedVerified">0</p>
                         </div>
                     </section>
 
-                    <!-- Detailed Progress Table -->
-                    <section class="mb-12 dashboard-card p-8 rounded-lg shadow-md">
+                    <!-- Detailed Progress Table (Placeholder) -->
+                    <section class="mb-12 card-bg p-8 rounded-lg shadow-md">
                         <h3 class="text-3xl font-bold mb-6 brand-heading">Detailed Ritual Progress</h3>
                         <div class="overflow-x-auto">
                             <table class="min-w-full bg-white rounded-lg shadow-inner">
@@ -1444,7 +1742,34 @@
                                     </tr>
                                 </thead>
                                 <tbody class="text-gray-600 text-sm font-light" id="docProgressTableBody">
-                                    <!-- Data will be dynamically loaded here by JS -->
+                                    <!-- Data will be dynamically loaded here -->
+                                    <tr>
+                                        <td class="py-3 px-6 text-left whitespace-nowrap">Rain Dance of the Ancestors</td>
+                                        <td class="py-3 px-6 text-left">Ceremony</td>
+                                        <td class="py-3 px-6 text-left"><span class="bg-green-200 text-green-800 py-1 px-3 rounded-full text-xs">Verified</span></td>
+                                        <td class="py-3 px-6 text-left">2024-06-15</td>
+                                        <td class="py-3 px-6 text-center">
+                                            <button class="text-blue-500 hover:text-blue-700 text-sm" onclick="window.showMessage('Simulating view details for Rain Dance of the Ancestors')">View</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 px-6 text-left whitespace-nowrap">Oral History: Elder Thabo</td>
+                                        <td class="py-3 px-6 text-left">Oral History</td>
+                                        <td class="py-3 px-6 text-left"><span class="bg-yellow-200 text-yellow-800 py-1 px-3 rounded-full text-xs">In Progress</span></td>
+                                        <td class="py-3 px-6 text-left">2024-07-01</td>
+                                        <td class="py-3 px-6 text-center">
+                                            <button class="text-blue-500 hover:text-blue-700 text-sm" onclick="window.showMessage('Simulating edit for Oral History: Elder Thabo')">Edit</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 px-6 text-left whitespace-nowrap">Artifact: Ancient Drum</td>
+                                        <td class="py-3 px-6 text-left">Artifact Description</td>
+                                        <td class="py-3 px-6 text-left"><span class="bg-red-200 text-red-800 py-1 px-3 rounded-full text-xs">Pending Review</span></td>
+                                        <td class="py-3 px-6 text-left">2024-06-28</td>
+                                        <td class="py-3 px-6 text-center">
+                                            <button class="text-blue-500 hover:text-blue-700 text-sm" onclick="window.showMessage('Simulating review for Artifact: Ancient Drum')">Review</button>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -1454,14 +1779,14 @@
                     <section class="mb-12">
                         <h3 class="text-3xl font-bold text-center mb-8 brand-heading">Visual Progress</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div class="dashboard-card p-6 rounded-lg shadow-md flex flex-col items-center">
-                                <h4 class="text-xl font-bold dashboard-dark-text mb-4">Overall Documentation Status</h4>
+                            <div class="card-bg p-6 rounded-lg shadow-md flex flex-col items-center">
+                                <h4 class="text-xl font-bold text-gray-800 mb-4">Overall Documentation Status</h4>
                                 <div class="w-full h-64 relative">
                                     <canvas id="overallStatusChart"></canvas>
                                 </div>
                             </div>
-                            <div class="dashboard-card p-6 rounded-lg shadow-md flex flex-col items-center">
-                                <h4 class="text-xl font-bold dashboard-dark-text mb-4">Monthly Documentation Rate</h4>
+                            <div class="card-bg p-6 rounded-lg shadow-md flex flex-col items-center">
+                                <h4 class="text-xl font-bold text-gray-800 mb-4">Monthly Documentation Rate</h4>
                                 <div class="w-full h-64 relative">
                                     <canvas id="monthlyRateChart"></canvas>
                                 </div>
@@ -1470,13 +1795,13 @@
                     </section>
 
                     <section class="text-center bg-gray-100 p-8 rounded-lg shadow-md">
-                        <h3 class="text-3xl font-bold mb-4 dashboard-dark-text">Developer's Note: Documentation Progress</h3>
-                        <p class="dashboard-muted-text">
-                            This section is dedicated to tracking the documentation progress within RiteNest™.
+                        <h3 class="text-3xl font-bold mb-4 text-gray-800">Developer's Note</h3>
+                        <p class="text-gray-600">
+                            This page is dedicated to tracking the documentation progress within RiteNest™.
                             Your task is to integrate real data from Firestore to populate the metrics, table, and charts.
                         </p>
-                        <ul class="list-disc list-inside text-left inline-block mt-4 dashboard-muted-text">
-                            <li><strong>Metrics:</strong> Fetch counts of rituals by their status (e.g., 'total', 'in progress', 'completed', 'verified') from Firestore.</li>
+                        <ul class="list-disc list-inside text-left inline-block mt-4 text-gray-600">
+                            <li><strong>Metrics:</strong> Fetch counts of rituals by their status (e.g., 'total', 'in progress', 'completed', 'verified').</li>
                             <li><strong>Table:</strong> Populate the "Detailed Ritual Progress" table with actual ritual data, including dynamic action buttons (View, Edit, Review) that link to individual ritual detail pages.</li>
                             <li><strong>Charts:</strong> Ensure `overallStatusChart` and `monthlyRateChart` accurately reflect the fetched data, updating dynamically as new rituals are added or their statuses change.</li>
                             <li>Consider adding filtering and sorting options to the table.</li>
@@ -1501,22 +1826,22 @@
                             <h3 class="text-3xl font-bold mb-6 brand-heading">Add New Totem Record</h3>
                             <form id="addTotemForm" class="space-y-4">
                                 <div>
-                                    <label for="totemName" class="block dashboard-muted-text font-semibold mb-2">Totem Name/Identifier</label>
+                                    <label for="totemName" class="block text-gray-700 font-semibold mb-2">Totem Name/Identifier</label>
                                     <input type="text" id="totemName" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent" placeholder="e.g., Lion Clan Totem, Sacred Calabash" required>
                                 </div>
                                 <div>
-                                    <label for="totemDescription" class="block dashboard-muted-text font-semibold mb-2">Description & Significance</label>
+                                    <label for="totemDescription" class="block text-gray-700 font-semibold mb-2">Description & Significance</label>
                                     <textarea id="totemDescription" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent h-32" placeholder="Describe its history, cultural significance, and any associated rituals."></textarea>
                                 </div>
                                 <div>
-                                    <label for="totemOrigin" class="block dashboard-muted-text font-semibold mb-2">Origin/Associated Clan</label>
+                                    <label for="totemOrigin" class="block text-gray-700 font-semibold mb-2">Origin/Associated Clan</label>
                                     <input type="text" id="totemOrigin" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent" placeholder="e.g., Zulu, Xhosa, specific family lineage">
                                 </div>
                                 <div>
-                                    <label for="totemImage" class="block dashboard-muted-text font-semibold mb-2">Upload Image (Simulated)</label>
+                                    <label for="totemImage" class="block text-gray-700 font-semibold mb-2">Upload Image (Simulated)</label>
                                     <input type="file" id="totemImage" accept="image/*" class="w-full p-3 rounded-lg border border-gray-300">
                                 </div>
-                                <button type="submit" class="primary-btn px-6 py-3 rounded-lg text-lg font-semibold w-full">
+                                <button type="submit" class="primary-btn px-6 py-3 rounded-lg text-lg font-semibold w-full" onclick="window.showMessage('Simulating: Totem record added. In a real app, this would save to Firestore.')">
                                     <i class="fas fa-plus-circle mr-2"></i> Add Totem Record
                                 </button>
                             </form>
@@ -1525,22 +1850,44 @@
                         <div class="dashboard-card p-8 rounded-lg shadow-md">
                             <h3 class="text-3xl font-bold mb-6 brand-heading">Your Documented Totems</h3>
                             <div id="totemList" class="space-y-4 max-h-96 overflow-y-auto">
-                                <!-- Totem cards will be dynamically loaded here by JS -->
+                                <!-- Sample Totem Cards -->
+                                <div class="subnode-card p-4 rounded-lg flex items-center justify-between">
+                                    <div>
+                                        <p class="font-semibold text-gray-800">Elephant Clan Totem</p>
+                                        <p class="text-gray-600 text-sm">Associated with strength and wisdom.</p>
+                                    </div>
+                                    <button class="primary-btn px-4 py-2 rounded-md text-sm" onclick="window.showMessage('Simulating: Viewing details for Elephant Clan Totem.')">View Details</button>
+                                </div>
+                                <div class="subnode-card p-4 rounded-lg flex items-center justify-between">
+                                    <div>
+                                        <p class="font-semibold text-gray-800">Sacred Healing Staff</p>
+                                        <p class="text-gray-600 text-sm">Passed down through generations of healers.</p>
+                                    </div>
+                                    <button class="primary-btn px-4 py-2 rounded-md text-sm" onclick="window.showMessage('Simulating: Viewing details for Sacred Healing Staff.')">View Details</button>
+                                </div>
+                                <div class="subnode-card p-4 rounded-lg flex items-center justify-between">
+                                    <div>
+                                        <p class="font-semibold text-gray-800">Ancestral Mask of Protection</p>
+                                        <p class="text-gray-600 text-sm">Used in ceremonial dances.</p>
+                                    </div>
+                                    <button class="primary-btn px-4 py-2 rounded-md text-sm" onclick="window.showMessage('Simulating: Viewing details for Ancestral Mask of Protection.')">View Details</button>
+                                </div>
+                                <!-- End Sample Totem Cards -->
                             </div>
-                            <button class="primary-btn px-6 py-3 rounded-lg text-lg font-semibold w-full mt-6" onclick="alert('Simulating: Searching all totem records.')">
+                            <button class="primary-btn px-6 py-3 rounded-lg text-lg font-semibold w-full mt-6" onclick="window.showMessage('Simulating: Searching all totem records.')">
                                 <i class="fas fa-search mr-2"></i> Search All Totems
                             </button>
                         </div>
                     </section>
 
                     <section class="text-center bg-gray-100 p-8 rounded-lg shadow-md">
-                        <h3 class="text-3xl font-bold mb-4 dashboard-dark-text">Developer's Note: TotemTrack</h3>
-                        <p class="dashboard-muted-text">
-                            This section is for managing ancestral totem records.
+                        <h3 class="text-3xl font-bold mb-4 text-gray-800">Developer's Note</h3>
+                        <p class="text-gray-600">
+                            This `totemtrack.html` page is for managing ancestral totem records.
                             Your primary task here is to implement the backend integration and dynamic rendering.
                         </p>
-                        <ul class="list-disc list-inside text-left inline-block mt-4 dashboard-muted-text">
-                            <li><strong>Form Submission:</strong> Implement the logic to capture form data and save it to a Firestore collection (e.g., `artifacts/{appId}/users/{userId}/ritenest/totems`).</li>
+                        <ul class="list-disc list-inside text-left inline-block mt-4 text-gray-600">
+                            <li><strong>Form Submission:</strong> Implement the logic to capture form data and save it to a Firestore collection (e.g., `artifacts/{appId}/users/{userId}/totems`).</li>
                             <li><strong>Dynamic List:</strong> Fetch and display actual totem records from Firestore in the "Your Documented Totems" section. Ensure real-time updates using `onSnapshot`.</li>
                             <li><strong>Image Upload:</strong> For real image uploads, you'd need Firebase Storage or a similar service. The current `input type="file"` is a placeholder.</li>
                             <li><strong>Search Functionality:</strong> Implement client-side or Firestore-based searching for totem records.</li>
@@ -1562,15 +1909,15 @@
 
                     <!-- Upload & Manage Features -->
                     <section class="mb-12 grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="dashboard-card p-8 rounded-lg shadow-md">
+                        <div class="card-bg p-8 rounded-lg shadow-md">
                             <h3 class="text-3xl font-bold mb-6 brand-heading">Upload New Media</h3>
                             <form id="uploadMediaForm" class="space-y-4">
                                 <div>
-                                    <label for="mediaTitle" class="block dashboard-muted-text font-semibold mb-2">Media Title</label>
+                                    <label for="mediaTitle" class="block text-gray-700 font-semibold mb-2">Media Title</label>
                                     <input type="text" id="mediaTitle" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent" placeholder="e.g., Ancestral Chant, Rain Dance Video" required>
                                 </div>
                                 <div>
-                                    <label for="mediaType" class="block dashboard-muted-text font-semibold mb-2">Media Type</label>
+                                    <label for="mediaType" class="block text-gray-700 font-semibold mb-2">Media Type</label>
                                     <select id="mediaType" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent" required>
                                         <option value="">Select Type</option>
                                         <option value="Audio">Audio (Oral History, Music)</option>
@@ -1579,14 +1926,14 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label for="mediaDescription" class="block dashboard-muted-text font-semibold mb-2">Description</label>
+                                    <label for="mediaDescription" class="block text-gray-700 font-semibold mb-2">Description</label>
                                     <textarea id="mediaDescription" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent h-24" placeholder="Briefly describe the content and its context."></textarea>
                                 </div>
                                 <div>
-                                    <label for="mediaFile" class="block dashboard-muted-text font-semibold mb-2">Select File (Simulated Upload)</label>
+                                    <label for="mediaFile" class="block text-gray-700 font-semibold mb-2">Select File (Simulated Upload)</label>
                                     <input type="file" id="mediaFile" class="w-full p-3 rounded-lg border border-gray-300" required>
                                 </div>
-                                <button type="submit" class="primary-btn px-6 py-3 rounded-lg text-lg font-semibold w-full">
+                                <button type="submit" class="primary-btn px-6 py-3 rounded-lg text-lg font-semibold w-full" onclick="window.showMessage('Simulating: Media uploaded. In a real app, this would use Firebase Storage.')">
                                     <i class="fas fa-upload mr-2"></i> Upload to Vault
                                 </button>
                             </form>
@@ -1595,21 +1942,43 @@
                         <div class="dashboard-card p-8 rounded-lg shadow-md">
                             <h3 class="text-3xl font-bold mb-6 brand-heading">Your Vaulted Media</h3>
                             <div id="mediaList" class="space-y-4 max-h-96 overflow-y-auto">
-                                <!-- Media cards will be dynamically loaded here by JS -->
+                                <!-- Sample Media Cards -->
+                                <div class="subnode-card p-4 rounded-lg flex items-center justify-between">
+                                    <div>
+                                        <p class="font-semibold text-gray-800">Zulu Wedding Ceremony (Video)</p>
+                                        <p class="text-gray-600 text-sm">Recorded 2023-09-10.</p>
+                                    </div>
+                                    <button class="primary-btn px-4 py-2 rounded-md text-sm" onclick="window.showMessage('Simulating: Playing Zulu Wedding Ceremony video.')">Play/View</button>
+                                </div>
+                                <div class="subnode-card p-4 rounded-lg flex items-center justify-between">
+                                    <div>
+                                        <p class="font-semibold text-gray-800">San Bushman Storytelling (Audio)</p>
+                                        <p class="text-gray-600 text-sm">Oral history from 1980s.</p>
+                                    </div>
+                                    <button class="primary-btn px-4 py-2 rounded-md text-sm" onclick="window.showMessage('Simulating: Playing San Bushman Storytelling audio.')">Play/View</button>
+                                </div>
+                                <div class="subnode-card p-4 rounded-lg flex items-center justify-between">
+                                    <div>
+                                        <p class="font-semibold text-gray-800">Sacred Ndebele Patterns (Image)</p>
+                                        <p class="text-gray-600 text-sm">Detailed imagery of traditional art.</p>
+                                    </div>
+                                    <button class="primary-btn px-4 py-2 rounded-md text-sm" onclick="window.showMessage('Simulating: Viewing Ndebele Patterns image.')">Play/View</button>
+                                </div>
+                                <!-- End Sample Media Cards -->
                             </div>
-                            <button class="primary-btn px-6 py-3 rounded-lg text-lg font-semibold w-full mt-6" onclick="alert('Simulating: Searching all vaulted media.')">
+                            <button class="primary-btn px-6 py-3 rounded-lg text-lg font-semibold w-full mt-6" onclick="window.showMessage('Simulating: Searching all vaulted media.')">
                                 <i class="fas fa-search mr-2"></i> Search Vault
                             </button>
                         </div>
                     </section>
 
                     <section class="text-center bg-gray-100 p-8 rounded-lg shadow-md">
-                        <h3 class="text-3xl font-bold mb-4 dashboard-dark-text">Developer's Note: VaultSpirit</h3>
-                        <p class="dashboard-muted-text">
-                            This section is for managing multimedia and oral history records.
+                        <h3 class="text-3xl font-bold mb-4 text-gray-800">Developer's Note</h3>
+                        <p class="text-gray-600">
+                            This `vaultspirit.html` page is for managing multimedia and oral history records.
                             The core functionality here involves secure file storage and retrieval.
                         </p>
-                        <ul class="list-disc list-inside text-left inline-block mt-4 dashboard-muted-text">
+                        <ul class="list-disc list-inside text-left inline-block mt-4 text-gray-600">
                             <li><strong>File Upload:</strong> Implement actual file upload to Firebase Storage, ensuring proper MIME types and security rules.</li>
                             <li><strong>Metadata Storage:</strong> Save media metadata (title, type, description, storage URL) to Firestore.</li>
                             <li><strong>Dynamic List:</strong> Fetch and display media records from Firestore, allowing users to view/play content.</li>
@@ -1632,81 +2001,79 @@
 
                     <!-- Provenance Verification & Tagging -->
                     <section class="mb-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="dashboard-card p-8 rounded-lg shadow-md">
+                        <div class="card-bg p-8 rounded-lg shadow-md">
                             <h3 class="text-3xl font-bold mb-6 brand-heading">Verify Provenance</h3>
                             <form id="verifyProvenanceForm" class="space-y-4">
                                 <div>
-                                    <label for="provenanceHashInput" class="block dashboard-muted-text font-semibold mb-2">Provenance Hash</label>
-                                    <input type="text" id="provenanceHashInput" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent" placeholder="e.g., 0xabcdef1234567890abcdef1234567890" required>
+                                    <label for="provenanceHash" class="block text-gray-700 font-semibold mb-2">Provenance Hash</label>
+                                    <input type="text" id="provenanceHash" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent" placeholder="e.g., 0xabcdef1234567890abcdef1234567890" required>
                                 </div>
-                                <button type="submit" class="primary-btn px-6 py-3 rounded-lg text-lg font-semibold w-full">
+                                <button type="submit" class="primary-btn px-6 py-3 rounded-lg text-lg font-semibold w-full" onclick="window.showMessage('Simulating: Verifying hash on the blockchain.')">
                                     <i class="fas fa-search mr-2"></i> Verify Hash
                                 </button>
                             </form>
-                            <div class="mt-8 p-6 bg-gray-100 rounded-lg dashboard-muted-text">
-                                <h4 class="text-xl font-bold mb-3 dashboard-dark-text">Verification Result:</h4>
+                            <div class="mt-8 p-6 bg-gray-100 rounded-lg text-gray-700">
+                                <h4 class="text-xl font-bold mb-3">Verification Result:</h4>
                                 <p id="verificationResult" class="italic">Enter a hash and click "Verify" to see its provenance chain.</p>
                             </div>
                         </div>
 
-                        <div class="dashboard-card p-8 rounded-lg shadow-md">
+                        <div class="card-bg p-8 rounded-lg shadow-md">
                             <h3 class="text-3xl font-bold mb-6 brand-heading">Generate New GlyphTag</h3>
                             <form id="generateGlyphTagForm" class="space-y-4">
                                 <div>
-                                    <label for="contentIdToTag" class="block dashboard-muted-text font-semibold mb-2">Content ID to Tag</label>
+                                    <label for="contentIdToTag" class="block text-gray-700 font-semibold mb-2">Content ID to Tag</label>
                                     <input type="text" id="contentIdToTag" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent" placeholder="e.g., ritual-ID-001, media-ID-005" required>
                                 </div>
                                 <div>
-                                    <label for="taggingDescription" class="block dashboard-muted-text font-semibold mb-2">Tagging Event Description</label>
+                                    <label for="taggingDescription" class="block text-gray-700 font-semibold mb-2">Tagging Event Description</label>
                                     <textarea id="taggingDescription" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent h-24" placeholder="e.g., Initial documentation, Elder verification, Multimedia attachment."></textarea>
                                 </div>
-                                <button type="submit" class="primary-btn px-6 py-3 rounded-lg text-lg font-semibold w-full">
+                                <button type="submit" class="primary-btn px-6 py-3 rounded-lg text-lg font-semibold w-full" onclick="window.showMessage('Simulating: Generating new provenance hash for content.')">
                                     <i class="fas fa-tags mr-2"></i> Generate GlyphTag
                                 </button>
                             </form>
-                            <div class="mt-8 p-6 bg-gray-100 rounded-lg dashboard-muted-text">
-                                <h4 class="text-xl font-bold mb-3 dashboard-dark-text">Generated Hash:</h4>
+                            <div class="mt-8 p-6 bg-gray-100 rounded-lg text-gray-700">
+                                <h4 class="text-xl font-bold mb-3">Generated Hash:</h4>
                                 <p id="generatedHash" class="break-all italic">New GlyphTag will appear here.</p>
                             </div>
                         </div>
                     </section>
 
                     <!-- Provenance Chain Visualization (Conceptual) -->
-                    <section class="mb-12 dashboard-card p-8 rounded-lg shadow-md">
+                    <section class="mb-12 card-bg p-8 rounded-lg shadow-md">
                         <h3 class="text-3xl font-bold mb-6 brand-heading">Example Provenance Chain</h3>
                         <div id="provenanceChainDisplay" class="space-y-6">
-                            <!-- Sample Provenance Steps -->
                             <div class="provenance-step">
-                                <p class="font-semibold dashboard-dark-text">Step 1: Original Oral History Recorded</p>
-                                <p class="dashboard-muted-text text-sm">Timestamp: 2023-01-15 10:30 SAST</p>
-                                <p class="dashboard-muted-text text-xs mt-1">Hash: <code>0xabc123...</code></p>
+                                <p class="font-semibold text-gray-800">Step 1: Original Oral History Recorded</p>
+                                <p class="text-gray-600 text-sm">Timestamp: 2023-01-15 10:30 SAST</p>
+                                <p class="text-gray-600 text-xs mt-1">Hash: <code>0xabc123...</code></p>
                             </div>
                             <div class="provenance-step">
-                                <p class="font-semibold dashboard-dark-text">Step 2: Transcription & Initial Tagging</p>
-                                <p class="dashboard-muted-text text-sm">Timestamp: 2023-01-20 14:00 SAST</p>
-                                <p class="dashboard-muted-text text-xs mt-1">Hash: <code>0xdef456...</code></p>
+                                <p class="font-semibold text-gray-800">Step 2: Transcription & Initial Tagging</p>
+                                <p class="text-gray-600 text-sm">Timestamp: 2023-01-20 14:00 SAST</p>
+                                <p class="text-gray-600 text-xs mt-1">Hash: <code>0xdef456...</code></p>
                             </div>
                             <div class="provenance-step">
-                                <p class="font-semibold dashboard-dark-text">Step 3: Elder Verification & Approval</p>
-                                <p class="dashboard-muted-text text-sm">Timestamp: 2023-02-01 09:00 SAST</p>
-                                <p class="dashboard-muted-text text-xs mt-1">Hash: <code>0xghi789...</code></p>
+                                <p class="font-semibold text-gray-800">Step 3: Elder Verification & Approval</p>
+                                <p class="text-gray-600 text-sm">Timestamp: 2023-02-01 09:00 SAST</p>
+                                <p class="text-gray-600 text-xs mt-1">Hash: <code>0xghi789...</code></p>
                             </div>
                             <div class="provenance-step">
-                                <p class="font-semibold dashboard-dark-text">Step 4: Linked to RiteNest™ VaultMesh</p>
-                                <p class="dashboard-muted-text text-sm">Timestamp: 2023-02-05 11:45 SAST</p>
-                                <p class="dashboard-muted-text text-xs mt-1">Hash: <code>0xjkl012...</code></p>
+                                <p class="font-semibold text-gray-800">Step 4: Linked to RiteNest™ VaultMesh</p>
+                                <p class="text-gray-600 text-sm">Timestamp: 2023-02-05 11:45 SAST</p>
+                                <p class="text-gray-600 text-xs mt-1">Hash: <code>0xjkl012...</code></p>
                             </div>
-                            <!-- End Sample Provenance Steps -->
                         </div>
                     </section>
 
                     <section class="text-center bg-gray-100 p-8 rounded-lg shadow-md">
-                        <h3 class="text-3xl font-bold mb-4 dashboard-dark-text">Developer's Note: GlyphTag</h3>
-                        <p class="dashboard-muted-text">
-                            This section is critical for ensuring the authenticity and immutability of ritual data.
+                        <h3 class="text-3xl font-bold mb-4 text-gray-800">Developer's Note</h3>
+                        <p class="text-gray-600">
+                            This `glyphtag.html` page is critical for ensuring the authenticity and immutability of ritual data.
                             The core functionality here involves cryptographic hashing and potentially blockchain interaction.
                         </p>
-                        <ul class="list-disc list-inside text-left inline-block mt-4 dashboard-muted-text">
+                        <ul class="list-disc list-inside text-left inline-block mt-4 text-gray-600">
                             <li><strong>Hash Verification:</strong> Implement a function to take a hash and simulate its verification against a ledger (e.g., by checking if it exists in a Firestore collection of "verified hashes").</li>
                             <li><strong>Hash Generation:</strong> Create a function that, given content data (e.g., a ritual's text, or a media file's metadata), generates a unique cryptographic hash (e.g., SHA-256).</li>
                             <li><strong>Blockchain Simulation:</strong> For a real "VaultMesh" integration, this would involve interacting with a blockchain API to record hashes as transactions. For a demo, you can simulate this by storing hashes in Firestore.</li>
@@ -1727,22 +2094,22 @@
                     </section>
 
                     <!-- Community Forum / Discussion Board -->
-                    <section class="mb-12 dashboard-card p-8 rounded-lg shadow-md">
+                    <section class="mb-12 card-bg p-8 rounded-lg shadow-md">
                         <h3 class="text-3xl font-bold mb-6 brand-heading">Community Discussions</h3>
                         
                         <!-- New Post Form -->
                         <div class="mb-8 p-6 bg-gray-100 rounded-lg shadow-inner">
-                            <h4 class="text-2xl font-bold dashboard-dark-text mb-4">Start a New Discussion</h4>
+                            <h4 class="text-2xl font-bold text-gray-800 mb-4">Start a New Discussion</h4>
                             <form id="newDiscussionForm" class="space-y-4">
                                 <div>
-                                    <label for="postTitle" class="block dashboard-muted-text font-semibold mb-2">Discussion Title</label>
+                                    <label for="postTitle" class="block text-gray-700 font-semibold mb-2">Discussion Title</label>
                                     <input type="text" id="postTitle" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent" placeholder="e.g., Interpreting the Symbolism of the Sun Dance" required>
                                 </div>
                                 <div>
-                                    <label for="postContent" class="block dashboard-muted-text font-semibold mb-2">Your Post</label>
+                                    <label for="postContent" class="block text-gray-700 font-semibold mb-2">Your Post</label>
                                     <textarea id="postContent" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent h-32" placeholder="Share your thoughts, questions, or insights here..."></textarea>
                                 </div>
-                                <button type="submit" class="primary-btn px-6 py-3 rounded-lg text-lg font-semibold w-full">
+                                <button type="submit" class="primary-btn px-6 py-3 rounded-lg text-lg font-semibold w-full" onclick="window.showMessage('Simulating: New discussion post created.')">
                                     <i class="fas fa-comments mr-2"></i> Post Discussion
                                 </button>
                             </form>
@@ -1750,27 +2117,62 @@
 
                         <!-- Existing Posts -->
                         <div id="discussionPosts" class="space-y-6">
-                            <!-- Discussion posts will be dynamically loaded here by JS -->
+                            <!-- Sample Discussion Posts -->
+                            <div class="discussion-post">
+                                <h4 class="text-xl font-bold text-gray-800 mb-2">The Role of Water in Cleansing Rituals</h4>
+                                <p class="text-gray-700 text-sm mb-3">By: CommunityMember123 - 2 hours ago</p>
+                                <p class="text-gray-600">
+                                    "I've been researching the use of water in various African cleansing ceremonies. It seems to symbolize purity and renewal across many cultures. Does anyone have insights into specific regional variations or historical contexts?"
+                                </p>
+                                <div class="mt-4 text-right">
+                                    <button class="primary-btn px-4 py-2 rounded-md text-sm mr-4" onclick="window.showMessage('Simulating: Viewing comments.')">View Comments (5)</button>
+                                    <button class="primary-btn px-4 py-2 rounded-md text-sm" onclick="window.showMessage('Simulating: Liking post.')"><i class="fas fa-thumbs-up"></i> 15</button>
+                                </div>
+                            </div>
+                            <div class="discussion-post">
+                                <h4 class="text-xl font-bold text-gray-800 mb-2">Challenges in Documenting Oral Traditions</h4>
+                                <p class="text-gray-700 text-sm mb-3">By: HeritagePreserver - yesterday</p>
+                                <p class="text-gray-600">
+                                    "What are the best practices for accurately capturing and transcribing oral histories, especially when dealing with multiple dialects or nuanced storytelling? Any tools or methodologies recommended?"
+                                </p>
+                                <div class="mt-4 text-right">
+                                    <button class="primary-btn px-4 py-2 rounded-md text-sm mr-4" onclick="window.showMessage('Simulating: Viewing comments.')">View Comments (8)</button>
+                                    <button class="primary-btn px-4 py-2 rounded-md text-sm" onclick="window.showMessage('Simulating: Liking post.')"><i class="fas fa-thumbs-up"></i> 22</button>
+                                </div>
+                            </div>
+                            <!-- End Sample Discussion Posts -->
                         </div>
                     </section>
 
                     <!-- Educational Resources & Workshops -->
-                    <section class="mb-12 dashboard-card p-8 rounded-lg shadow-md">
+                    <section class="mb-12 card-bg p-8 rounded-lg shadow-md">
                         <h3 class="text-3xl font-bold mb-6 brand-heading">Learning Resources & Workshops</h3>
                         <div id="learningResources" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Learning resources will be dynamically loaded here by JS -->
+                            <div class="subnode-card p-4 rounded-lg">
+                                <h4 class="text-xl font-bold text-gray-800 mb-2">Webinar: Digital Ethics in Heritage Preservation</h4>
+                                <p class="text-gray-600 text-sm mb-3">Date: 2024-07-20 | Speaker: Dr. Naledi Mokoena</p>
+                                <p class="text-gray-600">Explore the ethical considerations of digitizing indigenous knowledge.</p>
+                                <button class="primary-btn px-4 py-2 rounded-md text-sm mt-4" onclick="window.showMessage('Simulating: Registering for webinar.')">Register Now</button>
+                            </div>
+                            <div class="subnode-card p-4 rounded-lg">
+                                <h4 class="text-xl font-bold text-gray-800 mb-2">Guide: Understanding Ancestral Lineage</h4>
+                                <p class="text-gray-600 text-sm mb-3">Format: PDF | Author: RiteNest Team</p>
+                                <p class="text-gray-600">A comprehensive guide to researching and tracing your family\'s heritage.</p>
+                                <button class="primary-btn px-4 py-2 rounded-md text-sm mt-4" onclick="window.showMessage('Simulating: Downloading guide.')">Download Guide</button>
+                            </div>
                         </div>
                     </section>
 
                     <section class="text-center bg-gray-100 p-8 rounded-lg shadow-md">
-                        <h3 class="text-3xl font-bold mb-4 dashboard-dark-text">Developer's Note: ScrollLoop</h3>
-                        <p class="dashboard-muted-text">
-                            This section is for fostering community engagement and providing educational resources.
+                        <h3 class="text-3xl font-bold mb-4 text-gray-800">Developer's Note</h3>
+                        <p class="text-gray-600">
+                            This `scrollloop.html` page is for fostering community engagement and providing educational resources.
                             Key functionalities include forum management and content delivery.
                         </p>
-                        <ul class="list-disc list-inside text-left inline-block mt-4 dashboard-muted-text">
-                            <li><strong>Discussion Board:</strong> Implement functionality to post new discussions and display existing ones from Firestore (e.g., `artifacts/{appId}/users/{userId}/ritenest/discussions`).</li>
+                        <ul class="list-disc list-inside text-left inline-block mt-4 text-gray-600">
+                            <li><strong>Discussion Board:</strong> Implement functionality to post new discussions and display existing ones from Firestore (e.g., `artifacts/{appId}/users/{userId}/discussions`).</li>
                             <li><strong>User Interaction:</strong> Add features for comments, likes, and replies to discussion posts.</li>
+                            <li><strong>Resource Management:</strong> Integrate a system to manage and link to educational resources (e.g., PDFs, external webinars).</li>
                             <li>Consider using Gemini AI for content moderation or to summarize long discussion threads.</li>
                         </ul>
                     </section>
@@ -1860,7 +2262,7 @@
                                     <th class="py-3 px-4 text-left text-sm font-semibold dashboard-muted-text uppercase tracking-wider border-b dashboard-border-dark">Email</th>
                                     <th class="py-3 px-4 text-left text-sm font-semibold dashboard-muted-text uppercase tracking-wider border-b dashboard-border-dark">Role</th>
                                     <th class="py-3 px-4 text-left text-sm font-semibold dashboard-muted-text uppercase tracking-wider border-b dashboard-border-dark">Status</th>
-                                    <th class="py-3 px-4 text-left text-sm font-semibold dashboard-muted-text uppercase tracking-wider border-b dashboard-border-dark">Actions</th>
+                                    <th class="py-3 px-4 border-b dashboard-border-dark text-left text-sm font-semibold uppercase tracking-wider">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -1967,25 +2369,197 @@
 
                 <!-- 10. Settings Section (Dashboard) -->
                 <section id="settings" class="tab-content">
-                    <h2 class="text-3xl font-bold dashboard-primary-text mb-6">Settings ⚙️</h2>
-                    <p class="dashboard-muted-text mb-8">
-                        Configure your portal preferences and manage account settings.
-                    </p>
-                    <div class="space-y-6">
-                        <div class="dashboard-card p-6">
-                            <h3 class="text-xl font-bold dashboard-dark-text mb-4">General Settings</h3>
-                            <div class="flex items-center justify-between mb-4">
-                                <label for="darkModeToggle" class="dashboard-dark-text">Dark Mode</label>
-                                <input type="checkbox" id="darkModeToggle" class="toggle toggle-primary">
+                    <h2 class="text-3xl font-bold brand-heading mb-6">Global Settings</h2>
+                    <p class="dashboard-muted-text mb-4">Manage your profile, application preferences, and system configurations.</p>
+
+                    <!-- Settings Tab Navigation -->
+                    <div class="flex flex-wrap gap-2 mb-6 border-b border-ritenest-border">
+                        <button class="settings-tab-btn active" data-settings-tab="profile" onclick="window.showSettingsTab('profile')">
+                            <i class="fas fa-user-circle mr-2"></i> Profile
+                        </button>
+                        <button class="settings-tab-btn" data-settings-tab="domains" onclick="window.showSettingsTab('domains')">
+                            <i class="fas fa-globe mr-2"></i> Domains & DNS
+                        </button>
+                        <button class="settings-tab-btn" data-settings-tab="email" onclick="window.showSettingsTab('email')">
+                            <i class="fas fa-envelope mr-2"></i> Email Accounts
+                        </button>
+                        <button class="settings-tab-btn" data-settings-tab="company" onclick="window.showSettingsTab('company')">
+                            <i class="fas fa-building mr-2"></i> Company Management
+                        </button>
+                        <button class="settings-tab-btn" data-settings-tab="advanced" onclick="window.showSettingsTab('advanced')">
+                            <i class="fas fa-cogs mr-2"></i> Advanced
+                        </button>
+                    </div>
+
+                    <!-- Settings Sub-Views -->
+                    <div id="settings-profile" class="settings-sub-view panel p-6 rounded-lg shadow-md active">
+                        <h3 class="text-2xl font-semibold mb-4">User Profile Settings</h3>
+                        <form class="space-y-4">
+                            <div class="form-control">
+                                <label for="displayName" class="block text-sm font-medium mb-1">Display Name</label>
+                                <input type="text" id="displayName" class="w-full p-2 border rounded-md" placeholder="Your display name">
                             </div>
-                            <div class="flex items-center justify-between">
-                                <label for="notificationToggle" class="dashboard-dark-text">Email Notifications</label>
-                                <input type="checkbox" id="notificationToggle" class="toggle toggle-primary" checked>
+                            <div class="form-control">
+                                <label for="email" class="block text-sm font-medium mb-1">Email Address</label>
+                                <input type="email" id="email" class="w-full p-2 border rounded-md" placeholder="your@email.com" readonly>
+                            </div>
+                            <div class="form-control">
+                                <label for="defaultRegion" class="block text-sm font-medium mb-1">Default Region</label>
+                                <select id="defaultRegion" class="w-full p-2 border rounded-md">
+                                    <option value="global">Global</option>
+                                    <option value="africa">Africa</option>
+                                    <option value="europe">Europe</option>
+                                    <option value="asia">Asia</option>
+                                </select>
+                            </div>
+                            <div class="form-control">
+                                <label for="autoClaimSetting" class="block text-sm font-medium mb-1">Auto-Claim Scrolls</label>
+                                <select id="autoClaimSetting" class="w-full p-2 border rounded-md">
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                    <option value="prompt">Prompt Me</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="form-action-button px-4 py-2 rounded-md">Save Profile Settings</button>
+                        </form>
+                    </div>
+
+                    <div id="settings-domains" class="settings-sub-view panel p-6 rounded-lg shadow-md hidden">
+                        <h3 class="text-2xl font-semibold mb-4">Domain & DNS Management</h3>
+
+                        <div class="mb-6">
+                            <h4 class="text-xl font-semibold mb-3">Your Domains</h4>
+                            <ul id="domainList" class="list-disc pl-5 space-y-2">
+                                <!-- Domains will be rendered here by JS -->
+                            </ul>
+                            <div class="mt-4 flex flex-col md:flex-row gap-4">
+                                <input type="text" id="newDomainName" class="flex-grow p-2 border rounded-md" placeholder="Add new domain (e.g., mynewheritage.com)">
+                                <button class="form-action-button px-4 py-2 rounded-md" onclick="window.showMessage('Domain Add', 'Adding new domain functionality coming soon!')">Add Domain</button>
                             </div>
                         </div>
-                        <div class="dashboard-card p-6">
-                            <h3 class="text-xl font-bold dashboard-dark-text mb-4">Account Management</h3>
-                            <button class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-full w-full">Delete Account (Simulated)</button>
+
+                        <div class="mb-6">
+                            <h4 class="text-xl font-semibold mb-3">Add-on Domains</h4>
+                            <p class="text-sm text-ritenest-muted-text mb-3">Link additional domains to existing primary domains.</p>
+                            <div class="flex flex-col md:flex-row gap-4">
+                                <input type="text" id="addonDomainName" class="flex-grow p-2 border rounded-md" placeholder="Add-on domain (e.g., blog.myheritage.com)">
+                                <select id="addonDomainTarget" class="p-2 border rounded-md">
+                                    <!-- Options populated by JS -->
+                                </select>
+                                <button class="form-action-button px-4 py-2 rounded-md" onclick="window.showMessage('Add-on Domain', 'Add-on domain functionality coming soon!')">Link Domain</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xl font-semibold mb-3">DNS Records</h4>
+                            <div class="overflow-x-auto mb-4">
+                                <table class="min-w-full api-key-table bg-white rounded-lg shadow-inner">
+                                    <thead>
+                                        <tr class="bg-ritenest-light-bg text-ritenest-dark-text uppercase text-sm leading-normal">
+                                            <th class="py-3 px-4 text-left">Type</th>
+                                            <th class="py-3 px-4 text-left">Name</th>
+                                            <th class="py-3 px-4 text-left">Value</th>
+                                            <th class="py-3 px-4 text-left">TTL</th>
+                                            <th class="py-3 px-4 text-right">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dnsRecordsTableBody" class="text-ritenest-muted-text text-sm font-light">
+                                        <!-- DNS records will be rendered here by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="flex flex-col md:flex-row gap-4 mt-4">
+                                <input type="text" id="dnsRecordTypeInput" class="flex-grow p-2 border rounded-md" placeholder="DNS Record Type (e.g., A, CNAME, MX)">
+                                <button id="explainDnsBtn" class="form-action-button px-4 py-2 rounded-md">
+                                    ✨ Explain DNS Type
+                                </button>
+                            </div>
+                            <p id="dnsExplainStatus" class="text-xs text-ritenest-muted-text mt-1 hidden"></p>
+                            <div id="dnsExplanationOutput" class="mt-4 p-3 bg-ritenest-light-bg rounded-md border border-ritenest-border text-ritenest-dark-text hidden">
+                                <!-- DNS explanation will appear here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="settings-email" class="settings-sub-view panel p-6 rounded-lg shadow-md hidden">
+                        <h3 class="text-2xl font-semibold mb-4">Email Accounts</h3>
+                        <p class="text-ritenest-muted-text mb-4">Manage your RiteNest™ email addresses.</p>
+
+                        <div class="mb-6">
+                            <h4 class="text-xl font-semibold mb-3">Create New Email Account</h4>
+                            <div class="flex flex-col md:flex-row items-center gap-2">
+                                <input type="text" id="newEmailPrefix" class="p-2 border rounded-md flex-grow" placeholder="username">
+                                <span class="text-ritenest-dark-text">@</span>
+                                <select id="newEmailDomain" class="p-2 border rounded-md">
+                                    <!-- Domains will be populated here from appData.domains -->
+                                </select>
+                                <button id="createEmailBtn" class="form-action-button px-4 py-2 rounded-md">
+                                    Create Email
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xl font-semibold mb-3">Existing Email Accounts</h4>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full api-key-table bg-white rounded-lg shadow-inner">
+                                    <thead>
+                                        <tr class="bg-ritenest-light-bg text-ritenest-dark-text uppercase text-sm leading-normal">
+                                            <th class="py-3 px-4 text-left">Email Address</th>
+                                            <th class="py-3 px-4 text-left">Status</th>
+                                            <th class="py-3 px-4 text-right">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="emailAccountsTableBody" class="text-ritenest-muted-text text-sm font-light">
+                                        <!-- Email accounts will be rendered here by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="settings-company" class="settings-sub-view panel p-6 rounded-lg shadow-md hidden">
+                        <h3 class="text-2xl font-semibold mb-4">Company & Infrastructure</h3>
+                        <p class="text-ritenest-muted-text mb-4">Select a company to view and manage its associated infrastructure and protocols.</p>
+
+                        <div id="settingsCompanySelectionGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                            <!-- Company cards will be rendered here by JS -->
+                        </div>
+
+                        <div id="settingsCompanyDetailsOutput" class="company-details-section p-6 rounded-lg shadow-md hidden">
+                            <!-- Company details will be rendered here by JS -->
+                        </div>
+                    </div>
+
+                    <div id="settings-advanced" class="settings-sub-view panel p-6 rounded-lg shadow-md hidden">
+                        <h3 class="text-2xl font-semibold mb-4">Advanced Settings</h3>
+                        <p class="text-ritenest-muted-text mb-4">Caution: These settings are for experienced users only.</p>
+
+                        <div class="space-y-6">
+                            <div class="form-control">
+                                <label for="apiLogLevel" class="block text-sm font-medium mb-1">API Log Level</label>
+                                <select id="apiLogLevel" class="w-full p-2 border rounded-md">
+                                    <option value="info">Info</option>
+                                    <option value="warn">Warn</option>
+                                    <option value="error">Error</option>
+                                    <option value="debug">Debug</option>
+                                </select>
+                                <button class="form-action-button px-4 py-2 rounded-md mt-2" onclick="window.showMessage('Log Level', 'API Log Level updated (simulated).')">Update Log Level</button>
+                            </div>
+
+                            <div class="form-control">
+                                <label for="dataRetentionPeriod" class="block text-sm font-medium mb-1">Data Retention Period (Days)</label>
+                                <input type="number" id="dataRetentionPeriod" class="w-full p-2 border rounded-md" value="365">
+                                <button class="form-action-button px-4 py-2 rounded-md mt-2" onclick="window.showMessage('Data Retention', 'Data Retention Period updated (simulated).')">Set Retention</button>
+                            </div>
+
+                            <div class="form-control">
+                                <h4 class="text-xl font-semibold mb-2">Danger Zone</h4>
+                                <p class="text-red-500 text-sm mb-3">Proceed with extreme caution. These actions are irreversible.</p>
+                                <button class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition duration-200" onclick="window.showMessage('Reset App', 'Resetting application data (simulated). This would delete all your data!')">
+                                    <i class="fas fa-exclamation-triangle mr-2"></i> Reset Application Data
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -2002,18 +2576,53 @@
                 Discover Banimal's world of thoughtful baby essentials & innovative lighting. For every purchase, we deliver the same item to a child in need, identified by the Baobab Security Network's data-driven insights.
             </p>
             <div class="button-container flex flex-wrap justify-center gap-4 mt-6">
-                <a href="javascript:void(0)" class="cta-button" onclick="alert('Simulating: Exploring Banimal World.')">
+                <a href="javascript:void(0)" class="cta-button" onclick="window.showMessage('Simulating: Exploring Banimal World.')">
                     Explore Banimal's World <i class="fas fa-arrow-right"></i>
                 </a>
                 <a href="https://www.banimal.co.za/" target="_blank" class="cta-button shop-now-button">
                     Shop Now <i class="fas fa-external-link-alt"></i>
                 </a>
             </div>
-        </section>
+        </div>
+    </section>
 
     <footer class="py-8 px-6 md:px-12 text-center">
         © 2025 RiteNest™ Protocol. All Rights Reserved. Powered by 🌿 glyphs + Vault API. Synced with Seedwave™.
     </footer>
+
+    <!-- Custom Message Modal -->
+    <div id="messageModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button" onclick="window.closeMessageModal()">&times;</span>
+            <p id="modalMessage" class="text-lg font-semibold text-ritenest-dark-text"></p>
+            <button class="primary-btn mt-4 px-6 py-2 rounded-lg" onclick="window.closeMessageModal()">OK</button>
+        </div>
+    </div>
+
+    <div id="emailDraftModal" class="custom-modal-overlay hidden">
+        <div class="custom-modal-content max-w-xl w-full h-auto">
+            <div class="template-preview-header">
+                <h3 id="emailDraftTitle">Draft Email</h3>
+                <button class="close-preview-btn" onclick="hideEmailDraftModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="template-preview-body text-left">
+                <p class="text-ritenest-muted-text text-sm mb-2">To: <span id="emailDraftTo"></span></p>
+                <div class="form-control">
+                    <label for="emailPurposeInput" class="text-ritenest-dark-text text-sm mb-1">Purpose of Email</label>
+                    <input type="text" id="emailPurposeInput" placeholder="e.g., Welcome new user, Support query, Marketing announcement" class="w-full p-2 rounded-md bg-ritenest-light-bg border border-ritenest-border text-ritenest-dark-text text-sm">
+                </div>
+                <button type="button" id="generateEmailDraftBtn" class="form-action-button text-xs px-3 py-2">
+                    ✨ Generate Draft
+                </button>
+                <p id="emailDraftStatus" class="text-xs text-ritenest-muted-text mt-1 hidden"></p>
+                <textarea id="generatedEmailDraftOutput" rows="10" class="w-full p-2 border border-ritenest-border rounded-md bg-ritenest-light-bg text-ritenest-dark-text mt-2" placeholder="Your AI-generated email draft will appear here..." readonly></textarea>
+                <div class="template-preview-actions">
+                    <button class="btn-primary" onclick="document.execCommand('copy'); window.showMessage('Email Copied', 'Email draft copied to clipboard!', true);">Copy to Clipboard</button>
+                    <button class="btn-secondary" onclick="hideEmailDraftModal()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -2038,11 +2647,40 @@
         let activeMusicSubSection = 'allMusic'; // Default active music sub-section
         let banimalAnimationFrameId; // Store Banimal canvas animation frame ID
 
-        // Gemini API Key from your original dashboard file
-        const GEMINI_API_KEY = "AIzaSyBGSDZATtITv5iIoB3rgKHBpWx9MrufxXE";
-        // Google Maps API Key from your original dashboard file
-        const GOOGLE_MAPS_API_KEY = "AIzaSyBPG8dG29cl0TvYRGyLozejGed5Wj5Ab80";
+        // Banimal Canvas Variables
+        let banimalCanvas;
+        let banimalCtx;
+        let banimalParticles = [];
+        const numBanimalParticles = 100;
 
+        // Particle class for Banimal canvas
+        class BanimalParticle {
+            constructor() {
+                this.x = Math.random() * banimalCanvas.width;
+                this.y = Math.random() * banimalCanvas.height;
+                this.size = Math.random() * 5 + 1;
+                this.speedX = Math.random() * 3 - 1.5;
+                this.speedY = Math.random() * 3 - 1.5;
+                this.color = `hsl(${Math.random() * 360}, 50%, 70%)`; // Soft pastel colors
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.size > 0.2) this.size -= 0.01;
+
+                if (this.x < 0 || this.x > banimalCanvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > banimalCanvas.height) this.speedY *= -1;
+            }
+
+            draw() {
+                banimalCtx.fillStyle = this.color;
+                banimalCtx.beginPath();
+                banimalCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                banimalCtx.fill();
+            }
+        }
 
         // --- Simulated Data (for offline demo and initial rendering) ---
         let simulatedRitualData = [
@@ -2070,6 +2708,7 @@
             { id: 'p1', contentId: 'r1', event: 'Original Oral History Recorded', timestamp: '2023-01-15 10:30 SAST', hash: '0xabc1234567890def' },
             { id: 'p2', contentId: 'r1', event: 'Transcription & Initial Tagging', timestamp: '2023-01-20 14:00 SAST', hash: '0xdef4567890abc1' },
             { id: 'p3', contentId: 'r2', event: 'Elder Verification & Approval', timestamp: '2023-02-01 09:00 SAST', hash: '0xghi7890123456def' },
+            { id: 'p4', contentId: 'r2', event: 'Linked to RiteNest™ VaultMesh', timestamp: '2023-02-05 11:45 SAST', hash: '0xjkl01234567890' },
         ];
 
         let simulatedDiscussionPosts = [
@@ -2091,6 +2730,18 @@
         let analyticsRitualTypeChartInstance; // For Analytics section
         let contributorActivityChartInstance; // For Analytics section
 
+        // --- Custom Message Modal Functions ---
+        window.showMessage = function(message) {
+            const modal = document.getElementById('messageModal');
+            const modalMessage = document.getElementById('modalMessage');
+            modalMessage.textContent = message;
+            modal.classList.remove('hidden');
+        }
+
+        window.closeMessageModal = function() {
+            const modal = document.getElementById('messageModal');
+            modal.classList.add('hidden');
+        }
 
         // --- Main Landing Page Functions ---
 
@@ -2291,6 +2942,9 @@
                 } else if (tabId === 'analytics') {
                     window.updateAnalyticsRitualTypeChart();
                     window.updateContributorActivityChart();
+                } else if (tabId === 'settings') { // Added for settings tab
+                    loadSettings();
+                    showSettingsTab('profile'); // Default to profile tab when settings is opened
                 }
             });
         }
@@ -2453,7 +3107,7 @@
                     <td class="py-3 px-6 text-left"><span class="py-1 px-3 rounded-full text-xs ${statusClass}">${ritual.status}</span></td>
                     <td class="py-3 px-6 text-left">${ritual.lastUpdated}</td>
                     <td class="py-3 px-6 text-center">
-                        <button class="text-blue-500 hover:text-blue-700 text-sm" onclick="alert('Simulating view details for ${ritual.name}')">View</button>
+                        <button class="text-blue-500 hover:text-blue-700 text-sm" onclick="window.showMessage('Simulating view details for ${ritual.name}')">View</button>
                     </td>
                 `;
                 tableBody.appendChild(row);
@@ -2573,7 +3227,7 @@
             // const totemImageFile = document.getElementById('totemImage').files[0]; // For real upload
 
             if (!totemName) {
-                alert('Totem Name is required!');
+                window.showMessage('Totem Name is required!');
                 return;
             }
 
@@ -2586,7 +3240,7 @@
             };
             simulatedTotems.push(newTotem);
             window.renderTotemList();
-            alert('Simulating: Totem record added. In a real app, this would save to Firestore.');
+            window.showMessage('Simulating: Totem record added. In a real app, this would save to Firestore.');
             document.getElementById('addTotemForm').reset();
         }
 
@@ -2608,7 +3262,7 @@
                         <p class="font-semibold dashboard-dark-text">${totem.name}</p>
                         <p class="dashboard-muted-text text-sm">${totem.description}</p>
                     </div>
-                    <button class="primary-btn px-4 py-2 rounded-md text-sm" onclick="alert('Simulating: Viewing details for ${totem.name}.')">View Details</button>
+                    <button class="primary-btn px-4 py-2 rounded-md text-sm" onclick="window.showMessage('Simulating: Viewing details for ${totem.name}.')">View Details</button>
                 `;
                 totemListContainer.appendChild(card);
             });
@@ -2623,7 +3277,7 @@
             // const mediaFile = document.getElementById('mediaFile').files[0]; // For real upload
 
             if (!mediaTitle || !mediaType) {
-                alert('Media Title and Type are required!');
+                window.showMessage('Media Title and Type are required!');
                 return;
             }
 
@@ -2636,7 +3290,7 @@
             };
             simulatedMedia.push(newMedia);
             window.renderMediaList();
-            alert('Simulating: Media uploaded. In a real app, this would use Firebase Storage.');
+            window.showMessage('Simulating: Media uploaded. In a real app, this would use Firebase Storage.');
             document.getElementById('uploadMediaForm').reset();
         }
 
@@ -2658,7 +3312,7 @@
                         <p class="font-semibold dashboard-dark-text">${media.title} (${media.type})</p>
                         <p class="dashboard-muted-text text-sm">${media.description}</p>
                     </div>
-                    <button class="primary-btn px-4 py-2 rounded-md text-sm" onclick="alert('Simulating: Playing/Viewing ${media.title}.')">Play/View</button>
+                    <button class="primary-btn px-4 py-2 rounded-md text-sm" onclick="window.showMessage('Simulating: Playing/Viewing ${media.title}.')">Play/View</button>
                 `;
                 mediaListContainer.appendChild(card);
             });
@@ -2667,7 +3321,7 @@
         // --- GlyphTag Section Functions (Dashboard) ---
         window.handleVerifyProvenanceForm = function(event) {
             event.preventDefault();
-            const hashInput = document.getElementById('provenanceHashInput').value.trim();
+            const hashInput = document.getElementById('provenanceHash').value.trim(); // Corrected ID
             const resultDisplay = document.getElementById('verificationResult');
 
             if (!hashInput) {
@@ -2698,7 +3352,7 @@
             const generatedHashDisplay = document.getElementById('generatedHash');
 
             if (!contentId) {
-                alert('Content ID is required to generate a GlyphTag!');
+                window.showMessage('Content ID is required to generate a GlyphTag!');
                 return;
             }
 
@@ -2751,7 +3405,7 @@
             const postContent = document.getElementById('postContent').value.trim();
 
             if (!postTitle || !postContent) {
-                alert('Discussion Title and Content are required!');
+                window.showMessage('Discussion Title and Content are required!');
                 return;
             }
 
@@ -2766,7 +3420,7 @@
             };
             simulatedDiscussionPosts.unshift(newPost); // Add to the beginning
             window.renderDiscussionPosts();
-            alert('Simulating: New discussion post created.');
+            window.showMessage('Simulating: New discussion post created.');
             document.getElementById('newDiscussionForm').reset();
         }
 
@@ -2784,12 +3438,14 @@
                 const postElement = document.createElement('div');
                 postElement.className = 'discussion-post';
                 postElement.innerHTML = `
-                    <h4 class="text-xl font-bold dashboard-dark-text mb-2">${post.title}</h4>
-                    <p class="dashboard-muted-text text-sm mb-3">By: ${post.author} - ${post.timestamp}</p>
-                    <p class="dashboard-muted-text">"${post.content}"</p>
+                    <h4 class="text-xl font-bold text-gray-800 mb-2">${post.title}</h4>
+                    <p class="text-gray-700 text-sm mb-3">By: ${post.author} - ${post.timestamp}</p>
+                    <p class="text-gray-600">
+                        "${post.content}"
+                    </p>
                     <div class="mt-4 text-right">
-                        <button class="primary-btn px-4 py-2 rounded-md text-sm mr-4" onclick="alert('Simulating: Viewing comments for ${post.title}.')">View Comments (${post.comments})</button>
-                        <button class="primary-btn px-4 py-2 rounded-md text-sm" onclick="alert('Simulating: Liking post ${post.title}.')"><i class="fas fa-thumbs-up"></i> ${post.likes}</button>
+                        <button class="primary-btn px-4 py-2 rounded-md text-sm mr-4" onclick="window.showMessage('Simulating: Viewing comments.')">View Comments (${post.comments})</button>
+                        <button class="primary-btn px-4 py-2 rounded-md text-sm" onclick="window.showMessage('Simulating: Liking post.')"><i class="fas fa-thumbs-up"></i> ${post.likes}</button>
                     </div>
                 `;
                 postsContainer.appendChild(postElement);
@@ -2810,12 +3466,12 @@
                 const card = document.createElement('div');
                 card.className = 'subnode-card p-4 rounded-lg';
                 card.innerHTML = `
-                    <h4 class="text-xl font-bold dashboard-dark-text mb-2">${resource.title}</h4>
-                    <p class="dashboard-muted-text text-sm mb-3">
+                    <h4 class="text-xl font-bold text-gray-800 mb-2">${resource.title}</h4>
+                    <p class="text-gray-600 text-sm mb-3">
                         ${resource.type}: ${resource.date || resource.format} | ${resource.speaker ? `Speaker: ${resource.speaker}` : `Author: ${resource.author}`}
                     </p>
-                    <p class="dashboard-muted-text">${resource.description}</p>
-                    <button class="primary-btn px-4 py-2 rounded-md text-sm mt-4" onclick="alert('Simulating: ${resource.action} for ${resource.title}.')">
+                    <p class="text-gray-600">${resource.description}</p>
+                    <button class="primary-btn px-4 py-2 rounded-md text-sm mt-4" onclick="window.showMessage('Simulating: ${resource.action} for ${resource.title}.')">
                         ${resource.action}
                     </button>
                 `;
@@ -2996,6 +3652,330 @@
         }
 
 
+        // --- Data Definitions for Settings (from provided template) ---
+        const sectorList = {
+            "mining": { name: "⛏️ Mining & Resources" },
+            "admin-panel": { name: "⚙️ CodeNest™ Central Hub" },
+            "ritual-culture": { name: "☯ Ritual & Culture" } // Added for RiteNest
+        };
+
+        const companyData = {
+            "ritenest-corp": { // This would ideally be dynamically loaded or passed in a real app
+                name: "RiteNest Corporation",
+                sector_key: "ritual-culture", // Changed to ritual-culture
+                details: {
+                    "Location": "Global",
+                    "CEO": "Global Lead",
+                    "Primary Contact": "operations@ritenest.faa.zone",
+                    "Deployment Servers": "Global (Managed by Fruitful Global)",
+                    "Active Licenses": "All Sector Protocols",
+                    "Compliance Standards": "Global Standards",
+                    "Security Audit": "Bi-annual",
+                    "System Uptime (YTD)": "99.99%",
+                    "VaultMesh Integration": "Full",
+                    "ClaimRoot Integration": "Full"
+                }
+            },
+            "culturemesh-ltd": { // Example of another company, could be dynamic
+                name: "CultureMesh Ltd.",
+                sector_key: "ritual-culture",
+                details: {
+                    "Location": "Global",
+                    "CEO": "Culture Lead",
+                    "Primary Contact": "support@culturemesh.com",
+                    "Deployment Servers": "Global (Cloud-based)",
+                    "Active Licenses": "Specific Protocols",
+                    "Compliance Standards": "Regional Standards",
+                    "Security Audit": "Annual",
+                    "System Uptime (YTD)": "99.8%",
+                    "VaultMesh Integration": "Partial",
+                    "ClaimRoot Integration": "Enabled"
+                }
+            }
+        };
+
+        const appData = {
+            user: {
+                displayName: "RiteNest Admin", // Changed to RiteNest
+                email: "admin@ritenest.faa.zone", // Changed to RiteNest
+                defaultRegion: "global",
+                autoClaim: "yes"
+            },
+            dnsRecords: [
+                { type: 'A', name: '@', value: '203.0.113.45', ttl: 'Auto' },
+                { type: 'CNAME', name: 'www', value: '@', ttl: 'Auto' },
+                { type: 'MX', name: '@', value: 'mail.ritenest.faa.zone (Priority 10)', ttl: 'Auto' }, // Changed to RiteNest
+                { type: 'TXT', name: '@', value: 'v=spf1 include:ritenest.faa.zone ~all', ttl: 'Auto' }, // Changed to RiteNest
+            ],
+            emailAccounts: [
+                { email: 'operations@ritenest.faa.zone', status: 'Active' }, // Changed to RiteNest
+                { email: 'support@ritenest.faa.zone', status: 'Active' }, // Changed to RiteNest
+                { email: 'billing@ritenest.faa.zone', status: 'Suspended' }, // Changed to RiteNest
+            ],
+            domains: [
+                { name: 'ritenest.faa.zone', type: 'Primary' }, // Changed to RiteNest
+                { name: 'app.ritenest.faa.zone', type: 'Subdomain' }, // Changed to RiteNest
+                { name: 'data.ritenest.faa.zone', type: 'Subdomain' }, // Changed to RiteNest
+            ],
+        };
+
+        // --- Utility Functions for Settings ---
+
+        // Settings View Logic
+        function loadSettings() {
+            // Ensure elements exist before trying to set their values
+            const displayNameInput = document.getElementById('displayName');
+            const emailInput = document.getElementById('email');
+            const defaultRegionSelect = document.getElementById('defaultRegion');
+            const autoClaimSettingSelect = document.getElementById('autoClaimSetting');
+
+            if (displayNameInput) displayNameInput.value = appData.user.displayName;
+            if (emailInput) emailInput.value = appData.user.email;
+            if (defaultRegionSelect) defaultRegionSelect.value = appData.user.defaultRegion;
+            if (autoClaimSettingSelect) autoClaimSettingSelect.value = appData.user.autoClaim;
+
+            // Render DNS records and email accounts
+            renderDnsRecords();
+            renderEmailAccounts();
+            renderDomains();
+            renderSettingsCompanySelection(); // Render company selection for settings
+        }
+
+        // Settings Tab Navigation Logic
+        function showSettingsTab(tabId) {
+            // Hide all sub-views
+            document.querySelectorAll('#settings .settings-sub-view').forEach(view => {
+                view.classList.add('hidden');
+            });
+            // Show the selected sub-view
+            document.getElementById(`settings-${tabId}`).classList.remove('hidden');
+
+            // Update active button state
+            document.querySelectorAll('#settings .settings-tab-btn').forEach(btn => {
+                if (btn.getAttribute('data-settings-tab') === tabId) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Re-render domain/email/dns data if switching to that tab
+            if (tabId === 'domains') {
+                renderDnsRecords();
+                renderEmailAccounts();
+                renderDomains();
+                renderSettingsCompanySelection(); // Ensure selection is rendered on tab switch
+            }
+        }
+        window.showSettingsTab = showSettingsTab; // Make global for direct calls from HTML
+
+        // Render DNS Records
+        function renderDnsRecords() {
+            const dnsTableBody = document.getElementById('dnsRecordsTableBody');
+            if (!dnsTableBody) return;
+            dnsTableBody.innerHTML = '';
+            appData.dnsRecords.forEach(record => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="font-semibold">${record.type}</td>
+                    <td>${record.name}</td>
+                    <td>${record.value}</td>
+                    <td>${record.ttl}</td>
+                    <td class="text-right">
+                        <button class="text-blue-500 hover:text-blue-700 text-sm mr-2" onclick="window.showMessage('Edit DNS', 'Edit functionality for ${record.name} coming soon!')">Edit</button>
+                        <button class="text-red-500 hover:text-red-700 text-sm" onclick="window.showMessage('Delete DNS', 'Delete functionality for ${record.name} coming soon!')">Delete</button>
+                    </td>
+                `;
+                dnsTableBody.appendChild(row);
+            });
+        }
+
+        // Render Domains
+        function renderDomains() {
+            const domainList = document.getElementById('domainList');
+            const addonDomainTargetSelect = document.getElementById('addonDomainTarget');
+            // Populate newEmailDomain select with available domains
+            const newEmailDomainSelect = document.getElementById('newEmailDomain');
+
+            if (!domainList || !addonDomainTargetSelect || !newEmailDomainSelect) return;
+            
+            domainList.innerHTML = ''; // Clear existing
+            addonDomainTargetSelect.innerHTML = '<option value="">Select Primary Domain</option>';
+            newEmailDomainSelect.innerHTML = ''; // Clear existing options
+
+            appData.domains.forEach(domain => {
+                const listItem = document.createElement('li');
+                const statusIcon = domain.type.includes('Pending') ? 'fas fa-hourglass-half text-yellow-500' : 'fas fa-check-circle text-green-500';
+                listItem.innerHTML = `<i class="${statusIcon} mr-2"></i> ${domain.name} (${domain.type})`;
+                domainList.appendChild(listItem);
+
+                // Populate add-on domain select only with primary/active domains
+                if (domain.type.includes('Primary') || domain.type.includes('Subdomain')) {
+                    const option = document.createElement('option');
+                    option.value = domain.name;
+                    option.textContent = domain.name;
+                    addonDomainTargetSelect.appendChild(option);
+
+                    // Also add to newEmailDomainSelect
+                    const emailDomainOption = document.createElement('option');
+                    emailDomainOption.value = domain.name;
+                    emailDomainOption.textContent = domain.name;
+                    newEmailDomainSelect.appendChild(emailDomainOption);
+                }
+            });
+        }
+
+
+        // Render Email Accounts
+        function renderEmailAccounts() {
+            const emailAccountsTableBody = document.getElementById('emailAccountsTableBody');
+            if (!emailAccountsTableBody) return;
+            emailAccountsTableBody.innerHTML = '';
+            appData.emailAccounts.forEach(account => {
+                const row = document.createElement('tr');
+                const statusClass = account.status === 'Active' ? 'text-green-500' : 'text-yellow-500';
+                row.innerHTML = `
+                    <td class="font-semibold">${account.email}</td>
+                    <td><span class="${statusClass}">${account.status}</span></td>
+                    <td class="text-right">
+                        <button class="text-blue-500 hover:text-blue-700 text-sm mr-2" onclick="window.showMessage('Edit Email', 'Edit email ${account.email} functionality coming soon!')">Edit</button>
+                        <button class="text-red-500 hover:text-red-700 text-sm" onclick="window.showMessage('Delete Email', 'Delete email ${account.email} functionality coming soon!')">Delete</button>
+                        <button class="form-action-button text-xs px-3 py-2 mt-2 ml-2" onclick="window.openEmailDraftModal('${account.email}')">
+                            ✨ Draft Email
+                        </button>
+                    </td>
+                `;
+                emailAccountsTableBody.appendChild(row);
+            });
+        }
+
+        // Render company selection cards for settings panel
+        function renderSettingsCompanySelection() {
+            const settingsCompanySelectionGrid = document.getElementById('settingsCompanySelectionGrid');
+            if (settingsCompanySelectionGrid) {
+                settingsCompanySelectionGrid.innerHTML = ''; // Clear previous selections
+                // Filter companyData to only show companies in the "ritual-culture" sector
+                const filteredCompanies = Object.entries(companyData).filter(([key, company]) => company.sector_key === "ritual-culture");
+
+                filteredCompanies.forEach(([key, company]) => {
+                    const card = document.createElement('div');
+                    card.className = 'company-select-card p-4 rounded-lg text-center shadow-md cursor-pointer'; // Using RiteNest theme classes
+                    card.innerHTML = `
+                        <h3 class="text-lg font-bold">${company.name}</h3>
+                        <p class="text-xs">Sector: ${sectorList[company.sector_key] ? sectorList[company.sector_key].name : 'N/A'}</p>
+                    `;
+                    card.onclick = () => window.renderSettingsCompanyDetails(key);
+                    settingsCompanySelectionGrid.appendChild(card);
+                });
+            }
+        }
+
+        // Render detailed company information in settings
+        window.renderSettingsCompanyDetails = function(companyKey) {
+            const company = companyData[companyKey];
+            const detailsOutput = document.getElementById('settingsCompanyDetailsOutput');
+            if (!company || !detailsOutput) return;
+
+            detailsOutput.innerHTML = `
+                <h4 class="text-xl font-bold mb-4">${company.name} Infrastructure Details</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    ${Object.entries(company.details).map(([key, value]) => `
+                        <div class="bg-ritenest-light-bg p-4 rounded-md border border-ritenest-border">
+                            <strong class="text-ritenest-accent">${key}:</strong> ${value}
+                        </div>
+                    `).join('')}
+                </div>
+                <button class="primary-btn mt-4 bg-red-600 hover:bg-red-700" onclick="window.showMessage('Simulation', 'Advanced company management tools coming soon!', true)">
+                    <i class="fas fa-cogs mr-1"></i> Manage Company Infrastructure
+                </button>
+            `;
+            detailsOutput.classList.remove('hidden');
+        };
+
+        // --- Email Draft Modal (NEW) ---
+        let currentEmailForDraft = ''; // Store the email being drafted for
+
+        window.openEmailDraftModal = function(emailAddress) {
+            currentEmailForDraft = emailAddress;
+            const modal = document.getElementById('emailDraftModal');
+            const modalTitle = document.getElementById('emailDraftTitle');
+            const emailDraftTo = document.getElementById('emailDraftTo');
+            const emailPurposeInput = document.getElementById('emailPurposeInput');
+            const generatedEmailDraftOutput = document.getElementById('generatedEmailDraftOutput');
+            const emailDraftStatus = document.getElementById('emailDraftStatus');
+
+            if (modal && modalTitle && emailDraftTo && emailPurposeInput && generatedEmailDraftOutput && emailDraftStatus) {
+                modalTitle.textContent = `Draft Email for ${emailAddress}`;
+                emailDraftTo.textContent = emailAddress;
+                emailPurposeInput.value = '';
+                generatedEmailDraftOutput.value = '';
+                emailDraftStatus.classList.add('hidden');
+                modal.classList.add('active');
+            }
+        };
+
+        window.hideEmailDraftModal = function() {
+            document.getElementById('emailDraftModal')?.classList.remove('active');
+            currentEmailForDraft = '';
+        };
+
+        // --- Gemini API Call Function (Simplified for Template) ---
+        window.callGeminiAPI = async function(prompt, targetElementId, statusElementId, buttonElement, type) {
+            const targetElement = document.getElementById(targetElementId);
+            const statusElement = document.getElementById(statusElementId);
+            
+            if (!targetElement || !statusElement || !buttonElement) {
+                console.error("Missing target, status element, or button element for Gemini API call.");
+                return null;
+            }
+
+            statusElement.textContent = "Generating...";
+            statusElement.classList.remove('hidden');
+            targetElement.classList.add('hidden'); // Hide output until ready
+            buttonElement.disabled = true;
+            buttonElement.innerHTML = `<span class="inline-block border-4 border-t-ritenest-primary border-ritenest-border rounded-full w-5 h-5 animate-spin"></span>`; // RiteNest spinner colors
+
+            try {
+                // Simulate API call for this template
+                let simulatedResponse = "";
+                if (type === 'Explain DNS Type') {
+                    const dnsType = document.getElementById('dnsRecordTypeInput').value.trim(); // Get dnsType from input
+                    simulatedResponse = `A ${dnsType} record is used for... (Simulated Explanation)`; 
+                } else if (type === 'Draft Email') {
+                    const emailPurpose = document.getElementById('emailPurposeInput').value.trim(); // Get emailPurpose from input
+                    simulatedResponse = `Subject: Regarding your ${emailPurpose}
+Dear User,
+
+This is a simulated email draft based on your request.
+Purpose: ${emailPurpose}
+
+Best regards,
+Your RiteNest Team`; // Updated team name
+                }
+
+                targetElement.innerHTML = simulatedResponse;
+                targetElement.classList.remove('hidden');
+                statusElement.textContent = "Generation complete!";
+                return simulatedResponse;
+
+            } catch (error) {
+                statusElement.textContent = "Error: API call failed.";
+                console.error("Error calling Gemini API:", error);
+                return null;
+            } finally {
+                buttonElement.disabled = false;
+                let originalButtonText = '';
+                if (type === 'Explain DNS Type') {
+                    originalButtonText = 'Explain DNS Type';
+                } else if (type === 'Draft Email') {
+                    originalButtonText = 'Generate Draft';
+                }
+                buttonElement.innerHTML = `✨ ${originalButtonText}`;
+                setTimeout(() => statusElement.classList.add('hidden'), 3000);
+            }
+        };
+
+
         // --- Initial Load Functions ---
         document.addEventListener('DOMContentLoaded', () => {
             // Firebase Initialization (existing from previous dashboard)
@@ -3042,7 +4022,7 @@
 
 
             // Set up dashboard tab navigation listeners
-            document.querySelectorAll('#ritenest-dashboard-wrapper .tab-nav-item').forEach(button => {
+            document.querySelectorAll('#ritenest-dashboard-wrapper .dashboard-sidebar-nav-item').forEach(button => {
                 button.addEventListener('click', () => {
                     window.showDashboardSectionTab(button.dataset.tab);
                 });
@@ -3060,6 +4040,8 @@
             // These will be called when their respective tabs are activated.
             // Calling them here ensures initial data is ready.
             window.updateOverviewMetrics();
+            window.updateRitualTypeChart();
+            window.updateDocumentationProgressChart();
             window.updateProgressMetrics();
             window.populateProgressTable();
             window.updateOverallStatusChart();
@@ -3072,12 +4054,55 @@
             window.updateAnalyticsRitualTypeChart();
             window.updateContributorActivityChart();
 
-            // Show the default main section (Home)
-            window.showMainSection('hero-section');
-            const homeLink = document.querySelector(`.header-nav-item[onclick*="hero-section"]`);
-            if (homeLink) {
-                homeLink.classList.add('header-nav-active');
+            // Show the default main section (Dashboard)
+            window.showMainSection('ritenest-dashboard-wrapper');
+            const dashboardLink = document.querySelector(`.header-nav-item[onclick*="ritenest-dashboard-wrapper"]`);
+            if (dashboardLink) {
+                dashboardLink.classList.add('header-nav-active');
             }
+
+            // Setup DNS Explain button listener (moved here for correct scope)
+            document.getElementById('explainDnsBtn')?.addEventListener('click', async (event) => {
+                const dnsType = document.getElementById('dnsRecordTypeInput').value.trim();
+                const button = event.currentTarget;
+                if (!dnsType) {
+                    window.showMessage('Input Required', 'Please enter a DNS record type (e.g., A, CNAME, MX) to explain.');
+                    return;
+                }
+                const prompt = `Explain what a "${dnsType}" DNS record is, its primary purpose, and a typical use case. Keep the explanation concise and easy to understand for a non-expert.`;
+                await window.callGeminiAPI(prompt, 'dnsExplanationOutput', 'dnsExplainStatus', button, 'Explain DNS Type');
+            });
+
+            // Event listener for Create Email Button (moved here for correct scope)
+            document.getElementById('createEmailBtn')?.addEventListener('click', async (event) => {
+                const emailPrefix = String(document.getElementById('newEmailPrefix').value).trim();
+                const emailDomain = String(document.getElementById('newEmailDomain').value).trim();
+                const fullEmail = `${emailPrefix}@${emailDomain}`;
+
+                if (!emailPrefix || !emailDomain) {
+                    window.showMessage('Input Required', 'Please enter both an email prefix and domain to create a new email account.');
+                    return;
+                }
+
+                window.showMessage('Email Account Creation', `Creating email account: ${fullEmail} (Simulated).`);
+                appData.emailAccounts.push({ email: fullEmail, status: 'Active' });
+                renderEmailAccounts(); // Re-render table
+                document.getElementById('newEmailPrefix').value = ''; // Clear prefix
+
+                // Open the email draft modal automatically after simulated creation
+                window.openEmailDraftModal(fullEmail);
+            });
+
+            document.getElementById('generateEmailDraftBtn')?.addEventListener('click', async (event) => {
+                const emailPurpose = document.getElementById('emailPurposeInput').value.trim();
+                const button = event.currentTarget;
+                if (!emailPurpose) {
+                    window.showMessage('Input Required', 'Please enter a purpose for the email.');
+                    return;
+                }
+                const prompt = `Draft a professional email (max 200 words) for the purpose of "${emailPurpose}" from the email address "${currentEmailForDraft}". Focus on a clear and polite tone. Provide only the email body.`;
+                await window.callGeminiAPI(prompt, 'generatedEmailDraftOutput', 'emailDraftStatus', button, 'Draft Email');
+            });
         });
     </script>
 </body>
