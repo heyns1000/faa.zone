@@ -23,3 +23,4 @@
 | 17 | 2025-06-30 | quantum.seedwave.faa.zone | history | `index.html` | `0ded3317` | FAA™ | Quantum Protocols Dashboard | 199835 | 97 | 26 | 232.0 |
 | 18 | 2025-07-02 | agriculture.seedwave.faa.zone | history | `index.html` | `fe738203` | Fruitful | Global Agriculture Dashboard | 148798 | 83 | 18 | 180.9 |
 | 19 | 2025-07-21 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/agriculture.seedwave.faa.zone-main/index.html` | `fe026d32` | Fruitful | Global Agriculture Dashboard | 157815 | 87 | 18 | 189.8 |
+| 20 | 2025-07-21 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/mining.seedwave.faa.zone-main/public/index.html` | `81ff3887` | Fruitful™ | About Us: Thabo Ntlatleng | 152649 | 191 | 15 | 270.3 |
