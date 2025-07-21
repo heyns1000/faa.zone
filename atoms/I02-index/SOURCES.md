@@ -22,3 +22,4 @@
 | 16 | 2025-06-30 | agriculture.seedwave.faa.zone | history | `index.html` | `8f9291f7` | Fruitful | Global Agriculture Dashboard | 148827 | 83 | 18 | 180.9 |
 | 17 | 2025-06-30 | quantum.seedwave.faa.zone | history | `index.html` | `0ded3317` | FAA™ | Quantum Protocols Dashboard | 199835 | 97 | 26 | 232.0 |
 | 18 | 2025-07-02 | agriculture.seedwave.faa.zone | history | `index.html` | `fe738203` | Fruitful | Global Agriculture Dashboard | 148798 | 83 | 18 | 180.9 |
+| 19 | 2025-07-21 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/agriculture.seedwave.faa.zone-main/index.html` | `fe026d32` | Fruitful | Global Agriculture Dashboard | 157815 | 87 | 18 | 189.8 |

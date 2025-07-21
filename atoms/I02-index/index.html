@@ -431,6 +431,63 @@
             100% { transform: rotate(360deg); }
         }
 
+        /* Modal Header/Footer Styling (for Farm Details, Email Draft, Edit Farm) */
+        .template-preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background-color: var(--agri-primary-color);
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        .template-preview-header h3 {
+            margin: 0;
+            color: white; /* Override panel h3 color */
+            font-size: 1.2rem;
+        }
+        .template-preview-header .close-preview-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .template-preview-header .close-preview-btn:hover {
+            color: var(--agri-secondary-color);
+        }
+        .template-preview-body {
+            padding: 1.5rem;
+        }
+        .template-preview-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            padding: 1.5rem;
+            border-top: 1px solid var(--agri-border-color);
+            background-color: var(--agri-card-bg);
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+        .template-preview-actions .btn-primary {
+            background-color: var(--agri-primary-color);
+            color: white;
+        }
+        .template-preview-actions .btn-secondary {
+            background-color: var(--agri-border-color);
+            color: var(--agri-text-light);
+        }
+        .template-preview-actions .btn-primary:hover {
+            background-color: var(--agri-success-green);
+        }
+        .template-preview-actions .btn-secondary:hover {
+            background-color: #4a5568;
+        }
+
         /* Responsive Mobile Layout */
         @media (max-width: 767px) {
             body {
@@ -548,10 +605,10 @@
             <a href="#agri-tools" data-view="agri-tools">
                 <i class="fas fa-tools nav-icon"></i> Agri-Tools & Resources
             </a>
-             <a href="#maps" data-view="maps">
+              <a href="#maps" data-view="maps">
                 <i class="fas fa-map-marked-alt nav-icon"></i> Maps
             </a>
-            <a href="#settings" class="active" data-view="settings">
+            <a href="#settings" data-view="settings">
                 <i class="fas fa-cog nav-icon"></i> Settings
             </a>
         </nav>
@@ -581,8 +638,8 @@
                 <div class="metric-card">
                     <h4>Forecasted Yield (Tons)</h4>
                     <p id="forecastedYield">0</p>
-                 </div>
-                 <div class="metric-card md:col-span-full">
+                   </div>
+                   <div class="metric-card md:col-span-full">
                     <h4>Global Commodity Index (Wheat)</h4>
                     <p id="commodityPriceIndex">$0.00</p>
                 </div>
@@ -596,7 +653,7 @@
                     <canvas id="resourceConsumptionChart"></canvas>
                 </div>
             </div>
-             <div class="panel">
+              <div class="panel">
                 <h4>Global Yield Growth Trend</h4>
                 <div class="chart-container">
                     <canvas id="globalYieldGrowthChart"></canvas>
@@ -804,7 +861,7 @@
                                 <gmp-advanced-marker position="-25.60, 28.30" title="Farm 3, Cullinan"></gmp-advanced-marker>
                             </gmp-map>
                         </div>
-                         <div class="text-agri-danger-red text-sm mt-4">
+                           <div class="text-agri-danger-red text-sm mt-4">
                             <strong>IMPORTANT:</strong> Google Maps requires a valid API key. If the map doesn't load, ensure `AIzaSyBPG8dG29cl0TvYRGyLozejGed5Wj5Ab80` is correct and enabled for Maps JavaScript API in your Google Cloud Console.
                         </div>
                     </div>
@@ -819,7 +876,7 @@
         </section>
 
         <!-- Settings View (NEW) -->
-        <section id="settings-view" class="view">
+        <section id="settings-view" class="view view-hidden">
             <div class="panel">
                 <h3><i class="fas fa-cog mr-2"></i> AgriDash Settings</h3>
 
@@ -914,7 +971,7 @@
                             </tbody>
                         </table>
                         <div class="flex flex-wrap items-center gap-2 mt-4">
-                             <input type="text" id="agriDnsRecordTypeInput" placeholder="DNS Type (e.g., A, CNAME)" class="flex-grow p-2 rounded-md bg-gray-700 border border-gray-600 text-white text-xs max-w-[200px]">
+                               <input type="text" id="agriDnsRecordTypeInput" placeholder="DNS Type (e.g., A, CNAME)" class="flex-grow p-2 rounded-md bg-gray-700 border border-gray-600 text-white text-xs max-w-[200px]">
                             <button class="form-action-button text-sm px-3 py-2 bg-agri-info-blue hover:bg-blue-600" id="explainAgriDnsBtn">
                                 ✨ Explain DNS Type
                             </button>
@@ -939,7 +996,7 @@
                                 <i class="fas fa-plus mr-1"></i> Add Domain
                             </button>
                         </div>
-                         <div class="flex flex-wrap items-center gap-2 mt-2">
+                           <div class="flex flex-wrap items-center gap-2 mt-2">
                             <input type="text" id="agriNewAddonDomainName" placeholder="Add Add-on Domain (e.g., research.smart-agri.com)" class="flex-grow p-2 rounded-md bg-gray-700 border border-gray-600 text-white text-sm">
                             <select id="agriAddonDomainTarget" class="p-2 rounded-md bg-gray-700 border border-gray-600 text-white text-sm">
                                 <option value="">Select Primary Domain</option>
@@ -1028,6 +1085,58 @@
         </div>
     </div>
 
+    <!-- Edit Farm Modal (NEW) -->
+    <div id="editFarmModal" class="custom-modal-overlay">
+        <div class="custom-modal-content max-w-xl w-full h-auto" style="padding: 0; text-align: left;">
+            <div class="template-preview-header bg-agri-primary-color">
+                <h3 id="editFarmTitle" class="text-white">Edit Farm Details</h3>
+                <button class="close-preview-btn" onclick="window.hideEditFarmModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="template-preview-body p-4 bg-agri-card-bg">
+                <form id="editFarmForm">
+                    <input type="hidden" id="editFarmId">
+                    <div class="form-control">
+                        <label for="editFarmName">Farm Name</label>
+                        <input type="text" id="editFarmName" required>
+                    </div>
+                    <div class="form-control">
+                        <label for="editFarmLocation">Location</label>
+                        <input type="text" id="editFarmLocation" required>
+                    </div>
+                    <div class="form-control">
+                        <label for="editFarmCrop">Primary Crop / Livestock</label>
+                        <input type="text" id="editFarmCrop" required>
+                    </div>
+                    <div class="form-control">
+                        <label for="editFarmSize">Size (Acres)</label>
+                        <input type="number" id="editFarmSize" placeholder="e.g., 500" required min="1">
+                    </div>
+                    <div class="form-control">
+                        <label for="editFarmStatus">Status</label>
+                        <select id="editFarmStatus" required>
+                            <option value="active">Active</option>
+                            <option value="harvesting">Harvesting</option>
+                            <option value="planting">Planting</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+                    <div class="flex justify-end gap-2 mt-4">
+                        <button type="submit" class="form-action-button bg-agri-primary-color hover:bg-agri-success-green">
+                            <i class="fas fa-save mr-2"></i> Save Changes
+                        </button>
+                        <button type="button" id="deleteFarmButton" class="form-action-button bg-agri-danger-red hover:bg-red-700">
+                            <i class="fas fa-trash-alt mr-2"></i> Delete Farm
+                        </button>
+                        <button type="button" onclick="window.hideEditFarmModal()" class="form-action-button bg-gray-500 hover:bg-gray-600">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
     <!-- Email Draft Modal (NEW - specifically for agriculture emails) -->
     <div id="agriEmailDraftModal" class="custom-modal-overlay">
         <div class="custom-modal-content max-w-xl w-full h-auto">
@@ -1047,7 +1156,7 @@
                 <p id="agriEmailDraftStatus" class="text-xs text-gray-400 mt-1 hidden"></p>
                 <textarea id="generatedAgriEmailDraftOutput" rows="10" class="w-full p-2 border border-gray-600 rounded-md bg-gray-700 text-white mt-2" placeholder="Your AI-generated email draft will appear here..." readonly></textarea>
                 <div class="template-preview-actions">
-                    <button class="form-action-button btn-primary" onclick="document.execCommand('copy'); window.showCustomModal('Email Copied', 'Email draft copied to clipboard!', true);">Copy to Clipboard</button>
+                    <button class="form-action-button btn-primary" onclick="window.copyGeneratedEmailToClipboard()">Copy to Clipboard</button>
                     <button class="form-action-button btn-secondary" onclick="hideAgriEmailDraftModal()">Close</button>
                 </div>
             </div>
@@ -1675,6 +1784,65 @@
         };
 
         /**
+         * Shows the farm details modal and populates it with farm data.
+         * @param {object} farmData - The data of the farm to display.
+         */
+        window.showFarmDetailsModal = function(farmData) {
+            const modal = document.getElementById('farmDetailsModal');
+            const titleElement = document.getElementById('farmDetailsTitle');
+            const overviewDetails = document.getElementById('farmOverviewDetails');
+            const subnodeMetricsContainer = document.getElementById('subnodeMetricsContainer');
+
+            if (!modal || !titleElement || !overviewDetails || !subnodeMetricsContainer) {
+                console.error("Farm details modal elements not found.");
+                return;
+            }
+
+            titleElement.textContent = farmData.name;
+            overviewDetails.innerHTML = `
+                <div class="bg-agri-bg-dark p-3 rounded-md border border-agri-border-color"><strong>Location:</strong> ${farmData.location}</div>
+                <div class="bg-agri-bg-dark p-3 rounded-md border border-agri-border-color"><strong>Primary Crop/Livestock:</strong> ${farmData.primaryCrop}</div>
+                <div class="bg-agri-bg-dark p-3 rounded-md border border-agri-border-color"><strong>Size:</strong> ${farmData.size}</div>
+                <div class="bg-agri-bg-dark p-3 rounded-md border border-agri-border-color"><strong>Status:</strong> <span class="farm-status status-${farmData.status}">${farmData.status.toUpperCase()}</span></div>
+                <div class="bg-agri-bg-dark p-3 rounded-md border border-agri-border-color"><strong>Last Report:</strong> ${farmData.lastReport}</div>
+                <div class="bg-agri-bg-dark p-3 rounded-md border border-agri-border-color"><strong>Farm ID:</strong> ${farmData.id}</div>
+            `;
+
+            subnodeMetricsContainer.innerHTML = '';
+            if (farmData.subnodeMetrics && farmData.subnodeMetrics.length > 0) {
+                farmData.subnodeMetrics.forEach(metric => {
+                    const metricCard = document.createElement('div');
+                    metricCard.className = 'bg-agri-bg-dark p-4 rounded-md border border-agri-border-color';
+                    let metricHtml = `<h5 class="text-lg font-semibold text-agri-primary-color mb-2">${metric.type} (${metric.id})</h5>`;
+                    for (const key in metric) {
+                        if (key !== 'type' && key !== 'id') {
+                            metricHtml += `<p class="text-sm text-agri-text-light"><strong>${key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}:</strong> ${metric[key]}</p>`;
+                        }
+                    }
+                    metricCard.innerHTML = metricHtml;
+                    subnodeMetricsContainer.appendChild(metricCard);
+                });
+            } else {
+                subnodeMetricsContainer.innerHTML = '<p class="text-agri-text-light">No detailed subnode metrics available for this farm.</p>';
+            }
+
+            modal.classList.add('active'); // Add active for animation
+        };
+
+        /**
+         * Hides the farm details modal.
+         */
+        window.hideFarmDetailsModal = function() {
+            const modal = document.getElementById('farmDetailsModal');
+            if (modal) {
+                modal.classList.remove('active');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+        };
+
+        /**
          * Shows the edit farm modal and populates it with farm data.
          * @param {object} farmData - The data of the farm to edit.
          */
@@ -1685,7 +1853,7 @@
                 document.getElementById('editFarmName').value = farmData.name;
                 document.getElementById('editFarmLocation').value = farmData.location;
                 document.getElementById('editFarmCrop').value = farmData.primaryCrop;
-                document.getElementById('editFarmSize').value = farmData.size.replace(' acres', '');
+                document.getElementById('editFarmSize').value = parseInt(farmData.size); // Ensure it's a number
                 document.getElementById('editFarmStatus').value = farmData.status;
 
                 modal.classList.remove('hidden');
@@ -2052,9 +2220,18 @@
             // Using a custom modal for confirmation instead of window.confirm
             const confirmDelete = await new Promise((resolve) => {
                 const confirmModal = document.getElementById('customModal');
+                const modalContent = confirmModal.querySelector('.custom-modal-content');
                 const confirmMessage = confirmModal.querySelector('p');
-                const confirmButtonContainer = document.createElement('div');
-                confirmButtonContainer.className = "mt-4 flex justify-center gap-4";
+                let confirmButtonContainer = modalContent.querySelector('.flex.justify-center.gap-4');
+
+                // Create buttons if they don't exist, or clear existing ones
+                if (!confirmButtonContainer) {
+                    confirmButtonContainer = document.createElement('div');
+                    confirmButtonContainer.className = "mt-4 flex justify-center gap-4";
+                    modalContent.appendChild(confirmButtonContainer);
+                } else {
+                    confirmButtonContainer.innerHTML = ''; // Clear existing buttons
+                }
 
                 const yesButton = document.createElement('button');
                 yesButton.className = "form-action-button bg-agri-danger-red hover:bg-red-700";
@@ -2066,18 +2243,11 @@
                 noButton.textContent = "Cancel";
                 noButton.onclick = () => { window.hideCustomModal(); resolve(false); };
 
-                // Clear previous buttons from the modal content if any
-                const existingButtons = confirmModal.querySelector('.custom-modal-content .flex.justify-center.gap-4');
-                if (existingButtons) {
-                    existingButtons.remove();
-                }
-
                 confirmButtonContainer.appendChild(yesButton);
                 confirmButtonContainer.appendChild(noButton);
 
                 if (confirmModal && confirmMessage) {
                     confirmMessage.innerHTML = `<strong>Confirm Deletion</strong><br>Are you sure you want to delete this farm? This action cannot be undone.`;
-                    confirmModal.querySelector('.custom-modal-content').appendChild(confirmButtonContainer);
                     confirmModal.classList.remove('hidden');
                     confirmModal.classList.add('active');
                 } else {
@@ -2270,10 +2440,10 @@ ${[
          * @param {string} targetElementId - The ID of the HTML element to display the response.
          * @param {string} statusElementId - The ID of the HTML element to display the status (e.g., "Generating...").
          * @param {HTMLElement} buttonElement - The button element that triggered the call.
-         * @param {string} type - The original text content of the button for restoration.
+         * @param {string} buttonOriginalText - The original text content of the button for restoration.
          * @returns {Promise<string>|null} - The generated text or null if an error occurred.
          */
-        window.callGeminiAPI = async function(prompt, targetElementId, statusElementId, buttonElement, type) {
+        window.callGeminiAPI = async function(prompt, targetElementId, statusElementId, buttonElement, buttonOriginalText) {
             const targetElement = document.getElementById(targetElementId);
             const statusElement = document.getElementById(statusElementId);
             
@@ -2286,7 +2456,7 @@ ${[
             statusElement.classList.remove('hidden');
             targetElement.classList.add('hidden'); // Hide output until ready
             buttonElement.disabled = true;
-            buttonElement.innerHTML = `<span class="inline-block border-4 border-t-green-500 border-gray-300 rounded-full w-5 h-5 animate-spin"></span>`; // Show spinner
+            buttonElement.innerHTML = `<span class="loading-spinner"></span>`; // Show spinner
 
             try {
                 let chatHistory = [];
@@ -2324,7 +2494,7 @@ ${[
                 return null;
             } finally {
                 buttonElement.disabled = false;
-                buttonElement.innerHTML = `✨ ${type}`;
+                buttonElement.innerHTML = buttonOriginalText; // Restore original button text
                 setTimeout(() => statusElement.classList.add('hidden'), 3000);
             }
         };
@@ -2332,8 +2502,6 @@ ${[
         // Event listener for AI Agri Assistant Button
         document.getElementById('sendAgriAIPrompt')?.addEventListener('click', async (event) => {
             const agriPromptText = document.getElementById('agriAIPrompt').value.trim();
-            const responseDiv = document.getElementById('agriAIResponse');
-            const statusElement = document.getElementById('agriAIStatus');
             const button = event.currentTarget;
 
             if (!agriPromptText) {
@@ -2342,7 +2510,7 @@ ${[
             }
 
             const fullPrompt = `As an expert in sustainable agriculture and farming, provide concise and actionable advice for the following query: "${agriPromptText}"`;
-            await window.callGeminiAPI(fullPrompt, 'agriAIResponse', 'agriAIStatus', button, 'Get Agri-AI Advice');
+            await window.callGeminiAPI(fullPrompt, 'agriAIResponse', 'agriAIStatus', button, '✨ Get Agri-AI Advice');
         });
 
         // --- Maps Section Logic (NEW) ---
@@ -2610,7 +2778,7 @@ ${[
                 return;
             }
             const prompt = `Explain what a "${dnsType}" DNS record is, its primary purpose, and a typical use case in the context of managing an agricultural technology company's website or services. Keep the explanation concise and easy to understand for a non-expert.`;
-            await window.callGeminiAPI(prompt, 'agriDnsExplanationOutput', 'agriDnsExplainStatus', button, 'Explain DNS Type');
+            await window.callGeminiAPI(prompt, 'agriDnsExplanationOutput', 'agriDnsExplainStatus', button, '✨ Explain DNS Type');
         });
 
         // Email Draft Modal for Agriculture (NEW)
@@ -2638,6 +2806,7 @@ ${[
 
         window.hideAgriEmailDraftModal = function() {
             document.getElementById('agriEmailDraftModal')?.classList.remove('active');
+            document.getElementById('generatedAgriEmailDraftOutput').value = ''; // Clear output on close
             currentAgriEmailForDraft = '';
         };
 
@@ -2650,8 +2819,22 @@ ${[
                 return;
             }
             const prompt = `Draft a professional email (max 200 words) for the purpose of "${emailPurpose}" from the agriculture company email address "${currentAgriEmailForDraft}". Focus on a clear and concise tone relevant to agricultural operations. Provide only the email body.`;
-            await window.callGeminiAPI(prompt, 'generatedAgriEmailDraftOutput', 'agriEmailDraftStatus', button, 'Generate Draft');
+            await window.callGeminiAPI(prompt, 'generatedAgriEmailDraftOutput', 'agriEmailDraftStatus', button, '✨ Generate Draft');
         });
+
+        /**
+         * Copies the generated email draft to the clipboard.
+         */
+        window.copyGeneratedEmailToClipboard = function() {
+            const textarea = document.getElementById('generatedAgriEmailDraftOutput');
+            if (textarea) {
+                textarea.select();
+                document.execCommand('copy');
+                window.showCustomModal('Email Copied', 'Email draft copied to clipboard!', true);
+            } else {
+                window.showCustomModal('Copy Failed', 'No email draft to copy.', true);
+            }
+        };
 
 
         // --- General Utility for Copy to Clipboard (re-used from CodeNest) ---
