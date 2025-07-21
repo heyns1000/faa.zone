@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
     <title>Fruitful™ | MineNest™ Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -94,9 +94,14 @@
             .form-control select,
             .form-control textarea,
             .form-control input[type="number"] { /* Added number type */
-                background-color: #ebebeb; /* Lighter input fields */
-                border-color: #d1d1d1;
-                color: var(--light-text-color-light); /* Input text darker */
+                width: 100%;
+                padding: 0.75rem;
+                border-radius: 8px;
+                border: 1px solid var(--border-color-dark);
+                background-color: #3a3a3e; /* Input background changes with theme */
+                color: var(--text-color-light); /* Input text color changes with theme */
+                font-size: 1rem;
+                transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
             }
             .project-card {
                 background-color: #f0f0f0; /* Lighter project cards in light mode */
@@ -2775,7 +2780,7 @@
             if (targetElementId !== 'tempSimplifyOutput' && !targetElementId.startsWith('tempProjectSummaryOutput')) { // Don't hide the temp div used for simplification or project summary
                 targetElement.classList.add('hidden'); // Hide output until ready
             }
-            buttonElement.disabled = true;
+            buttonElement.disabled = true; 
             buttonElement.innerHTML = `<span class="inline-block border-4 border-t-blue-500 border-gray-300 rounded-full w-5 h-5 animate-spin"></span>`; // Show spinner
 
             try {
@@ -3340,7 +3345,6 @@
         let currentEmailForDraft = ''; // Store the email being drafted for
 
         window.openEmailDraftModal = function(emailAddress) {
-            console.log("DEBUG: openEmailDraftModal received emailAddress:", emailAddress); // Added log
             currentEmailForDraft = emailAddress;
             const modal = document.getElementById('emailDraftModal');
             const modalTitle = document.getElementById('emailDraftTitle');
@@ -3984,7 +3988,7 @@ ${[
             setupFileUpload('uploadCss', 'cssCode', 'cssRefineStatus');
             setupUrlImport('importCssUrlBtn', 'importCssUrl', 'cssCode', 'cssRefineStatus');
             setupFileUpload('uploadJs', 'jsCode', 'jsRefineStatus');
-            setupUrlImport('importJsUrlUrlBtn', 'importJsUrl', 'jsCode', 'jsRefineStatus'); // Fix: changed ID from 'importJsUrlBtn'
+            setupUrlImport('importJsUrlBtn', 'importJsUrl', 'jsCode', 'jsRefineStatus'); // Corrected to use 'importJsUrlBtn'
 
             // Setup DNS Explain button listener
             document.getElementById('explainDnsBtn')?.addEventListener('click', async (event) => {
@@ -3998,17 +4002,14 @@ ${[
                 await window.callGeminiAPI(prompt, 'dnsExplanationOutput', 'dnsExplainStatus', button, 'Explain DNS Type');
             });
 
-            // Event listener for Create Email Button (MODIFIED)
+            // Event listener for Create Email Button
             document.getElementById('createEmailBtn')?.addEventListener('click', async (event) => {
                 const emailPrefix = String(document.getElementById('newEmailPrefix').value).trim();
                 const emailDomain = String(document.getElementById('newEmailDomain').value).trim();
                 const fullEmail = `${emailPrefix}@${emailDomain}`;
 
-                console.log("DEBUG: Attempting to create email. Prefix:", emailPrefix, "Domain:", emailDomain, "Full Email:", fullEmail); // Debug log
-
                 if (!emailPrefix || !emailDomain) {
                     window.showCustomModal('Input Required', 'Please enter both an email prefix and domain to create a new email account.');
-                    console.warn("DEBUG: Email prefix or domain is empty. Aborting email creation."); // Debug log
                     return; // Stop execution if inputs are empty
                 }
 
@@ -4209,4 +4210,3 @@ ${[
     </script>
 </body>
 </html>
-
