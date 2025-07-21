@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-07-03 | mining.seedwave.faa.zone | history | `public/proposal/siyandisa.html` | `f8c4ae79` | Fruitful Mining | Strategic Partnership Propo | 37996 | 31 | 0 | 60.8 |
+| 2 | 2025-07-21 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/mining.seedwave.faa.zone-main/public/proposal/siyandisa.html` | `79df1178` | Fruitful Mining | Strategic Partnership Propo | 85666 | 29 | 0 | 63.5 |
