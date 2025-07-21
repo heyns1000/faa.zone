@@ -15,3 +15,4 @@
 | 9 | 2025-06-09 | baobab | history | `index.html` | `50bfac06` | 🌳 Baobab Security Network - Home | 4799 | 7 | 0 | 32.5 |
 | 10 | 2025-06-09 | baobab | history | `index.html` | `74ba04bd` | 🌳 Baobab Security Network - Home | 4840 | 7 | 0 | 32.5 |
 | 11 | 2025-07-05 | baobab | history | `index.html` | `457971c7` | 🌳 Baobab Security Network™ - Global Solutions | 30104 | 19 | 6 | 61.0 |
+| 12 | 2025-07-21 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/baobab_spa_dashboard_1753207194747.html` | `cc88a2ea` | Baobab Security Network - Global Dashboard | 45968 | 19 | 27 | 104.6 |
