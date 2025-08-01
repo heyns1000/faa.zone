@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="pageTitle">Adele Klein - Portfolio</title>
+    <!-- Tailwind CSS CDN for a powerful utility-first framework -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for a modern, geometric feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Define dark mode colors */
+        :root {
+            --color-bg: #0C0D1A;
+            --color-primary: #00E4B7;
+            --color-secondary: #8E2DE2;
+            --color-text: #E0E7FF;
+            --color-glass-bg: rgba(255, 255, 255, 0.05);
+            --color-glass-border: rgba(255, 255, 255, 0.1);
+            --color-quote-border: #8E2DE2;
+            --color-quote-text: #BCC2FF;
+            --color-hero-text: #8E2DE2;
+            --color-hero-tagline: #A0A5E3;
+            --color-divider: linear-gradient(to right, transparent, #8E2DE2, transparent);
+            --color-sub-text: #BCC2FF;
+        }
+
+        /* Define new, high-contrast light mode colors */
+        body.light-mode {
+            --color-bg: #F0F4F8; /* Soft, light gray */
+            --color-primary: #1D4ED8; /* Strong, clear blue */
+            --color-secondary: #00E4B7; /* Vibrant teal */
+            --color-text: #1F2937; /* Dark charcoal for high readability */
+            --color-glass-bg: rgba(0, 0, 0, 0.03);
+            --color-glass-border: rgba(0, 0, 0, 0.1);
+            --color-quote-border: #1D4ED8;
+            --color-quote-text: #6B7280;
+            --color-hero-text: #1F2937;
+            --color-hero-tagline: #4B5563;
+            --color-divider: linear-gradient(to right, transparent, #4B5563, transparent);
+            --color-sub-text: #4B5563;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            scroll-behavior: smooth;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* Glassmorphism effect for cards and sections */
+        .glass-card {
+            background: var(--color-glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--color-glass-border);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            background: var(--color-glass-bg);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Gradient text effect */
+        .gradient-text {
+            background-image: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: black;
+            font-weight: 700;
+        }
+
+        /* Glowing button effect */
+        .glowing-btn {
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            background: var(--color-primary);
+            color: var(--color-bg);
+            font-weight: 600;
+            transition: all 0.4s ease;
+        }
+
+        .glowing-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: conic-gradient(from 0deg, var(--color-primary), var(--color-secondary));
+            transform: translate(-50%, -50%) rotate(0deg);
+            z-index: -1;
+            transition: transform 0.8s ease-in-out;
+            opacity: 0;
+        }
+
+        .glowing-btn:hover {
+            color: var(--color-text);
+        }
+
+        .glowing-btn:hover::before {
+            transform: translate(-50%, -50%) rotate(360deg);
+            opacity: 1;
+        }
+        
+        /* Icon color with gradient */
+        .icon-gradient {
+            background-image: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Scroll-based animations */
+        .fade-in {
+            opacity: 0;
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+            transform: translateY(30px);
+        }
+        .fade-in.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .hero-text-dark {
+             color: var(--color-hero-text);
+        }
+        .hero-tagline-dark {
+             color: var(--color-hero-tagline);
+        }
+        .quote-border-dark {
+             border-left-color: var(--color-quote-border);
+        }
+        .quote-text-dark {
+             color: var(--color-quote-text);
+        }
+        .divider-dark {
+             background-image: var(--color-divider);
+        }
+        .sub-text-dark {
+             color: var(--color-sub-text);
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .contact-info p {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        .contact-info p svg {
+            margin-right: 0.5rem;
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Hero Section -->
+    <header id="hero" class="relative min-h-screen flex flex-col justify-center items-center p-8 text-center bg-gray-950 light-mode:bg-white">
+        <div class="absolute top-8 right-8 z-20 flex space-x-4 items-center">
+            <!-- Language Dropdown -->
+            <div class="relative inline-block text-left">
+                <select id="language-selector" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-gray-800 text-white p-2 light-mode:bg-gray-200 light-mode:text-gray-800">
+                    <option value="en">English</option>
+                    <option value="af">Afrikaans</option>
+                    <option value="st">Sotho</option>
+                    <option value="zu">Zulu</option>
+                </select>
+            </div>
+            <!-- Day/Night Toggle -->
+            <button id="theme-toggle" class="p-2 rounded-full bg-gray-800 text-white shadow-lg transition-colors duration-300 hover:bg-gray-700 light-mode:bg-gray-200 light-mode:text-gray-800 light-mode:hover:bg-gray-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+            </button>
+        </div>
+        <div class="z-10">
+            <h1 class="text-6xl md:text-8xl font-bold tracking-widest leading-tight uppercase fade-in is-visible hero-text-dark">
+                <span data-i18n="name">Adele Klein</span>
+            </h1>
+            <p class="text-xl md:text-3xl font-light italic mt-4 hero-tagline-dark fade-in" style="animation-delay: 0.2s;" data-i18n="specialist">
+                Communications Specialist
+            </p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-24">
+
+        <!-- About Section -->
+        <section id="about" class="fade-in max-w-4xl mx-auto text-center mb-32">
+            <h2 class="text-4xl md:text-5xl font-bold mb-8">
+                <span class="gradient-text" data-i18n="aboutTitle">A Journey of Courage</span>
+            </h2>
+            <p class="text-lg leading-relaxed mb-8" data-i18n="aboutText">
+                Adele's story is one of profound courage. From a place of darkness, she has found the strength to stand tall, embracing her creative gifts and professional expertise to build a new life. This is not just a portfolio; it is a celebration of her brave journey and a foundation for her future.
+            </p>
+            <blockquote class="text-xl italic quote-text-dark quote-border-dark pl-6">
+                "<span data-i18n="quote">Every step forward is an act of creation. With each project, I'm not just building a career; I'm building a monument to hope.</span>"
+            </blockquote>
+        </section>
+
+        <!-- Divider -->
+        <div class="h-px w-full divider-dark my-16"></div>
+
+        <!-- Skills Section -->
+        <section id="skills" class="fade-in mb-32">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">
+                <span class="gradient-text" data-i18n="skillsTitle">Her Gifts</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Skill Card 1 - Sprouting Plant for growth -->
+                <div class="glass-card p-8 rounded-xl shadow-lg transition-all duration-300">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <svg class="h-8 w-8 icon-gradient" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-3.8 0-7-3.2-7-7V4l7-3 7 3v7c0 3.8-3.2 7-7 7z"/><path d="M12 21c0-4.38 3.52-8 7-8c-3.52 0-7 3.62-7 8z"/></svg>
+                        <h3 class="text-2xl font-semibold" data-i18n="skill1Title">Story & Strategy</h3>
+                    </div>
+                    <p class="text-md sub-text-dark" data-i18n="skill1Text">
+                        Crafting compelling narratives that resonate with diverse audiences and drive meaningful engagement.
+                    </p>
+                </div>
+                <!-- Skill Card 2 - Mountains for strength -->
+                <div class="glass-card p-8 rounded-xl shadow-lg transition-all duration-300">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <svg class="h-8 w-8 icon-gradient" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 4 8 2 21h20l-2-13-5 5-4-8z"/></svg>
+                        <h3 class="text-2xl font-semibold" data-i18n="skill2Title">Leadership & Growth</h3>
+                    </div>
+                    <p class="text-md sub-text-dark" data-i18n="skill2Text">
+                        Leading projects with a compassionate yet focused approach, ensuring success with empathy and precision.
+                    </p>
+                </div>
+                <!-- Skill Card 3 - Sun for hope and vision -->
+                <div class="glass-card p-8 rounded-xl shadow-lg transition-all duration-300">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <svg class="h-8 w-8 icon-gradient" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                        <h3 class="text-2xl font-semibold" data-i18n="skill3Title">Vision & Direction</h3>
+                    </div>
+                    <p class="text-md sub-text-dark" data-i18n="skill3Text">
+                        Providing innovative guidance and vision to bring creative concepts to life with stunning, impactful results.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Divider -->
+        <div class="h-px w-full divider-dark my-16"></div>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="fade-in mb-32">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">
+                <span class="gradient-text" data-i18n="portfolioTitle">Creative Output</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Portfolio Card 1 -->
+                <div class="glass-card p-6 rounded-xl shadow-lg transition-all duration-300">
+                    <h3 class="text-2xl font-semibold mb-1" data-i18n="project1Title">Project Title 1</h3>
+                    <p class="text-sm italic mb-4 sub-text-dark" data-i18n="project1Text">A project born of creativity and focus.</p>
+                    <a href="#" class="inline-flex items-center space-x-2 text-blue-400 hover:text-blue-200 transition-colors duration-200">
+                        <span data-i18n="viewProject">View Project</span>
+                        <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
+                </div>
+                <!-- Portfolio Card 2 -->
+                <div class="glass-card p-6 rounded-xl shadow-lg transition-all duration-300">
+                    <h3 class="text-2xl font-semibold mb-1" data-i18n="project2Title">Project Title 2</h3>
+                    <p class="text-sm italic mb-4 sub-text-dark" data-i18n="project2Text">A testament to her ability to stand and create.</p>
+                    <a href="#" class="inline-flex items-center space-x-2 text-blue-400 hover:text-blue-200 transition-colors duration-200">
+                        <span data-i18n="viewProject">View Project</span>
+                        <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
+                </div>
+                <!-- Portfolio Card 3 -->
+                <div class="glass-card p-6 rounded-xl shadow-lg transition-all duration-300">
+                    <h3 class="text-2xl font-semibold mb-1" data-i18n="project3Title">Project Title 3</h3>
+                    <p class="text-sm italic mb-4 sub-text-dark" data-i18n="project3Text">A testament to her ability to stand and create.</p>
+                    <a href="#" class="inline-flex items-center space-x-2 text-blue-400 hover:text-blue-200 transition-colors duration-200">
+                        <span data-i18n="viewProject">View Project</span>
+                        <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="fade-in text-center p-12 rounded-xl max-w-3xl mx-auto glass-card">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                <span class="gradient-text" data-i18n="connectTitle">Connect</span>
+            </h2>
+            <p class="text-lg sub-text-dark mb-8" data-i18n="connectText">
+                Adele welcomes new opportunities and a chance to share her gifts with the world.
+            </p>
+            <div class="space-y-4 font-semibold text-lg mb-8">
+                <p data-i18n="email-label">Email: <a href="mailto:adelelklein@gmail.com" class="text-blue-400 hover:underline" data-i18n="email-address">adelelklein@gmail.com</a></p>
+                <p data-i18n="phone-label">Phone: <a href="tel:+27790926804" class="text-blue-400 hover:underline" data-i18n="phone-number">079 092 6804</a></p>
+            </div>
+            <a href="#" class="glowing-btn inline-flex items-center space-x-3 py-3 px-8 rounded-full shadow-lg">
+                <span data-i18n="downloadCV">Download CV</span>
+                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+            </a>
+            <p class="text-gray-500 text-sm mt-4" data-i18n="cvNote">
+                (Note: Please update the 'href' with the actual link to her C.V.)
+            </p>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center text-gray-600 mt-24 py-8">
+        <p data-i18n="footerText">&copy; 2025 adele.faa.zone. A story of bravery, beautifully told.</p>
+    </footer>
+
+    <!-- JavaScript for functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Scroll-based animations
+            const sections = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            sections.forEach(section => { observer.observe(section); });
+
+            // Day/Night Toggle
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+
+            // Set initial theme based on local storage or a default
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light-mode') {
+                body.classList.add('light-mode');
+            }
+
+            themeToggle.addEventListener('click', () => {
+                body.classList.toggle('light-mode');
+                // Save the user's preference
+                if (body.classList.contains('light-mode')) {
+                    localStorage.setItem('theme', 'light-mode');
+                } else {
+                    localStorage.removeItem('theme');
+                }
+            });
+
+            // Language Translation
+            const translations = {
+                en: {
+                    pageTitle: "Adele Klein - Portfolio",
+                    name: "Adele Klein",
+                    specialist: "Communications Specialist",
+                    aboutTitle: "A Journey of Courage",
+                    aboutText: "Adele's story is one of profound courage. From a place of darkness, she has found the strength to stand tall, embracing her creative gifts and professional expertise to build a new life. This is not just a portfolio; it is a celebration of her brave journey and a foundation for her future.",
+                    quote: "Every step forward is an act of creation. With each project, I'm not just building a career; I'm building a monument to hope.",
+                    skillsTitle: "Her Gifts",
+                    skill1Title: "Story & Strategy",
+                    skill1Text: "Crafting compelling narratives that resonate with diverse audiences and drive meaningful engagement.",
+                    skill2Title: "Leadership & Growth",
+                    skill2Text: "Leading projects with a compassionate yet focused approach, ensuring success with empathy and precision.",
+                    skill3Title: "Vision & Direction",
+                    skill3Text: "Providing innovative guidance and vision to bring creative concepts to life with stunning, impactful results.",
+                    portfolioTitle: "Creative Output",
+                    project1Title: "Project Title 1",
+                    project1Text: "A project born of creativity and focus.",
+                    project2Title: "Project Title 2",
+                    project2Text: "A testament to her ability to stand and create.",
+                    project3Title: "Project Title 3",
+                    project3Text: "A testament to her ability to stand and create.",
+                    viewProject: "View Project",
+                    connectTitle: "Connect",
+                    connectText: "Adele welcomes new opportunities and a chance to share her gifts with the world.",
+                    "email-label": "Email: ",
+                    "email-address": "adelelklein@gmail.com",
+                    "phone-label": "Phone: ",
+                    "phone-number": "079 092 6804",
+                    downloadCV: "Download CV",
+                    cvNote: "(Note: Please update the 'href' with the actual link to her C.V.)",
+                    footerText: "&copy; 2025 adele.faa.zone. A story of bravery, beautifully told.",
+                },
+                af: {
+                    pageTitle: "Adele Klein - Portefeulje",
+                    name: "Adele Klein",
+                    specialist: "Kommunikasiespesialis",
+                    aboutTitle: "'n Reis van Moed",
+                    aboutText: "Adele se verhaal is een van diepgaande moed. Vanuit 'n plek van duisternis het sy die krag gevind om regop te staan, en haar kreatiewe gawes en professionele kundigheid te omhels om 'n nuwe lewe te bou. Dit is nie net 'n portefeulje nie; dit is 'n viering van haar dapper reis en 'n fondament vir haar toekoms.",
+                    quote: "Elke tree vorentoe is 'n daad van skepping. Met elke projek bou ek nie net 'n loopbaan nie; ek bou 'n monument van hoop.",
+                    skillsTitle: "Haar Gawes",
+                    skill1Title: "Storie & Strategie",
+                    skill1Text: "Die skep van boeiende narratiewe wat resoneer met diverse gehore en betekenisvolle betrokkenheid dryf.",
+                    skill2Title: "Leierskap & Groei",
+                    skill2Text: "Projekte met 'n deernisvolle, maar gefokusde benadering te lei, om sukses met empatie en presisie te verseker.",
+                    skill3Title: "Visie & Rigting",
+                    skill3Text: "Innoverende leiding en visie te verskaf om kreatiewe konsepte tot lewe te bring met pragtige, impakvolle resultate.",
+                    portfolioTitle: "Kreatiewe Uitset",
+                    project1Title: "Projek Titel 1",
+                    project1Text: "'n Projek gebore uit kreatiwiteit en fokus.",
+                    project2Title: "Projek Titel 2",
+                    project2Text: "'n Bewys van haar vermoë om te staan en te skep.",
+                    project3Title: "Projek Titel 3",
+                    project3Text: "'n Bewys van haar vermoë om te staan en te skep.",
+                    viewProject: "Bekyk Projek",
+                    connectTitle: "Konnekteer",
+                    connectText: "Adele verwelkom nuwe geleenthede en 'n kans om haar gawes met die wêreld te deel.",
+                    "email-label": "E-pos: ",
+                    "email-address": "adelelklein@gmail.com",
+                    "phone-label": "Foon: ",
+                    "phone-number": "079 092 6804",
+                    downloadCV: "Laai CV af",
+                    cvNote: "(Let wel: Werk asseblief die 'href' op met die werklike skakel na haar C.V.)",
+                    footerText: "&copy; 2025 adele.faa.zone. 'n Storie van moed, pragtig vertel.",
+                },
+                st: {
+                    pageTitle: "Adele Klein - Portfolio",
+                    name: "Adele Klein",
+                    specialist: "Setsebi sa Puisano",
+                    aboutTitle: "Leeto la Sebete",
+                    aboutText: "Pale ya Adele ke ya sebete se seholo. Ho tloha sebakeng sa lefifi, o fumane matla a ho ema, a amohela dimpho tsa hae tsa boqapi le boitsebelo ba profeshenale ho aha bophelo bo botjha. Sena ha se portfolio feela; ke ketekelo ya leeto la hae le sebete le motheo wa bokamoso ba hae.",
+                    quote: "Mohato o mong le o mong pele ke ketso ya pōpo. Ka projeke e nngwe le e nngwe, ha ke aha mosebetsi feela; ke aha sehopotso sa tshepo.",
+                    skillsTitle: "Dimpho tsa Hae",
+                    skill1Title: "Pale le Leano",
+                    skill1Text: "Ho etsa dipale tse hlollang tse amanang le babadi ba fapaneng le ho hlohlelletsa ho nka karolo ho nang le moelelo.",
+                    skill2Title: "Boetapele le Kholo",
+                    skill2Text: "Ho etella pele diprojeke ka mokgwa o nang le kutloelo-bohloko empa o tsepamisitse maikutlo, ho netefatsa katleho ka kutloelo-bohloko le ho nepahala.",
+                    skill3Title: "Pono le Tataiso",
+                    skill3Text: "Ho fana ka tataiso e ntjha le pono ho tlisetsa dikgopolo tsa boqapi bophelo ka diphetho tse makatsang, tse nang le phello.",
+                    portfolioTitle: "Pōpo ea Boqapi",
+                    project1Title: "Sehlooho sa Projeke 1",
+                    project1Text: "Projeke e hlahileng ho tswa boqaping le tsepamisong ya maikutlo.",
+                    project2Title: "Sehlooho sa Projeke 2",
+                    project2Text: "Bopaki ba bokhoni ba hae ba ho ema le ho bopa.",
+                    project3Title: "Sehlooho sa Projeke 3",
+                    project3Text: "Bopaki ba bokhoni ba hae ba ho ema le ho bopa.",
+                    viewProject: "Bona Projeke",
+                    connectTitle: "Kopana",
+                    connectText: "Adele o amohela menyetla e metjha le monyetla wa ho arolelana dimpho tsa hae le lefatshe.",
+                    "email-label": "I-imeile: ",
+                    "email-address": "adelelklein@gmail.com",
+                    "phone-label": "Nomoro ya mohala: ",
+                    "phone-number": "079 092 6804",
+                    downloadCV: "Tlatla CV",
+                    cvNote: "(Tlhokomeliso: Ka kopo ntlafatsa 'href' ka sehokelo sa nnete sa C.V. ya hae.)",
+                    footerText: "&copy; 2025 adele.faa.zone. Pale ya sebete, e boletsweng ka bokgabane.",
+                },
+                zu: {
+                    pageTitle: "Adele Klein - I-Portfolio",
+                    name: "Adele Klein",
+                    specialist: "Uchwepheshe Wezokuxhumana",
+                    aboutTitle: "Uhambo Lwesibindi",
+                    aboutText: "Indaba ka-Adele ingeyesiqiniseko esikhulu. Kusukela endaweni yobumnyama, uthole amandla okuqina, wamukela izipho zakhe zokudala kanye nobuchwepheshe bakhe ukuze akhe impilo entsha. Lokhu akuyona nje i-portfolio; kuwumgubho wohambo lwakhe olunesibindi kanye nesisekelo sekusasa lakhe.",
+                    quote: "Isinyathelo ngasinye esiya phambili siwumsebenzi wokudala. Ngephrojekthi ngayinye, angakhi umsebenzi kuphela; ngakha isikhumbuzo sethemba.",
+                    skillsTitle: "Izipho Zakhe",
+                    skill1Title: "Indaba kanye Nesitrateji",
+                    skill1Text: "Ukwakha izindaba eziheha kakhulu ezihambisana nababukeli abahlukahlukene futhi zidala ukuzibandakanya okunenjongo.",
+                    skill2Title: "Ubuholi kanye Nokukhula",
+                    skill2Text: "Ukuphatha amaphrojekthi ngendlela enozwelo kodwa egxilile, ukuqinisekisa impumelelo ngomusa kanye nokunemba.",
+                    skill3Title: "Umbono kanye Nesiqondiso",
+                    skill3Text: "Ukunikeza isiqondiso esisha kanye nombono wokuletha imiqondo yokudala empilweni ngemiphumela emangalisayo, enomthelela.",
+                    portfolioTitle: "Okudaliwe",
+                    project1Title: "Isihloko Sephrojekthi 1",
+                    project1Text: "Iphrojekthi ezelwe ngenxa yokudala kanye nokugxila.",
+                    project2Title: "Isihloko Sephrojekthi 2",
+                    project2Text: "Ubufakazi bekhono lakhe lokuqina nokudala.",
+                    project3Title: "Isihloko Sephrojekthi 3",
+                    project3Text: "Ubufakazi bekhono lakhe lokuqina nokudala.",
+                    viewProject: "Buka Iphrojekthi",
+                    connectTitle: "Xhumana",
+                    connectText: "U-Adele wamukela amathuba amasha kanye nethuba lokwabelana ngezipho zakhe nomhlaba.",
+                    "email-label": "I-imeyili: ",
+                    "email-address": "adelelklein@gmail.com",
+                    "phone-label": "Ucingo: ",
+                    "phone-number": "079 092 6804",
+                    downloadCV: "Landa i-CV",
+                    cvNote: "(Qaphela: Sicela ubuyekeze i-'href' ngesixhumanisi sangempela se-C.V. yakhe.)",
+                    footerText: "&copy; 2025 adele.faa.zone. Indaba yesibindi, eshiwo ngobuhle.",
+                }
+            };
+
+            const languageSelector = document.getElementById('language-selector');
+            const elementsToTranslate = document.querySelectorAll('[data-i18n]');
+            
+            // Function to apply translation
+            const translatePage = (lang) => {
+                elementsToTranslate.forEach(element => {
+                    const key = element.getAttribute('data-i18n');
+                    if (translations[lang] && translations[lang][key]) {
+                        element.innerHTML = translations[lang][key];
+                    }
+                });
+                
+                // Fix for phone and email links
+                document.querySelector('[data-i18n="email-label"]').innerHTML = translations[lang]['email-label'] + `<a href='mailto:adelelklein@gmail.com' class='text-blue-400 hover:underline'>adelelklein@gmail.com</a>`;
+                document.querySelector('[data-i18n="phone-label"]').innerHTML = translations[lang]['phone-label'] + `<a href='tel:+27790926804' class='text-blue-400 hover:underline'>079 092 6804</a>`;
+            };
+
+            // Event listener for language selection
+            languageSelector.addEventListener('change', (e) => {
+                const selectedLang = e.target.value;
+                translatePage(selectedLang);
+            });
+            
+            // Initial translation on page load
+            const initialLang = localStorage.getItem('language') || 'en';
+            languageSelector.value = initialLang;
+            translatePage(initialLang);
+
+        });
+    </script>
+</body>
+</html>
