@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-08-01 | adele | history | `public/index.html` | `e96e6c8a` | Adele Klein - Portfolio | 30347 | 15 | 0 | 27.4 |
+| 2 | 2025-08-01 | adele | main | `public/index.html` | `e2cbfff5` | 🎨Adele Klein - Portfolio | 29637 | 15 | 0 | 27.3 |
