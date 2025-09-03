@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-09-03 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `public/claimroot-checkout.html` | `06428847` | ClaimRoot Checkout - CodeFlow | 4956 | 2 | 0 | 27.5 |
+| 2 | 2025-09-03 | FruitfulPlanetChange | history | `public/claimroot-checkout.html` | `b02c7c92` | ClaimRoot Checkout - CodeFlow | 3524 | 1 | 0 | 26.4 |
