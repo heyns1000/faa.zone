@@ -9,3 +9,4 @@
 | 3 | 2025-07-03 | ritual.seedwave.faa.zone | history | `public/dashboard.html` | `874168fa` | 👤 AncestorTag™ Heritage Portal | 211725 | 167 | 8 | 252.6 |
 | 4 | 2025-07-03 | ritual.seedwave.faa.zone | history | `public/index.html` | `f09728c0` | 👤 AncestorTag™ Heritage Portal | 211662 | 167 | 8 | 252.6 |
 | 5 | 2025-09-04 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/ritual.seedwave.faa.zone-main/public/dashboard.html` | `40322859` | 👤 AncestorTag™ Heritage Portal | 250680 | 204 | 8 | 304.1 |
+| 6 | 2025-09-04 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `public/samfox-templates/heritage/ancestortag_heritage_portal.html` | `236b4343` | 👤 AncestorTag™ Heritage Portal | 211661 | 167 | 8 | 252.6 |
