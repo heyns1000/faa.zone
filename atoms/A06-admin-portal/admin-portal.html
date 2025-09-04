@@ -7,6 +7,12 @@
     <title>⚙️ Seedwave™ Admin Portal</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- PayPal SDK Integration -->
+    <script src="https://www.paypal.com/sdk/js?client-id=BAAGdPecRsf6dw_nIrWqUen0GdW0UsBZapp1Gn62xkPdD-Vqc-4lqWAidKK8LOObXux8pHJGjXknZoar6Q&currency=USD"></script>
+    <!-- Google Maps API Integration -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPG8dG29cl0TvYRGyLozejGed5Wj5Ab80&callback=initMap"></script>
+
     <style>
         body {
             background-color: #f3f4f6;
@@ -158,6 +164,7 @@
             <a href="#" onclick="showSectorPanel('embedded-mining-snapshot', this)" class="sector-link" data-sector="mining">⛏️ Mining & Resources</a>
             <a href="#" onclick="showSectorPanel('embedded-wildlife-snapshot', this)" class="sector-link" data-sector="wildlife">🦁 Wildlife & Habitat</a>
             <a href="#" onclick="showSectorPanel('embedded-admin-panel-snapshot', this)" class="sector-link" data-sector="admin-panel">⚙️ Admin Panel</a>
+            <a href="#" onclick="showSectorPanel('embedded-global-index-snapshot', this)" class="sector-link" data-sector="global-index">🌐 Global Brand Index</a>
         </nav>
 
         <main>
@@ -201,6 +208,35 @@
                     <button onclick="clearAdminAddedData()" class="text-sm text-red-600 underline">
                         🗑 Clear Locally Added Admin Data (Client-Side)
                     </button>
+                </div>
+                <div class="mt-8">
+                    <h3 class="text-xl font-bold text-indigo-700 mb-4">API Key Demonstrations</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200">
+                            <h4 class="font-semibold mb-2">PayPal SDK Demo</h4>
+                            <div id="paypal-button-container"></div>
+                            <p class="text-xs text-gray-600 mt-2">Client ID: `BAAGdPecRsf6dw_nIrWqUen0GdW0UsBZapp1Gn62xkPdD-Vqc-4lqWAidKK8LOObXux8pHJGjXknZoar6Q`</p>
+                            <p class="text-xs text-gray-600">Hosted Button IDs are typically used in backend or direct links.</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200">
+                            <h4 class="font-semibold mb-2">Google Maps Demo</h4>
+                            <div id="map" class="h-48 w-full rounded-md border border-gray-300"></div>
+                            <p class="text-xs text-gray-600 mt-2">API Key: `AIzaSyBPG8dG29cl0TvYRGyLozejGed5Wj5Ab80`</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200">
+                            <h4 class="font-semibold mb-2">Spotify Integration (Conceptual)</h4>
+                            <button onclick="initSpotifyAPI()" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-xs">Connect Spotify</button>
+                            <p class="text-xs text-gray-600 mt-2">Access Token: `BQBDSZ232IQmSLV1BROkxqdwNMoGhtitKOJBjDzE-Lu9YKsSK1RKVwXNfYfncP2wf6Fj6xcYlnGD75baEqOmd3XtxhU...` (short-lived)</p>
+                            <p class="text-xs text-gray-600">Full OAuth flow required for real integration.</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200">
+                            <h4 class="font-semibold mb-2">Xero Integration (Conceptual)</h4>
+                            <a href="https://seedwave.faa.zone/admin_panel_xero.html" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs inline-block">Initiate Xero OAuth</a>
+                            <button onclick="alert('Webhook key management is typically a backend process.')" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-xs ml-2">Manage Webhooks</button>
+                            <p class="text-xs text-gray-600 mt-2">Client ID: `81B3573D453040508996432C5DAD565B`</p>
+                            <p class="text-xs text-gray-600">Client Secret & Webhook Key are for backend security.</p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -308,7 +344,7 @@
                 <div id="nutrition-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="nutrition-snapshots"></div>
             </div>
-            
+           
             <div id="embedded-ai-logic-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow sector-panel">
                 <div class="flex justify-between items-center text-2xl font-bold text-indigo-700 mb-4"><span>🧠 FAA™ AI, Logic & Grid Dashboard</span> <button onclick="hideCurrentPanel()" class="text-red-500 font-semibold text-sm">❌ Close</button></div>
                 <div id="ai-logic-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
@@ -374,7 +410,7 @@
                 <div id="zerowaste-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
                 <div class="p-6" id="zerowaste-snapshots"></div>
             </div>
-            
+           
             <div id="embedded-professional-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow sector-panel">
                 <div class="flex justify-between items-center text-2xl font-bold text-indigo-800 mb-4"><span>🧾 FAA™ Professional Services Dashboard</span> <button onclick="hideCurrentPanel()" class="text-red-500 font-semibold text-sm">❌ Close</button></div>
                 <div id="professional-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
@@ -397,6 +433,26 @@
                 <div class="p-6" id="wildlife-snapshots"></div>
             </div>
 
+            <!-- New Global Brand Index Panel -->
+            <div id="embedded-global-index-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow relative sector-panel">
+                <div class="flex justify-between items-center text-2xl font-bold text-blue-700 mb-4"><span>🌐 Global FAA.ZONE Brand Index</span> <button onclick="hideCurrentPanel()" class="text-red-500 font-semibold text-sm">❌ Close</button></div>
+                <input type="text" id="globalBrandSearch" placeholder="🔍 Search all brands & subnodes..." class="w-full p-2 border rounded mb-4">
+                <div class="overflow-x-auto snapshot-box h-[500px]">
+                    <table id="globalBrandTable" class="min-w-full text-sm text-left border border-gray-200">
+                        <thead class="bg-gray-100 text-gray-700 font-semibold sticky top-0 z-10">
+                            <tr>
+                                <th class="px-4 py-2">Sector</th>
+                                <th class="px-4 py-2">Brand Name</th>
+                                <th class="px-4 py-2">Subnodes</th>
+                                <th class="px-4 py-2">Source</th>
+                            </tr>
+                        </thead>
+                        <tbody id="globalBrandTableBody" class="text-gray-700">
+                            <!-- Content populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
             <section class="bg-white rounded shadow p-6 mb-16">
                 <h2 class="text-xl font-bold mb-4">⦿ FAA.ZONE INDEX — Expanded Table Structure</h2>
@@ -424,31 +480,31 @@
             <section class="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-7 gap-6 px-6 py-8">
                 <a href="node-activity.html" class="bg-white p-5 rounded shadow text-center hover:bg-yellow-50 transition-transform hover:-translate-y-1 hover:scale-105">
                     <h3 class="text-md font-bold text-gray-700">🧠 Active Nodes</h3>
-                    <p id="activeNodesCount">0</p> 
+                    <p id="activeNodesCount">0</p>  
                 </a>
                 <a href="license-grid.html" class="bg-white p-5 rounded shadow text-center hover:bg-yellow-50 transition-transform hover:-translate-y-1 hover:scale-105">
                     <h3 class="text-md font-bold text-gray-700">🔐 Licenses Active</h3>
-                    <p id="licensesActiveCount">0</p> 
+                    <p id="licensesActiveCount">0</p>  
                 </a>
                 <a href="vault-deployments.html" class="bg-white p-5 rounded shadow text-center hover:bg-yellow-50 transition-transform hover:-translate-y-1 hover:scale-105">
                     <h3 class="text-md font-bold text-gray-700">💾 Vault Deployments</h3>
-                    <p id="vaultDeploymentsCount">0</p> 
+                    <p id="vaultDeploymentsCount">0</p>  
                 </a>
                 <a href="ecosync-logs.html" class="bg-white p-5 rounded shadow text-center hover:bg-yellow-50 transition-transform hover:-translate-y-1 hover:scale-105">
                     <h3 class="text-md font-bold text-gray-700">📥 Sync Logs</h3>
-                    <p id="syncLogsCount">0</p> 
+                    <p id="syncLogsCount">0</p>  
                 </a>
                 <a href="audit-tracker.html" class="bg-white p-5 rounded shadow text-center hover:bg-yellow-50 transition-transform hover:-translate-y-1 hover:scale-105">
                     <h3 class="text-md font-bold text-gray-700">📈 Audits Running</h3>
-                    <p id="auditsRunningCount">0</p> 
+                    <p id="auditsRunningCount">0</p>  
                 </a>
                 <a href="signal-zones.html" class="bg-white p-5 rounded shadow text-center hover:bg-yellow-50 transition-transform hover:-translate-y-1 hover:scale-105">
                     <h3 class="text-md font-bold text-gray-700">🛰️ Signal Zones</h3>
-                    <p id="signalZonesCount">0</p> 
+                    <p id="signalZonesCount">0</p>  
                 </a>
                 <a href="grid-index.html" class="bg-white p-5 rounded shadow text-center hover:bg-yellow-50 transition-transform hover:-translate-y-1 hover:scale-105">
                     <h3 class="text-md font-bold text-gray-700">📊 Scroll Grid Index</h3>
-                    <p id="scrollGridIndexCount">0</p> 
+                    <p id="scrollGridIndexCount">0</p>  
                 </a>
             </section>
         </main>
@@ -470,6 +526,15 @@
     </footer>
 
     <script>
+        // --- API Keys ---
+        const PAYPAL_SDK_CLIENT_ID = "BAAGdPecRsf6dw_nIrWqUen0GdW0UsBZapp1Gn62xkPdD-Vqc-4lqWAidKK8LOObXux8pHJGjXknZoar6Q";
+        const GOOGLE_MAPS_API_KEY = "AIzaSyBPG8dG29cl0TvYRGyLozejGed5Wj5Ab80";
+        const SPOTIFY_ACCESS_TOKEN = "BQBDSZ232IQmSLV1BROkxqdwNMoGhtitKOJBjDzE-Lu9YKsSK1RKVwXNfYfncP2wf6Fj6xcYlnGD75baEqOmd3XtxhU..."; // This is a placeholder, real tokens are short-lived and obtained via OAuth
+        const GEMINI_AI_API_KEY = "AIzaSyBGSDZATtITv5iIoB3rgKHBpWx9MrufxXE";
+        const XERO_CLIENT_ID = "81B3573D453040508996432C5DAD565B";
+        const XERO_REDIRECT_URI = "https://seedwave.faa.zone/admin_panel_xero.html";
+        // Xero Client Secret and Webhook Key are for backend use only and should not be exposed in frontend code.
+
         // --- Global Data Definitions ---
         const sectorList = {
             "agriculture": "🌱 Agriculture & Biotech",
@@ -503,10 +568,11 @@
             "payroll-mining": "🪙 Payroll Mining & Accounting", 
             "mining": "⛏️ Mining & Resources", 
             "wildlife": "🦁 Wildlife & Habitat",
-            "admin-panel": "⚙️ Admin Panel" 
+            "admin-panel": "⚙️ Admin Panel",
+            "global-index": "🌐 Global Brand Index"
         };
 
-        // Data arrays 
+        // Data arrays (expanded with new sectors and unique data for education-youth)
         const bankingBrands = ['FinGrid','TradeAmp','LoopPay','TaxNova','VaultMaster','Gridwise','CrateDance','CashGlyph','Foresync','OmniRank','ZenoBank','CruxSpend','PulseHive','WireVault','BitTrust','MeshCredit','NovaScore','ZentryPay','FlowDrift','AlphaClearing','LumenBank','DeltaCustody','FractalFund','TorusFinance','VectorMint','RapidTally','FathomBank','KiteYield','BondRhythm','EchoTrust','QuantArk','NodeCapital','VeritasPay','TrustCage','CoreLedge','SkyFin','MintFuse','OrbitBank','HashVault','MicroDelta','AnchorPrime','FleetGrid','ZoomLedge','BeaconBank','CrateTeller','NumenYield','SparkScore','MetaBank','AetherTrust','TrueCustody','NeutronMint','SiloCash','JetReconcile','PulseClearing','SyncTeller','TangentBank','NovaLedger','GlideBank','TraceFin','RootBank','BankSingularity','PillarTrust','AxonFin','MonetGrid','LayerBank','VergePay','StackCash','CrownBank','PrismScore','HaloMint','CentraClear','TrustForge','OmniBank','NanoPay','LatticeScore','NobleCredit','ChainBank','PulseMint','BridgeLedger','ChronoBank','UnityFin','GridTrust','SparkVault','LucidBank','RiverMint','FlightClearing','NetTeller','PeakCustody','FlarePay','DarkBank','OriginTrust','ShardLedger','IndexPay','AltimeterFin','EchoClearing','FrameCustody','ZenithGrid','AtomScore','CoreMeta','CruxFin','PulseMatrix','BalanceGrid','GoldMint','ClearStack','QuantumBank','ScriptScore','SyncVault','FolioTrust','HyperFin','ToneLedger','IndexGrid','LineBank','CoreAlpha','LogicPay','NodeYield','RatioMint','LockLedger','PrimeGrid','TrustAmp','FundLattice','CreditHelix','AuraVault','DataBank','RingMint','GlyphTrust','NebulaBank','ZenScore','LoopTrust','AxialFin','OmniLoop','AlphaPulse','NexusBank','VaultHelix','ScriptTeller','TallyCore','FuseMint'];
         const bankingSubNodes = [['Ledger Mesh','Arbitrage Core','Token Router','Tax Engine','Vault Lock','Compliance Matrix','Logistics Fin','Currency Glyph','Forecast Engine','Signal Tracker'],['Zeno Mesh','Crux Bridge','Hive Monitor','Wire Reconciler','Bit Locker','Credit Splice','Score Vector','Zentry Core','Drift Trace','Alpha Ledger'],['Lumen Pulse','Delta Secure','Fractal Trace','Torus Signal','Mint Bridge','Tally Stream','Bank Depth','Kite Path','Bond Engine','Echo Stack'],['Ark Model','Node Gate','Veritas Sync','Cage Mapper','Core Trace','Sky Sweep','Mint Grid','Orbit Channel','Hash Clear','Micro Chain'],['Anchor Lock','Fleet Sync','Zoom Channel','Beacon Path','Crate Vault','Numen Index','Spark Flow','Meta Signal','Aether Drift','Custody Map'],['Neutron Signal','Cash Stream','Jet Grid','Pulse Map','Sync Grid','Tangent Vector','Nova Route','Glide Core','Trace Engine','Root Node'],['Bank Shift','Pillar Core','Axon Thread','Monet Route','Layer Core','Verge Node','Stack Tally','Crown Core','Prism Gate','Halo Grid'],['Clearance Vector','Forge Sync','Bank Mesh','Nano Token','Lattice Path','Noble Curve','Chain Vector','Mint Grid','Bridge Path','Chrono Index'],['Unity Sync','Trust Matrix','Vault Score','Lucid Gate','Mint Route','Flight Signal','Teller Index','Custody Trace','Flare Lock','Dark Stream'],['Origin Pulse','Shard Bank','Pay Score','Altimeter Path','Clearing Core','Frame Lock','Zenith Route','Score Helix','Meta Stack','Crux Trace'],['Pulse Engine','Balance Tally','Gold Trace','Stack Mesh','Quantum Sync','Script Pulse','Vault Stack','Trust Model','Hyper Lock','Tone Gate'],['Grid Index','Line Mesh','Alpha Signal','Logic Gate','Yield Route','Ratio Core','Ledger Path','Prime Helix','Amp Signal','Lattice Node'],['Credit Curve','Vault Pulse','Data Mesh','Ring Gate','Glyph Stack','Bank Channel','Zen Gate','Loop Vault','Axial Index','Loop Stack'],['Pulse Vector','Bank Curve','Helix Gate','Teller Pulse','Tally Signal','Mint Vault']];
         const agriBrands = ['CropLink','SoilPulse','RootYield','AquaFarm','AgriMesh','GrowNode','GrainCast','SoilBank','CropID','AgriVault','PulseHarvest','MarketSoil','DroneFarm','RuralOps','SeedGrid','FarmChain','AgriScore','SoilNet','CropDoc','TerraVault','AgriID','SproutFlow','GrainSafe','FieldSync','AgriDepot','DroneCrop','CropTrace','PulseSoil','SeedRoot','RuralFlow','MarketGrow','AgriRank','SoilLogic','AgriSync','NutrientGrid','FieldCast','CropSource','YieldStack','FarmPulse','SoilTech','GreenTrace','CropVault','AgriCast','TerraPulse','SoilTrace','PulseAg','GrowVault','FieldNet','DroneSoil','SoilGrid','HarvestLoop','RuralMesh','FarmFlag','AgriFlow','SoilVault','FieldProof','DroneTrace','MarketRoots','NutrientPath','CropPulse','AgriPulse','EcoSeed','AgriMetrics','DroneGrid','GreenNode','RootVault','FieldToken','AgriPlan','SoilYield','SeedVault','MarketLink','CropFlow','RuralCast','AgriSyncPro','SoilLine','EcoAgri','HarvestNode','TerraSoil','CropMesh','AgriSignal','RuralVault','PulseGrow','MarketSoilX','AgriOmni'];
@@ -519,8 +585,9 @@
         const fsfSubNodes = [['SoilSync','CropTrack','FarmLink','HarvestNet'],['BioBoost','NutrientFlow','EarthGuard','RootMax'],['OrganicGrow','PureHarvest','GreenCycle','EcoFarm'],['YieldMap','PlantPulse','GrowthScan','FieldSense'],['GrainGate','ProducePath','MarketLink','FarmFlow'],['LandRevive','SoilBalance','EcoTill','AgroRenew'],['SeedStart','PlantBoost','GrowTrack','EcoRoot'],['FarmVital','CropCare','SoilSense','HarvestEase'],['EcoGrow','NaturalYield','SoilPure','PlantHealth'],['GreenField','CropCycle','SoilNurture','FarmSustain'],['GerminatePro','PlantConnect','GrowNet','RootLink'],['NutrientTrack','EarthMonitor','SoilScan','FertilEase'],['AgriPlan','CropManage','FieldGuide','HarvestLogic'],['PestShield','DiseaseControl','PlantProtect','YieldSecure'],['GrainFlow','ProduceEase','MarketAccess','FarmSimplify'],['LandEnrich','SoilEnhance','EcoFert','AgroBoost'],['SeedSelect','PlantOptimize','GrowManage','EcoCultivate'],['FarmInnovate','CropTech','SoilAdvance','HarvestTech'],['EcoProduce','NaturalHarvest','SoilRich','PlantGain'],['GreenCultivate','CropSustain','SoilCare','FarmEco'],['SoilMonitor','CropSensor','FieldData','HarvestAlert'],['OrganicSeed','PlantHealth','GrowthTrack','EcoYield'],['AgriConnect','FieldNet','CropShare','HarvestSync'],['NutrientShield','ErosionControl','pHBalance','RootProtect'],['EcoCrop','SustainableYield','BioFertilizer','FarmSustain'],['LandOptimize','SoilEnhance','CropBoost','AgroManage'],['GerminationTrack','PlantMap','GrowthPredict','YieldForecast'],['PestMonitor','DiseaseAlert','PlantHealthCheck','YieldSecure'],['GrainQuality','ProduceSorting','MarketAccess','FarmLogistics'],['MoistureDetect','NutrientMap','SoilProfile','FertilityIndex'],['SatelliteImagery','CropAnalysis','FieldMapping','YieldEstimation'],['PrecisionFarming','SmartIrrigation','DroneSurvey','DataAnalytics'],['MicrobeEnhance','OrganicMatter','SoilRegen','EcoBalance'],['PlantGrowthMonitor','FieldProgress','HarvestTimeline','YieldReport'],['SupplyChainConnect','ProduceTrace','MarketIntegration','FarmNetwork'],['pHTesting','NutrientAnalysis','SoilSampling','FertilityReport'],['TaskScheduler','ResourceAllocation','LaborTracking','EquipmentMonitor'],['CropRecords','FieldHistory','YieldAnalytics','FarmReports'],['OrganicInputs','PlantNutrition','GrowthEnhancer','EcoSolutions'],['SustainablePractices','RenewableEnergy','WasteManagement','Biodiversity'],['FieldNet','SoilGrid','YieldLink','NodeTrace'],['GermCode','SeedID','RootLink','GrowthStart'],['VaultSoil','SampleSecure','LabLink','ResultSync'],['GrowthSignal','WeatherFeed','PlantAlert','FieldNotify'],['NodePath','HarvestTrace','ScrollYield','CropGrid'],['ZonePing','CropAlert','SignalYield','TraceLight'],['EcoSeed','VitalTrace','GreenMap','GrowStream'],['SampleLink','DataStream','FertilMap','FieldTest'],['HarvestPing','VendorClaim','YieldPoint','CrateDrop'],['PlantID','CrossNode','ZoneSync','QRRoot'],['AgriCycle','SoilWave','CropSync','EcoChain'],['PulseCheck','GrowthWave','DepthTrace','FieldFlow'],['ZoneGrid','OrganicNode','FarmSquare','PlantDrop'],['SyncPoint','CropMerge','LandSplit','VendorMesh'],['NodeSeed','GridSprout','PathFert','MicroPulse'],['CropGroup','FieldChain','VendorLoop','YieldRing'],['ZoneScan','PlantGrid','GrowthMeter','SeedSync'],['AquaNode','RootHumidity','DepthScan','FieldAqua'],['GreenClaim','NaturalPath','FarmMesh','ZoneCert'],['YieldSync','VendorCast','CrateSend','RouteField'],['ScrollFarm','VendorPanel','YieldDash','FieldUpload'],['FrameID','EarthLine','GridSoil','TestPath'],['PingGrid','DropYield','ClaimNode','AlertField'],['BarcodeRoot','GrowthTag','ScrollField','LabelGrow'],['LandID','CropNode','FieldLink','SoilRoute'],['NestCode','SproutDrop','GrowthLog','FarmBase'],['FarmScan','VendorLink','HarvestLedger','ScrollProof'],['ChainGrow','YieldLink','NodeDrop','EcoSprout'],['StackClaim','DepthScan','FertilRow','SoilVault'],['PanelSync','ScrollDash','CropView','VendorControl'],['ClaimTrace','RootID','VendorStamp','FieldLock'],['HydrateLink','DepthSync','MoistPulse','NodeRain'],['CrateLedger','DropPanel','MarketNode','VendorCrate'],['AlertRoot','ScanGrow','PlantTrace','PingField'],['LoopClaim','SoilCycle','FarmMesh','GrowthPath'],['GridYield','MapTrack','HarvestView','CropLink'],['VendorID','FarmStart','ClaimMap','SproutVault'],['MicroScan','HealthAlert','GrowthWatch','RootPath'],['EcoPlot','FarmJoin','GreenPanel','ZoneMesh'],['SoilDNA','SeedLog','CropCodeX','ScanTag'],['VaultDrop','CrateClaim','PayoutLock','FieldSecure'],['BinderLoop','VendorTrace','ScrollTag','FarmCode'],['TestLog','ResultPath','QRProof','SoilPass']];
         const educationIpBrands = ['EduNest', 'FormFlex', 'ScrollBooks', 'MindLift', 'GridClass', 'YouthSignal', 'TalentNest', 'PeerPath', 'ScrollGrade', 'LearnMesh','EduChain', 'SkillCast', 'YouthForge', 'QuizNet', 'ScrollLabs', 'LearnFlag', 'ScholarMesh', 'VaultEdu', 'YouthSphere', 'EduGlow','LearnBloom', 'MentorLoop', 'YouthID', 'ScrollQuiz', 'PupilChain', 'IdeaGrid', 'VaultLearn', 'SkillNest', 'ClassFlow', 'CertifyCast','PathMentor', 'IdeaNest', 'SchoolVault', 'LearnSignal', 'GridBadge', 'ScrollCraft', 'MindBoard', 'ClassEcho', 'VaultPupil', 'YouthSignal','TeachStack', 'StudyCast', 'RoleGrid', 'LearnFrame', 'PulseAcademy', 'GradeSync', 'TeachCircle', 'CampusNet', 'StudyBoard', 'ScrollPath','LearnQuest', 'EduNestPro', 'LoopStudy', 'GradeForge', 'IdeaLink', 'TeachTrack', 'VaultClass', 'BadgeMesh', 'EduCast', 'YouthGrid','LearnProof', 'PathCoach', 'TalentID', 'OmniPupil', 'SchoolChain', 'GradeVault'];
         const educationIpSubNodes = [['LearnNode', 'ScrollSeed', 'CampusID', 'MentorLink', 'PathClaim'],['SkillWrap', 'GradeSync', 'CourseMap', 'IDTrack', 'PupilMesh'],['ChapterFlow', 'StoryTag', 'QuizLink', 'YieldRead', 'TextClaim'],['BoostTrack', 'LearnSignal', 'LevelUp', 'FocusPath', 'VaultPace'],['ClassNode', 'TeachSync', 'VaultBoard', 'EduAlert', 'NodeAttend'],['SignalDrop', 'SkillPing', 'PeerMesh', 'RoleAssign', 'TrackEcho'],['TalentVault', 'ClaimCoach', 'RoleTree', 'PayoutPath', 'CertifyNode'],['PeerMap', 'ConnectNode', 'SkillVote', 'PathSync', 'LearnOrbit'],['GradeID', 'TestVault', 'YieldCredit', 'ExamSync', 'ResultNode'],['MeshID', 'ModuleLink', 'ClassSync', 'ProgressTag', 'LoopNode'],['CourseLink', 'CreditVault', 'CertDrop', 'LearnKey', 'ScrollLedger'],['CastNode', 'MentorPing', 'PeerEcho', 'PayoutRank', 'TalentDrop'],['ForgePath', 'BuildMesh', 'IdeaClaim', 'LearnFoundry', 'PeerLoop'],['QuizTrigger', 'TestField', 'GradeWave', 'RecallGrid', 'PassSync'],['LabNode', 'ProjectClaim', 'IdeaTrace', 'SkillXP', 'ModuleYield'],['FlagRaise', 'SchoolLink', 'RegionTrack', 'PupilEcho', 'ClaimNode'],['MeshTrack', 'GradeRelay', 'ScrollDegree', 'LearnVault', 'StudyPulse'],['IDVault', 'CertChain', 'TranscriptGrid', 'SecureLearn', 'DegreeDrop'],['CircleCast', 'ClassLink', 'ScrollTribe', 'GroupEcho', 'PeerRing'],['SignalLight', 'LearnPulse', 'BrainSync', 'FlashGrade', 'EnlightNode'],['BloomNode', 'GrowthTrack', 'SkillSeed', 'EduSprout', 'PeerSoil'],['LoopConnect', 'WisdomPath', 'MentorVault', 'ScrollPing', 'TeachBond'],['IDSync', 'LearnerNode', 'ProofTag', 'IdentityScroll', 'JoinClass'],['QuizNode', 'AnswerTag', 'TimerMesh', 'ScoreClaim', 'ReviewPulse'],['PupilBlock', 'TaskNode', 'LedgerPath', 'EduEcho', 'LearnLock'],['IdeaDrop', 'GridThink', 'SparkVault', 'PeerPush', 'ThoughtClaim'],['SecureScroll', 'GradeLock', 'ChainTest', 'RecordMesh', 'PayoutGrade'],['NestGrow', 'RoleTree', 'PeerRoot', 'MentorNode', 'CertPulse'],['FlowSync', 'ClassRoute', 'PeerGroup', 'ScrollRing', 'LessonCast'],['CastAward', 'NodeBadge', 'VaultProof', 'ScrollCredit', 'ChainEarn'],['MentorMap', 'GrowthLink', 'TrailNode', 'ScrollCoach', 'PeerTrace'],['NestPath', 'SparkClaim', 'ScrollTree', 'PupilEcho', 'ThoughtPulse'],['VaultGate', 'IDBoard', 'RosterDrop', 'GridEnroll', 'SecureClass'],['SignalNode', 'BrainPing', 'LessonTrack', 'EduCast', 'PathAlert'],['BadgeSync', 'PathAward', 'TagNode', 'CreditDrop', 'CertLock'],['CraftScroll', 'YieldPath', 'PeerSkill', 'VaultMaker', 'ProjectPulse'],['BoardTag', 'ClassSignal', 'IdeaPost', 'TaskDrop', 'VoteMark'],['EchoNode', 'SyncMesh', 'StudentCast', 'AlertPing', 'ScrollPlay'],['PupilID', 'SecureClaim', 'GradeVault', 'TrackNode', 'CertTrigger'],['PeerAlert', 'LoopClaim', 'ScrollWave', 'VoiceDrop', 'IDMesh'],['StackLink', 'LessonPulse', 'GradeBeam', 'TrackNode', 'PeerPath'],['StudyStream', 'PeerJoin', 'QuizSignal', 'ReviewGrid', 'ClassLink'],['RoleMap', 'ClaimSync', 'PeerTree', 'IdentityPath', 'TagTrack'],['FrameNode', 'LessonTrace', 'PupilMesh', 'CastDrop', 'ScoreProof'],['AcademyPing', 'PeerLight', 'FocusPath', 'VaultLearn', 'BadgeSync'],['GradeLink', 'ResultEcho', 'TestMesh', 'PassTrack', 'VaultSheet'],['CircleCast', 'MentorPulse', 'ScrollBeam', 'IdeaClaim', 'PeerRing'],['CampusID', 'GroupPath', 'ScrollZone', 'PeerAlert', 'ConnectMesh'],['StudyNode', 'NoteTrace', 'ProjectGrid', 'SyncClaim', 'ViewRank'],['PathLink', 'VaultCredit', 'PeerYield', 'LessonGrid', 'ClassSync'],['QuestNode', 'MapTrack', 'StudyGoal', 'ProgressPath', 'PeerSignal'],['NestID', 'PathPulse', 'MentorNode', 'VaultGrade', 'PupilClaim'],['StudyLoop', 'GridSync', 'QuizWave', 'PeerCast', 'ReviewTrack'],['ForgeNode', 'GradeRing', 'ResultPush', 'CertPath', 'LearnLine'],['SparkLine', 'LoopLink', 'IdeaDrop', 'MentorPing', 'ClassTrace'],['ClassFlow', 'InstructorNode', 'FeedbackGrid', 'PeerScore', 'PathEcho'],['SecureNode', 'RosterClaim', 'EnrollTrack', 'PeerMap', 'ClassKey'],['BadgeID', 'VaultLink', 'ScrollProof', 'AwardBeam', 'PayoutPing'],['CoursePing', 'ClassSignal', 'LectureDrop', 'QuizRelay', 'PeerPush'],['MeshLearn', 'PeerTrace', 'StudyJoin', 'PupilMark', 'LessonSync'],['ProofID', 'CourseClaim', 'ScrollCert', 'VaultDrop', 'GradeLoop'],['CoachNode', 'RolePath', 'ScrollEcho', 'StudyChain', 'CertPush'],['TalentClaim', 'VaultPass', 'SkillMap', 'IDScroll', 'LearnLock'],['OmniLearn', 'ScrollLoop', 'ViewNode', 'ClassCast', 'IDTrack'],['LedgerLearn', 'BlockEnroll', 'VaultBoard', 'PeerPath', 'ClassFlow'],['VaultClaim', 'CreditPing', 'ScoreSheet', 'SecureDrop', 'LedgerTrack']];
-        const educationYouthBrands = educationIpBrands; 
-        const educationYouthSubNodes = educationIpSubNodes;
+        const educationYouthBrands = ['YouthSpark', 'EduFlow', 'LearnGen', 'FutureNode', 'SkillSeedling', 'BrightPath', 'MentorLinkYouth', 'CodeSprout', 'GameLearn', 'CreativeYouth'];
+        const educationYouthSubNodes = [['SparkNode', 'EduMesh', 'LearnLoop'], ['FlowTrack', 'SkillGrid', 'YouthSync'], ['GenCode', 'FutureVault', 'LearnMap'], ['NodePlay', 'SkillBoost', 'YouthConnect'], ['SeedlingID', 'GrowTrack', 'LearnPulse'], ['PathMentor', 'BrightSync', 'YouthFlow'], ['LinkMentor', 'SkillNode', 'YouthPath'], ['SproutCode', 'LearnBuild', 'GameDevNode'], ['LearnSim', 'GameDesign', 'YouthPlay'], ['CreativeMesh', 'ArtNode', 'YouthCreate']];
+
         const weblessBrands = ['OmniQR', 'MeshSync', 'VaultBeacon', 'TapClaim', 'ScrollKey', 'AirLoop', 'DotGrid', 'VaultTouch', 'PouchCast', 'YieldTrace','TapSync', 'TouchProof', 'MeshKey', 'QRPad', 'DotPulse', 'FlashNode', 'ScrollFuse', 'PassiveYield', 'QRClaimMesh', 'VaultTouchPro','AirDropVault', 'MeshTrigger', 'ZeroLink', 'PaperID', 'SignalFrame','TapMesh', 'TagBeacon', 'ScrollTouch', 'ClaimPatch', 'LightGrid','VaultPrint', 'OmniTag', 'ScanToken', 'PassiveKey', 'VaultCast','ScrollNodeX', 'FrameSync', 'QRPath', 'DotLogic', 'BeaconMesh','NFCVault', 'LightPulse', 'ScrollRelay', 'OfflineYield', 'DotClaim','ZeroMesh', 'CastLink', 'FrameYield', 'MeshProof', 'PaperVault','SyncPulse', 'PassiveCast', 'TriggerDrop', 'SignalTag', 'GridID','ScrollPing', 'NFCDrop', 'VaultEcho', 'PassiveSync', 'QRBeam','NFCTrace', 'ScrollMark', 'LightDrop', 'MeshStamp', 'OmniTouch', 'AirPrint', 'FlashID', 'CastMesh', 'QRNode', 'PulseRoute','DropCast', 'ClaimPrint', 'VaultTag', 'QRFuse', 'TapVault','PrintSync', 'TraceCast', 'PassiveRoute', 'CastProof', 'AirPath','QRMesh', 'ScrollZero', 'TagSync', 'GridTouch', 'LightTrace','PassiveVault', 'EchoGrid', 'CastToken', 'TraceNode', 'NFCGrid','ProofCast', 'SignalDrop', 'TouchFlow', 'TagNode', 'YieldPath', 'ScanMark', 'BeamNode', 'DotClaimPro', 'QRTrigger', 'TouchNodeX','TraceQR', 'PaperMesh', 'ZeroID'];
         const weblessSubNodes = [['QRNode', 'YieldPing', 'ClaimGrid', 'ScanFlow', 'RouteToken'],['NodeJoin', 'MeshPulse', 'ConnectGrid', 'DropRoute', 'SignalFlow'],['FlashNode', 'SecurePing', 'LightPath', 'VaultCast', 'NodePing'],['NFCTrigger', 'ScrollTap', 'NodePush', 'PayoutTouch', 'QRClaim'],['KeyNode', 'UnlockTrack', 'AccessVault', 'PeerPass', 'SecureDrop'],['LoopCast', 'AirPing', 'PassiveTrack', 'QRWave', 'SignalBoard'],['DotNode', 'MeshPrint', 'InkLink', 'FormSync', 'TagPulse'],['TouchID', 'QRAccess', 'ScrollPulse', 'FieldTrigger', 'NodeProof'],['DeviceDrop', 'LoopTouch', 'PulseSend', 'AirLabel', 'AssetBeam'],['QRDrop', 'PathYield', 'SignalToken', 'ScanLock', 'LoopClaim'],['ScrollNode', 'QRConnect', 'TouchBeam', 'PeerSync', 'PathTrigger'],['ProofLink', 'TagScan', 'YieldPath', 'ScrollTouch', 'DataNode'],['MeshCode', 'AccessRoute', 'NodeTrace', 'LockDrop', 'AirJoin'],['GridTouch', 'SignalDrop', 'TagFrame', 'VaultClick', 'QRPush'],['PulseWave', 'FrameDrop', 'DotYield', 'ScrollEcho', 'ProofPad'],['NodePing', 'LightPath', 'QRSync', 'PassiveDrop', 'AirGrid'],['FuseNode', 'TouchLoop', 'NFCTrace', 'QRJoin', 'DeviceCast'],['PassiveNode', 'QRTrace', 'ScrollMark', 'AirSync', 'RouteKey'],['ClaimGrid', 'MeshLock', 'TouchYield', 'TagTrace', 'NodeTap'],['SecureTap', 'NodeCast', 'ProofScroll', 'QRBeam', 'LinkMesh'],['AirTag', 'YieldNode', 'VaultSend', 'QRTrigger', 'TapClaim'],['TriggerNode', 'PassiveSync', 'TouchCast', 'LinkClaim', 'ScrollDrop'],['QRNodeZero', 'OfflineConnect', 'ScrollTrack', 'VaultLoop', 'MeshYield'],['QRPrint', 'ScrollForm', 'NodeMark', 'ScanVault', 'OfflineYield'],['LightID', 'SignalTrace', 'NodeGrid', 'ScrollFlash', 'MeshPath'],['TouchGrid', 'PassiveYield', 'ScrollTouch', 'NFCMap', 'VaultDrop'],['TagNode', 'FlashPath', 'YieldLink', 'TouchMark', 'NodePush'],['SecureTouch', 'PeerDrop', 'NFCVault', 'QRSignal', 'CastTrace'],['ScrollPatch', 'TagClaim', 'QRLink', 'ProofMark', 'PassiveTrace'],['FlashNode', 'TouchEcho', 'SignalCast', 'LightDrop', 'MeshJoin'],['QRLayout', 'SecureForm', 'TouchScan', 'VaultCopy', 'MeshIndex'],['TagPath', 'TouchNode', 'ClaimGrid', 'DotJoin', 'VaultID'],['TokenNode', 'ScanPath', 'YieldDot', 'QRMesh', 'ProofCast'],['KeyNode', 'NFCYield', 'QRSync', 'DropToken', 'TraceLoop'],['CastSignal', 'LinkNode', 'ScrollSync', 'ProofDrop', 'BeamClaim'],['NodePulse', 'TrackEcho', 'TouchID', 'QRLog', 'PassiveMap'],['FrameID', 'SyncNode', 'VaultPath', 'QRTrigger', 'CastMark'],['GridTrace', 'DropClaim', 'QRIndex', 'ProofNode', 'VaultSync'],['DotMap', 'ScrollPulse', 'YieldClaim', 'MeshCode', 'NFCGrid'],['BeaconTrack', 'NodeLight', 'FlashYield', 'SecureDrop', 'TagCast'],['TagSync', 'VaultNode', 'QRPath', 'TouchTrace'],['GridClaim', 'PathDrop', 'ScrollSignal', 'NFCVault'],['FrameYield', 'MeshCast', 'NodeJoin', 'VaultDrop'],['NodeID', 'QRPanel', 'VaultView', 'SceneSync'],['MapNode', 'QRDrop', 'VaultPing', 'TrackLine'],['CertifyScene', 'VaultWave', 'QRNode', 'ClipTrack'],['ViewGrid', 'VaultEcho', 'QRAudio', 'TagPath'],['BoardClip', 'QRMap', 'VaultTag', 'MediaFlow'],['ClipProof', 'VaultScene', 'QRDrop', 'FrameTrace'],['SceneID', 'QRLink', 'VaultClaim', 'ClipEcho'],['NodeBeat', 'VaultTrack', 'QRSound', 'EchoDrop'],['DropTrack', 'QRMix', 'VaultOutput', 'NodeSync']];
         const healthBrands = ['MedVault', 'CleanCast', 'ScrollHealth', 'Hygienix', 'CareNode','VaultSan', 'TrackMeds', 'SteriMesh', 'MedLoop', 'PulseClean','HealthDrop', 'SanitiPath', 'VaultMeds', 'BioPulse', 'NurseFlow','AirHealth', 'ScanCare', 'PathogenTrace', 'CareYield', 'SoapGrid','MedTrace', 'SteriLoop', 'BioScan', 'CareLink', 'VaultWell','DoseSync', 'SanityTrack', 'CleanPulse', 'NurseGrid', 'ScanHealth','PureFlow', 'MedCert', 'SteriPack', 'AlertCare', 'VaultNurse','TrackVitals', 'HygieneCast', 'PatientSync', 'MedFuse', 'CleanChain','SoapNode', 'ScanDose', 'CareCast', 'HealthPing', 'PatientPath','PureVault', 'MedDrop', 'SanitiLoop', 'AlertDose', 'CleanLine','VaultVitals', 'MaskTrack', 'CarePrint', 'SteriBoard', 'NurseYield','BioTrack', 'VaultWellness', 'TouchClean', 'MedEcho', 'PatientCert','MedLogix', 'ScanSan', 'NurseCast', 'TouchScan', 'DoseVault','PathClean', 'SanitiID', 'RecordGrid', 'PureCare', 'MedClaim','QRVitals', 'HygieneNode', 'SoapDrop', 'NurseVault', 'BioClaim','ScanWell', 'SprayTrack', 'CarePath', 'VaultScript', 'PatientLink','SteriCheck', 'HealthCast', 'DoseLink', 'TouchProof', 'RecordVault','MedPortal', 'AlertVault', 'ClaimDose', 'CleanForm', 'ScanProof','NurseSignal', 'MedPathway', 'WellnessTrack'];
@@ -554,7 +621,7 @@
         // --- Nutrition & Food Chain Data ---
         const foodChainBrands = ['AgriNest™', 'FreshSync™', 'CropLoop™', 'SoilGrid™', 'FarmDrop™','GrainVault™', 'HarvestClaim™', 'PulseCrop™', 'YieldField™', 'RootMap™','FoodProof™', 'AquaNest™', 'SeedCycle™', 'PlantTrack™', 'CropVault™','SoilEcho™', 'NutritionClaim™', 'LoopFarm™', 'PulseGrain™', 'FieldNest™'];
         const foodChainSubNodes = [['CropTag', 'SoilPath', 'YieldSync', 'VaultHarvest'],['NestGrain', 'PulseField', 'FarmTrack', 'ClaimRoot'],['CycleGrain', 'VaultCrop', 'YieldClaim', 'FieldDrop'],['SoilBeam', 'FarmYield', 'VaultNest', 'TagField'],['DropCrop', 'HarvestTrack', 'ClaimEcho', 'PulseSoil'],['GrainTrack', 'YieldNest', 'VaultMap', 'SoilNode'],['ClaimCrop', 'PulseHarvest', 'RootVault', 'NestLoop'],['PulseSoilX', 'VaultGrain', 'FieldClaim', 'TrackEcho'],['SoilDrop', 'PlantClaim', 'YieldProof', 'VaultRoot'],['FarmGrid', 'VaultPath', 'CropPanel', 'EchoHarvest'],['FoodYield', 'TrackSeed', 'SoilNodeX', 'PulseNest'],['AquaTrack', 'GrainClaim', 'VaultSync', 'HarvestEcho'],['SeedRoot', 'ClaimPanel', 'DropVault', 'CropSync'],['TrackCrop', 'VaultField', 'EchoGrain', 'YieldPath'],['VaultFarm', 'PulseNestX', 'ClaimGrain', 'SoilEchoX'],['FieldCycle', 'HarvestPanel', 'VaultProof', 'GrainLoop'],['NutritionDrop', 'ClaimVault', 'SeedTrack', 'EchoField'],['FarmSync', 'LoopNest', 'VaultRootX', 'SoilPanel'],['GrainYield', 'ClaimDropX', 'EchoNest', 'VaultFieldX'],['NestHarvest', 'PulseCropX', 'TrackSoil', 'VaultClaim']];
-        
+            
         // --- Zero Waste Data ---
         const zeroWasteBrands = ['EcoNest™', 'GreenLoop™', 'CycleSync™', 'ZeroCrate™', 'WasteGrid™','BioDrop™', 'SustainClaim™', 'LoopSort™', 'PulseGreen™', 'YieldTrash™','RecycleMap™', 'CleanTrack™', 'EcoVault™', 'ClaimClean™', 'CompostGrid™','GreenBeam™', 'LoopNest™', 'TrashEcho™', 'SortClaim™', 'VaultCycle™'];
         const zeroWasteSubNodes = [['GreenSync', 'VaultTrack', 'LoopPath', 'CompostTag'],['TrashGrid', 'CycleDrop', 'VaultEcho', 'ClaimPath'],['RecycleCast', 'GreenEcho', 'SortTrack', 'YieldBin'],['DropWaste', 'EcoNode', 'ClaimClean', 'LoopTrace'],['GridWaste', 'VaultNest', 'SortEcho', 'BinClaim'],['BioTrack', 'VaultBin', 'PulseSort', 'TrashTag'],['EcoProof', 'ClaimBin', 'CycleTag', 'LoopEcho'],['SortMap', 'VaultClaim', 'CleanDrop', 'GreenVault'],['GreenFlow', 'BinCast', 'EcoClaim', 'RecycleNest'],['PulseTrash', 'VaultClean', 'ClaimDrop', 'CycleTrack'],['TrashYield', 'LoopDrop', 'RecycleTrack', 'EcoGrid'],['VaultPath', 'BinEcho', 'CleanMap', 'SortClaim'],['NestTrash', 'ClaimTrack', 'LoopNode', 'RecycleEcho'],['GreenMark', 'VaultProof', 'TrashLoop', 'CompostSync'],['EchoClaim', 'PulseCycle', 'SortBin', 'YieldTrack'],['TrackClean', 'VaultEchoX', 'ClaimSync', 'BinDrop'],['CompostPath', 'RecyclePanel', 'VaultTrackX', 'LoopGrid'],['EchoBin', 'ClaimCrate', 'SortPulse', 'NestVault'],['GreenClaim', 'VaultMap', 'DropCompost', 'CycleEcho'],['WasteNode', 'SyncNest', 'TrashBeam', 'VaultCycleX']];
@@ -567,19 +634,39 @@
         const fashionBrands = ['FashionNest™', 'StyleForm™', 'ChicClaim™', 'RunwayPulse™', 'TrendCast™','BrandX™', 'LuxLink™', 'VogueSync™', 'ModeFrame™', 'GlamRoot™','FitTrack™', 'StyleMesh™', 'VibeCast™', 'DressSync™', 'FitGrid™','TrendPath™', 'StyleNode™', 'CatwalkCore™', 'EchoWear™', 'LuxuryClaim™','SculptWear™', 'FitClaim™', 'RunwayLoop™', 'VogueMesh™', 'DressTrack™','ClassSync™', 'FitMark™', 'ModeWave™', 'VogueDrop™', 'RunwayPoint™','PulseWear™', 'GlamSync™', 'TrendCore™', 'FitLink™', 'VibeCastX™','CatwalkMesh™', 'LuxuryTag™', 'RunwayTrace™', 'FitCheck™', 'VoguePath™','StyleTrace™', 'DressCore™', 'VibeTag™', 'ModeTrack™', 'TrendPoint™','StyleCast™', 'VogueSeal™', 'ClaimRun™', 'WearSync™', 'DropLook™','EchoMark™', 'FitNest™', 'ChicTrack™', 'TrendLoop™', 'ModePulse™','PulseSync™', 'StyleTraceX™', 'TagFit™', 'NodeClaim™', 'RunwayNode™','EchoLoop™', 'ClaimCast™', 'VogueTrace™', 'SyncLook™', 'CastMesh™','FitPanel™', 'StyleMeshX™', 'PulseEcho™', 'FashionBeam™', 'TagTrace™','DropPath™', 'GridClaimX™', 'NodeStyle™', 'VogueFrame™', 'FitFlow™','TrendBeam™', 'CastPoint™', 'LoopTag™', 'EchoBeam™', 'PulsePoint™','GridPath™', 'StyleCrate™', 'ClaimRoot™', 'ModeEchoX™', 'FitNestX™','DropSync™', 'TrackGrid™', 'FashionPanel™', 'PathPulse™', 'GridNode™','TagGrid™', 'ClaimTrackX™', 'EchoMap™', 'PulseRoot™', 'StyleVault™','BeamTrack™', 'LookNode™', 'StyleCore™', 'VogueMeshX™', 'FitCore™','TrendCastX™', 'PulseGrid™', 'LoopCrate™', 'EchoNest™', 'StyleTraceY™','NestEcho™', 'RunwayFlow™', 'FashionNode™', 'GridWear™', 'PulseMap™','LoopSeal™', 'EchoLook™', 'ClaimDropX™', 'StyleEchoX™', 'TrackVibe™','MeshPulse™', 'SyncCrate™', 'VogueDropX™', 'PanelWear™', 'GridTagX™','FitPanelX™', 'EchoTrackX™', 'PulseStyle™', 'SyncTrackX™', 'FashionForm™','WearClaim™', 'BeamStyle™', 'CratePulse™', 'StyleTraceZ™', 'PulseEchoX™','GridLoopX™', 'TagCast™', 'EchoFit™', 'NodeClaimX™', 'LoopPanel™','CrateLook™', 'SyncBeam™', 'TrackDrop™'];
         const fashionSubNodes = [['EchoNest', 'TrackSeal', 'GridPath', 'PulseTag', 'LoopForm', 'WearGrid'],['RunwayMesh', 'FashionPanel', 'TagSync', 'EchoForm', 'BeamLook', 'PulseTrack'],['ClaimStyle', 'PulseBeam', 'TrackPanel', 'EchoClaim', 'SyncTag', 'LookNode'],['GridForm', 'LoopMesh', 'DropEcho', 'TrackWear', 'ClaimPanel', 'PulsePath'],['PulseRoot', 'EchoTrack', 'WearCast', 'BeamTrace', 'CrateDrop', 'ClaimMark'],['LoopPanel', 'FashionDrop', 'TrackGrid', 'PulseCast', 'EchoWear', 'GridMark'],['LookSync', 'PanelTag', 'PulseLoop', 'TrackCrate', 'EchoSeal', 'GridNest'],['ClaimMesh', 'DropPath', 'PulseTag', 'EchoCast', 'TrackPoint', 'StyleFit'],['EchoStyle', 'PanelClaim', 'PulseGrid', 'TrackNest', 'ClaimNode', 'SyncEcho'],['TrackPulse', 'BeamCast', 'LookTag', 'EchoTrace', 'CratePanel', 'GridTrack'],['PulseBeam', 'StyleForm', 'LoopEcho', 'TrackClaim', 'SyncCast', 'CratePoint'],['CrateSync', 'PulsePath', 'BeamLoop', 'StyleCrate', 'ClaimPanel', 'TrackFit'],['DropTrace', 'WearPanel', 'EchoNode', 'StylePulse', 'ClaimBeam', 'GridCast'],['PanelCast', 'EchoPanel', 'ClaimDrop', 'TrackNest', 'PulseSync', 'StyleGrid'],['TagPath', 'WearEcho', 'PanelGrid', 'CrateStyle', 'SyncTrack', 'PulsePanel'],['FitDrop', 'EchoPoint', 'LoopStyle', 'CrateClaim', 'TrackRoot', 'PulseEcho'],['EchoTrack', 'SyncNode', 'PulseNest', 'WearTrace', 'GridEcho', 'BeamCrate'],['StylePanel', 'ClaimNest', 'LoopPath', 'DropPulse', 'SyncBeam', 'TrackPanel'],['PulseStyle', 'EchoGrid', 'BeamTrack', 'CrateSync', 'ClaimEcho', 'LookPath'],['FormCrate', 'TrackSync', 'EchoDrop', 'PulseClaim', 'StyleMark', 'GridTrace'],['ClaimLoop', 'WearPanel', 'EchoStyle', 'DropSync', 'PulseGrid', 'BeamRoot'],['StyleEcho', 'LoopBeam', 'CratePanel', 'TrackCrate', 'GridNode', 'PulseNest'],['PulseTrack', 'WearTag', 'PanelRoot', 'ClaimCast', 'StyleLoop', 'DropPath'],['TraceBeam', 'LookClaim', 'EchoGrid', 'PanelTrack', 'PulseDrop', 'TrackSync'],['EchoPulse', 'GridBeam', 'DropPanel', 'ClaimMark', 'CrateSync', 'PulseTrace'],['LoopEcho', 'TrackNest', 'ClaimPath', 'WearPanel', 'PulseLook', 'StyleDrop'],['TagTrace', 'EchoForm', 'DropLook', 'PanelClaim', 'BeamNest', 'GridLoop'],['FitTrace', 'SyncNode', 'PulsePanel', 'ClaimEcho', 'TrackMark', 'LoopForm'],['NodeClaim', 'StylePulse', 'PanelSync', 'DropTrack', 'CrateLoop', 'PulseEcho'],['PanelClaim', 'CrateBeam', 'TrackSync', 'EchoPanel', 'LoopGrid', 'PulseNest'],['LookBeam', 'PulseForm', 'DropTag', 'TrackEcho', 'ClaimNest', 'StyleSync'],['GridDrop', 'TagLoop', 'PanelTrack', 'EchoClaim', 'PulseMark', 'BeamNode'],['SyncLoop', 'PulseEcho', 'WearClaim', 'DropTrack', 'CratePanel', 'TrackRoot']]; 
 
-        // Placeholder for other sector data if not provided by user
-        const gamingBrands = [], gamingSubNodes = [];
-        const justiceBrands = [], justiceSubNodes = [];
-        const knowledgeBrands = [], knowledgeSubNodes = [];
-        const micromeshBrands = [], micromeshSubNodes = [];
-        const packagingBrands = [], packagingSubNodes = [];
-        const tradeBrands = [], tradeSubNodes = [];
-        const utilitiesBrands = [], utilitiesSubNodes = [];
-        const voiceBrands = [], voiceSubNodes = [];
-        const payrollMiningBrands = [], payrollMiningSubNodes = []; 
-        const wildlifeBrands = [], wildlifeSubNodes = [];
+        // New Sector Data (Gaming, Justice, Knowledge, Micromesh, Packaging, Trade, Utilities, Voice, Payroll Mining, Wildlife)
+        const gamingBrands = ['GameGrid', 'PixelPulse', 'QuestVault', 'SimuLink', 'PlayNode', 'MetaGame', 'LevelUp', 'ArcadeFlow', 'VRMesh', 'EsportSync'];
+        const gamingSubNodes = [['GridRender', 'PulseEngine', 'VaultSave'], ['LinkSim', 'NodeControl', 'PlayStream'], ['GameID', 'LevelTrack', 'FlowState'], ['MeshConnect', 'SyncMatch', 'QuestLog'], ['PixelArt', 'SoundFX', 'InputHandler'], ['RenderFarm', 'PhysicsEngine', 'AIBehavior'], ['ScoreTracker', 'LeaderboardSync', 'AchievementNode'], ['MultiplayerMesh', 'ChatNode', 'SpectateView'], ['AssetStream', 'TextureAtlas', 'ShaderGraph'], ['GameAnalytics', 'PlayerMetrics', 'MonetizationHook']];
 
-        // Object to hold all static sector data for easier iteration in metrics
+        const justiceBrands = ['LawLedger', 'EthicGrid', 'VerdictVault', 'JusticeLink', 'EquityNode', 'TruthTrace', 'ClauseChain', 'RightSync', 'AuditLaw', 'FairFlow'];
+        const justiceSubNodes = [['LedgerProve', 'EthicScan', 'VerdictLog'], ['LinkJustice', 'NodeEquity', 'TraceTruth'], ['ChainClause', 'SyncRight', 'AuditFlow'], ['LawID', 'EthicMonitor', 'VerdictTrack'], ['JusticeMesh', 'EquityPulse', 'TruthVault'], ['ClauseNode', 'RightTrace', 'AuditLink'], ['FairGrid', 'LawSync', 'EthicFlow'], ['VerdictChain', 'JusticeClaim', 'EquityLog'], ['TruthNode', 'ClauseScan', 'RightVault'], ['AuditMesh', 'FairPulse', 'LawTrack']];
+
+        const knowledgeBrands = ['InfoVault', 'ArchiveGrid', 'LexiLink', 'DataNodeX', 'WisdomMesh', 'ScrollLore', 'FactFlow', 'CogniSync', 'LearnBase', 'IntellectHub'];
+        const knowledgeSubNodes = [['VaultIndex', 'GridSearch', 'LinkData'], ['NodeKnowledge', 'MeshWisdom', 'LoreScroll'], ['FlowFact', 'SyncCogni', 'BaseLearn'], ['HubIntellect', 'InfoTrace', 'ArchiveScan'], ['LexiNode', 'DataQuery', 'WisdomMap'], ['ScrollData', 'FactChain', 'CogniLink'], ['LearnVault', 'IntellectGrid', 'InfoSync'], ['ArchiveNode', 'LexiMesh', 'DataFlow'], ['WisdomTrace', 'ScrollFact', 'FactBase'], ['CogniNode', 'LearnSync', 'IntellectMap']];
+
+        const micromeshBrands = ['MicroGrid', 'NanoLink', 'PicoMesh', 'FemtoNode', 'AttoFlow', 'ZeptoSync', 'YoctoTrace', 'QuantumMicro', 'HyperMesh', 'FlexiGrid'];
+        const micromeshSubNodes = [['GridConnect', 'LinkNano', 'MeshPico'], ['NodeFemto', 'FlowAtto', 'SyncZepto'], ['TraceYocto', 'MicroQuantum', 'MeshHyper'], ['GridFlexi', 'MicroNode', 'NanoSync'], ['PicoFlow', 'FemtoTrace', 'AttoMesh'], ['ZeptoNode', 'YoctoSync', 'QuantumFlow'], ['HyperTrace', 'FlexiNode', 'MicroLink'], ['NanoMesh', 'PicoSync', 'FemtoFlow'], ['AttoTrace', 'ZeptoNode', 'YoctoMesh'], ['QuantumSync', 'HyperFlow', 'FlexiTrace']];
+
+        const packagingBrands = ['PackVault', 'WrapGrid', 'SealLink', 'BoxNode', 'ContainMesh', 'EcoPack', 'SmartWrap', 'FlexiBox', 'SecureSeal', 'TracePack'];
+        const packagingSubNodes = [['VaultSecure', 'GridOptimize', 'LinkSeal'], ['NodeBox', 'MeshContain', 'PackEco'], ['WrapSmart', 'BoxFlexi', 'SealSecure'], ['PackTrace', 'VaultWrap', 'GridSeal'], ['LinkBox', 'NodeContain', 'MeshEco'], ['WrapSmart', 'BoxFlexi', 'SealSecure'], ['PackTrace', 'VaultWrap', 'GridSeal'], ['LinkBox', 'NodeContain', 'MeshEco'], ['PackSmart', 'WrapFlexi', 'SealTrace'], ['BoxEco', 'ContainSecure', 'PackOptimize']];
+
+        const tradeBrands = ['TradeFlow', 'MarketGrid', 'ExchangeNode', 'ValueLink', 'CommodityMesh', 'SupplySync', 'DemandTrace', 'GlobalTrade', 'FairExchange', 'AssetFlow'];
+        const tradeSubNodes = [['FlowTrade', 'GridMarket', 'NodeExchange'], ['LinkValue', 'MeshCommodity', 'SyncSupply'], ['TraceDemand', 'TradeGlobal', 'ExchangeFair'], ['FlowAsset', 'TradeID', 'MarketScan'], ['ExchangeMesh', 'NodeValue', 'CommodityFlow'], ['SupplyTrace', 'DemandLink', 'GlobalNode'], ['FairGrid', 'AssetSync', 'TradePulse'], ['MarketFlow', 'ExchangeTrace', 'ValueNode'], ['CommodityLink', 'SupplyMesh', 'DemandFlow'], ['GlobalSync', 'FairTrace', 'AssetNode']];
+
+        const utilitiesBrands = ['PowerGrid', 'HydroFlow', 'SolarNode', 'WindLink', 'GeoMesh', 'EnergySync', 'WaterTrace', 'WasteUtility', 'SmartGridX', 'ResourceFlow'];
+        const utilitiesSubNodes = [['GridPower', 'FlowHydro', 'NodeSolar'], ['LinkWind', 'MeshGeo', 'SyncEnergy'], ['TraceWater', 'UtilityWaste', 'GridSmart'], ['FlowResource', 'PowerID', 'HydroScan'], ['SolarMesh', 'NodeWind', 'GeoFlow'], ['EnergyTrace', 'WaterLink', 'WasteNode'], ['SmartGrid', 'ResourceSync', 'PowerPulse'], ['HydroFlow', 'SolarTrace', 'WindNode'], ['GeoLink', 'EnergyMesh', 'WaterFlow'], ['WasteSync', 'SmartTrace', 'ResourceNode']];
+
+        const voiceBrands = ['AudioMesh', 'SonicNode', 'VoiceLink', 'EchoGrid', 'SoundVault', 'SpeechSync', 'ToneTrace', 'VocalFlow', 'AcousticMesh', 'ListenNode'];
+        const voiceSubNodes = [['MeshAudio', 'NodeSonic', 'LinkVoice'], ['GridEcho', 'VaultSound', 'SyncSpeech'], ['TraceTone', 'FlowVocal', 'MeshAcoustic'], ['NodeListen', 'AudioID', 'SonicScan'], ['VoiceMesh', 'EchoNode', 'SoundFlow'], ['SpeechTrace', 'ToneLink', 'VocalNode'], ['AcousticGrid', 'ListenSync', 'AudioPulse'], ['SonicFlow', 'VoiceTrace', 'EchoNode'], ['SoundLink', 'SpeechMesh', 'ToneFlow'], ['VocalSync', 'AcousticTrace', 'ListenNode']];
+
+        const payrollMiningBrands = ['PayMine', 'CoinLedger', 'AuditCoin', 'CryptoPayroll', 'TokenAccount', 'MineFlow', 'YieldPay', 'HashLedger', 'BlockPay', 'NodeCoin'];
+        const payrollMiningSubNodes = [['MineTrack', 'LedgerVerify', 'AuditSync'], ['PayrollCrypto', 'AccountToken', 'FlowMine'], ['PayYield', 'LedgerHash', 'PayBlock'], ['CoinNode', 'MineID', 'LedgerScan'], ['AuditBlock', 'CryptoFlow', 'TokenYield'], ['MineSync', 'PayTrace', 'HashFlow'], ['YieldNode', 'LedgerBlock', 'CoinFlow'], ['CryptoTrace', 'TokenNode', 'MinePay'], ['BlockSync', 'NodeHash', 'CoinYield'], ['PayFlow', 'LedgerMine', 'AuditTrace']];
+
+        const wildlifeBrands = ['EcoGuard', 'HabitatLink', 'WildTrace', 'BioNode', 'ConservMesh', 'SpeciesSync', 'ZoneProtect', 'NatureFlow', 'PreserveGrid', 'FaunaVault'];
+        const wildlifeSubNodes = [['GuardEco', 'LinkHabitat', 'TraceWild'], ['NodeBio', 'MeshConserv', 'SyncSpecies'], ['ProtectZone', 'FlowNature', 'GridPreserve'], ['VaultFauna', 'EcoID', 'HabitatScan'], ['WildMesh', 'NodeBio', 'ConservFlow'], ['SpeciesTrace', 'ZoneLink', 'NatureNode'], ['PreserveGrid', 'FaunaSync', 'EcoPulse'], ['HabitatFlow', 'WildTrace', 'BioNode'], ['ConservLink', 'SpeciesMesh', 'ZoneFlow'], ['NatureSync', 'PreserveTrace', 'FaunaNode']];
+
+
+        // This object maps sector keys to their respective brand and subnode arrays
         const ALL_SECTOR_DATA_STATIC = {
             "agriculture": { brands: agriBrands, subNodes: agriSubNodes },
             "fsf": { brands: fsfBrands, subNodes: fsfSubNodes },
@@ -604,15 +691,14 @@
             "trade": { brands: tradeBrands, subNodes: tradeSubNodes },
             "utilities": { brands: utilitiesBrands, subNodes: utilitiesSubNodes },
             "voice": { brands: voiceBrands, subNodes: voiceSubNodes },
-            "webless": { brands: weblessBrands, subNodes: weblessSubNodes }, // Corrected missing brands/subnodes for webless
+            "webless": { brands: weblessBrands, subNodes: weblessSubNodes },
             "nft": { brands: nftOwnershipBrands, subNodes: nftOwnershipSubNodes }, 
             "education-youth": { brands: educationYouthBrands, subNodes: educationYouthSubNodes },
             "zerowaste": { brands: zeroWasteBrands, subNodes: zeroWasteSubNodes },
             "professional": { brands: professionalBrands, subNodes: professionalSubNodes },
             "payroll-mining": { brands: payrollMiningBrands, subNodes: payrollMiningSubNodes }, 
             "mining": { brands: miningBrands, subNodes: miningSubNodes }, 
-            "wildlife": { brands: wildlifeBrands, subNodes: wildlifeSubNodes },
-            "admin-panel": "⚙️ Admin Panel" // This is a display name, not data for rendering brands/nodes
+            "wildlife": { brands: wildlifeBrands, subNodes: wildlifeSubNodes }
         };
 
         // Data for FAA.ZONE INDEX Table (static parts)
@@ -652,11 +738,11 @@
 
 
         // Store for data added via admin panel (client-side)
-        let clientAdminData = JSON.parse(localStorage.getItem("clientAdminData")) || {};
-        // Initialize clientAdminData for all sectors if not present
+        let adminSectorData = JSON.parse(localStorage.getItem("adminSectorData")) || {};
+        // Initialize adminSectorData for all sectors if not present
         for (const key in sectorList) {
-            if (!clientAdminData[key]) {
-                clientAdminData[key] = { brands: [], nodes: [] };
+            if (!adminSectorData[key]) {
+                adminSectorData[key] = { brands: [], nodes: [] };
             }
         }
 
@@ -803,6 +889,17 @@
                 // Specific rendering for media scroll profiles if that panel is shown
                 if (panelId === 'embedded-media-snapshot') {
                     renderMediaScrollProfiles();
+                } else if (panelId === 'embedded-global-index-snapshot') {
+                    renderGlobalBrandTable(); // Re-render global index when opened
+                } else if (panelId === 'embedded-admin-panel-snapshot') {
+                    // Re-initialize PayPal buttons if admin panel is shown
+                    if (typeof paypal !== 'undefined') {
+                        renderPayPalButtons();
+                    }
+                    // Re-initialize map if admin panel is shown
+                    if (typeof google !== 'undefined' && typeof initMap === 'function') {
+                        initMap();
+                    }
                 }
             } else {
                 console.warn('[FAA] Panel not found:', panelId);
@@ -867,7 +964,7 @@
             if (!select) return;
             select.innerHTML = ''; // Clear existing options
             Object.entries(sectorList).forEach(([key, label]) => {
-                if (key !== 'admin-panel') { // Exclude admin panel from being a target sector
+                if (key !== 'admin-panel' && key !== 'global-index') { // Exclude admin panel and global index from being a target sector
                     const option = document.createElement('option');
                     option.value = key;
                     option.textContent = label;
@@ -903,7 +1000,7 @@
                 let chatHistory = [];
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
                 const payload = { contents: chatHistory };
-                const apiKey = ""; // Leave as-is for Canvas environment
+                const apiKey = GEMINI_AI_API_KEY; // Use the defined API key
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -968,7 +1065,7 @@
                         }
                     }
                 };
-                const apiKey = ""; // Leave as-is for Canvas environment
+                const apiKey = GEMINI_AI_API_KEY; // Use the defined API key
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -1045,15 +1142,16 @@
                 addBrandBtn.innerHTML = '✔️ Added!';
                 
                 // Also update client-side admin data for immediate reflection if needed for other parts
-                if (!clientAdminData[sectorKey]) clientAdminData[sectorKey] = { brands: [], nodes: [] };
-                clientAdminData[sectorKey].brands.push(brandName);
-                clientAdminData[sectorKey].nodes.push(subnodesArray);
-                localStorage.setItem("clientAdminData", JSON.stringify(clientAdminData));
+                if (!adminSectorData[sectorKey]) adminSectorData[sectorKey] = { brands: [], nodes: [] };
+                adminSectorData[sectorKey].brands.push(brandName);
+                adminSectorData[sectorKey].nodes.push(subnodesArray);
+                localStorage.setItem("adminSectorData", JSON.stringify(adminSectorData));
 
                 updateSectorDashboardOnAdd(sectorKey, brandName, subnodesArray); // Update the specific sector's grid
                 calculateGlobalMetrics(); // Recalculate and update metrics
                 renderFaaZoneIndexTable(); // Re-render FAA Zone Index table
                 loadMainDashboardData(); // Re-fetch and re-render the main dashboard to include new data
+                renderGlobalBrandTable(); // Re-render the global index table
 
                 brandInput.value = "";
                 subnodesInput.value = "";
@@ -1103,7 +1201,7 @@
         
             const btn = document.createElement('button');
             btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 font-semibold cursor-pointer';
-            // Apply sector-specific hover styles (copied from genericRenderFn)
+            
             if (sectorKey === 'banking' || sectorKey === 'ai-logic' || ['professional', 'saas', 'admin-panel'].includes(sectorKey)) btn.classList.add('hover:bg-indigo-100', 'hover:text-indigo-800');
             else if (['agriculture', 'fsf', 'education-ip', 'education-youth', 'health', 'zerowaste', 'nutrition', 'wildlife'].includes(sectorKey)) btn.classList.add('hover:bg-green-100', 'hover:text-green-800');
             else if (['creative', 'gaming', 'quantum', 'voice', 'nft', 'ritual', 'media'].includes(sectorKey)) btn.classList.add('hover:bg-purple-100', 'hover:text-purple-800');
@@ -1118,8 +1216,8 @@
             snap.id = `${sectorKey}-snap-${brandIndex}`;
             snap.className = 'brand-snapshot hidden mt-6';
             
-            if (sectorKey === 'media' && scrollProfilesData && scrollProfilesData[brand]) {
-                const p = scrollProfilesData[brand];
+            if (sectorKey === 'media' && mediaScrollProfiles && mediaScrollProfiles[brand]) {
+                const p = mediaScrollProfiles[brand];
                 snap.innerHTML = `
                     <div class="flex flex-col md:flex-row justify-between gap-6">
                         <div class="w-full md:w-1/2 space-y-3">
@@ -1162,10 +1260,10 @@
 
         function clearAdminAddedData() { // Clears only client-side localStorage for admin additions
             if (window.confirm("Are you sure you want to clear client-side admin-added data? This won't affect the backend.")) {
-                localStorage.removeItem("clientAdminData");
-                clientAdminData = {};
+                localStorage.removeItem("adminSectorData");
+                adminSectorData = {};
                 for (const key in sectorList) {
-                    clientAdminData[key] = { brands: [], nodes: [] };
+                    adminSectorData[key] = { brands: [], nodes: [] };
                 }
                 // Re-render all sector panels to reflect cleared client-side admin data
                 Object.keys(ALL_SECTOR_DATA_STATIC).forEach(key => {
@@ -1175,6 +1273,7 @@
                 calculateGlobalMetrics(); // Recalculate metrics after clearing
                 renderFaaZoneIndexTable(); // Re-render FAA Zone Index table
                 loadMainDashboardData(); // Re-fetch and re-render the main dashboard (to show original backend data)
+                renderGlobalBrandTable(); // Re-render the global index table
                 document.getElementById("adminStatus").textContent = "🗑️ Client-side admin data cleared.";
                 setTimeout(() => { document.getElementById("adminStatus").textContent = "Ready to receive input."; }, 3000);
             }
@@ -1203,11 +1302,11 @@
             let effectiveSubNodes = Array.isArray(subNodesArray) ? JSON.parse(JSON.stringify(subNodesArray)) : []; // Deep copy for subnodes
 
             // Combine with client-side admin data
-            if (clientAdminData[sectorKey] && Array.isArray(clientAdminData[sectorKey].brands)) {
-                effectiveBrands.push(...clientAdminData[sectorKey].brands);
+            if (adminSectorData[sectorKey] && Array.isArray(adminSectorData[sectorKey].brands)) {
+                effectiveBrands.push(...adminSectorData[sectorKey].brands);
             }
-            if (clientAdminData[sectorKey] && Array.isArray(clientAdminData[sectorKey].nodes)) {
-                effectiveSubNodes.push(...clientAdminData[sectorKey].nodes);
+            if (adminSectorData[sectorKey] && Array.isArray(adminSectorData[sectorKey].nodes)) {
+                effectiveSubNodes.push(...adminSectorData[sectorKey].nodes);
             }
 
 
@@ -1275,7 +1374,7 @@
                     `;
                 } else {
                     if (typeof generateGenericBrandSnapshotContent === 'function') {
-                        snap.innerHTML = generateGenericBrandSnapshotContent(sectorKey, brand, currentSubNodes);
+                        snap.innerHTML = generateGenericBrandSnapshotContent(sectorKey, brand, currentSubNodes); // Pass the actual subnodes
                     } else {
                         console.error('generateGenericBrandSnapshotContent is not defined');
                         snap.innerHTML = `<p class="text-red-500">Error: Snapshot generator function is missing.</p>`;
@@ -1287,40 +1386,9 @@
         }
         
         // --- Individual Sector Rendering Functions (using the generic renderer) ---
-        // These can now be simplified or removed in favor of a loop, but kept for clarity
-        function renderAILogicSection() { renderSectorBrandsAndSnapshots('ai-logic', 'ai-logic-grid', 'ai-logic-snapshots', ALL_SECTOR_DATA_STATIC['ai-logic'].brands, ALL_SECTOR_DATA_STATIC['ai-logic'].subNodes); }
-        function renderBankingSection() { renderSectorBrandsAndSnapshots('banking', 'banking-grid', 'banking-snapshots', ALL_SECTOR_DATA_STATIC['banking'].brands, ALL_SECTOR_DATA_STATIC['banking'].subNodes); }
-        function renderAgriSection() { renderSectorBrandsAndSnapshots('agriculture', 'agriculture-grid', 'agriculture-snapshots', ALL_SECTOR_DATA_STATIC['agriculture'].brands, ALL_SECTOR_DATA_STATIC['agriculture'].subNodes); }
-        function renderCreativeSection() { renderSectorBrandsAndSnapshots('creative', 'creative-grid', 'creative-snapshots', ALL_SECTOR_DATA_STATIC['creative'].brands, ALL_SECTOR_DATA_STATIC['creative'].subNodes); }
-        function renderLogisticsSection() { renderSectorBrandsAndSnapshots('logistics', 'logistics-grid', 'logistics-snapshots', ALL_SECTOR_DATA_STATIC['logistics'].brands, ALL_SECTOR_DATA_STATIC['logistics'].subNodes); }
-        function renderFSFSection() { renderSectorBrandsAndSnapshots('fsf', 'fsf-grid', 'fsf-snapshots', ALL_SECTOR_DATA_STATIC['fsf'].brands, ALL_SECTOR_DATA_STATIC['fsf'].subNodes); }
-        function renderEducationIpSection() { renderSectorBrandsAndSnapshots('education-ip', 'education-ip-grid', 'education-ip-snapshots', ALL_SECTOR_DATA_STATIC['education-ip'].brands, ALL_SECTOR_DATA_STATIC['education-ip'].subNodes); }
-        function renderEducationYouthSection() { renderSectorBrandsAndSnapshots('education-youth', 'education-youth-grid', 'education-youth-snapshots', ALL_SECTOR_DATA_STATIC['education-youth'].brands, ALL_SECTOR_DATA_STATIC['education-youth'].subNodes); }
-        function renderWeblessSection() { renderSectorBrandsAndSnapshots('webless', 'webless-grid', 'webless-snapshots', ALL_SECTOR_DATA_STATIC['webless'].brands, ALL_SECTOR_DATA_STATIC['webless'].subNodes); }
-        function renderHealthSection() { renderSectorBrandsAndSnapshots('health', 'health-grid', 'health-snapshots', ALL_SECTOR_DATA_STATIC['health'].brands, ALL_SECTOR_DATA_STATIC['health'].subNodes); }
-        function renderHousingSection() { renderSectorBrandsAndSnapshots('housing', 'housing-grid', 'housing-snapshots', ALL_SECTOR_DATA_STATIC['housing'].brands, ALL_SECTOR_DATA_STATIC['housing'].subNodes); }
-        function renderMediaSection() { renderSectorBrandsAndSnapshots('media', 'media-grid', 'media-snapshots', ALL_SECTOR_DATA_STATIC['media'].brands, ALL_SECTOR_DATA_STATIC['media'].subNodes, ALL_SECTOR_DATA_STATIC['media'].scrollProfiles); }
-        function renderProfessionalSection() { renderSectorBrandsAndSnapshots('professional', 'professional-grid', 'professional-snapshots', ALL_SECTOR_DATA_STATIC['professional'].brands, ALL_SECTOR_DATA_STATIC['professional'].subNodes); }
-        function renderFashionSection() { renderSectorBrandsAndSnapshots('fashion', 'fashion-grid', 'fashion-snapshots', ALL_SECTOR_DATA_STATIC['fashion'].brands, ALL_SECTOR_DATA_STATIC['fashion'].subNodes); }
-        function renderGamingSection() { renderSectorBrandsAndSnapshots('gaming', 'gaming-grid', 'gaming-snapshots', ALL_SECTOR_DATA_STATIC['gaming'].brands, ALL_SECTOR_DATA_STATIC['gaming'].gamingSubNodes); }
-        function renderJusticeSection() { renderSectorBrandsAndSnapshots('justice', 'justice-grid', 'justice-snapshots', ALL_SECTOR_DATA_STATIC['justice'].brands, ALL_SECTOR_DATA_STATIC['justice'].justiceSubNodes); }
-        function renderKnowledgeSection() { renderSectorBrandsAndSnapshots('knowledge', 'knowledge-grid', 'knowledge-snapshots', ALL_SECTOR_DATA_STATIC['knowledge'].brands, ALL_SECTOR_DATA_STATIC['knowledge'].knowledgeSubNodes); }
-        function renderMicromeshSection() { renderSectorBrandsAndSnapshots('micromesh', 'micromesh-grid', 'micromesh-snapshots', ALL_SECTOR_DATA_STATIC['micromesh'].brands, ALL_SECTOR_DATA_STATIC['micromesh'].micromeshSubNodes); }
-        function renderNutritionSection() { renderSectorBrandsAndSnapshots('nutrition', 'nutrition-grid', 'nutrition-snapshots', ALL_SECTOR_DATA_STATIC['nutrition'].brands, ALL_SECTOR_DATA_STATIC['nutrition'].subNodes); } 
-        function renderPackagingSection() { renderSectorBrandsAndSnapshots('packaging', 'packaging-grid', 'packaging-snapshots', ALL_SECTOR_DATA_STATIC['packaging'].brands, ALL_SECTOR_DATA_STATIC['packaging'].packagingSubNodes); }
-        function renderQuantumSection() { renderSectorBrandsAndSnapshots('quantum', 'quantum-grid', 'quantum-snapshots', ALL_SECTOR_DATA_STATIC['quantum'].brands, ALL_SECTOR_DATA_STATIC['quantum'].subNodes); }
-        function renderRitualSection() { renderSectorBrandsAndSnapshots('ritual', 'ritual-grid', 'ritual-snapshots', ALL_SECTOR_DATA_STATIC['ritual'].brands, ALL_SECTOR_DATA_STATIC['ritual'].subNodes); }
-        function renderSaasSection() { renderSectorBrandsAndSnapshots('saas', 'saas-grid', 'saas-snapshots', ALL_SECTOR_DATA_STATIC['saas'].brands, ALL_SECTOR_DATA_STATIC['saas'].subNodes); } 
-        function renderTradeSection() { renderSectorBrandsAndSnapshots('trade', 'trade-grid', 'trade-snapshots', ALL_SECTOR_DATA_STATIC['trade'].brands, ALL_SECTOR_DATA_STATIC['trade'].tradeSubNodes); }
-        function renderUtilitiesSection() { renderSectorBrandsAndSnapshots('utilities', 'utilities-grid', 'utilities-snapshots', ALL_SECTOR_DATA_STATIC['utilities'].brands, ALL_SECTOR_DATA_STATIC['utilities'].utilitiesSubNodes); }
-        function renderVoiceSection() { renderSectorBrandsAndSnapshots('voice', 'voice-grid', 'voice-snapshots', ALL_SECTOR_DATA_STATIC['voice'].brands, ALL_SECTOR_DATA_STATIC['voice'].voiceSubNodes); }
-        function renderNftSection() { renderSectorBrandsAndSnapshots('nft', 'nft-grid', 'nft-snapshots', ALL_SECTOR_DATA_STATIC['nft'].brands, ALL_SECTOR_DATA_STATIC['nft'].subNodes); } 
-        function renderZerowasteSection() { renderSectorBrandsAndSnapshots('zerowaste', 'zerowaste-grid', 'zerowaste-snapshots', ALL_SECTOR_DATA_STATIC['zerowaste'].brands, ALL_SECTOR_DATA_STATIC['zerowaste'].subNodes); }
-        function renderProfessionalSection() { renderSectorBrandsAndSnapshots('professional', 'professional-grid', 'professional-snapshots', ALL_SECTOR_DATA_STATIC['professional'].brands, ALL_SECTOR_DATA_STATIC['professional'].subNodes); }
-        function renderPayrollMiningSection() { renderSectorBrandsAndSnapshots('payroll-mining', 'payroll-mining-grid', 'payroll-mining-snapshots', ALL_SECTOR_DATA_STATIC['payroll-mining'].brands, ALL_SECTOR_DATA_STATIC['payroll-mining'].payrollMiningSubNodes); }
-        function renderMiningSection() { renderSectorBrandsAndSnapshots('mining', 'mining-grid', 'mining-snapshots', ALL_SECTOR_DATA_STATIC['mining'].brands, ALL_SECTOR_DATA_STATIC['mining'].subNodes); } 
-        function renderWildlifeSection() { renderSectorBrandsAndSnapshots('wildlife', 'wildlife-grid', 'wildlife-snapshots', ALL_SECTOR_DATA_STATIC['wildlife'].brands, ALL_SECTOR_DATA_STATIC['wildlife'].wildlifeSubNodes); }
-
+        // These are now consolidated into the loop in DOMContentLoaded
+        // function renderAILogicSection() { renderSectorBrandsAndSnapshots('ai-logic', 'ai-logic-grid', 'ai-logic-snapshots', ALL_SECTOR_DATA_STATIC['ai-logic'].brands, ALL_SECTOR_DATA_STATIC['ai-logic'].subNodes); }
+        // ... and so on for all other sectors
 
         // --- Load Main Dashboard Data (from Backend) ---
         function loadMainDashboardData() {
@@ -1335,7 +1403,7 @@
             fetch('http://localhost:5000/api/sectors') 
                 .then(res => {
                     if (!res.ok) {
-                             console.error(`Backend Error: ${res.status} ${res.statusText}`); 
+                                 console.error(`Backend Error: ${res.status} ${res.statusText}`); 
                         throw new Error(`Network response was not ok: ${res.status} ${res.statusText}`);
                     }
                     return res.json();
@@ -1475,10 +1543,10 @@
             let tempScrollGridIndex = 0;
 
             for (const sectorKey in sectorList) {
-                if (sectorKey === 'admin-panel') continue; 
+                if (sectorKey === 'admin-panel' || sectorKey === 'global-index') continue; 
 
                 const staticData = ALL_SECTOR_DATA_STATIC[sectorKey];
-                const adminData = clientAdminData[sectorKey];
+                const adminData = adminSectorData[sectorKey];
 
                 const staticBrandsCount = staticData?.brands?.length || 0;
                 const staticNodesCount = (staticData?.subNodes || []).flat().length;
@@ -1637,7 +1705,7 @@
                 const displayName = sectorList[sectorKey] || sectorKey.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
 
                 const staticData = ALL_SECTOR_DATA_STATIC[sectorKey];
-                const adminData = clientAdminData[sectorKey];
+                const adminData = adminSectorData[sectorKey];
 
                 const staticBrandsCount = staticData?.brands?.length || 0;
                 const staticNodesCount = (staticData?.subNodes || []).flat().length;
@@ -1675,6 +1743,170 @@
             });
         }
 
+        // --- NEW: Global Brand Index Panel Renderer ---
+        function renderGlobalBrandTable() {
+            const tableBody = document.getElementById("globalBrandTableBody");
+            if (!tableBody) {
+                console.error("Global brand table body not found.");
+                return;
+            }
+            tableBody.innerHTML = ''; // Clear previous content
+
+            const allBrands = [];
+
+            // Add hardcoded brands
+            for (const sectorKey in ALL_SECTOR_DATA_STATIC) {
+                const sectorDisplayName = sectorList[sectorKey] || sectorKey;
+                const data = ALL_SECTOR_DATA_STATIC[sectorKey];
+                if (data.brands && data.subNodes) {
+                    data.brands.forEach((brand, i) => {
+                        allBrands.push({
+                            sector: sectorDisplayName,
+                            brand: brand,
+                            subnodes: (data.subNodes[i] || []).join(', '),
+                            source: 'System'
+                        });
+                    });
+                }
+            }
+
+            // Add admin-added brands
+            for (const sectorKey in adminSectorData) {
+                const sectorDisplayName = sectorList[sectorKey] || sectorKey;
+                const data = adminSectorData[sectorKey];
+                if (data.brands && data.nodes) {
+                    data.brands.forEach((brand, i) => {
+                        allBrands.push({
+                            sector: sectorDisplayName,
+                            brand: brand,
+                            subnodes: (data.nodes[i] || []).join(', '),
+                            source: 'Admin'
+                        });
+                    });
+                }
+            }
+            
+            // Sort brands alphabetically
+            allBrands.sort((a, b) => a.brand.localeCompare(b.brand));
+
+            // Render table rows
+            allBrands.forEach(item => {
+                const row = document.createElement('tr');
+                row.className = 'border-t hover:bg-gray-50';
+                row.innerHTML = `
+                    <td class="px-4 py-2 whitespace-nowrap">${item.sector}</td>
+                    <td class="px-4 py-2 font-semibold whitespace-nowrap">${item.brand}<sup>™</sup></td>
+                    <td class="px-4 py-2">${item.subnodes}</td>
+                    <td class="px-4 py-2 text-gray-500">${item.source}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Search functionality for Global Brand Index
+        function filterGlobalBrandTable() {
+            const input = document.getElementById("globalBrandSearch");
+            const filter = input.value.toLowerCase();
+            const tableBody = document.getElementById("globalBrandTableBody");
+            const rows = tableBody.getElementsByTagName("tr");
+
+            for (let i = 0; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName("td");
+                let rowVisible = false;
+                for (let j = 0; j < cells.length; j++) {
+                    const cellText = cells[j].textContent || cells[j].innerText;
+                    if (cellText.toLowerCase().indexOf(filter) > -1) {
+                        rowVisible = true;
+                        break;
+                    }
+                }
+                rows[i].style.display = rowVisible ? "" : "none";
+            }
+        }
+
+        // --- API Specific Functions ---
+
+        // Google Maps Initialization
+        let map;
+        function initMap() {
+            const mapElement = document.getElementById('map');
+            if (mapElement && typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
+                map = new google.maps.Map(mapElement, {
+                    center: { lat: -34.397, lng: 150.644 }, // Centered near Sydney
+                    zoom: 8,
+                });
+                new google.maps.Marker({
+                    position: { lat: -34.397, lng: 150.644 },
+                    map: map,
+                    title: 'Sample Location'
+                });
+            } else {
+                console.warn("Google Maps API not yet loaded or map element not found.");
+            }
+        }
+
+        // PayPal Button Rendering
+        function renderPayPalButtons() {
+            const paypalButtonContainer = document.getElementById('paypal-button-container');
+            if (paypalButtonContainer && typeof paypal !== 'undefined') {
+                 // Clear existing buttons to prevent duplicates on re-render
+                paypalButtonContainer.innerHTML = ''; 
+
+                paypal.Buttons({
+                    createOrder: function(data, actions) {
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: {
+                                    value: '0.01' // Sample amount
+                                }
+                            }]
+                        });
+                    },
+                    onApprove: function(data, actions) {
+                        return actions.order.capture().then(function(details) {
+                            alert('Transaction completed by ' + details.payer.name.given_name);
+                        });
+                    },
+                    onError: function(err) {
+                        console.error('PayPal button error:', err);
+                        alert('PayPal transaction failed. See console for details.');
+                    }
+                }).render('#paypal-button-container');
+            } else {
+                console.warn("PayPal SDK not yet loaded or container not found.");
+            }
+        }
+
+        // Spotify Conceptual API Call
+        function initSpotifyAPI() {
+            // In a real application, you would perform an OAuth flow here
+            // to get a fresh, short-lived access token.
+            // For this demo, we're using a hardcoded placeholder token.
+            console.log("Initiating Spotify API connection...");
+            console.log("Using placeholder token:", SPOTIFY_ACCESS_TOKEN);
+
+            // Example of a conceptual fetch to Spotify API (will likely fail without a valid, fresh token)
+            fetch('https://api.spotify.com/v1/me', {
+                headers: {
+                    'Authorization': 'Bearer ' + SPOTIFY_ACCESS_TOKEN
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Spotify API error: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Spotify User Profile:', data);
+                alert('Successfully (conceptually) connected to Spotify! Check console for user data.');
+            })
+            .catch(error => {
+                console.error('Error connecting to Spotify:', error);
+                alert('Failed to connect to Spotify. This is expected with a placeholder token. A real app requires OAuth.');
+            });
+        }
+
 
         // --- DOMContentLoaded Initialization ---
         document.addEventListener('DOMContentLoaded', () => {
@@ -1685,7 +1917,7 @@
             for (const sectorKey in ALL_SECTOR_DATA_STATIC) {
                 // Ensure ALL_SECTOR_DATA_STATIC[sectorKey] is an object before accessing properties
                 const sectorData = ALL_SECTOR_DATA_STATIC[sectorKey];
-                if (typeof sectorData === 'object' && sectorData !== null && sectorKey !== 'admin-panel') {
+                if (typeof sectorData === 'object' && sectorData !== null && sectorKey !== 'admin-panel' && sectorKey !== 'global-index') {
                     renderSectorBrandsAndSnapshots(
                         sectorKey,
                         `${sectorKey}-grid`,
@@ -1694,7 +1926,7 @@
                         sectorData.subNodes,
                         sectorData.scrollProfiles // Pass scrollProfiles for media specifically
                     );
-                } else if (sectorKey !== 'admin-panel') {
+                } else if (sectorKey !== 'admin-panel' && sectorKey !== 'global-index') {
                     console.warn(`[Initialization] Missing or invalid data for sector: ${sectorKey}. Skipping rendering.`);
                 }
             }
@@ -1703,6 +1935,21 @@
             calculateGlobalMetrics(); 
             renderDynamicPulseChart(); 
             setInterval(updateDynamicPulseChart, 3000); 
+
+            // Initialize API Demos when the admin panel is loaded or if it's the default view
+            // This ensures the PayPal button and map are rendered if the admin panel is the first thing seen.
+            if (document.getElementById('embedded-admin-panel-snapshot') && !document.getElementById('embedded-admin-panel-snapshot').classList.contains('hidden')) {
+                renderPayPalButtons();
+                initMap();
+            }
+
+            // Attach search listener to the new global brand search input
+            const globalSearchInput = document.getElementById("globalBrandSearch");
+            if (globalSearchInput) {
+                globalSearchInput.addEventListener('keyup', filterGlobalBrandTable);
+            }
+            // Initial render of the global index when the page loads, but it will be hidden
+            renderGlobalBrandTable();
         });
 
     </script>
