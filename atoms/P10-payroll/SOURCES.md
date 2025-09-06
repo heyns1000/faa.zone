@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-09-06 | ThesisGallery | main | `attached_assets/activation_1757168195993.html` | `808dbc05` | 🍇 FAA Payroll — Node Activation | 2694 | 5 | 0 | 30.3 |
+| 2 | 2025-09-06 | ThesisGallery | main | `attached_assets/onboarding_1757168144980.html` | `bfd29f98` | 🍇 FAA Payroll – Onboarding Portal | 4365 | 16 | 0 | 42.4 |
