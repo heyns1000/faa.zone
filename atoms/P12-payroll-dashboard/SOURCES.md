@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-09-06 | ThesisGallery | main | `attached_assets/dashboard_1757168144978.html` | `be5cff94` | FAA™ Payroll Dashboard | 5670 | 18 | 0 | 43.6 |
+| 2 | 2025-09-06 | ThesisGallery | main | `attached_assets/welcome-dashboard_1757168154032.html` | `d2149937` | 📊 FAA Payroll Dashboard — Real-Time Ops | 5294 | 17 | 0 | 42.5 |
