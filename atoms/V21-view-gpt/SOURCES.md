@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-04-20 | faa.zone | history | `docs/terminals/global-view.html` | `1916da73` | 🌍 Global View GPT | 2927 | 2 | 1 | 30.3 |
+| 2 | 2025-09-06 | ThesisGallery | main | `attached_assets/global-view_1757167943934.html` | `b8ee4bff` | 🌍 Global View GPT | 2980 | 3 | 2 | 34.3 |
