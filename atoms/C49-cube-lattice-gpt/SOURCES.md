@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-04-20 | faa.zone | history | `docs/terminals/cube-lattice.html` | `4a7a7cf1` | 🧱 Cube Lattice GPT | 2424 | 2 | 1 | 30.2 |
+| 2 | 2025-09-06 | ThesisGallery | main | `attached_assets/cube-lattice_1757167943939.html` | `8fddbb5c` | 🧱 Cube Lattice GPT | 3405 | 3 | 2 | 34.3 |
