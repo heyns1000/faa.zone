@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-04-20 | faa.zone | history | `docs/terminals/seedwave.html` | `a060928e` | 🌱 Seedwave GPT | 2353 | 2 | 1 | 30.2 |
+| 2 | 2025-09-06 | ThesisGallery | main | `attached_assets/seedwave_1757167915615.html` | `f1c9af1c` | 🌱 Seedwave GPT | 2885 | 3 | 2 | 34.3 |
