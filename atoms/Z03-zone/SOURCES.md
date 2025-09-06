@@ -6,3 +6,4 @@
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-09-06 | ThesisGallery | main | `attached_assets/clause-index_1757167943941.html` | `9489358f` | FAA.Zone — 📜 Clause Index | 21610 | 50 | 1 | 74.3 |
 | 2 | 2025-09-06 | ThesisGallery | main | `attached_assets/heartbeat_dashboard_1757168316194.html` | `faf8257a` | FAA.Zone | Mining Sector Heartbeat | 1845 | 4 | 1 | 31.2 |
+| 3 | 2025-09-06 | ThesisGallery | main | `attached_assets/licensing_1757167915620.html` | `0e81e705` | FAA.Zone — License Ledger | 21247 | 50 | 1 | 74.3 |
