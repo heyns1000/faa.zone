@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-04-20 | faa.zone | history | `docs/terminals/signal.html` | `906c2aec` | 🔐 Signal GPT | 2357 | 2 | 1 | 30.2 |
+| 2 | 2025-09-06 | ThesisGallery | main | `attached_assets/signal_1757167915615.html` | `a99038eb` | 🔐 Signal GPT | 2857 | 3 | 2 | 34.3 |
