@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-09-06 | ThesisGallery | main | `attached_assets/portal-landing_1757168154031.html` | `6dab0666` | 🪙 Payroll Core Systems | FAA™ | 4015 | 13 | 0 | 38.4 |
+| 2 | 2025-09-06 | ThesisGallery | main | `attached_assets/welcome_1757168154032.html` | `48857e2a` | 🪙 Payroll Core Systems | FAA™ | 4874 | 15 | 0 | 40.5 |
