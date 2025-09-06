@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-04-20 | faa.zone | history | `docs/terminals/distribution.html` | `a58a7a7b` | 📦 Distribution GPT | 2359 | 2 | 1 | 30.2 |
+| 2 | 2025-09-06 | ThesisGallery | main | `attached_assets/distribution_1757167943938.html` | `2bdeeafd` | 📦 Distribution GPT | 2936 | 3 | 2 | 34.3 |
