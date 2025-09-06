@@ -11,3 +11,4 @@
 | 5 | 2025-09-06 | ThesisGallery | main | `attached_assets/pulse-monitor_1757167915619.html` | `1238e1dc` | FAA.Zone — Signal Sync Dashboard | 7918 | 27 | 1 | 54.8 |
 | 6 | 2025-09-06 | ThesisGallery | main | `attached_assets/quick-view_1757167915618.html` | `1f37e5b1` | FAA.Zone — Pulse Dashboard | 13722 | 53 | 1 | 81.4 |
 | 7 | 2025-09-06 | ThesisGallery | main | `attached_assets/scrollmap_1757167915617.html` | `3d9195d3` | FAA.Zone — 🗺️ ScrollMap Dashboard | 3918 | 9 | 0 | 34.4 |
+| 8 | 2025-09-06 | ThesisGallery | main | `attached_assets/sector-grid_1757167915616.html` | `3a7399bd` | FAA.Zone — Sector Grid | 7707 | 27 | 1 | 47.8 |
