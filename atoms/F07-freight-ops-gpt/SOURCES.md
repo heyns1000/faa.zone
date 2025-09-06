@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-04-20 | faa.zone | history | `docs/terminals/freight-ops.html` | `3181d993` | 🚚 Freight Ops GPT | 2388 | 2 | 1 | 30.2 |
+| 2 | 2025-09-06 | ThesisGallery | main | `attached_assets/freight-ops_1757167943936.html` | `b654ad21` | 🚚 Freight Ops GPT | 3011 | 3 | 2 | 34.3 |
