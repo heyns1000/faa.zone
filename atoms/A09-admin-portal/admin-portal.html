@@ -1,24 +1,259 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>🍇FAA.Zone🍇 — 🍇Pulse Dashboard🍇</title>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>⚙️ Admin Portal</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Add the custom style block here -->
   <style>
-    html { scroll-behavior: smooth; }
-    .glow-btn:hover {
-      transform: translateY(-2px) scale(1.05);
-      box-shadow: 0 4px 15px rgba(255,255,255,0.3);
+    .sector-link {
+      background-color: #f3f4f6; /* Gray-100 */
+      padding: 0.75rem 0.5rem;
+      border-radius: 0.375rem; /* Rounded corners */
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      text-align: center;
+      font-weight: 600; /* Semi-bold */
+      display: block;
+      transition: transform 0.2s ease-in-out, scale 0.2s ease-in-out;
+    }
+
+    .sector-link:hover {
+      transform: translateY(-0.25rem) scale(1.05);
+      background-color: #e5e7eb; /* Slightly darker gray */
     }
   </style>
 </head>
-<body class="bg-gray-50 text-gray-800 tracking-tight">
+<body class="bg-gray-50 font-sans">
 
-<!-- HEADER -->
+  <!-- Hero Header -->
+  <header class="bg-indigo-700 text-white py-6 mb-8 shadow">
+    <div class="container mx-auto px-6">
+      <h1 class="text-3xl font-bold">🦁 Seedwave™ Admin Portal</h1>
+      <p class="text-sm opacity-80 mt-2">✿Corebrands management & AI logic deployment center</p>
+    </div>
+  </header>
+
+  <!-- 🔐 Access Control Buttons (Fixed to go to admin-portal-approval) -->
+  <div class="flex space-x-2 absolute right-6 top-6">
+    <a href="/admin/admin-portal-approval">
+      <button class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-1 rounded shadow">
+        🪙 Loyalty Access
+      </button>
+    </a>
+    <a href="/admin/admin-portal-approval">
+      <button class="bg-gray-800 hover:bg-gray-900 text-white text-sm font-semibold px-4 py-1 rounded shadow">
+        📊 Shareholder Access
+      </button>
+    </a>
+    <a href="/admin/admin-portal-approval">
+      <button class="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold px-4 py-1 rounded shadow">
+        🤝 Service Provider
+      </button>
+    </a>
+    <a href="/admin/admin-portal-approval">
+      <button class="bg-purple-500 hover:bg-purple-600 text-white text-sm font-semibold px-4 py-1 rounded shadow">
+        👨‍👩‍👧‍👦 Family Access
+      </button>
+    </a>
+  </div>
+  
+</body>
+</html>
+
+
+  <!-- Admin Panel Layout -->
+  <main class="max-w-6xl mx-auto px-6">
+
+    <!-- Panel Section 1 -->
+    <section class="bg-white rounded shadow p-6 mb-8">
+      <h2 class="text-xl font-bold mb-4">⚙️ Admin Panel — Add Brand & Subnodes</h2>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div>
+          <label class="text-sm block font-medium mb-1">📂 Sector</label>
+          <select id="sectorSelect" class="w-full border rounded p-2 bg-gray-50"></select>
+        </div>
+        <div>
+          <label class="text-sm block font-medium mb-1">🏷 Brand Name</label>
+          <input id="brandInput" class="w-full border rounded p-2" placeholder="e.g. OmniCastX">
+        </div>
+        <div>
+          <label class="text-sm block font-medium mb-1">📌 Subnodes</label>
+          <input id="subnodesInput" class="w-full border rounded p-2" placeholder="e.g. VaultDrop, QRClaim">
+        </div>
+        <div class="flex items-end">
+          <button onclick="addBrandToSector()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded shadow">
+            ➕ Add Brand
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Panel Section 2 -->
+    <section class="bg-white rounded shadow p-6 mb-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label class="text-sm block font-medium mb-1">🏷️ Sector Name</label>
+          <input id="sectorName" class="w-full border rounded p-2" placeholder="e.g. AI Logic">
+        </div>
+        <div>
+          <label class="text-sm block font-medium mb-1">📁 Sector File Path</label>
+          <input id="sectorPath" class="w-full border rounded p-2" placeholder="e.g. faa.zone/public/sectors/ai-logic/">
+        </div>
+        <div>
+          <label class="text-sm block font-medium mb-1">🚀 Deploy To</label>
+          <select id="deployTarget" class="w-full border rounded p-2 bg-gray-50">
+            <option>Cloudware Worker 1</option>
+            <option>Cloudware Worker 2</option>
+            <option>Cloudware Worker 3</option>
+            <option>OpenAI Assistant</option>
+            <option>Vector Store</option>
+            <option>Local Folders</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Admin Status -->
+    <section class="bg-white rounded shadow p-6 mb-16">
+      <h3 class="text-md font-semibold mb-2">ℹ️ Admin Status Feedback</h3>
+      <p id="adminStatus" class="text-sm text-gray-600 italic">Ready to receive input.</p>
+    </section>
+
+  </main>
+
+  <script>
+    // Sector list initialization
+if (typeof sectorList === 'undefined') {
+  const sectorList = {
+      "ai-logic": "🧠 AI, Logic & Grid",
+      "creative": "🖋️ Creative Tech",
+      "logistics": "📦 Logistics & Packaging",
+      "education-ip": "📚 Education & IP",
+      "fashion": "✂ Fashion & Identity",
+      "gaming": "🎮 Gaming & Simulation",
+      "health": "🧠 Health & Hygiene",
+      "housing": "🏗️ Housing & Infrastructure",
+      "justice": "⚖ Justice & Ethics",
+      "knowledge": "🧠 Knowledge & Archives",
+      "micromesh": "☰ Micro-Mesh Logistics",
+      "media": "🎬 Motion, Media & Sonic",
+      "nutrition": "✿ Nutrition & Food Chain",
+      "packaging": "📦 Packaging & Materials",
+      "quantum": "✴️ Quantum Protocols",
+      "ritual": "☯ Ritual & Culture",
+      "saas": "🔑 SaaS & Licensing",
+      "trade": "🧺 Trade Systems",
+      "utilities": "🔋 Utilities & Energy",
+      "voice": "🎙️ Voice & Audio",
+      "webless": "📡 Webless Tech & Nodes",
+      "nft": "🔁 NFT & Ownership",
+      "education-youth": "🎓 Education & Youth",
+      "zerowaste": "♻️ Zero Waste",
+      "professional": "🧾 Professional Services"
+    };
+}
+
+
+    for (let key in sectorList) {
+      if (!sectorData[key]) {
+        sectorData[key] = { brands: [], nodes: [] };
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const select = document.getElementById("sectorSelect");
+      for (let key in sectorList) {
+        const option = document.createElement("option");
+        option.value = key;
+        option.textContent = sectorList[key];
+        select.appendChild(option);
+      }
+    });
+
+    function addBrandToSector() {
+      const sector = document.getElementById("sectorSelect").value;
+      const brand = document.getElementById("brandInput").value.trim();
+      const subnodes = document.getElementById("subnodesInput").value
+        .split(",").map(n => n.trim()).filter(Boolean);
+
+      if (!brand || subnodes.length === 0) {
+        document.getElementById("adminStatus").textContent = "⚠️ Please fill in both fields.";
+        return;
+      }
+
+      sectorData[sector].brands.push(brand);
+      sectorData[sector].nodes.push(subnodes);
+      document.getElementById("adminStatus").textContent = `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
+    }
+  </script>
+
+</body>
+</html>
+<!-- 📊 FAA.ZONE INDEX — Expanded Table Structure -->
+<section class="bg-white rounded shadow p-6 mb-16">
+  <h2 class="text-xl font-bold mb-4">⦿ FAA.ZONE INDEX — Expanded Table Structure</h2>
+  <div class="overflow-x-auto">
+    <table class="min-w-full text-sm text-left border border-gray-200">
+      <thead class="bg-gray-100 text-gray-700 font-semibold">
+        <tr>
+          <th class="px-4 py-2">Glyph</th>
+          <th class="px-4 py-2">Sector</th>
+          <th class="px-4 py-2">Core Brands</th>
+          <th class="px-4 py-2">Total Nodes</th>
+          <th class="px-4 py-2">Monthly Fee</th>
+          <th class="px-4 py-2">Annual Fee</th>
+          <th class="px-4 py-2">Payout Tier</th>
+          <th class="px-4 py-2">Region</th>
+          <th class="px-4 py-2">Inspect</th>
+          <th class="px-4 py-2">Deploy</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-700">
+        <tr class="border-t">
+          <td class="px-4 py-2">🧺</td><td>Retail, Vendor & Trade</td><td>183</td><td>1,098</td><td>$88</td><td>$888</td><td>A+</td><td>Div A-F</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-4 py-2">🧠</td><td>AI, Logic & Grid Systems</td><td>188</td><td>752</td><td>$104</td><td>$1,050</td><td>A+</td><td>Global</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-4 py-2">🖋️</td><td>Creative & Design Systems</td><td>142</td><td>710</td><td>$67</td><td>$720</td><td>A</td><td>Div E</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-4 py-2">₿</td><td>Finance & Token Yield</td><td>136</td><td>680</td><td>$125</td><td>$1,250</td><td>A+</td><td>Div A-E</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-4 py-2">📴</td><td>Webless Tech & Nodes</td><td>103</td><td>515</td><td>$76</td><td>$770</td><td>A</td><td>Div D-G</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-4 py-2">📦</td><td>Logistics & Packaging</td><td>111</td><td>444</td><td>$58</td><td>$595</td><td>B+</td><td>Div B-F</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-4 py-2">✿</td><td>Food, Soil & Farming</td><td>83</td><td>332</td><td>$46</td><td>$480</td><td>B+</td><td>Rural</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-4 py-2">🧒</td><td>Youth & Education</td><td>66</td><td>330</td><td>$39</td><td>$420</td><td>A</td><td>Tribal</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-4 py-2">⚗</td><td>Health & Hygiene</td><td>93</td><td>372</td><td>$52</td><td>$550</td><td>B</td><td>Div F</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-4 py-2">☯</td><td>Aura, Ritual & Culture</td><td>74</td><td>296</td><td>$68</td><td>$725</td><td>A</td><td>Div C</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-4 py-2">🏗️</td><td>Housing & Infrastructure</td><td>91</td><td>364</td><td>$59</td><td>$610</td><td>B+</td><td>Div A-F</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+        </tr>
+         <tr class="border-t">
+        <td class="px-4 py-2">🔁</td><td>NFT, IP, Ownership Grid</td><td>58</td><td>232</td><td>$120</td><td>$1,200</td><td>A</td><td>FAA IP</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+         </tr>
+         <tr class="border-t">
+  <td class="px-4 py-2">🌀</td><td>Motion, Media, Sonic</td><td>78</td><td>312</td><td>$72</td><td>$740</td><td>A</td><td>Creative</td><td><button class="text-blue-600 hover:underline">View</button></td><td><button class="text-green-600 hover:underline">Deploy</button></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
 <header class="bg-white shadow p-6 flex justify-between items-center">
   <div>
     <h1 class="text-3xl font-extrabold text-indigo-700">🍇 Fruitful™ Master Pulse Dashboard</h1>
@@ -50,51 +285,100 @@
   <a href="ecosync-logs.html" class="hover:text-indigo-600 hover:-translate-y-1 hover:scale-105 transition">📥 Ecosync Logs</a>
 </nav>
 
-  <!-- SECTOR GRID NAVIGATION -->
+ <!-- SECTOR GRID NAVIGATION -->
 <nav class="bg-white border-b px-6 py-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8 gap-4 text-sm">
-  <a href="#" onclick="showSectorPanel('embedded-agriculture-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">
+  <a href="#" onclick="showSectorPanel('embedded-agriculture-snapshot')" class="sector-link">
     🌱 Agriculture & Biotech
   </a>
-  <a href="#" onclick="showSectorPanel('embedded-fsf-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🥦 Food, Soil & Farming</a>
-<a href="#" onclick="showSectorPanel('embedded-banking-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">
-  🏦 Banking & Finance
+  <a href="#" onclick="showSectorPanel('embedded-fsf-snapshot')" class="sector-link">
+    🥦 Food, Soil & Farming
+  </a>
+  <a href="#" onclick="showSectorPanel('embedded-banking-snapshot')" class="sector-link">
+    🏦 Banking & Finance
+  </a>
+  <a href="#" onclick="showSectorPanel('embedded-creative-snapshot')" class="sector-link">
+    🖋️ Creative Tech
+  </a>
+  <a href="#" onclick="showSectorPanel('embedded-logistics-snapshot')" class="sector-link">
+    📦 Logistics & Packaging
+  </a>
+  <a href="#" onclick="showSectorPanel('embedded-education-snapshot')" class="sector-link">
+    📚 Education & IP
+  </a>
+  <a href="#" onclick="showSectorPanel('embedded-fashion-snapshot')" class="sector-link">
+    ✂ Fashion & Identity
+  </a>
+  <a href="#" onclick="showSectorPanel('embedded-gaming-snapshot')" class="sector-link">
+    🎮 Gaming & Simulation
+  </a>
+  <a href="#" onclick="showSectorPanel('embedded-health-snapshot')" class="sector-link">
+    🧠 Health & Hygiene
+  </a>
+  <a href="#" onclick="showSectorPanel('embedded-housing-snapshot')" class="sector-link">
+    🏗️ Housing & Infrastructure
+  </a>
+  <a href="#" onclick="showSectorPanel('embedded-justice-snapshot')" class="sector-link">
+    ⚖ Justice & Ethics
+  </a>
+  <a href="#" onclick="showSectorPanel('embedded-knowledge-snapshot')" class="sector-link">
+    🧠 Knowledge & Archives
+  </a>
+  <a href="#" onclick="showSectorPanel('embedded-micromesh-snapshot')" class="sector-link">
+    ☰ Micro-Mesh Logistics
+  </a>
+  <a href="#" onclick="showSectorPanel('embedded-media-snapshot')" class="sector-link">
+    🎬 Motion, Media & Sonic
+  </a>
+  <a href="#" onclick="showSectorPanel('embedded-nutrition-snapshot')" class="sector-link">
+    ✿ Nutrition & Food Chain
+  </a>
+  <a href="#" onclick="showSectorPanel('embedded-ailogic-snapshot')" class="sector-link">
+    🧠 AI, Logic & Grid Systems
+  </a>
+  <a href="#" onclick="showSectorPanel('embedded-packaging-snapshot')" class="sector-link">
+    📦 Packaging & Materials
+  </a>
+  <a href="#" onclick="showSectorPanel('embedded-quantum-snapshot')" class="sector-link">
+    ✴️ Quantum Protocols
+  </a>
+  <a href="#" onclick="showSectorPanel('embedded-ritual-snapshot')" class="sector-link">
+    ☯ Ritual & Culture
+  </a>
+  <a href="#" onclick="showSectorPanel('embedded-saas-snapshot')" class="sector-link">
+    🔑 SaaS & Licensing
+  </a>
+  <a href="#" onclick="showSectorPanel('embedded-trade-snapshot')" class="sector-link">
+    🧺 Trade Systems
+  </a>
+  <a href="#" onclick="showSectorPanel('embedded-utilities-snapshot')" class="sector-link">
+    🔋 Utilities & Energy
+  </a>
+  <a href="#" onclick="showSectorPanel('embedded-voice-snapshot')" class="sector-link">
+    🎙️ Voice & Audio
+  </a>
+ <a href="#" onclick="showSectorPanel('embedded-webless-snapshot')" class="sector-link">
+    📡 Webless Tech & Nodes
 </a>
-  <a href="#" onclick="showSectorPanel('embedded-creative-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🖋️ Creative Tech</a>
-  <a href="#" onclick="showSectorPanel('embedded-logistics-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">📦 Logistics & Packaging</a>
-  <a href="#" onclick="showSectorPanel('embedded-education-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">📚 Education & IP</a>
-  <a href="#" onclick="showSectorPanel('embedded-fashion-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">✂ Fashion & Identity</a>
-  <a href="#" onclick="showSectorPanel('embedded-gaming-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🎮 Gaming & Simulation</a>
-    <a href="#" onclick="showSectorPanel('embedded-health-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">
-  🧠 Health & Hygiene
-</a>
-  <a href="#" onclick="showSectorPanel('embedded-housing-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🏗️ Housing & Infrastructure</a>
-  <a href="#" onclick="showSectorPanel('embedded-justice-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">⚖ Justice & Ethics</a>
-  <a href="#" onclick="showSectorPanel('embedded-knowledge-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🧠 Knowledge & Archives</a>
-  <a href="#" onclick="showSectorPanel('embedded-micromesh-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">☰ Micro-Mesh Logistics</a>
-  <a href="#" onclick="showSectorPanel('embedded-media-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🎬 Motion, Media & Sonic</a>
-  <a href="#" onclick="showSectorPanel('embedded-nutrition-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">✿ Nutrition & Food Chain</a>
-  <a href="#" onclick="showSectorPanel('embedded-ailogic-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">
-  🧠 AI, Logic & Grid Systems
-</a>
-  <a href="#" onclick="showSectorPanel('embedded-packaging-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">📦 Packaging & Materials</a>
-  <a href="#" onclick="showSectorPanel('embedded-quantum-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">✴️ Quantum Protocols</a>
-  <a href="#" onclick="showSectorPanel('embedded-ritual-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">☯ Ritual & Culture</a>
-  <a href="#" onclick="showSectorPanel('embedded-saas-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🔑 SaaS & Licensing</a>
-  <a href="#" onclick="showSectorPanel('embedded-trade-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🧺 Trade Systems</a>
-  <a href="#" onclick="showSectorPanel('embedded-utilities-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🔋 Utilities & Energy</a>
-  <a href="#" onclick="showSectorPanel('embedded-voice-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🎙️ Voice & Audio</a>
-  <a href="#" onclick="showSectorPanel('embedded-webless-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">📡 Webless Tech & Nodes</a>
-  <a href="#" onclick="showSectorPanel('embedded-nft-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">🔁 NFT & Ownership</a>
-   <a href="#" onclick="showSectorPanel('embedded-education-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">
-  🎓 Education & Youth Sector
-</a>
-  <a href="#" onclick="showSectorPanel('embedded-zerowaste-snapshot')" class="bg-gray-100 px-3 py-2 rounded shadow text-center font-semibold block hover:-translate-y-1 hover:scale-105 transition">♻️ Zero Waste</a>
+  <a href="#" onclick="showSectorPanel('embedded-nft-snapshot')" class="sector-link">
+    🔁 NFT & Ownership
+  </a>
+  <a href="#" onclick="showSectorPanel('embedded-zerowaste-snapshot')" class="sector-link">
+    ♻️ Zero Waste
+  </a>
+  <a href="#" onclick="showSectorPanel('embedded-professional-snapshot')" class="sector-link">
+    🧾 Professional Services
+  </a>
 </nav>
+  <a href="#" onclick="showSectorPanel('embedded-admin-snapshot')" class="sector-link">
+    ⚙️ Admin & Manual Sync Panel
+  </a>
+
+
 
 <!-- Embedded Agri Panel -->
 <div id="embedded-agriculture-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
   <div class="text-2xl font-bold text-green-800 mb-4">
-    🌾 FAA™ Agriculture Core Brand Dashboard (84 Brands)
+    🌾 FAA™ Agriculture Core Brand Dashboard
   </div>
   <div id="agri-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="agri-snapshots"></div>
@@ -103,7 +387,7 @@
 <!-- Embedded FSF Sector Panel -->
 <div id="embedded-fsf-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
   <div class="text-2xl font-bold text-green-700 mb-4">
-    🥦 FAA™ Food, Soil & Farming Brand Dashboard (83 Brands)
+    🥦 FAA™ Food, Soil & Farming Dashboard
   </div>
   <div id="fsf-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="fsf-snapshots"></div>
@@ -118,123 +402,125 @@
   <div class="p-6" id="banking-snapshots"></div>
 </div>
 
-
-<!-- 🖋️ Creative -->
+<!-- Embedded Creative Snapshot -->
 <div id="embedded-creative-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
   <div class="text-2xl font-bold text-purple-800 mb-4">🖋️ FAA™ Creative Tech Dashboard</div>
   <div id="creative-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="creative-snapshots"></div>
 </div>
 
-<!-- 📦 Logistics -->
+<!-- Embedded Logistics Snapshot -->
 <div id="embedded-logistics-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
   <div class="text-2xl font-bold text-yellow-700 mb-4">📦 FAA™ Logistics & Packaging Dashboard</div>
   <div id="logistics-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="logistics-snapshots"></div>
 </div>
 
-  <!-- Embedded Education Sector Panel -->
+<!-- Embedded Education Sector Panel -->
 <div id="embedded-education-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
   <div class="text-2xl font-bold text-green-700 mb-4">
-    🎓 FAA™ Education & Youth Brand Dashboard (66 Brands)
+    🎓 FAA™ Education & Youth Dashboard
   </div>
   <div id="education-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="education-snapshots"></div>
 </div>
 
-<!-- ✂ Fashion -->
+<!-- Embedded Fashion Sector -->
 <div id="embedded-fashion-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
   <div class="text-2xl font-bold text-pink-700 mb-4">✂ FAA™ Fashion & Identity Dashboard</div>
   <div id="fashion-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="fashion-snapshots"></div>
 </div>
 
-<!-- 🎮 Gaming -->
+<!-- Embedded Gaming Sector -->
 <div id="embedded-gaming-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
   <div class="text-2xl font-bold text-indigo-700 mb-4">🎮 FAA™ Gaming & Simulation Dashboard</div>
   <div id="gaming-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="gaming-snapshots"></div>
 </div>
 
- <!-- Embedded Health & Hygiene Sector Panel -->
+<!-- Embedded Health Sector -->
 <div id="embedded-health-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
   <div class="text-2xl font-bold text-gray-700 mb-4">
-    🧠 FAA™ Health & Hygiene Core Brand Dashboard (93 Brands)
+    🧠 FAA™ Health & Hygiene Dashboard
   </div>
   <div id="health-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="health-snapshots"></div>
 </div>
 
-
-<!-- 🏗️ Housing -->
+<!-- Embedded Housing Sector -->
 <div id="embedded-housing-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
   <div class="text-2xl font-bold text-blue-800 mb-4">🏗️ FAA™ Housing & Infrastructure Dashboard</div>
   <div id="housing-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="housing-snapshots"></div>
 </div>
 
-<!-- ⚖ Justice -->
+<!-- Embedded Justice Sector -->
 <div id="embedded-justice-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
   <div class="text-2xl font-bold text-gray-700 mb-4">⚖ FAA™ Justice & Ethics Dashboard</div>
   <div id="justice-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="justice-snapshots"></div>
 </div>
 
-<!-- Embedded AI Logic Snapshot Panel -->
-<div id="embedded-ailogic-snapshot" class="bg-white p-6 mt-10 rounded shadow">
-  <div class="text-2xl font-bold text-indigo-800 mb-4">
-    🧠 FAA™ AI, Logic & Grid Dashboard
-  </div>
-  <div id="ailogic-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
-  <div class="p-6" id="ailogic-snapshots"></div>
+<!-- Embedded Professional Services Panel -->
+<div id="embedded-professional-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
+  <div class="text-2xl font-bold text-indigo-800 mb-4">🧾 FAA™ Professional Services Dashboard</div>
+  <div id="professional-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+  <div class="p-6" id="professional-snapshots"></div>
 </div>
 
-
-
-
-  <!-- 🧠 Knowledge -->
+<!-- Embedded Knowledge Sector -->
 <div id="embedded-knowledge-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
   <div class="text-2xl font-bold text-blue-700 mb-4">🧠 FAA™ Knowledge & Archives Dashboard</div>
   <div id="knowledge-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="knowledge-snapshots"></div>
 </div>
 
-<!-- ☰ Micro-Mesh -->
+<!-- Embedded Micro-Mesh Logistics -->
 <div id="embedded-micromesh-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
   <div class="text-2xl font-bold text-yellow-800 mb-4">☰ FAA™ Micro-Mesh Logistics Dashboard</div>
   <div id="micromesh-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="micromesh-snapshots"></div>
 </div>
 
-<!-- 🎬 Media -->
+<!-- Embedded Media Sector -->
 <div id="embedded-media-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
   <div class="text-2xl font-bold text-gray-700 mb-4">🎬 FAA™ Motion, Media & Sonic Dashboard</div>
+
+  <!-- 💠 Brand Buttons -->
   <div id="media-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+
+  <!-- 💡 Snapshots -->
   <div class="p-6" id="media-snapshots"></div>
+
+  <!-- 🔁 Scroll Profile Cards (Carousel Style) -->
+  <div id="media-scroll-panel" class="overflow-x-auto mt-10 mb-12 px-4">
+    <div class="scroll-cards flex space-x-6 min-w-full pb-4"></div>
+  </div>
 </div>
 
-<!-- ✿ Nutrition -->
+<!-- Embedded Nutrition Sector -->
 <div id="embedded-nutrition-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
   <div class="text-2xl font-bold text-green-800 mb-4">✿ FAA™ Nutrition & Food Chain Dashboard</div>
   <div id="nutrition-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="nutrition-snapshots"></div>
 </div>
 
-<!-- 📦 Packaging -->
+<!-- Embedded Packaging -->
 <div id="embedded-packaging-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
   <div class="text-2xl font-bold text-yellow-600 mb-4">📦 FAA™ Packaging & Materials Dashboard</div>
   <div id="packaging-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="packaging-snapshots"></div>
 </div>
 
-<!-- ✴️ Quantum -->
+<!-- Embedded Quantum Sector -->
 <div id="embedded-quantum-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
   <div class="text-2xl font-bold text-purple-700 mb-4">✴️ FAA™ Quantum Protocols Dashboard</div>
   <div id="quantum-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="quantum-snapshots"></div>
 </div>
 
-<!-- ☯ Ritual -->
+<!-- Embedded Ritual Sector -->
 <div id="embedded-ritual-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
   <div class="text-2xl font-bold text-gray-800 mb-4">☯ FAA™ Ritual & Culture Dashboard</div>
   <div id="ritual-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
@@ -272,7 +558,11 @@
 <!-- 📡 Webless -->
 <div id="embedded-webless-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
   <div class="text-2xl font-bold text-gray-700 mb-4">📡 FAA™ Webless Tech & Nodes Dashboard</div>
+  
+  <!-- Grid where dynamic content will be appended -->
   <div id="webless-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+
+  <!-- Section to display snapshots -->
   <div class="p-6" id="webless-snapshots"></div>
 </div>
 
@@ -283,20 +573,33 @@
   <div class="p-6" id="nft-snapshots"></div>
 </div>
 
-   <!-- Embedded Education Sector Panel -->
+<!-- Embedded Education Sector Panel -->
 <div id="embedded-education-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
-  <div class="text-2xl font-bold text-green-700 mb-4">
-    🎓 FAA™ Education & Youth Brand Dashboard (66 Brands)
-  </div>
+  <div class="text-2xl font-bold text-green-700 mb-4">🎓 FAA™ Education & Youth Brand Dashboard (66 Brands)</div>
   <div id="education-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="education-snapshots"></div>
 </div>
-  
+
 <!-- ♻️ Zero Waste -->
 <div id="embedded-zerowaste-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
   <div class="text-2xl font-bold text-lime-700 mb-4">♻️ FAA™ Zero Waste Dashboard</div>
   <div id="zerowaste-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
   <div class="p-6" id="zerowaste-snapshots"></div>
+</div>
+
+<!-- Embedded AI Logic Sector Panel -->
+<div id="embedded-ailogic-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
+  <div class="text-2xl font-bold text-indigo-700 mb-4">🧠 FAA™ AI, Logic & Grid Brand Dashboard </div>
+  <div id="ailogic-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+  <div class="p-6" id="ailogic-snapshots"></div>
+</div>
+
+
+<!-- Embedded Professional Services Panel -->
+<div id="embedded-professional-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
+  <div class="text-2xl font-bold text-indigo-800 mb-4">🧾 FAA™ Professional Services Dashboard</div>
+  <div id="professional-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 px-4"></div>
+  <div class="p-6" id="professional-snapshots"></div>
 </div>
 
 <!-- 📉 FAA Scroll Pulse Monitor -->
@@ -310,69 +613,62 @@
   </div>
 </section>
 
-<!-- CHART.JS + LUXON ADAPTER (Module CDN Setup) -->
-<script type="module">
-  import Chart from 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.esm.js';
-  import 'https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js';
-  import 'https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1';
+<!-- Chart.js CDN (include once) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const ctx = document.getElementById('pulseChart')?.getContext('2d');
-    if (!ctx) return;
+<!-- Pulse Chart Script -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const ctx = document.getElementById("pulseChart").getContext("2d");
 
-    const generateData = () => {
-      const now = Date.now();
-      return Array.from({ length: 10 }, (_, i) => ({
-        x: new Date(now - (9 - i) * 1000),
-        y: 80 + Math.random() * 20
-      }));
-    };
-
-    const chartData = {
-      datasets: [{
-        label: 'Pulse Index',
-        data: generateData(),
-        backgroundColor: 'rgba(99, 102, 241, 0.2)',
-        borderColor: 'rgb(99, 102, 241)',
-        borderWidth: 2,
-        tension: 0.4,
-        pointRadius: 0
-      }]
-    };
-
-    const pulseChart = new Chart(ctx, {
+    new Chart(ctx, {
       type: 'line',
-      data: chartData,
+      data: {
+        labels: [
+          "AI Logic", "Creative", "Logistics", "Housing", "Media",
+          "Nutrition", "Education", "Gaming", "Health", "Utilities"
+        ],
+        datasets: [{
+          label: "Sync Pulse",
+          data: [92, 134, 108, 95, 204, 77, 88, 142, 126, 101],
+          borderColor: "rgba(99,102,241,1)",  // Indigo-500
+          backgroundColor: "rgba(99,102,241,0.1)",
+          borderWidth: 2,
+          tension: 0.3,
+          fill: true,
+          pointRadius: 3,
+          pointHoverRadius: 5
+        }]
+      },
       options: {
         responsive: true,
-        animation: false,
-        plugins: { legend: { display: false } },
+        plugins: {
+          legend: {
+            display: true,
+            labels: {
+              color: "#4B5563"  // Tailwind gray-600
+            }
+          }
+        },
         scales: {
-          x: {
-            type: 'time',
-            time: { tooltipFormat: 'HH:mm:ss', unit: 'second' },
-            ticks: { display: false }
-          },
           y: {
-            min: 60,
-            max: 120,
-            ticks: { stepSize: 10 }
+            beginAtZero: true,
+            ticks: {
+              color: "#6B7280" // Tailwind gray-500
+            }
+          },
+          x: {
+            ticks: {
+              color: "#6B7280"
+            }
           }
         }
       }
     });
-
-    setInterval(() => {
-      chartData.datasets[0].data = generateData();
-      pulseChart.update();
-    }, 3000);
   });
 </script>
 
-
-
-
-  <!-- METRICS SECTION -->
+<!-- METRICS SECTION -->
 <section class="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-7 gap-6 px-6 py-8">
   <a href="node-activity.html" class="bg-white p-5 rounded shadow text-center hover:bg-yellow-50 transition-transform hover:-translate-y-1 hover:scale-105">
     <h3 class="text-md font-bold text-gray-700">🧠 Active Nodes</h3>
@@ -1645,6 +1941,104 @@ function renderMediaSection() {
     return;
   }
 
+  const scrollProfiles = {
+    "SonicGrid": {
+      title: "SonicGrid™ Product Scroll",
+      intro: "SonicGrid™ is a modular media routing protocol for dynamic audio environments. Built for creators, audio engineers, podcasters, and signal integrators.",
+      features: [
+        "Low-latency audio mesh processing",
+        "Vault-linked subnode chaining (e.g. AudioNode™, QRMix™)",
+        "WebAudio-ready deployment",
+        "FAA VaultTrace™ compatibility"
+      ],
+      pricing: [
+        "Starter – R99/mo (3 signal lanes)",
+        "Pro Studio – R299/mo (unlimited mesh lanes + batch export)",
+        "Enterprise SLA – Custom pricing (includes FAA compliance sync)"
+      ],
+      metadata: {
+        id: "SGRID-FAAZ-8492",
+        vault: "HM-0425",
+        layer: "ScrollMesh v2.4"
+      }
+    },
+    "VoiceLoop": {
+      title: "VoiceLoop™ Product Scroll",
+      intro: "VoiceLoop™ enables looped audio workflows for speech actors, voice apps, and smart device interactions.",
+      features: [
+        "Loop authoring in-browser",
+        "QRVoice triggers with FAA sync",
+        "ScrollPath routing and caption sync"
+      ],
+      pricing: [
+        "Creator Tier – R49",
+        "Pro VoiceKit – R149",
+        "Enterprise TTS Mesh – R499"
+      ],
+      metadata: {
+        id: "VLOOP-FAAV-4910",
+        vault: "HM-0425",
+        layer: "VoiceMesh v1.6"
+      }
+    },
+    "MediaMesh": {
+      title: "MediaMesh™ Overview",
+      intro: "MediaMesh™ connects distributed media nodes with lightweight FAA-verified logic layers.",
+      features: [
+        "Connects WebRTC, RTMP, and static media endpoints",
+        "VaultPing™ logs every stream state",
+        "Works inside Notion embeds & LMS platforms"
+      ],
+      pricing: [
+        "Lite – Free",
+        "Studio Sync – R249/mo",
+        "API Mesh Mode – R499+"
+      ],
+      metadata: {
+        id: "MMESH-FAAC-1092",
+        vault: "HM-0425",
+        layer: "ScrollMesh v3.0"
+      }
+    },
+    "StreamNode": {
+      title: "StreamNode™ FAA Integration",
+      intro: "StreamNode™ deploys embeddable video & audio nodes with built-in vault linkage and edge buffering.",
+      features: [
+        "FAA SignalToken™ ready",
+        "Supports HLS, WebRTC & FAA NFT Proofs",
+        "Zero-lag audio fallback chain"
+      ],
+      pricing: [
+        "Free Node – R0",
+        "Premium Bundle – R149/mo",
+        "Vault-Claimed Hosting – R299"
+      ],
+      metadata: {
+        id: "SNODE-FAAE-4482",
+        vault: "HM-0425",
+        layer: "EchoStack v2.2"
+      }
+    },
+    "MotionID": {
+      title: "MotionID™ Scroll Layer",
+      intro: "MotionID™ provides traceable video labeling for creative and forensic use.",
+      features: [
+        "Auto-claim NFT for every upload",
+        "ScrollSync™ Layering",
+        "Vaulted Timestamp Chain"
+      ],
+      pricing: [
+        "R99 flat",
+        "R399 w/ IP Sync + FAA Archive Lock"
+      ],
+      metadata: {
+        id: "MOTID-FAAL-5293",
+        vault: "HM-0425",
+        layer: "VideoMesh v1.1"
+      }
+    }
+  };
+
   mediaBrands.forEach((brand, i) => {
     const btn = document.createElement('button');
     btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-indigo-100 hover:text-indigo-800 font-semibold cursor-pointer';
@@ -1661,6 +2055,42 @@ function renderMediaSection() {
       <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
         ${subList}
       </ul>`;
+
+    if (scrollProfiles[brand]) {
+      const p = scrollProfiles[brand];
+      const scroll = document.createElement("div");
+      scroll.className = "min-w-[300px] max-w-md flex-shrink-0 bg-white p-6 border rounded shadow text-sm space-y-4";
+
+      scroll.innerHTML = `
+        <h4 class="text-xl font-bold text-indigo-700">🔊 ${p.title}</h4>
+        <p>${p.intro}</p>
+
+        <div>
+          <h5 class="font-semibold">🎛️ Features</h5>
+          <ul class="list-disc list-inside ml-4 space-y-1">
+            ${p.features.map(f => `<li>${f}</li>`).join("")}
+          </ul>
+        </div>
+
+        <div>
+          <h5 class="font-semibold">💳 Pricing</h5>
+          <ul class="list-disc list-inside ml-4 space-y-1">
+            ${p.pricing.map(f => `<li>${f}</li>`).join("")}
+          </ul>
+        </div>
+
+        <div>
+          <h5 class="font-semibold">🔗 FAA Metadata</h5>
+          <ul class="list-disc list-inside ml-4">
+            <li>Product ID: <code>${p.metadata.id}</code></li>
+            <li>VaultID: <code>${p.metadata.vault}</code></li>
+            <li>Signal Echo Layer: <code>${p.metadata.layer}</code></li>
+          </ul>
+        </div>
+      `;
+      snap.appendChild(scroll);
+    }
+
     snapContainer.appendChild(snap);
   });
 }
@@ -1871,45 +2301,284 @@ const ailogicSubNodes = [
   ['ZoneClaim', 'VaultProof', 'QRTrace', 'GridEcho'],
   ['TraceLogic', 'VaultPath', 'QRBeam', 'OmniID'],
   ['MapClaim', 'VaultSync', 'QRSignal', 'LogicMesh'],
-  ];
+];
 
-  function renderAILogicSection() {
-    const grid = document.getElementById('ailogic-grid');
-    const snapContainer = document.getElementById('ailogic-snapshots');
+function renderAILogicSection() {
+  const grid = document.getElementById('ailogic-grid');
+  const snapContainer = document.getElementById('ailogic-snapshots');
+
+  if (!grid || !snapContainer) {
+    console.error('[AI Logic] Required DOM elements missing.');
+    return;
+  }
+
+  grid.innerHTML = '';
+  snapContainer.innerHTML = '';
+
+  const minLength = Math.min(ailogicBrands.length, ailogicSubNodes.length);
+  for (let i = 0; i < minLength; i++) {
+    const brand = ailogicBrands[i];
+
+    const btn = document.createElement('button');
+    btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-indigo-100 hover:text-indigo-800 font-semibold cursor-pointer';
+    btn.innerHTML = `${brand}<sup>™</sup>`;
+    btn.onclick = () => toggleSnapshot(`ailogic-snap-${i}`);
+    grid.appendChild(btn);
+
+    const subList = (ailogicSubNodes[i] || []).map(n => `<li>🔹 ${n}</li>`).join('');
+    const snap = document.createElement('div');
+    snap.id = `ailogic-snap-${i}`;
+    snap.className = 'brand-snapshot hidden mt-6';
+    snap.innerHTML = `
+      <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
+      <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+        ${subList}
+      </ul>`;
+    snapContainer.appendChild(snap);
+  }
+
+  console.log('[AI Logic] Rendered successfully.');
+}
+
+document.addEventListener('DOMContentLoaded', renderAILogicSection);
+</script>
+
+
+  <script>
+const professionalBrands = [
+  'LedgerNest™', 'OmniBooks™', 'QCalcX™', 'SiteProof™', 'LawTrace™',
+  'ContractCast™', 'Enginuity™', 'StructVault™', 'RegiSync™', 'ScrollAudit™',
+  'ClaimDocX™', 'PlanDrop™', 'SurveyGrid™', 'VaultJudge™', 'LoopInspect™',
+  'BuildNode™', 'ComplyTrack™', 'LegalSync™', 'BudgetCast™', 'VaultPlans™',
+  'FormCert™', 'ProofLayer™', 'ZoneMap™', 'TrackSeal™', 'DocLoop™',
+  'AuditCrate™', 'VerifyLine™', 'PlanMesh™', 'FrameBook™', 'LogicPermit™',
+  'OmniBrief™', 'ClauseCraft™', 'FormLogic™', 'CheckNode™', 'AssetTrace™',
+  'LawPathX™', 'LedgerFlow™', 'BudgetSync™', 'CrateJudge™', 'SpecAudit™',
+  'LoopCheck™', 'OmniTender™', 'SignalCompliance™', 'BuildCast™', 'NodeClause™',
+  'PermitDrop™', 'AuditMatrix™', 'StructPlan™', 'ClaimBoard™', 'FormDrop™'
+];
+const professionalSubNodes = [
+  ['LedgerCore', 'VaultTrack', 'QRInvoice', 'AuditSync', 'StatementFlow', 'TaxGrid'],
+  ['BooksPath', 'VaultEcho', 'QRPay', 'BudgetMesh', 'EntryLoop', 'PayrollCast'],
+  ['QuantZone', 'CostTrack', 'VaultEcho', 'GridEstimate', 'QRClaim', 'SiteYield'],
+  ['ProofMesh', 'ProjectVault', 'QRSync', 'SpecClaim', 'SurveyNode', 'BuildFlow'],
+  ['LawGrid', 'VaultLegal', 'QRCase', 'ClauseMap', 'SignalJudge', 'TrackClaim'],
+  ['CastPath', 'VaultContract', 'QRSign', 'FormDrop', 'LegalSync', 'NodeClause'],
+  ['EnginuityCore', 'VaultStruct', 'QREngine', 'ModelClaim', 'SpecLoop', 'PlanNode'],
+  ['VaultFrame', 'StructMap', 'QRDesign', 'BuildPath', 'EstimateLine', 'NodeSpec'],
+  ['RegCore', 'VaultRule', 'QRCompliance', 'GovTrack', 'DocNode', 'ProofSync'],
+  ['AuditTrail', 'VaultAudit', 'QRTrace', 'NodeForm', 'ControlClaim', 'VerifyRoute'],
+  ['DocClaim', 'VaultDocs', 'QRForm', 'FormCert', 'LegalDrop', 'TraceNode'],
+  ['DropSheet', 'VaultPlan', 'QRDesign', 'BudgetLine', 'MeshForm', 'CastApproval'],
+  ['GridScan', 'VaultSurvey', 'QRField', 'TrackDrop', 'PingZone', 'NodeMeasure'],
+  ['JudgeTag', 'VaultCourt', 'QRSign', 'RulingPath', 'CaseLoop', 'LegalCast'],
+  ['InspectMesh', 'VaultLoop', 'QRInspect', 'NodeClaim', 'SignalProof', 'FieldTag'],
+  ['NodeBuild', 'VaultPermit', 'QRStage', 'DropPanel', 'SiteCast', 'LabelForm'],
+  ['TrackComply', 'VaultReg', 'QRCertify', 'PathEcho', 'DocLock', 'ClausePanel'],
+  ['LegalForm', 'VaultBrief', 'QRFile', 'TrackJudge', 'LoopEcho', 'ScanClause'],
+  ['CastBudget', 'VaultBook', 'QRCost', 'PlanNode', 'DropMesh', 'ClaimNode'],
+  ['PlansFrame', 'VaultDraw', 'QRLoop', 'PathEcho', 'StageCast', 'LabelProof'],
+  ['CertForm', 'VaultPaper', 'QRStep', 'MeshAudit', 'DropClause', 'PingClaim'],
+  ['LayerProof', 'VaultTrace', 'QRGrid', 'ClauseEcho', 'FormYield', 'NodeTag'],
+  ['MapZone', 'VaultGPS', 'QRPlot', 'ScanClaim', 'FormTrace', 'AuditMark'],
+  ['SealLine', 'VaultPad', 'QRRoute', 'ClaimFlow', 'MeshLabel', 'LegalGrid'],
+  ['LoopForm', 'VaultDoc', 'QRClaim', 'DropBoard', 'ClauseFlow', 'TraceLink'],
+  ['CrateAudit', 'VaultSort', 'QRPanel', 'ScanCast', 'TraceBoard', 'FormNote'],
+  ['LineVerify', 'VaultMark', 'QRSignal', 'NodeDrop', 'ClauseCheck', 'FormSeal'],
+  ['PlanCast', 'VaultSheet', 'QRFrame', 'EchoGrid', 'SiteTag', 'NodeLoop'],
+  ['BookFrame', 'VaultPages', 'QRRef', 'BudgetDrop', 'FormNode', 'AssetGrid'],
+  ['PermitLine', 'VaultLogic', 'QRPermit', 'DropSignal', 'NodeProof', 'TagGrid'],
+  ['BriefCast', 'VaultJudge', 'QRPath', 'EchoPanel', 'DocGrid', 'PlanTrack'],
+  ['CraftClause', 'VaultSign', 'QRProof', 'EchoFile', 'LoopAudit', 'NodeYield'],
+  ['LogicFile', 'VaultEcho', 'QRForm', 'CheckPath', 'TraceLock', 'AuditStage'],
+  ['CheckFlow', 'VaultList', 'QRCheck', 'NodeMark', 'DropPermit', 'GridLine'],
+  ['TraceAsset', 'VaultHold', 'QRAsset', 'FileLine', 'PermitEcho', 'ClauseMap'],
+  ['LawWay', 'VaultJudge', 'QRLaw', 'TraceCast', 'PathCourt', 'CaseEcho'],
+  ['LedgerPath', 'VaultBooks', 'QRLedger', 'DropSync', 'ProofBoard', 'FormPulse'],
+  ['SyncBudget', 'VaultSpend', 'QRBalance', 'PathCheck', 'LoopForm', 'AuditMesh'],
+  ['JudgeCrate', 'VaultCase', 'QRReview', 'DropNode', 'ClauseRoute', 'SignalFile'],
+  ['AuditSpec', 'VaultGrid', 'QRSpec', 'NodeRoute', 'CaseMesh', 'LoopPanel'],
+  ['CheckLoop', 'VaultProof', 'QRTest', 'EchoCast', 'ClaimPanel', 'DocTrace'],
+  ['TenderPath', 'VaultBid', 'QRAward', 'MeshClause', 'PanelCheck', 'TrackPlan'],
+  ['CompliancePulse', 'VaultCheck', 'QRGov', 'RouteLaw', 'MeshJudge', 'NodeCast'],
+  ['BuildFlow', 'VaultDraft', 'QRBuild', 'PlanStage', 'EchoTrack', 'PermitNode'],
+  ['ClausePanel', 'VaultSection', 'QRDrop', 'SignalMesh', 'LawCast', 'PlanForm'],
+  ['DropPermit', 'VaultCourt', 'QRMark', 'CastEcho', 'ProofLine', 'GridCase'],
+  ['MatrixAudit', 'VaultData', 'QRMatrix', 'StageFlow', 'CheckLabel', 'FormGrid'],
+  ['PlanLine', 'VaultMap', 'QRStruct', 'EchoAudit', 'PermitFlow', 'ScanProof'],
+  ['BoardClaim', 'VaultRoll', 'QRClaim', 'LineNote', 'TagMesh', 'DropAudit'],
+  ['DropForm', 'VaultEntry', 'QRPath', 'ClauseNote', 'AuditMap', 'PingPlan']
+ ];
+
+  function renderProfessionalSection() {
+    const grid = document.getElementById("professional-grid");
+    const snapContainer = document.getElementById("professional-snapshots");
 
     if (!grid || !snapContainer) {
-      console.error('[FAA] Required DOM element(s) missing.');
+      console.error("[Professional] Required DOM elements missing.");
       return;
     }
 
-    const minLength = Math.min(ailogicBrands.length, ailogicSubNodes.length);
-    for (let i = 0; i < minLength; i++) {
-      const brand = ailogicBrands[i];
+    grid.innerHTML = "";
+    snapContainer.innerHTML = "";
 
-      const btn = document.createElement('button');
-      btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-indigo-100 hover:text-indigo-800 font-semibold cursor-pointer';
+    professionalBrands.forEach((brand, i) => {
+      const btn = document.createElement("button");
+      btn.className =
+        "bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-yellow-100 hover:text-yellow-800 font-semibold cursor-pointer";
       btn.innerHTML = `${brand}<sup>™</sup>`;
-      btn.onclick = () => toggleSnapshot(`ailogic-snap-${i}`);
+      btn.onclick = () => toggleSnapshot(`professional-snap-${i}`);
       grid.appendChild(btn);
 
-      const subList = (ailogicSubNodes[i] || []).map(n => `<li>🔹 ${n}</li>`).join('');
-      const snap = document.createElement('div');
-      snap.id = `ailogic-snap-${i}`;
-      snap.className = 'brand-snapshot hidden mt-6';
+      const subList = professionalSubNodes[i]
+        .map((n) => `<li>🔹 ${n}</li>`)
+        .join("");
+
+      const snap = document.createElement("div");
+      snap.id = `professional-snap-${i}`;
+      snap.className = "brand-snapshot hidden mt-6";
       snap.innerHTML = `
         <div class='text-xl font-semibold mb-2'>${brand}<sup>™</sup> Snapshot</div>
         <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
           ${subList}
         </ul>`;
       snapContainer.appendChild(snap);
+    });
+
+    console.log("[Professional] Rendered successfully.");
+  }
+
+  document.addEventListener("DOMContentLoaded", renderProfessionalSection);
+</script>
+
+
+<script>
+const weblessTechBrands = [
+    'OmniQR™', 'MeshSync™', 'VaultBeacon™', 'TapClaim™', 'ScrollKey™',
+    'AirLoop™', 'DotGrid™', 'VaultTouch™', 'PouchCast™', 'YieldTrace™',
+    'TapSync™', 'TouchProof™', 'MeshKey™', 'QRPad™', 'DotPulse™',
+    'FlashNode™', 'ScrollFuse™', 'PassiveYield™', 'QRClaimMesh™', 'VaultTouchPro™',
+    'AirDropVault™', 'MeshTrigger™', 'ZeroLink™', 'PaperID™', 'SignalFrame™',
+    'TapMesh™', 'TagBeacon™', 'ScrollTouch™', 'ClaimPatch™', 'LightGrid™',
+    'VaultPrint™', 'OmniTag™', 'ScanToken™', 'PassiveKey™', 'VaultCast™',
+    'ScrollNodeX™', 'FrameSync™', 'QRPath™', 'DotLogic™', 'BeaconMesh™',
+    'NFCVault™', 'LightPulse™', 'ScrollRelay™', 'OfflineYield™', 'DotClaim™',
+    'ZeroMesh™', 'CastLink™', 'FrameYield™', 'MeshProof™', 'PaperVault™',
+    'SyncPulse™', 'PassiveCast™', 'TriggerDrop™', 'SignalTag™', 'GridID™',
+    'ScrollPing™', 'NFCDrop™', 'VaultEcho™', 'PassiveSync™', 'QRBeam™',
+    'DropCast™', 'ClaimPrint™', 'VaultTag™', 'QRFuse™', 'TapVault™',
+    'PrintSync™', 'TraceCast™', 'PassiveRoute™', 'CastProof™', 'AirPath™',
+    'QRMesh™', 'ScrollZero™', 'TagSync™', 'GridTouch™', 'LightTrace™',
+    'PassiveVault™', 'EchoGrid™', 'CastToken™', 'TraceNode™', 'NFCGrid™',
+    'ProofCast™', 'SignalDrop™', 'TouchFlow™', 'TagNode™', 'SceneGrid™',
+    'EchoVault™', 'ClipNode™', 'BeatProof™', 'SoundBoard™', 'MediaPulse™',
+    'RenderSync™', 'SceneLock™', 'SonicLine™', 'AudioSpan™', 'TrackProof™',
+    'VaultMix™', 'AudioIndex™', 'VisualCast™', 'MediaTrace™', 'PulseTrack™',
+    'EchoClaim™', 'FrameNode™', 'AudioMap™', 'StreamCert™', 'SonicView™'
+  ];
+
+  const weblessTechSubNodes = [
+    ['QRNode', 'YieldPing', 'ClaimGrid', 'ScanFlow'],
+    ['NodeJoin', 'MeshPulse', 'ConnectGrid', 'DropRoute'],
+    ['FlashNode', 'SecurePing', 'LightPath', 'VaultCast'],
+    ['NFCTrigger', 'ScrollTap', 'NodePush', 'PayoutTouch'],
+    ['KeyNode', 'UnlockTrack', 'AccessVault', 'PeerPass'],
+    ['LoopCast', 'AirPing', 'PassiveTrack', 'QRWave'],
+    ['DotNode', 'MeshPrint', 'InkLink', 'FormSync'],
+    ['TouchID', 'QRAccess', 'ScrollPulse', 'FieldTrigger'],
+    ['DeviceDrop', 'LoopTouch', 'PulseSend', 'AirLabel'],
+    ['QRDrop', 'PathYield', 'SignalToken', 'ScanLock'],
+    ['ScrollNode', 'QRConnect', 'TouchBeam', 'PeerSync'],
+    ['ProofLink', 'TagScan', 'YieldPath', 'ScrollTouch'],
+    ['MeshCode', 'AccessRoute', 'NodeTrace', 'LockDrop'],
+    ['GridTouch', 'SignalDrop', 'TagFrame', 'VaultClick'],
+    ['PulseWave', 'FrameDrop', 'DotYield', 'ScrollEcho'],
+    ['NodePing', 'LightPath', 'QRSync', 'PassiveDrop'],
+    ['FuseNode', 'TouchLoop', 'NFCTrace', 'QRJoin'],
+    ['PassiveNode', 'QRTrace', 'ScrollMark', 'AirSync'],
+    ['ClaimGrid', 'MeshLock', 'TouchYield', 'TagTrace'],
+    ['SecureTap', 'NodeCast', 'ProofScroll', 'QRBeam'],
+    ['AirTag', 'YieldNode', 'VaultSend', 'QRTrigger'],
+    ['TriggerNode', 'PassiveSync', 'TouchCast', 'LinkClaim'],
+    ['QRNodeZero', 'OfflineConnect', 'ScrollTrack', 'VaultLoop'],
+    ['QRPrint', 'ScrollForm', 'NodeMark', 'ScanVault'],
+    ['LightID', 'SignalTrace', 'NodeGrid', 'ScrollFlash'],
+    ['TouchGrid', 'PassiveYield', 'ScrollTouch', 'NFCMap'],
+    ['TagNode', 'FlashPath', 'YieldLink', 'TouchMark'],
+    ['SecureTouch', 'PeerDrop', 'NFCVault', 'QRSignal'],
+    ['ScrollPatch', 'TagClaim', 'QRLink', 'ProofMark'],
+    ['FlashNode', 'TouchEcho', 'SignalCast', 'LightDrop'],
+    ['QRLayout', 'SecureForm', 'TouchScan', 'VaultCopy'],
+    ['TagPath', 'TouchNode', 'ClaimGrid', 'DotJoin'],
+    ['TokenNode', 'ScanPath', 'YieldDot', 'QRMesh'],
+    ['KeyNode', 'NFCYield', 'QRSync', 'DropToken'],
+    ['CastSignal', 'LinkNode', 'ScrollSync', 'ProofDrop'],
+    ['NodePulse', 'TrackEcho', 'TouchID', 'QRLog'],
+    ['FrameID', 'SyncNode', 'VaultPath', 'QRTrigger'],
+    ['GridTrace', 'DropClaim', 'QRIndex', 'ProofNode'],
+    ['DotMap', 'ScrollPulse', 'YieldClaim', 'MeshCode'],
+    ['BeaconTrack', 'NodeLight', 'FlashYield', 'SecureDrop'],
+    ['TagSync', 'VaultNode', 'QRPath', 'TouchTrace'],
+    ['GridClaim', 'PathDrop', 'ScrollSignal', 'NFCVault'],
+    ['FrameYield', 'MeshCast', 'NodeJoin', 'VaultDrop'],
+    ['NodeID', 'QRPanel', 'VaultView', 'SceneSync'],
+    ['MapNode', 'QRDrop', 'VaultPing', 'TrackLine'],
+    ['CertifyScene', 'VaultWave', 'QRNode', 'ClipTrack'],
+    ['ViewGrid', 'VaultEcho', 'QRAudio', 'TagPath'],
+    ['BoardClip', 'QRMap', 'VaultTag', 'MediaFlow'],
+    ['ClipProof', 'VaultScene', 'QRDrop', 'FrameTrace'],
+    ['SceneID', 'QRLink', 'VaultClaim', 'ClipEcho'],
+    ['NodeBeat', 'VaultTrack', 'QRSound', 'EchoDrop'],
+    ['DropTrack', 'QRMix', 'VaultOutput', 'NodeSync']
+  ];
+
+  function renderWeblessTechSection() {
+    const grid = document.getElementById('webless-grid');
+    const snapContainer = document.getElementById('webless-snapshots');
+
+    if (!grid || !snapContainer) return;
+
+    weblessTechBrands.forEach((brand, i) => {
+      // Create the button
+      const btn = document.createElement('button');
+      btn.className = 'bg-white brand-button px-2 py-1 text-sm rounded shadow transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-indigo-100 hover:text-indigo-800 font-semibold cursor-pointer';
+      btn.innerHTML = `${brand}<sup>™</sup>`;
+      btn.onclick = () => toggleSnapshot(`webless-tech-snap-${i}`);
+      grid.appendChild(btn);
+
+      // Create the snapshot div with its contents
+      const subList = (weblessTechSubNodes[i] || []).map(n => `<li>🔹 ${n}</li>`).join('');
+      const snap = document.createElement('div');
+      snap.id = `webless-tech-snap-${i}`;
+      snap.className = 'brand-snapshot hidden mt-6';
+      snap.innerHTML = `
+        <div class='text-xl font-semibold mb-2'>
+          ${brand}<sup>™</sup> Snapshot
+          <button class="close-btn text-sm text-gray-500 ml-2" onclick="toggleSnapshot('webless-tech-snap-${i}')">❌</button>
+        </div>
+        <ul class='bg-white border rounded p-4 shadow text-sm list-disc list-inside space-y-1'>
+          ${subList}
+        </ul>`;
+
+      snapContainer.appendChild(snap);
+    });
+
+    console.log("[Professional] Rendered successfully.");
+  }
+
+  // This function will toggle the visibility of the snapshot div
+  function toggleSnapshot(id) {
+    const snap = document.getElementById(id);
+    if (snap) {
+      snap.classList.toggle('hidden');  // Toggle the hidden class
     }
   }
 
-  function toggleSnapshot(id) {
-    const el = document.getElementById(id);
-    if (el) el.classList.toggle('hidden');
-  }
+  // Call the function after the page loads
+  document.addEventListener("DOMContentLoaded", renderWeblessTechSection);
+</script>
 
+<script>
   const sectorList = {
     "ai-logic": "🧠 AI, Logic & Grid",
     "creative": "🖋️ Creative Tech",
@@ -1934,33 +2603,31 @@ const ailogicSubNodes = [
     "webless": "📡 Webless Tech & Nodes",
     "nft": "🔁 NFT & Ownership",
     "education-youth": "🎓 Education & Youth",
-    "zerowaste": "♻️ Zero Waste"
+    "zerowaste": "♻️ Zero Waste",
+    "professional": "🧾 Professional Services"
   };
 
-  const sectorData = {};
-  for (let key in sectorList) {
-    sectorData[key] = { brands: [], nodes: [] };
+  // 🧠 Persistent Sector Data via localStorage
+  let sectorData = JSON.parse(localStorage.getItem("sectorData")) || {};
+  for (const key in sectorList) {
+    if (!sectorData[key]) {
+      sectorData[key] = { brands: [], nodes: [] };
+    }
   }
 
-  window.addEventListener('DOMContentLoaded', () => {
-    const select = document.getElementById("sectorSelect");
-    if (select) {
-      for (let key in sectorList) {
-        const option = document.createElement("option");
-        option.value = key;
-        option.textContent = sectorList[key];
-        select.appendChild(option);
-      }
-    }
-
-    renderAILogicSection();
-  });
-
+  // ➕ Add Brand and Subnodes to Selected Sector
   function addBrandToSector() {
     const sector = document.getElementById("sectorSelect").value;
-    const brand = document.getElementById("brandInput").value.trim();
-    const subnodes = document.getElementById("subnodesInput").value
-      .split(",").map(n => n.trim()).filter(Boolean);
+    const brandInput = document.getElementById("brandInput");
+    const subnodesInput = document.getElementById("subnodesInput");
+
+    if (!sector || !brandInput || !subnodesInput) {
+      console.error("Admin input fields missing.");
+      return;
+    }
+
+    const brand = brandInput.value.trim();
+    const subnodes = subnodesInput.value.split(",").map(n => n.trim()).filter(Boolean);
 
     if (!brand || subnodes.length === 0) {
       document.getElementById("adminStatus").textContent = "⚠️ Please fill in both fields.";
@@ -1969,26 +2636,30 @@ const ailogicSubNodes = [
 
     sectorData[sector].brands.push(brand);
     sectorData[sector].nodes.push(subnodes);
+    localStorage.setItem("sectorData", JSON.stringify(sectorData));
 
     document.getElementById("adminStatus").textContent =
       `✅ Added ${brand} to ${sectorList[sector]} (${subnodes.length} nodes)`;
 
     document.getElementById("brandInput").value = "";
     document.getElementById("subnodesInput").value = "";
-
     renderSectorOutput(sector);
+
+    setTimeout(() => {
+      document.getElementById("adminStatus").textContent = "";
+    }, 3000);
   }
 
+  // 🧾 Renders Sector Output Below the Admin Panel
   function renderSectorOutput(sectorKey) {
-    let container = document.getElementById("output-section");
-    if (!container) {
-      container = document.createElement("section");
-      container.id = "output-section";
-      container.className = "p-8";
-      document.body.appendChild(container);
-    }
+    const container = document.getElementById("output-section");
+    if (!container) return;
+
+    container.innerHTML = "";
 
     const data = sectorData[sectorKey];
+    if (!data) return;
+
     const html = data.brands.map((brand, i) => `
       <div class="mb-6 border rounded shadow p-4">
         <h3 class="text-lg font-bold text-indigo-700 mb-2">${brand}<sup>™</sup></h3>
@@ -2006,15 +2677,50 @@ const ailogicSubNodes = [
     panel.id = panelId;
     panel.className = "my-8";
     panel.innerHTML = `<h2 class="text-xl font-bold mb-4">${sectorList[sectorKey]} Brands</h2>${html}`;
-
     container.appendChild(panel);
   }
+
+  // 🧹 Clears All Admin-Saved Data
+  function clearSectorData() {
+    localStorage.removeItem("sectorData");
+    location.reload();
+  }
+
+  // 🔄 Setup on Page Load
+  document.addEventListener("DOMContentLoaded", () => {
+    // Render Professional Section first
+    renderProfessionalSection();
+
+    // Now, show the admin panel and append it to the bottom of the page
+    const adminPanel = document.getElementById("embedded-admin-snapshot");
+    if (adminPanel) {
+      adminPanel.classList.remove("hidden");
+      document.body.appendChild(adminPanel); // Moves it to the bottom of the page
+    }
+    
+    // Set up sector options dynamically
+    const select = document.getElementById("sectorSelect");
+    if (select) {
+      Object.keys(sectorList).forEach((key) => {
+        const option = document.createElement("option");
+        option.value = key;
+        option.textContent = sectorList[key];
+        select.appendChild(option);
+      });
+    }
+
+    // Render all saved sector data
+    Object.keys(sectorData).forEach(renderSectorOutput);
+  });
 </script>
 
-<!-- ✅ Now place Admin Panel JUST BEFORE </body> -->
-<section class="bg-white p-6 rounded shadow mt-16 mx-6" id="admin-panel">
-  <h2 class="text-xl font-bold text-gray-800 mb-4">⚙️ Admin Panel — Add Brand & Subnodes</h2>
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<!-- Admin Panel HTML -->
+<div class="text-2xl font-bold text-indigo-700 mb-4">⚙️ FAA™ Admin & Manual Sync Panel</div>
+<div id="embedded-admin-snapshot" class="hidden bg-white p-6 mt-10 rounded shadow">
+  <!-- Close Button for Admin Panel -->
+  <button onclick="closeDiv('embedded-admin-snapshot')" class="absolute top-2 right-2 text-red-500 font-semibold">❌ Close</button>
+
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
     <div>
       <label class="text-sm font-medium block mb-1">📂 Sector</label>
       <select id="sectorSelect" class="w-full border rounded p-2"></select>
@@ -2028,13 +2734,29 @@ const ailogicSubNodes = [
       <input id="subnodesInput" class="w-full border rounded p-2" placeholder="e.g. VaultDrop, QRClaim" />
     </div>
     <div class="flex items-end">
-      <button onclick="addBrandToSector()" class="bg-indigo-600 text-white px-4 py-2 rounded shadow hover:bg-indigo-700">
+      <button onclick="addBrandToSector()" class="bg-indigo-600 text-white px-4 py-2 rounded shadow hover:bg-indigo-700 w-full">
         ➕ Add Brand
       </button>
     </div>
   </div>
-  <p id="adminStatus" class="text-sm mt-4 text-gray-500"></p>
-</section>
 
-</body>
-</html>
+  <p id="adminStatus" class="text-sm text-gray-500 mb-4"></p>
+
+  <div class="mb-6">
+    <button onclick="clearSectorData()" class="text-sm text-red-600 underline">
+      🗑 Clear All Admin Data
+    </button>
+  </div>
+
+  <div id="output-section" class="pt-4"></div>
+</div>
+
+<script>
+  // Function to close the div
+  function closeDiv(id) {
+    const div = document.getElementById(id);
+    if (div) {
+      div.style.display = 'none';  // Hides the div
+    }
+  }
+</script>
