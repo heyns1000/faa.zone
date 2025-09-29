@@ -1,141 +1,513 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Seedwave™ Access Portal</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seedwave™ Access Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDK Imports -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { 
+            getAuth, 
+            signInAnonymously, 
+            signInWithCustomToken, 
+            onAuthStateChanged, 
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { 
+            getFirestore, 
+            setDoc, 
+            doc, 
+            collection,
+            serverTimestamp 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global Firebase variables provided by the environment (MUST BE USED)
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let app, db, auth;
+        let userId = null; // Will store the user's UID or a temp ID
+
+        // Initialize Firebase and Authentication
+        async function initializeFirebase() {
+            try {
+                // Set debug logging for Firestore
+                setLogLevel('Debug');
+                
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                // 1. Authenticate using custom token or anonymously
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                // 2. Set up Auth State Listener
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        document.getElementById('auth-message').textContent = `User: ${user.email || 'Anonymous'}`;
+                        document.getElementById('auth-section').classList.add('hidden');
+                        document.getElementById('authenticated-portal').classList.remove('hidden');
+                        document.getElementById('user-id-display').textContent = `UID: ${userId}`;
+                        console.log("Authenticated User ID:", userId);
+                    } else {
+                        userId = null;
+                        document.getElementById('auth-message').textContent = `Please Sign In or Sign Up`;
+                        document.getElementById('auth-section').classList.remove('hidden');
+                        document.getElementById('authenticated-portal').classList.add('hidden');
+                        document.getElementById('user-id-display').textContent = '';
+                        console.log("User signed out or anonymous.");
+                    }
+                });
+            } catch (error) {
+                console.error("Firebase Initialization/Authentication Error:", error);
+                document.getElementById('auth-message').textContent = `Auth Error: ${error.message}`;
+            }
+        }
+
+        initializeFirebase();
+
+        // Expose necessary functions to the global scope for HTML inline handlers
+        window.db = () => db;
+        window.auth = () => auth;
+        window.userId = () => userId;
+        window.appId = () => appId;
+        window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+        window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+        window.signOut = signOut;
+        window.serverTimestamp = serverTimestamp;
+        window.setDoc = setDoc;
+        window.doc = doc;
+        window.collection = collection;
+    </script>
+    <!-- End Firebase SDK Imports -->
+
+    <style>
+        /* --- Base Theming from FAA.zone for Consistency --- */
+        :root {
+            --bg-color-primary: #f3f4f6;
+            --bg-color-secondary: #ffffff;
+            --text-color-primary: #1d1d1f;
+            --text-color-secondary: #424245;
+            --border-color: #e8e8ed;
+            --primary-accent-color: #0071e3;
+            --secondary-accent-color: #30d158;
+            --tertiary-accent-color: #ff3b30;
+        }
+        body.dark-mode {
+            --bg-color-primary: #1a1a1c;
+            --bg-color-secondary: #2a2a2e;
+            --text-color-primary: #f5f5f7;
+            --text-color-secondary: #a0a0a5;
+            --border-color: #3a3a3e;
+            --primary-accent-color: #667eea;
+            --secondary-accent-color: #68d391;
+            --tertiary-accent-color: #fc8181;
+        }
+        /* --- General Styles --- */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color-primary);
+            color: var(--text-color-primary);
+            transition: all 0.3s ease;
+        }
+        .access-button-base {
+            background-color: var(--bg-color-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-color-primary);
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-radius: 12px;
+            text-align: center;
+        }
+        .access-button-base:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-color: var(--primary-accent-color);
+        }
+        #form-wrapper, #auth-form-wrapper {
+            background-color: var(--bg-color-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        #form-wrapper input, #form-wrapper textarea, #auth-form-wrapper input, #auth-form-wrapper select {
+            background-color: var(--bg-color-primary);
+            border-color: var(--border-color);
+            color: var(--text-color-primary);
+            border-radius: 8px;
+            padding: 0.75rem;
+        }
+        .cta-button-primary {
+            background-color: var(--primary-accent-color);
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,113,227,0.3);
+        }
+        .cta-button-primary:hover {
+            background-color: #0066cc;
+            transform: translateY(-1px);
+        }
+        .confirmation-message {
+            color: var(--secondary-accent-color);
+        }
+        .error-message {
+            color: var(--tertiary-accent-color);
+        }
+        .signout-button {
+            background: none;
+            border: none;
+            color: var(--tertiary-accent-color);
+            font-size: 0.8rem;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+    </style>
 </head>
-<body class="bg-gray-50 min-h-screen px-4 py-12">
+<body class="min-h-screen px-4 py-12">
 
-  <!-- Header -->
-  <header class="text-center mb-10">
-    <h1 class="text-4xl font-bold text-indigo-700">🌐 Seedwave™ Access Portal</h1>
-    <p class="text-gray-600 mt-1">Corebrands management & AI logic deployment center™</p>
-  </header>
+    <!-- Header -->
+    <header class="text-center mb-10">
+        <h1 class="text-4xl sm:text-5xl font-extrabold" style="color: var(--primary-accent-color);">🌐 Seedwave™ Access Portal</h1>
+        <p class="mt-2 text-lg" style="color: var(--text-color-secondary);">Corebrands management & AI logic deployment center™</p>
+        <div class="mt-4 text-sm font-semibold" style="color: var(--text-color-secondary);">
+            <span id="auth-message">Initializing Authentication...</span>
+            <span id="user-id-display" class="text-xs ml-4" style="color: var(--primary-accent-color);"></span>
+            <button id="signout-btn" class="signout-button hidden" onclick="handleSignOut()">Sign Out</button>
+        </div>
+    </header>
 
-  <!-- Access Grid -->
-  <section class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto mb-12">
-    <button onclick="showForm('loyalty')" class="bg-blue-100 hover:bg-blue-200 text-blue-800 p-6 rounded shadow text-center transition">
-      <div class="text-3xl mb-2">🪙</div>
-      <div class="text-xl font-semibold">Loyalty Access</div>
-      <p class="text-sm mt-1">Brand partners, rewards & alliance view</p>
-    </button>
-    <button onclick="showForm('shareholder')" class="bg-gray-100 hover:bg-gray-200 text-gray-800 p-6 rounded shadow text-center transition">
-      <div class="text-3xl mb-2">📊</div>
-      <div class="text-xl font-semibold">Shareholder Access</div>
-      <p class="text-sm mt-1">Governance & ecosystem metrics dashboard</p>
-    </button>
-    <button onclick="showForm('service')" class="bg-green-100 hover:bg-green-200 text-green-800 p-6 rounded shadow text-center transition">
-      <div class="text-3xl mb-2">🤝</div>
-      <div class="text-xl font-semibold">Service Provider</div>
-      <p class="text-sm mt-1">Integration & deployment tools</p>
-    </button>
-    <button onclick="showForm('family')" class="bg-purple-100 hover:bg-purple-200 text-purple-800 p-6 rounded shadow text-center transition">
-      <div class="text-3xl mb-2">👨‍👩‍👧‍👦</div>
-      <div class="text-xl font-semibold">Family Access</div>
-      <p class="text-sm mt-1">Personal vaults, archive access & memory mesh</p>
-    </button>
-  </section>
+    <!-- Authentication Section (Default View) -->
+    <section id="auth-section" class="max-w-md mx-auto p-8 rounded-xl shadow-2xl transition-all hidden">
+        <div id="auth-form-wrapper" class="p-8">
+            <h2 class="text-2xl font-bold mb-6 text-center" style="color: var(--primary-accent-color);">Account Login / Sign Up</h2>
+            <form id="login-form" class="space-y-4">
+                <input type="email" id="auth-email" placeholder="Email Address" class="w-full border p-3" required />
+                <input type="password" id="auth-password" placeholder="Password" class="w-full border p-3" required />
+                <button type="submit" id="auth-submit-btn" class="cta-button-primary w-full py-3">Login</button>
+                <button type="button" id="toggle-auth-mode-btn" class="w-full text-center text-sm mt-3 underline" style="color: var(--text-color-secondary);">Need an account? Click here to Sign Up.</button>
+            </form>
+        </div>
+        <div id="auth-status" class="mt-4 text-center text-sm font-semibold error-message"></div>
+    </section>
 
-  <!-- Dynamic Form Container -->
-  <section id="form-section" class="max-w-5xl mx-auto hidden">
-    <div id="form-wrapper" class="bg-white p-8 rounded shadow"></div>
+    <!-- Authenticated Portal Content (Hidden until logged in) -->
+    <div id="authenticated-portal" class="hidden">
+        <!-- Access Grid -->
+        <section class="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-6xl mx-auto mb-12">
+            <button onclick="showForm('loyalty')" class="access-button-base p-8 hover:border-blue-600">
+                <div class="text-4xl mb-3" style="color: #0071e3;">🪙</div>
+                <div class="text-xl font-bold">Loyalty Access</div>
+                <p class="text-sm mt-1" style="color: var(--text-color-secondary);">Brand partners, rewards & alliance view</p>
+            </button>
+            <button onclick="showForm('shareholder')" class="access-button-base p-8 hover:border-gray-500">
+                <div class="text-4xl mb-3" style="color: #4a5568;">📊</div>
+                <div class="text-xl font-bold">Shareholder Access</div>
+                <p class="text-sm mt-1" style="color: var(--text-color-secondary);">Governance & ecosystem metrics dashboard</p>
+            </button>
+            <button onclick="showForm('service')" class="access-button-base p-8 hover:border-green-600">
+                <div class="text-4xl mb-3" style="color: #30d158;">🤝</div>
+                <div class="text-xl font-bold">Service Provider</div>
+                <p class="text-sm mt-1" style="color: var(--text-color-secondary);">Integration & deployment tools</p>
+            </button>
+            <button onclick="showForm('family')" class="access-button-base p-8 hover:border-purple-600">
+                <div class="text-4xl mb-3" style="color: #8b5cf6;">👨‍👩‍👧‍👦</div>
+                <div class="text-xl font-bold">Family Access</div>
+                <p class="text-sm mt-1" style="color: var(--text-color-secondary);">Personal vaults, archive access & memory mesh</p>
+            </button>
+        </section>
 
-    <div class="mt-6">
-      <button 
-        onclick="submitRegistration(event)" 
-        class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-2 rounded shadow"
-      >
-        ✅ Submit Registration
-      </button>
+        <!-- Dynamic Form Container (Role Request) -->
+        <section id="form-section" class="max-w-4xl mx-auto hidden">
+            <div id="form-wrapper" class="p-8">
+                <p class="text-center" style="color: var(--text-color-secondary);">Select an access type above to submit a role request.</p>
+            </div>
+
+            <div class="mt-6 flex items-center justify-between">
+                <button
+                    onclick="submitRegistration(event)"
+                    class="cta-button-primary"
+                    id="submit-role-btn"
+                >
+                    ✅ Submit Role Request
+                </button>
+                <div id="submissionConfirmation" class="text-sm confirmation-message font-semibold hidden">
+                    <!-- Submission status updates here -->
+                </div>
+            </div>
+        </section>
     </div>
 
-    <div id="submissionConfirmation" class="mt-4 text-green-700 font-semibold hidden">
-      🎉 Your access request has been received. You will get an activation email from <strong>vault@faa.zone</strong> shortly.
-    </div>
-  </section>
+    <!-- Footer -->
+    <footer class="text-center text-xs mt-16" style="color: var(--text-color-secondary);">
+        FAA.Zone Mesh • TreatyMesh Certified • All roles encrypted & routed via ⛓️ SecureScroll™
+    </footer>
 
-  <!-- Footer -->
-  <footer class="text-center text-xs text-gray-500 mt-16">
-    FAA.Zone Mesh • TreatyMesh Certified • All roles encrypted & routed via ⛓️ SecureScroll✂
-  </footer>
+<script type="module">
+    // Re-importing from the module scope defined above for clarity and to ensure all functions are available.
+    // The actual Firebase objects (auth, db, userId, etc.) are available globally via window.auth(), window.db(), etc.
+    
+    let currentRoleType = null;
 
-<script>
-const formTemplates = {
-  loyalty: `
-    <h2 class="text-2xl font-bold mb-4 text-blue-700">🪙 Loyalty Access Registration</h2>
-    <form class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <input type="text" placeholder="Full Name" class="border rounded p-2" />
-      <input type="email" placeholder="Email Address" class="border rounded p-2" />
-      <input type="tel" placeholder="Phone Number" class="border rounded p-2" />
-      <input type="text" placeholder="Vault / Family Name" class="border rounded p-2" />
-      <input type="date" placeholder="Date of Birth" class="border rounded p-2" />
-      <input type="number" placeholder="Age" class="border rounded p-2" />
-      <input type="text" placeholder="Referral Code (optional)" class="border rounded p-2" />
-      <textarea placeholder="What does loyalty mean to you?" class="col-span-2 border rounded p-2"></textarea>
-      <label class="col-span-2"><input type="checkbox" class="mr-2" /> I understand this is a lifelong journey and relationship request.</label>
-    </form>
-  `,
-  service: `
-    <h2 class="text-2xl font-bold mb-4 text-green-700">🤝 Service Provider Onboarding</h2>
-    <form class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <input type="text" placeholder="Company Name" class="border rounded p-2" />
-      <input type="text" placeholder="Registration / FICA Number" class="border rounded p-2" />
-      <input type="text" placeholder="Country of Operation" class="border rounded p-2" />
-      <input type="email" placeholder="Official Email Address" class="border rounded p-2" />
-      <input type="tel" placeholder="Primary Contact Number" class="border rounded p-2" />
-      <input type="text" placeholder="Company Director Full Name" class="border rounded p-2" />
-      <input type="text" placeholder="24/7 Service Contact Name" class="border rounded p-2" />
-      <input type="file" class="border rounded p-2" />
-      <label class="col-span-2"><input type="checkbox" class="mr-2" /> I confirm this company offers 24/7 service and support.</label>
-    </form>
-  `,
-  family: `
-    <h2 class="text-2xl font-bold mb-4 text-purple-700">👨‍👩‍👧‍👦 Family Access Registration</h2>
-    <form class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <input type="text" placeholder="Family Representative Name" class="border rounded p-2" />
-      <input type="text" placeholder="Family Name" class="border rounded p-2" />
-      <input type="email" placeholder="Email Address" class="border rounded p-2" />
-      <input type="date" placeholder="Date of Birth" class="border rounded p-2" />
-      <input type="number" placeholder="Age" class="border rounded p-2" />
-      <input type="text" placeholder="Desired Username" class="border rounded p-2" />
-      <input type="password" placeholder="Create Password" class="border rounded p-2" />
-      <input type="password" placeholder="Confirm Password" class="border rounded p-2" />
-      <input type="file" class="border rounded p-2" />
-      <label class="col-span-2"><input type="checkbox" class="mr-2" /> Generate my vault at: faa.zone/public/FamilyName/username-password.html</label>
-    </form>
-  `,
-  shareholder: `
-    <h2 class="text-2xl font-bold mb-4 text-gray-800">📊 Welcome Shareholder</h2>
-    <p class="text-gray-600">Governance tools and ecosystem metrics will be enabled during onboarding.</p>
-  `
-};
+    // --- Authentication Handlers ---
+    const authForm = document.getElementById('login-form');
+    const authSubmitBtn = document.getElementById('auth-submit-btn');
+    const authStatusDiv = document.getElementById('auth-status');
+    const authEmailInput = document.getElementById('auth-email');
+    const authPasswordInput = document.getElementById('auth-password');
+    const toggleAuthModeBtn = document.getElementById('toggle-auth-mode-btn');
+    const signoutBtn = document.getElementById('signout-btn');
+    
+    let isSignUpMode = false;
 
-function showForm(type) {
-  document.getElementById('form-wrapper').innerHTML = formTemplates[type] || 'Form not found.';
-  document.getElementById('form-section').classList.remove('hidden');
-  document.getElementById('submissionConfirmation').classList.add('hidden');
-  document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' });
-}
+    if (signoutBtn) {
+        // Toggle Sign Out button visibility based on login status
+        window.auth().onAuthStateChanged(user => {
+            if (user && user.email) {
+                signoutBtn.classList.remove('hidden');
+            } else {
+                signoutBtn.classList.add('hidden');
+            }
+        });
+    }
 
-function submitRegistration(e) {
-  e.preventDefault();
-  const form = document.querySelector('#form-wrapper form');
-  if (!form) return;
+    if (toggleAuthModeBtn) {
+        toggleAuthModeBtn.addEventListener('click', () => {
+            isSignUpMode = !isSignUpMode;
+            if (isSignUpMode) {
+                authSubmitBtn.textContent = 'Sign Up';
+                toggleAuthModeBtn.textContent = 'Already have an account? Click here to Log In.';
+            } else {
+                authSubmitBtn.textContent = 'Login';
+                toggleAuthModeBtn.textContent = 'Need an account? Click here to Sign Up.';
+            }
+            authStatusDiv.textContent = ''; // Clear status on mode change
+        });
+    }
 
-  const data = {};
-  form.querySelectorAll('input, textarea').forEach(input => {
-    const key = input.placeholder || input.name || input.id || 'unnamed';
-    if (input.type === 'checkbox') data[key] = input.checked;
-    else if (input.type === 'file') data[key] = input.files.length ? input.files[0].name : '';
-    else data[key] = input.value;
-  });
+    if (authForm) {
+        authForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = authEmailInput.value;
+            const password = authPasswordInput.value;
+            authStatusDiv.textContent = '';
+            authSubmitBtn.disabled = true;
+            authSubmitBtn.textContent = isSignUpMode ? 'Signing Up...' : 'Logging In...';
 
-  console.log("📨 Submission", data);
-  document.getElementById('submissionConfirmation').classList.remove('hidden');
-}
+            try {
+                if (isSignUpMode) {
+                    await window.createUserWithEmailAndPassword(window.auth(), email, password);
+                    authStatusDiv.textContent = `✅ Successfully Signed Up & Logged In! Welcome.`;
+                    authStatusDiv.classList.remove('error-message');
+                    authStatusDiv.classList.add('confirmation-message');
+                } else {
+                    await window.signInWithEmailAndPassword(window.auth(), email, password);
+                    authStatusDiv.textContent = `✅ Successfully Logged In!`;
+                    authStatusDiv.classList.remove('error-message');
+                    authStatusDiv.classList.add('confirmation-message');
+                }
+            } catch (error) {
+                console.error("Authentication Failed:", error);
+                authStatusDiv.textContent = `🛑 Auth Error: ${error.message.replace('Firebase: ', '')}`;
+                authStatusDiv.classList.add('error-message');
+                authStatusDiv.classList.remove('confirmation-message');
+            } finally {
+                authSubmitBtn.disabled = false;
+                authSubmitBtn.textContent = isSignUpMode ? 'Sign Up' : 'Login';
+            }
+        });
+    }
+
+    window.handleSignOut = async function() {
+        try {
+            await window.signOut(window.auth());
+            document.getElementById('auth-message').textContent = 'Signed out successfully.';
+            document.getElementById('auth-status').textContent = '';
+        } catch (error) {
+            console.error("Sign Out Error:", error);
+            document.getElementById('auth-message').textContent = `Sign Out Error: ${error.message}`;
+        }
+    }
+
+    // --- Form Templates (Data Structures for form generation) ---
+    const formTemplates = {
+        loyalty: `
+            <h2 class="text-2xl font-bold mb-6" style="color: var(--primary-accent-color);">🪙 Loyalty Access Registration</h2>
+            <form id="loyalty-form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" name="fullName" placeholder="Full Name" class="border rounded p-3" required />
+                <input type="tel" name="phoneNumber" placeholder="Phone Number" class="border rounded p-3" />
+                <input type="text" name="vaultFamilyName" placeholder="Vault / Family Name" class="border rounded p-3" required />
+                <input type="date" name="dob" placeholder="Date of Birth" class="border rounded p-3" required />
+                <input type="text" name="referralCode" placeholder="Referral Code (optional)" class="border rounded p-3 col-span-2" />
+                <div class="col-span-2">
+                    <textarea name="loyaltyMeaning" placeholder="What does loyalty mean to you in the context of Seedwave™?" class="w-full border rounded p-3 h-24 resize-none" required></textarea>
+                </div>
+                <label class="col-span-2 flex items-center text-sm" style="color: var(--text-color-secondary);"><input type="checkbox" name="lifelongJourneyAgreement" class="mr-2" required /> I understand this is a lifelong journey and relationship request.</label>
+            </form>
+        `,
+        service: `
+            <h2 class="text-2xl font-bold mb-6" style="color: var(--secondary-accent-color);">🤝 Service Provider Onboarding</h2>
+            <form id="service-form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" name="companyName" placeholder="Company Name" class="border rounded p-3" required />
+                <input type="text" name="ficaNumber" placeholder="Registration / FICA Number" class="border rounded p-3" required />
+                <input type="text" name="countryOfOperation" placeholder="Country of Operation" class="border rounded p-3" required />
+                <input type="tel" name="primaryContactNumber" placeholder="Primary Contact Number" class="border rounded p-3" required />
+                <input type="text" name="companyDirector" placeholder="Company Director Full Name" class="border rounded p-3" required />
+                <input type="text" name="serviceContact" placeholder="24/7 Service Contact Name" class="border rounded p-3" required />
+                <label class="block text-sm font-medium pt-1 col-span-2" style="color: var(--text-color-secondary);">Upload Official Business Document (Max 1MB):
+                    <input type="file" name="businessDocument" class="w-full border rounded p-2 mt-1" accept=".pdf,.doc,.docx" />
+                </label>
+                <label class="col-span-2 flex items-center text-sm" style="color: var(--text-color-secondary);"><input type="checkbox" name="serviceAgreement" class="mr-2" required /> I confirm this company offers 24/7 service and support.</label>
+            </form>
+        `,
+        family: `
+            <h2 class="text-2xl font-bold mb-6" style="color: #8b5cf6;">👨‍👩‍👧‍👦 Family Access Registration</h2>
+            <form id="family-form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" name="repName" placeholder="Family Representative Name" class="border rounded p-3" required />
+                <input type="text" name="familyName" placeholder="Family Name" class="border rounded p-3" required />
+                <input type="date" name="dob" placeholder="Date of Birth" class="border rounded p-3" required />
+                <input type="text" name="desiredUsername" placeholder="Desired Vault Username" class="border rounded p-3" required />
+                <label class="block text-sm font-medium pt-1 col-span-2" style="color: var(--text-color-secondary);">Upload Family Seal/Glyph (Optional):
+                    <input type="file" name="familySeal" class="w-full border rounded p-2 mt-1" accept="image/*" />
+                </label>
+                <label class="col-span-2 flex items-center text-sm" style="color: var(--text-color-secondary);"><input type="checkbox" name="vaultAgreement" class="mr-2" required /> Generate my secure vault at: faa.zone/public/FamilyName/username-vault.html</label>
+            </form>
+        `,
+        shareholder: `
+            <h2 class="text-2xl font-bold mb-6" style="color: var(--text-color-primary);">📊 Shareholder Verification</h2>
+            <div id="shareholder-form" class="space-y-4">
+                <p class="text-base" style="color: var(--text-color-secondary);">Governance tools and ecosystem metrics will be enabled during onboarding via <strong>Multi-Factor Authentication (MFA)</strong>. Please provide your official registered details for verification.</p>
+                <input type="text" name="shareholderID" placeholder="Official Shareholder ID" class="w-full border rounded p-3" required />
+                <input type="text" name="mfaContact" placeholder="MFA Contact Phone/App ID" class="w-full border rounded p-3" required />
+            </div>
+        `
+    };
+
+    /**
+     * Shows the corresponding registration form template and sets the current role type.
+     * @param {string} type - The type of access being requested.
+     */
+    window.showForm = function(type) {
+        currentRoleType = type;
+        const formWrapper = document.getElementById('form-wrapper');
+        const formSection = document.getElementById('form-section');
+        const submissionConfirmation = document.getElementById('submissionConfirmation');
+
+        if (!formTemplates[type]) {
+            formWrapper.innerHTML = `<h2 class="text-xl font-bold text-red-600">Error: Access form template not found.</h2>`;
+            return;
+        }
+
+        formWrapper.innerHTML = formTemplates[type];
+        formSection.classList.remove('hidden');
+        submissionConfirmation.classList.add('hidden');
+        document.getElementById('submit-role-btn').textContent = `✅ Submit ${type.charAt(0).toUpperCase() + type.slice(1)} Request`;
+        formSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    /**
+     * Processes the form submission and saves data to Firestore.
+     * @param {Event} e - The click event.
+     */
+    window.submitRegistration = async function(e) {
+        e.preventDefault();
+        
+        if (!window.userId()) {
+            document.getElementById('submissionConfirmation').textContent = "🛑 You must be logged in to submit a request.";
+            document.getElementById('submissionConfirmation').classList.remove('hidden', 'confirmation-message');
+            document.getElementById('submissionConfirmation').classList.add('error-message');
+            return;
+        }
+
+        const form = document.querySelector('#form-wrapper form, #form-wrapper div');
+        const submitButton = document.getElementById('submit-role-btn');
+        const submissionConfirmation = document.getElementById('submissionConfirmation');
+
+        // Reset status
+        submissionConfirmation.textContent = '';
+        submissionConfirmation.classList.add('hidden');
+        submissionConfirmation.classList.remove('error-message', 'confirmation-message');
+
+        // 1. Validate Form (Only for forms with input fields)
+        let allValid = true;
+        if (form.tagName === 'FORM' || form.id === 'shareholder-form') {
+            const requiredFields = form.querySelectorAll('[required]');
+            requiredFields.forEach(field => {
+                if (!field.value || (field.type === 'checkbox' && !field.checked)) {
+                    allValid = false;
+                    field.style.borderColor = 'var(--tertiary-accent-color)';
+                    setTimeout(() => field.style.borderColor = 'var(--border-color)', 2000);
+                }
+            });
+        }
+        
+        if (!allValid || !currentRoleType) {
+            submissionConfirmation.classList.remove('hidden');
+            submissionConfirmation.classList.add('error-message');
+            submissionConfirmation.innerHTML = '🛑 Please complete all required fields and select a role first.';
+            return;
+        }
+
+        // 2. Collect Data
+        const data = { role: currentRoleType, timestamp: window.serverTimestamp(), userEmail: window.auth().currentUser?.email || 'N/A' };
+        const formElements = form.querySelectorAll('input, textarea, select');
+        
+        formElements.forEach(input => {
+            const key = input.name || input.id;
+            if (key) {
+                if (input.type === 'checkbox') data[key] = input.checked;
+                else if (input.type === 'file') data[key] = input.files.length ? input.files[0].name : '';
+                else data[key] = input.value;
+            }
+        });
+
+        // 3. Save to Firestore
+        submitButton.disabled = true;
+        submitButton.textContent = 'Submitting to VaultMesh...';
+
+        try {
+            const userId = window.userId();
+            const appId = window.appId();
+            const requestDocRef = window.doc(window.db(), 
+                `/artifacts/${appId}/users/${userId}/role_requests`, 
+                currentRoleType.toLowerCase()
+            );
+
+            await window.setDoc(requestDocRef, data, { merge: true });
+
+            // 4. Final Confirmation
+            submissionConfirmation.classList.remove('hidden', 'error-message');
+            submissionConfirmation.classList.add('confirmation-message');
+            submissionConfirmation.innerHTML = `🎉 **${currentRoleType.toUpperCase()}** access request received and logged in your private Vault. Activation email is pending from <strong>vault@faa.zone</strong>.`;
+            
+            console.log("Firestore Submission Successful:", data);
+
+        } catch (error) {
+            console.error("Firestore Submission Error:", error);
+            submissionConfirmation.classList.remove('hidden', 'confirmation-message');
+            submissionConfirmation.classList.add('error-message');
+            submissionConfirmation.textContent = `🛑 VaultMesh Error: Failed to submit request. ${error.message}`;
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = `✅ Submit ${currentRoleType.charAt(0).toUpperCase() + currentRoleType.slice(1)} Request`;
+        }
+    }
 </script>
 </body>
 </html>
-
