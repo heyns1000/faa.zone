@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-10-09 | banimal | history | `Vito_Stroller.html` | `7beea14c` | 🌿Little One Vito Stroller/Camp Cot Import Pla | 31259 | 28 | 0 | 56.1 |
+| 2 | 2025-10-09 | banimal | history | `Vito_Stroller.html` | `72d8e5cc` | 🌿Little One Vito Stroller/Camp Cot Import Pla | 31125 | 28 | 0 | 56.1 |
