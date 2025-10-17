@@ -423,3 +423,4 @@
 | 417 | 2025-10-17 | ThesisGallery | main | `generated_pages/housing-sector/croplink/page-112.html` | `b036f38a` | FAA™ Housing-sector - croplink #112 | 5656 | 7 | 0 | 32.6 |
 | 418 | 2025-10-17 | ThesisGallery | main | `generated_pages/housing-sector/croplink/page-113.html` | `cb7489dc` | FAA™ Housing-sector - croplink #113 | 5657 | 7 | 0 | 32.6 |
 | 419 | 2025-10-17 | ThesisGallery | main | `generated_pages/housing-sector/croplink/page-114.html` | `93b1cdef` | FAA™ Housing-sector - croplink #114 | 5656 | 7 | 0 | 32.6 |
+| 420 | 2025-10-17 | ThesisGallery | main | `generated_pages/housing-sector/croplink/page-115.html` | `ecfba3db` | FAA™ Housing-sector - croplink #115 | 5656 | 7 | 0 | 32.6 |
