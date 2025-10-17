@@ -11,3 +11,4 @@
 | 5 | 2025-10-17 | ThesisGallery | main | `attached_assets/dashboard_1760700119019.html` | `98693038` | 🌐 VaultKey™ Dashboard | 31498 | 27 | 1 | 52.9 |
 | 6 | 2025-10-17 | ThesisGallery | main | `attached_assets/features_1760700119019.html` | `2799cce8` | 🌐 VaultKey™ Key Features | 31514 | 27 | 1 | 52.9 |
 | 7 | 2025-10-17 | ThesisGallery | main | `attached_assets/index_1760700119020.html` | `331be36f` | 🌐 VaultKey™ Home | 31464 | 27 | 1 | 52.9 |
+| 8 | 2025-10-17 | ThesisGallery | main | `attached_assets/licensing_1760700119020.html` | `1a77a5fb` | 🌐 VaultKey™ Licensing | 31498 | 27 | 1 | 52.9 |
