@@ -375,3 +375,4 @@
 | 369 | 2025-10-17 | ThesisGallery | main | `generated_pages/agriculture/croplink/page-7.html` | `cace1530` | FAA™ Agriculture - croplink #7 | 5633 | 7 | 0 | 32.6 |
 | 370 | 2025-10-17 | ThesisGallery | main | `generated_pages/agriculture/croplink/page-70.html` | `890d7508` | FAA™ Agriculture - croplink #70 | 5637 | 7 | 0 | 32.6 |
 | 371 | 2025-10-17 | ThesisGallery | main | `generated_pages/agriculture/croplink/page-71.html` | `ac60dbe9` | FAA™ Agriculture - croplink #71 | 5636 | 7 | 0 | 32.6 |
+| 372 | 2025-10-17 | ThesisGallery | main | `generated_pages/agriculture/croplink/page-72.html` | `db6af280` | FAA™ Agriculture - croplink #72 | 5637 | 7 | 0 | 32.6 |
