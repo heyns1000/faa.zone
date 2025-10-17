@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-10-17 | ThesisGallery | main | `attached_assets/about_1760700119014.html` | `99f4bda0` | 🌐 VaultKey™ About Us | 31490 | 27 | 1 | 52.9 |
+| 2 | 2025-10-17 | ThesisGallery | main | `attached_assets/auth_1760700119015.html` | `05b7f36e` | 🌐 VaultKey™ Authentication Portal | 31565 | 27 | 1 | 52.9 |
