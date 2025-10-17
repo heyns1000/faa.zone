@@ -13,3 +13,4 @@
 | 7 | 2025-10-17 | ThesisGallery | main | `attached_assets/index_1760700119020.html` | `331be36f` | 🌐 VaultKey™ Home | 31464 | 27 | 1 | 52.9 |
 | 8 | 2025-10-17 | ThesisGallery | main | `attached_assets/licensing_1760700119020.html` | `1a77a5fb` | 🌐 VaultKey™ Licensing | 31498 | 27 | 1 | 52.9 |
 | 9 | 2025-10-17 | ThesisGallery | main | `attached_assets/metrics_1760700119021.html` | `a5c67e3a` | 🌐 VaultKey™ Performance Metrics | 31556 | 27 | 1 | 52.9 |
+| 10 | 2025-10-17 | ThesisGallery | main | `attached_assets/pricing_1760700119021.html` | `83a4757e` | 🌐 VaultKey™ Pricing & Plans | 31532 | 27 | 1 | 52.9 |
