@@ -87,6 +87,9 @@
                     <button id="user-btn" class="btn-primary w-full text-lg font-bold py-4 px-6 rounded-xl">👤 User ID</button>
                     <button id="product-btn" class="btn-primary w-full text-lg font-bold py-4 px-6 rounded-xl">📦 Product ID</button>
                 </div>
+                <div class="grid grid-cols-1 gap-4 mt-4">
+                    <button id="repo-btn" class="btn-primary w-full text-lg font-bold py-4 px-6 rounded-xl">🗂️ GitHub Repository ID</button>
+                </div>
             </div>
 
             <div id="instruction-view" class="instruction-card hidden-view mt-8">
@@ -163,11 +166,23 @@
                 urlPrefix: '.../post.php?',
                 urlHighlight: 'post=456',
                 urlSuffix: '&action=edit'
+            },
+            repo: {
+                title: 'Finding a GitHub Repository ID',
+                steps: [
+                    "Go to <strong>GitHub.com</strong> and navigate to your repository (e.g., heyns1000/banimal).",
+                    "Look at the repository URL or use the GitHub API to find the repository ID.",
+                    "The repository ID is a unique number assigned by GitHub to each repository."
+                ],
+                urlPrefix: 'https://api.github.com/repos/heyns1000/banimal → "id": ',
+                urlHighlight: '789012345',
+                urlSuffix: ''
             }
         };
 
         const userBtn = document.getElementById('user-btn');
         const productBtn = document.getElementById('product-btn');
+        const repoBtn = document.getElementById('repo-btn');
         const instructionView = document.getElementById('instruction-view');
         
         const instructionTitle = document.getElementById('instruction-title');
@@ -202,16 +217,23 @@
                 wpUsers.classList.add('highlight');
                 userBtn.classList.add('active');
                 productBtn.classList.remove('active');
-            } else {
+                repoBtn.classList.remove('active');
+            } else if (idType === 'product') {
                 wpProducts.classList.add('highlight');
                 wpWooCommerce.classList.add('highlight');
                 productBtn.classList.add('active');
                 userBtn.classList.remove('active');
+                repoBtn.classList.remove('active');
+            } else {
+                repoBtn.classList.add('active');
+                userBtn.classList.remove('active');
+                productBtn.classList.remove('active');
             }
         }
         
         userBtn.addEventListener('click', () => updateGuide('user'));
         productBtn.addEventListener('click', () => updateGuide('product'));
+        repoBtn.addEventListener('click', () => updateGuide('repo'));
 
     </script>
 </body>
