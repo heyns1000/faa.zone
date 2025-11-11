@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🔥 HotStack™ | Banimal Ecosystem Intake</title>
-    <!-- External CDN dependencies - consider local hosting for production -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Courier+New:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* --- GLOBAL THEME: HOTSTACK (Rhino Gold / Dark) --- */
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
@@ -36,7 +36,6 @@
         
         .hotstack-container {
             background: rgba(0, 0, 0, 0.8);
-            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
@@ -44,7 +43,7 @@
         }
         
         .countdown-timer {
-            font-family: 'Courier New', monospace;
+            font-family: 'Courier New', monospace; /* Used original font for the timer */
             font-size: 3rem;
             font-weight: bold;
             color: #fbbf24;
@@ -75,6 +74,7 @@
             border-radius: 8px;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+            cursor: pointer;
         }
         
         .btn-hotstack:hover {
@@ -89,6 +89,7 @@
             text-align: center;
             transition: all 0.3s ease;
             background: rgba(251, 191, 36, 0.05);
+            cursor: pointer;
         }
         
         .drop-zone:hover {
@@ -105,9 +106,36 @@
             transition: all 0.3s ease;
         }
         
+        .hotstack-station.special {
+            background: rgba(0, 100, 255, 0.1);
+            border-color: rgba(0, 100, 255, 0.5);
+        }
+
         .hotstack-station:hover {
             background: rgba(251, 191, 36, 0.2);
             transform: scale(1.02);
+        }
+        /* Metrics style for dynamic injection */
+        .metric-info {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 10px;
+            border-top: 1px solid #333;
+            padding-top: 5px;
+        }
+        .metric-info span {
+            color: #fbbf24;
+            font-weight: bold;
+        }
+        .region-header {
+            color: #f59e0b;
+            font-weight: bold;
+            text-align: left;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(251, 191, 36, 0.3);
+            padding-bottom: 5px;
         }
     </style>
 </head>
@@ -120,11 +148,11 @@
             <!-- Main HotStack Interface -->
             <div class="hotstack-container p-8 text-center mb-8">
                 <div class="flex items-center justify-center mb-6">
-                    <h1 class="text-4xl font-bold mr-4">🔥 Fruitful | HotStack™</h1>
+                    <h1 class="text-4xl font-bold mr-4">🔥 HotStack™</h1>
                 </div>
                 
                 <p class="text-lg mb-2 text-gray-300">Omnidrop Your Digital Presence. Live in Minutes.</p>
-                <p class="text-xl font-semibold mb-8 text-yellow-400">Branded Forever.</p>
+                <p class="text-xl font-semibold mb-8 text-yellow-400">Build Your Collapse.</p>
                 
                 <!-- Live Countdown Timer -->
                 <div class="countdown-timer mb-8" id="countdown-display">02:52</div>
@@ -160,76 +188,55 @@
                 </div>
                 
                 <!-- Main Action Button -->
-                <button aria-label="Enter CodeNest system" class="btn-hotstack text-lg px-8 py-4 mb-8" id="enter-hotstack-btn">
-                    → Enter Fruitful | CodeNest™
+                <button class="btn-hotstack text-lg px-8 py-4 mb-8" id="enter-hotstack-btn" onclick="openZeroSignupPortal()">
+                    → Initiate Zero-Signup Access
                 </button>
                 
-                <!-- Drag & Drop Zone -->
+                <!-- Drop Zone (Used as the core intake area) -->
                 <div class="drop-zone" id="omnidrop-zone">
                     <div class="text-2xl mb-2">📂</div>
                     <p class="text-gray-300 mb-2">Drag & Drop HTML/PDF here to Omnidrop into CodeNest™</p>
                     <p class="text-sm text-gray-500">(Adheres to the 3-minute rule for rapid registration)</p>
                 </div>
+
+                <!-- Hidden Zero-Signup Metrics Display -->
+                <div id="signup-metrics-display" class="metric-info hidden">
+                    <p>Current Store ID: <span id="store-id">---</span>s | Total Strikes: <span id="total-strikes">---</span></p>
+                    <p>Routemesh Trace: <span id="routemesh-id">---</span></p>
+                    <p>License Status: <span id="license-status">---</span></p>
+                </div>
             </div>
             
-            <!-- Nationwide HotStack Stations -->
+            <!-- GLOBAL HotStack Hubs -->
             <div class="hotstack-container p-8 mb-8">
-                <h2 class="text-2xl font-bold text-center mb-6">🗺️ Nationwide HotStack Stations</h2>
-                <p class="text-center text-gray-300 mb-6">Your digital filling stations across the country</p>
+                <h2 class="text-2xl font-bold text-center mb-6">🗺️ Global HotStack Hubs</h2>
+                <p class="text-center text-gray-300 mb-6">Master Licensed Sectors for the Omnigrid Expansion</p>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div class="hotstack-station">
-                        <h3 class="font-bold text-yellow-400">🏢 Cape Town HotStack</h3>
-                        <p class="text-sm text-gray-300">Western Cape Digital Gateway</p>
-                        <div class="flex justify-between items-center mt-2">
-                            <span class="text-xs bg-green-600 px-2 py-1 rounded">ACTIVE</span>
-                            <button class="btn-hotstack text-xs px-3 py-1">Connect</button>
-                        </div>
+                <div id="global-hubs-container">
+                    <!-- Dynamic content rendered here -->
+                </div>
+            </div>
+            
+            <!-- Zero-Signup Portal Modal (The actual collapse interaction) -->
+            <div id="zero-signup-modal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50">
+                <div class="card p-8 md:p-10 rounded-2xl max-w-lg w-full bg-[#110022] border-2 border-dashed border-gray-700">
+                    <h3 class="text-2xl font-bold text-center mb-6 text-yellow-400">Zero-Signup Access Portal</h3>
+                    <p class="text-gray-400 mb-6 text-center text-sm">
+                        **No $\text{username}$ or $\text{password}$ required.** Initiate the $\text{Collapse}$ to calculate your identity.
+                    </p>
+                    
+                    <textarea id="collapse-idea-input" rows="5" class="w-full p-4 bg-gray-900 border border-gray-600 rounded-lg focus:border-yellow-400 focus:ring-yellow-400 text-gray-200" placeholder="HOTSTACK Design Blueprint: Define the specific goal, UI style (e.g., 'Rhino Flare'), and target platform. The system traces your prompt to: https://github.com/heyns1000/hotstack.git"></textarea>
+                    
+                    <div class="mt-6">
+                        <p class="text-sm font-mono text-gray-500 text-center">Your Calculated Pay ID: <span id="payfast-id" class="text-yellow-400">---</span></p>
+                        <p class="text-sm font-mono text-gray-500 text-center">User Number: <span id="user-number" class="text-white">---</span> (Sector: Coffee Business)</p>
                     </div>
                     
-                    <div class="hotstack-station">
-                        <h3 class="font-bold text-yellow-400">🏙️ Johannesburg HotStack</h3>
-                        <p class="text-sm text-gray-300">Gauteng Business Hub</p>
-                        <div class="flex justify-between items-center mt-2">
-                            <span class="text-xs bg-green-600 px-2 py-1 rounded">ACTIVE</span>
-                            <button class="btn-hotstack text-xs px-3 py-1">Connect</button>
-                        </div>
-                    </div>
-                    
-                    <div class="hotstack-station">
-                        <h3 class="font-bold text-yellow-400">🌊 Durban HotStack</h3>
-                        <p class="text-sm text-gray-300">KwaZulu-Natal Port</p>
-                        <div class="flex justify-between items-center mt-2">
-                            <span class="text-xs bg-yellow-600 px-2 py-1 rounded">SETUP</span>
-                            <button class="btn-hotstack text-xs px-3 py-1">Connect</button>
-                        </div>
-                    </div>
-                    
-                    <div class="hotstack-station">
-                        <h3 class="font-bold text-yellow-400">🏔️ Bloemfontein HotStack</h3>
-                        <p class="text-sm text-gray-300">Free State Central</p>
-                        <div class="flex justify-between items-center mt-2">
-                            <span class="text-xs bg-yellow-600 px-2 py-1 rounded">SETUP</span>
-                            <button class="btn-hotstack text-xs px-3 py-1">Connect</button>
-                        </div>
-                    </div>
-                    
-                    <div class="hotstack-station">
-                        <h3 class="font-bold text-yellow-400">🌄 Polokwane HotStack</h3>
-                        <p class="text-sm text-gray-300">Limpopo Gateway</p>
-                        <div class="flex justify-between items-center mt-2">
-                            <span class="text-xs bg-gray-600 px-2 py-1 rounded">PLANNED</span>
-                            <button class="btn-hotstack text-xs px-3 py-1" disabled>Soon</button>
-                        </div>
-                    </div>
-                    
-                    <div class="hotstack-station">
-                        <h3 class="font-bold text-yellow-400">⛰️ Lesotho HotStack</h3>
-                        <p class="text-sm text-gray-300">Mountain Kingdom</p>
-                        <div class="flex justify-between items-center mt-2">
-                            <span class="text-xs bg-blue-600 px-2 py-1 rounded">SPECIAL</span>
-                            <button class="btn-hotstack text-xs px-3 py-1">Connect</button>
-                        </div>
+                    <div class="flex justify-between items-center mt-6">
+                        <button onclick="closeZeroSignupPortal()" class="text-gray-500 hover:text-white transition text-sm">Cancel</button>
+                        <button onclick="deployShanana()" class="px-8 py-3 rounded-full text-lg font-bold action-button transition transform hover:scale-105">
+                            Collapse & Join NEXUS
+                        </button>
                     </div>
                 </div>
             </div>
@@ -237,25 +244,14 @@
             <!-- Integration with Noodle Juice Flow -->
             <div class="hotstack-container p-8 mb-8">
                 <h2 class="text-2xl font-bold text-center mb-6">🍝 Noodle Juice Integration</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="text-center">
-                        <h3 class="font-bold text-yellow-400 mb-4">📱 Your 67 Replit Apps</h3>
-                        <div class="bg-gray-800 p-4 rounded-lg">
-                            <div class="text-2xl font-bold text-green-400" id="apps-counter">67</div>
-                            <p class="text-sm text-gray-300">Private Apps Flowing</p>
-                            <button class="btn-hotstack mt-3 text-sm">View All Apps</button>
+                <div class="text-center">
+                    <h3 class="font-bold text-yellow-400 mb-4">🔗 Referral System</h3>
+                    <div class="bg-gray-800 p-4 rounded-lg max-w-md mx-auto">
+                        <p class="text-xs text-gray-400 mb-2">Your Replit Referral:</p>
+                        <div class="bg-gray-900 p-2 rounded text-xs font-mono break-all">
+                            replit.com/refer/heynsschoeman
                         </div>
-                    </div>
-                    
-                    <div class="text-center">
-                        <h3 class="font-bold text-yellow-400 mb-4">🔗 Referral System</h3>
-                        <div class="bg-gray-800 p-4 rounded-lg">
-                            <p class="text-xs text-gray-400 mb-2">Your Replit Referral:</p>
-                            <div class="bg-gray-900 p-2 rounded text-xs font-mono break-all">
-                                replit.com/refer/heynsschoeman
-                            </div>
-                            <button class="btn-hotstack mt-3 text-sm" id="copy-referral">Copy Link</button>
-                        </div>
+                        <button class="btn-hotstack mt-3 text-sm" id="copy-referral">Copy Link</button>
                     </div>
                 </div>
             </div>
@@ -265,17 +261,11 @@
                 <h3 class="text-lg font-bold mb-4">📊 HotStack Live Status</h3>
                 <div class="bg-black rounded-lg p-4 font-mono text-sm">
                     <div class="text-green-400" id="status-log">
-                        <div>[12:52:30] HotStack™ System Online</div>
-                        <div>[12:52:31] Monitoring 67 Replit apps via Noodle Juice</div>
-                        <div>[12:52:32] Vault allocation system ready</div>
-                        <div>[12:52:33] Nationwide stations: 6 locations</div>
-                        <div>[12:52:34] Referral system active</div>
-                        <div>[12:52:35] Omnidrop zone initialized</div>
-                        <div class="text-yellow-400">[12:52:36] Ready for digital presence deployment</div>
+                        <!-- Real status logs will appear here -->
                     </div>
                 </div>
             </div>
-            
+
             <!-- Footer -->
             <footer class="text-center mt-8 text-gray-400 text-sm">
                 <p>Powered by Fruitful Global | ScrollSynced | Vault-Verified</p>
@@ -285,9 +275,10 @@
     </main>
 
     <script>
-        // Initialize particles background
+        // --- INITIALIZATION FUNCTIONS (Moved to top for hoisting guarantee) ---
         function createParticles() {
             const container = document.getElementById('particles-container');
+            if (!container) return; 
             for (let i = 0; i < 50; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
@@ -297,8 +288,42 @@
                 container.appendChild(particle);
             }
         }
+
+        // --- GLOBAL HUB DATA ---
+        const GLOBAL_HUBS_DATA = [
+            { region: "🇿🇦 AFRICA MASTER HUB", hubs: [
+                { name: "Cape Town HotStack", detail: "Western Cape Digital Gateway", status: "ACTIVE", icon: "🏢" },
+                { name: "Johannesburg HotStack", detail: "Gauteng Business Hub", status: "ACTIVE", icon: "🏙️" },
+                { name: "Lagos HotStack", detail: "West African Economic Anchor", status: "SETUP", icon: "🌊" },
+                { name: "Lesotho HotStack", detail: "Mountain Kingdom Treaty Node", status: "SPECIAL", icon: "⛰️" }
+            ]},
+            { region: "🇺🇸 NORTH AMERICA HUB", hubs: [
+                { name: "New York HotStack", detail: "Global FinTech Gateway", status: "ACTIVE", icon: "🗽" },
+                { name: "Toronto HotStack", detail: "Canadian Innovation Corridor", status: "SETUP", icon: "🌲" },
+                { name: "Silicon Valley HotStack", detail: "West Coast Tech Nexus", status: "PLANNED", icon: "🌉" }
+            ]},
+            { region: "🇪🇺 EUROPE & UK MASTER HUB", hubs: [
+                { name: "London HotStack", detail: "UK Financial Exchange", status: "ACTIVE", icon: "🏛️" },
+                { name: "Berlin HotStack", detail: "EU Digital Compliance Anchor", status: "SETUP", icon: "🏰" },
+                { name: "Reykjavik HotStack", detail: "Atlantic Island Data Vault", status: "SPECIAL", icon: "🇮🇸" }
+            ]},
+            { region: "🇯🇵 ASIA & AUSTRALASIA HUB", hubs: [
+                { name: "Tokyo HotStack", detail: "Japan Robotics Gateway", status: "ACTIVE", icon: "🗼" },
+                { name: "Singapore HotStack", detail: "Southeast Asia Trade Nexus", status: "SETUP", icon: "🏝️" },
+                { name: "Sydney HotStack", detail: "Australasian Data Core", status: "PLANNED", icon: "🦘" }
+            ]}
+        ];
         
-        // Countdown timer
+        // --- DATA AND INITIALIZATION ---
+        const ROOT_KEY = '0f19bb22-ad64-45d2-abc9-ad5686a978dc';
+        const LOCK_TIMESTAMP_MS = 1730013441000; // Ecosystem Genesis
+        const COLLAPSE_INTERVAL_MS = 900;
+        const BANIMAL_API_PULL_MS = 1730013441000 + 5000000; // Simulating API Key Pull time
+        
+        // **HOTSTACK LICENSING STATUS**
+        const HOTSTACK_LICENSE_STATUS = 'MASTERED'; // Must be 'MASTERED' to function
+
+        // --- COUNTDOWN LOGIC (Original HotStack Timer) ---
         let minutes = 2;
         let seconds = 52;
         
@@ -313,15 +338,65 @@
                 minutes--;
                 seconds = 59;
             } else {
-                // Reset countdown
-                minutes = 2;
-                seconds = 52;
+                // Reset to 3 minutes (180s)
+                minutes = 3;
+                seconds = 0;
             }
         }
         
-        // Live status logger
+        // --- CORE COLLAPSE PROTOCOL (IDENTITY CALCULATION) ---
+
+        function calculateCollapseMetrics(userCreationTimeMs = null) {
+            const now = new Date().getTime();
+            const timeElapsedMs = now - LOCK_TIMESTAMP_MS;
+            const storeID = timeElapsedMs / 1000;
+            const lapCount = Math.floor(timeElapsedMs / COLLAPSE_INTERVAL_MS);
+            
+            let payfastUserID = 'N/A';
+            let collapsedUserNumber = 'N/A';
+            let routemeshTraceID = btoa(storeID.toString()).substring(0, 20);
+
+            if (userCreationTimeMs) {
+                // Calculate Payfast User ID: (User Upload Time - Banimal API Key Pull Time)
+                const timeDiffSeconds = Math.abs((userCreationTimeMs - BANIMAL_API_PULL_MS) / 1000);
+                const rawUserID = Math.floor(timeDiffSeconds); 
+                
+                collapsedUserNumber = (rawUserID % 2300) + 1;
+                payfastUserID = `PF-${rawUserID.toString(36).toUpperCase()}`;
+            }
+
+            return {
+                storeID: storeID.toFixed(2),
+                lapCount: lapCount.toLocaleString(),
+                routemeshTraceID: routemeshTraceID,
+                payfastUserID: payfastUserID,
+                collapsedUserNumber: collapsedUserNumber
+            };
+        }
+
+        // --- UPDATE LOOP ---
+
+        function updateMetricsDisplay() {
+            const metrics = calculateCollapseMetrics();
+            
+            // Update License Status Display (Placeholder in NAV)
+            const licenseElement = document.querySelector('.hotstack-nav-item:first-child');
+            if (licenseElement) {
+                licenseElement.textContent = `AFRICA: ${HOTSTACK_LICENSE_STATUS}`;
+                if (HOTSTACK_LICENSE_STATUS === 'MASTERED') {
+                    licenseElement.classList.add('text-green-400');
+                    licenseElement.classList.remove('text-red-500');
+                } else {
+                    licenseElement.classList.remove('text-green-400');
+                    licenseElement.classList.add('text-red-500');
+                }
+            }
+        }
+
+        // --- LIVE STATUS LOGGER ---
         function addStatusLog(message) {
             const log = document.getElementById('status-log');
+            if (!log) return;
             const time = new Date().toLocaleTimeString();
             const logEntry = document.createElement('div');
             logEntry.innerHTML = `<span class="text-blue-400">[${time}]</span> ${message}`;
@@ -333,35 +408,130 @@
                 log.removeChild(log.firstChild);
             }
         }
-        
-        // Event listeners
-        document.getElementById('enter-hotstack-btn').addEventListener('click', function() {
-            addStatusLog('🚀 Initiating CodeNest™ entry protocol...');
-            setTimeout(() => {
-                addStatusLog('✅ CodeNest™ connection established');
-                // In production, redirect to fruitful.faa.zone
-                window.open('https://fruitful.faa.zone', '_blank');
-            }, 1000);
-        });
-        
-        document.getElementById('copy-referral').addEventListener('click', function() {
-            navigator.clipboard.writeText('https://replit.com/refer/heynsschoeman').catch(() => {
-                // Fallback for older browsers
-                const textArea = document.createElement('textarea');
-                textArea.value = 'https://replit.com/refer/heynsschoeman';
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
+
+        // --- HUB RENDERING LOGIC ---
+        function renderGlobalHubs() {
+            const container = document.getElementById('global-hubs-container');
+            if (!container) return;
+
+            let html = '';
+            GLOBAL_HUBS_DATA.forEach(regionData => {
+                // Region Header
+                html += `<h3 class="region-header">${regionData.region}</h3>`;
+                html += `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">`;
+                
+                regionData.hubs.forEach(hub => {
+                    const statusClass = {
+                        'ACTIVE': 'bg-green-600',
+                        'SETUP': 'bg-yellow-600',
+                        'PLANNED': 'bg-gray-600',
+                        'SPECIAL': 'bg-blue-600'
+                    }[hub.status];
+                    
+                    const specialClass = hub.status === 'SPECIAL' ? ' special' : '';
+
+                    html += `
+                        <div class="hotstack-station${specialClass}">
+                            <h3 class="font-bold text-yellow-400">${hub.icon} ${hub.name}</h3>
+                            <p class="text-sm text-gray-300">${hub.detail}</p>
+                            <div class="mt-2">
+                                <span class="text-xs ${statusClass} px-2 py-1 rounded">${hub.status}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `</div>`;
             });
-            this.textContent = 'Copied!';
-            addStatusLog('📋 Referral link copied to clipboard');
+
+            container.innerHTML = html;
+        }
+
+
+        // --- MODAL CONTROL ---
+        const modal = document.getElementById('zero-signup-modal');
+        function openZeroSignupPortal() {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            addStatusLog('🔑 Zero-Signup Portal opened.');
+            
+            // Ensure metrics are fresh when portal opens
+            const metrics = calculateCollapseMetrics();
+            const payfastIdElement = modal.querySelector('#payfast-id');
+            const userNumberElement = modal.querySelector('#user-number');
+
+            if (payfastIdElement) payfastIdElement.textContent = '---';
+            if (userNumberElement) userNumberElement.textContent = '---';
+            
+            // Focus on the input inside the modal
+            document.getElementById('collapse-idea-input').focus();
+        }
+
+        function closeZeroSignupPortal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            addStatusLog('🚪 Zero-Signup Portal closed.');
+            // Clear input on close
+            document.getElementById('collapse-idea-input').value = "";
+        }
+
+        // --- SHANANA DEPLOYMENT LOGIC (ACCESS INITIATION) ---
+
+        function deployShanana() {
+            const input = document.getElementById('collapse-idea-input').value.trim();
+            
+            // **HOTSTACK LICENSING LOCK CHECK**
+            if (HOTSTACK_LICENSE_STATUS !== 'MASTERED') {
+                 addStatusLog("❌ CRITICAL: Master License Lock. Deployment denied.");
+                 alert("CRITICAL ERROR: System cannot work. HOTSTACK Master License is required for deployment.");
+                 return;
+            }
+
+            const userCreationTime = new Date().getTime(); 
+            const metrics = calculateCollapseMetrics(userCreationTime);
+            
+            if (input.length < 10) {
+                alert("Error: Please provide a collapsed idea (min 10 characters) to initiate access.");
+                return;
+            }
+            
+            // Highlight Intake Portal and show processing status
+            const intakeCard = modal.querySelector('.card');
+            intakeCard.style.boxShadow = '0 0 40px rgba(255, 184, 0, 0.9)'; 
+            
+            const payfastIdElement = modal.querySelector('#payfast-id');
+            const userNumberElement = modal.querySelector('#user-number');
+
+            if (payfastIdElement) payfastIdElement.textContent = 'Collapsing...';
+            if (userNumberElement) userNumberElement.textContent = 'Generating...';
+            addStatusLog(`🔄 Initiating Collapse for User #${metrics.collapsedUserNumber}...`);
+
+            // Simulate Collapse Completion
             setTimeout(() => {
-                this.textContent = 'Copy Link';
-            }, 2000);
-        });
-        
-        // Drag and drop functionality
+                
+                if (payfastIdElement) payfastIdElement.textContent = metrics.payfastUserID;
+                if (userNumberElement) userNumberElement.textContent = metrics.collapsedUserNumber + ' (Assigned)';
+                
+                addStatusLog(`✅ ACCESS GRANTED. Pay ID: ${metrics.payfastUserID}`);
+                addStatusLog('🌐 Connecting to all integration points (Git, Figma, Gemini, Replit)...');
+                
+                // Final alert/notification
+                alert(`ACCESS GRANTED!
+Your identity is the timestamp of your creation.
+- Payfast User ID: ${metrics.payfastUserID}
+- User Number: ${metrics.collapsedUserNumber}
+- Status: Connected to Git, Figma, Gemini, Replit.
+(Welcome to the Zero-Signup Nexus!)`);
+                
+                intakeCard.style.boxShadow = '0 0 0 rgba(255, 184, 0, 0.1)'; // Reset shadow
+                document.getElementById('collapse-idea-input').value = "";
+                closeZeroSignupPortal();
+                updateMetricsDisplay();
+            }, 1500); // 1.5 second simulation for dramatic effect
+        }
+
+
+        // --- DRAG & DROP LOGIC ---
         const dropZone = document.getElementById('omnidrop-zone');
         
         dropZone.addEventListener('dragover', function(e) {
@@ -382,43 +552,37 @@
             
             const files = e.dataTransfer.files;
             if (files.length > 0) {
-                addStatusLog(`📂 Processing ${files.length} file(s) for Omnidrop...`);
-                setTimeout(() => {
-                    addStatusLog('⚡ Rapid deployment initiated');
-                    addStatusLog('🔗 DNS hooks activated');
-                    addStatusLog('✅ Omnidrop complete - Site live in 180 seconds');
-                }, 1000);
+                addStatusLog(`📂 ${files.length} file(s) detected for Omnidrop`);
+                addStatusLog('⚠️ Note: File processing requires backend server connection.');
+                addStatusLog('🔗 Switch to the Replit environment for full functionality.');
+                // In a live Replit environment, the API call logic would be here
             }
         });
         
-        // HotStack station connections
-        document.querySelectorAll('.hotstack-station button:not([disabled])').forEach(button => {
-            button.addEventListener('click', function() {
-                const stationName = this.closest('.hotstack-station').querySelector('h3').textContent;
-                addStatusLog(`🔌 Connecting to ${stationName}...`);
-                setTimeout(() => {
-                    addStatusLog(`✅ Connected to ${stationName}`);
-                }, 1500);
-            });
+        // --- REFERRAL COPY LOGIC ---
+        document.getElementById('copy-referral').addEventListener('click', function() {
+            navigator.clipboard.writeText('https://replit.com/refer/heynsschoeman');
+            this.textContent = 'Copied!';
+            addStatusLog('📋 Referral link copied to clipboard');
+            setTimeout(() => {
+                this.textContent = 'Copy Link';
+            }, 2000);
         });
-        
-        // Initialize everything
-        document.addEventListener('DOMContentLoaded', function() {
+
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
             createParticles();
-            setInterval(updateCountdown, 1000);
+            renderGlobalHubs(); // Render the new global hubs
+            addStatusLog('🔥 HotStack™ system loading...');
+            updateMetricsDisplay(); 
+            setInterval(updateMetricsDisplay, 900); // Heartbeat tied to Collapse Interval
+            setInterval(updateCountdown, 1000); // Start Countdown Timer
             
-            // Simulate live activity
-            setTimeout(() => {
-                addStatusLog('📊 Noodle Juice flow monitoring active');
-            }, 3000);
-            
-            setTimeout(() => {
-                addStatusLog('🗄️ Vault allocation system synchronized');
-            }, 6000);
-            
-            setTimeout(() => {
-                addStatusLog('🌍 Nationwide HotStack network operational');
-            }, 9000);
+            // Expose functions to global scope for button clicks
+            window.openZeroSignupPortal = openZeroSignupPortal; 
+            window.closeZeroSignupPortal = closeZeroSignupPortal;
+            window.deployShanana = deployShanana;
         });
     </script>
 </body>
