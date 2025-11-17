@@ -3,381 +3,803 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fruitful™ | About Us</title>
+    <title data-i18n="pageTitle">About Fruitful Global™ | Fruitful Global™</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Base Styles - Consistent with Fruitful aesthetic */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0D1B2A;
-            color: #E0E1DD;
+            background-color: #f5f5f7; /* Very light gray, almost white */
+            color: #1d1d1f; /* Near black for primary text */
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Pushes footer to the bottom */
         }
-        .chart-container {
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #f5f5f7;
+        }
+        body.dark-mode header {
+            background-color: rgba(26, 26, 26, 0.9);
+            border-bottom-color: #333;
+            box-shadow: 0 1px 0 rgba(255,255,255,0.05);
+        }
+        body.dark-mode header h1 {
+            color: #f5f5f7;
+        }
+        body.dark-mode header nav a {
+            color: #f5f5f7; /* Light text in dark mode for visibility */
+        }
+        body.dark-mode header nav a:hover {
+            color: #66b2ff; /* Lighter blue for dark mode hover */
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        body.dark-mode header nav a.px-4 { /* SecureSign button in dark mode */
+            background-color: #66b2ff;
+            color: #1d1d1f;
+            box-shadow: 0 1px 3px rgba(255,255,255,0.1);
+            border-color: #66b2ff; /* Ensure border color matches */
+        }
+        body.dark-mode header nav a.px-4:hover {
+            background-color: #7abaff;
+            box-shadow: 0 2px 5px rgba(255,255,255,0.15);
+        }
+        body.dark-mode #language-toggle, body.dark-mode #theme-toggle {
+            background-color: #3a3a3a;
+            color: #f5f5f7;
+        }
+        body.dark-mode #language-toggle:focus, body.dark-mode #theme-toggle:focus {
+            box-shadow: 0 0 0 2px rgba(102, 178, 255, 0.5); /* Blue ring for dark mode */
+        }
+
+        body.dark-mode .container {
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+        body.dark-mode .container h1, body.dark-mode h2, body.dark-mode h3 {
+            color: #f5f5f7;
+        }
+        body.dark-mode .container .brand-logo-text {
+            color: #66b2ff;
+        }
+        body.dark-mode p, body.dark-mode ul li, body.dark-mode pre {
+            color: #e0e0e0;
+        }
+        body.dark-mode a {
+            color: #66b2ff;
+        }
+        body.dark-mode a:hover {
+            color: #7abaff;
+        }
+        body.dark-mode footer {
+            background-color: #1a1a1a;
+            border-top-color: #333;
+            color: #888;
+        }
+        body.dark-mode footer a {
+            color: #e0e0e0;
+        }
+        body.dark-mode footer a:hover {
+            color: #f5f5f7;
+        }
+        body.dark-mode pre {
+            background-color: #1d1d1f; /* Darker background for code in dark mode */
+            border-color: #333;
+            color: #00e393; /* Greenish code text for dark mode */
+        }
+        body.dark-mode .section-card {
+            background-color: #3a3a3a;
+            border-color: #4a4a4a;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        body.dark-mode .section-card:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        body.dark-mode .action-button {
+            background-color: #66b2ff;
+            color: #1d1d1f;
+        }
+        body.dark-mode .action-button:hover {
+            background-color: #7abaff;
+        }
+
+
+        /* Header specific styling from faa.zone/index.html */
+        header {
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+            backdrop-filter: blur(10px); /* Frosted glass effect */
+            border-bottom: 1px solid #e8e8ed; /* Subtle bottom border */
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            sm:flex-direction: row; /* Adjusted for responsive header */
+            justify-content: space-between;
+            align-items: center;
+            padding-left: 1.5rem; /* px-6 */
+            padding-right: 1.5rem; /* px-6 */
+            md:padding-left: 3rem; /* md:px-12 */
+            md:padding-right: 3rem; /* md:px-12 */
+        }
+        header h1 {
+            color: #1d1d1f; /* Dark text for logo */
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem; /* mb-4 sm:mb-0 */
+            sm:margin-bottom: 0;
+        }
+        header nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            sm:justify-content: flex-end; /* sm:justify-end */
+            align-items: center;
+            gap: 0.5rem; /* space-x-2 sm:space-x-4 */
+            sm:gap: 1rem;
+        }
+        header nav a {
+            color: #1d1d1f; /* Ensure dark color for links on light header */
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            transition: all 0.2s ease-in-out;
             position: relative;
+        }
+        header nav a:hover {
+            color: #0071e3; /* Apple blue on hover */
+            background-color: rgba(0, 0, 0, 0.03);
+        }
+        header nav a.px-4 { /* Sign Up button */
+            background-color: #0071e3; /* Apple blue */
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #0071e3; /* Ensure border is visible and matches */
+        }
+        header nav a.px-4:hover {
+            background-color: #0077ed;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+        header .flex.items-center.space-x-2.ml-4 {
+            margin-left: 1rem; /* ml-4 */
+        }
+        header select, header button {
+            padding: 0.5rem; /* p-2 */
+            border-radius: 9999px; /* rounded-full */
+            font-size: 0.875rem; /* text-sm */
+            cursor: pointer;
+            outline: none;
+            border: none; /* remove default border */
+            background-color: #e5e7eb; /* bg-gray-100 */
+            color: #1f2937; /* text-gray-800 */
+            transition: all 0.2s ease-in-out;
+        }
+        header select:focus, header button:focus {
+            box-shadow: 0 0 0 2px #3b82f6; /* focus:ring-2 focus:ring-blue-500 */
+        }
+
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 960px;
             width: 100%;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-            max-height: 400px;
+            margin: 2rem auto;
+            flex-grow: 1; /* Allows container to take available space */
         }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 350px;
+
+        /* Corrected styling for main title and headings */
+        .container h1 {
+            font-size: 2.8rem; /* Consistent with faa.zone hero h2 */
+            font-weight: 800; /* Extra bold */
+            color: #1d1d1f; /* Near black for primary text on light mode */
+            margin-bottom: 0.5rem; /* Reduced margin to bring brand text closer */
+            text-align: center;
+            letter-spacing: -0.03em;
+        }
+        body.dark-mode .container h1 {
+            color: #f5f5f7; /* White in dark mode */
+        }
+        .container .brand-logo-text {
+            font-size: 1.8rem; /* Adjusted for a strong presence within content */
+            font-weight: 700;
+            color: #0071e3; /* Fruitful blue */
+            text-align: center;
+            margin-top: 0; /* Align with h1's bottom */
+            margin-bottom: 2rem; /* Space below brand text */
+            letter-spacing: -0.02em;
+        }
+        body.dark-mode .container .brand-logo-text {
+            color: #66b2ff; /* Lighter blue in dark mode */
+        }
+
+
+        /* Enhanced H2 styling for numbered sections and main content sections */
+        h2 {
+            font-size: 2.2rem; /* Slightly larger than before, closer to main H1 */
+            font-weight: 800; /* Extra bold, like main title */
+            color: #0071e3; /* Fruitful blue for prominence */
+            margin-top: 3rem; /* More space above */
+            margin-bottom: 1.5rem; /* More space below */
+            border-bottom: 1px solid #e8e8ed;
+            padding-bottom: 0.75rem; /* More padding below border */
+            letter-spacing: -0.02em; /* Tighter spacing */
+        }
+        body.dark-mode h2 {
+            color: #66b2ff; /* Lighter blue in dark mode */
+            border-bottom-color: #333;
+        }
+
+        h3 {
+            font-size: 1.5rem; /* Consistent with faa.zone h3 */
+            font-weight: 700; /* Bold */
+            color: #1d1d1f; /* Near black */
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        body.dark-mode h3 {
+            color: #f5f5f7;
+        }
+
+        p {
+            margin-bottom: 1rem; /* Consistent spacing between paragraphs */
+            color: #424245; /* Slightly lighter gray for body text */
+        }
+        body.dark-mode p {
+            color: #e0e0e0;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+            color: #424245;
+        }
+        ul li {
+            margin-bottom: 0.5rem; /* Spacing for list items */
+        }
+        body.dark-mode ul {
+            color: #e0e0e0;
+        }
+        body.dark-mode ul li {
+            color: #e0e0e0;
+        }
+
+        /* Styling for code blocks within content */
+        pre {
+            background-color: #f0f0f0; /* Light gray background */
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto; /* Enable horizontal scrolling for long lines */
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+            font-size: 0.85rem;
+            color: #1d1d1f;
+            white-space: pre-wrap; /* Wrap long lines */
+            word-break: break-all; /* Break long words if necessary */
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #e8e8ed;
+        }
+        body.dark-mode pre {
+            background-color: #1d1d1f; /* Darker background for code in dark mode */
+            border-color: #333;
+            color: #00e393; /* Greenish code text for dark mode */
+        }
+
+        a {
+            color: #0071e3; /* Apple Blue */
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: #005bb5;
+            text-decoration: underline;
+        }
+
+        .last-updated {
+            text-align: right;
+            font-size: 0.9rem;
+            color: #6e6e73;
+            margin-top: 2rem;
+            margin-bottom: 1rem; /* Ensure space below last updated */
+        }
+        body.dark-mode .last-updated {
+            color: #888;
+        }
+
+        /* Footer styles - copied directly from faa.zone/index.html */
+        footer {
+            background-color: #f5f5f7;
+            color: #6e6e73;
+            padding: 2rem;
+            font-size: 0.85rem;
+            border-top: 1px solid #e8e8ed;
+            text-align: center;
+        }
+        body.dark-mode footer {
+            background-color: #1a1a1a;
+            color: #888;
+            border-top-color: #333;
+        }
+        footer .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        footer .footer-links a {
+            color: #6e6e73;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            margin: 0 0.5rem; /* Horizontal spacing */
+            margin-bottom: 0.5rem; /* Vertical spacing for wrapped items */
+            white-space: nowrap; /* Prevent links from breaking individually */
+        }
+        body.dark-mode footer .footer-links a {
+            color: #e0e0e0; /* Adjusted for better visibility in dark mode */
+        }
+        footer .footer-links a:hover {
+            color: #1d1d1f;
+        }
+        body.dark-mode footer .footer-links a:hover {
+            color: #f5f5f7;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
             }
-        }
-        .kpi-card h3 {
-            font-size: 3rem;
-            font-weight: 800;
-            line-height: 1.1;
-        }
-        .flow-line::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            right: -1rem;
-            width: 1.5rem;
-            height: 2px;
-            background-color: #415A77;
-        }
-         .flow-line-vertical::after {
-            content: '';
-            position: absolute;
-            bottom: -1.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 1.5rem;
-            background-color: #415A77;
+            header h1 {
+                font-size: 1.2rem;
+            }
+            header nav {
+                margin-top: 1rem;
+            }
+            header nav a {
+                margin: 0.25rem 0.5rem;
+                padding: 0.4rem 0.6rem;
+                font-size: 0.8rem;
+            }
+            header .flex.items-center.space-x-2.ml-4 {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                width: 100%;
+                justify-content: center;
+            }
+            header select, header button {
+                padding: 0.4rem;
+                font-size: 0.8rem;
+            }
+
+            .container {
+                padding: 1.5rem;
+                margin: 1rem auto;
+            }
+            h1 {
+                font-size: 2.2rem;
+            }
+            .container .brand-logo-text {
+                font-size: 1.5rem;
+            }
+            h2 {
+                font-size: 1.6rem;
+            }
+            h3 {
+                font-size: 1.3rem;
+            }
+            p, ul li {
+                font-size: 0.95rem;
+            }
+            footer {
+                padding: 1.5rem;
+            }
+            footer .footer-links a {
+                margin: 0 0.25rem; /* Smaller horizontal margin for mobile */
+                margin-bottom: 0.25rem; /* Smaller vertical margin for mobile */
+            }
         }
     </style>
 </head>
-<body class="antialiased">
+<body>
+    <header class="py-4 px-6 md:px-12 flex flex-col sm:flex-row justify-between items-center text-white">
+        <h1 class="text-2xl font-extrabold tracking-tight mb-4 sm:mb-0" data-i18n="fruitfulBrand">Fruitful™</h1>
+        <nav class="flex flex-wrap justify-center sm:justify-end items-center space-x-2 sm:space-x-4">
+            <a href="https://faa.zone/#features" class="transition-colors duration-200" data-i18n="navFeatures">Features</a>
+            <a href="https://faa.zone/#shareprice" class="transition-colors duration-200" data-i18n="navSignal">Signal</a>
+            <a href="https://faa.zone/#vault-access" class="transition-colors duration-200" data-i18n="navVault">Vault</a>
+            <a href="https://faa.zone/#treaty" class="transition-colors duration-200" data-i18n="navTreaty">Treaty</a>
+            <a href="https://faa.zone/#vaultmesh-section" class="transition-colors duration-200" data-i18n="navVaultMesh">VaultMesh</a>
+            <a href="https://faa.zone/#about" class="transition-colors duration-200" data-i18n="navAbout">About</a>
+            <a href="https://fruitfulcratedance.com/" class="transition-colors duration-200" data-i18n="navCrateDance">Fruitful Crate Dance</a>
+            <a href="https://faa.zone/careers/hiring-homepage.html" class="transition-colors duration-200" data-i18n="navCareers">Careers</a>
+            <a href="https://faa.zone/legal/securesign.html" class="transition-colors duration-200 font-semibold px-4 py-2 rounded-full" data-i18n="navSecureSign">SecureSign</a>
+            <a href="https://faa.zone/signup.html" class="px-4 py-2 rounded-full font-semibold transition-colors duration-200" data-i18n="navSignUp">Sign Up</a>
 
-    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
-
-        <header class="text-center my-12">
-            <h1 class="text-4xl md:text-6xl font-extrabold text-[#E0E1DD]">About <span class="text-[#38A169]">Fruitful™</span></h1>
-            <p class="mt-4 text-lg md:text-xl text-[#778DA9]">Pioneering the future of agriculture through innovation and insight.</p>
-        </header>
-
-        <section id="about-intro" class="my-16 bg-[#1B263B] p-8 rounded-xl shadow-2xl">
-            <h2 class="text-3xl md:text-4xl font-bold text-[#E0E1DD] mb-6 text-center">Our Mission</h2>
-            <p id="mission-statement" class="text-lg text-[#778DA9] leading-relaxed mb-6">
-                At Fruitful™, we believe in cultivating a world where agriculture thrives through intelligence and sustainability. Our mission is to empower farmers, agribusinesses, and agricultural stakeholders with cutting-edge technology, data-driven insights, and a connected ecosystem to optimize operations, enhance yields, and foster environmental stewardship.
-            </p>
-            <p class="text-lg text-[#778DA9] leading-relaxed">
-                We are committed to transforming traditional farming practices into smart, efficient, and resilient systems that can meet the growing global demand for food while preserving our planet's vital resources.
-            </p>
-        </section>
-
-        <section id="our-values" class="my-20">
-            <h2 class="text-3xl md:text-4xl font-bold text-[#778DA9] mb-12 text-center">Our Core Values</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-[#1B263B] p-6 rounded-xl shadow-2xl text-center">
-                    <p class="text-5xl mb-4">💡</p>
-                    <h3 class="font-bold text-xl text-[#E0E1DD] mb-2">Innovation</h3>
-                    <p class="text-md text-[#778DA9]">Continuously developing advanced solutions to solve agricultural challenges.</p>
-                </div>
-                <div class="bg-[#1B263B] p-6 rounded-xl shadow-2xl text-center">
-                    <p class="text-5xl mb-4">🌍</p>
-                    <h3 class="font-bold text-xl text-[#E0E1DD] mb-2">Sustainability</h3>
-                    <p class="text-md text-[#778DA9]">Promoting practices that protect the environment and ensure long-term viability.</p>
-                </div>
-                <div class="bg-[#1B263B] p-6 rounded-xl shadow-2xl text-center">
-                    <p class="text-5xl mb-4">🤝</p>
-                    <h3 class="font-bold text-xl text-[#E0E1DD] mb-2">Collaboration</h3>
-                    <p class="text-md text-[#778DA9]">Building strong partnerships across the agricultural ecosystem.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="ask-fruitful-ai" class="my-20 bg-[#1B263B] p-8 rounded-xl shadow-2xl">
-            <h2 class="text-3xl md:text-4xl font-bold text-[#E0E1DD] mb-6 text-center">Ask Fruitful™ AI ✨</h2>
-            <p class="text-lg text-[#778DA9] mb-8 text-center">有任何關於 Fruitful™ 的使命、價值觀或願景的問題嗎？請向我們的 AI 助手提問！</p>
-            <div class="w-full max-w-2xl mx-auto bg-[#0D1B2A] p-6 rounded-lg">
-                <p class="text-left text-sm text-[#778DA9] mb-2">您的問題：</p>
-                <textarea id="aboutAIPrompt" rows="4" placeholder="例如：Fruitful™ 在永續發展方面有何承諾？" class="w-full p-2 rounded-md bg-[#415A77] border border-[#778DA9] text-[#E0E1DD] text-sm"></textarea>
-                <button type="button" id="sendAboutAIPrompt" class="mt-4 w-full bg-[#38A169] hover:bg-[#287A4F] text-white font-bold py-3 px-6 rounded-md transition-colors duration-200 text-lg">
-                    ✨ 詢問 Fruitful™ AI
+            <!-- Language and Day/Night Toggles -->
+            <div class="flex items-center space-x-2 ml-4">
+                <select id="language-toggle" class="p-2 rounded-full text-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-100">
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="ar">العربية</option>
+                    <option value="zh">中文</option>
+                </select>
+                <button id="theme-toggle" class="p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-100">
+                    ☀️
                 </button>
-                <p id="aboutAIStatus" class="text-xs text-[#778DA9] mt-2 hidden text-center"></p>
-                <div id="aboutAIResponse" class="w-full p-4 border border-[#778DA9] rounded-md bg-[#415A77] text-[#E0E1DD] mt-4 hidden text-left" style="white-space: pre-wrap;"></div>
             </div>
-        </section>
+        </nav>
+    </header>
 
-        <section id="explore-dashboard" class="my-20 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold text-[#778DA9] mb-8">Ready to See Fruitful™ in Action?</h2>
-            <p class="text-lg text-[#415A77] mb-8">Dive into our comprehensive dashboard to explore real-time data, manage your farms, and leverage AI-powered insights.</p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="https://agriculture.seedwave.faa.zone/index.html" target="_blank" class="inline-block bg-[#38A169] hover:bg-[#287A4F] text-white font-bold py-4 px-8 rounded-lg shadow-xl transition-colors duration-200 text-xl">
-                    Explore Dashboard ↗
-                </a>
-                <a href="https://agriculture.seedwave.faa.zone/infographic.html" target="_blank" class="inline-block bg-[#F6AD55] hover:bg-[#D99041] text-white font-bold py-4 px-8 rounded-lg shadow-xl transition-colors duration-200 text-xl">
-                    View Infographic 📊
-                </a>
-            </div>
-        </section>
+    <div class="container">
+        <h1 data-i18n="fruitfulGlobalTitle">About Fruitful Global™</h1>
+        <p class="brand-logo-text" data-i18n="fruitfulGlobalBrand">Fruitful Global™</p>
+        <p class="last-updated" data-i18n="lastUpdated">Last Updated: <span id="lastUpdatedDate">July 1, 2025</span></p>
 
-        <footer class="py-8 px-6 md:px-12 text-center bg-[#1B263B] text-[#778DA9] border-t border-[#415A77]">
-            <div class="flex flex-wrap justify-center mb-4 text-sm">
-                <a href="https://footer.global.repo.seedwave.faa.zone/privacy.html" class="hover:text-[#E0E1DD] transition-colors mx-2 my-1" data-i18n="footerPrivacy">Privacy</a>
-                <a href="https://footer.global.repo.seedwave.faa.zone/terms.html" class="hover:text-[#E0E1DD] transition-colors mx-2 my-1" data-i18n="footerTerms">Terms</a>
-                <a href="https://footer.global.repo.seedwave.faa.zone/contact.html" class="hover:text-[#E0E1DD] transition-colors mx-2 my-1" data-i18n="footerContact">Contact</a>
-                <a href="https://footer.global.repo.seedwave.faa.zone/copyright.html" class="hover:text-[#E0E1DD] transition-colors mx-2 my-1" data-i18n="footerCopyright">Copyright</a>
-                <a href="https://footer.global.repo.seedwave.faa.zone/developers.html" class="hover:text-[#E0E1DD] transition-colors mx-2 my-1" data-i18n="footerDevelopers">Developers</a>
-                <a href="https://footer.global.repo.seedwave.faa.zone/vaultmesh.html" class="hover:text-[#E0E1DD] transition-colors mx-2 my-1" data-i18n="footerVaultMesh">VaultMesh™</a>
-                <a href="https://footer.global.repo.seedwave.faa.zone/fruitful.html" class="hover:text-[#E0E1DD] transition-colors mx-2 my-1" data-i18n="footerFruitful">Fruitful™</a>
-                <a href="https://footer.global.repo.seedwave.faa.zone/faa.zone.html" class="hover:text-[#E0E1DD] transition-colors mx-2 my-1" data-i18n="footerFAAZone">FAA.Zone™</a>
-                <a href="https://footer.global.repo.seedwave.faa.zone/about.html" class="hover:text-[#E0E1DD] transition-colors mx-2 my-1" data-i18n="footerAbout">About</a>
-                <a href="https://footer.global.repo.seedwave.faa.zone/accessibility.html" class="hover:text-[#E0E1DD] transition-colors mx-2 my-1" data-i18n="footerAccessibility">Accessibility</a>
-            </div>
-            <span data-i18n="footerCopyrightText">© 2025 FAA™ Treaty System™. All Rights Reserved.</span> <span data-i18n="footerPoweredBy">Powered by 🦍 glyphs + Vault API. Synced with Seedwave™.</span>
-        </footer>
+        <p data-i18n="aboutFruitfulPara1">
+            Fruitful Global™ is at the forefront of building a sustainable and collaborative ecosystem for independent brands and innovators worldwide. Our mission is to empower businesses and individuals to thrive by providing cutting-edge technology, fostering global connections, and championing eco-friendly practices. We believe in a future where growth is not just about profit, but about positive impact on the planet and its communities.
+        </p>
+        <p data-i18n="aboutFruitfulPara2">
+            Our platform integrates advanced AI for insightful analytics, robust security protocols like VaultMesh™ for data protection, and transparent ledger systems like OmniScroll for efficient record-keeping. We are more than just a marketplace; we are a TreatyCommerce™ network where every participant is aligned with deeper values of meaning and sustainability.
+        </p>
+        <p data-i18n="aboutFruitfulPara3">
+            Join us in shaping a more fruitful future, today. We are driven by innovation, committed to transparency, and dedicated to creating personalized experiences that benefit every user and contribute to a healthier planet.
+        </p>
 
+        <h2 data-i18n="ourMissionTitle">Our Mission</h2>
+        <p data-i18n="ourMissionPara1">
+            To empower independent brands and innovators globally by providing a collaborative, sustainable, and technologically advanced ecosystem that fosters mutual growth and positive planetary impact.
+        </p>
+
+        <h2 data-i18n="ourVisionTitle">Our Vision</h2>
+        <p data-i18n="ourVisionPara1">
+            To be the leading global platform where innovation, connection, and sustainability converge, creating a thriving future for businesses and the planet.
+        </p>
+
+        <h2 data-i18n="coreValuesTitle">Core Values</h2>
+        <ul class="list-disc ml-6 space-y-2">
+            <li data-i18n="coreValuesListItem1">**Innovation:** Continuously pushing the boundaries of technology and collaboration.</li>
+            <li data-i18n="coreValuesListItem2">**Sustainability:** Championing eco-friendly practices and responsible growth.</li>
+            <li data-i18n="coreValuesListItem3">**Transparency:** Ensuring clear and open operations across all our systems.</li>
+            <li data-i18n="coreValuesListItem4">**Collaboration:** Building a network where mutual support leads to collective success.</li>
+            <li data-i18n="coreValuesListItem5">**Impact:** Driving positive change for businesses, individuals, and the environment.</li>
+        </ul>
+
+        <h2 data-i18n="ourTeamTitle">Our Team</h2>
+        <p data-i18n="ourTeamPara1">
+            Our diverse team of FAA-certified engineers, Scroll Ministers, Vault Admins, and HSOMNI9000™ Operators are dedicated to the vision of Fruitful Global™. We are a collective of passionate experts committed to innovation and excellence.
+        </p>
     </div>
 
+    <footer class="py-8 px-6 md:px-12 text-center">
+        <div class="flex flex-wrap justify-center mb-4 text-sm">
+            <a href="https://footer.global.repo.seedwave.faa.zone/privacy.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerPrivacy">Privacy</a>
+            <a href="https://footer.global.repo.seedwave.faa.zone/terms.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerTerms">Terms</a>
+            <a href="https://footer.global.repo.seedwave.faa.zone/contact.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerContact">Contact</a>
+            <a href="https://footer.global.repo.seedwave.faa.zone/copyright.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerCopyrightLink">Copyright</a>
+            <a href="https://footer.global.repo.seedwave.faa.zone/developers.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerDevelopers">Developers</a>
+            <a href="https://footer.global.repo.seedwave.faa.zone/vaultmesh.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerVaultMeshLink">VaultMesh</a>
+            <a href="https://footer.global.repo.seedwave.faa.zone/fruitful.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerFruitfulLink">Fruitful</a>
+            <a href="https://footer.global.repo.seedwave.faa.zone/faa.zone.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerFAAZoneLink">FAA.Zone</a>
+            <a href="https://footer.global.repo.seedwave.faa.zone/about.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors" data-i18n="footerAboutLink">About</a>
+            <a href="https://footer.global.repo.seedwave.faa.zone/accessibility.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors" data-i18n="footerAccessibility">Accessibility</a>
+        </div>
+        <span data-i18n="footerCopyright">© 2025 FAA™ Treaty System™. All Rights Reserved.</span> <span data-i18n="footerPoweredBy">Powered by 🦍 glyphs + Vault API. Synced with Seedwave™.</span>
+    </footer>
+
     <script>
-        const colorPalette = {
-            background: '#0D1B2A',
-            cardBackground: '#1B263B',
-            border: '#415A77',
-            textPrimary: '#E0E1DD',
-            textSecondary: '#778DA9',
-            accentGreen: '#38A169',
-            accentOrange: '#F6AD55',
-            accentBlue: '#63B3ED',
-        };
-
-        // Chart.js related code (not directly used on this about page, but kept for consistency if needed elsewhere)
-        let currentChartInstances = {};
-
-        function wrapLabel(str) {
-            const words = str.split(' ');
-            if (str.length <= 16) {
-                return str;
-            }
-            let lines = [];
-            let currentLine = '';
-            for (const word of words) {
-                if ((currentLine + word).length > 16) {
-                    lines.push(currentLine.trim());
-                    currentLine = '';
-                }
-                currentLine += word + ' ';
-            }
-            lines.push(currentLine.trim());
-            return lines.filter(line => line.length > 0);
-        }
-
-        const sharedChartOptions = {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    labels: {
-                        color: colorPalette.textPrimary,
-                        font: {
-                            family: 'Inter',
-                            size: 12
-                        }
-                    }
-                },
-                tooltip: {
-                    backgroundColor: colorPalette.background,
-                    titleColor: colorPalette.textPrimary,
-                    bodyColor: colorPalette.textSecondary,
-                    borderColor: colorPalette.border,
-                    borderWidth: 1,
-                    callbacks: {
-                        title: function(tooltipItems) {
-                            const item = tooltipItems[0];
-                            let label = item.chart.data.labels[item.dataIndex];
-                            if (Array.isArray(label)) {
-                              return label.join(' ');
-                            }
-                            return label;
-                        }
-                    }
-                }
-            },
-        };
-
-        // Dummy data for charts (not used on this page, but kept for reference)
-        const cropHealthData = { labels: [], datasets: [] };
-        const cropYieldData = { labels: [], datasets: [] };
-        const globalYieldData = { labels: [], datasets: [] };
-        const soilNutrientsData = { labels: [], datasets: [] };
-
-        function initializeCharts() {
-            // No charts to initialize on the About Us page.
-        }
-
-        const GEMINI_API_KEY = "";
-
-        window.callGeminiAPI = async function(prompt, targetElementId, statusElementId, buttonElement, originalButtonText) {
-            const targetElement = document.getElementById(targetElementId);
-            const statusElement = document.getElementById(statusElementId);
-            
-            if (!targetElement || !statusElement || !buttonElement) {
-                console.error("Missing target, status element, or button element for Gemini API call.");
-                return null;
-            }
-
-            statusElement.textContent = "Generating...";
-            statusElement.classList.remove('hidden');
-            targetElement.classList.add('hidden');
-            buttonElement.disabled = true;
-            buttonElement.innerHTML = `<span class="inline-block border-4 border-t-[#38A169] border-[#778DA9] rounded-full w-5 h-5 animate-spin"></span>`; // 顯示旋轉器
-
-            try {
-                let chatHistory = [];
-                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-                const payload = { contents: chatHistory };
-                
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
-
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                const result = await response.json();
-                
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    const text = result.candidates[0].content.parts[0].text;
-                    
-                    targetElement.innerHTML = text;
-                    targetElement.classList.remove('hidden');
-                    statusElement.textContent = "生成完成！"; // 生成完成
-                    return text;
-                } else {
-                    statusElement.textContent = "錯誤：AI 未生成內容。"; // AI 未生成內容
-                    console.error("Gemini API returned an unexpected structure or no content:", result);
-                    return null;
-                }
-            } catch (error) {
-                statusElement.textContent = "錯誤：API 調用失敗。"; // API 調用失敗
-                console.error("Error calling Gemini API:", error);
-                return null;
-            } finally {
-                buttonElement.disabled = false;
-                buttonElement.innerHTML = originalButtonText;
-                setTimeout(() => statusElement.classList.add('hidden'), 3000);
-            }
-        };
-
-        // New LLM feature for the About Us page
-        document.getElementById('sendAboutAIPrompt')?.addEventListener('click', async (event) => {
-            const userQuestion = document.getElementById('aboutAIPrompt').value.trim();
-            const button = event.currentTarget;
-
-            if (!userQuestion) {
-                alert('請輸入您的問題。'); // 請輸入您的問題。
-                return;
-            }
-
-            const missionStatement = document.getElementById('mission-statement').innerText;
-            const coreValues = Array.from(document.querySelectorAll('#our-values .text-md')).map(el => el.innerText).join(' ');
-
-            const context = `以下是 Fruitful™ 公司的使命和核心價值：\n\n使命：${missionStatement}\n\n核心價值：${coreValues}\n\n請根據以上資訊回答以下問題："${userQuestion}"。如果問題無法從提供的資訊中回答，請禮貌地說明。`;
-
-            await window.callGeminiAPI(context, 'aboutAIResponse', 'aboutAIStatus', button, '✨ 詢問 Fruitful™ AI');
-        });
+        // Set the last updated date dynamically
+        document.getElementById('lastUpdatedDate').innerText = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
         // Language data for i18n
-        window.languageData = window.languageData || {
+        window.languageData = { // Changed to window.languageData to avoid re-declaration errors
             en: {
+                pageTitle: 'About Fruitful Global™ | Fruitful Global™',
+                fruitfulBrand: 'Fruitful™',
+                navFeatures: 'Features',
+                navSignal: 'Signal',
+                navVault: 'Vault',
+                navTreaty: 'Treaty',
+                navVaultMesh: 'VaultMesh',
+                navAbout: 'About',
+                navCrateDance: 'Fruitful Crate Dance',
+                navCareers: 'Careers',
+                navSecureSign: 'SecureSign',
+                navSignUp: 'Sign Up',
+                // About Fruitful Global Content
+                fruitfulGlobalTitle: 'About Fruitful Global™',
+                fruitfulGlobalBrand: 'Fruitful Global™',
+                lastUpdated: 'Last Updated: ',
+                aboutFruitfulPara1: 'Fruitful Global™ is at the forefront of building a sustainable and collaborative ecosystem for independent brands and innovators worldwide. Our mission is to empower businesses and individuals to thrive by providing cutting-edge technology, fostering global connections, and championing eco-friendly practices. We believe in a future where growth is not just about profit, but about positive impact on the planet and its communities.',
+                aboutFruitfulPara2: 'Our platform integrates advanced AI for insightful analytics, robust security protocols like VaultMesh™ for data protection, and transparent ledger systems like OmniScroll for efficient record-keeping. We are more than just a marketplace; we are a TreatyCommerce™ network where every participant is aligned with deeper values of meaning and sustainability.',
+                aboutFruitfulPara3: 'Join us in shaping a more fruitful future, today. We are driven by innovation, committed to transparency, and dedicated to creating personalized experiences that benefit every user and contribute to a healthier planet.',
+                ourMissionTitle: 'Our Mission',
+                ourMissionPara1: 'To empower independent brands and innovators globally by providing a collaborative, sustainable, and technologically advanced ecosystem that fosters mutual growth and positive planetary impact.',
+                ourVisionTitle: 'Our Vision',
+                ourVisionPara1: 'To be the leading global platform where innovation, connection, and sustainability converge, creating a thriving future for businesses and the planet.',
+                coreValuesTitle: 'Core Values',
+                coreValuesListItem1: '**Innovation:** Continuously pushing the boundaries of technology and collaboration.',
+                coreValuesListItem2: '**Sustainability:** Championing eco-friendly practices and responsible growth.',
+                coreValuesListItem3: '**Transparency:** Ensuring clear and open operations across all our systems.',
+                coreValuesListItem4: '**Collaboration:** Building a network where mutual support leads to collective success.',
+                coreValuesListItem5: '**Impact:** Driving positive change for businesses, individuals, and the environment.',
+                ourTeamTitle: 'Our Team',
+                ourTeamPara1: 'Our diverse team of FAA-certified engineers, Scroll Ministers, Vault Admins, and HSOMNI9000™ Operators are dedicated to the vision of Fruitful Global™. We are a collective of passionate experts committed to innovation and excellence.',
+                // Footer links
                 footerPrivacy: 'Privacy',
                 footerTerms: 'Terms',
                 footerContact: 'Contact',
-                footerCopyright: 'Copyright',
+                footerCopyrightLink: 'Copyright',
                 footerDevelopers: 'Developers',
-                footerVaultMesh: 'VaultMesh™',
-                footerFruitful: 'Fruitful™',
-                footerFAAZone: 'FAA.Zone™',
-                footerAbout: 'About',
+                footerVaultMeshLink: 'VaultMesh',
+                footerFruitfulLink: 'Fruitful',
+                footerFAAZoneLink: 'FAA.Zone',
+                footerAboutLink: 'About',
                 footerAccessibility: 'Accessibility',
-                footerCopyrightText: '© 2025 FAA™ Treaty System™. All Rights Reserved.',
+                footerCopyright: '© 2025 FAA™ Treaty System™. All Rights Reserved.',
                 footerPoweredBy: 'Powered by 🦍 glyphs + Vault API. Synced with Seedwave™.'
             },
             es: {
+                pageTitle: 'Acerca de Fruitful Global™ | Fruitful Global™',
+                fruitfulBrand: 'Fruitful™',
+                navFeatures: 'Características',
+                navSignal: 'Señal',
+                navVault: 'Bóveda',
+                navTreaty: 'Tratado',
+                navVaultMesh: 'VaultMesh',
+                navAbout: 'Nosotros',
+                navCrateDance: 'Danza de Cestas Frutales',
+                navCareers: 'Carreras',
+                navSecureSign: 'Firma Segura',
+                navSignUp: 'Registrarse',
+                // About Fruitful Global Content
+                fruitfulGlobalTitle: 'Acerca de Fruitful Global™',
+                fruitfulGlobalBrand: 'Fruitful Global™',
+                lastUpdated: 'Última Actualización: ',
+                aboutFruitfulPara1: 'Fruitful Global™ está a la vanguardia de la construcción de un ecosistema sostenible y colaborativo para marcas e innovadores independientes en todo el mundo. Nuestra misión es empoderar a empresas e individuos para que prosperen proporcionando tecnología de vanguardia, fomentando conexiones globales y promoviendo prácticas ecológicas. Creemos en un futuro donde el crecimiento no se trata solo de ganancias, sino de un impacto positivo en el planeta y sus comunidades.',
+                aboutFruitfulPara2: 'Nuestra plataforma integra IA avanzada para análisis perspicaces, protocolos de seguridad robustos como VaultMesh™ para la protección de datos y sistemas de contabilidad transparentes como OmniScroll para un registro eficiente. Somos más que un simple mercado; somos una red TreatyCommerce™ donde cada participante está alineado con valores más profundos de significado y sostenibilidad.',
+                aboutFruitfulPara3: 'Únase a nosotros para dar forma a un futuro más fructífero, hoy. Nos impulsa la innovación, estamos comprometidos con la transparencia y dedicados a crear experiencias personalizadas que beneficien a cada usuario y contribuyan a un planeta más saludable.',
+                ourMissionTitle: 'Nuestra Misión',
+                ourMissionPara1: 'Empoderar a marcas e innovadores independientes a nivel mundial proporcionando un ecosistema colaborativo, sostenible y tecnológicamente avanzado que fomente el crecimiento mutuo y un impacto planetario positivo.',
+                ourVisionTitle: 'Nuestra Visión',
+                ourVisionPara1: 'Ser la plataforma global líder donde la innovación, la conexión y la sostenibilidad convergen, creando un futuro próspero para las empresas y el planeta.',
+                coreValuesTitle: 'Valores Fundamentales',
+                coreValuesListItem1: '**Innovación:** Empujar continuamente los límites de la tecnología y la colaboración.',
+                coreValuesListItem2: '**Sostenibilidad:** Defender prácticas ecológicas y un crecimiento responsable.',
+                coreValuesListItem3: '**Transparencia:** Garantizar operaciones claras y abiertas en todos nuestros sistemas.',
+                coreValuesListItem4: '**Colaboración:** Construir una red donde el apoyo mutuo conduzca al éxito colectivo.',
+                coreValuesListItem5: '**Impacto:** Impulsar un cambio positivo para las empresas, los individuos y el medio ambiente.',
+                ourTeamTitle: 'Nuestro Equipo',
+                ourTeamPara1: 'Nuestro diverso equipo de ingenieros certificados por la FAA, Ministros de Scrolls, Administradores de Bóvedas y Operadores de HSOMNI9000™ está dedicado a la visión de Fruitful Global™. Somos un colectivo de expertos apasionados comprometidos con la innovación y la excelencia.',
+                // Footer links
                 footerPrivacy: 'Privacidad',
                 footerTerms: 'Términos',
                 footerContact: 'Contacto',
-                footerCopyright: 'Derechos de Autor',
+                footerCopyrightLink: 'Derechos de Autor',
                 footerDevelopers: 'Desarrolladores',
-                footerVaultMesh: 'VaultMesh™',
-                footerFruitful: 'Fruitful™',
-                footerFAAZone: 'FAA.Zone™',
-                footerAbout: 'Nosotros',
+                footerVaultMeshLink: 'VaultMesh',
+                footerFruitfulLink: 'Fruitful',
+                footerFAAZoneLink: 'FAA.Zone',
+                footerAboutLink: 'Nosotros',
                 footerAccessibility: 'Accesibilidad',
-                footerCopyrightText: '© 2025 FAA™ Treaty System™. Todos los derechos reservados.',
+                footerCopyright: '© 2025 FAA™ Treaty System™. Todos los derechos reservados.',
                 footerPoweredBy: 'Impulsado por 🦍 glifos + API de Bóveda. Sincronizado con Seedwave™.'
             },
             fr: {
+                pageTitle: 'À Propos de Fruitful Global™ | Fruitful Global™',
+                fruitfulBrand: 'Fruitful™',
+                navFeatures: 'Fonctionnalités',
+                navSignal: 'Signal',
+                navVault: 'Coffre',
+                navTreaty: 'Traité',
+                navVaultMesh: 'VaultMesh',
+                navAbout: 'À Propos',
+                navCrateDance: 'Fruitful Crate Dance',
+                navCareers: 'Carrières',
+                navSecureSign: 'Signature Sécurisée',
+                navSignUp: 'S\'inscrire',
+                // About Fruitful Global Content
+                fruitfulGlobalTitle: 'À Propos de Fruitful Global™',
+                fruitfulGlobalBrand: 'Fruitful Global™',
+                lastUpdated: 'Dernière mise à jour : ',
+                aboutFruitfulPara1: 'Fruitful Global™ est à l\'avant-garde de la construction d\'un écosystème durable et collaboratif pour les marques et les innovateurs indépendants du monde entier. Notre mission est de donner aux entreprises et aux individus les moyens de prospérer en fournissant une technologie de pointe, en favorisant les connexions mondiales et en défendant les pratiques respectueuses de l\'environnement. Nous croyons en un avenir où la croissance ne se limite pas au profit, mais concerne également un impact positif sur la planète et ses communautés.',
+                aboutFruitfulPara2: 'Notre plateforme intègre une IA avancée pour des analyses perspicaces, des protocoles de sécurité robustes comme VaultMesh™ pour la protection des données, et des systèmes de registre transparents comme OmniScroll pour une tenue de registres efficace. Nous sommes plus qu\'un simple marché ; nous sommes un réseau TreatyCommerce™ où chaque participant est aligné sur des valeurs plus profondes de sens et de durabilité.',
+                aboutFruitfulPara3: 'Rejoignez-nous pour façonner un avenir plus fructueux, dès aujourd\'hui. Nous sommes animés par l\'innovation, engagés envers la transparence et dédiés à la création d\'expériences personnalisées qui profitent à chaque utilisateur et contribuent à une planète plus saine.',
+                ourMissionTitle: 'Notre Mission',
+                ourMissionPara1: 'Donner aux marques et aux innovateurs indépendants du monde entier les moyens d\'agir en leur fournissant un écosystème collaboratif, durable et technologiquement avancé qui favorise la croissance mutuelle et un impact planétaire positif.',
+                ourVisionTitle: 'Notre Vision',
+                ourVisionPara1: 'Être la principale plateforme mondiale où l\'innovation, la connexion et la durabilité convergent, créant un avenir prospère pour les entreprises et la planète.',
+                coreValuesTitle: 'Valeurs Fondamentales',
+                coreValuesListItem1: '**Innovation :** Repousser continuellement les limites de la technologie et de la collaboration.',
+                coreValuesListItem2: '**Durabilité :** Promouvoir les pratiques respectueuses de l\'environnement et une croissance responsable.',
+                coreValuesListItem3: '**Transparence :** Assurer des opérations claires et ouvertes sur tous nos systèmes.',
+                coreValuesListItem4: '**Collaboration :** Construire un réseau où le soutien mutuel mène au succès collectif.',
+                coreValuesListItem5: '**Impact :** Générer un changement positif pour les entreprises, les individus et l\'environnement.',
+                ourTeamTitle: 'Notre Équipe',
+                ourTeamPara1: 'Notre équipe diversifiée d\'ingénieurs certifiés FAA, de ministres des Scrolls, d\'administrateurs de Vault et d\'opérateurs HSOMNI9000™ est dédiée à la vision de Fruitful Global™. Nous sommes un collectif d\'experts passionnés engagés envers l\'innovation et l\'excellence.',
+                // Footer links
                 footerPrivacy: 'Confidentialité',
                 footerTerms: 'Conditions',
                 footerContact: 'Contact',
-                footerCopyright: 'Droits d\'Auteur',
+                footerCopyrightLink: 'Droits d\'Auteur',
                 footerDevelopers: 'Développeurs',
-                footerVaultMesh: 'VaultMesh™',
-                footerFruitful: 'Fruitful™',
-                footerFAAZone: 'FAA.Zone™',
-                footerAbout: 'À Propos',
+                footerVaultMeshLink: 'VaultMesh',
+                footerFruitfulLink: 'Fruitful',
+                footerFAAZoneLink: 'FAA.Zone',
+                footerAboutLink: 'À Propos',
                 footerAccessibility: 'Accessibilité',
-                footerCopyrightText: '© 2025 FAA™ Treaty System™. Tous droits réservés.',
+                footerCopyright: '© 2025 FAA™ Treaty System™. Tous droits réservés.',
                 footerPoweredBy: 'Propulsé par 🦍 glyphes + API du Coffre. Synchronisé avec Seedwave™.'
             },
             ar: {
+                pageTitle: 'حول Fruitful Global™ | Fruitful Global™',
+                fruitfulBrand: 'Fruitful™',
+                navFeatures: 'الميزات',
+                navSignal: 'الإشارة',
+                navVault: 'الخزنة',
+                navTreaty: 'المعاهدة',
+                navVaultMesh: 'شبكة الكهف',
+                navAbout: 'حول',
+                navCrateDance: 'رقصة الصندوق المثمر',
+                navCareers: 'الوظائف',
+                navSecureSign: 'توقيع آمن',
+                navSignUp: 'التسجيل',
+                // About Fruitful Global Content
+                fruitfulGlobalTitle: 'حول Fruitful Global™',
+                fruitfulGlobalBrand: 'Fruitful Global™',
+                lastUpdated: 'آخر تحديث: ',
+                aboutFruitfulPara1: 'تقف Fruitful Global™ في طليعة بناء نظام بيئي مستدام وتعاوني للعلامات التجارية والمبتكرين المستقلين في جميع أنحاء العالم. تتمثل مهمتنا في تمكين الشركات والأفراد من الازدهار من خلال توفير أحدث التقنيات، وتعزيز الروابط العالمية، ودعم الممارسات الصديقة للبيئة. نحن نؤمن بمستقبل لا يقتصر فيه النمو على الربح فحسب، بل على التأثير الإيجابي على الكوكب ومجتمعاته.',
+                aboutFruitfulPara2: 'تدمج منصتنا الذكاء الاصطناعي المتقدم للحصول على رؤى ثاقبة، وبروتوكولات أمان قوية مثل VaultMesh™ لحماية البيانات، وأنظمة دفتر الأستاذ الشفافة مثل OmniScroll لحفظ السجلات بكفاءة. نحن أكثر من مجرد سوق؛ نحن شبكة TreatyCommerce™ حيث يتوافق كل مشارك مع قيم أعمق للمعنى والاستدامة.',
+                aboutFruitfulPara3: 'انضم إلينا في تشكيل مستقبل أكثر إثمارًا، اليوم. نحن مدفوعون بالابتكار، وملتزمون بالشفافية، ومكرسون لإنشاء تجارب مخصصة تفيد كل مستخدم وتساهم في كوكب أكثر صحة.',
+                ourMissionTitle: 'مهمتنا',
+                ourMissionPara1: 'تمكين العلامات التجارية والمبتكرين المستقلين عالميًا من خلال توفير نظام بيئي تعاوني ومستدام ومتقدم تقنيًا يعزز النمو المتبادل والتأثير الإيجابي على الكوكب.',
+                ourVisionTitle: 'رؤيتنا',
+                ourVisionPara1: 'أن نكون المنصة العالمية الرائدة حيث يلتقي الابتكار والتواصل والاستدامة، مما يخلق مستقبلًا مزدهرًا للشركات والكوكب.',
+                coreValuesTitle: 'القيم الأساسية',
+                coreValuesListItem1: '**الابتكار:** دفع حدود التكنولوجيا والتعاون باستمرار.',
+                coreValuesListItem2: '**الاستدامة:** دعم الممارسات الصديقة للبيئة والنمو المسؤول.',
+                coreValuesListItem3: '**الشفافية:** ضمان عمليات واضحة ومفتوحة عبر جميع أنظمتنا.',
+                coreValuesListItem4: '**التعاون:** بناء شبكة يؤدي فيها الدعم المتبادل إلى النجاح الجماعي.',
+                coreValuesListItem5: '**التأثير:** دفع التغيير الإيجابي للشركات والأفراد والبيئة.',
+                ourTeamTitle: 'فريقنا',
+                ourTeamPara1: 'فريقنا المتنوع من المهندسين المعتمدين من FAA، ووزراء Scrolls، ومديري Vault، ومشغلي HSOMNI9000™ مكرس لرؤية Fruitful Global™. نحن مجموعة من الخبراء المتحمسين الملتزمين بالابتكار والتميز.',
+                // Footer links
                 footerPrivacy: 'الخصوصية',
                 footerTerms: 'الشروط',
                 footerContact: 'اتصل بنا',
-                footerCopyright: 'حقوق النشر',
+                footerCopyrightLink: 'حقوق النشر',
                 footerDevelopers: 'المطورون',
-                footerVaultMesh: 'شبكة الكهف™',
-                footerFruitful: 'مثمر™',
-                footerFAAZone: 'FAA.Zone™',
-                footerAbout: 'حول',
+                footerVaultMeshLink: 'شبكة الكهف',
+                footerFruitfulLink: 'مثمر',
+                footerFAAZoneLink: 'FAA.Zone',
+                footerAboutLink: 'حول',
                 footerAccessibility: 'إمكانية الوصول',
-                footerCopyrightText: '© 2025 نظام معاهدة FAA™. جميع الحقوق محفوظة.',
+                footerCopyright: '© 2025 نظام معاهدة FAA™. جميع الحقوق محفوظة.',
                 footerPoweredBy: 'مدعوم بواسطة 🦍 الرموز + واجهة برمجة تطبيقات Vault. متزامن مع Seedwave™.'
             },
             zh: {
+                pageTitle: '关于丰硕全球™ | 丰硕全球™',
+                fruitfulBrand: '丰硕™',
+                navFeatures: '功能',
+                navSignal: '信号',
+                navVault: '金库',
+                navTreaty: '条约',
+                navVaultMesh: '金库网格',
+                navAbout: '关于',
+                navCrateDance: '丰硕板条箱之舞',
+                navCareers: '职业',
+                navSecureSign: '安全签署',
+                navSignUp: '注册',
+                // About Fruitful Global Content
+                fruitfulGlobalTitle: '关于丰硕全球™',
+                fruitfulGlobalBrand: '丰硕全球™',
+                lastUpdated: '最后更新: ',
+                aboutFruitfulPara1: '丰硕全球™ 致力于为全球独立品牌和创新者构建一个可持续的协作生态系统。我们的使命是通过提供尖端技术、促进全球联系和倡导环保实践，赋能企业和个人蓬勃发展。我们相信，未来的增长不仅关乎利润，更关乎对地球及其社区的积极影响。',
+                aboutFruitfulPara2: '我们的平台集成了先进的 AI 以提供富有洞察力的分析，采用 VaultMesh™ 等强大的安全协议保护数据，并使用 OmniScroll 等透明的账本系统进行高效的记录保存。我们不仅仅是一个市场；我们是一个 TreatyCommerce™ 网络，每个参与者都秉持着更深层次的意义和可持续性价值观。',
+                aboutFruitfulPara3: '今天就加入我们，共同塑造一个更丰硕的未来。我们以创新为驱动，致力于透明化，并专注于创造个性化的体验，使每个用户受益并为更健康的地球做出贡献。',
+                ourMissionTitle: '我们的使命',
+                ourMissionPara1: '通过提供一个协作、可持续和技术先进的生态系统，赋能全球独立品牌和创新者，促进共同增长和积极的地球影响。',
+                ourVisionTitle: '我们的愿景',
+                ourVisionPara1: '成为创新、连接和可持续发展汇聚的全球领先平台，为企业和地球创造一个繁荣的未来。',
+                coreValuesTitle: '核心价值观',
+                coreValuesListItem1: '**创新：** 不断突破技术和协作的界限。',
+                coreValuesListItem2: '**可持续性：** 倡导环保实践和负责任的增长。',
+                coreValuesListItem3: '**透明度：** 确保我们所有系统的操作清晰公开。',
+                coreValuesListItem4: '**协作：** 建立一个相互支持以实现集体成功的网络。',
+                coreValuesListItem5: '**影响力：** 推动企业、个人和环境的积极变革。',
+                ourTeamTitle: '我们的团队',
+                ourTeamPara1: '我们由 FAA 认证工程师、卷轴部长、金库管理员和 HSOMNI9000™ 运营商组成的多元化团队致力于丰硕全球™ 的愿景。我们是一个充满激情的专家集体，致力于创新和卓越。',
+                // Footer links
                 footerPrivacy: '隐私',
                 footerTerms: '条款',
                 footerContact: '联系',
-                footerCopyright: '版权',
+                footerCopyrightLink: '版权',
                 footerDevelopers: '开发者',
-                footerVaultMesh: '金库网格™',
-                footerFruitful: '丰硕™',
-                footerFAAZone: 'FAA.Zone™',
-                footerAbout: '关于',
+                footerVaultMeshLink: '金库网格',
+                footerFruitfulLink: '丰硕',
+                footerFAAZoneLink: 'FAA.Zone',
+                footerAboutLink: '关于',
                 footerAccessibility: '无障碍',
-                footerCopyrightText: '© 2025 FAA™ 条约系统™。保留所有权利。',
+                footerCopyright: '© 2025 FAA™ 条约系统™。保留所有权利。',
                 footerPoweredBy: '由 🦍 符文 + 金库 API 提供支持。与 Seedwave™ 同步。'
             }
         };
 
-        function updateFooterLanguage(lang) {
-            const footerElements = document.querySelectorAll('footer [data-i18n]');
-            footerElements.forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (window.languageData[lang] && window.languageData[lang][key]) {
-                    el.innerHTML = window.languageData[lang][key];
+        // Theme Toggle Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const body = document.body;
+            const themeToggle = document.getElementById('theme-toggle');
+            const languageToggle = document.getElementById('language-toggle');
+
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                body.classList.add('dark-mode');
+                themeToggle.innerText = '🌙';
+            } else {
+                themeToggle.innerText = '☀️';
+            }
+
+            // Load saved language
+            const savedLang = localStorage.getItem('language') || 'en';
+            languageToggle.value = savedLang;
+            updateLanguage(savedLang);
+
+            // Theme toggle event listener
+            themeToggle.addEventListener('click', () => {
+                if (body.classList.contains('dark-mode')) {
+                    body.classList.remove('dark-mode');
+                    localStorage.setItem('theme', 'light');
+                    themeToggle.innerText = '☀️';
+                } else {
+                    body.classList.add('dark-mode');
+                    localStorage.setItem('theme', 'dark');
+                    themeToggle.innerText = '🌙';
                 }
             });
-        }
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedLang = localStorage.getItem('language') || 'en';
-            updateFooterLanguage(savedLang);
+
+            // Language toggle event listener
+            languageToggle.addEventListener('change', (event) => {
+                const newLang = event.target.value;
+                updateLanguage(newLang);
+                localStorage.setItem('language', newLang);
+            });
+
+            // Function to update text content based on selected language
+            function updateLanguage(lang) {
+                const elements = document.querySelectorAll('[data-i18n]');
+                elements.forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (window.languageData[lang] && window.languageData[lang][key]) { // Use window.languageData
+                        el.innerHTML = window.languageData[lang][key];
+                    }
+                });
+                document.title = window.languageData[lang]?.pageTitle || 'Fruitful Global'; // Use window.languageData
+            }
         });
     </script>
 </body>

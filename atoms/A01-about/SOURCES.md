@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-07-21 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/agriculture.seedwave.faa.zone-main/about.html` | `fe0989e2` | Fruitful™ | About Us | 20369 | 21 | 3 | 55.0 |
+| 2 | 2025-11-17 | codenest | resolve-conflicts-manually | `repos/footer.global.repo/public/fruitful.html` | `dd158308` | About Fruitful Global™ | Fruitful Global™ | 48059 | 24 | 1 | 56.8 |
