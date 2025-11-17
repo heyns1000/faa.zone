@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-11-17 | codenest | resolve-conflicts-manually | `repos/nexus-nair/frontend/hooks/index.html` | `6352bd77` | VaultMesh Global Payment Portal | 411 | 2 | 0 | 27.0 |
+| 2 | 2025-11-17 | codenest | resolve-conflicts-manually | `repos/payment/public/VaultMesh_Global_Synergy_Hub.html` | `c61c5f2e` | VaultMesh Global Payment Portal | 23699 | 14 | 4 | 27.4 |
