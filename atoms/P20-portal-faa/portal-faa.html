@@ -78,7 +78,7 @@
             display: none;
         }
         .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
+            -ms-overflow-style: none; /* IE and Edge */
             scrollbar-width: none;  /* Firefox */
         }
 
@@ -273,7 +273,7 @@
         .cta-button:hover {
             background-color: #0066cc;
             transform: translateY(-2px);
-            box-shadow: 0 44px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
         .cta-button.cta-button-secondary {
             background-color: #e8e8ed;
@@ -300,43 +300,40 @@
             color: var(--text-color-dark);
         }
 
-        /* Pulse Grid Noodle Rope Styling - Now Baobab Roots */
+        /* Pulse Grid Noodle Rope Styling */
         .pulse-grid-noodle-rope {
             display: flex;
             align-items: center;
-            height: 6px; /* Thicker, like a robust root */
-            width: 150px; /* Slightly longer to emphasize root-like extension */
-            background-color: #5C4033; /* Darker earthy brown for the root */
-            border-radius: 3px; /* More rounded, less sharp */
+            height: 2px;
+            width: 120px; /* Reduced length to fit better in header */
+            background-color: var(--muted-text-light);
+            border-radius: 1px;
             position: relative;
-            margin: 0 20px;
-            opacity: 0.9; /* More solid like a root */
-            flex-shrink: 0;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3); /* Inner shadow for depth */
+            margin: 0 20px; /* Adjusted margin */
+            opacity: 0.7;
+            flex-shrink: 0; /* Prevent noodle from shrinking */
         }
         .dark-mode .pulse-grid-noodle-rope {
-            background-color: #6F4E37; /* Lighter earthy brown for dark mode */
+            background-color: var(--muted-text-dark);
         }
 
         .noodle-dot {
             position: absolute;
-            width: 10px; /* Larger dots */
-            height: 10px; /* Larger dots */
-            background-color: #D4AF37; /* Gold/amber for a sap-like glow */
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary-color);
             border-radius: 50%;
             transform: translate(-50%, -50%);
             top: 50%;
             animation: pulse 3s infinite ease-in-out;
-            box-shadow: 0 0 8px rgba(212, 175, 55, 0.7); /* More prominent glow */
         }
         .noodle-dot.dot-stepdad {
-            width: 12px; /* Even larger for stepdad */
-            height: 12px; /* Even larger for stepdad */
-            background-color: #5F9EA0; /* CadetBlue for a subtle unique "nutrient" dot */
-            box-shadow: 0 0 10px rgba(95, 158, 160, 0.7); /* Matching glow */
+            width: 10px;
+            height: 10px;
+            background-color: var(--secondary-color);
         }
 
-        /* Staggered animation delays (no change to values as requested) */
+        /* Staggered animation delays */
         .noodle-dot.dot-1 { left: 0%; animation-delay: 0s; }
         .noodle-dot.dot-2 { left: 20%; animation-delay: 0.5s; }
         .noodle-dot.dot-3 { left: 40%; animation-delay: 1s; }
@@ -1277,9 +1274,9 @@
             margin-bottom: 0.25rem;
         }
         .ledger-metric-card p {
-            font-size: 2.5rem;
-            font-weight: 700;
             color: var(--primary-color);
+            font-size: 2rem;
+            font-weight: 700;
         }
 
         /* Chart-specific styling for consistency across all charts */
@@ -1448,17 +1445,26 @@
                 <a href="https://faa.zone/omnigrid.html" class="hero-cta-button">
                     🕸️ Explore Ecosystem
                 </a>
+                   <a href="https://faa.zone/" class="hero-cta-button">
+                    🧬 FAA.ZONE™
+                </a>
+                    <a href="https://fruitful.faa.zone/" class="hero-cta-button">
+                    🧬 Fruitful™
+                </a>
+                <a href="https://vaultmesh.faa.zone/index.html" class="hero-cta-button cta-button-secondary">
+                           🌐 VaultMesh™
+                </a> 
                 <a href="https://baobab.faa.zone" class="hero-cta-button cta-button-secondary">
-                    🌳 Baobab Network
+                    🌳 Baobab Network™
                 </a>
                 <a href="https://fruitfulcratedance.com/" class="hero-cta-button cta-button-secondary">
                     📦 Fruitful™ Crate Dance
                 </a>
                 <a href="https://portal.faa.zone/payroll.html" class="hero-cta-button cta-button-secondary">
-                    💰 Fruitful™ Payroll
+                    💰 Fruitful™ Payroll (coming soon)
                 </a>
-                <a href="admin-login.html" class="hero-cta-button cta-button-secondary">
-                    ⚙️ Admin Login
+                <a href="https://admin.faa.zone/" class="hero-cta-button cta-button-secondary">
+                    ⚙️ Admin Global Dashboard
                 </a>
                 <a href="https://faa.zone/contact-us.html" class="hero-cta-button cta-button-secondary">
                     ✉️ Contact Us
@@ -1848,7 +1854,7 @@
                     <p>734</p>
                 </div>
                 <div class="ledger-metric-card">
-                    <h3>Tier 4 (Experimental)
+                    <h3>Tier 4 (Experimental)</h3>
                     <p>289</p>
                 </div>
                 <div class="ledger-metric-card">
@@ -2071,152 +2077,61 @@
             if (!canvas) return;
             canvas.width = canvas.offsetWidth;
             canvas.height = canvas.offsetHeight;
-            // Adjust base size for more organic shapes
             if (canvas.width < 300) canvas.width = 300;
             if (canvas.height < 150) canvas.height = 150;
-            // No lineAmplitude needed as we're drawing branches
+            lineAmplitude = canvas.height / 4;
         }
 
-        // Branching tree/root drawing variables and function
-        let angleOffset = 0;
-        const branchSpeed = 0.005; // Speed of growth
-        let branches = [];
-        const maxBranches = 80; // Limit the number of branches for performance
-        const initialBranchLength = 20; // Starting length of branches
-        const branchShrinkFactor = 0.7; // How much smaller each new branch is
-        const minBranchLength = 2; // Stop drawing when branches get too small
-        const maxDepth = 4; // Max recursive depth for branches
+        let time = 0;
+        const numLines = 50;
+        let lineAmplitude;
+        const lineFrequency = 0.05;
+        const lineSpeed = 0.005;
 
-        class Branch {
-            constructor(startX, startY, angle, length, depth, hue, parentBranch = null) {
-                this.startX = startX;
-                this.startY = startY;
-                this.angle = angle;
-                this.length = length;
-                this.depth = depth;
-                this.endX = startX + Math.cos(angle) * length;
-                this.endY = startY + Math.sin(angle) * length;
-                this.hue = hue;
-                this.currentLength = 0; // For growth animation
-                this.growthSpeed = Math.random() * 0.5 + 0.5; // Randomize growth speed
-                this.parent = parentBranch; // Reference to parent for color variation
-            }
+        function drawGlyph() {
+            if (!ctx) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'rgba(10, 10, 10, 0.0)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            draw(ctx, animationProgress) {
-                if (!ctx) return;
-                let actualLength = this.length * animationProgress; // Animate growth
-                if (actualLength < minBranchLength) return; // Don't draw if too small
+            time += lineSpeed;
 
+            for (let i = 0; i < numLines; i++) {
                 ctx.beginPath();
-                ctx.moveTo(this.startX, this.startY);
-                ctx.lineTo(this.startX + Math.cos(this.angle) * actualLength, this.startY + Math.sin(this.angle) * actualLength);
+                const offset = i * (Math.PI * 2 / numLines);
+                
+                const colorHue = (time * 100 + i * 5) % 360;
+                ctx.strokeStyle = `hsla(${colorHue}, 80%, 60%, 0.7)`;
+                
+                ctx.lineWidth = 1.5;
 
-                let branchColor;
-                if (this.parent) {
-                    // Slight variation from parent's hue, or a more earthy tone
-                    branchColor = `hsl(${this.hue % 360}, ${70 - this.depth * 10}%, ${30 - this.depth * 5}%)`;
-                } else {
-                    // Base color for main roots
-                    branchColor = `hsl(25, 60%, 25%)`; // Earthy brown hue for main roots
+                for (let x = 0; x < canvas.width; x += 5) {
+                    const y = Math.sin(x * lineFrequency + time + offset) * (lineAmplitude * (Math.sin(time * 0.1 + i * 0.1) * 0.5 + 0.5)) + canvas.height / 2;
+                    if (x === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
                 }
-
-                ctx.strokeStyle = branchColor;
-                ctx.lineWidth = Math.max(1, (maxDepth - this.depth + 1) * 2); // Thicker branches at lower depth
-                ctx.lineCap = 'round';
                 ctx.stroke();
             }
 
-            // Method to grow and potentially spawn new branches
-            updateAndGrow(progress) {
-                this.currentLength = this.length * progress;
-            }
+            animationFrameId = requestAnimationFrame(drawGlyph);
         }
-
-        function createBranch(x, y, angle, length, depth, hue, parentBranch = null) {
-            if (depth > maxDepth || branches.length >= maxBranches || length < minBranchLength) return;
-
-            const newBranch = new Branch(x, y, angle, length, depth, hue, parentBranch);
-            branches.push(newBranch);
-
-            // Create sub-branches
-            if (depth < maxDepth) {
-                // Randomize number of sub-branches
-                const numSubBranches = Math.random() < 0.5 ? 2 : 3; 
-
-                for (let i = 0; i < numSubBranches; i++) {
-                    const newAngle = angle + (Math.random() - 0.5) * Math.PI / 3; // Randomize angle slightly
-                    const newLength = length * branchShrinkFactor;
-                    const newHue = hue + (Math.random() - 0.5) * 20; // Slightly vary hue
-                    createBranch(newBranch.endX, newBranch.endY, newAngle, newLength, depth + 1, newHue, newBranch);
-                }
-            }
-        }
-
-        function drawBaobabRoots() {
-            if (!ctx) return;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.05)'; // Subtle translucent white overlay for blending
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            angleOffset += branchSpeed; // Continuous subtle animation
-
-            // Regenerate branches for a dynamic effect or only draw existing ones
-            // For a "growing" effect, we can clear and redraw with increasing length
-            // For a more persistent "roots system", generate once and animate pulse/flow
-
-            // Let's create a subtle "growth" animation for existing branches
-            const growthProgress = (Math.sin(angleOffset * 0.5) * 0.5 + 0.5); // Oscillates between 0 and 1
-
-            // Draw existing branches
-            branches.forEach(branch => {
-                branch.draw(ctx, growthProgress); // Pass progress for length animation
-            });
-
-            // Periodically add new primary roots/trees for continuous evolution
-            if (Math.random() < 0.005) { // Small chance to start a new main root/tree
-                const startX = Math.random() * canvas.width;
-                const startY = canvas.height * (0.8 + Math.random() * 0.2); // Start lower on the canvas
-                const initialAngle = -Math.PI / 2 - (Math.random() - 0.5) * Math.PI / 6; // Mostly upwards, slightly varied
-                createBranch(startX, startY, initialAngle, initialBranchLength * 2, 0, Math.random() * 360);
-            }
-
-            // Remove old branches to keep performance reasonable
-            if (branches.length > maxBranches * 1.5) { // If too many, trim
-                branches.splice(0, branches.length - maxBranches);
-            }
-            
-            animationFrameId = requestAnimationFrame(drawBaobabRoots);
-        }
-
-        // Initial setup for the Baobab roots
-        if (canvas) {
-            window.addEventListener('load', () => {
-                resizeCanvas();
-                // Create a few initial main roots/trees
-                createBranch(canvas.width * 0.2, canvas.height * 0.9, -Math.PI / 2 - Math.PI / 10, initialBranchLength * 2.5, 0, 20); // First main root
-                createBranch(canvas.width * 0.8, canvas.height * 0.9, -Math.PI / 2 + Math.PI / 10, initialBranchLength * 2.5, 0, 40); // Second main root
-                createBranch(canvas.width * 0.5, canvas.height * 0.8, -Math.PI / 2, initialBranchLength * 3, 0, 30); // Center main root
-                drawBaobabRoots(); // Start the animation
-            });
-            window.addEventListener('resize', () => {
-                resizeCanvas();
-                // Clear existing branches and re-generate on resize for responsiveness
-                branches = []; 
-                createBranch(canvas.width * 0.2, canvas.height * 0.9, -Math.PI / 2 - Math.PI / 10, initialBranchLength * 2.5, 0, 20);
-                createBranch(canvas.width * 0.8, canvas.height * 0.9, -Math.PI / 2 + Math.PI / 10, initialBranchLength * 2.5, 0, 40);
-                createBranch(canvas.width * 0.5, canvas.height * 0.8, -Math.PI / 2, initialBranchLength * 3, 0, 30);
-            });
-        }
-
 
         // --- Core Application Initialization and Event Handling ---
         let charts = {}; // Global chart instances for proper management
 
         document.addEventListener('DOMContentLoaded', function() {
             // Initial setup for the entire page
+            if (canvas) {
+                resizeCanvas();
+                drawGlyph();
+            }
             updateSharePrice();
             setupAnnouncementBar();
-            updateHeaderPosition(); // Call this after announcement bar is potentially hidden/moved
+            // Call this after announcement bar is potentially hidden/moved
+            updateHeaderPosition();
 
             // Set up main navigation scroll spy
             setupGlobalNavScrollSpy();
@@ -2225,7 +2140,8 @@
             populateAdminSectorSelect();
             loadBrandDashboard(appData.admin.sectors); // Pass initial data
             setupAdminNav();
-            // showAdminView('admin-quick-view'); // Removed this call to prevent error on initial load
+            // Show the initial admin view (e.g., 'admin-quick-view')
+            showAdminView('admin-quick-view');
         });
 
         // --- Announcement Bar Logic ---
@@ -2420,17 +2336,10 @@
 
         // Function to show a specific admin view panel
         function showAdminView(viewId) {
-            // Check if element exists before manipulating classList
-            const targetPanel = document.getElementById(viewId);
-            if (!targetPanel) {
-                console.warn(`Attempted to show admin view '${viewId}', but element not found.`);
-                return;
-            }
-
             adminViewPanels.forEach(panel => {
                 panel.classList.add('hidden');
             });
-            targetPanel.classList.remove('hidden');
+            document.getElementById(viewId).classList.remove('hidden');
 
             adminNavLinks.forEach(link => {
                 link.classList.remove('active');
