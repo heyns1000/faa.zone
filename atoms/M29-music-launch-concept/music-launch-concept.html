@@ -19,6 +19,42 @@
     <!-- Babel for JSX transformation (for embedded React app) -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
+    <!-- Firebase SDKs for the React App -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, addDoc, setDoc, updateDoc, deleteDoc, onSnapshot, collection, query, where } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+
+        // Global variables for Firebase (will be populated at runtime by Canvas environment)
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // Expose Firebase instances globally for use in React component
+        window.firebase = {
+            db,
+            auth,
+            signInAnonymously,
+            signInWithCustomToken,
+            onAuthStateChanged,
+            doc,
+            getDoc,
+            addDoc,
+            setDoc,
+            updateDoc,
+            deleteDoc,
+            onSnapshot,
+            collection,
+            query,
+            where
+        };
+    </script>
+
     <style>
         /* Base Palette (Overall Document - Serene Orbit from manual) */
         :root {
@@ -43,12 +79,13 @@
             --app-hover-bg: #374151; /* App's dark gray hover states */
             --app-border-dark: #4b5563; /* App's dark borders */
             --app-aura-teal: #20c997; /* App's Aura output */
+            --app-core-brand-purple: #8B5CF6; /* New: Core Brand Purple */
         }
 
         body {
             font-family: var(--font-inter);
             background-color: var(--bg-light); /* Overall light background */
-            color: var(--text-dark); /* Overall dark text */
+            color: var(--text-dark); /* Overall dark dark text */
             line-height: 1.6;
             margin: 0;
             padding: 0;
@@ -350,6 +387,16 @@
         .fruitful-music-app-container nav .fas { color: var(--app-text-muted); }
         .fruitful-music-app-container nav .fas:hover { color: var(--app-text-light); }
         .fruitful-music-app-container nav .fa-gem { color: var(--app-secondary-blue); }
+        /* Specific icon color for SonicNest */
+        .fruitful-music-app-container nav .fa-headphones-alt,
+        .fruitful-music-app-container nav .fa-film {
+            color: #ff3b30; /* Vibrant Red for SonicNest */
+        }
+        /* New: Core Brand icon color */
+        .fruitful-music-app-container nav .fa-sitemap {
+            color: var(--app-core-brand-purple); /* Purple for Core Brands */
+        }
+
 
         .fruitful-music-app-container main {
             background-color: var(--app-dark-bg);
@@ -371,6 +418,13 @@
         .fruitful-music-app-container main section h2.text-yellow-400 { color: var(--warning-yellow); } /* Keep yellow as is */
         .fruitful-music-app-container main section h2.text-purple-400 { color: var(--app-cta-button-bg); }
         .fruitful-music-app-container main section h2.text-indigo-400 { color: var(--app-secondary-blue); }
+        /* New section header colors for SonicNest */
+        .fruitful-music-app-container main section h2.text-red-400 { color: #ff3b30; } /* SonicNest Red */
+        .fruitful-music-app-container main section h2.text-orange-400 { color: #f97316; } /* Another accent for SonicNest */
+        /* New: Core Brand section header */
+        .fruitful-music-app-container main section h2.text-purple-600 { color: var(--app-core-brand-purple); }
+
+
         .fruitful-music-app-container main section h3 { color: var(--app-text-light); }
         .fruitful-music-app-container main section p { color: var(--app-text-muted); }
         .fruitful-music-app-container main section img { background-color: var(--app-primary-green); }
@@ -380,6 +434,10 @@
         .fruitful-music-app-container main section .bg-indigo-600 { background-color: var(--app-cta-button-bg); }
         .fruitful-music-app-container main section .bg-indigo-600:hover { background-color: #3f36a0; }
         .fruitful-music-app-container main section .bg-gray-800.shadow-md:hover { background-color: var(--app-hover-bg); }
+        /* New: Core Brand button styling */
+        .fruitful-music-app-container main section .bg-purple-700 { background-color: var(--app-core-brand-purple); }
+        .fruitful-music-app-container main section .bg-purple-700:hover { background-color: #7c3aed; }
+
 
         /* Aura Suggestion Output (for app) */
         .fruitful-music-app-container #auraSuggestionOutput {
@@ -406,6 +464,106 @@
         .fruitful-music-app-container footer .text-red-500:hover { color: #ef4444; }
         .fruitful-music-app-container footer .accent-green-500 { accent-color: var(--app-primary-green); }
         .fruitful-music-app-container footer iframe { border: 1px solid var(--app-border-dark); }
+
+        /* Custom Modal for App-specific alerts (within the React app scope) */
+        .app-custom-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .app-custom-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .app-custom-modal-content {
+            background-color: var(--app-header-bg);
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            color: var(--app-text-light);
+            border: 1px solid var(--app-border-dark);
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .app-custom-modal-overlay.active .app-custom-modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .app-custom-modal-content h3 {
+            color: var(--app-primary-green);
+            margin-bottom: 1rem;
+        }
+        .app-custom-modal-content button {
+            background-color: var(--app-primary-green);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-top: 1rem;
+        }
+        .app-custom-modal-content button:hover {
+            background-color: #1a9c4b;
+        }
+        /* Specific styles for Live Demo Modal */
+        .live-demo-modal-content {
+            max-width: 800px; /* Wider for demos */
+            width: 95%;
+            height: 90%;
+            display: flex;
+            flex-direction: column;
+            padding: 0; /* Remove padding from content wrapper */
+            overflow: hidden; /* Hide scrollbars on modal content itself */
+        }
+        .live-demo-modal-header {
+            background-color: var(--app-primary-green);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-top-left-radius: 0.75rem;
+            border-top-right-radius: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .live-demo-modal-header button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            margin: -0.5rem; /* Negative margin to align icon */
+        }
+        .live-demo-modal-body {
+            flex-grow: 1;
+            background-color: var(--app-dark-bg);
+            overflow-y: auto; /* Allow scrolling within the body */
+            padding: 1.5rem;
+        }
+        .live-demo-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background-color: white; /* Default background for iframe content */
+            border-radius: 0.5rem;
+        }
     </style>
 </head>
 <body>
@@ -444,7 +602,7 @@
                 </div>
                 <div>
                     <h2>Future Expansions</h2>
-                    <p>This integration lays a critical groundwork for more sophisticated musical features and unique cross-platform experiences.</p>
+                    <p>This integration lays a critical groundwork for more sophisticated musical features and and unique cross-platform experiences.</p>
                     <ul>
                         <li><strong>Collaborative Playlists:</strong> Synced with "Job Ant Hut" project management.</li>
                         <li><strong>AI-Generated Soundtracks:</b> Dynamic music based on "Noodle Soup Innovations" data.</li>
@@ -458,7 +616,7 @@
         <section id="spotify-demo-manual" class="mb-8">
             <h2>Live Spotify Demo: Music Pulse Interaction (Manual Section)</h2>
             <p>Experience the core functionalities of the Spotify integration directly. Retrieve your top tracks, create a playlist, and listen to snippets without leaving this page.</p>
-            <div class="flex flex-wrap justify-center gap-4 my-6">
+            <div class="flex flex-wrap justify-center gap-4 my-6 spotify-controls">
                 <button id="getTopTracksBtn" class="cta-button">
                     <i class="fab fa-spotify"></i> Get My Top 5 Tracks
                 </button>
@@ -576,18 +734,383 @@
     <script type="text/babel">
         // --- React App Code (Fruitful.Music™ Launch Concept Design) ---
         const { useState, useEffect } = React;
+        const { db, auth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, doc, addDoc, setDoc, updateDoc, deleteDoc, onSnapshot, collection } = window.firebase;
+
+        // Get the unique app ID from the global variable
+        const APP_ID = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const INITIAL_AUTH_TOKEN = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+
+        // Custom Modal Component for the React App
+        function AppCustomModal({ isOpen, onClose, title, message }) {
+            if (!isOpen) return null;
+
+            return (
+                <div className="app-custom-modal-overlay active">
+                    <div className="app-custom-modal-content active">
+                        <h3 className="text-2xl font-bold mb-4">{title}</h3>
+                        <p className="text-md text-gray-300 mb-6">{message}</p>
+                        <button onClick={onClose}>Close</button>
+                    </div>
+                </div>
+            );
+        }
+
+        // NEW: Edit Project Modal Component
+        function EditProjectModal({ isOpen, onClose, project, onSave }) {
+            const [title, setTitle] = useState(project ? project.title : '');
+            const [description, setDescription] = useState(project ? project.description : '');
+
+            useEffect(() => {
+                if (project) {
+                    setTitle(project.title);
+                    setDescription(project.description);
+                }
+            }, [project]);
+
+            if (!isOpen || !project) return null;
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                onSave(project.id, { title, description });
+                onClose();
+            };
+
+            return (
+                <div className="app-custom-modal-overlay active">
+                    <div className="app-custom-modal-content active">
+                        <h3 className="text-2xl font-bold mb-4">Edit Project: {project.title}</h3>
+                        <form onSubmit={handleSubmit}>
+                            <div className="mb-4 text-left">
+                                <label htmlFor="editTitle" className="block text-gray-300 text-sm font-medium mb-1">Title</label>
+                                <input
+                                    type="text"
+                                    id="editTitle"
+                                    className="w-full p-2 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div className="mb-4 text-left">
+                                <label htmlFor="editDescription" className="block text-gray-300 text-sm font-medium mb-1">Description</label>
+                                <textarea
+                                    id="editDescription"
+                                    rows="3"
+                                    className="w-full p-2 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
+                                    required
+                                ></textarea>
+                            </div>
+                            <div className="flex justify-end gap-2">
+                                <button type="button" onClick={onClose} className="bg-gray-600 hover:bg-gray-700 text-white text-sm py-2 px-4 rounded-full">Cancel</button>
+                                <button type="submit" className="bg-green-600 hover:bg-green-700 text-white text-sm py-2 px-4 rounded-full">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            );
+        }
+
+        // NEW: Product Details Modal Component
+        function ProductDetailsModal({ isOpen, onClose, product }) {
+            if (!isOpen || !product) return null;
+
+            return (
+                <div className="app-custom-modal-overlay active">
+                    <div className="app-custom-modal-content active live-demo-modal-content"> {/* Reusing some live-demo styles for wider modal */}
+                        <div className="live-demo-modal-header">
+                            <h3>{product.name || product.title} Details</h3>
+                            <button onClick={onClose}><i className="fas fa-times"></i></button>
+                        </div>
+                        <div className="live-demo-modal-body text-left">
+                            <p className="text-gray-300 mb-4">{product.description}</p>
+                            {product.features && (
+                                <div className="mb-4">
+                                    <h4 className="text-xl font-bold text-teal-400 mb-2">Key Features:</h4>
+                                    <ul className="list-disc list-inside text-gray-300 ml-4">
+                                        {product.features.map((feature, index) => <li key={index}>{feature}</li>)}
+                                    </ul>
+                                </div>
+                            )}
+                            {product.technologies && (
+                                <div className="mb-4">
+                                    <h4 className="text-xl font-bold text-teal-400 mb-2">Technologies Used:</h4>
+                                    <ul className="list-disc list-inside text-gray-300 ml-4">
+                                        {product.technologies.map((tech, index) => <li key={index}>{tech}</li>)}
+                                    </ul>
+                                </div>
+                            )}
+                             {product.useCases && (
+                                <div className="mb-4">
+                                    <h4 className="text-xl font-bold text-teal-400 mb-2">Typical Use Cases:</h4>
+                                    <ul className="list-disc list-inside text-gray-300 ml-4">
+                                        {product.useCases.map((useCase, index) => <li key={index}>{useCase}</li>)}
+                                    </ul>
+                                </div>
+                            )}
+                            {product.integrationNotes && (
+                                <div className="mb-4">
+                                    <h4 className="text-xl font-bold text-teal-400 mb-2">Integration Notes:</h4>
+                                    <p className="text-gray-300">{product.integrationNotes}</p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // NEW: Live Demo Modal Component
+        function LiveDemoModal({ isOpen, onClose, project }) {
+            if (!isOpen || !project) return null;
+
+            // Simulated live content for the iframe
+            const liveContentHtml = `
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Live Demo - ${project.title}</title>
+                    <style>
+                        body {
+                            font-family: 'Inter', sans-serif;
+                            background-color: #1a1a1d; /* App dark background */
+                            color: #e0e0e0; /* App text light */
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+                            min-height: 100vh;
+                            padding: 20px;
+                            text-align: center;
+                            overflow: hidden;
+                        }
+                        .demo-container {
+                            background-color: #2a2a2e; /* App header background */
+                            border: 1px solid #4b5563; /* App border dark */
+                            border-radius: 1rem;
+                            padding: 2rem;
+                            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                            width: 90%;
+                            max-width: 600px;
+                        }
+                        h1 {
+                            color: #22c55e; /* App primary green */
+                            font-size: 2em;
+                            margin-bottom: 1rem;
+                        }
+                        p {
+                            color: #9ca3af; /* App text muted */
+                            margin-bottom: 1.5rem;
+                        }
+                        .visualizer-placeholder {
+                            width: 100%;
+                            height: 150px;
+                            background-color: #374151; /* App hover bg */
+                            border-radius: 0.5rem;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 1.2em;
+                            color: #e0e0e0;
+                            border: 2px dashed #4b5563;
+                            margin-bottom: 1.5rem;
+                        }
+                        .play-button {
+                            background-color: #4f46e5; /* App CTA button bg */
+                            color: white;
+                            padding: 0.8rem 1.5rem;
+                            border-radius: 9999px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            transition: background-color 0.2s ease;
+                        }
+                        .play-button:hover {
+                            background-color: #3f36a0;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="demo-container">
+                        <h1>Live Demo: ${project.title}</h1>
+                        <p>Experience your deployed project in action!</p>
+                        <div class="visualizer-placeholder">
+                            <i class="fas fa-play-circle text-4xl mr-2"></i> Simulated Live Content
+                        </div>
+                        <p class="text-sm">This content is streamed live via OmniGrid™.</p>
+                        <button class="play-button">Engage Now</button>
+                    </div>
+                </body>
+                </html>
+            `;
+
+            return (
+                <div className="app-custom-modal-overlay active">
+                    <div className="app-custom-modal-content active live-demo-modal-content">
+                        <div className="live-demo-modal-header">
+                            <h3>Live Demo: {project.title}</h3>
+                            <button onClick={onClose}><i className="fas fa-times"></i></button>
+                        </div>
+                        <div className="live-demo-modal-body">
+                            <iframe
+                                srcDoc={liveContentHtml}
+                                className="live-demo-iframe"
+                                sandbox="allow-scripts allow-same-origin"
+                                title={`Live Demo: ${project.title}`}
+                            ></iframe>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
 
         // Main App component
         function App() {
             const [searchTerm, setSearchTerm] = useState('');
-            const [activeTab, setActiveTab] = useState('browse'); // 'browse', 'search', 'playlists', 'faa-brands'
-            // New states for player controls
+            const [activeTab, setActiveTab] = useState('browse');
             const [isPlaying, setIsPlaying] = useState(false);
             const [isShuffleOn, setIsShuffleOn] = useState(false);
-            const [repeatMode, setRepeatMode] = useState('off'); // 'off', 'one', 'all'
-            // State for Aura Music Suggestion feature
+            const [repeatMode, setRepeatMode] = useState('off');
+
             const [auraSuggestionOutput, setAuraSuggestionOutput] = useState('');
             const [isGeneratingAuraSuggestion, setIsGeneratingAuraSuggestion] = useState(false);
+
+            const [coreBrandAlignmentOutput, setCoreBrandAlignmentOutput] = useState('');
+            const [isGeneratingCoreBrandAlignment, setIsGeneratingCoreBrandAlignment] = useState(false);
+            const [coreBrandProjectIdea, setCoreBrandProjectIdea] = useState('');
+            const [selectedCoreBrand, setSelectedCoreBrand] = useState(null);
+            const [integrationStepsOutput, setIntegrationStepsOutput] = useState(''); // New state for integration steps
+            const [isGeneratingIntegrationSteps, setIsGeneratingIntegrationSteps] = useState(false); // New state for loading
+
+            // Firestore states
+            const [userId, setUserId] = useState(null);
+            const [isAuthReady, setIsAuthReady] = useState(false);
+            const [myMotionProjects, setMyMotionProjects] = useState([]);
+            const [mySoundTools, setMySoundTools] = useState([]);
+            const [liveMotionProjectsCount, setLiveMotionProjectsCount] = useState(0); // New state for live count
+            const [firestoreLoading, setFirestoreLoading] = useState(true);
+            const [firestoreError, setFirestoreError] = useState(null);
+
+            // Edit modal state
+            const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+            const [projectToEdit, setProjectToEdit] = useState(null);
+
+            // Product Details Modal State
+            const [isProductDetailsModalOpen, setIsProductDetailsModalOpen] = useState(false);
+            const [selectedProduct, setSelectedProduct] = useState(null);
+
+            // Live Demo Modal State
+            const [isLiveDemoModalOpen, setIsLiveDemoModalOpen] = useState(false);
+            const [projectToDemo, setProjectToDemo] = useState(null);
+
+
+            // Initialize Firebase and set up listeners
+            useEffect(() => {
+                const unsubscribeAuth = onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        setUserId(user.uid);
+                        setIsAuthReady(true);
+                        console.log("Firebase User ID:", user.uid);
+                    } else {
+                        try {
+                            if (INITIAL_AUTH_TOKEN) {
+                                await signInWithCustomToken(auth, INITIAL_AUTH_TOKEN);
+                            } else {
+                                await signInAnonymously(auth);
+                            }
+                        } catch (error) {
+                            console.error("Firebase Auth Error:", error);
+                            setFirestoreError("Authentication failed. Some features may not work.");
+                            setIsAuthReady(true); // Still set ready to allow UI to render, but with error
+                        }
+                    }
+                });
+
+                return () => unsubscribeAuth(); // Cleanup auth listener
+            }, []);
+
+            // Firestore data listeners (depend on userId and isAuthReady)
+            useEffect(() => {
+                let unsubscribeProjects = () => {};
+                let unsubscribeTools = () => {};
+                let unsubscribeLiveCount = () => {};
+
+                if (isAuthReady && userId) {
+                    setFirestoreLoading(true);
+                    setFirestoreError(null);
+
+                    // Listener for My Motion Projects
+                    const projectsCollectionRef = collection(db, `artifacts/${APP_ID}/users/${userId}/motionProjects`);
+                    unsubscribeProjects = onSnapshot(projectsCollectionRef, (snapshot) => {
+                        const projects = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                        setMyMotionProjects(projects);
+                        setFirestoreLoading(false);
+                    }, (error) => {
+                        console.error("Error fetching motion projects:", error);
+                        setFirestoreError("Failed to load motion projects.");
+                        setFirestoreLoading(false);
+                    });
+
+                    // Listener for My Sound Tools
+                    const toolsCollectionRef = collection(db, `artifacts/${APP_ID}/users/${userId}/soundTools`);
+                    unsubscribeTools = onSnapshot(toolsCollectionRef, (snapshot) => {
+                        const tools = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                        setMySoundTools(tools);
+                        setFirestoreLoading(false);
+                    }, (error) => {
+                        console.error("Error fetching sound tools:", error);
+                        setFirestoreError("Failed to load sound tools.");
+                        setFirestoreLoading(false);
+                    });
+
+                    // Listener for Live Motion Projects Count
+                    // Ensure the path matches the security rules: /artifacts/{appId}/sonicNestMetrics/liveProjects
+                    const liveCountDocRef = doc(db, `artifacts/${APP_ID}/sonicNestMetrics`, 'liveProjects');
+                    unsubscribeLiveCount = onSnapshot(liveCountDocRef, (docSnap) => {
+                        if (docSnap.exists()) {
+                            setLiveMotionProjectsCount(docSnap.data().count || 0);
+                            console.log("Live projects count updated:", docSnap.data().count); // Debug log
+                        } else {
+                            // Initialize if it doesn't exist
+                            setDoc(liveCountDocRef, { count: 0 }).catch(console.error); // Ensure initialization is attempted
+                            setLiveMotionProjectsCount(0);
+                            console.log("Live projects count initialized to 0."); // Debug log
+                        }
+                    }, (error) => {
+                        console.error("Error fetching live projects count:", error);
+                        // This is the error the user reported. Provide guidance.
+                        setFirestoreError("Permission denied for live projects count. Please update Firebase Security Rules.");
+                    });
+
+                } else if (isAuthReady && !userId) {
+                    setFirestoreLoading(false); // Not authenticated, so no data to load
+                }
+
+                return () => {
+                    unsubscribeProjects(); // Cleanup listeners
+                    unsubscribeTools();
+                    unsubscribeLiveCount();
+                };
+            }, [isAuthReady, userId]); // Re-run when auth state changes
+
+
+            // State for custom modal (general purpose)
+            const [isModalOpen, setIsModalOpen] = useState(false);
+            const [modalContent, setModalContent] = useState({ title: '', message: '' });
+
+            const showAppModal = (title, message) => {
+                setModalContent({ title, message });
+                setIsModalOpen(true);
+            };
+
+            const closeAppModal = () => {
+                setIsModalOpen(false);
+                setModalContent({ title: '', message: '' });
+            };
 
 
             // Placeholder data for demonstration
@@ -613,7 +1136,7 @@
                 { name: 'Chill Vibes', description: 'Relaxing tunes for your evening.', count: '70 songs' },
             ];
 
-            // NEW: FAA Family Brands data
+            // FAA Family Brands data
             const faaFamilyBrands = [
                 { id: 'faa-1', name: 'HarmonyHearth™', icon: '👨‍👩‍👧‍👦', description: 'Facilitates family gatherings centered around music, fostering unity and shared experiences.', auraBenefit: 'Unity Aura' },
                 { id: 'faa-2', name: 'MelodyMosaic™', icon: '🎶', description: 'Offers customizable music experiences tailored to individual and familial preferences, enhancing the collective aura.', auraBenefit: 'Personalized Aura Flow' },
@@ -622,126 +1145,391 @@
                 { id: 'faa-5', name: 'SerenadeSphere™', icon: '🧘‍♀️', description: 'Provides immersive musical environments aimed at relaxation and aura cleansing.', auraBenefit: 'Relaxation & Aura Cleansing' },
             ];
 
+            // SonicNest Motion & Media Projects (Static examples)
+            const motionMediaProjects = [
+                { id: 'mm-1', title: 'Dynamic Visualizer Suite', description: 'Real-time interactive visualizers for live performances.', imageUrl: 'https://placehold.co/150x150/ff3b30/ffffff?text=Visualizer',
+                  features: ['Real-time audio analysis', 'Customizable particle effects', 'Multi-screen support'],
+                  technologies: ['WebGL', 'Web Audio API', 'React'],
+                  useCases: ['Live concerts', 'Interactive art installations', 'Music videos']
+                },
+                { id: 'mm-2', title: 'Short Film Scoring', description: 'Original score and sound design for independent short films.', imageUrl: 'https://placehold.co/150x150/ff3b30/ffffff?text=Film',
+                  features: ['Adaptive scoring engine', 'Foley sound library integration', 'Dialogue enhancement'],
+                  technologies: ['DAW Integration', 'AI Composition Algorithms', 'Dolby Atmos'],
+                  useCases: ['Independent films', 'Documentaries', 'Commercials']
+                },
+                { id: 'mm-3', title: 'VR Experience Soundtrack', description: 'Immersive 3D audio for virtual reality environments.', imageUrl: 'https://placehold.co/150x150/ff3b30/ffffff?text=VR',
+                  features: ['Spatial audio rendering', 'Interactive soundscapes', 'Haptic feedback synchronization'],
+                  technologies: ['Ambisonics', 'Unity/Unreal Audio Engine', 'OpenVR'],
+                  useCases: ['VR games', 'Virtual tours', 'Training simulations']
+                },
+                { id: 'mm-4', title: 'Brand Identity Animation', description: 'Animated logos and intros with custom sound effects for corporate branding.', imageUrl: 'https://placehold.co/150x150/ff3b30/ffffff?text=Brand',
+                  features: ['Vector animation support', 'Custom sound logo creation', 'Cross-platform export'],
+                  technologies: ['After Effects', 'Cinema 4D', 'Wwise'],
+                  useCases: ['Corporate branding', 'Product launches', 'Event intros']
+                },
+                { id: 'mm-5', title: 'Interactive Documentary', description: 'Engaging documentary experience with user-controlled narrative paths.', imageUrl: 'https://placehold.co/150x150/ff3b30/ffffff?text=Doc',
+                  features: ['Branching narratives', 'Dynamic media loading', 'User choice tracking'],
+                  technologies: ['HTML5 Video', 'JavaScript Frameworks', 'Node.js Backend'],
+                  useCases: ['Educational content', 'Interactive storytelling', 'Archival presentations']
+                },
+                { id: 'mm-6', title: 'Podcast Video Series', description: 'Visual enhancements and motion graphics for podcast episodes.', imageUrl: 'https://placehold.co/150x150/ff3b30/ffffff?text=Podcast',
+                  features: ['Automated waveform visualization', 'Dynamic lower thirds', 'Social media optimization'],
+                  technologies: ['Adobe Premiere Pro', 'DaVinci Resolve', 'AI Transcription'],
+                  useCases: ['Podcast promotion', 'YouTube content', 'Social media snippets']
+                },
+                { id: 'mm-7', title: 'Generative Art Installation', description: 'AI-driven visual art reacting to live sound inputs.', imageUrl: 'https://placehold.co/150x150/ff3b30/ffffff?text=Generative',
+                  features: ['Real-time audio reactivity', 'Algorithmic pattern generation', 'Audience interaction'],
+                  technologies: ['p5.js', 'Web Audio API', 'Machine Learning Models'],
+                  useCases: ['Museum exhibits', 'Public spaces', 'Interactive events']
+                },
+                { id: 'mm-8', title: '3D Audio Walkthrough', description: 'Spatial audio experience for architectural visualizations.', imageUrl: 'https://placehold.co/150x150/ff3b30/ffffff?text=3D+Audio',
+                  features: ['Immersive sound positioning', 'Material acoustic simulation', 'Multi-platform deployment'],
+                  technologies: ['Wwise', 'FMOD', 'Unity/Unreal Engine'],
+                  useCases: ['Architectural design reviews', 'Real estate tours', 'Virtual museums']
+                },
+            ];
 
-            const [currentPlayingTrack, setCurrentPlayingTrack] = useState(trendingSongs[0]); // Make current track dynamic
+            // SonicNest Sonic Production Tools (Static examples)
+            const sonicProductionTools = [
+                { id: 'sp-1', name: 'AudioMix Pro', description: 'Professional-grade mixing and mastering console.', icon: 'fas fa-sliders-h',
+                  features: ['Unlimited tracks', 'Vocal tuning algorithms', 'AI-powered mastering presets'],
+                  technologies: ['VST/AU Plugin Support', 'Cloud Processing', 'Real-time Collaboration'],
+                  useCases: ['Music production', 'Podcast editing', 'Film audio post-production']
+                },
+                { id: 'sp-2', name: 'SoundFX Library', description: 'Vast collection of royalty-free sound effects and ambiences.', icon: 'fas fa-volume-up',
+                  features: ['Categorized library', 'Advanced search filters', 'Direct DAW integration'],
+                  technologies: ['Cloud Storage', 'Metadata Tagging', 'API Access'],
+                  useCases: ['Game development', 'Film/TV production', 'Advertising']
+                },
+                { id: 'sp-3', name: 'VocalTune AI', description: 'AI-powered vocal pitch correction and harmony generation.', icon: 'fas fa-microphone-alt',
+                  features: ['Real-time pitch correction', 'Automatic harmony generation', 'Vibrato control'],
+                  technologies: ['Machine Learning', 'DSP Algorithms', 'MIDI Integration'],
+                  useCases: ['Vocal production', 'Demo recording', 'Live performance enhancement']
+                },
+                { id: 'sp-4', name: 'BeatForge Studio', description: 'Intuitive drum machine and beat sequencing software.', icon: 'fas fa-drum',
+                  features: ['Extensive drum kit library', 'Pattern sequencer', 'MIDI export'],
+                  technologies: ['Sampler Engine', 'Step Sequencer', 'Quantization Algorithms'],
+                  useCases: ['Beatmaking', 'Electronic music production', 'Hip-hop production']
+                },
+                { id: 'sp-5', name: 'Synthesizer Suite', description: 'Comprehensive collection of virtual synthesizers for diverse soundscapes.', icon: 'fas fa-keyboard',
+                  features: ['Analog, FM, Wavetable synthesis', 'Modulation matrix', 'Preset management'],
+                  technologies: ['Virtual Analog Modeling', 'DSP Synthesis', 'Polyphony Engine'],
+                  useCases: ['Sound design', 'Electronic music', 'Film scoring']
+                },
+                { id: 'sp-6', name: 'Mastering Lab', description: 'Tools for final audio polish and loudness optimization.', icon: 'fas fa-waveform',
+                  features: ['Multi-band compression', 'Limiting and Loudness metering', 'ISRC/UPC embedding'],
+                  technologies: ['Loudness Normalization', 'True Peak Limiting', 'Codec Optimization'],
+                  useCases: ['Final audio mastering', 'Broadcast preparation', 'Streaming platform delivery']
+                },
+                { id: 'sp-7', name: 'Spatial Audio Designer', description: 'Design and mix immersive 3D audio environments.', icon: 'fas fa-cube',
+                  features: ['Object-based audio mixing', 'Room acoustic simulation', 'HRTF integration'],
+                  technologies: ['Ambisonics', 'Binaural Rendering', 'Dolby Atmos Tools'],
+                  useCases: ['VR/AR audio', 'Immersive film experiences', 'Interactive installations']
+                },
+                { id: 'sp-8', name: 'AI Composer Assistant', description: 'AI-powered tool to assist with melodic and harmonic composition.', icon: 'fas fa-robot',
+                  features: ['Melody generation', 'Chord progression suggestions', 'Style transfer'],
+                  technologies: ['Generative AI', 'Neural Networks', 'Music Theory Algorithms'],
+                  useCases: ['Music composition', 'Creative brainstorming', 'Background music generation']
+                },
+            ];
+
+            // Core Fruitful Global Brands
+            const coreBrands = [
+                { id: 'cb-1', name: 'VaultMesh™', icon: 'fas fa-lock', description: 'Secure blockchain-based data and transaction integrity across all sectors.', focusArea: 'Security & Trust' },
+                { id: 'cb-2', name: 'OmniGrid™', icon: 'fas fa-globe', description: 'Interconnected global digital infrastructure for seamless data flow and resource allocation.', focusArea: 'Global Connectivity' },
+                { id: 'cb-3', name: 'ClaimRoot™', icon: 'fas fa-certificate', description: 'Automated intellectual property and licensing management for digital assets.', focusArea: 'Licensing & IP' },
+                { id: 'cb-4', name: 'CodeNest™', icon: 'fas fa-code', description: 'Development and deployment platform for AI-driven applications and smart contracts.', focusArea: 'Innovation & Development' },
+                { id: 'cb-5', name: 'TreatyMesh™', icon: 'fas fa-handshake', description: 'Framework for digital treaties, agreements, and collaborative governance.', focusArea: 'Governance & Collaboration' },
+                { id: 'cb-6', name: 'EcoFlow™', icon: 'fas fa-leaf', description: 'Sustainable resource management and environmental data integration.', focusArea: 'Sustainability & Resources' },
+                { id: 'cb-7', name: 'BioSense™', icon: 'fas fa-dna', description: 'Biometric authentication and personalized health data management.', focusArea: 'Health & Identity' },
+                { id: 'cb-8', name: 'CrateDance™', icon: 'fas fa-box-open', description: 'Optimized logistics and supply chain solutions for physical and digital goods.', focusArea: 'Logistics & Supply Chain' },
+                { id: 'cb-9', name: 'AuraSync™', icon: 'fas fa-lightbulb', description: 'Harmonizing digital experiences with user emotional and energetic states.', focusArea: 'Personalization & Well-being' },
+                { id: 'cb-10', name: 'MetaVerse Nexus™', icon: 'fas fa-vr-cardboard', description: 'Interoperable gateway to diverse metaverse environments and digital realities.', focusArea: 'Virtual Worlds & Immersion' },
+                { id: 'cb-11', name: 'DataStream Forge™', icon: 'fas fa-database', description: 'Real-time data processing and analytics for dynamic content generation and insights.', focusArea: 'Data Analytics & AI' },
+                { id: 'cb-12', name: 'QuantumPulse™', icon: 'fas fa-atom', description: 'Leveraging quantum computing principles for ultra-secure and high-speed data operations.', focusArea: 'Advanced Computing & Security' },
+            ];
+
+
+            const [currentPlayingTrack, setCurrentPlayingTrack] = useState(trendingSongs[0]);
             const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
 
-            // Effect to update embedId when currentPlayingTrack changes
             useEffect(() => {
-                // In a real app, this would trigger loading of a new track based on ID
                 console.log('Now playing:', currentPlayingTrack.title);
             }, [currentPlayingTrack]);
 
-            // Handler for Play/Pause button
-            const handlePlayPause = () => {
-                setIsPlaying(!isPlaying);
-                // In a real app, this would control the Spotify embed's playback
-                console.log(isPlaying ? 'Pausing playback' : 'Starting playback');
-            };
-
-            // Handler for Previous track button
+            const handlePlayPause = () => setIsPlaying(!isPlaying);
             const handlePreviousTrack = () => {
                 const newIndex = (currentTrackIndex - 1 + trendingSongs.length) % trendingSongs.length;
                 setCurrentTrackIndex(newIndex);
                 setCurrentPlayingTrack(trendingSongs[newIndex]);
-                setIsPlaying(true); // Auto-play new track
-                console.log('Playing previous track');
+                setIsPlaying(true);
             };
-
-            // Handler for Next track button
             const handleNextTrack = () => {
                 const newIndex = (currentTrackIndex + 1) % trendingSongs.length;
                 setCurrentTrackIndex(newIndex);
                 setCurrentPlayingTrack(trendingSongs[newIndex]);
-                setIsPlaying(true); // Auto-play new track
-                console.log('Playing next track');
+                setIsPlaying(true);
             };
-
-            // Handler for Shuffle button
-            const handleShuffle = () => {
-                setIsShuffleOn(!isShuffleOn);
-                console.log('Shuffle toggled:', !isShuffleOn);
-            };
-
-            // Handler for Repeat button
+            const handleShuffle = () => setIsShuffleOn(!isShuffleOn);
             const handleRepeat = () => {
-                if (repeatMode === 'off') {
-                    setRepeatMode('all');
-                    console.log('Repeat all tracks');
-                } else if (repeatMode === 'all') {
-                    setRepeatMode('one');
-                    console.log('Repeat current track');
-                } else {
-                    setRepeatMode('off');
-                    console.log('Repeat off');
-                }
+                if (repeatMode === 'off') setRepeatMode('all');
+                else if (repeatMode === 'all') setRepeatMode('one');
+                else setRepeatMode('off');
             };
-
-            // Handler for Like button (simulated)
-            const handleLike = () => {
-                console.log('Liked current track!');
-                // In a real app, this would update user's liked songs
-            };
-
-            // Handler for Queue button (simulated)
-            const handleQueue = () => {
-                console.log('Opening queue!');
-                // In a real app, this would open the queue view
-            };
-
-            // Handler for FAA Family Brand interaction
+            const handleLike = () => showAppModal('Feature', 'Liked current track! (Simulation)');
+            const handleQueue = () => showAppModal('Feature', 'Opening queue! (Simulation)');
             const handleFAABrandClick = (brandName, auraBenefit) => {
                 console.log(`Interacting with FAA Family Brand: ${brandName}. Aura Benefit: ${auraBenefit}.`);
-                // For now, we'll just log the interaction.
             };
 
-            // NEW: LLM Call for Aura-Based Music Suggestion
             const generateAuraMusicSuggestion = async (auraBenefit) => {
                 setIsGeneratingAuraSuggestion(true);
                 setAuraSuggestionOutput('✨ Generating music suggestions...');
 
                 const prompt = `Based on the aura benefit "${auraBenefit}", suggest 3-5 distinct music genres, instruments, or sound characteristics that would enhance this aura. Be concise and creative.`;
-
                 try {
-                    let chatHistory = [];
-                    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-                    const payload = { contents: chatHistory };
-                    const apiKey = ""; // Canvas will automatically provide this during runtime
+                    const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+                    const apiKey = "";
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
+                    const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                     const result = await response.json();
-
-                    if (result.candidates && result.candidates.length > 0 &&
-                        result.candidates[0].content && result.candidates[0].content.parts &&
-                        result.candidates[0].content.parts.length > 0) {
-                        const text = result.candidates[0].content.parts[0].text;
-                        setAuraSuggestionOutput(text);
+                    if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts.length > 0) {
+                        setAuraSuggestionOutput(result.candidates[0].content.parts[0].text);
                     } else {
                         setAuraSuggestionOutput('Failed to generate suggestions. Please try again.');
-                        console.error("Gemini API response was unexpected or missing content:", result);
                     }
                 } catch (error) {
                     setAuraSuggestionOutput('Error connecting to AI. Please check your network.');
-                    console.error("Error calling Gemini API for aura suggestion:", error);
                 } finally {
                     setIsGeneratingAuraSuggestion(false);
                 }
             };
 
+            const generateCoreBrandAlignment = async (brandName, focusArea, projectIdea) => {
+                setIsGeneratingCoreBrandAlignment(true);
+                setCoreBrandAlignmentOutput('✨ Generating alignment brief...');
+                setIntegrationStepsOutput(''); // Clear previous integration steps
+
+                if (!projectIdea) {
+                    showAppModal('Input Required', 'Please enter your project idea to generate the alignment brief.');
+                    setIsGeneratingCoreBrandAlignment(false);
+                    setCoreBrandAlignmentOutput('');
+                    return;
+                }
+
+                const prompt = `You are an AI assistant for Fruitful Global. A user is developing a new music/media project with the idea: "${projectIdea}". They want to align it with the core brand "${brandName}", which focuses on "${focusArea}". Provide a concise 3-4 sentence brief (max 100 words) on how this specific music or media project could effectively embody the principles and objectives of this brand.`;
+
+                try {
+                    const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+                    const apiKey = "";
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                    const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    const result = await response.json();
+                    if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts.length > 0) {
+                        setCoreBrandAlignmentOutput(result.candidates[0].content.parts[0].text);
+                    } else {
+                        setCoreBrandAlignmentOutput('Failed to generate alignment brief. Please try again.');
+                    }
+                } catch (error) {
+                    setCoreBrandAlignmentOutput('Error connecting to AI. Please check your network.');
+                } finally {
+                    setIsGeneratingCoreBrandAlignment(false);
+                }
+            };
+
+            // NEW: Function to generate integration steps for core brand alignment
+            const generateIntegrationSteps = async (brandName, projectIdea, alignmentBrief) => {
+                setIsGeneratingIntegrationSteps(true);
+                setIntegrationStepsOutput('✨ Suggesting integration steps...');
+
+                const prompt = `Based on the core brand "${brandName}" (focus: "${selectedCoreBrand.focusArea}") and the project idea "${projectIdea}", and the alignment brief: "${alignmentBrief}", suggest 3-5 concrete steps or considerations for how this music/media project could technically or strategically integrate with the capabilities of ${brandName}. Be specific and actionable. Format as a markdown list.`;
+
+                try {
+                    const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+                    const apiKey = "";
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                    const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    const result = await response.json();
+                    if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts.length > 0) {
+                        setIntegrationStepsOutput(result.candidates[0].content.parts[0].text);
+                    } else {
+                        setIntegrationStepsOutput('Failed to suggest integration steps. Please try again.');
+                    }
+                } catch (error) {
+                    setIntegrationStepsOutput('Error connecting to AI. Please check your network.');
+                } finally {
+                    setIsGeneratingIntegrationSteps(false);
+                }
+            };
+
+            // NEW: Function to add a motion project to Firestore
+            const addMyMotionProject = async () => {
+                if (!userId) {
+                    showAppModal('Authentication Required', 'Please wait for authentication to complete.');
+                    return;
+                }
+                const newTitle = prompt("Enter new project title:");
+                if (newTitle) {
+                    const newDescription = prompt("Enter project description:");
+                    try {
+                        await addDoc(collection(db, `artifacts/${APP_ID}/users/${userId}/motionProjects`), {
+                            title: newTitle,
+                            description: newDescription,
+                            status: 'Draft',
+                            createdAt: new Date().toISOString()
+                        });
+                        showAppModal('Project Added', `"${newTitle}" has been added to My Motion Projects.`);
+                    } catch (e) {
+                        showAppModal('Error', `Failed to add project: ${e.message}`);
+                        console.error("Error adding motion project:", e);
+                    }
+                }
+            };
+
+            // NEW: Function to delete a motion project from Firestore
+            const deleteMyMotionProject = async (projectId, projectTitle) => {
+                if (!userId) {
+                    showAppModal('Authentication Required', 'Please wait for authentication to complete.');
+                    return;
+                }
+                if (confirm(`Are you sure you want to delete "${projectTitle}"?`)) {
+                    try {
+                        await deleteDoc(doc(db, `artifacts/${APP_ID}/users/${userId}/motionProjects`, projectId));
+                        showAppModal('Project Deleted', `"${projectTitle}" has been deleted.`);
+                    } catch (e) {
+                        showAppModal('Error', `Failed to delete project: ${e.message}`);
+                        console.error("Error deleting motion project:", e);
+                    }
+                }
+            };
+
+            // NEW: Function to open edit modal for a motion project
+            const openEditProjectModal = (project) => {
+                setProjectToEdit(project);
+                setIsEditModalOpen(true);
+            };
+
+            // NEW: Function to save edited motion project to Firestore
+            const saveEditedProject = async (projectId, updatedData) => {
+                if (!userId) {
+                    showAppModal('Authentication Required', 'Please wait for authentication to complete.');
+                    return;
+                }
+                try {
+                    await updateDoc(doc(db, `artifacts/${APP_ID}/users/${userId}/motionProjects`, projectId), {
+                        ...updatedData,
+                        lastModified: new Date().toISOString()
+                    });
+                    showAppModal('Project Updated', `"${updatedData.title}" has been updated.`);
+                } catch (e) {
+                    showAppModal('Error', `Failed to update project: ${e.message}`);
+                    console.error("Error updating motion project:", e);
+                }
+            };
+
+            // NEW: Function to deploy a motion project (update status and live count)
+            const deployMyMotionProject = async (projectId, projectTitle) => {
+                if (!userId) {
+                    showAppModal('Authentication Required', 'Please wait for authentication to complete.');
+                    return;
+                }
+
+                // Check if already live
+                const project = myMotionProjects.find(p => p.id === projectId);
+                if (project && project.status === 'Live') {
+                    showAppModal('Already Live', `"${projectTitle}" is already deployed.`);
+                    return;
+                }
+
+                if (confirm(`Are you sure you want to deploy "${projectTitle}"? This will make it live.`)) {
+                    try {
+                        // Update project status to 'Live'
+                        await updateDoc(doc(db, `artifacts/${APP_ID}/users/${userId}/motionProjects`, projectId), {
+                            status: 'Live',
+                            deployedAt: new Date().toISOString()
+                        });
+
+                        // Increment live projects count
+                        const liveCountRef = doc(db, `artifacts/${APP_ID}/sonicNestMetrics`, 'liveProjects');
+                        const liveCountSnap = await getDoc(liveCountRef);
+                        const currentCount = liveCountSnap.exists() ? liveCountSnap.data().count : 0;
+                        await setDoc(liveCountRef, { count: currentCount + 1 });
+
+                        showAppModal('Project Deployed!', `"${projectTitle}" has been successfully deployed and is now live.`);
+                    } catch (e) {
+                        showAppModal('Deployment Error', `Failed to deploy project: ${e.message}`);
+                        console.error("Error deploying motion project:", e);
+                    }
+                }
+            };
+
+            // NEW: Function to add a sound tool to favorites in Firestore
+            const addMySoundTool = async (tool) => {
+                if (!userId) {
+                    showAppModal('Authentication Required', 'Please wait for authentication to complete.');
+                    return;
+                }
+                if (mySoundTools.some(t => t.id === tool.id)) {
+                    showAppModal('Already Added', `"${tool.name}" is already in your favorites.`);
+                    return;
+                }
+                try {
+                    await setDoc(doc(db, `artifacts/${APP_ID}/users/${userId}/soundTools`, tool.id), {
+                        name: tool.name,
+                        icon: tool.icon,
+                        description: tool.description, // Include description for consistency
+                        addedAt: new Date().toISOString()
+                    });
+                    showAppModal('Tool Added', `"${tool.name}" added to My Favorite Tools.`);
+                } catch (e) {
+                    showAppModal('Error', `Failed to add tool: ${e.message}`);
+                    console.error("Error adding sound tool:", e);
+                }
+            };
+
+            // NEW: Function to delete a sound tool from favorites in Firestore
+            const deleteMySoundTool = async (toolId, toolName) => {
+                if (!userId) {
+                    showAppModal('Authentication Required', 'Please wait for authentication to complete.');
+                    return;
+                }
+                if (confirm(`Are you sure you want to remove "${toolName}" from your favorites?`)) {
+                    try {
+                        await deleteDoc(doc(db, `artifacts/${APP_ID}/users/${userId}/soundTools`, toolId));
+                        showAppModal('Tool Removed', `"${toolName}" removed from favorites.`);
+                    } catch (e) {
+                        showAppModal('Error', `Failed to remove tool: ${e.message}`);
+                        console.error("Error deleting sound tool:", e);
+                    }
+                }
+            };
+
+            // NEW: Function to open Product Details Modal
+            const openProductDetailsModal = (product) => {
+                setSelectedProduct(product);
+                setIsProductDetailsModalOpen(true);
+            };
+
+            // NEW: Function to open Live Demo Modal
+            const openLiveDemoModal = (project) => {
+                setProjectToDemo(project);
+                setIsLiveDemoModalOpen(true);
+            };
+
 
             return (
                 <div className="min-h-screen bg-gray-900 text-white font-inter flex flex-col antialiased">
+                    {/* Custom Modals */}
+                    <AppCustomModal isOpen={isModalOpen} onClose={closeAppModal} title={modalContent.title} message={modalContent.message} />
+                    <EditProjectModal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} project={projectToEdit} onSave={saveEditedProject} />
+                    <ProductDetailsModal isOpen={isProductDetailsModalOpen} onClose={() => setIsProductDetailsModalOpen(false)} product={selectedProduct} />
+                    <LiveDemoModal isOpen={isLiveDemoModalOpen} onClose={() => setIsLiveDemoModalOpen(false)} project={projectToDemo} />
+
                     {/* Header */}
                     <header className="bg-gray-800 p-4 shadow-lg sticky top-0 z-50 flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <span className="text-3xl font-extrabold text-green-500">Fruitful.Music™</span>
-                            <span className="text-xl font-medium text-gray-400">Launch Concept</span>
+                            <span className="text-xl font-medium text-gray-400">| SonicNest™</span> {/* Added SonicNest branding */}
                         </div>
                         <div className="relative w-1/3 max-w-sm">
                             <input
@@ -791,10 +1579,9 @@
                                                 activeTab === 'playlists' ? 'bg-gray-700 text-white' : 'text-gray-400 hover:bg-gray-700 hover:text-white'
                                             }`}
                                         >
-                                            <i className="fas fa-bookmark"></i> Your Library
+                                            <i className="fas fa-bookmark"></i> Playlists & Licenses {/* Renamed tab */}
                                         </button>
                                     </li>
-                                    {/* NEW: FAA Family Brands tab */}
                                     <li>
                                         <button
                                             onClick={() => setActiveTab('faa-brands')}
@@ -803,6 +1590,50 @@
                                             }`}
                                         >
                                             <i className="fas fa-gem"></i> FAA Brands
+                                        </button>
+                                    </li>
+                                    {/* NEW: SonicNest Motion & Media Tab */}
+                                    <li>
+                                        <button
+                                            onClick={() => setActiveTab('motion-media')}
+                                            className={`flex items-center gap-3 w-full p-3 rounded-lg text-lg font-medium transition duration-200 ${
+                                                activeTab === 'motion-media' ? 'bg-gray-700 text-white' : 'text-gray-400 hover:bg-gray-700 hover:text-white'
+                                            }`}
+                                        >
+                                            <i className="fas fa-film"></i> Motion & Media
+                                        </button>
+                                    </li>
+                                    {/* NEW: SonicNest Sonic Production Tab */}
+                                    <li>
+                                        <button
+                                            onClick={() => setActiveTab('sonic-production')}
+                                            className={`flex items-center gap-3 w-full p-3 rounded-lg text-lg font-medium transition duration-200 ${
+                                                activeTab === 'sonic-production' ? 'bg-gray-700 text-white' : 'text-gray-400 hover:bg-gray-700 hover:text-white'
+                                            }`}
+                                        >
+                                            <i className="fas fa-headphones-alt"></i> Sonic Production
+                                        </button>
+                                    </li>
+                                    {/* NEW: Fruitful Ecosystem Tab */}
+                                    <li>
+                                        <button
+                                            onClick={() => setActiveTab('fruitful-ecosystem')}
+                                            className={`flex items-center gap-3 w-full p-3 rounded-lg text-lg font-medium transition duration-200 ${
+                                                activeTab === 'fruitful-ecosystem' ? 'bg-gray-700 text-white' : 'text-gray-400 hover:bg-gray-700 hover:text-white'
+                                            }`}
+                                        >
+                                            <i className="fas fa-sitemap"></i> Fruitful Ecosystem
+                                        </button>
+                                    </li>
+                                    {/* NEW: Live Demos Tab */}
+                                    <li>
+                                        <button
+                                            onClick={() => setActiveTab('live-demos')}
+                                            className={`flex items-center gap-3 w-full p-3 rounded-lg text-lg font-medium transition duration-200 ${
+                                                activeTab === 'live-demos' ? 'bg-gray-700 text-white' : 'text-gray-400 hover:bg-gray-700 hover:text-white'
+                                            }`}
+                                        >
+                                            <i className="fas fa-broadcast-tower"></i> Live Demos ({liveMotionProjectsCount})
                                         </button>
                                     </li>
                                 </ul>
@@ -821,7 +1652,22 @@
                                     </ul>
                                 </div>
                             </div>
-                            {/* Add a "Create Playlist" or "Install App" button here if desired */}
+                            {/* Display User ID from Firestore */}
+                            {isAuthReady && userId && (
+                                <div className="mt-auto text-center text-xs text-gray-500 pt-4 border-t border-gray-700">
+                                    User ID: {userId}
+                                </div>
+                            )}
+                            {firestoreLoading && (
+                                <div className="mt-auto text-center text-xs text-gray-500 pt-4">
+                                    Loading data... <i className="fas fa-spinner fa-spin"></i>
+                                </div>
+                            )}
+                            {firestoreError && (
+                                <div className="mt-auto text-center text-xs text-red-500 pt-4">
+                                    Error: {firestoreError}
+                                </div>
+                            )}
                         </nav>
 
                         {/* Dynamic Content Area */}
@@ -884,7 +1730,7 @@
 
                             {activeTab === 'playlists' && (
                                 <section>
-                                    <h2 className="text-3xl font-bold mb-6 text-purple-400">Your Playlists</h2>
+                                    <h2 className="text-3xl font-bold mb-6 text-purple-400">Your Playlists & Licenses</h2> {/* Updated tab title */}
                                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                                         {playlists.map(playlist => (
                                             <div key={playlist.name} className="bg-gray-800 p-5 rounded-lg shadow-md hover:bg-gray-700 transition duration-300 transform hover:scale-105 cursor-pointer">
@@ -894,6 +1740,17 @@
                                                 <button className="mt-4 bg-green-600 hover:bg-green-700 text-white text-sm py-2 px-4 rounded-full">View Playlist</button>
                                             </div>
                                         ))}
+                                    </div>
+                                    {/* Placeholder for Licensed Content/Royalties */}
+                                    <h2 className="text-3xl font-bold mb-6 mt-12 text-blue-400">Your Licensed Content & Royalties</h2>
+                                    <div className="bg-gray-800 p-5 rounded-lg shadow-md">
+                                        <p className="text-gray-400 mb-4">Here you'll find an overview of your licensed content and associated royalty earnings from SonicNest™ and other Fruitful Global integrations.</p>
+                                        <ul className="list-disc list-inside text-gray-300">
+                                            <li><strong>"The Quantum Leap" Soundtrack:</strong> Monthly Royalty Est. $500</li>
+                                            <li><strong>"Cityscape Motion Loop":</strong> Quarterly Royalty Est. $1200</li>
+                                            <li><strong>"Ambient Forest Soundscape":</strong> Annual Royalty Est. $300</li>
+                                        </ul>
+                                        <button className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white text-sm py-2 px-4 rounded-full">View Full Royalty Report</button>
                                     </div>
                                 </section>
                             )}
@@ -934,6 +1791,416 @@
                                             {auraSuggestionOutput || 'Click "Suggest Aura Music" to generate insights.'}
                                         </div>
                                     </div>
+                                </section>
+                            )}
+
+                            {/* Motion & Media Section */}
+                            {activeTab === 'motion-media' && (
+                                <section>
+                                    <h2 className="text-3xl font-bold mb-6 text-red-400">🎬 SonicNest™ Motion & Media Projects</h2>
+                                    <p className="text-gray-400 mb-8 max-w-3xl mx-auto">
+                                        Explore a curated selection of motion graphics, video productions, and interactive media projects powered by SonicNest™'s advanced rendering and streaming capabilities.
+                                    </p>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                        {motionMediaProjects.map(project => (
+                                            <div key={project.id} className="bg-gray-800 p-5 rounded-lg shadow-md hover:bg-gray-700 transition duration-300 transform hover:scale-105 cursor-pointer">
+                                                <img
+                                                    src={project.imageUrl}
+                                                    alt={project.title}
+                                                    className="w-full h-32 object-cover rounded-md mb-3"
+                                                    onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/150x150/4b5563/d1d5db?text=Media+Art"; }}
+                                                />
+                                                <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
+                                                <p className="text-gray-400 text-sm">{project.description}</p>
+                                                <button
+                                                    onClick={() => openProductDetailsModal(project)}
+                                                    className="mt-4 bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-4 rounded-full"
+                                                >
+                                                    View Details
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* NEW: My Motion Projects Section (Firestore-backed) */}
+                                    <h2 className="text-3xl font-bold mb-6 mt-12 text-blue-400">My Motion Projects</h2>
+                                    <div className="bg-gray-800 p-5 rounded-lg shadow-md mb-6">
+                                        {firestoreLoading ? (
+                                            <p className="text-gray-400">Loading your projects... <i className="fas fa-spinner fa-spin"></i></p>
+                                        ) : myMotionProjects.length === 0 ? (
+                                            <p className="text-gray-400">You haven't added any motion projects yet.</p>
+                                        ) : (
+                                            <ul className="space-y-3">
+                                                {myMotionProjects.map(project => (
+                                                    <li key={project.id} className="flex items-center justify-between bg-gray-700 p-3 rounded-md">
+                                                        <div>
+                                                            <p className="font-semibold text-lg">{project.title}</p>
+                                                            <p className="text-gray-400 text-sm">{project.description}</p>
+                                                            <p className="text-gray-500 text-xs">Status: {project.status}</p>
+                                                        </div>
+                                                        <div className="flex gap-2">
+                                                            <button
+                                                                onClick={() => openEditProjectModal(project)}
+                                                                className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm py-1 px-3 rounded-full"
+                                                            >
+                                                                Edit
+                                                            </button>
+                                                            <button
+                                                                onClick={() => deployMyMotionProject(project.id, project.title)}
+                                                                className={`bg-green-600 hover:bg-green-700 text-white text-sm py-1 px-3 rounded-full ${project.status === 'Live' ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                                                disabled={project.status === 'Live'}
+                                                            >
+                                                                {project.status === 'Live' ? 'Deployed' : 'Deploy'}
+                                                            </button>
+                                                            <button
+                                                                onClick={() => showAppModal('Manage Project', `Simulating management interface for "${project.title}".`)}
+                                                                className="bg-purple-600 hover:bg-purple-700 text-white text-sm py-1 px-3 rounded-full"
+                                                            >
+                                                                Manage
+                                                            </button>
+                                                            <button
+                                                                onClick={() => deleteMyMotionProject(project.id, project.title)}
+                                                                className="bg-red-600 hover:bg-red-700 text-white text-sm py-1 px-3 rounded-full"
+                                                            >
+                                                                Delete
+                                                            </button>
+                                                        </div>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        )}
+                                        <button
+                                            onClick={addMyMotionProject}
+                                            className="mt-4 bg-green-600 hover:bg-green-700 text-white text-sm py-2 px-4 rounded-full"
+                                        >
+                                            Add New Project
+                                        </button>
+                                    </div>
+
+                                    <div className="mt-8 p-6 bg-gray-800 rounded-lg shadow-md text-left">
+                                        <h3 className="text-xl font-bold text-orange-400 mb-4">AI-Powered Motion & Media Brief Generator</h3>
+                                        <p className="text-gray-400 mb-4">Describe your vision, and our AI will generate a detailed project brief for your next motion or media production.</p>
+                                        <textarea
+                                            id="motionMediaBriefInput"
+                                            rows="4"
+                                            className="w-full p-3 rounded-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500"
+                                            placeholder="e.g., A 30-second animated intro for a tech startup, featuring futuristic cityscapes and dynamic data visualization."
+                                        ></textarea>
+                                        <button
+                                            onClick={async () => {
+                                                const input = document.getElementById('motionMediaBriefInput').value;
+                                                const output = document.getElementById('motionMediaBriefOutput');
+                                                const status = document.getElementById('motionMediaBriefStatus');
+                                                const button = document.querySelector('#motion-media .llm-button-brief'); // Target the correct button
+                                                if (!input.trim()) {
+                                                    showAppModal('Input Required', 'Please enter a brief description to generate a project brief.');
+                                                    return;
+                                                }
+                                                output.textContent = 'Generating brief...';
+                                                output.classList.remove('hidden');
+                                                status.textContent = 'Generating...';
+                                                status.classList.remove('hidden');
+                                                button.disabled = true;
+                                                button.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> Generating...`;
+
+                                                const prompt = `Generate a detailed project brief for a motion or media project based on the following input: "${input}". Include sections for: Project Title, Objective, Target Audience, Key Visual Elements, Desired Tone, Deliverables, and Technical Requirements. Be comprehensive and professional.`;
+
+                                                try {
+                                                    let chatHistory = [];
+                                                    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                                                    const payload = { contents: chatHistory };
+                                                    const apiKey = "";
+                                                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                                                    const response = await fetch(apiUrl, {
+                                                        method: 'POST',
+                                                        headers: { 'Content-Type': 'application/json' },
+                                                        body: JSON.stringify(payload)
+                                                    });
+                                                    const result = await response.json();
+                                                    if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts.length > 0) {
+                                                        output.textContent = result.candidates[0].content.parts[0].text;
+                                                        status.textContent = 'Brief generated successfully!';
+                                                    } else {
+                                                        output.textContent = 'Failed to generate brief. Please try again.';
+                                                        status.textContent = 'Error generating brief.';
+                                                    }
+                                                } catch (error) {
+                                                    output.textContent = 'Error connecting to AI. Please check your network.';
+                                                    status.textContent = 'Network error.';
+                                                    console.error("Error calling Gemini API:", error);
+                                                } finally {
+                                                    button.disabled = false;
+                                                    button.innerHTML = `✨ Generate Brief`;
+                                                    setTimeout(() => status.classList.add('hidden'), 3000);
+                                                }
+                                            }}
+                                            className="mt-4 bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-4 rounded-full llm-button-brief"
+                                        >
+                                            ✨ Generate Brief
+                                        </button>
+                                        <p id="motionMediaBriefStatus" className="text-xs text-gray-400 mt-1 hidden"></p>
+                                        <div id="motionMediaBriefOutput" className="mt-4 p-4 bg-gray-700 rounded-md text-gray-300 whitespace-pre-wrap hidden"></div>
+                                    </div>
+                                </section>
+                            )}
+
+                            {/* Sonic Production Section */}
+                            {activeTab === 'sonic-production' && (
+                                <section>
+                                    <h2 className="text-3xl font-bold mb-6 text-red-400">🎧 SonicNest™ Production Suite</h2>
+                                    <p className="text-gray-400 mb-8 max-w-3xl mx-auto">
+                                        Access powerful tools and resources for audio production, sound design, and music composition. From raw sound to polished masters, SonicNest™ empowers your creative flow.
+                                    </p>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                        {sonicProductionTools.map(tool => (
+                                            <div key={tool.id} className="bg-gray-800 p-5 rounded-lg shadow-md hover:bg-gray-700 transition duration-300 transform hover:scale-105 cursor-pointer">
+                                                <span className="text-4xl block mb-2 text-red-400"><i className={tool.icon}></i></span>
+                                                <h3 className="text-xl font-semibold mb-2">{tool.name}</h3>
+                                                <p className="text-gray-400 text-sm">{tool.description}</p>
+                                                <button
+                                                    onClick={() => openProductDetailsModal(tool)}
+                                                    className="mt-4 bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-4 rounded-full"
+                                                >
+                                                    Explore Features
+                                                </button>
+                                                <button
+                                                    onClick={() => addMySoundTool(tool)}
+                                                    className="mt-2 bg-blue-600 hover:bg-blue-700 text-white text-sm py-1 px-3 rounded-full w-full"
+                                                >
+                                                    Add to Favorites
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* NEW: My Favorite Tools Section (Firestore-backed) */}
+                                    <h2 className="text-3xl font-bold mb-6 mt-12 text-blue-400">My Favorite Tools</h2>
+                                    <div className="bg-gray-800 p-5 rounded-lg shadow-md mb-6">
+                                        {firestoreLoading ? (
+                                            <p className="text-gray-400">Loading your tools... <i className="fas fa-spinner fa-spin"></i></p>
+                                        ) : mySoundTools.length === 0 ? (
+                                            <p className="text-gray-400">You haven't added any favorite tools yet.</p>
+                                        ) : (
+                                            <ul className="space-y-3">
+                                                {mySoundTools.map(tool => (
+                                                    <li key={tool.id} className="flex items-center justify-between bg-gray-700 p-3 rounded-md">
+                                                        <div className="flex items-center gap-3">
+                                                            <span className="text-2xl text-red-400"><i className={tool.icon}></i></span>
+                                                            <p className="font-semibold text-lg">{tool.name}</p>
+                                                        </div>
+                                                        <div className="flex gap-2">
+                                                            <button
+                                                                onClick={() => showAppModal('Tool Configuration', `Simulating configuration for "${tool.name}".`)}
+                                                                className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm py-1 px-3 rounded-full"
+                                                            >
+                                                                Configure
+                                                            </button>
+                                                            <button
+                                                                onClick={() => openProductDetailsModal(tool)}
+                                                                className="bg-purple-600 hover:bg-purple-700 text-white text-sm py-1 px-3 rounded-full"
+                                                            >
+                                                                Details
+                                                            </button>
+                                                            <button
+                                                                onClick={() => deleteMySoundTool(tool.id, tool.name)}
+                                                                className="bg-red-600 hover:bg-red-700 text-white text-sm py-1 px-3 rounded-full"
+                                                            >
+                                                                Remove
+                                                            </button>
+                                                        </div>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        )}
+                                    </div>
+
+                                    <div className="mt-8 p-6 bg-gray-800 rounded-lg shadow-md text-left">
+                                        <h3 className="text-xl font-bold text-orange-400 mb-4">AI-Powered Sound Design Concept Generator</h3>
+                                        <p className="text-gray-400 mb-4">Describe a scene or emotion, and our AI will suggest sound design concepts, instruments, and effects.</p>
+                                        <textarea
+                                            id="soundDesignConceptInput"
+                                            rows="4"
+                                            className="w-full p-3 rounded-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500"
+                                            placeholder="e.g., A tense, futuristic chase scene through a neon-lit city, or a serene meditation in a bamboo forest."
+                                        ></textarea>
+                                        <button
+                                            onClick={async () => {
+                                                const input = document.getElementById('soundDesignConceptInput').value;
+                                                const output = document.getElementById('soundDesignConceptOutput');
+                                                const status = document.getElementById('soundDesignConceptStatus');
+                                                const button = document.querySelector('#sonic-production .llm-button-concept'); // Target the correct button
+                                                if (!input.trim()) {
+                                                    showAppModal('Input Required', 'Please enter a description to generate sound design concepts.');
+                                                    return;
+                                                }
+                                                output.textContent = 'Generating concepts...';
+                                                output.classList.remove('hidden');
+                                                status.textContent = 'Generating...';
+                                                status.classList.remove('hidden');
+                                                button.disabled = true;
+                                                button.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> Generating...`;
+
+                                                const prompt = `Based on the following scene/emotion: "${input}", suggest 3-5 distinct sound design concepts, including specific instruments, effects, or atmospheric elements. Be creative and concise.`;
+
+                                                try {
+                                                    let chatHistory = [];
+                                                    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                                                    const payload = { contents: chatHistory };
+                                                    const apiKey = "";
+                                                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                                                    const response = await fetch(apiUrl, {
+                                                        method: 'POST',
+                                                        headers: { 'Content-Type': 'application/json' },
+                                                        body: JSON.stringify(payload)
+                                                    });
+                                                    const result = await response.json();
+                                                    if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts.length > 0) {
+                                                        output.textContent = result.candidates[0].content.parts[0].text;
+                                                        status.textContent = 'Concepts generated successfully!';
+                                                    } else {
+                                                        output.textContent = 'Failed to generate concepts. Please try again.';
+                                                        status.textContent = 'Error generating concepts.';
+                                                    }
+                                                } catch (error) {
+                                                    output.textContent = 'Error connecting to AI. Please check your network.';
+                                                    status.textContent = 'Network error.';
+                                                    console.error("Error calling Gemini API:", error);
+                                                } finally {
+                                                    button.disabled = false;
+                                                    button.innerHTML = `✨ Generate Concepts`;
+                                                    setTimeout(() => status.classList.add('hidden'), 3000);
+                                                }
+                                            }}
+                                            className="mt-4 bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-4 rounded-full llm-button-concept"
+                                        >
+                                            ✨ Generate Concepts
+                                        </button>
+                                        <p id="soundDesignConceptStatus" className="text-xs text-gray-400 mt-1 hidden"></p>
+                                        <div id="soundDesignConceptOutput" className="mt-4 p-4 bg-gray-700 rounded-md text-gray-300 whitespace-pre-wrap hidden"></div>
+                                    </div>
+                                </section>
+                            )}
+
+                            {/* NEW: Fruitful Ecosystem Section (Core Brands) */}
+                            {activeTab === 'fruitful-ecosystem' && (
+                                <section>
+                                    <h2 className="text-3xl font-bold mb-6 text-purple-600">🌐 Fruitful Global Ecosystem — Core Brands</h2>
+                                    <p className="text-gray-400 mb-8 max-w-3xl mx-auto">
+                                        Explore the foundational brands of the Fruitful Global ecosystem. Each brand represents a core pillar of our interconnected digital universe, influencing and supporting all creative endeavors, including music and media.
+                                    </p>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                                        {coreBrands.map(brand => (
+                                            <div
+                                                key={brand.id}
+                                                className={`bg-gray-800 p-5 rounded-lg shadow-md hover:bg-gray-700 transition duration-300 transform hover:scale-105 cursor-pointer ${selectedCoreBrand && selectedCoreBrand.id === brand.id ? 'border-2 border-purple-600' : ''}`}
+                                                onClick={() => {
+                                                    setSelectedCoreBrand(brand);
+                                                    setCoreBrandAlignmentOutput(''); // Clear previous output
+                                                    setCoreBrandProjectIdea(''); // Clear previous input
+                                                    setIntegrationStepsOutput(''); // Clear previous integration steps
+                                                }}
+                                            >
+                                                <span className="text-4xl block mb-2 text-purple-600"><i className={brand.icon}></i></span>
+                                                <h3 className="text-xl font-semibold mb-2">{brand.name}</h3>
+                                                <p className="text-gray-400 text-sm">{brand.description}</p>
+                                                <p className="text-gray-500 text-xs mt-2">Focus: {brand.focusArea}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    {selectedCoreBrand && (
+                                        <div className="mt-8 p-6 bg-gray-800 rounded-lg shadow-md text-left">
+                                            <h3 className="text-xl font-bold text-purple-600 mb-4">Integrate with {selectedCoreBrand.name}</h3>
+                                            <p className="text-gray-400 mb-4">How can your music/media project leverage {selectedCoreBrand.name}'s capabilities?</p>
+                                            <label htmlFor="coreBrandProjectSelect" className="block text-gray-300 text-sm font-medium mb-2">Select your project:</label>
+                                            <select
+                                                id="coreBrandProjectSelect"
+                                                className="w-full p-3 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 mb-4"
+                                                value={coreBrandProjectIdea}
+                                                onChange={(e) => setCoreBrandProjectIdea(e.target.value)}
+                                            >
+                                                <option value="">-- Select a project or type below --</option>
+                                                {myMotionProjects.map(project => (
+                                                    <option key={project.id} value={project.title}>{project.title}</option>
+                                                ))}
+                                            </select>
+                                            <textarea
+                                                id="coreBrandProjectIdeaInput"
+                                                rows="3"
+                                                className="w-full p-3 rounded-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                                placeholder={`Or describe your project idea here (e.g., A new music streaming service, a short film, an interactive album) to see how it aligns with ${selectedCoreBrand.name}.`}
+                                                value={coreBrandProjectIdea}
+                                                onChange={(e) => setCoreBrandProjectIdea(e.target.value)}
+                                            ></textarea>
+                                            <button
+                                                onClick={() => generateCoreBrandAlignment(selectedCoreBrand.name, selectedCoreBrand.focusArea, coreBrandProjectIdea)}
+                                                className="mt-4 bg-purple-700 hover:bg-purple-800 text-white text-sm py-2 px-4 rounded-full w-full"
+                                                disabled={isGeneratingCoreBrandAlignment || !coreBrandProjectIdea.trim()}
+                                            >
+                                                {isGeneratingCoreBrandAlignment ? (
+                                                    <i className="fas fa-spinner fa-spin mr-2"></i>
+                                                ) : (
+                                                    '✨ Generate Alignment Brief'
+                                                )}
+                                            </button>
+                                            <div className="mt-4 p-4 bg-gray-700 rounded-md text-gray-300 whitespace-pre-wrap min-h-[50px] flex items-center">
+                                                {coreBrandAlignmentOutput || 'Your alignment brief will appear here.'}
+                                            </div>
+                                            {coreBrandAlignmentOutput && (
+                                                <button
+                                                    onClick={() => generateIntegrationSteps(selectedCoreBrand.name, coreBrandProjectIdea, coreBrandAlignmentOutput)}
+                                                    className="mt-4 bg-blue-600 hover:bg-blue-700 text-white text-sm py-2 px-4 rounded-full w-full"
+                                                    disabled={isGeneratingIntegrationSteps}
+                                                >
+                                                    {isGeneratingIntegrationSteps ? (
+                                                        <i className="fas fa-spinner fa-spin mr-2"></i>
+                                                    ) : (
+                                                        '✨ Suggest Integration Steps'
+                                                    )}
+                                                </button>
+                                            )}
+                                            {integrationStepsOutput && (
+                                                <div className="mt-4 p-4 bg-gray-700 rounded-md text-gray-300 whitespace-pre-wrap">
+                                                    <h4 className="text-xl font-bold text-teal-400 mb-2">Suggested Integration Steps:</h4>
+                                                    {integrationStepsOutput}
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+                                </section>
+                            )}
+
+                            {/* NEW: Live Demos Section */}
+                            {activeTab === 'live-demos' && (
+                                <section>
+                                    <h2 className="text-3xl font-bold mb-6 text-red-400">📡 Live Demos from My Projects</h2>
+                                    <p className="text-gray-400 mb-8 max-w-3xl mx-auto">
+                                        These are your motion and media projects that are currently deployed and live. Click "View Live" to see them in action!
+                                    </p>
+                                    <p className="text-gray-400 text-lg mb-4">Total Live Projects: <span className="font-bold text-green-400">{liveMotionProjectsCount}</span></p>
+
+                                    {firestoreLoading ? (
+                                        <p className="text-gray-400">Loading live demos... <i className="fas fa-spinner fa-spin"></i></p>
+                                    ) : myMotionProjects.filter(p => p.status === 'Live').length === 0 ? (
+                                        <p className="text-gray-400">No live demos found. Deploy a project from the "Motion & Media" tab to see it here!</p>
+                                    ) : (
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                            {myMotionProjects.filter(p => p.status === 'Live').map(project => (
+                                                <div key={project.id} className="bg-gray-800 p-5 rounded-lg shadow-md hover:bg-gray-700 transition duration-300 transform hover:scale-105 cursor-pointer">
+                                                    <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
+                                                    <p className="text-gray-400 text-sm">{project.description}</p>
+                                                    <p className="text-gray-500 text-xs mt-2">Deployed: {new Date(project.deployedAt).toLocaleDateString()}</p>
+                                                    <button
+                                                        onClick={() => openLiveDemoModal(project)}
+                                                        className="mt-4 bg-green-600 hover:bg-green-700 text-white text-sm py-2 px-4 rounded-full"
+                                                    >
+                                                        View Live
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </section>
                             )}
                         </main>
@@ -1039,7 +2306,7 @@
 
         // IMPORTANT: In a real app, never hardcode your Spotify token like this.
         // Implement an OAuth 2.0 flow to securely obtain and refresh tokens.
-        const SPOTIFY_ACCESS_TOKEN = 'BQBDSZ232IQmSLV1BROkxqdwNMoGhtitKOJBjDzE-Lu9YKsSK1RKVwXNfYfncP2wf6Fj6xcYlnGD75baEqOmd3XtxhUhB-X6koPd92H9S0rQBqZ0HSKpsb04HiAme_FtqVLket7_s07gH9y1nxuPhbRyxp0r59oXtovV-uw0lCt2B7Mh5OmN3untEAGhfg6a6AZsaWLsv02dh6zKOQ_6DXHvCHZWxcYVmoggu4eLA2NrqAf8rFRSNOw6HQpaN-VZkJWblznWQ0pT7ynzjpKOPlM_70N7vOLIZF8XnRmN1Oe784V-XfYNV-j1x1kdXGEpzlx1'; // Replace with a valid token for actual testing
+        const SPOTIFY_ACCESS_TOKEN = 'BQBDSZ232IQmSLV1BROkxqdwNMoGhtitKOJBjDzE-Lu9YKsSK1RKVwXNfYfncP2wf6Fj6xcYlnGD75baEqOmd3XtxhUhB-X6koPd92H-XfYNV-j1x1kdXGEpzlx1'; // Replace with a valid token for actual testing
 
 
         async function fetchSpotifyWebApi(endpoint, method, body = null) {
@@ -1152,9 +2419,9 @@
             const audioPlayersContainer = document.getElementById('audio-players');
 
             if (!audioPlayersContainer) {
-                 console.error("Manual demo audio players container not found. Cannot run playTracksDemo.");
-                 displayDemoMessage("Demo audio players container not found. Please ensure it exists.", "error");
-                 return;
+                   console.error("Manual demo audio players container not found. Cannot run playTracksDemo.");
+                   displayDemoMessage("Demo audio players container not found. Please ensure it exists.", "error");
+                   return;
             }
 
             audioPlayersContainer.innerHTML = ''; // Clear previous players
@@ -1249,10 +2516,8 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
-                        plugins: {
-                            legend: { position: 'bottom', labels: { color: var_to_rgba('--text-dark', 0.9) } },
-                            tooltip: { callbacks: { label: (context) => `${context.label}: ${context.raw}%` } }
-                        }
+                        plugins: { legend: { position: 'bottom', labels: { color: var_to_rgba('--text-dark', 0.9) } } },
+                        tooltip: { callbacks: { label: (context) => `${context.label}: ${context.raw}%` } }
                     }
                 });
             }
