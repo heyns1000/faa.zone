@@ -3,89 +3,886 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📧 Contact Us - Baobab Security Network™</title>
+    <title data-i18n="pageTitle">Contact Us | Fruitful Global™</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Base Styles - Consistent with Fruitful aesthetic */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #F5F5F5; /* Warm Neutral: Light Beige */
-            color: #333333;
+            background-color: #f5f5f7; /* Very light gray, almost white */
+            color: #1d1d1f; /* Near black for primary text */
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Pushes footer to the bottom */
         }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #f5f5f7;
+        }
+        body.dark-mode header {
+            background-color: rgba(26, 26, 26, 0.9);
+            border-bottom-color: #333;
+            box-shadow: 0 1px 0 rgba(255,255,255,0.05);
+        }
+        body.dark-mode header h1 {
+            color: #f5f5f7;
+        }
+        body.dark-mode header nav a {
+            color: #f5f5f7; /* Light text in dark mode for visibility */
+        }
+        body.dark-mode header nav a:hover {
+            color: #66b2ff; /* Lighter blue for dark mode hover */
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        body.dark-mode header nav a.px-4 { /* SecureSign button in dark mode */
+            background-color: #66b2ff;
+            color: #1d1d1f;
+            box-shadow: 0 1px 3px rgba(255,255,255,0.1);
+            border-color: #66b2ff; /* Ensure border color matches */
+        }
+        body.dark-mode header nav a.px-4:hover {
+            background-color: #7abaff;
+            box-shadow: 0 2px 5px rgba(255,255,255,0.15);
+        }
+        body.dark-mode #language-toggle, body.dark-mode #theme-toggle {
+            background-color: #3a3a3a;
+            color: #f5f5f7;
+        }
+        body.dark-mode #language-toggle:focus, body.dark-mode #theme-toggle:focus {
+            box-shadow: 0 0 0 2px rgba(102, 178, 255, 0.5); /* Blue ring for dark mode */
+        }
+
+        body.dark-mode .container {
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+        body.dark-mode .container h1, body.dark-mode h2, body.dark-mode h3 {
+            color: #f5f5f7;
+        }
+        body.dark-mode .container .brand-logo-text {
+            color: #66b2ff;
+        }
+        body.dark-mode p, body.dark-mode ul li, body.dark-mode label, body.dark-mode input, body.dark-mode textarea {
+            color: #e0e0e0;
+        }
+        body.dark-mode a {
+            color: #66b2ff;
+        }
+        body.dark-mode a:hover {
+            color: #7abaff;
+        }
+        body.dark-mode footer {
+            background-color: #1a1a1a;
+            border-top-color: #333;
+            color: #888;
+        }
+        body.dark-mode footer a {
+            color: #e0e0e0;
+        }
+        body.dark-mode footer a:hover {
+            color: #f5f5f7;
+        }
+        body.dark-mode .form-input, body.dark-mode .form-textarea {
+            background-color: #3a3a3a;
+            border-color: #4a4a4a;
+        }
+        body.dark-mode .form-input:focus, body.dark-mode .form-textarea:focus {
+            border-color: #66b2ff;
+            box-shadow: 0 0 0 2px rgba(102, 178, 255, 0.5);
+        }
+        body.dark-mode .submit-button {
+            background-color: #66b2ff;
+            color: #1d1d1f;
+        }
+        body.dark-mode .submit-button:hover {
+            background-color: #7abaff;
+        }
+
+        /* Header specific styling from faa.zone/index.html */
         header {
-            background-color: #FFFFFF;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+            backdrop-filter: blur(10px); /* Frosted glass effect */
+            border-bottom: 1px solid #e8e8ed; /* Subtle bottom border */
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.05);
             position: sticky;
             top: 0;
             z-index: 50;
+            display: flex;
+            flex-direction: column;
+            sm:flex-direction: row; /* Adjusted for responsive header */
+            justify-content: space-between;
+            align-items: center;
+            padding-left: 1.5rem; /* px-6 */
+            padding-right: 1.5rem; /* px-6 */
+            md:padding-left: 3rem; /* md:px-12 */
+            md:padding-right: 3rem; /* md:px-12 */
         }
-        header a {
-            transition: all 0.2s ease-in-out;
-            color: #374151; /* Gray-700 */
-            padding: 0.5rem 0.8rem;
-            border-radius: 0.375rem;
+        header h1 {
+            color: #1d1d1f; /* Dark text for logo */
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem; /* mb-4 sm:mb-0 */
+            sm:margin-bottom: 0;
+        }
+        header nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            sm:justify-content: flex-end; /* sm:justify-end */
+            align-items: center;
+            gap: 0.5rem; /* space-x-2 sm:space-x-4 */
+            sm:gap: 1rem;
+        }
+        header nav a {
+            color: #1d1d1f; /* Ensure dark color for links on light header */
+            font-size: 0.9rem;
             font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            transition: all 0.2s ease-in-out;
+            position: relative;
         }
-        header a:hover {
-            background-color: #EBF5FF; /* Subtle Blue accent */
-            color: #2563EB; /* Blue-600 */
+        header nav a:hover {
+            color: #0071e3; /* Apple blue on hover */
+            background-color: rgba(0, 0, 0, 0.03);
         }
-        .contact-card {
-            background-color: #FFFFFF;
-            border-radius: 0.75rem;
-            border: 1px solid #E5E7EB;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            padding: 3rem;
+        header nav a.px-4 { /* Sign Up button */
+            background-color: #0071e3; /* Apple blue */
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #0071e3; /* Ensure border is visible and matches */
+        }
+        header nav a.px-4:hover {
+            background-color: #0077ed;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+        header .flex.items-center.space-x-2.ml-4 {
+            margin-left: 1rem; /* ml-4 */
+        }
+        header select, header button {
+            padding: 0.5rem; /* p-2 */
+            border-radius: 9999px; /* rounded-full */
+            font-size: 0.875rem; /* text-sm */
+            cursor: pointer;
+            outline: none;
+            border: none; /* remove default border */
+            background-color: #e5e7eb; /* bg-gray-100 */
+            color: #1f2937; /* text-gray-800 */
+            transition: all 0.2s ease-in-out;
+        }
+        header select:focus, header button:focus {
+            box-shadow: 0 0 0 2px #3b82f6; /* focus:ring-2 focus:ring-blue-500 */
+        }
+
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 960px;
+            width: 100%;
+            margin: 2rem auto;
+            flex-grow: 1; /* Allows container to take available space */
+        }
+
+        /* Corrected styling for main title and headings */
+        .container h1 {
+            font-size: 2.8rem; /* Consistent with faa.zone hero h2 */
+            font-weight: 800; /* Extra bold */
+            color: #1d1d1f; /* Near black for primary text on light mode */
+            margin-bottom: 0.5rem; /* Reduced margin to bring brand text closer */
             text-align: center;
+            letter-spacing: -0.03em;
+        }
+        body.dark-mode .container h1 {
+            color: #f5f5f7; /* White in dark mode */
+        }
+        .container .brand-logo-text {
+            font-size: 1.8rem; /* Adjusted for a strong presence within content */
+            font-weight: 700;
+            color: #0071e3; /* Fruitful blue */
+            text-align: center;
+            margin-top: 0; /* Align with h1's bottom */
+            margin-bottom: 2rem; /* Space below brand text */
+            letter-spacing: -0.02em;
+        }
+        body.dark-mode .container .brand-logo-text {
+            color: #66b2ff; /* Lighter blue in dark mode */
+        }
+
+
+        /* Enhanced H2 styling for numbered sections */
+        h2 {
+            font-size: 2.2rem; /* Slightly larger than before, closer to main H1 */
+            font-weight: 800; /* Extra bold, like main title */
+            color: #0071e3; /* Fruitful blue for prominence */
+            margin-top: 3rem; /* More space above */
+            margin-bottom: 1.5rem; /* More space below */
+            border-bottom: 1px solid #e8e8ed;
+            padding-bottom: 0.75rem; /* More padding below border */
+            letter-spacing: -0.02em; /* Tighter spacing */
+        }
+        body.dark-mode h2 {
+            color: #66b2ff; /* Lighter blue in dark mode */
+            border-bottom-color: #333;
+        }
+
+        h3 {
+            font-size: 1.5rem; /* Consistent with faa.zone h3 */
+            font-weight: 700; /* Bold */
+            color: #1d1d1f; /* Near black */
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        body.dark-mode h3 {
+            color: #f5f5f7;
+        }
+
+        p {
+            margin-bottom: 1rem; /* Consistent spacing between paragraphs */
+            color: #424245; /* Slightly lighter gray for body text */
+        }
+        body.dark-mode p {
+            color: #e0e0e0;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+            color: #424245;
+        }
+        ul li {
+            margin-bottom: 0.5rem; /* Spacing for list items */
+        }
+        body.dark-mode ul {
+            color: #e0e0e0;
+        }
+        body.dark-mode ul li {
+            color: #e0e0e0;
+        }
+
+        a {
+            color: #0071e3; /* Apple Blue */
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: #005bb5;
+            text-decoration: underline;
+        }
+
+        .last-updated {
+            text-align: right;
+            font-size: 0.9rem;
+            color: #6e6e73;
+            margin-top: 2rem;
+            margin-bottom: 1rem; /* Ensure space below last updated */
+        }
+        body.dark-mode .last-updated {
+            color: #888;
+        }
+
+        /* Footer styles - copied directly from faa.zone/index.html */
+        footer {
+            background-color: #f5f5f7;
+            color: #6e6e73;
+            padding: 2rem;
+            font-size: 0.85rem;
+            border-top: 1px solid #e8e8ed;
+            text-align: center;
+        }
+        body.dark-mode footer {
+            background-color: #1a1a1a;
+            color: #888;
+            border-top-color: #333;
+        }
+        footer .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        footer .footer-links a {
+            color: #6e6e73;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            margin: 0 0.5rem; /* Horizontal spacing */
+            margin-bottom: 0.5rem; /* Vertical spacing for wrapped items */
+            white-space: nowrap; /* Prevent links from breaking individually */
+        }
+        body.dark-mode footer .footer-links a {
+            color: #e0e0e0; /* Adjusted for better visibility in dark mode */
+        }
+        footer .footer-links a:hover {
+            color: #1d1d1f;
+        }
+        body.dark-mode footer .footer-links a:hover {
+            color: #f5f5f7;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+            header h1 {
+                font-size: 1.2rem;
+            }
+            header nav {
+                margin-top: 1rem;
+            }
+            header nav a {
+                margin: 0.25rem 0.5rem;
+                padding: 0.4rem 0.6rem;
+                font-size: 0.8rem;
+            }
+            header .flex.items-center.space-x-2.ml-4 {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                width: 100%;
+                justify-content: center;
+            }
+            header select, header button {
+                padding: 0.4rem;
+                font-size: 0.8rem;
+            }
+
+            .container {
+                padding: 1.5rem;
+                margin: 1rem auto;
+            }
+            h1 {
+                font-size: 2.2rem;
+            }
+            .container .brand-logo-text {
+                font-size: 1.5rem;
+            }
+            h2 {
+                font-size: 1.6rem;
+            }
+            h3 {
+                font-size: 1.3rem;
+            }
+            p, ul li {
+                font-size: 0.95rem;
+            }
+            footer {
+                padding: 1.5rem;
+            }
+            footer .footer-links a {
+                margin: 0 0.25rem; /* Smaller horizontal margin for mobile */
+                margin-bottom: 0.25rem; /* Smaller vertical margin for mobile */
+            }
         }
     </style>
 </head>
-<body class="antialiased">
+<body>
+    <header class="py-4 px-6 md:px-12 flex flex-col sm:flex-row justify-between items-center text-white">
+        <h1 class="text-2xl font-extrabold tracking-tight mb-4 sm:mb-0" data-i18n="fruitfulBrand">Fruitful™</h1>
+        <nav class="flex flex-wrap justify-center sm:justify-end items-center space-x-2 sm:space-x-4">
+            <a href="https://faa.zone/#features" class="transition-colors duration-200" data-i18n="navFeatures">Features</a>
+            <a href="https://faa.zone/#shareprice" class="transition-colors duration-200" data-i18n="navSignal">Signal</a>
+            <a href="https://faa.zone/#vault-access" class="transition-colors duration-200" data-i18n="navVault">Vault</a>
+            <a href="https://faa.zone/#treaty" class="transition-colors duration-200" data-i18n="navTreaty">Treaty</a>
+            <a href="https://faa.zone/#vaultmesh-section" class="transition-colors duration-200" data-i18n="navVaultMesh">VaultMesh</a>
+            <a href="https://faa.zone/#about" class="transition-colors duration-200" data-i18n="navAbout">About</a>
+            <a href="https://fruitfulcratedance.com/" class="transition-colors duration-200" data-i18n="navCrateDance">Fruitful Crate Dance</a>
+            <a href="https://faa.zone/careers/hiring-homepage.html" class="transition-colors duration-200" data-i18n="navCareers">Careers</a>
+            <a href="https://faa.zone/legal/securesign.html" class="transition-colors duration-200 font-semibold px-4 py-2 rounded-full" data-i18n="navSecureSign">SecureSign</a>
+            <a href="https://faa.zone/signup.html" class="px-4 py-2 rounded-full font-semibold transition-colors duration-200" data-i18n="navSignUp">Sign Up</a>
 
-    <header class="py-4 px-8">
-        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
-            <a href="index.html" class="text-2xl font-bold text-gray-800">🌳 Baobab Net</a>
-            <nav class="flex flex-wrap justify-center md:justify-end items-center space-x-4 md:space-x-6 text-sm">
-                <a href="baobab_spa_dashboard.html">Global Dashboards 📊</a>
-                <a href="eskom_crisis_dashboard.html">Eskom Crisis 🔌</a>
-                <a href="pricing.html">Pricing & Plans 💰</a>
-                <a href="about_us.html">About Us ℹ️</a>
-                <a href="contact.html" class="font-semibold active">Contact Us 📧</a>
-            </nav>
-        </div>
+            <!-- Language and Day/Night Toggles -->
+            <div class="flex items-center space-x-2 ml-4">
+                <select id="language-toggle" class="p-2 rounded-full text-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-100">
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="ar">العربية</option>
+                    <option value="zh">中文</option>
+                </select>
+                <button id="theme-toggle" class="p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-100">
+                    ☀️
+                </button>
+            </div>
+        </nav>
     </header>
 
-    <main class="main-content p-4 md:p-8">
-        <section class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">Contact Us</h1>
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                We're here to help! Reach out to us with any questions, support needs, or partnership inquiries.
-            </p>
-        </section>
+    <div class="container">
+        <h1 data-i18n="contactTitle">Contact Us</h1>
+        <p class="brand-logo-text" data-i18n="fruitfulGlobalBrand">Fruitful Global™</p>
+        <p class="last-updated" data-i18n="lastUpdated">Last Updated: <span id="lastUpdatedDate">July 1, 2025</span></p>
 
-        <section class="max-w-xl mx-auto">
-            <div class="contact-card">
-                <h2 class="text-3xl font-bold text-gray-900 mb-6">Send us an Email</h2>
-                <p class="text-gray-700 text-lg mb-8">
-                    For all inquiries, please feel free to send us an email at:
-                </p>
-                <a href="mailto:vault@faa.zone" class="text-blue-600 hover:text-blue-700 text-2xl md:text-3xl font-semibold break-all">
-                    vault@faa.zone
-                </a>
-                <p class="text-gray-500 mt-8 text-sm">
-                    We aim to respond to all inquiries within 24-48 business hours.
-                </p>
+        <p data-i18n="contactPara1" class="text-center">
+            We'd love to hear from you! Whether you have questions about our services, need support, or want to explore partnership opportunities, our team is here to help.
+        </p>
+
+        <h2 data-i18n="generalInquiriesTitle">General Inquiries</h2>
+        <p data-i18n="generalInquiriesPara1">
+            For general questions about Fruitful Global™ and our ecosystem, please reach out to:
+        </p>
+        <p data-i18n="generalInquiriesEmail">
+            Email: <a href="mailto:info@faa.zone">info@faa.zone</a>
+        </p>
+
+        <h2 data-i18n="supportTitle">Support</h2>
+        <p data-i18n="supportPara1">
+            If you require technical assistance or have issues with your account, our support team is ready to assist:
+        </p>
+        <p data-i18n="supportEmail">
+            Email: <a href="mailto:support@faa.zone">support@faa.zone</a>
+        </p>
+        <p data-i18n="supportPhone">
+            Phone: +27 12 345 6789 (Mon-Fri, 9 AM - 5 PM SAST)
+        </p>
+
+        <h2 data-i18n="partnershipsTitle">Partnerships & Collaborations</h2>
+        <p data-i18n="partnershipsPara1">
+            Interested in collaborating with Fruitful Global™ or integrating your brand into our ecosystem?
+            Please contact our partnerships team:
+        </p>
+        <p data-i18n="partnershipsEmail">
+            Email: <a href="mailto:partnerships@faa.zone">partnerships@faa.zone</a>
+        </p>
+
+        <h2 data-i18n="mediaTitle">Media & Press</h2>
+        <p data-i18n="mediaPara1">
+            For media inquiries, press releases, or interview requests, please contact:
+        </p>
+        <p data-i18n="mediaEmail">
+            Email: <a href="mailto:media@faa.zone">media@faa.zone</a>
+        </p>
+
+        <h2 data-i18n="physicalAddressTitle">Physical Address</h2>
+        <p data-i18n="physicalAddressPara1">
+            Our main office is located at:
+        </p>
+        <p data-i18n="physicalAddressDetails">
+            Fruitful Global™ Headquarters<br>
+            123 Innovation Drive<br>
+            Pretoria, Gauteng, 0083<br>
+            South Africa
+        </p>
+
+        <h2 data-i18n="contactFormTitle">Send Us a Message</h2>
+        <p data-i18n="contactFormPara1">
+            Alternatively, you can send us a message directly using the form below. We aim to respond to all inquiries within 2 business days.
+        </p>
+        <form class="mt-8 space-y-6">
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300" data-i18n="formNameLabel">Your Name</label>
+                <input type="text" id="name" name="name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm form-input" data-i18n="formNamePlaceholder" placeholder="Enter your name">
             </div>
-        </section>
-    </main>
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300" data-i18n="formEmailLabel">Your Email</label>
+                <input type="email" id="email" name="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm form-input" data-i18n="formEmailPlaceholder" placeholder="Enter your email">
+            </div>
+            <div>
+                <label for="subject" class="block text-sm font-medium text-gray-700 dark:text-gray-300" data-i18n="formSubjectLabel">Subject</label>
+                <input type="text" id="subject" name="subject" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm form-input" data-i18n="formSubjectPlaceholder" placeholder="Subject of your inquiry">
+            </div>
+            <div>
+                <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300" data-i18n="formMessageLabel">Message</label>
+                <textarea id="message" name="message" rows="4" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm form-textarea" data-i18n="formMessagePlaceholder" placeholder="Your message..."></textarea>
+            </div>
+            <div>
+                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 submit-button" data-i18n="formSubmitButton">Send Message</button>
+            </div>
+        </form>
+    </div>
 
-    <footer class="py-8 px-6 bg-gray-900 text-center text-sm text-gray-400">
-        <p>&copy; 2025 Baobab Security Network™. All rights reserved.</p>
-        <p class="mt-2">AI-Powered Interplanetary Security | "Sustain. Protect. Empower."</p>
+    <footer class="py-8 px-6 md:px-12 text-center">
+        <div class="flex flex-wrap justify-center mb-4 text-sm">
+            <a href="https://footer.global.repo.seedwave.faa.zone/privacy.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerPrivacy">Privacy</a>
+            <a href="https://footer.global.repo.seedwave.faa.zone/terms.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerTerms">Terms</a>
+            <a href="https://footer.global.repo.seedwave.faa.zone/contact.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerContact">Contact</a>
+            <a href="https://footer.global.repo.seedwave.faa.zone/copyright.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerCopyrightLink">Copyright</a>
+            <a href="https://footer.global.repo.seedwave.faa.zone/developers.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerDevelopers">Developers</a>
+            <a href="https://footer.global.repo.seedwave.faa.zone/vaultmesh.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerVaultMeshLink">VaultMesh</a>
+            <a href="https://footer.global.repo.seedwave.faa.zone/fruitful.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerFruitfulLink">Fruitful</a>
+            <a href="https://footer.global.repo.seedwave.faa.zone/faa.zone.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerFAAZoneLink">FAA.Zone</a>
+            <a href="https://footer.global.repo.seedwave.faa.zone/about.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors" data-i18n="footerAboutLink">About</a>
+            <a href="https://footer.global.repo.seedwave.faa.zone/accessibility.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors" data-i18n="footerAccessibility">Accessibility</a>
+        </div>
+        <span data-i18n="footerCopyright">© 2025 FAA™ Treaty System™. All Rights Reserved.</span> <span data-i18n="footerPoweredBy">Powered by 🦍 glyphs + Vault API. Synced with Seedwave™.</span>
     </footer>
 
+    <script>
+        // Set the last updated date dynamically
+        document.getElementById('lastUpdatedDate').innerText = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+        // Language data for i18n
+        window.languageData = { // Changed to window.languageData to avoid re-declaration errors
+            en: {
+                pageTitle: 'Contact Us | Fruitful Global™',
+                fruitfulBrand: 'Fruitful™',
+                navFeatures: 'Features',
+                navSignal: 'Signal',
+                navVault: 'Vault',
+                navTreaty: 'Treaty',
+                navVaultMesh: 'VaultMesh',
+                navAbout: 'About',
+                navCrateDance: 'Fruitful Crate Dance',
+                navCareers: 'Careers',
+                navSecureSign: 'SecureSign',
+                navSignUp: 'Sign Up',
+                // Contact Us Content
+                contactTitle: 'Contact Us',
+                fruitfulGlobalBrand: 'Fruitful Global™',
+                lastUpdated: 'Last Updated: ',
+                contactPara1: 'We\'d love to hear from you! Whether you have questions about our services, need support, or want to explore partnership opportunities, our team is here to help.',
+                generalInquiriesTitle: 'General Inquiries',
+                generalInquiriesPara1: 'For general questions about Fruitful Global™ and our ecosystem, please reach out to:',
+                generalInquiriesEmail: 'Email: <a href="mailto:info@faa.zone">info@faa.zone</a>',
+                supportTitle: 'Support',
+                supportPara1: 'If you require technical assistance or have issues with your account, our support team is ready to assist:',
+                supportEmail: 'Email: <a href="mailto:support@faa.zone">support@faa.zone</a>',
+                supportPhone: 'Phone: +27 12 345 6789 (Mon-Fri, 9 AM - 5 PM SAST)',
+                partnershipsTitle: 'Partnerships & Collaborations',
+                partnershipsPara1: 'Interested in collaborating with Fruitful Global™ or integrating your brand into our ecosystem? Please contact our partnerships team:',
+                partnershipsEmail: 'Email: <a href="mailto:partnerships@faa.zone">partnerships@faa.zone</a>',
+                mediaTitle: 'Media & Press',
+                mediaPara1: 'For media inquiries, press releases, or interview requests, please contact:',
+                mediaEmail: 'Email: <a href="mailto:media@faa.zone">media@faa.zone</a>',
+                physicalAddressTitle: 'Physical Address',
+                physicalAddressPara1: 'Our main office is located at:',
+                physicalAddressDetails: 'Fruitful Global™ Headquarters<br>123 Innovation Drive<br>Pretoria, Gauteng, 0083<br>South Africa',
+                contactFormTitle: 'Send Us a Message',
+                contactFormPara1: 'Alternatively, you can send us a message directly using the form below. We aim to respond to all inquiries within 2 business days.',
+                formNameLabel: 'Your Name',
+                formNamePlaceholder: 'Enter your name',
+                formEmailLabel: 'Your Email',
+                formEmailPlaceholder: 'Enter your email',
+                formSubjectLabel: 'Subject',
+                formSubjectPlaceholder: 'Subject of your inquiry',
+                formMessageLabel: 'Message',
+                formMessagePlaceholder: 'Your message...',
+                formSubmitButton: 'Send Message',
+                // Footer links
+                footerPrivacy: 'Privacy',
+                footerTerms: 'Terms',
+                footerContact: 'Contact',
+                footerCopyrightLink: 'Copyright',
+                footerDevelopers: 'Developers',
+                footerVaultMeshLink: 'VaultMesh',
+                footerFruitfulLink: 'Fruitful',
+                footerFAAZoneLink: 'FAA.Zone',
+                footerAboutLink: 'About',
+                footerAccessibility: 'Accessibility',
+                footerCopyright: '© 2025 FAA™ Treaty System™. All Rights Reserved.',
+                footerPoweredBy: 'Powered by 🦍 glyphs + Vault API. Synced with Seedwave™.'
+            },
+            es: {
+                pageTitle: 'Contáctenos | Fruitful Global™',
+                fruitfulBrand: 'Fruitful™',
+                navFeatures: 'Características',
+                navSignal: 'Señal',
+                navVault: 'Bóveda',
+                navTreaty: 'Tratado',
+                navVaultMesh: 'VaultMesh',
+                navAbout: 'Nosotros',
+                navCrateDance: 'Danza de Cestas Frutales',
+                navCareers: 'Carreras',
+                navSecureSign: 'Firma Segura',
+                navSignUp: 'Registrarse',
+                // Contact Us Content
+                contactTitle: 'Contáctenos',
+                fruitfulGlobalBrand: 'Fruitful Global™',
+                lastUpdated: 'Última Actualización: ',
+                contactPara1: '¡Nos encantaría saber de usted! Ya sea que tenga preguntas sobre nuestros servicios, necesite soporte o desee explorar oportunidades de asociación, nuestro equipo está aquí para ayudar.',
+                generalInquiriesTitle: 'Consultas Generales',
+                generalInquiriesPara1: 'Para preguntas generales sobre Fruitful Global™ y nuestro ecosistema, comuníquese con:',
+                generalInquiriesEmail: 'Correo electrónico: <a href="mailto:info@faa.zone">info@faa.zone</a>',
+                supportTitle: 'Soporte',
+                supportPara1: 'Si necesita asistencia técnica o tiene problemas con su cuenta, nuestro equipo de soporte está listo para ayudar:',
+                supportEmail: 'Correo electrónico: <a href="mailto:support@faa.zone">support@faa.zone</a>',
+                supportPhone: 'Teléfono: +27 12 345 6789 (Lun-Vie, 9 AM - 5 PM SAST)',
+                partnershipsTitle: 'Asociaciones y Colaboraciones',
+                partnershipsPara1: '¿Interesado en colaborar con Fruitful Global™ o integrar su marca en nuestro ecosistema? Póngase en contacto con nuestro equipo de asociaciones:',
+                partnershipsEmail: 'Correo electrónico: <a href="mailto:partnerships@faa.zone">partnerships@faa.zone</a>',
+                mediaTitle: 'Medios y Prensa',
+                mediaPara1: 'Para consultas de medios, comunicados de prensa o solicitudes de entrevistas, comuníquese con:',
+                mediaEmail: 'Correo electrónico: <a href="mailto:media@faa.zone">media@faa.zone</a>',
+                physicalAddressTitle: 'Dirección Física',
+                physicalAddressPara1: 'Nuestra oficina principal se encuentra en:',
+                physicalAddressDetails: 'Sede de Fruitful Global™<br>123 Innovation Drive<br>Pretoria, Gauteng, 0083<br>Sudáfrica',
+                contactFormTitle: 'Envíenos un Mensaje',
+                contactFormPara1: 'Alternativamente, puede enviarnos un mensaje directamente utilizando el formulario a continuación. Nuestro objetivo es responder a todas las consultas dentro de los 2 días hábiles.',
+                formNameLabel: 'Su Nombre',
+                formNamePlaceholder: 'Ingrese su nombre',
+                formEmailLabel: 'Su Correo Electrónico',
+                formEmailPlaceholder: 'Ingrese su correo electrónico',
+                formSubjectLabel: 'Asunto',
+                formSubjectPlaceholder: 'Asunto de su consulta',
+                formMessageLabel: 'Mensaje',
+                formMessagePlaceholder: 'Su mensaje...',
+                formSubmitButton: 'Enviar Mensaje',
+                // Footer links
+                footerPrivacy: 'Privacidad',
+                footerTerms: 'Términos',
+                footerContact: 'Contacto',
+                footerCopyrightLink: 'Derechos de Autor',
+                footerDevelopers: 'Desarrolladores',
+                footerVaultMeshLink: 'VaultMesh',
+                footerFruitfulLink: 'Fruitful',
+                footerFAAZoneLink: 'FAA.Zone',
+                footerAboutLink: 'Nosotros',
+                footerAccessibility: 'Accesibilidad',
+                footerCopyright: '© 2025 FAA™ Treaty System™. Todos los derechos reservados.',
+                footerPoweredBy: 'Impulsado por 🦍 glifos + API de Bóveda. Sincronizado con Seedwave™.'
+            },
+            fr: {
+                pageTitle: 'Nous Contacter | Fruitful Global™',
+                fruitfulBrand: 'Fruitful™',
+                navFeatures: 'Fonctionnalités',
+                navSignal: 'Signal',
+                navVault: 'Coffre',
+                navTreaty: 'Traité',
+                navVaultMesh: 'VaultMesh',
+                navAbout: 'À Propos',
+                navCrateDance: 'Fruitful Crate Dance',
+                navCareers: 'Carrières',
+                navSecureSign: 'Signature Sécurisée',
+                navSignUp: 'S\'inscrire',
+                // Contact Us Content
+                contactTitle: 'Nous Contacter',
+                fruitfulGlobalBrand: 'Fruitful Global™',
+                lastUpdated: 'Dernière mise à jour : ',
+                contactPara1: 'Nous serions ravis de vous entendre ! Que vous ayez des questions sur nos services, besoin d\'assistance ou que vous souhaitiez explorer des opportunités de partenariat, notre équipe est là pour vous aider.',
+                generalInquiriesTitle: 'Demandes Générales',
+                generalInquiriesPara1: 'Pour toute question générale sur Fruitful Global™ et notre écosystème, veuillez contacter :',
+                generalInquiriesEmail: 'E-mail: <a href="mailto:info@faa.zone">info@faa.zone</a>',
+                supportTitle: 'Assistance',
+                supportPara1: 'Si vous avez besoin d\'une assistance technique ou si vous rencontrez des problèmes avec votre compte, notre équipe d\'assistance est prête à vous aider :',
+                supportEmail: 'E-mail: <a href="mailto:support@faa.zone">support@faa.zone</a>',
+                supportPhone: 'Téléphone: +27 12 345 6789 (Lun-Ven, 9h - 17h SAST)',
+                partnershipsTitle: 'Partenariats et Collaborations',
+                partnershipsPara1: 'Intéressé par une collaboration avec Fruitful Global™ ou l\'intégration de votre marque dans notre écosystème ? Veuillez contacter notre équipe de partenariats :',
+                partnershipsEmail: 'E-mail: <a href="mailto:partnerships@faa.zone">partnerships@faa.zone</a>',
+                mediaTitle: 'Médias et Presse',
+                mediaPara1: 'Pour les demandes des médias, les communiqués de presse ou les demandes d\'interview, veuillez contacter :',
+                mediaEmail: 'E-mail: <a href="mailto:media@faa.zone">media@faa.zone</a>',
+                physicalAddressTitle: 'Adresse Physique',
+                physicalAddressPara1: 'Notre bureau principal est situé à :',
+                physicalAddressDetails: 'Siège de Fruitful Global™<br>123 Innovation Drive<br>Pretoria, Gauteng, 0083<br>Afrique du Sud',
+                contactFormTitle: 'Envoyez-nous un Message',
+                contactFormPara1: 'Alternativement, vous pouvez nous envoyer un message directement en utilisant le formulaire ci-dessous. Nous nous efforçons de répondre à toutes les demandes dans les 2 jours ouvrables.',
+                formNameLabel: 'Votre Nom',
+                formNamePlaceholder: 'Entrez votre nom',
+                formEmailLabel: 'Votre E-mail',
+                formEmailPlaceholder: 'Entrez votre e-mail',
+                formSubjectLabel: 'Sujet',
+                formSubjectPlaceholder: 'Sujet de votre demande',
+                formMessageLabel: 'Message',
+                formMessagePlaceholder: 'Votre message...',
+                formSubmitButton: 'Envoyer le Message',
+                // Footer links
+                footerPrivacy: 'Confidentialité',
+                footerTerms: 'Conditions',
+                footerContact: 'Contact',
+                footerCopyrightLink: 'Droits d\'Auteur',
+                footerDevelopers: 'Développeurs',
+                footerVaultMeshLink: 'VaultMesh',
+                footerFruitfulLink: 'Fruitful',
+                footerFAAZoneLink: 'FAA.Zone',
+                footerAboutLink: 'À Propos',
+                footerAccessibility: 'Accessibilité',
+                footerCopyright: '© 2025 FAA™ Treaty System™. Tous droits réservés.',
+                footerPoweredBy: 'Propulsé par 🦍 glyphes + API du Coffre. Synchronisé avec Seedwave™.'
+            },
+            ar: {
+                pageTitle: 'اتصل بنا | Fruitful Global™',
+                fruitfulBrand: 'Fruitful™',
+                navFeatures: 'الميزات',
+                navSignal: 'الإشارة',
+                navVault: 'الخزنة',
+                navTreaty: 'المعاهدة',
+                navVaultMesh: 'شبكة الكهف',
+                navAbout: 'حول',
+                navCrateDance: 'رقصة الصندوق المثمر',
+                navCareers: 'الوظائف',
+                navSecureSign: 'توقيع آمن',
+                navSignUp: 'التسجيل',
+                // Contact Us Content
+                contactTitle: 'اتصل بنا',
+                fruitfulGlobalBrand: 'Fruitful Global™',
+                lastUpdated: 'آخر تحديث: ',
+                contactPara1: 'نود أن نسمع منك! سواء كانت لديك أسئلة حول خدماتنا، أو كنت بحاجة إلى دعم، أو أردت استكشاف فرص الشراكة، فإن فريقنا هنا للمساعدة.',
+                generalInquiriesTitle: 'استفسارات عامة',
+                generalInquiriesPara1: 'للاستفسارات العامة حول Fruitful Global™ ونظامنا البيئي، يرجى التواصل مع:',
+                generalInquiriesEmail: 'البريد الإلكتروني: <a href="mailto:info@faa.zone">info@faa.zone</a>',
+                supportTitle: 'الدعم',
+                supportPara1: 'إذا كنت بحاجة إلى مساعدة فنية أو واجهت مشكلات في حسابك، فإن فريق الدعم لدينا جاهز للمساعدة:',
+                supportEmail: 'البريد الإلكتروني: <a href="mailto:support@faa.zone">support@faa.zone</a>',
+                supportPhone: 'الهاتف: +27 12 345 6789 (من الإثنين إلى الجمعة، 9 صباحًا - 5 مساءً بتوقيت جنوب إفريقيا)',
+                partnershipsTitle: 'الشراكات والتعاون',
+                partnershipsPara1: 'هل أنت مهتم بالتعاون مع Fruitful Global™ أو دمج علامتك التجارية في نظامنا البيئي؟ يرجى الاتصال بفريق الشراكات لدينا:',
+                partnershipsEmail: 'البريد الإلكتروني: <a href="mailto:partnerships@faa.zone">partnerships@faa.zone</a>',
+                mediaTitle: 'الإعلام والصحافة',
+                mediaPara1: 'للاستفسارات الإعلامية أو البيانات الصحفية أو طلبات المقابلات، يرجى الاتصال بـ:',
+                mediaEmail: 'البريد الإلكتروني: <a href="mailto:media@faa.zone">media@faa.zone</a>',
+                physicalAddressTitle: 'العنوان الفعلي',
+                physicalAddressPara1: 'يقع مكتبنا الرئيسي في:',
+                physicalAddressDetails: 'مقر Fruitful Global™ الرئيسي<br>123 Innovation Drive<br>بريتوريا، جوتنج، 0083<br>جنوب إفريقيا',
+                contactFormTitle: 'أرسل لنا رسالة',
+                contactFormPara1: 'بدلاً من ذلك، يمكنك إرسال رسالة إلينا مباشرة باستخدام النموذج أدناه. نهدف إلى الرد على جميع الاستفسارات في غضون يومي عمل.',
+                formNameLabel: 'اسمك',
+                formNamePlaceholder: 'أدخل اسمك',
+                formEmailLabel: 'بريدك الإلكتروني',
+                formEmailPlaceholder: 'أدخل بريدك الإلكتروني',
+                formSubjectLabel: 'الموضوع',
+                formSubjectPlaceholder: 'موضوع استفسارك',
+                formMessageLabel: 'الرسالة',
+                formMessagePlaceholder: 'رسالتك...',
+                formSubmitButton: 'إرسال الرسالة',
+                // Footer links
+                footerPrivacy: 'الخصوصية',
+                footerTerms: 'الشروط',
+                footerContact: 'اتصل بنا',
+                footerCopyrightLink: 'حقوق النشر',
+                footerDevelopers: 'المطورون',
+                footerVaultMeshLink: 'شبكة الكهف',
+                footerFruitfulLink: 'مثمر',
+                footerFAAZoneLink: 'FAA.Zone',
+                footerAboutLink: 'حول',
+                footerAccessibility: 'إمكانية الوصول',
+                footerCopyright: '© 2025 نظام معاهدة FAA™. جميع الحقوق محفوظة.',
+                footerPoweredBy: 'مدعوم بواسطة 🦍 الرموز + واجهة برمجة تطبيقات Vault. متزامن مع Seedwave™.'
+            },
+            zh: {
+                pageTitle: '联系我们 | 丰硕全球™',
+                fruitfulBrand: 'Fruitful™',
+                navFeatures: '功能',
+                navSignal: '信号',
+                navVault: '金库',
+                navTreaty: '条约',
+                navVaultMesh: '金库网格',
+                navAbout: '关于',
+                navCrateDance: '丰硕板条箱之舞',
+                navCareers: '职业',
+                navSecureSign: '安全签署',
+                navSignUp: '注册',
+                // Contact Us Content
+                contactTitle: '联系我们',
+                fruitfulGlobalBrand: '丰硕全球™',
+                lastUpdated: '最后更新: ',
+                contactPara1: '我们很高兴收到您的来信！无论您对我们的服务有疑问、需要支持，还是想探索合作机会，我们的团队都会随时为您提供帮助。',
+                generalInquiriesTitle: '一般咨询',
+                generalInquiriesPara1: '有关丰硕全球™和我们生态系统的一般问题，请联系：',
+                generalInquiriesEmail: '电子邮件: <a href="mailto:info@faa.zone">info@faa.zone</a>',
+                supportTitle: '支持',
+                supportPara1: '如果您需要技术援助或遇到账户问题，我们的支持团队随时准备提供帮助：',
+                supportEmail: '电子邮件: <a href="mailto:support@faa.zone">support@faa.zone</a>',
+                supportPhone: '电话: +27 12 345 6789 (周一至周五，南非标准时间上午9点至下午5点)',
+                partnershipsTitle: '合作伙伴与合作',
+                partnershipsPara1: '有兴趣与丰硕全球™合作或将您的品牌整合到我们的生态系统中吗？请联系我们的合作伙伴团队：',
+                partnershipsEmail: '电子邮件: <a href="mailto:partnerships@faa.zone">partnerships@faa.zone</a>',
+                mediaTitle: '媒体与新闻',
+                mediaPara1: '如需媒体咨询、新闻稿或采访请求，请联系：',
+                mediaEmail: '电子邮件: <a href="mailto:media@faa.zone">media@faa.zone</a>',
+                physicalAddressTitle: '实际地址',
+                physicalAddressPara1: '我们的主要办事处位于：',
+                physicalAddressDetails: '丰硕全球™总部<br>创新大道123号<br>比勒陀利亚，豪登省，0083<br>南非',
+                contactFormTitle: '给我们留言',
+                contactFormPara1: '或者，您可以使用下面的表格直接给我们发送消息。我们旨在在2个工作日内回复所有咨询。',
+                formNameLabel: '您的姓名',
+                formNamePlaceholder: '输入您的姓名',
+                formEmailLabel: '您的电子邮件',
+                formEmailPlaceholder: '输入您的电子邮件',
+                formSubjectLabel: '主题',
+                formSubjectPlaceholder: '您的咨询主题',
+                formMessageLabel: '消息',
+                formMessagePlaceholder: '您的消息...',
+                formSubmitButton: '发送消息',
+                // Footer links
+                footerPrivacy: '隐私',
+                footerTerms: '条款',
+                footerContact: '联系',
+                footerCopyrightLink: '版权',
+                footerDevelopers: '开发者',
+                footerVaultMeshLink: '金库网格',
+                footerFruitfulLink: '丰硕',
+                footerFAAZoneLink: 'FAA.Zone',
+                footerAboutLink: '关于',
+                footerAccessibility: '无障碍',
+                footerCopyright: '© 2025 FAA™ 条约系统™。保留所有权利。',
+                footerPoweredBy: '由 🦍 符文 + 金库 API 提供支持。与 Seedwave™ 同步。'
+            }
+        };
+
+        // Theme Toggle Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const body = document.body;
+            const themeToggle = document.getElementById('theme-toggle');
+            const languageToggle = document.getElementById('language-toggle');
+
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                body.classList.add('dark-mode');
+                themeToggle.innerText = '🌙';
+            } else {
+                themeToggle.innerText = '☀️';
+            }
+
+            // Load saved language
+            const savedLang = localStorage.getItem('language') || 'en';
+            languageToggle.value = savedLang;
+            updateLanguage(savedLang);
+
+            // Theme toggle event listener
+            themeToggle.addEventListener('click', () => {
+                if (body.classList.contains('dark-mode')) {
+                    body.classList.remove('dark-mode');
+                    localStorage.setItem('theme', 'light');
+                    themeToggle.innerText = '☀️';
+                } else {
+                    body.classList.add('dark-mode');
+                    localStorage.setItem('theme', 'dark');
+                    themeToggle.innerText = '�';
+                }
+            });
+
+            // Language toggle event listener
+            languageToggle.addEventListener('change', (event) => {
+                const newLang = event.target.value;
+                updateLanguage(newLang);
+                localStorage.setItem('language', newLang);
+            });
+
+            // Function to update text content based on selected language
+            function updateLanguage(lang) {
+                const elements = document.querySelectorAll('[data-i18n]');
+                elements.forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (window.languageData[lang] && window.languageData[lang][key]) { // Use window.languageData
+                        el.innerHTML = window.languageData[lang][key];
+                    }
+                });
+                document.title = window.languageData[lang]?.pageTitle || 'Fruitful Global'; // Use window.languageData
+            }
+        });
+    </script>
 </body>
 </html>
+�

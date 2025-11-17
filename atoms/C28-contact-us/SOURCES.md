@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-07-21 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/contact_1753207194748.html` | `214d84c3` | 📧 Contact Us - Baobab Security Network™ | 3781 | 9 | 0 | 34.4 |
+| 2 | 2025-11-17 | codenest | resolve-conflicts-manually | `repos/footer.global.repo/public/contact.html` | `427983e4` | Contact Us | Fruitful Global™ | 47571 | 35 | 1 | 68.8 |
