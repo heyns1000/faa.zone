@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-11-11 | FGP--samfox | main | `public/global_templates/hotstack/Sovereign_Rossouw_Node_Nexus.html` | `0de5b8a6` | Rossouw Nexus Anchor Point | 7530 | 2 | 4 | 35.8 |
+| 2 | 2025-11-17 | codenest | resolve-conflicts-manually | `repos/fruitfulhome/rossouw_nexus.html` | `3b1fb379` | Rossouw Nexus Anchor Point | 7258 | 2 | 4 | 35.7 |
