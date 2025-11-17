@@ -9,3 +9,4 @@
 | 3 | 2025-10-17 | ThesisGallery | main | `attached_assets/hotstack-intake-frontend_1760696693605.html` | `ecc1898a` | 🔥 HotStack™ | Banimal Ecosystem Intake | 19355 | 18 | 3 | 59.9 |
 | 4 | 2025-11-11 | FGP--samfox | main | `public/global_templates/hotstack/Fruitful_Global_Nexus_Landing_Page.html` | `fde41b13` | 🔥 HotStack™ | Banimal Ecosystem Intake | 26980 | 11 | 9 | 60.7 |
 | 5 | 2025-11-11 | FGP--samfox | main | `public/global_templates/hotstack_vs2.0.html` | `59706bd4` | 🔥 HotStack™ | Banimal Ecosystem Intake | 29721 | 28 | 8 | 76.0 |
+| 6 | 2025-11-17 | codenest | resolve-conflicts-manually | `repos/hotstack/public/hotstack-landing.html` | `232061e3` | HotStack™ - Omnidrop Your Digital Presence | 14341 | 2 | 5 | 38.4 |
