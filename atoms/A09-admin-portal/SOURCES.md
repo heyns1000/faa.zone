@@ -66,3 +66,4 @@
 | 60 | 2025-09-07 | ThesisGallery | main | `attached_assets/admin-portal_1757036180356_1757206433392.html` | `0ade79dc` | ⚙️ Admin Portal | 142030 | 83 | 17 | 190.2 |
 | 61 | 2025-11-17 | codenest | resolve-conflicts-manually | `packages/fruitful/home/seedwave_admin.html` | `0c8a300f` | ⚙️ Seedwave™ Admin Portal | 199227 | 87 | 48 | 264.8 |
 | 62 | 2025-11-17 | codenest | resolve-conflicts-manually | `repos/omnigrid/public/omnigrid_admin_portal.html` | `be3929db` | ⚙️ Seedwave™ Admin Portal | 195529 | 90 | 47 | 265.4 |
+| 63 | 2025-11-30 | hotstack | main | `omnigrid-master/core/seedwave/admin-portal.html` | `529102d4` | Seedwave™ Admin Portal | OMNIGRID Central | 6159 | 11 | 0 | 37.6 |
