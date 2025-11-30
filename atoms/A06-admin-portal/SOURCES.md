@@ -72,3 +72,4 @@
 | 66 | 2025-07-08 | faa.zone | history | `public/admin/admin-portal.html` | `5c6cd429` | ⚙️ Seedwave™ Admin Portal | 198531 | 90 | 49 | 271.7 |
 | 67 | 2025-09-04 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/interns.seedwave.faa.zone-main/public/admin-panel_full_arrays.html` | `f6991af4` | ⚙️ Seedwave™ Admin Portal | 212696 | 102 | 24 | 238.1 |
 | 68 | 2025-09-28 | fruitful | v0/heyns1000-f96621dc | `seedwave_admin.html` | `0c8a300f` | ⚙️ Seedwave™ Admin Portal | 199227 | 87 | 48 | 264.8 |
+| 69 | 2025-11-30 | hotstack | main | `omnigrid-master/core/seedwave/admin-portal.html` | `529102d4` | Seedwave™ Admin Portal | OMNIGRID Central | 6159 | 11 | 0 | 37.6 |
