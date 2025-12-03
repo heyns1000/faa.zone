@@ -11,3 +11,4 @@
 | 5 | 2025-11-11 | FGP--samfox | main | `public/global_templates/hotstack_vs2.0.html` | `59706bd4` | 🔥 HotStack™ | Banimal Ecosystem Intake | 29721 | 28 | 8 | 76.0 |
 | 6 | 2025-11-17 | codenest | resolve-conflicts-manually | `repos/hotstack/public/hotstack-landing.html` | `232061e3` | HotStack™ - Omnidrop Your Digital Presence | 14341 | 2 | 5 | 38.4 |
 | 7 | 2025-11-20 | hotstack | copilot/add-github-actions-workflow | `hotstack_manual.html` | `8cfbe1ff` | HOTSTACK | Interstellar Manual | 75094 | 1 | 2 | 40.5 |
+| 8 | 2025-12-03 | hotstack | claude/complete-fruitful-enterprise-01ADTb7NWZySJcgZrirhraU6 | `index.html` | `02fa610a` | 🔥 HotStack™ | Banimal Ecosystem Intake | 31727 | 28 | 10 | 80.2 |
