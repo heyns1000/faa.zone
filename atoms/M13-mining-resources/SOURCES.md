@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-05-29 | faa.zone | history | `public/sectors/mining/index.html` | `6c3d0471` | FAA™ Mining & Resources - Innovate. Connect.  | 61073 | 53 | 7 | 110.1 |
+| 2 | 2025-12-05 | codenest | resolve-conflicts-manually | `packages/faa-zone/public/sectors/mining/index.html` | `4d7ae081` | FAA™ Mining & Resources - Innovate. Connect.  | 60863 | 53 | 7 | 110.1 |
