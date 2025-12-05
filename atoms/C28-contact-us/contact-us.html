@@ -1,395 +1,425 @@
 <!DOCTYPE html>
-<html lang="en" class="min-h-screen bg-black text-white overflow-x-hidden">
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>FAA.ZONE™ | Contact Careers</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - FAA.ZONE™</title>
+    <link rel="icon" href="/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* Base Styles - Consistent with Apple-inspired theme */
+        html { scroll-behavior: smooth; } /* Added for smooth scrolling to sections */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0d1117; /* Main page dark background */
-        }
-        /* Custom styles for the dark form section */
-        .form-section-dark {
-            @apply bg-gray-900 rounded-3xl shadow-2xl mt-12 mb-12 text-center;
-            padding: 4rem 5rem; /* Generous padding */
-            color: white; /* Default text color for this section */
-            border: 1px solid #374151; /* Subtle border for definition */
-        }
-        /* Styles for inputs within the dark form */
-        .form-input-dark,
-        .form-textarea-dark,
-        .form-select-dark {
-            @apply block w-full px-4 py-3 rounded-lg border border-gray-700 text-white placeholder-gray-500
-                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200;
-            background-color: #1f2937; /* Slightly lighter dark for inputs */
-        }
-        .file-input-dark {
-            @apply block w-full text-sm text-gray-200
-                   file:mr-4 file:py-2 file:px-5 file:rounded-full file:border-0
-                   file:text-sm file:font-semibold file:bg-blue-600 file:text-white
-                   hover:file:bg-blue-700 cursor-pointer transition-colors duration-200;
-        }
-        /* Style for icons on dark background */
-        .icon-light {
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 8px;
-            width: 20px;
-            height: 20px;
-            fill: currentColor; /* Inherit color from parent text (white/light) */
-        }
-        .submit-button-dark {
-            @apply px-10 py-4 bg-blue-600 text-white font-bold rounded-xl shadow-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105;
-        }
-        /* Canvas styling for the main body graph */
-        #pulseGraphCanvas {
-            background-color: transparent;
-            display: block;
-            width: 100%;
-            height: 400px; /* Portrait-like height */
-            border-radius: 0.5rem;
-        }
-        /* Footer Pulse Graph Canvas styling */
-        #footerGraphCanvas {
-            display: block;
-            background-color: #0d1117;
-            width: 100%;
-            height: 300px;
-        }
-        /* Footer container for positioning elements on top of canvas */
-        .footer-container {
-            position: relative;
-            width: 100%;
-            min-height: 300px;
-            background-color: #0d1117;
-        }
-        /* Content overlaying the canvas */
-        .footer-content-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            background-color: #f5f5f7; /* Very light gray, almost white */
+            color: #1d1d1f; /* Near black for primary text */
+            line-height: 1.4;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+        }
+
+        /* Header - Minimalist and clean */
+        header {
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e8e8ed;
+            padding: 1rem 2rem;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+            width: 100%;
+            position: sticky; /* Changed to sticky for better scrolling with long content */
+            top: 0;
+            left: 0;
+            z-index: 50;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            z-index: 10;
+        }
+        header h1 {
+            color: #1d1d1f;
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+        header nav a {
+            color: #424245;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            transition: all 0.2s ease-in-out;
+            text-decoration: none;
+        }
+        header nav a:hover {
+            color: #0071e3;
+            background-color: rgba(0, 0, 0, 0.03);
+        }
+        header nav a.button-style {
+            background-color: #0071e3;
             color: white;
-            padding: 2rem 1rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        .footer-content-overlay a {
-            color: #60a5fa;
-            transition: color 0.2s ease-in-out;
+        header nav a.button-style:hover {
+            background-color: #0077ed;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
         }
-        .footer-content-overlay a:hover {
-            color: #3b82f6;
+
+        /* Main content container */
+        .main-content-container {
+            max-width: 1000px; /* Increased max-width to accommodate more content */
+            margin: 4rem auto 2rem auto; /* Adjusted margins */
+            padding: 2rem;
+            width: 100%;
+            box-sizing: border-box;
+            flex-grow: 1; /* Allow main content to grow and push footer down */
+        }
+
+        /* Section styling */
+        section {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* Consistent shadow */
+            padding: 2.5rem;
+            margin-bottom: 2rem; /* Space between sections */
+            text-align: center; /* Default center alignment for sections */
+        }
+        section h2, section h3 {
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 1.5rem;
+        }
+        section p {
+            color: #424245;
+            line-height: 1.5;
+            font-size: 1.05rem;
+        }
+
+        /* Contact Form Specific Styles */
+        .contact-form-section h2 {
+            font-size: 2.5rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left; /* Align form labels/inputs left */
+        }
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 0.5rem;
+        }
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.375rem;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #0071e3;
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.2);
+        }
+        .submit-button {
+            background-color: #0071e3;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 600;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .submit-button:hover {
+            background-color: #0077ed;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+        .alert {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1.5rem;
+            font-weight: 500;
+            display: none;
+            text-align: left;
+        }
+        .alert-success {
+            background-color: #e0ffe0;
+            color: #008000;
+            border: 1px solid #b3ffb3;
+        }
+        .alert-error {
+            background-color: #ffe0e0;
+            color: #cc0000;
+            border: 1px solid #ffb3b3;
+        }
+
+        /* Direct Contact Info Section */
+        .direct-contact-section {
+            background-color: #0050b3; /* Darker Apple blue for improved contrast */
+            color: #FFFFFF; /* Explicitly set main text color to white */
+            padding: 2.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .direct-contact-section h3 {
+            font-size: 2rem;
+            color: #FFFFFF; /* Ensure heading is white */
+            margin-bottom: 1.5rem;
+        }
+        .direct-contact-section a {
+            color: #FFFFFF; /* Ensure links are pure white */
+            font-weight: bold; /* Made bolder for clarity */
+            transition: color 0.2s ease, text-decoration 0.2s ease;
+        }
+        .direct-contact-section a:hover {
+            text-decoration: underline;
+        }
+        /* Apply to all direct child paragraphs within this section for consistent styling */
+        .direct-contact-section p {
+            color: #FFFFFF; /* Ensure all paragraph text is pure white */
+            font-weight: bold; /* Made bolder for clarity */
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        /* Overriding .text-sm if it's still present, ensuring pure white and bold */
+        .direct-contact-section .text-sm {
+            color: #FFFFFF !important; /* Use !important to override potential Tailwind defaults */
+            font-weight: bold !important;
+        }
+
+        .contact-button-alt { /* Button within direct contact section */
+            background-color: white;
+            color: #1d1d1f; /* Dark text on white button */
+            padding: 0.8rem 1.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            margin-top: 2rem;
+        }
+        .contact-button-alt:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        /* Legal Policies Section */
+        .legal-policies-section {
+            background-color: #ffffff;
+            padding: 2.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+        .legal-policies-section h4 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 1rem;
+        }
+        .legal-policies-section p {
+            font-size: 1rem;
+            color: #424245;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .legal-policies-section a {
+            color: #0071e3;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .legal-policies-section a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #f5f5f7;
+            color: #6e6e73;
+            padding: 2rem;
+            font-size: 0.85rem;
+            border-top: 1px solid #e8e8ed;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            header nav {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            header nav a {
+                margin: 0.25rem 0.5rem;
+            }
+            .main-content-container {
+                padding: 1rem;
+                margin-top: 5rem;
+            }
+            section {
+                padding: 1.5rem;
+            }
+            .contact-form-section h2, .direct-contact-section h3 {
+                font-size: 1.75rem;
+            }
+            .submit-button, .contact-button-alt {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            .legal-policies-section h4 {
+                font-size: 1.25rem;
+            }
+            .legal-policies-section p {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
-<body class="relative min-h-screen flex flex-col justify-between items-center p-0 md:p-8">
+<body>
+    <header>
+        <h1 class="text-2xl font-extrabold tracking-tight">FAA.ZONE™</h1>
+        <nav class="flex items-center space-x-4">
+            <a href="index.html">Home</a>
+            <a href="public-dashboard.html">Overview</a>
+            <a href="admin-login.html">Admin Login</a>
+            <a href="signup.html" class="button-style">Sign Up</a>
+        </nav>
+    </header>
 
-    <main class="flex flex-col items-center flex-grow w-full max-w-screen-2xl p-4 md:p-10">
-        <section class="form-section-dark w-full max-w-3xl mx-auto">
-            <h1 class="text-3xl md:text-4xl font-bold text-emerald-400 mb-8 drop-shadow-sm flex items-center justify-center">
-                <svg class="icon-light mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                    <polyline points="22,6 12,13 2,6"></polyline>
-                </svg>
-                Contact FAA.ZONE™ Careers
-            </h1>
-            <p class="text-lg text-gray-300 mb-12">
-                For general career inquiries or to submit your CV for consideration, please fill out the form below. Your application will be sent directly to our careers team. We're excited to hear from you!
-            </p>
+    <main class="main-content-container">
+        <button onclick="history.back()" class="text-blue-600 hover:text-blue-800 mb-6 flex items-center">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            Back
+        </button>
 
-            <form id="careerContactForm" class="space-y-8 text-left">
+        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Get in Touch with FAA.ZONE™</h2>
+
+        <section class="contact-form-section">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Send Us a Message</h2>
+            <form id="contactForm" class="space-y-6">
                 <div>
-                    <label for="fullName" class="block text-gray-200 text-sm font-bold mb-2 pl-4">
-                        <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                        Full Name
-                    </label>
-                    <input type="text" id="fullName" name="fullName" class="form-input-dark" placeholder="John Doe" required>
+                    <label for="name" class="form-label">Your Name</label>
+                    <input type="text" id="name" name="name" class="form-input" required>
                 </div>
                 <div>
-                    <label for="email" class="block text-gray-200 text-sm font-bold mb-2 pl-4">
-                        <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                            <polyline points="22,6 12,13 2,6"></polyline>
-                        </svg>
-                        Your Email Address
-                    </label>
-                    <input type="email" id="email" name="email" class="form-input-dark" placeholder="you@example.com" required>
+                    <label for="email" class="form-label">Your Email</label>
+                    <input type="email" id="email" name="email" class="form-input" required>
                 </div>
                 <div>
-                    <label for="phone" class="block text-gray-200 text-sm font-bold mb-2 pl-4">
-                        <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2H7c.5 0 .9.34 1 .85l.72 2.87a2 2 0 0 0-.7 2.87l-2.17 2.17a12.5 12.5 0 0 0 5.57 5.57l2.17-2.17a2 2 0 0 0 2.87-.7l2.87.72c.5.1.85.5.85 1z"></path>
-                        </svg>
-                        Phone Number (Optional)
-                    </label>
-                    <input type="tel" id="phone" name="phone" class="form-input-dark" placeholder="+123 456 7890">
+                    <label for="subject" class="form-label">Subject</label>
+                    <input type="text" id="subject" name="subject" class="form-input">
                 </div>
                 <div>
-                    <label for="positionInterest" class="block text-gray-200 text-sm font-bold mb-2 pl-4">
-                        <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                        </svg>
-                        Position of Interest (Optional)
-                    </label>
-                    <select id="positionInterest" name="positionInterest" class="form-select-dark">
-                        <option value="">Select a position (or general inquiry)</option>
-                        <option value="Junior Developer">Junior Developer</option>
-                        <option value="Senior AI Engineer">Senior AI Engineer</option>
-                        <option value="Product Manager, OmniDrop">Product Manager, OmniDrop</option>
-                        <option value="UI/UX Designer">UI/UX Designer</option>
-                        <option value="Internship/Graduate Program">Internship/Graduate Program</option>
-                        <option value="General Inquiry">General Inquiry</option>
-                    </select>
+                    <label for="message" class="form-label">Message</label>
+                    <textarea id="message" name="message" rows="6" class="form-textarea" required></textarea>
                 </div>
-                <div>
-                    <label for="experienceLevel" class="block text-gray-200 text-sm font-bold mb-2 pl-4">
-                        <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                        Years of Experience (Optional)
-                    </label>
-                    <select id="experienceLevel" name="experienceLevel" class="form-select-dark">
-                        <option value="">Select experience level</option>
-                        <option value="0-1">0-1 Years</option>
-                        <option value="1-3">1-3 Years</option>
-                        <option value="3-5">3-5 Years</option>
-                        <option value="5+">5+ Years</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="message" class="block text-gray-200 text-sm font-bold mb-2 pl-4">
-                        <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L2 22l1.5-4.5A8.38 8.38 0 0 1 2 11.5a8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8.5 8.5z"></path>
-                        </svg>
-                        Your Message / General Questions
-                    </label>
-                    <textarea id="message" name="message" rows="7" class="form-textarea-dark" placeholder="Tell us more about your inquiry or ask your questions here..."></textarea>
-                </div>
-                <div>
-                    <label for="cvUpload" class="block text-gray-200 text-sm font-bold mb-2 pl-4">
-                        <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="16" y1="13" x2="8" y2="13"></line>
-                            <line x1="16" y1="17" x2="8" y2="17"></line>
-                            <polyline points="10 9 9 9 8 9"></polyline>
-                        </svg>
-                        Upload CV/Resume (PDF/DOCX preferred)
-                    </label>
-                    <input type="file" id="cvUpload" name="cvUpload" accept=".pdf,.doc,.docx" class="file-input-dark">
-                    <p class="mt-2 text-xs text-gray-400">Please note: File attachments via this form will require manual attachment in your email client after clicking 'Send Email'.</p>
-                </div>
-                <div class="flex items-center justify-center mt-10">
-                    <button type="submit" class="submit-button-dark">
-                        Send Email to Careers Team
-                    </button>
-                </div>
+                <button type="submit" class="submit-button">Send Message</button>
             </form>
-            <div class="mt-16 pt-8 border-t border-gray-700 w-full">
-                <h2 class="text-2xl md:text-3xl font-bold text-emerald-400 mb-8 text-center">
-                    ✨ The Rhythmic Pulse of Your Aspirations ✨
-                </h2>
-                <p class="text-lg text-gray-300 mb-8">
-                    This "Rhythmic Pulse Graph" visualizes the dynamic energy of your unique journey, illustrating how your aspirations and inquiries create a vibrant, spiraling connection with our team.
-                </p>
-                <canvas id="pulseGraphCanvas"></canvas>
+            <div id="formMessage" class="alert mt-4"></div>
+        </section>
+
+        <section class="direct-contact-section">
+            <h3 class="font-bold mb-4">📬 Reach Out Directly</h3>
+            <a href="mailto:vault@faa.zone" class="text-lg font-semibold">vault@faa.zone</a>
+
+            <div class="text-sm space-y-2 mt-6">
+                <p><strong>Fruitful Holdings™</strong> t/a 🍇 FAA™ - Fruitful™ Global Planet™</p>
+                <p>📍 South Africa · Global Treaty Hub 🇿🇦🌍</p>
+                <p>📞 Business Hours: Mon–Fri 08:00–17:00 · Sat 09:00–13:00</p>
+                <p class="mb-2">Phone: +1 (555) 123-4567</p>
+                <p>Social Media: <a href="#" class="hover:underline">Twitter</a> | <a href="#" class="hover:underline">LinkedIn</a></p>
+            </div>
+
+            <a href="mailto:vault@faa.zone" class="contact-button-alt">
+                📩 Email Us Now
+            </a>
+        </section>
+
+        <section class="legal-policies-section">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">Legal & Policies</h3>
+            <div class="space-y-8">
+                <div>
+                    <h4>📜 Terms & Conditions</h4>
+                    <p>Use of FAA.Zone™ services is subject to sovereign scroll licensing. Unauthorized resale, replication or scraping of any vault logic, claim code, or API endpoint is prohibited without formal TreatyMesh™ registration.</p>
+                </div>
+
+                <div>
+                    <h4>🔒 Privacy Policy</h4>
+                    <p>We do not track or resell any scroll-related identity or metadata. Data captured via vault interfaces remains encrypted, zero-knowledge, and subject to claimholder-only access unless explicitly stated.</p>
+                </div>
+
+                <div>
+                    <h4>🔁 Return Policy</h4>
+                    <p>All scroll software licenses are digital and final. If hardware is purchased through Fruitful™, returns are accepted within 14 days for unopened VaultMesh™ equipment in original packaging. Contact <a href="mailto:vault@faa.zone">vault@faa.zone</a> for return logistics.</p>
+                </div>
             </div>
         </section>
     </main>
 
-    <footer class="footer-container">
-        <canvas id="footerGraphCanvas"></canvas>
-        <div class="footer-content-overlay">
-            <div class="max-w-screen-2xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center text-sm md:text-xs lg:text-sm w-full">
-                <div class="mb-6 md:mb-0 md:w-1/3">
-                    <div class="text-xl md:text-2xl font-bold mb-2 text-blue-600">FAA.zone <span class="text-gray-200">/ BuildNest™</span></div>
-                    <p class="text-gray-400">© 2025 FAA.zone. All systems, symbols, and brand echoes <br> protected by the Omni Present Copyright™.</p>
-                </div>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-y-4 gap-x-8 md:gap-x-12 lg:gap-x-16">
-                    <div>
-                        <h3 class="font-bold text-gray-200 mb-2">BuildNest™</h3>
-                        <ul class="space-y-1 text-gray-400">
-                            <li><a href="https://faa.zone/buildnest/features" class="hover:text-blue-400 transition-colors">Features</a></li>
-                            <li><a href="https://faa.zone/buildnest/use-cases" class="hover:text-blue-400 transition-colors">Use Cases</a></li>
-                            <li><a href="https://faa.zone/buildnest/pricing" class="hover:text-blue-400 transition-colors">Pricing</a></li>
-                            <li><a href="https://faa.zone/buildnest/modules" class="hover:text-blue-400 transition-colors">Modules</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-gray-200 mb-2">FAA.zone</h3>
-                        <ul class="space-y-1 text-gray-400">
-                            <li><a href="https://faa.zone/about" class="hover:text-blue-400 transition-colors">About FAA Systems™</a></li>
-                            <li><a href="https://faa.zone/omni-grid" class="hover:text-blue-400 transition-colors">Omni Grid™</a></li>
-                            <li><a href="https://faa.zone/baobab-archive" class="hover:text-blue-400 transition-colors">Compliance</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-gray-200 mb-2">Careers</h3>
-                        <ul class="space-y-1 text-gray-400">
-                            <li><a href="https://faa.zone/careers" class="hover:text-blue-400 transition-colors">Open Roles</a></li>
-                            <li><a href="https://faa.zone/careers/culture" class="hover:text-blue-400 transition-colors">Our Culture</a></li>
-                            <li><a href="https://faa.zone/careers/benefits" class="hover:text-blue-400 transition-colors">Benefits</a></li>
-                            <li><a href="https://faa.zone/careers/faq" class="hover:text-blue-400 transition-colors">FAQ</a></li>
-                            <li><a href="https://faa.zone/careers/team" class="hover:text-blue-400 transition-colors">Meet the Team</a></li>
-                            <li><a href="https://faa.zone/careers/life-at-faa" class="hover:text-blue-400 transition-colors">Life at FAA.ZONE™</a></li>
-                            <li><a href="https://faa.zone/careers/internships" class="hover:text-blue-400 transition-colors">Internships</a></li>
-                            <li><a href="https://faa.zone/careers/diversity" class="hover:text-blue-400 transition-colors">Diversity & Inclusion</a></li>
-                            <li><a href="https://faa.zone/careers/contact-us" class="hover:text-blue-400 transition-colors">Contact Careers</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <footer>
+        <p>&copy; 2025 FAA.ZONE™. All Rights Reserved. Powering the Future of Interconnected Systems. • Fruitful™ Global Planet™ • VaultMesh™ Synced · TreatyMesh™ Compliant</p>
     </footer>
 
     <script>
-        window.onload = function() {
-            // --- Main Pulse Graph Canvas (Weird Portrait Sausage) ---
-            const mainCanvas = document.getElementById('pulseGraphCanvas');
-            const mainCtx = mainCanvas.getContext('2d');
-            const mainNumLines = 250; // More lines for density
-            const mainPulseDuration = 4000; // Slightly slower, more deliberate pulse
-            const mainPulseAmplitude = 0.7; // Stronger amplitude for "weirdness"
+        // JavaScript for simulated form submission feedback
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
 
-            const mainLineData = [];
-            for (let i = 0; i < mainNumLines; i++) {
-                mainLineData.push({
-                    // Randomize starting position more for a scattered feel
-                    startX: Math.random() * mainCanvas.width,
-                    startY: Math.random() * mainCanvas.height,
-                    // Amplitude and frequency for vertical movement
-                    amplitudeY: Math.random() * 0.3 + 0.1,
-                    frequencyY: Math.random() * 0.02 + 0.005,
-                    // Amplitude and frequency for horizontal movement (spiral)
-                    amplitudeX: Math.random() * 0.1 + 0.01,
-                    frequencyX: Math.random() * 0.01 + 0.001,
-                    // Random vibrant and slightly unusual colors
-                    color: `hsla(${Math.random() * 360}, 100%, ${Math.random() * 50 + 50}%, ${Math.random() * 0.7 + 0.3})`,
-                    thickness: Math.random() * 3 + 1, // Varied thickness
-                    phaseOffset: Math.random() * Math.PI * 2 // Individual phase offset
-                });
+            const formMessage = document.getElementById('formMessage');
+            formMessage.style.display = 'none'; // Hide previous messages
+
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            // Basic client-side validation
+            if (!name || !email || !message) {
+                formMessage.textContent = 'Please fill in all required fields (Name, Email, Message).';
+                formMessage.className = 'alert alert-error';
+                formMessage.style.display = 'block';
+                return;
             }
 
-            function resizeMainCanvas() {
-                mainCanvas.width = mainCanvas.offsetWidth;
-                mainCanvas.height = mainCanvas.offsetHeight;
-            }
-            resizeMainCanvas();
-            window.addEventListener('resize', resizeMainCanvas);
+            // Simulate network request delay
+            setTimeout(() => {
+                formMessage.textContent = `Thank you, ${name}! Your message has been sent successfully. We'll get back to you at ${email} shortly.`;
+                formMessage.className = 'alert alert-success';
+                formMessage.style.display = 'block';
 
-            let mainStartTime = Date.now();
-
-            function animateMainGraph() {
-                requestAnimationFrame(animateMainGraph);
-                mainCtx.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
-                const currentTime = Date.now();
-                const elapsedTime = currentTime - mainStartTime;
-                const pulseProgress = (elapsedTime % mainPulseDuration) / mainPulseDuration;
-                const pulseEffect = Math.sin(pulseProgress * Math.PI * 2) * mainPulseAmplitude; // Declared here
-
-                for (let i = 0; i < mainNumLines; i++) {
-                    const line = mainLineData[i];
-                    mainCtx.beginPath();
-                    mainCtx.strokeStyle = line.color;
-                    mainCtx.lineWidth = line.thickness;
-                    mainCtx.lineCap = 'round';
-
-                    // Draw a segment of the "sausage"
-                    const numSegments = 50; // Increased segments for smoother spiral
-
-                    for (let j = 0; j <= numSegments; j++) {
-                        const t = j / numSegments; // Progress along the segment
-
-                        // Calculate position with vertical bias and spiral effect
-                        const x = mainCanvas.width / 2 +
-                                  Math.sin(t * line.frequencyX * 20 + line.phaseOffset + pulseEffect * 2) * (line.amplitudeX * mainCanvas.width / 2) +
-                                  Math.cos(t * Math.PI * 4 + pulseProgress * Math.PI * 8) * (mainCanvas.width / 8 * (1 - t)); // More pronounced spiral
-
-                        const y = mainCanvas.height * t +
-                                  Math.sin(t * line.frequencyY * 20 + line.phaseOffset + pulseEffect * 3) * (line.amplitudeY * mainCanvas.height / 4);
-
-                        if (j === 0) {
-                            mainCtx.moveTo(x, y);
-                        } else {
-                            mainCtx.lineTo(x, y);
-                        }
-                    }
-                    mainCtx.stroke();
-                }
-            }
-            animateMainGraph();
-
-            // --- Footer Pulse Graph Canvas ---
-            const footerCanvas = document.getElementById('footerGraphCanvas');
-            const footerCtx = footerCanvas.getContext('2d');
-            const footerNumLines = 1000;
-            const footerLineData = [];
-            const footerPulseDuration = 3000;
-            const footerPulseAmplitude = 0.8;
-
-            for (let i = 0; i < footerNumLines; i++) {
-                footerLineData.push({
-                    offset: Math.random() * Math.PI * 2,
-                    amplitude: Math.random() * 0.1 + 0.01,
-                    frequency: Math.random() * 0.1 + 0.005,
-                    color: `rgba(${Math.floor(Math.random() * 50) + 10}, ${Math.floor(Math.random() * 150) + 100}, ${Math.floor(Math.random() * 50) + 200}, ${Math.random() * 0.5 + 0.1})`,
-                    thickness: Math.random() * 0.8 + 0.1
-                });
-            }
-
-            function resizeFooterCanvas() {
-                footerCanvas.width = footerCanvas.offsetWidth;
-                footerCanvas.height = footerCanvas.offsetHeight;
-            }
-            resizeFooterCanvas();
-            window.addEventListener('resize', resizeFooterCanvas);
-
-            let footerStartTime = Date.now();
-
-            function animateFooterGraph() {
-                requestAnimationFrame(animateFooterGraph);
-                footerCtx.clearRect(0, 0, footerCanvas.width, footerCanvas.height);
-                const currentTime = Date.now();
-                const elapsedTime = currentTime - footerStartTime;
-                const pulseProgress = (elapsedTime % footerPulseDuration) / footerPulseDuration;
-
-                for (let i = 0; i < footerNumLines; i++) {
-                    const line = footerLineData[i];
-                    footerCtx.beginPath();
-                    footerCtx.strokeStyle = line.color;
-                    footerCtx.lineWidth = line.thickness;
-                    footerCtx.lineCap = 'round';
-
-                    const pulseEffect = Math.sin(pulseProgress * Math.PI * 2) * footerPulseAmplitude;
-
-                    for (let x = 0; x <= footerCanvas.width; x += 10) {
-                        const y = footerCanvas.height / 2 +
-                                  Math.sin(x * line.frequency + line.offset + pulseEffect * 5) * (line.amplitude * footerCanvas.height / 2) +
-                                  Math.sin(pulseProgress * Math.PI * 2 + i * 0.1) * (footerCanvas.height / 10);
-
-                        if (x === 0) {
-                            footerCtx.moveTo(x, y);
-                        } else {
-                            footerCtx.lineTo(x, y);
-                        }
-                    }
-                    footerCtx.stroke();
-                }
-            }
-            animateFooterGraph();
-        };
+                // Optionally clear the form
+                document.getElementById('contactForm').reset();
+            }, 1000); // Simulate a 1-second delay
+        });
     </script>
 </body>
 </html>
