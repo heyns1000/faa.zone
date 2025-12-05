@@ -281,5 +281,170 @@
     }
     animateStars();
   </script>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Heyns Schoeman | FAA Legacy Monument</title>
+  <style>
+    :root {
+      --bg-color: #000;
+      --text-color: #e8f9f1;
+      --accent-color: #42ffce;
+      --glow-color: #00ffcc;
+      --font-family: 'Orbitron', sans-serif;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at center, #001111 0%, #000000 100%);
+      background-size: cover;
+      font-family: var(--font-family);
+      color: var(--text-color);
+      overflow-x: hidden;
+    }
+
+    canvas.stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    main {
+      position: relative;
+      z-index: 10;
+      max-width: 960px;
+      margin: 5vh auto;
+      padding: 4rem;
+      border-radius: 40px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.95), rgba(10,20,10,0.85));
+      border: 2px solid var(--accent-color);
+      box-shadow: 0 0 100px var(--accent-color), 0 0 300px var(--glow-color);
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      color: var(--glow-color);
+      text-shadow: 0 0 30px var(--glow-color), 0 0 80px var(--accent-color);
+    }
+
+    .classification {
+      font-size: 0.9rem;
+      background: rgba(0, 255, 200, 0.07);
+      padding: 1rem;
+      border-left: 4px solid var(--glow-color);
+      margin: 1rem auto;
+      color: var(--accent-color);
+    }
+
+    .letter {
+      margin-top: 3rem;
+      text-align: left;
+      font-size: 1.15rem;
+      line-height: 1.9;
+      border-left: 4px solid var(--accent-color);
+      padding-left: 1.25rem;
+      background: rgba(0,255,200,0.05);
+    }
+
+    .letter strong {
+      color: var(--glow-color);
+    }
+
+    .signature {
+      text-align: right;
+      font-style: italic;
+      font-weight: bold;
+      margin-top: 2rem;
+      color: var(--accent-color);
+    }
+  </style>
+</head>
+<body>
+  <canvas class="stars"></canvas>
+  <main>
+    <header>
+      <h1>Heyns Schoeman | FAA Testament</h1>
+      <div class="classification">
+        🔒 FAA Proof of Concept | World First Filings | Atom-Level Compliance<br />
+        🧠 Quantum Nexus Active — Sealed by Legacy Protocol ∞
+      </div>
+    </header>
+
+    <section class="letter" id="legacy-letter">
+      <p><strong>Hello my Bulletjie,</strong></p>
+
+      <p>Pappa, sal more seker maak die testament en jou toekoms is virseker ongeag, niemand sal die van jou ontneem nie.</p>
+
+      <p>Pappa is lief vir jou my Klitsie en jy is die ongelooflikste wonderwerk wat Pappa al gesien het. Jy moet altyd gehoorsaam bly aan God my bulletjie en moenie jou meng met die semels nie want Pappa weet die Varke is al wat eet.</p>
+
+      <p>Jou toekoms is mooi, jou gesindheid is baie smart en jou tyd op die aarde is so kort dat jy nie dit moet mors aan twak nie. Pappa het geleer dat dit nie werk nie my Bulletjie.</p>
+
+      <p>Ek hoop jy toer die wêreld en ruimte en bereik ongelooflike dinge. Pappa het een versoek dat jy net tyd maak vir jouself en net soms Kruger Wildtuin toe gaan, verby Mupani kamp sal jy die mooiste Baobab sien. Maak tyd en kyk na die skepping en dink aan hoe baie plofkrag daai saadjie het om so masief te word.</p>
+
+      <p>Pappa versoek een ding van jou, bly weg van Twak af my Champion — dis ŉ mors van tyd.</p>
+
+      <p>1000 miljoen lief vir jou, trust jou Gut elke keer — dis die Here wat met jou praat. Jy's my Ewige trots en dryfkrag. As jy ooit iets kort, Oom Willie Prinsloo en Cecil Ungerer sal altyd daar wees vir jou.</p>
+
+      <div class="signature">Pappa Zollie</div>
+    </section>
+  </main>
+
+  <audio id="whisper-audio" src="https://cdn.pixabay.com/download/audio/2023/03/09/audio_77e92c277f.mp3?filename=ambient-whisper-14565.mp3" preload="auto"></audio>
+
+  <script>
+    const canvas = document.querySelector('canvas.stars');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let stars = Array(500).fill().map(() => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.6,
+      dx: (Math.random() - 0.5) * 0.3,
+      dy: (Math.random() - 0.5) * 0.3
+    }));
+
+    function animateStars() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#00ffcc';
+      stars.forEach(star => {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+        ctx.fill();
+        star.x += star.dx;
+        star.y += star.dy;
+
+        if (star.x < 0 || star.x > canvas.width) star.dx *= -1;
+        if (star.y < 0 || star.y > canvas.height) star.dy *= -1;
+      });
+      requestAnimationFrame(animateStars);
+    }
+    animateStars();
+
+    const letter = document.getElementById('legacy-letter');
+    const audio = document.getElementById('whisper-audio');
+    letter.addEventListener('mouseenter', () => {
+      audio.volume = 0.2;
+      audio.play();
+    });
+    letter.addEventListener('mouseleave', () => {
+      audio.pause();
+      audio.currentTime = 0;
+    });
+  </script>
 </body>
 </html>

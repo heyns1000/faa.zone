@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-05-16 | faa.zone | history | `public/cecil/rossouw/index.html` | `8887a197` | ΣΩVEREIGN TJOMLINYA STUDANTIA™ | Scroll Claim | 9091 | 6 | 1 | 33.9 |
+| 2 | 2025-12-05 | codenest | resolve-conflicts-manually | `packages/faa-zone/public/cecil/rossouw/index.html` | `c48d45fc` | ΣΩVEREIGN TJOMLINYA STUDANTIA™ | Scroll Claim | 14482 | 7 | 1 | 35.4 |
