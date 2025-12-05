@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-09-07 | ThesisGallery | main | `attached_assets/admin_login_1757206568783.html` | `92713c18` | Admin Login - PayPal Integration System | 6141 | 6 | 0 | 34.6 |
+| 2 | 2025-12-05 | codenest | resolve-conflicts-manually | `packages/faa-zone/public/admin-portal.html` | `e9acc275` | Admin Login - FAA.ZONE | 10667 | 8 | 0 | 35.1 |
