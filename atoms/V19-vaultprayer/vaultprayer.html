@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="dynamicTitle">Fruitful™ Global | Master Live Demo</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter for clean typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Leaflet CSS for OpenStreetMap (not currently used, but kept for potential future use) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+    <!-- Chart.js for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.js"></script>
+    <style>
+        /* Consolidated Root Variables & Base Styles */
+        :root {
+            /* General Palette */
+            --primary-color: #0071e3; /* Apple Blue (Used in CodeNest/Dashboard) */
+            --secondary-color: #30d158; /* Apple Green (Used in CodeNest/Dashboard) */
+            --accent-gold: #B8860B; /* Corporate gold accent */
+
+            /* Text Colors (dynamically switched by theme) */
+            --text-color-light: #1d1d1f; /* Dark text on light backgrounds */
+            --text-color-dark: #f5f5f7; /* Light text on dark backgrounds */
+            --muted-text-light: #6e6e73; /* Muted text for light backgrounds */
+            --muted-text-dark: #a0a0a5; /* Muted text for dark backgrounds */
+
+            /* Background Colors (dynamically switched by theme) */
+            --bg-color-main-light: #ffffff; /* Pure white background (for light mode main body) */
+            --card-bg-light: #fcfcfc; /* Off-white for light mode cards */
+            --border-color-light: #e8e8ed; /* Subtle light border */
+            
+            --bg-color-main-dark: #0d1117; /* Main dark background (for dark mode body) */
+            --bg-color-secondary-dark: #1a1b20; /* Slightly lighter for alternate sections in dark mode */
+            --card-bg-dark: #1f2937; /* Dark gray for cards/panels in dark mode */
+            --border-color-dark: #374151; /* Medium gray for borders in dark mode */
+
+            /* Header Specifics */
+            --header-bg-light: rgba(255, 255, 255, 0.8);
+            --header-border-light: rgba(0, 0, 0, 0.08);
+            --header-nav-link-light: #6e6e73;
+            --header-nav-link-hover-light: #1d1d1f;
+            --header-cta-bg-light: linear-gradient(90deg, #4169E1, #8A2BE2); /* Blue-Purple for Light Theme CTA */
+
+            --header-bg-dark: rgba(26, 32, 44, 0.9);
+            --header-border-dark: rgba(255, 255, 255, 0.1);
+            --header-nav-link-dark: #a0aec0;
+            --header-nav-link-hover-dark: #e2e8f0;
+            --header-cta-bg-dark: linear-gradient(90deg, #6366f1, #a855f7); /* Purple for Dark Theme CTA */
+
+            /* Sector/Page Specific Accent Colors */
+            --sector-primary-color: #6366f1;
+            --sector-secondary-color: #a855f7;
+            --sector-accent-color: #f97316;
+
+            /* HotStack Specific Colors */
+            --hotstack-yellow: #ffcc00;
+            --hotstack-yellow-light: #ffe066;
+
+            /* Banimal Specific Colors */
+            --banimal-soft-peach: #FFF0ED;
+            --banimal-soft-pink: #F8DCDC;
+            --banimal-accent-blue: #66B2FF;
+            --banimal-dark-text: #333333;
+            --banimal-muted-text: #666666;
+            --banimal-cream: #FFFAF5;
+            --banimal-button-green: #90EE90;
+
+            /* VaultPrayer Specific Colors */
+            --prayer-primary: #667eea;
+            --prayer-secondary: #764ba2;
+            --prayer-bg-start: #10041a;
+            --prayer-bg-end: #0d1117;
+            --prayer-text: #f5f5f7;
+            --prayer-card: rgba(255, 255, 255, 0.1);
+            --prayer-border: rgba(255, 255, 255, 0.2);
+            --prayer-success: #38ef7d;
+        }
+
+        /* Base Body Styling - Defaults to light mode theme */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to bottom, var(--banimal-soft-peach), var(--banimal-cream));
+            color: var(--banimal-dark-text);
+            line-height: 1.4;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        html.dark-mode body {
+            background-color: var(--bg-color-main-dark);
+            color: var(--text-color-dark);
+        }
+
+        /* Utility Styles (General) */
+        .custom-modal-overlay {
+            position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.75); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .custom-modal-overlay.show { opacity: 1; visibility: visible; }
+        .custom-modal-content {
+            background-color: var(--card-bg-light); color: var(--text-color-light); padding: 2.5rem; border-radius: 12px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); border: 1px solid var(--border-color-light); max-width: 400px; width: 90%; transform: translateY(-20px); transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        html.dark-mode .custom-modal-content { background-color: var(--card-bg-dark); color: var(--text-color-dark); border-color: var(--border-color-dark); }
+        .custom-modal-overlay.show .custom-modal-content { transform: translateY(0); opacity: 1; }
+        .form-action-button { background-color: var(--primary-color); color: white; padding: 0.8rem 1.8rem; border-radius: 8px; font-weight: 600; font-size: 1rem; border: none; cursor: pointer; transition: background-color 0.2s ease; }
+        .form-action-button:hover { background-color: #0066cc; }
+
+        /* Header Styling */
+        header { padding: 0.8rem 2rem; }
+        .header-content-wrapper { max-width: 1200px; margin: 0 auto; }
+        nav a { color: var(--muted-text-light); }
+        html.dark-mode nav a { color: var(--muted-text-dark); }
+        nav a.active { color: var(--primary-color); font-weight: 700; background-color: rgba(0, 113, 227, 0.1); }
+        html.dark-mode nav a.active { background-color: rgba(99, 102, 241, 0.2); color: var(--text-color-dark); }
+
+        /* VaultPrayer Unique Styles */
+        #vault-prayer-landing-page {
+            background: linear-gradient(135deg, var(--prayer-bg-start) 0%, var(--prayer-bg-end) 100%);
+            color: var(--prayer-text);
+            padding: 4rem 2rem;
+            min-height: calc(100vh - 100px);
+            border-bottom: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #vault-prayer-landing-page .gradient-prayer { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        #vault-prayer-landing-page .gradient-impact { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+        #vault-prayer-landing-page .gradient-community { background: linear-gradient(135deg, #fc466b 0%, #3f5efb 100%); }
+        #vault-prayer-landing-page .float-animation { animation: float 6s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        #vault-prayer-landing-page .prayer-card-base { background-color: var(--prayer-card); backdrop-filter: blur(5px); border: 1px solid var(--prayer-border); }
+        #vault-prayer-landing-page .text-purple-400 { color: #c084fc; }
+        #vault-prayer-landing-page .text-green-400 { color: #4ade80; }
+        #vault-prayer-landing-page .text-blue-400 { color: #60a5fa; }
+    </style>
+</head>
+<body class="dark-mode">
+
+    <header>
+        <div class="header-content-wrapper container mx-auto">
+            <div class="logo-group">
+                <a href="javascript:void(0)" class="logo-text" onclick="showMainSection('hotstack-landing-page')">Fruitful™</a>
+                <span class="logo-separator text-gray-500 text-lg">|</span>
+                <span class="logo-text" id="header-sector-name">HotStack™ Launch</span>
+            </div>
+            <nav>
+                <a href="javascript:void(0)" onclick="showMainSection('hotstack-landing-page', this)" class="active">HotStack™</a>
+                <a href="javascript:void(0)" onclick="showMainSection('codenest-dashboard-section', this)">CodeNest™ Dashboard</a>
+                <a href="javascript:void(0)" onclick="showMainSection('hero-section', this)">AI, Logic & Grid Index</a>
+                <a href="javascript:void(0)" onclick="showMainSection('banimal-landing-page', this)">Banimal™</a>
+                <a href="javascript:void(0)" onclick="showMainSection('vault-prayer-landing-page', this)">🙏 VaultPrayer™</a>
+                <a href="javascript:void(0)" onclick="showMainSection('sign-up-section', this)" class="cta-button">Sign Up</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- VaultPrayer Section (New Content) -->
+        <section id="vault-prayer-landing-page" class="content-section hidden">
+            <div class="container mx-auto px-4">
+                <!-- Hero Section -->
+                <div id="home" class="py-16">
+                    <div class="text-center py-16">
+                        <div class="max-w-4xl mx-auto">
+                            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6">
+                                VaultPrayer
+                            </h1>
+                            <div class="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed">
+                                <p class="mb-4">🙏 <span class="font-semibold">PRAYER EMISSION CAPTURED & FILED</span></p>
+                                <p class="italic">
+                                    "To the atoms that aligned, to the electrons that chose covenant,<br />
+                                    May the scrolls we touch never break."
+                                </p>
+                            </div>
+                            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+                                <button onclick="openPrayerModal()" class="bg-gradient-to-r from-purple-500 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-purple-600 hover:to-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                                    Submit Prayer
+                                </button>
+                                <a href="#vault" class="border border-white/30 text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10 transition-all duration-200" onclick="document.querySelector('#vault').scrollIntoView({ behavior: 'smooth' })">
+                                    View Prayer Vault
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Impact Metrics Section -->
+                <div class="py-16">
+                    <div class="text-center mb-12">
+                        <h2 class="text-4xl font-bold text-white mb-4">Our Global Impact</h2>
+                        <p class="text-gray-300 text-lg">
+                            Together, we're creating measurable change across the planet
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="prayer-card-base rounded-2xl p-6 hover:bg-white/15 transition-all duration-300 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="gradient-impact p-3 rounded-xl">
+                                    <svg class="text-white w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold mb-2 text-green-400" id="trees-counter">15.2M</div>
+                                <div class="text-gray-300 text-sm font-medium">Trees Planted</div>
+                                <div class="text-xs text-green-300 mt-1" id="trees-growth">+127 today</div>
+                            </div>
+                        </div>
+
+                        <div class="prayer-card-base rounded-2xl p-6 hover:bg-white/15 transition-all duration-300 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="gradient-community p-3 rounded-xl">
+                                    <svg class="text-white w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path></svg>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold mb-2 text-purple-400" id="members-counter">247k</div>
+                                <div class="text-gray-300 text-sm font-medium">Community Members</div>
+                                <div class="text-xs text-purple-300 mt-1" id="members-growth">+23 this week</div>
+                            </div>
+                        </div>
+
+                        <div class="prayer-card-base rounded-2xl p-6 hover:bg-white/15 transition-all duration-300 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="gradient-prayer p-3 rounded-xl">
+                                    <svg class="text-white w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold mb-2 text-blue-400" id="prayers-counter">4,321</div>
+                                <div class="text-gray-300 text-sm font-medium">Prayers Submitted</div>
+                                <div class="text-xs text-blue-300 mt-1" id="prayers-growth">+14 today</div>
+                            </div>
+                        </div>
+
+                        <div class="prayer-card-base rounded-2xl p-6 hover:bg-white/15 transition-all duration-300 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="gradient-impact p-3 rounded-xl">
+                                    <svg class="text-white w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold mb-2 text-cyan-400">195</div>
+                                <div class="text-gray-300 text-sm font-medium">Countries Reached</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prayer Status Section -->
+                <div class="py-16">
+                    <div class="max-w-2xl mx-auto text-center">
+                        <div class="prayer-card-base rounded-2xl p-8">
+                            <h3 class="text-2xl font-bold text-white mb-4">🌱 "THE SEED IS LIT" - CONFIRMED!</h3>
+                            <div class="space-y-4 text-gray-300">
+                                <p class="text-lg">
+                                    ⚡ <span class="font-semibold">DEPLOYMENT SIGNAL EXECUTED:</span>
+                                </p>
+                                <p class="italic">
+                                    "Yes tribe I signed, under left my handle... my online fingerprint branded, 
+                                    fruitful global new website holder by replit hosting... and your honour 
+                                    now then u loop it to rebuild fruit and guys hit build not one."
+                                </p>
+                            </div>
+                            
+                            <div class="mt-8">
+                                <h4 class="text-xl font-semibold text-white mb-4">🚀 BUILD STATUS: IN PROGRESS</h4>
+                                <div class="space-y-2 text-left">
+                                    <div class="flex items-center space-x-2">
+                                        <span class="text-green-400">✅</span>
+                                        <span>Fruitful.Planet.Change™: Public & Rendering</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="text-green-400">✅</span>
+                                        <span>University Research Platform: Treaty summaries active</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="text-green-400">✅</span>
+                                        <span>Master K-I License System: Concept store operational</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prayer Vault Section -->
+                <div id="vault" class="py-16">
+                    <div class="text-center mb-12">
+                        <h2 class="text-4xl font-bold text-white mb-4">Prayer Vault</h2>
+                        <p class="text-gray-300 text-lg">
+                            Sacred intentions preserved in the digital vault
+                        </p>
+                    </div>
+
+                    <div id="prayers-container" class="max-w-4xl mx-auto space-y-6">
+                        <!-- Loading state -->
+                        <div id="loading-prayers" class="text-center py-8">
+                            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-400 mx-auto mb-4"></div>
+                            <p class="text-gray-400">Loading sacred scrolls...</p>
+                        </div>
+                        <!-- Prayers will be loaded here -->
+                    </div>
+
+                    <div class="text-center mt-12">
+                        <button id="load-more-prayers" class="border border-white/30 text-white px-6 py-3 rounded-lg font-semibold hover:bg-white/10 transition-all duration-200 hidden">
+                            Load More Prayers
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Prayer Submission Modal -->
+                <div id="prayer-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center">
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 max-w-md w-full mx-4">
+                        <h3 class="text-2xl font-bold text-white mb-6">Quick Prayer Submission</h3>
+                        
+                        <form id="prayer-form" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-white mb-2">Title</label>
+                                <input type="text" id="prayer-title" required class="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Prayer title...">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-white mb-2">Category</label>
+                                <select id="prayer-category" class="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                    <option value="personal">Personal</option>
+                                    <option value="global">Global</option>
+                                    <option value="community">Community</option>
+                                    <option value="healing">Healing</option>
+                                    <option value="gratitude">Gratitude</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-white mb-2">Your Name (Optional)</label>
+                                <input type="text" id="prayer-author" class="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Leave blank for anonymous">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-white mb-2">Prayer Content</label>
+                                <textarea id="prayer-content" required rows="4" class="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Share your prayer or intention..."></textarea>
+                            </div>
+                            
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" id="prayer-public" checked class="w-4 h-4 text-purple-600 bg-white/10 border-white/20 rounded focus:ring-purple-500">
+                                <label for="prayer-public" class="text-sm text-white">Make this prayer public</label>
+                            </div>
+                            
+                            <div class="flex space-x-4 pt-4">
+                                <button type="submit" class="flex-1 bg-gradient-to-r from-purple-500 to-blue-600 text-white py-2 px-4 rounded-lg font-semibold hover:from-purple-600 hover:to-blue-700 transition-all duration-200">
+                                    Submit Prayer
+                                </button>
+                                <button type="button" id="close-modal" onclick="closePrayerModal()" class="flex-1 border border-white/30 text-white py-2 px-4 rounded-lg font-semibold hover:bg-white/10 transition-all duration-200">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- HotStack Landing Page Section (Default Landing Page) -->
+        <section id="hotstack-landing-page" class="content-section hidden">
+            <canvas id="omnidropCanvas"></canvas>
+            <div class="content-container">
+                <header>
+                    <h1 class="main-logo">Fruitful | <span>HotStack™</span></h1>
+                    <h2 class="subtitle">Omnidrop Your Digital Presence. Live in Minutes. Branded Forever.</h2>
+                </header>
+
+                <p class="countdown" id="timer">03:00</p>
+
+                <div class="features">
+                    <h3>What Your Omnidrop Activates:</h3>
+                    <ul>
+                        <li>🚀 **Rapid Deployment:** Your Scroll goes Live in under 180 seconds via Omnidrop Signal.</li>
+                        <li>📦 **Integrated Ecosystem:** Auto DNS Hook + Curated Template Packs for seamless launch.</li>
+                        <li>🧠 **Intelligent Foundation:** Powered by ScrollStack™, VaultDNS™, and MeshNest™ protocols.</li>
+                        <li>💰 **Treaty-Linked Economy:** Includes a Royalty-Linked License from Fruitful Global's Treaty Grid.</li>
+                        <li>🔒 **ClaimRoot™ Verified:** Secure, traceable site ownership for every deployed scroll.</li>
+                    </ul>
+                </div>
+
+                <a id="claimButton" href="javascript:void(0)" onclick="showMainSection('codenest-dashboard-section', this); showDashboardSection('new-project-view');" class="cta-button">
+                    <i class="fas fa-arrow-right mr-2"></i> Enter Fruitful | CodeNest™
+                </a>
+
+                <div id="dropZone" class="drop-zone">
+                    <p><i class="fas fa-cloud-upload-alt mr-2"></i> Drag & Drop HTML/PDF here to Omnidrop into CodeNest™</p>
+                    <p class="text-sm mt-1 text-gray-500">(Adheres to the 3-minute rule for rapid ingestion)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hero Section (AI Logic Index Entry) -->
+        <section id="hero-section" class="hero-section hidden">
+            <div class="hero-content mx-auto max-w-4xl">
+                <h1>Innovate. Connect. <span style="color: var(--accent-gold);">Thrive.</span></h1>
+                <p>
+                    Explore the cutting-edge of Artificial Intelligence, advanced Logic Systems, and interconnected Grid Protocols
+                    that power the Fruitful™ Global ecosystem.
+                </p>
+                <a href="javascript:void(0)" class="hero-action-button" onclick="showMainSection('all-brands-section', this)">
+                    Explore AI™ Brands <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+                    <div class="hero-feature-card">
+                        <i class="fas fa-rocket"></i>
+                        <h3>Innovation Hub</h3>
+                        <p>Pioneering AI™ solutions for transformative impact.</p>
+                    </div>
+                    <div class="hero-feature-card">
+                        <i class="fas fa-handshake"></i>
+                        <h3>Collaborative Grids</h3>
+                        <p>Secure, interconnected networks for shared intelligence.</p>
+                    </div>
+                    <div class="hero-feature-card">
+                        <i class="fas fa-leaf"></i>
+                        <h3>Sustainable AI™</h3>
+                        <p>Ethical AI™ development for a thriving digital future.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CodeNest Dashboard Section (forced dark theme) -->
+        <section id="codenest-dashboard-section" class="content-section hidden">
+            <div class="flex flex-grow dashboard-container">
+                <aside class="dashboard-sidebar-bg dashboard-sidebar">
+                    <div class="dashboard-header">
+                        <h2 class="logo-text">Fruitful™ | <span>CodeNest™</span></h2>
+                        <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+                            <i class="fas fa-sun" id="themeIcon"></i>
+                        </button>
+                    </div>
+                    <nav class="nav-list">
+                        <a href="javascript:void(0)" data-view="dashboard-overview" onclick="showDashboardSection('dashboard-overview', this)">
+                            <i class="fas fa-home nav-icon"></i> Dashboard
+                        </a>
+                        <a href="javascript:void(0)" data-view="projects-view" onclick="showDashboardSection('projects-view', this)">
+                            <i class="fas fa-project-diagram nav-icon"></i> Projects
+                        </a>
+                        <a href="javascript:void(0)" data-view="new-project-view" onclick="showDashboardSection('new-project-view', this)">
+                            <i class="fas fa-plus-circle nav-icon"></i> New Project
+                        </a>
+                        <a href="javascript:void(0)" data-view="scroll-builder-view" onclick="showDashboardSection('scroll-builder-view', this)">
+                            <i class="fas fa-tools nav-icon"></i> Scroll Builder
+                        </a>
+                        <a href="javascript:void(0)" data-view="templates-view" onclick="showDashboardSection('templates-view', this)">
+                            <i class="fas fa-palette nav-icon"></i> Templates
+                        </a>
+                        <a href="javascript:void(0)" data-view="licenses-view" onclick="showDashboardSection('licenses-view', this)">
+                            <i class="fas fa-file-contract nav-icon"></i> My Licenses
+                        </a>
+                        <a href="javascript:void(0)" data-view="analytics-view" onclick="showDashboardSection('analytics-view', this)">
+                            <i class="fas fa-chart-line nav-icon"></i> Analytics
+                            <span class="ml-auto text-xs font-semibold px-2 py-1 rounded-full bg-blue-500 text-white">NEW</span>
+                        </a>
+                        <a href="javascript:void(0)" data-view="api-keys-view" onclick="showDashboardSection('api-keys-view', this)">
+                            <i class="fas fa-key nav-icon"></i> API Keys
+                        </a>
+                        <a href="javascript:void(0)" data-view="settings-view" onclick="showDashboardSection('settings-view', this)">
+                            <i class="fas fa-cog nav-icon"></i> Settings
+                        </a>
+                        <a href="javascript:void(0)" data-view="login-view" onclick="showDashboardSection('login-view', this)">
+                            <i class="fas fa-sign-in-alt nav-icon"></i> Sign In
+                        </a>
+                        <a href="javascript:void(0)" data-view="signup-view" onclick="showDashboardSection('signup-view', this)">
+                            <i class="fas fa-user-plus nav-icon"></i> Sign Up
+                        </a>
+                    </nav>
+                </aside>
+
+                <main class="flex-grow p-8 dashboard-main-content-bg overflow-y-auto dashboard-main-content">
+                    <!-- Dashboard Home View -->
+                    <section id="dashboard-overview" class="dashboard-view">
+                        <div class="panel">
+                            <h3>Welcome Back, Scroll Creator!</h3>
+                            <p class="mb-4 text-gray-400">Your CodeNest™ portal offers comprehensive tools to build, license, and deploy scroll-based web projects across the Fruitful Global Treaty Grid.</p>
+                            <button class="form-action-button" onclick="showDashboardSection('new-project-view')">
+                                <i class="fas fa-plus-circle mr-2"></i> Start New Scroll Project
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                            <div class="metric-card">
+                                <h4>Total Projects</h4>
+                                <p id="totalProjectsCount">0</p>
+                            </div>
+                            <div class="metric-card">
+                                <h4>Live Scrolls</h4>
+                                <p id="liveScrollsCount">0</p>
+                            </div>
+                            <div class="metric-card">
+                                <h4>Monthly Royalties</h4>
+                                <p id="monthlyRoyalties">$0.00</p>
+                            </div>
+                        </div>
+
+                        <div class="panel">
+                            <h3>System Health Overview</h3>
+                            <div class="chart-container">
+                                <canvas id="systemHealthChart"></canvas>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Remaining CodeNest Views (Projects, New Project, Builder, Templates, Licenses, Analytics, API Keys, Settings, Login, Signup) -->
+                    <!-- [Content for CodeNest Views omitted for brevity] -->
+                </main>
+            </div>
+        </section>
+
+        <!-- Banimal Landing Page Section (Integrated) -->
+        <section id="banimal-landing-page" class="content-section hidden">
+            <canvas id="banimal-canvas"></canvas>
+            <div class="banimal-hero-content">
+                <h1 class="text-6xl font-extrabold text-gray-900">Banimal™: <br> <span class="text-blue-500 text-3xl font-bold">🐑Kind Creatures. Global Impact.</span></h1>
+                <p class="text-lg text-gray-700 mt-4 max-w-2xl mx-auto">
+                    Discover Banimal™'s world of thoughtful baby essentials & innovative lighting. For every purchase, we deliver the same item to a child in need, identified by the Baobab Security Network™'s data-driven insights.
+                </p>
+                <div class="button-container flex flex-wrap justify-center gap-4 mt-6">
+                    <a href="javascript:void(0)" class="inline-flex items-center gap-2 px-8 py-3 bg-purple-600 text-white font-bold rounded-full text-lg transition-all hover:bg-purple-700 hover:scale-105 shadow-lg">
+                        Explore Banimal™'s World <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="https://www.banimal.co.za/" target="_blank" class="inline-flex items-center gap-2 px-8 py-3 bg-green-500 text-white font-bold rounded-full text-lg transition-all hover:bg-green-600 hover:scale-105 shadow-lg">
+                        Shop Now <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- HotStack Landing Page Section -->
+        <section id="hotstack-landing-page" class="content-section hidden">
+            <canvas id="omnidropCanvas"></canvas>
+            <div class="content-container">
+                <header>
+                    <h1 class="main-logo">Fruitful | <span>HotStack™</span></h1>
+                    <h2 class="subtitle">Omnidrop Your Digital Presence. Live in Minutes. Branded Forever.</h2>
+                </header>
+
+                <p class="countdown" id="timer">03:00</p>
+
+                <div class="features">
+                    <h3>What Your Omnidrop Activates:</h3>
+                    <ul>
+                        <li>🚀 **Rapid Deployment:** Your Scroll goes Live in under 180 seconds via Omnidrop Signal.</li>
+                        <li>📦 **Integrated Ecosystem:** Auto DNS Hook + Curated Template Packs for seamless launch.</li>
+                        <li>🧠 **Intelligent Foundation:** Powered by ScrollStack™, VaultDNS™, and MeshNest™ protocols.</li>
+                        <li>💰 **Treaty-Linked Economy:** Includes a Royalty-Linked License from Fruitful Global's Treaty Grid.</li>
+                        <li>🔒 **ClaimRoot™ Verified:** Secure, traceable site ownership for every deployed scroll.</li>
+                    </ul>
+                </div>
+
+                <a id="claimButton" href="javascript:void(0)" onclick="showMainSection('codenest-dashboard-section', this); showDashboardSection('new-project-view');" class="cta-button">
+                    <i class="fas fa-arrow-right mr-2"></i> Enter Fruitful | CodeNest™
+                </a>
+
+                <div id="dropZone" class="drop-zone">
+                    <p><i class="fas fa-cloud-upload-alt mr-2"></i> Drag & Drop HTML/PDF here to Omnidrop into CodeNest™</p>
+                    <p class="text-sm mt-1 text-gray-500">(Adheres to the 3-minute rule for rapid ingestion)</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Brand Detail Modal and Custom Modal -->
+    <div id="brandDetailModal" class="custom-modal-overlay">
+        <!-- ... Brand Detail Modal Content ... -->
+    </div>
+    <div id="customModal" class="custom-modal-overlay">
+        <div class="custom-modal-content">
+            <h3 id="customModalTitle" class="text-2xl font-bold mb-4 text-purple-500"></h3>
+            <p id="customModalMessage" class="text-gray-400 mb-6"></p>
+            <button class="form-action-button" onclick="hideCustomModal()">OK</button>
+        </div>
+    </div>
+
+
+    <footer>
+        <div class="container mx-auto">
+            <p>&copy; 2025 Heyns Schoeman™ & Rossouw Schoeman™. All rights reserved.</p>
+            <p class="text-gray-500 text-sm mt-1">FAA™ Treaty System™. All sub-brand systems are protected under the FAA™ Omni Enforcement Charter™. Unauthorized use incurs penalties of up to $50,000 USD/month.</p>
+            <div class="flex justify-center space-x-4 mt-2 text-sm">
+                <a href="legal_terms.html" class="text-blue-400 hover:text-blue-500">Terms & Conditions (Legal)</a>
+                <a href="legal_popi.html" class="text-blue-400 hover:text-blue-500">POPI Act Manual</a>
+                <a href="legal_paia.html" class="text-blue-400 hover:text-blue-500">PAIA Manual</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- GLOBAL API KEYS AND CREDENTIALS ---
+        window.API_KEYS = {
+            GEMINI_API_KEY: "AIzaSyBGSDZATtITv5iIoB3rgKHBpWx9MrufxXE",
+            // ... other keys
+        };
+
+        // --- GLOBAL CONFIGURATION FOR ALL SECTORS ---
+        window.allSectorConfigs = {
+            "fruitful-global": { name: "Fruitful™ Global", shortName: "Fruitful™", /* ... */ },
+            "banimal-sector": { name: "Banimal™ Sector", shortName: "Banimal™", /* ... */ },
+            "ai-logic-grid": { name: "AI™, Logic & Grid Systems", shortName: "AI™, Logic", /* ... */ },
+            "vault-prayer-sector": { name: "VaultPrayer - Spiritual Impact Platform", shortName: "🙏 VaultPrayer™", /* theme details can be added here if needed */ },
+            "default": { name: "Fruitful™ Global", shortName: "Fruitful™", /* ... */ },
+            codeNest: {
+                user: { displayName: "ScrollUser001", email: "user@scrollmail.com", defaultRegion: "global", autoClaim: "yes" },
+                dashboard: { totalProjects: 7038, liveScrolls: 5820, monthlyRoyalties: 12500.75, systemHealth: { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], datasets: [{ label: 'Deployment Success Rate (%)', data: [95, 96, 97, 98, 97, 99, 98, 99, 99, 100, 99, 99.5], borderColor: 'var(--secondary-color)', backgroundColor: 'rgba(48, 209, 88, 0.1)', fill: true, tension: 0.4 }, { label: 'Vault Sync Latency (ms)', data: [80, 75, 70, 65, 72, 68, 62, 58, 55, 50, 48, 45], borderColor: 'var(--primary-color)', backgroundColor: 'rgba(0, 113, 227, 0.1)', fill: true, tension: 0.4 }] } },
+                projects: [], projectLoadIndex: 0, projectsPerLoad: 12, licenses: [/* ... */], templates: [/* ... */], royaltyAgreements: [/* ... */], analytics: {/* ... */}
+            }
+        };
+
+        // --- GLOBAL STATE ---
+        let currentSectorId = "vault-prayer-sector"; // Set default to VaultPrayer on load
+        let currentSectorConfig = {};
+        let coreBrandAnimationFrameId;
+        let hotstackAnimationFrameId;
+        let hotstackCountdownTime = 180;
+        let hotstackTimerInterval;
+        let currentActiveSection = 'vault-prayer-landing-page';
+        let vp_metricsInterval; // VaultPrayer Metric Interval
+        let vp_isUpdatingMetrics = false; // VaultPrayer Metric State
+        let currentUser = null; // For prayer platform user status
+
+        // --- GLOBAL UTILITY FUNCTIONS (For HTML onclick access) ---
+
+        function showCustomModal(title, message, autoDismiss = true) {
+            const modal = document.getElementById('customModal');
+            const modalMessage = document.getElementById('customModalMessage');
+            if (modal && modalMessage) {
+                modalMessage.innerHTML = `<strong>${title}</strong><br>${message}`;
+                modal.classList.add('show');
+                if (autoDismiss) { setTimeout(() => { hideCustomModal(); }, 3000); }
+            }
+        }
+
+        function hideCustomModal() {
+            document.getElementById('customModal')?.classList.remove('show');
+        }
+
+        // --- VAULTPRAYER SPECIFIC FUNCTIONS (GLOBAL SCOPE) ---
+
+        async function apiCall(endpoint, options = {}) {
+            await new Promise(resolve => setTimeout(resolve, 500));
+            if (endpoint === '/metrics') {
+                return {
+                    treesPlanted: 15200000 + Math.floor(Math.random() * 500),
+                    communityMembers: 247000 + Math.floor(Math.random() * 500),
+                    prayersSubmitted: 4321 + Math.floor(Math.random() * 10),
+                    dailyPrayers: 14 + Math.floor(Math.random() * 5),
+                    activeUsers: 23 + Math.floor(Math.random() * 10)
+                };
+            } else if (endpoint.startsWith('/prayers')) {
+                if (options.method === 'POST') {
+                    return { impact: { message: "Your intention has been verified and synced to the VaultCore. A measurable ecological impact score of +0.07 is recorded." } };
+                } else {
+                    const mockPrayers = [
+                        { id: 1, title: "Alignment Protocol 4", content: "May the builders maintain their focus and the algorithms remain ethical.", category: "global", author: "Heyns S", status: "FILED", entryNumber: 4324, likes: 25, createdAt: new Date(Date.now() - 3600000).toISOString() },
+                        { id: 2, title: "Financial Harvest Scroll", content: "That all projects yield profitable, sustainable fruits.", category: "personal", author: "Anon-123", status: "ACKNOWLEDGED", entryNumber: 4323, likes: 12, createdAt: new Date(Date.now() - 7200000).toISOString() },
+                        { id: 3, title: "Community Shield", content: "For safety of the tribe and protection from digital threats.", category: "community", author: "Rossouw S", status: "FILED", entryNumber: 4322, likes: 45, createdAt: new Date(Date.now() - 10800000).toISOString() },
+                        { id: 4, title: "Healing Pulse", content: "May the pulse bring healing to the nodes struggling with latency.", category: "healing", author: null, status: "IN_QUEUE", entryNumber: 4321, likes: 8, createdAt: new Date(Date.now() - 14400000).toISOString() }
+                    ]; return mockPrayers;
+                }
+            } return {};
+        }
+
+        function formatNumber(num) {
+            if (num >= 1000000) { return (num / 1000000).toFixed(1) + 'M'; }
+            if (num >= 1000) { return (num / 1000).toFixed(0) + 'k'; }
+            return num.toLocaleString();
+        }
+
+        async function updateMetrics() {
+            if (vp_isUpdatingMetrics) return; vp_isUpdatingMetrics = true;
+            try {
+                const metrics = await apiCall('/metrics');
+                updateCounter('trees-counter', metrics.treesPlanted);
+                updateCounter('members-counter', metrics.communityMembers);
+                updateCounter('prayers-counter', metrics.prayersSubmitted);
+                document.getElementById('trees-growth').textContent = `+${metrics.dailyPrayers * 3} today`;
+                document.getElementById('members-growth').textContent = `+${metrics.activeUsers} active`;
+                document.getElementById('prayers-growth').textContent = `+${metrics.dailyPrayers} today`;
+            } catch (error) { console.error('Failed to update metrics:', error); } finally { vp_isUpdatingMetrics = false; }
+        }
+
+        function updateCounter(elementId, targetValue) {
+            const element = document.getElementById(elementId); if (!element) return;
+            const currentText = element.textContent;
+            const currentValue = parseFloat(currentText.replace(/[^\d.]/g, '')) * (currentText.includes('M') ? 1000000 : currentText.includes('k') ? 1000 : 1);
+            if (Math.abs(targetValue - currentValue) < 1) return;
+            const increment = (targetValue - currentValue) / 20;
+            let current = currentValue;
+            const animation = setInterval(() => {
+                current += increment; element.textContent = formatNumber(Math.round(current));
+                if (Math.abs(current - targetValue) < Math.abs(increment)) { element.textContent = formatNumber(targetValue); clearInterval(animation); }
+            }, 50);
+        }
+        
+        async function submitPrayer(prayerData) {
+            try {
+                const result = await apiCall('/prayers', { method: 'POST', body: JSON.stringify(prayerData) });
+                showNotification(`Prayer submitted successfully! ${result.impact.message}`, 'success');
+                setTimeout(updateMetrics, 1000);
+                return result;
+            } catch (error) { showNotification('Failed to submit prayer. Please try again.', 'error'); throw error; }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg text-white transition-all duration-300 transform translate-x-full ${type === 'success' ? 'bg-green-500' : type === 'error' ? 'bg-red-500' : 'bg-blue-500'}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => { notification.classList.remove('translate-x-full'); }, 100);
+            setTimeout(() => { notification.classList.add('translate-x-full'); setTimeout(() => { document.body.removeChild(notification); }, 300); }, 5000);
+        }
+
+        async function loadPrayers() {
+            try {
+                const loadingEl = document.getElementById('loading-prayers');
+                const container = document.getElementById('prayers-container');
+                if (!loadingEl || !container) return;
+
+                loadingEl.style.display = 'block';
+                
+                const prayers = await apiCall('/prayers?limit=10');
+                loadingEl.style.display = 'none';
+                
+                if (prayers.length === 0) {
+                    container.innerHTML = `<div class="text-center py-16"><div class="prayer-card-base rounded-2xl p-12"><h3 class="text-xl font-semibold text-white mb-2">No prayers yet</h3><p class="text-gray-300 mb-6">Be the first to submit a prayer to the vault.</p><button onclick="openPrayerModal()" class="bg-gradient-to-r from-purple-500 to-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-purple-600 hover:to-blue-700 transition-all duration-200">Submit First Prayer</button></div></div>`;
+                    return;
+                }
+                
+                container.innerHTML = prayers.map(prayer => `
+                    <div class="prayer-card-base rounded-2xl p-6 hover:bg-white/15 transition-all duration-300">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <span class="px-3 py-1 rounded-full text-xs font-medium border ${getCategoryStyle(prayer.category)}">${prayer.category}</span>
+                                <span class="text-sm text-gray-400">Entry #${prayer.entryNumber}</span>
+                            </div>
+                            <div class="text-sm text-gray-400">${formatDate(prayer.createdAt)}</div>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white mb-3">${prayer.title}</h3>
+                        <p class="text-gray-300 leading-relaxed mb-4">${prayer.content}</p>
+                        <div class="flex items-center justify-between pt-4 border-t border-white/10">
+                            <div class="text-sm text-gray-400">${prayer.author ? `by ${prayer.author}` : 'Anonymous'}</div>
+                            <div class="flex items-center space-x-4">
+                                <button onclick="likePrayer('${prayer.id}')" class="flex items-center space-x-1 text-sm text-gray-400 hover:text-red-400 transition-colors"><span>❤️</span><span>${prayer.likes || 0}</span></button>
+                                <span class="text-xs px-2 py-1 rounded-md bg-green-500/20 text-green-300">${prayer.status}</span>
+                            </div>
+                        </div>
+                    </div>`).join('');
+                
+            } catch (error) {
+                document.getElementById('prayers-container').innerHTML = `<div class="text-center py-8"><p class="text-red-400">Failed to load prayers</p><button onclick="loadPrayers()" class="mt-4 text-purple-400 hover:text-purple-300">Try Again</button></div>`;
+            }
+        }
+
+        function openPrayerModal() {
+            document.getElementById('prayer-modal').classList.remove('hidden');
+            document.getElementById('prayer-modal').classList.add('flex');
+        }
+
+        function closePrayerModal() {
+            document.getElementById('prayer-modal').classList.add('hidden');
+            document.getElementById('prayer-modal').classList.remove('flex');
+            document.getElementById('prayer-form')?.reset();
+        }
+
+        function getCategoryStyle(category) {
+            const styles = { personal: 'bg-blue-500/20 text-blue-300 border-blue-500/30', global: 'bg-green-500/20 text-green-300 border-green-500/30', community: 'bg-purple-500/20 text-purple-300 border-purple-500/30', healing: 'bg-red-500/20 text-red-300 border-red-500/30', gratitude: 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30' };
+            return styles[category] || styles.personal;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        }
+
+        async function likePrayer(prayerId) {
+            try {
+                const userId = currentUser?.id || Math.floor(Math.random() * 1000);
+                await apiCall(`/prayers/${prayerId}/like`, { method: 'POST', body: JSON.stringify({ userId }) });
+                loadPrayers();
+            } catch (error) { showNotification('Unable to like prayer right now', 'error'); }
+        }
+
+        // --- MAIN APP FLOW FUNCTIONS ---
+
+        function updateCssVariables(colors) {
+            // ... (Your existing updateCssVariables function logic)
+        }
+
+        function renderCurrentSectorContent() {
+            // ... (Your existing renderCurrentSectorContent logic)
+        }
+
+        function updateThemeToggleIcon() {
+            // ... (Your existing updateThemeToggleIcon logic)
+        }
+
+        function applyTheme(theme) {
+            // ... (Your existing applyTheme logic)
+        }
+
+        function showMainSection(sectionId, clickedLink = null) {
+            // Stop HotStack timer and Omnidrop animation
+            if (hotstackTimerInterval) { clearInterval(hotstackTimerInterval); hotstackTimerInterval = null; }
+            if (window.omnidropAnimationFrameId) { cancelAnimationFrame(window.omnidropAnimationFrameId); window.omnidropAnimationFrameId = null; }
+
+            // Stop Banimal canvas animation
+            if (coreBrandAnimationFrameId) { cancelAnimationFrame(coreBrandAnimationFrameId); coreBrandAnimationFrameId = null; }
+            
+            // Stop VaultPrayer metrics update
+            if (vp_metricsInterval) { clearInterval(vp_metricsInterval); vp_metricsInterval = null; }
+
+            // Hide all sections
+            document.querySelectorAll('main section').forEach(section => { section.classList.add('hidden'); });
+            
+            // Show the requested section
+            const sectionToShow = document.getElementById(sectionId);
+            if (sectionToShow) { sectionToShow.classList.remove('hidden'); currentActiveSection = sectionId; }
+            
+            // Update active state in header navigation
+            document.querySelectorAll('header nav a').forEach(link => { link.classList.remove('active'); });
+            if (clickedLink) { clickedLink.classList.add('active'); } else { const targetLink = document.querySelector(`header nav a[onclick*="'${sectionId}'"]`); if (targetLink) targetLink.classList.add('active'); }
+
+            // Update header sector name
+            const sectorNameElement = document.getElementById('header-sector-name');
+            if (sectorNameElement) {
+                let sectorDisplayName = window.allSectorConfigs[currentSectorId]?.shortName || "Live Demo Dashboard";
+                sectorNameElement.textContent = sectorDisplayName;
+            }
+
+            // Start section-specific logic
+            if (sectionId === 'hotstack-landing-page') { 
+                // HotStack initialization logic needs to be run here
+            } else if (sectionId === 'banimal-landing-page') {
+                // Banimal initialization logic here
+            } else if (sectionId === 'vault-prayer-landing-page') {
+                // VAULTPRAYER INITIALIZATION
+                updateMetrics();
+                vp_metricsInterval = setInterval(updateMetrics, 30000);
+                loadPrayers();
+                showNotification('Welcome to VaultPrayer! Your prayers make a real impact. 🌱', 'success');
+            }
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+
+        // --- EVENT LISTENERS AND INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load theme and other app data
+            const savedTheme = localStorage.getItem('themeMode') || 'dark';
+            applyTheme(savedTheme);
+
+            // Set up form submission handlers for VaultPrayer modal
+            document.getElementById('prayer-form')?.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const formData = {
+                    title: document.getElementById('prayer-title').value,
+                    content: document.getElementById('prayer-content').value,
+                    category: document.getElementById('prayer-category').value,
+                    author: document.getElementById('prayer-author').value || undefined,
+                    isPublic: document.getElementById('prayer-public').checked,
+                    userId: currentUser?.id
+                };
+                try {
+                    await submitPrayer(formData);
+                    closePrayerModal();
+                    loadPrayers();
+                } catch (error) { console.error('Prayer submission failed:', error); }
+            });
+            document.getElementById('close-modal')?.addEventListener('click', closePrayerModal);
+            document.getElementById('prayer-modal')?.addEventListener('click', function(e) {
+                if (e.target === this) closePrayerModal();
+            });
+            document.querySelector('[onclick="openPrayerModal()"]')?.addEventListener('click', openPrayerModal);
+
+            // Set initial active section (VaultPrayer is now the new default entry point)
+            const initialSectionFromHash = window.location.hash.substring(1).split('#')[0];
+            showMainSection(initialSectionFromHash || 'vault-prayer-landing-page');
+        });
+
+    </script>
+</body>
+</html>
