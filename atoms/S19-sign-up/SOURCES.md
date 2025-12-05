@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-06-10 | seedwave | history | `public/signup.html` | `d22c4183` | Sign Up - 🦁 Seedwave™ Admin Portal | 4904 | 7 | 0 | 33.5 |
+| 2 | 2025-12-05 | codenest | resolve-conflicts-manually | `packages/faa-zone/public/admin/create_account.html` | `63aa4374` | Sign Up - FAA.ZONE | 10476 | 11 | 0 | 38.0 |
