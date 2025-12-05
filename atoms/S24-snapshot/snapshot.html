@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAA Snapshot — Locked Styling</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+  <div class="w-full px-6 py-12">
+    <header class="text-center mb-10">
+      <h1 class="text-5xl font-bold text-pink-600">🧠 FAA Brand Snapshot Viewer</h1>
+      <div id="media-grid" class="mt-6 flex flex-wrap gap-4 justify-center"></div>
+    </header>
+
+    <div id="media-snapshots" class="w-full"></div>
+  </div>
+
+  <script>
+    const mediaBrands = ["SonicGrid", "MediaMesh"];
+    const mediaSubNodes = [
+      ["SignalSync", "AudioNode", "VaultTrace", "QRMix"],
+      ["StreamMux", "NotionSync", "VaultPing", "FallbackNet"]
+    ];
+
+    const scrollProfiles = {
+      "SonicGrid": {
+        title: "SonicGrid™ Audio Control Layer",
+        intro: "SonicGrid™ is a dynamic, FAA-certified mesh engine for audio routing, studio-grade sync, and real-time media signal orchestration. Built for immersive sound pipelines, production hubs, and virtual soundstage engineering.",
+        features: [
+          "🎚️ Modular signal lanes with node-level control and latency-free chaining",
+          "🎙 FAA-integrated AudioNode™, VaultTrace™, and QRMix™ pathways",
+          "🌐 WebAudio and DAW-native compatibility — deployable in any browser",
+          "🛡️ Continuous compliance tracing with FAA media verification",
+          "🔁 Batch waveform export, waveform memory caching, loopback diagnostics",
+          "🔊 Pre-configured for podcast grids, broadcast routing & livestream splits"
+        ],
+        pricing: [
+          "🎧 Starter Node — R99/mo (Includes 3 routing lanes, 1 vault sync)",
+          "🔊 Studio Sync — R299/mo (Unlimited routing lanes + waveform export)",
+          "🏢 Enterprise SLA — Custom (Audit-ready + FAA orchestration sync)"
+        ],
+        metadata: {
+          id: "SGRID-FAAZ-8492",
+          vault: "HM-0425",
+          layer: "ScrollMesh v2.4",
+          height: "700px",
+          width: "2770px"
+        }
+      },
+      "MediaMesh": {
+        title: "MediaMesh™ FAA Stream Router",
+        intro: "MediaMesh™ connects static and live streams into one secure FAA-monitored infrastructure layer...",
+        features: [
+          "🖥 WebRTC, RTMP, and static media endpoint mesh mapping",
+          "📊 VaultPing™ audit trails for every stream state, live or archived",
+          "🔌 LMS & Notion-ready embed protocols, no-code deployment options",
+          "🧠 Adaptive stream fallback, lossless handover, and mute tunnel shielding",
+          "📂 Metadata-persistent vaults with FAA-anchored sync logs",
+          "📡 Use for remote learning, hybrid streaming, and proof-of-sync NFT drops"
+        ],
+        pricing: [
+          "🌱 Lite — Free forever (Includes up to 2 concurrent routes)",
+          "📽 Studio Sync — R249/mo (Multinode mesh, auto-recovery)",
+          "🏛 API Mesh Mode — R499+/mo (Advanced vault sync and webhook control)"
+        ],
+        metadata: {
+          id: "MMESH-FAAC-1092",
+          vault: "HM-0425",
+          layer: "ScrollMesh v3.0",
+          height: "700px",
+          width: "2770px"
+        }
+      }
+    };
+
+    function renderMediaSection() {
+      const grid = document.getElementById('media-grid');
+      const snapContainer = document.getElementById('media-snapshots');
+
+      mediaBrands.forEach((brand, i) => {
+        const btn = document.createElement('button');
+        btn.textContent = `${brand}™`;
+        btn.className = "bg-blue-600 hover:bg-blue-800 text-white text-lg px-6 py-2 rounded shadow";
+        btn.onclick = () => {
+          document.querySelectorAll('.brand-snapshot').forEach(el => el.classList.add('hidden'));
+          document.getElementById(`media-snap-${i}`).classList.remove('hidden');
+        };
+        grid.appendChild(btn);
+
+        const p = scrollProfiles[brand];
+        if (!p || !p.metadata) return;
+
+        const subList = mediaSubNodes[i].map(n => `<li class='text-sm text-gray-700'>🔹 ${n}</li>`).join('');
+
+        const snap = document.createElement('div');
+        snap.id = `media-snap-${i}`;
+        snap.className = 'brand-snapshot hidden';
+
+        snap.innerHTML = `
+          <div class="overflow-x-auto">
+            <section class="bg-white p-10 rounded-xl shadow-lg border border-gray-200" style="width: ${p.metadata.width}; height: ${p.metadata.height};">
+              <h2 class="text-3xl font-bold text-indigo-700 mb-4">${brand}™ Snapshot</h2>
+              <ul class="list-disc list-inside mb-6 space-y-1 ml-4">${subList}</ul>
+
+              <div class="flex flex-wrap justify-between gap-10">
+                <div class="flex-1 space-y-6 min-w-[320px]">
+                  <h3 class="text-xl font-semibold text-indigo-800">${p.title}</h3>
+                  <p class="text-sm text-gray-600 leading-relaxed">${p.intro}</p>
+
+                  <div>
+                    <h4 class="text-md font-bold text-gray-700 mb-2">🎛️ Features</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 space-y-1 ml-4">
+                      ${p.features.map(f => `<li>${f}</li>`).join('')}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 class="text-md font-bold text-gray-700 mb-2">💳 Pricing</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 space-y-1 ml-4">
+                      ${p.pricing.map(f => `<li>${f}</li>`).join('')}
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="w-[300px] space-y-2">
+                  <h4 class="text-md font-bold text-gray-700 mb-2">🔗 FAA Metadata</h4>
+                  <ul class="list-disc list-inside text-sm text-gray-600 ml-4">
+                    <li><code>Product ID:</code> ${p.metadata.id}</li>
+                    <li><code>Vault:</code> ${p.metadata.vault}</li>
+                    <li><code>Layer:</code> ${p.metadata.layer}</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </div>
+        `;
+
+        snapContainer.appendChild(snap);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', renderMediaSection);
+  </script>
+</body>
+</html>
+
