@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-09-06 | ThesisGallery | main | `attached_assets/faa-clausevault_1757168270332.html` | `24d42e6d` | 🧬 FAA ClauseVault™ | 3832 | 7 | 0 | 34.4 |
+| 2 | 2025-12-05 | codenest | resolve-conflicts-manually | `packages/faa-zone/public/clause-vault.html` | `0f205538` | 📜 FAA ClauseVault™ — Global Regulatory Index | 7873 | 16 | 0 | 41.8 |
