@@ -175,48 +175,53 @@
             display: flex;
             align-items: center;
             height: 2px; /* Height of the line */
-            width: 40px; /* Length of the line */
+            width: 250px; /* Increased length for "sambok whip" effect */
             background-color: var(--muted-text-light); /* Base color of the line */
             border-radius: 1px;
             position: relative;
-            margin: 0 15px; /* Space around the noodle rope */
+            margin: 0 40px; /* Increased space around the noodle rope */
             opacity: 0.7;
         }
         .dark-mode .pulse-grid-noodle-rope {
             background-color: var(--muted-text-dark);
         }
 
-        .pulse-grid-noodle-rope::before,
-        .pulse-grid-noodle-rope::after {
-            content: '';
+        .noodle-dot {
             position: absolute;
-            width: 6px;
-            height: 6px;
+            width: 8px;
+            height: 8px;
             background-color: var(--primary-color);
             border-radius: 50%;
-            animation: pulse 1.5s infinite ease-in-out;
+            transform: translate(-50%, -50%); /* Center dot on the line */
+            top: 50%;
+            animation: pulse 3s infinite ease-in-out; /* Pulse every 3 seconds */
+        }
+        .noodle-dot.dot-stepdad {
+            width: 10px; /* Larger */
+            height: 10px; /* Larger */
+            background-color: var(--secondary-color); /* Different color for stepdad */
         }
 
-        .pulse-grid-noodle-rope::before {
-            left: -3px;
-        }
+        /* Staggered animation delays */
+        .noodle-dot.dot-1 { left: 0%; animation-delay: 0s; }
+        .noodle-dot.dot-2 { left: 20%; animation-delay: 0.5s; }
+        .noodle-dot.dot-3 { left: 40%; animation-delay: 1s; }
+        .noodle-dot.dot-stepdad { left: 60%; animation-delay: 1.5s; } /* Stepdad placed before brothers */
+        .noodle-dot.dot-4 { left: 80%; animation-delay: 2s; }
+        .noodle-dot.dot-5 { left: 100%; animation-delay: 2.5s; }
 
-        .pulse-grid-noodle-rope::after {
-            right: -3px;
-            animation-delay: 0.75s; /* Stagger the pulse effect */
-        }
 
         @keyframes pulse {
             0% {
-                transform: scale(1);
+                transform: translate(-50%, -50%) scale(1);
                 opacity: 0.7;
             }
             50% {
-                transform: scale(1.5);
+                transform: translate(-50%, -50%) scale(1.5);
                 opacity: 1;
             }
             100% {
-                transform: scale(1);
+                transform: translate(-50%, -50%) scale(1);
                 opacity: 0.7;
             }
         }
@@ -584,7 +589,7 @@
     <header class="main-header">
         <div class="container header-content">
             <div class="logo-group">
-                <a href="index.html" class="logo-link"> <!-- Use a new class for styling the logo group link -->
+                <a href="index.html" class="logo-link">
                     <span class="logo-fruitful">Fruitful™</span>
                 </a>
                 <button class="hamburger-menu" aria-label="Toggle navigation">
@@ -592,7 +597,14 @@
                 </button>
             </div>
             <!-- Pulse Grid Noodle Rope -->
-            <div class="pulse-grid-noodle-rope"></div>
+            <div class="pulse-grid-noodle-rope">
+                <span class="noodle-dot dot-1"></span>
+                <span class="noodle-dot dot-2"></span>
+                <span class="noodle-dot dot-3"></span>
+                <span class="noodle-dot dot-stepdad"></span>
+                <span class="noodle-dot dot-4"></span>
+                <span class="noodle-dot dot-5"></span>
+            </div>
             <nav class="main-nav">
                 <ul class="nav-list">
                     <li><a href="#overview">Overview</a></li>
@@ -812,4 +824,3 @@
     </script>
 </body>
 </html>
-
