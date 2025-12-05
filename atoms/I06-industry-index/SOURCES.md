@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-07-08 | faa.zone | history | `public/global_scale.html` | `e909626c` | FAA™ Global Industry Index | 71216 | 12 | 3 | 52.1 |
+| 2 | 2025-12-05 | codenest | resolve-conflicts-manually | `packages/faa-zone/public/global_scale.html` | `9858a53e` | FAA™ Global Industry Index | 79201 | 13 | 4 | 55.9 |

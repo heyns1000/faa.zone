@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* Custom styles for the Inter font and overall body */
         body {
             font-family: 'Inter', sans-serif;
             background-color: #e2e8f0; /* Light blue-gray background */
@@ -198,6 +199,44 @@
             background-color: #f6e05e; /* Brighter yellow for dark mode */
             color: #1a202c;
         }
+        /* Styles for the new repository URL section */
+        .repo-url-list {
+            list-style: none;
+            padding: 0;
+        }
+        .repo-url-list li {
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            word-break: break-all; /* Ensures long URLs wrap */
+        }
+        .repo-url-list li a {
+            color: #3182ce;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .repo-url-list li a:hover {
+            color: #2b6cb0;
+            text-decoration: underline;
+        }
+        .repo-url-group {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #edf2f7;
+            border-radius: 0.75rem;
+            border: 1px solid #cbd5e0;
+        }
+        body.dark-mode .repo-url-group {
+            background-color: #4a5568;
+            border-color: #63b3ed;
+        }
+        .repo-url-group h4 {
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 0.75rem;
+        }
+        body.dark-mode .repo-url-group h4 {
+            color: #e2e8f0;
+        }
     </style>
 </head>
 <body class="p-4 sm:p-6 md:p-8">
@@ -220,6 +259,21 @@
             <!-- Content will be dynamically generated here by JavaScript -->
         </div>
 
+        <!-- Repository URL Examples Section -->
+        <div class="main-card mt-12">
+            <h2 class="text-3xl font-bold section-title cursor-pointer flex justify-between items-center" id="repo-urls-toggle">
+                Repository URL Examples <span id="toggle-icon">▼</span>
+            </h2>
+            <div id="repo-urls-content" class="hidden">
+                <p class="text-gray-700 dark:text-gray-300 mb-4">
+                    Below are examples of the repository URL structures for different sectors and brands, demonstrating the hierarchical organization within the FAA.Zone™.
+                </p>
+                <div id="generated-repo-urls">
+                    <!-- Repository URLs will be generated here by JavaScript -->
+                </div>
+            </div>
+        </div>
+
         <!-- Google Maps Section -->
         <div class="main-card mt-12">
             <h2 class="text-3xl font-bold section-title">FAA™ Global Presence Map 🗺️</h2>
@@ -228,6 +282,7 @@
     </div>
 
     <script>
+        // Data for FAA Brands
         const faaBrandData = {
             "Australia": {
                 "Smart Home & AI Tech": [
@@ -761,7 +816,7 @@
                     "FAA™ AI Commerce Suite™", "FAA™ Digital Micro-Banking™", "FAA™ Atom-Level Compliance™"
                 ]
             },
-            "South America (General)": {
+            "South America (General)": { // Renamed to avoid key conflict with specific Brazil entry
                 "Eco & Renewable Energy": [
                     "FAA™ EcoPower", "FAA™ Sustainable Home"
                 ],
@@ -862,6 +917,63 @@
             }
         };
 
+        // Mapping for country keys to continent.country URL parts
+        const countryToUrlMap = {
+            "Australia": { continent: "oceania", country: "australia" },
+            "Japan": { continent: "asia", country: "japan" },
+            "South Africa": { continent: "africa", country: "south-africa" },
+            "Africa (Pan-African Expansion)": { continent: "africa", country: "general" },
+            "Dubai (UAE)": { continent: "middle-east", country: "uae" },
+            "Global (General Application / Multiple Regions)": { continent: "global", country: "general" },
+            "China": { continent: "asia", country: "china" },
+            "India": { continent: "asia", country: "india" },
+            "United Kingdom": { continent: "europe", country: "uk" },
+            "United States": { continent: "north-america", country: "usa" },
+            "Germany": { continent: "europe", country: "germany" },
+            "Canada": { continent: "north-america", country: "canada" },
+            "Brazil": { continent: "south-america", country: "brazil" },
+            "Singapore": { continent: "asia", country: "singapore" },
+            "Hong Kong": { continent: "asia", country: "hong-kong" },
+            "Switzerland": { continent: "europe", country: "switzerland" },
+            "Sweden": { continent: "europe", country: "sweden" },
+            "France": { continent: "europe", country: "france" },
+            "Saudi Arabia": { continent: "middle-east", country: "saudi-arabia" },
+            "New Zealand": { continent: "oceania", country: "new-zealand" },
+            "Middle East (General)": { continent: "middle-east", country: "general" },
+            "Latin America (General)": { continent: "south-america", country: "general" },
+            "Mahalapye (Botswana)": { continent: "africa", country: "botswana" },
+            "South America (General)": { continent: "south-america", country: "general" },
+            "Asia-Pacific (General)": { continent: "asia", country: "general" },
+            "Russia": { continent: "europe", country: "russia" },
+            "Brazil (General)": { continent: "south-america", country: "brazil-general" },
+            "Berlin (Germany)": { continent: "europe", country: "germany" },
+            "Mumbai (India)": { continent: "asia", country: "india" },
+            "Paris (France)": { continent: "europe", country: "france" },
+            "Lagos (Nigeria)": { continent: "africa", country: "nigeria" },
+            "Nairobi (Kenya)": { continent: "africa", country: "kenya" },
+            "Beijing (China)": { continent: "asia", country: "china" },
+            "Moscow (Russia)": { continent: "europe", country: "russia" },
+            "Buenos Aires (Argentina)": { continent: "south-america", country: "argentina" },
+            "São Paulo (Brazil)": { continent: "south-america", country: "brazil" },
+            "New York (USA)": { continent: "north-america", country: "usa" },
+            "Oceania (General)": { continent: "oceania", country: "general" }
+        };
+
+        /**
+         * Converts a string to a URL-friendly slug.
+         * @param {string} text The input string.
+         * @returns {string} The URL-friendly slug.
+         */
+        function slugify(text) {
+            return text.toString().toLowerCase()
+                .replace(/\s+/g, '-')           // Replace spaces with -
+                .replace(/[^\w-]+/g, '')       // Remove all non-word chars
+                .replace(/--+/g, '-')         // Replace multiple - with single -
+                .replace(/^-+/, '')             // Trim - from start of text
+                .replace(/-+$/, '')             // Trim - from end of text
+                .replace(/™/g, '');             // Remove trademark symbol
+        }
+
         // Function to render brands
         function renderFaaBrands(searchTerm = '') {
             const container = document.getElementById('brands-container');
@@ -896,58 +1008,96 @@
                                 </ul>
                             </div>
                         `;
+                        countryHtml += sectorHtml; // Append sector HTML to countryHtml
                         countryHasVisibleContent = true;
                     }
                 }
 
                 if (countryHasVisibleContent) {
-                    countryHtml += `
+                    htmlContent += `
                         <div class="country-section">
                             <h2 class="country-title">${country}</h2>
                             ${countryHtml}
                         </div>
                     `;
-                    // Append sector HTML to countryHtml after country title
-                    for (const sector in faaBrandData[country]) {
-                        let sectorHtmlInner = '';
-                        let sectorHasVisibleBrandsInner = false;
-                        const brandsInSectorInner = [];
-
-                        faaBrandData[country][sector].forEach(brand => {
-                            const lowerCaseBrand = brand.toLowerCase();
-                            if (lowerCaseSearchTerm === '' || lowerCaseBrand.includes(lowerCaseSearchTerm)) {
-                                const highlightedBrand = searchTerm === '' ? brand : brand.replace(new RegExp(searchTerm, 'gi'), match => `<span class="highlight">${match}</span>`);
-                                brandsInSectorInner.push(`<li>${highlightedBrand}</li>`);
-                                sectorHasVisibleBrandsInner = true;
-                            }
-                        });
-
-                        if (sectorHasVisibleBrandsInner) {
-                            sectorHtmlInner += `
-                                <div class="sector-group">
-                                    <h3 class="sector-title">${sector}</h3>
-                                    <ul class="brand-list">
-                                        ${brandsInSectorInner.join('')}
-                                    </ul>
-                                </div>
-                            `;
-                            countryHtml += sectorHtmlInner; // Append to countryHtml
-                        }
-                    }
-                    htmlContent += countryHtml;
                 }
             }
             container.innerHTML = htmlContent;
         }
 
-        // Call the render function when the DOM is loaded
+        /**
+         * Generates and displays example repository URLs based on the faaBrandData.
+         */
+        function generateRepositoryUrls() {
+            const repoUrlsContainer = document.getElementById('generated-repo-urls');
+            let urlsHtml = '';
+
+            for (const countryKey in faaBrandData) {
+                const urlParts = countryToUrlMap[countryKey];
+                if (!urlParts) {
+                    console.warn(`No URL mapping found for country key: ${countryKey}`);
+                    continue;
+                }
+
+                const baseUrl = `${urlParts.continent}.${urlParts.country}.Faa.zone`;
+
+                let countryUrlsHtml = '';
+                let hasUrlsForCountry = false;
+
+                for (const sector in faaBrandData[countryKey]) {
+                    const sectorSlug = slugify(sector);
+                    const brandsInSector = faaBrandData[countryKey][sector];
+
+                    // Pattern 1 & 3: {continent}.{country}.Faa.zone/sectors/{sectorname}core brans}/index.html
+                    // Interpreting {name} as sectorname for pattern 3, and combining with "core brands" for pattern 1
+                    const sectorCoreBrandsUrl = `${baseUrl}/sectors/${sectorSlug}core-brands}/index.html`;
+                    countryUrlsHtml += `
+                        <li>
+                            <strong>Sector Page (Core Brands):</strong> <a href="${sectorCoreBrandsUrl}" target="_blank">${sectorCoreBrandsUrl}</a>
+                        </li>
+                    `;
+                    hasUrlsForCountry = true;
+
+                    // Pattern 2: {continent}.{country}.Faa.zone/sectors/{sectorname}core brans}/i{subonde}/index.html
+                    brandsInSector.forEach(brand => {
+                        const brandSlug = slugify(brand);
+                        const brandSubnodeUrl = `${baseUrl}/sectors/${sectorSlug}core-brands}/i${brandSlug}/index.html`;
+                        countryUrlsHtml += `
+                            <li>
+                                <strong>Brand Sub-node:</strong> <a href="${brandSubnodeUrl}" target="_blank">${brandSubnodeUrl}</a>
+                            </li>
+                        `;
+                        hasUrlsForCountry = true;
+                    });
+                }
+
+                if (hasUrlsForCountry) {
+                    urlsHtml += `
+                        <div class="repo-url-group mb-6">
+                            <h4 class="text-xl font-semibold mb-3">${countryKey} URLs:</h4>
+                            <ul class="repo-url-list">
+                                ${countryUrlsHtml}
+                            </ul>
+                        </div>
+                    `;
+                }
+            }
+            repoUrlsContainer.innerHTML = urlsHtml;
+        }
+
+
+        // Call the render functions when the DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
             renderFaaBrands(); // Initial render of all brands
+            generateRepositoryUrls(); // Generate and display repository URLs
 
             const searchInput = document.getElementById('brandSearchInput');
             const clearButton = document.getElementById('clearSearchButton');
             const themeToggle = document.getElementById('theme-toggle');
             const body = document.body;
+            const repoUrlsToggle = document.getElementById('repo-urls-toggle');
+            const repoUrlsContent = document.getElementById('repo-urls-content');
+            const toggleIcon = document.getElementById('toggle-icon');
 
             // Search functionality
             searchInput.addEventListener('input', (event) => {
@@ -978,6 +1128,18 @@
                     body.classList.add('dark-mode');
                     localStorage.setItem('theme', 'dark');
                     themeToggle.innerText = '🌙';
+                }
+            });
+
+            // Repository URLs section toggle functionality
+            repoUrlsToggle.addEventListener('click', () => {
+                const isHidden = repoUrlsContent.classList.contains('hidden');
+                if (isHidden) {
+                    repoUrlsContent.classList.remove('hidden');
+                    toggleIcon.innerText = '▲'; // Up arrow
+                } else {
+                    repoUrlsContent.classList.add('hidden');
+                    toggleIcon.innerText = '▼'; // Down arrow
                 }
             });
         });
