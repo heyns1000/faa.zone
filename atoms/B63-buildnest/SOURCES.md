@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-07-03 | FGP--samfox | main | `public/Templates/sectors/housing/index.html` | `729fed75` | BuildNest™ - The Future of Housing & Infrastr | 134787 | 19 | 4 | 74.5 |
+| 2 | 2025-12-05 | codenest | resolve-conflicts-manually | `packages/faa-zone/public/sectors/housing/Buildnest/index.html` | `a510e160` | BuildNest™ – FAA.zone Housing Infrastructure  | 34185 | 37 | 0 | 54.5 |
