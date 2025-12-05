@@ -1,888 +1,395 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="min-h-screen bg-black text-white overflow-x-hidden">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="pageTitle">Contact Us | Fruitful Global™</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="UTF-8" />
+    <title>FAA.ZONE™ | Contact Careers</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        /* Base Styles - Consistent with Fruitful aesthetic */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f5f5f7; /* Very light gray, almost white */
-            color: #1d1d1f; /* Near black for primary text */
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between; /* Pushes footer to the bottom */
+            background-color: #0d1117; /* Main page dark background */
         }
-
-        /* Dark Mode Styles */
-        body.dark-mode {
-            background-color: #1a1a1a;
-            color: #f5f5f7;
+        /* Custom styles for the dark form section */
+        .form-section-dark {
+            @apply bg-gray-900 rounded-3xl shadow-2xl mt-12 mb-12 text-center;
+            padding: 4rem 5rem; /* Generous padding */
+            color: white; /* Default text color for this section */
+            border: 1px solid #374151; /* Subtle border for definition */
         }
-        body.dark-mode header {
-            background-color: rgba(26, 26, 26, 0.9);
-            border-bottom-color: #333;
-            box-shadow: 0 1px 0 rgba(255,255,255,0.05);
+        /* Styles for inputs within the dark form */
+        .form-input-dark,
+        .form-textarea-dark,
+        .form-select-dark {
+            @apply block w-full px-4 py-3 rounded-lg border border-gray-700 text-white placeholder-gray-500
+                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200;
+            background-color: #1f2937; /* Slightly lighter dark for inputs */
         }
-        body.dark-mode header h1 {
-            color: #f5f5f7;
+        .file-input-dark {
+            @apply block w-full text-sm text-gray-200
+                   file:mr-4 file:py-2 file:px-5 file:rounded-full file:border-0
+                   file:text-sm file:font-semibold file:bg-blue-600 file:text-white
+                   hover:file:bg-blue-700 cursor-pointer transition-colors duration-200;
         }
-        body.dark-mode header nav a {
-            color: #f5f5f7; /* Light text in dark mode for visibility */
+        /* Style for icons on dark background */
+        .icon-light {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+            width: 20px;
+            height: 20px;
+            fill: currentColor; /* Inherit color from parent text (white/light) */
         }
-        body.dark-mode header nav a:hover {
-            color: #66b2ff; /* Lighter blue for dark mode hover */
-            background-color: rgba(255, 255, 255, 0.05);
+        .submit-button-dark {
+            @apply px-10 py-4 bg-blue-600 text-white font-bold rounded-xl shadow-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105;
         }
-        body.dark-mode header nav a.px-4 { /* SecureSign button in dark mode */
-            background-color: #66b2ff;
-            color: #1d1d1f;
-            box-shadow: 0 1px 3px rgba(255,255,255,0.1);
-            border-color: #66b2ff; /* Ensure border color matches */
-        }
-        body.dark-mode header nav a.px-4:hover {
-            background-color: #7abaff;
-            box-shadow: 0 2px 5px rgba(255,255,255,0.15);
-        }
-        body.dark-mode #language-toggle, body.dark-mode #theme-toggle {
-            background-color: #3a3a3a;
-            color: #f5f5f7;
-        }
-        body.dark-mode #language-toggle:focus, body.dark-mode #theme-toggle:focus {
-            box-shadow: 0 0 0 2px rgba(102, 178, 255, 0.5); /* Blue ring for dark mode */
-        }
-
-        body.dark-mode .container {
-            background-color: #2a2a2a;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-        }
-        body.dark-mode .container h1, body.dark-mode h2, body.dark-mode h3 {
-            color: #f5f5f7;
-        }
-        body.dark-mode .container .brand-logo-text {
-            color: #66b2ff;
-        }
-        body.dark-mode p, body.dark-mode ul li, body.dark-mode label, body.dark-mode input, body.dark-mode textarea {
-            color: #e0e0e0;
-        }
-        body.dark-mode a {
-            color: #66b2ff;
-        }
-        body.dark-mode a:hover {
-            color: #7abaff;
-        }
-        body.dark-mode footer {
-            background-color: #1a1a1a;
-            border-top-color: #333;
-            color: #888;
-        }
-        body.dark-mode footer a {
-            color: #e0e0e0;
-        }
-        body.dark-mode footer a:hover {
-            color: #f5f5f7;
-        }
-        body.dark-mode .form-input, body.dark-mode .form-textarea {
-            background-color: #3a3a3a;
-            border-color: #4a4a4a;
-        }
-        body.dark-mode .form-input:focus, body.dark-mode .form-textarea:focus {
-            border-color: #66b2ff;
-            box-shadow: 0 0 0 2px rgba(102, 178, 255, 0.5);
-        }
-        body.dark-mode .submit-button {
-            background-color: #66b2ff;
-            color: #1d1d1f;
-        }
-        body.dark-mode .submit-button:hover {
-            background-color: #7abaff;
-        }
-
-        /* Header specific styling from faa.zone/index.html */
-        header {
-            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
-            backdrop-filter: blur(10px); /* Frosted glass effect */
-            border-bottom: 1px solid #e8e8ed; /* Subtle bottom border */
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-            box-shadow: 0 1px 0 rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            display: flex;
-            flex-direction: column;
-            sm:flex-direction: row; /* Adjusted for responsive header */
-            justify-content: space-between;
-            align-items: center;
-            padding-left: 1.5rem; /* px-6 */
-            padding-right: 1.5rem; /* px-6 */
-            md:padding-left: 3rem; /* md:px-12 */
-            md:padding-right: 3rem; /* md:px-12 */
-        }
-        header h1 {
-            color: #1d1d1f; /* Dark text for logo */
-            font-weight: 700;
-            font-size: 1.5rem;
-            letter-spacing: -0.02em;
-            margin-bottom: 1rem; /* mb-4 sm:mb-0 */
-            sm:margin-bottom: 0;
-        }
-        header nav {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            sm:justify-content: flex-end; /* sm:justify-end */
-            align-items: center;
-            gap: 0.5rem; /* space-x-2 sm:space-x-4 */
-            sm:gap: 1rem;
-        }
-        header nav a {
-            color: #1d1d1f; /* Ensure dark color for links on light header */
-            font-size: 0.9rem;
-            font-weight: 500;
-            padding: 0.5rem 0.8rem;
-            border-radius: 6px;
-            transition: all 0.2s ease-in-out;
-            position: relative;
-        }
-        header nav a:hover {
-            color: #0071e3; /* Apple blue on hover */
-            background-color: rgba(0, 0, 0, 0.03);
-        }
-        header nav a.px-4 { /* Sign Up button */
-            background-color: #0071e3; /* Apple blue */
-            color: white;
-            padding: 0.6rem 1.2rem;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            border: 1px solid #0071e3; /* Ensure border is visible and matches */
-        }
-        header nav a.px-4:hover {
-            background-color: #0077ed;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-        }
-        header .flex.items-center.space-x-2.ml-4 {
-            margin-left: 1rem; /* ml-4 */
-        }
-        header select, header button {
-            padding: 0.5rem; /* p-2 */
-            border-radius: 9999px; /* rounded-full */
-            font-size: 0.875rem; /* text-sm */
-            cursor: pointer;
-            outline: none;
-            border: none; /* remove default border */
-            background-color: #e5e7eb; /* bg-gray-100 */
-            color: #1f2937; /* text-gray-800 */
-            transition: all 0.2s ease-in-out;
-        }
-        header select:focus, header button:focus {
-            box-shadow: 0 0 0 2px #3b82f6; /* focus:ring-2 focus:ring-blue-500 */
-        }
-
-
-        .container {
-            background-color: #ffffff;
-            border-radius: 12px;
-            padding: 2.5rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            max-width: 960px;
+        /* Canvas styling for the main body graph */
+        #pulseGraphCanvas {
+            background-color: transparent;
+            display: block;
             width: 100%;
-            margin: 2rem auto;
-            flex-grow: 1; /* Allows container to take available space */
+            height: 400px; /* Portrait-like height */
+            border-radius: 0.5rem;
         }
-
-        /* Corrected styling for main title and headings */
-        .container h1 {
-            font-size: 2.8rem; /* Consistent with faa.zone hero h2 */
-            font-weight: 800; /* Extra bold */
-            color: #1d1d1f; /* Near black for primary text on light mode */
-            margin-bottom: 0.5rem; /* Reduced margin to bring brand text closer */
-            text-align: center;
-            letter-spacing: -0.03em;
+        /* Footer Pulse Graph Canvas styling */
+        #footerGraphCanvas {
+            display: block;
+            background-color: #0d1117;
+            width: 100%;
+            height: 300px;
         }
-        body.dark-mode .container h1 {
-            color: #f5f5f7; /* White in dark mode */
+        /* Footer container for positioning elements on top of canvas */
+        .footer-container {
+            position: relative;
+            width: 100%;
+            min-height: 300px;
+            background-color: #0d1117;
         }
-        .container .brand-logo-text {
-            font-size: 1.8rem; /* Adjusted for a strong presence within content */
-            font-weight: 700;
-            color: #0071e3; /* Fruitful blue */
-            text-align: center;
-            margin-top: 0; /* Align with h1's bottom */
-            margin-bottom: 2rem; /* Space below brand text */
-            letter-spacing: -0.02em;
-        }
-        body.dark-mode .container .brand-logo-text {
-            color: #66b2ff; /* Lighter blue in dark mode */
-        }
-
-
-        /* Enhanced H2 styling for numbered sections */
-        h2 {
-            font-size: 2.2rem; /* Slightly larger than before, closer to main H1 */
-            font-weight: 800; /* Extra bold, like main title */
-            color: #0071e3; /* Fruitful blue for prominence */
-            margin-top: 3rem; /* More space above */
-            margin-bottom: 1.5rem; /* More space below */
-            border-bottom: 1px solid #e8e8ed;
-            padding-bottom: 0.75rem; /* More padding below border */
-            letter-spacing: -0.02em; /* Tighter spacing */
-        }
-        body.dark-mode h2 {
-            color: #66b2ff; /* Lighter blue in dark mode */
-            border-bottom-color: #333;
-        }
-
-        h3 {
-            font-size: 1.5rem; /* Consistent with faa.zone h3 */
-            font-weight: 700; /* Bold */
-            color: #1d1d1f; /* Near black */
-            margin-top: 1.5rem;
-            margin-bottom: 0.75rem;
-        }
-        body.dark-mode h3 {
-            color: #f5f5f7;
-        }
-
-        p {
-            margin-bottom: 1rem; /* Consistent spacing between paragraphs */
-            color: #424245; /* Slightly lighter gray for body text */
-        }
-        body.dark-mode p {
-            color: #e0e0e0;
-        }
-
-        ul {
-            list-style-type: disc;
-            margin-left: 1.5rem;
-            margin-bottom: 1rem;
-            color: #424245;
-        }
-        ul li {
-            margin-bottom: 0.5rem; /* Spacing for list items */
-        }
-        body.dark-mode ul {
-            color: #e0e0e0;
-        }
-        body.dark-mode ul li {
-            color: #e0e0e0;
-        }
-
-        a {
-            color: #0071e3; /* Apple Blue */
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        a:hover {
-            color: #005bb5;
-            text-decoration: underline;
-        }
-
-        .last-updated {
-            text-align: right;
-            font-size: 0.9rem;
-            color: #6e6e73;
-            margin-top: 2rem;
-            margin-bottom: 1rem; /* Ensure space below last updated */
-        }
-        body.dark-mode .last-updated {
-            color: #888;
-        }
-
-        /* Footer styles - copied directly from faa.zone/index.html */
-        footer {
-            background-color: #f5f5f7;
-            color: #6e6e73;
-            padding: 2rem;
-            font-size: 0.85rem;
-            border-top: 1px solid #e8e8ed;
-            text-align: center;
-        }
-        body.dark-mode footer {
-            background-color: #1a1a1a;
-            color: #888;
-            border-top-color: #333;
-        }
-        footer .footer-links {
+        /* Content overlaying the canvas */
+        .footer-content-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
             justify-content: center;
-            margin-bottom: 1rem;
+            align-items: center;
+            z-index: 10;
+            color: white;
+            padding: 2rem 1rem;
         }
-        footer .footer-links a {
-            color: #6e6e73;
-            text-decoration: none;
-            transition: color 0.2s ease;
-            margin: 0 0.5rem; /* Horizontal spacing */
-            margin-bottom: 0.5rem; /* Vertical spacing for wrapped items */
-            white-space: nowrap; /* Prevent links from breaking individually */
+        .footer-content-overlay a {
+            color: #60a5fa;
+            transition: color 0.2s ease-in-out;
         }
-        body.dark-mode footer .footer-links a {
-            color: #e0e0e0; /* Adjusted for better visibility in dark mode */
-        }
-        footer .footer-links a:hover {
-            color: #1d1d1f;
-        }
-        body.dark-mode footer .footer-links a:hover {
-            color: #f5f5f7;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            header {
-                padding: 1rem;
-            }
-            header h1 {
-                font-size: 1.2rem;
-            }
-            header nav {
-                margin-top: 1rem;
-            }
-            header nav a {
-                margin: 0.25rem 0.5rem;
-                padding: 0.4rem 0.6rem;
-                font-size: 0.8rem;
-            }
-            header .flex.items-center.space-x-2.ml-4 {
-                margin-left: 0;
-                margin-top: 0.5rem;
-                width: 100%;
-                justify-content: center;
-            }
-            header select, header button {
-                padding: 0.4rem;
-                font-size: 0.8rem;
-            }
-
-            .container {
-                padding: 1.5rem;
-                margin: 1rem auto;
-            }
-            h1 {
-                font-size: 2.2rem;
-            }
-            .container .brand-logo-text {
-                font-size: 1.5rem;
-            }
-            h2 {
-                font-size: 1.6rem;
-            }
-            h3 {
-                font-size: 1.3rem;
-            }
-            p, ul li {
-                font-size: 0.95rem;
-            }
-            footer {
-                padding: 1.5rem;
-            }
-            footer .footer-links a {
-                margin: 0 0.25rem; /* Smaller horizontal margin for mobile */
-                margin-bottom: 0.25rem; /* Smaller vertical margin for mobile */
-            }
+        .footer-content-overlay a:hover {
+            color: #3b82f6;
         }
     </style>
 </head>
-<body>
-    <header class="py-4 px-6 md:px-12 flex flex-col sm:flex-row justify-between items-center text-white">
-        <h1 class="text-2xl font-extrabold tracking-tight mb-4 sm:mb-0" data-i18n="fruitfulBrand">Fruitful™</h1>
-        <nav class="flex flex-wrap justify-center sm:justify-end items-center space-x-2 sm:space-x-4">
-            <a href="https://faa.zone/#features" class="transition-colors duration-200" data-i18n="navFeatures">Features</a>
-            <a href="https://faa.zone/#shareprice" class="transition-colors duration-200" data-i18n="navSignal">Signal</a>
-            <a href="https://faa.zone/#vault-access" class="transition-colors duration-200" data-i18n="navVault">Vault</a>
-            <a href="https://faa.zone/#treaty" class="transition-colors duration-200" data-i18n="navTreaty">Treaty</a>
-            <a href="https://faa.zone/#vaultmesh-section" class="transition-colors duration-200" data-i18n="navVaultMesh">VaultMesh</a>
-            <a href="https://faa.zone/#about" class="transition-colors duration-200" data-i18n="navAbout">About</a>
-            <a href="https://fruitfulcratedance.com/" class="transition-colors duration-200" data-i18n="navCrateDance">Fruitful Crate Dance</a>
-            <a href="https://faa.zone/careers/hiring-homepage.html" class="transition-colors duration-200" data-i18n="navCareers">Careers</a>
-            <a href="https://faa.zone/legal/securesign.html" class="transition-colors duration-200 font-semibold px-4 py-2 rounded-full" data-i18n="navSecureSign">SecureSign</a>
-            <a href="https://faa.zone/signup.html" class="px-4 py-2 rounded-full font-semibold transition-colors duration-200" data-i18n="navSignUp">Sign Up</a>
+<body class="relative min-h-screen flex flex-col justify-between items-center p-0 md:p-8">
 
-            <!-- Language and Day/Night Toggles -->
-            <div class="flex items-center space-x-2 ml-4">
-                <select id="language-toggle" class="p-2 rounded-full text-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-100">
-                    <option value="en">English</option>
-                    <option value="es">Español</option>
-                    <option value="fr">Français</option>
-                    <option value="ar">العربية</option>
-                    <option value="zh">中文</option>
-                </select>
-                <button id="theme-toggle" class="p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-100">
-                    ☀️
-                </button>
+    <main class="flex flex-col items-center flex-grow w-full max-w-screen-2xl p-4 md:p-10">
+        <section class="form-section-dark w-full max-w-3xl mx-auto">
+            <h1 class="text-3xl md:text-4xl font-bold text-emerald-400 mb-8 drop-shadow-sm flex items-center justify-center">
+                <svg class="icon-light mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                Contact FAA.ZONE™ Careers
+            </h1>
+            <p class="text-lg text-gray-300 mb-12">
+                For general career inquiries or to submit your CV for consideration, please fill out the form below. Your application will be sent directly to our careers team. We're excited to hear from you!
+            </p>
+
+            <form id="careerContactForm" class="space-y-8 text-left">
+                <div>
+                    <label for="fullName" class="block text-gray-200 text-sm font-bold mb-2 pl-4">
+                        <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Full Name
+                    </label>
+                    <input type="text" id="fullName" name="fullName" class="form-input-dark" placeholder="John Doe" required>
+                </div>
+                <div>
+                    <label for="email" class="block text-gray-200 text-sm font-bold mb-2 pl-4">
+                        <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        Your Email Address
+                    </label>
+                    <input type="email" id="email" name="email" class="form-input-dark" placeholder="you@example.com" required>
+                </div>
+                <div>
+                    <label for="phone" class="block text-gray-200 text-sm font-bold mb-2 pl-4">
+                        <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2H7c.5 0 .9.34 1 .85l.72 2.87a2 2 0 0 0-.7 2.87l-2.17 2.17a12.5 12.5 0 0 0 5.57 5.57l2.17-2.17a2 2 0 0 0 2.87-.7l2.87.72c.5.1.85.5.85 1z"></path>
+                        </svg>
+                        Phone Number (Optional)
+                    </label>
+                    <input type="tel" id="phone" name="phone" class="form-input-dark" placeholder="+123 456 7890">
+                </div>
+                <div>
+                    <label for="positionInterest" class="block text-gray-200 text-sm font-bold mb-2 pl-4">
+                        <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                        </svg>
+                        Position of Interest (Optional)
+                    </label>
+                    <select id="positionInterest" name="positionInterest" class="form-select-dark">
+                        <option value="">Select a position (or general inquiry)</option>
+                        <option value="Junior Developer">Junior Developer</option>
+                        <option value="Senior AI Engineer">Senior AI Engineer</option>
+                        <option value="Product Manager, OmniDrop">Product Manager, OmniDrop</option>
+                        <option value="UI/UX Designer">UI/UX Designer</option>
+                        <option value="Internship/Graduate Program">Internship/Graduate Program</option>
+                        <option value="General Inquiry">General Inquiry</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="experienceLevel" class="block text-gray-200 text-sm font-bold mb-2 pl-4">
+                        <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        Years of Experience (Optional)
+                    </label>
+                    <select id="experienceLevel" name="experienceLevel" class="form-select-dark">
+                        <option value="">Select experience level</option>
+                        <option value="0-1">0-1 Years</option>
+                        <option value="1-3">1-3 Years</option>
+                        <option value="3-5">3-5 Years</option>
+                        <option value="5+">5+ Years</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="message" class="block text-gray-200 text-sm font-bold mb-2 pl-4">
+                        <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L2 22l1.5-4.5A8.38 8.38 0 0 1 2 11.5a8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8.5 8.5z"></path>
+                        </svg>
+                        Your Message / General Questions
+                    </label>
+                    <textarea id="message" name="message" rows="7" class="form-textarea-dark" placeholder="Tell us more about your inquiry or ask your questions here..."></textarea>
+                </div>
+                <div>
+                    <label for="cvUpload" class="block text-gray-200 text-sm font-bold mb-2 pl-4">
+                        <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                        Upload CV/Resume (PDF/DOCX preferred)
+                    </label>
+                    <input type="file" id="cvUpload" name="cvUpload" accept=".pdf,.doc,.docx" class="file-input-dark">
+                    <p class="mt-2 text-xs text-gray-400">Please note: File attachments via this form will require manual attachment in your email client after clicking 'Send Email'.</p>
+                </div>
+                <div class="flex items-center justify-center mt-10">
+                    <button type="submit" class="submit-button-dark">
+                        Send Email to Careers Team
+                    </button>
+                </div>
+            </form>
+            <div class="mt-16 pt-8 border-t border-gray-700 w-full">
+                <h2 class="text-2xl md:text-3xl font-bold text-emerald-400 mb-8 text-center">
+                    ✨ The Rhythmic Pulse of Your Aspirations ✨
+                </h2>
+                <p class="text-lg text-gray-300 mb-8">
+                    This "Rhythmic Pulse Graph" visualizes the dynamic energy of your unique journey, illustrating how your aspirations and inquiries create a vibrant, spiraling connection with our team.
+                </p>
+                <canvas id="pulseGraphCanvas"></canvas>
             </div>
-        </nav>
-    </header>
+        </section>
+    </main>
 
-    <div class="container">
-        <h1 data-i18n="contactTitle">Contact Us</h1>
-        <p class="brand-logo-text" data-i18n="fruitfulGlobalBrand">Fruitful Global™</p>
-        <p class="last-updated" data-i18n="lastUpdated">Last Updated: <span id="lastUpdatedDate">July 1, 2025</span></p>
-
-        <p data-i18n="contactPara1" class="text-center">
-            We'd love to hear from you! Whether you have questions about our services, need support, or want to explore partnership opportunities, our team is here to help.
-        </p>
-
-        <h2 data-i18n="generalInquiriesTitle">General Inquiries</h2>
-        <p data-i18n="generalInquiriesPara1">
-            For general questions about Fruitful Global™ and our ecosystem, please reach out to:
-        </p>
-        <p data-i18n="generalInquiriesEmail">
-            Email: <a href="mailto:info@faa.zone">info@faa.zone</a>
-        </p>
-
-        <h2 data-i18n="supportTitle">Support</h2>
-        <p data-i18n="supportPara1">
-            If you require technical assistance or have issues with your account, our support team is ready to assist:
-        </p>
-        <p data-i18n="supportEmail">
-            Email: <a href="mailto:support@faa.zone">support@faa.zone</a>
-        </p>
-        <p data-i18n="supportPhone">
-            Phone: +27 12 345 6789 (Mon-Fri, 9 AM - 5 PM SAST)
-        </p>
-
-        <h2 data-i18n="partnershipsTitle">Partnerships & Collaborations</h2>
-        <p data-i18n="partnershipsPara1">
-            Interested in collaborating with Fruitful Global™ or integrating your brand into our ecosystem?
-            Please contact our partnerships team:
-        </p>
-        <p data-i18n="partnershipsEmail">
-            Email: <a href="mailto:partnerships@faa.zone">partnerships@faa.zone</a>
-        </p>
-
-        <h2 data-i18n="mediaTitle">Media & Press</h2>
-        <p data-i18n="mediaPara1">
-            For media inquiries, press releases, or interview requests, please contact:
-        </p>
-        <p data-i18n="mediaEmail">
-            Email: <a href="mailto:media@faa.zone">media@faa.zone</a>
-        </p>
-
-        <h2 data-i18n="physicalAddressTitle">Physical Address</h2>
-        <p data-i18n="physicalAddressPara1">
-            Our main office is located at:
-        </p>
-        <p data-i18n="physicalAddressDetails">
-            Fruitful Global™ Headquarters<br>
-            123 Innovation Drive<br>
-            Pretoria, Gauteng, 0083<br>
-            South Africa
-        </p>
-
-        <h2 data-i18n="contactFormTitle">Send Us a Message</h2>
-        <p data-i18n="contactFormPara1">
-            Alternatively, you can send us a message directly using the form below. We aim to respond to all inquiries within 2 business days.
-        </p>
-        <form class="mt-8 space-y-6">
-            <div>
-                <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300" data-i18n="formNameLabel">Your Name</label>
-                <input type="text" id="name" name="name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm form-input" data-i18n="formNamePlaceholder" placeholder="Enter your name">
+    <footer class="footer-container">
+        <canvas id="footerGraphCanvas"></canvas>
+        <div class="footer-content-overlay">
+            <div class="max-w-screen-2xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center text-sm md:text-xs lg:text-sm w-full">
+                <div class="mb-6 md:mb-0 md:w-1/3">
+                    <div class="text-xl md:text-2xl font-bold mb-2 text-blue-600">FAA.zone <span class="text-gray-200">/ BuildNest™</span></div>
+                    <p class="text-gray-400">© 2025 FAA.zone. All systems, symbols, and brand echoes <br> protected by the Omni Present Copyright™.</p>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-y-4 gap-x-8 md:gap-x-12 lg:gap-x-16">
+                    <div>
+                        <h3 class="font-bold text-gray-200 mb-2">BuildNest™</h3>
+                        <ul class="space-y-1 text-gray-400">
+                            <li><a href="https://faa.zone/buildnest/features" class="hover:text-blue-400 transition-colors">Features</a></li>
+                            <li><a href="https://faa.zone/buildnest/use-cases" class="hover:text-blue-400 transition-colors">Use Cases</a></li>
+                            <li><a href="https://faa.zone/buildnest/pricing" class="hover:text-blue-400 transition-colors">Pricing</a></li>
+                            <li><a href="https://faa.zone/buildnest/modules" class="hover:text-blue-400 transition-colors">Modules</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-200 mb-2">FAA.zone</h3>
+                        <ul class="space-y-1 text-gray-400">
+                            <li><a href="https://faa.zone/about" class="hover:text-blue-400 transition-colors">About FAA Systems™</a></li>
+                            <li><a href="https://faa.zone/omni-grid" class="hover:text-blue-400 transition-colors">Omni Grid™</a></li>
+                            <li><a href="https://faa.zone/baobab-archive" class="hover:text-blue-400 transition-colors">Compliance</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-200 mb-2">Careers</h3>
+                        <ul class="space-y-1 text-gray-400">
+                            <li><a href="https://faa.zone/careers" class="hover:text-blue-400 transition-colors">Open Roles</a></li>
+                            <li><a href="https://faa.zone/careers/culture" class="hover:text-blue-400 transition-colors">Our Culture</a></li>
+                            <li><a href="https://faa.zone/careers/benefits" class="hover:text-blue-400 transition-colors">Benefits</a></li>
+                            <li><a href="https://faa.zone/careers/faq" class="hover:text-blue-400 transition-colors">FAQ</a></li>
+                            <li><a href="https://faa.zone/careers/team" class="hover:text-blue-400 transition-colors">Meet the Team</a></li>
+                            <li><a href="https://faa.zone/careers/life-at-faa" class="hover:text-blue-400 transition-colors">Life at FAA.ZONE™</a></li>
+                            <li><a href="https://faa.zone/careers/internships" class="hover:text-blue-400 transition-colors">Internships</a></li>
+                            <li><a href="https://faa.zone/careers/diversity" class="hover:text-blue-400 transition-colors">Diversity & Inclusion</a></li>
+                            <li><a href="https://faa.zone/careers/contact-us" class="hover:text-blue-400 transition-colors">Contact Careers</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div>
-                <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300" data-i18n="formEmailLabel">Your Email</label>
-                <input type="email" id="email" name="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm form-input" data-i18n="formEmailPlaceholder" placeholder="Enter your email">
-            </div>
-            <div>
-                <label for="subject" class="block text-sm font-medium text-gray-700 dark:text-gray-300" data-i18n="formSubjectLabel">Subject</label>
-                <input type="text" id="subject" name="subject" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm form-input" data-i18n="formSubjectPlaceholder" placeholder="Subject of your inquiry">
-            </div>
-            <div>
-                <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300" data-i18n="formMessageLabel">Message</label>
-                <textarea id="message" name="message" rows="4" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm form-textarea" data-i18n="formMessagePlaceholder" placeholder="Your message..."></textarea>
-            </div>
-            <div>
-                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 submit-button" data-i18n="formSubmitButton">Send Message</button>
-            </div>
-        </form>
-    </div>
-
-    <footer class="py-8 px-6 md:px-12 text-center">
-        <div class="flex flex-wrap justify-center mb-4 text-sm">
-            <a href="https://footer.global.repo.seedwave.faa.zone/privacy.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerPrivacy">Privacy</a>
-            <a href="https://footer.global.repo.seedwave.faa.zone/terms.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerTerms">Terms</a>
-            <a href="https://footer.global.repo.seedwave.faa.zone/contact.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerContact">Contact</a>
-            <a href="https://footer.global.repo.seedwave.faa.zone/copyright.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerCopyrightLink">Copyright</a>
-            <a href="https://footer.global.repo.seedwave.faa.zone/developers.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerDevelopers">Developers</a>
-            <a href="https://footer.global.repo.seedwave.faa.zone/vaultmesh.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerVaultMeshLink">VaultMesh</a>
-            <a href="https://footer.global.repo.seedwave.faa.zone/fruitful.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerFruitfulLink">Fruitful</a>
-            <a href="https://footer.global.repo.seedwave.faa.zone/faa.zone.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mx-2 my-1" data-i18n="footerFAAZoneLink">FAA.Zone</a>
-            <a href="https://footer.global.repo.seedwave.faa.zone/about.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors" data-i18n="footerAboutLink">About</a>
-            <a href="https://footer.global.repo.seedwave.faa.zone/accessibility.html" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors" data-i18n="footerAccessibility">Accessibility</a>
         </div>
-        <span data-i18n="footerCopyright">© 2025 FAA™ Treaty System™. All Rights Reserved.</span> <span data-i18n="footerPoweredBy">Powered by 🦍 glyphs + Vault API. Synced with Seedwave™.</span>
     </footer>
 
     <script>
-        // Set the last updated date dynamically
-        document.getElementById('lastUpdatedDate').innerText = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        window.onload = function() {
+            // --- Main Pulse Graph Canvas (Weird Portrait Sausage) ---
+            const mainCanvas = document.getElementById('pulseGraphCanvas');
+            const mainCtx = mainCanvas.getContext('2d');
+            const mainNumLines = 250; // More lines for density
+            const mainPulseDuration = 4000; // Slightly slower, more deliberate pulse
+            const mainPulseAmplitude = 0.7; // Stronger amplitude for "weirdness"
 
-        // Language data for i18n
-        window.languageData = { // Changed to window.languageData to avoid re-declaration errors
-            en: {
-                pageTitle: 'Contact Us | Fruitful Global™',
-                fruitfulBrand: 'Fruitful™',
-                navFeatures: 'Features',
-                navSignal: 'Signal',
-                navVault: 'Vault',
-                navTreaty: 'Treaty',
-                navVaultMesh: 'VaultMesh',
-                navAbout: 'About',
-                navCrateDance: 'Fruitful Crate Dance',
-                navCareers: 'Careers',
-                navSecureSign: 'SecureSign',
-                navSignUp: 'Sign Up',
-                // Contact Us Content
-                contactTitle: 'Contact Us',
-                fruitfulGlobalBrand: 'Fruitful Global™',
-                lastUpdated: 'Last Updated: ',
-                contactPara1: 'We\'d love to hear from you! Whether you have questions about our services, need support, or want to explore partnership opportunities, our team is here to help.',
-                generalInquiriesTitle: 'General Inquiries',
-                generalInquiriesPara1: 'For general questions about Fruitful Global™ and our ecosystem, please reach out to:',
-                generalInquiriesEmail: 'Email: <a href="mailto:info@faa.zone">info@faa.zone</a>',
-                supportTitle: 'Support',
-                supportPara1: 'If you require technical assistance or have issues with your account, our support team is ready to assist:',
-                supportEmail: 'Email: <a href="mailto:support@faa.zone">support@faa.zone</a>',
-                supportPhone: 'Phone: +27 12 345 6789 (Mon-Fri, 9 AM - 5 PM SAST)',
-                partnershipsTitle: 'Partnerships & Collaborations',
-                partnershipsPara1: 'Interested in collaborating with Fruitful Global™ or integrating your brand into our ecosystem? Please contact our partnerships team:',
-                partnershipsEmail: 'Email: <a href="mailto:partnerships@faa.zone">partnerships@faa.zone</a>',
-                mediaTitle: 'Media & Press',
-                mediaPara1: 'For media inquiries, press releases, or interview requests, please contact:',
-                mediaEmail: 'Email: <a href="mailto:media@faa.zone">media@faa.zone</a>',
-                physicalAddressTitle: 'Physical Address',
-                physicalAddressPara1: 'Our main office is located at:',
-                physicalAddressDetails: 'Fruitful Global™ Headquarters<br>123 Innovation Drive<br>Pretoria, Gauteng, 0083<br>South Africa',
-                contactFormTitle: 'Send Us a Message',
-                contactFormPara1: 'Alternatively, you can send us a message directly using the form below. We aim to respond to all inquiries within 2 business days.',
-                formNameLabel: 'Your Name',
-                formNamePlaceholder: 'Enter your name',
-                formEmailLabel: 'Your Email',
-                formEmailPlaceholder: 'Enter your email',
-                formSubjectLabel: 'Subject',
-                formSubjectPlaceholder: 'Subject of your inquiry',
-                formMessageLabel: 'Message',
-                formMessagePlaceholder: 'Your message...',
-                formSubmitButton: 'Send Message',
-                // Footer links
-                footerPrivacy: 'Privacy',
-                footerTerms: 'Terms',
-                footerContact: 'Contact',
-                footerCopyrightLink: 'Copyright',
-                footerDevelopers: 'Developers',
-                footerVaultMeshLink: 'VaultMesh',
-                footerFruitfulLink: 'Fruitful',
-                footerFAAZoneLink: 'FAA.Zone',
-                footerAboutLink: 'About',
-                footerAccessibility: 'Accessibility',
-                footerCopyright: '© 2025 FAA™ Treaty System™. All Rights Reserved.',
-                footerPoweredBy: 'Powered by 🦍 glyphs + Vault API. Synced with Seedwave™.'
-            },
-            es: {
-                pageTitle: 'Contáctenos | Fruitful Global™',
-                fruitfulBrand: 'Fruitful™',
-                navFeatures: 'Características',
-                navSignal: 'Señal',
-                navVault: 'Bóveda',
-                navTreaty: 'Tratado',
-                navVaultMesh: 'VaultMesh',
-                navAbout: 'Nosotros',
-                navCrateDance: 'Danza de Cestas Frutales',
-                navCareers: 'Carreras',
-                navSecureSign: 'Firma Segura',
-                navSignUp: 'Registrarse',
-                // Contact Us Content
-                contactTitle: 'Contáctenos',
-                fruitfulGlobalBrand: 'Fruitful Global™',
-                lastUpdated: 'Última Actualización: ',
-                contactPara1: '¡Nos encantaría saber de usted! Ya sea que tenga preguntas sobre nuestros servicios, necesite soporte o desee explorar oportunidades de asociación, nuestro equipo está aquí para ayudar.',
-                generalInquiriesTitle: 'Consultas Generales',
-                generalInquiriesPara1: 'Para preguntas generales sobre Fruitful Global™ y nuestro ecosistema, comuníquese con:',
-                generalInquiriesEmail: 'Correo electrónico: <a href="mailto:info@faa.zone">info@faa.zone</a>',
-                supportTitle: 'Soporte',
-                supportPara1: 'Si necesita asistencia técnica o tiene problemas con su cuenta, nuestro equipo de soporte está listo para ayudar:',
-                supportEmail: 'Correo electrónico: <a href="mailto:support@faa.zone">support@faa.zone</a>',
-                supportPhone: 'Teléfono: +27 12 345 6789 (Lun-Vie, 9 AM - 5 PM SAST)',
-                partnershipsTitle: 'Asociaciones y Colaboraciones',
-                partnershipsPara1: '¿Interesado en colaborar con Fruitful Global™ o integrar su marca en nuestro ecosistema? Póngase en contacto con nuestro equipo de asociaciones:',
-                partnershipsEmail: 'Correo electrónico: <a href="mailto:partnerships@faa.zone">partnerships@faa.zone</a>',
-                mediaTitle: 'Medios y Prensa',
-                mediaPara1: 'Para consultas de medios, comunicados de prensa o solicitudes de entrevistas, comuníquese con:',
-                mediaEmail: 'Correo electrónico: <a href="mailto:media@faa.zone">media@faa.zone</a>',
-                physicalAddressTitle: 'Dirección Física',
-                physicalAddressPara1: 'Nuestra oficina principal se encuentra en:',
-                physicalAddressDetails: 'Sede de Fruitful Global™<br>123 Innovation Drive<br>Pretoria, Gauteng, 0083<br>Sudáfrica',
-                contactFormTitle: 'Envíenos un Mensaje',
-                contactFormPara1: 'Alternativamente, puede enviarnos un mensaje directamente utilizando el formulario a continuación. Nuestro objetivo es responder a todas las consultas dentro de los 2 días hábiles.',
-                formNameLabel: 'Su Nombre',
-                formNamePlaceholder: 'Ingrese su nombre',
-                formEmailLabel: 'Su Correo Electrónico',
-                formEmailPlaceholder: 'Ingrese su correo electrónico',
-                formSubjectLabel: 'Asunto',
-                formSubjectPlaceholder: 'Asunto de su consulta',
-                formMessageLabel: 'Mensaje',
-                formMessagePlaceholder: 'Su mensaje...',
-                formSubmitButton: 'Enviar Mensaje',
-                // Footer links
-                footerPrivacy: 'Privacidad',
-                footerTerms: 'Términos',
-                footerContact: 'Contacto',
-                footerCopyrightLink: 'Derechos de Autor',
-                footerDevelopers: 'Desarrolladores',
-                footerVaultMeshLink: 'VaultMesh',
-                footerFruitfulLink: 'Fruitful',
-                footerFAAZoneLink: 'FAA.Zone',
-                footerAboutLink: 'Nosotros',
-                footerAccessibility: 'Accesibilidad',
-                footerCopyright: '© 2025 FAA™ Treaty System™. Todos los derechos reservados.',
-                footerPoweredBy: 'Impulsado por 🦍 glifos + API de Bóveda. Sincronizado con Seedwave™.'
-            },
-            fr: {
-                pageTitle: 'Nous Contacter | Fruitful Global™',
-                fruitfulBrand: 'Fruitful™',
-                navFeatures: 'Fonctionnalités',
-                navSignal: 'Signal',
-                navVault: 'Coffre',
-                navTreaty: 'Traité',
-                navVaultMesh: 'VaultMesh',
-                navAbout: 'À Propos',
-                navCrateDance: 'Fruitful Crate Dance',
-                navCareers: 'Carrières',
-                navSecureSign: 'Signature Sécurisée',
-                navSignUp: 'S\'inscrire',
-                // Contact Us Content
-                contactTitle: 'Nous Contacter',
-                fruitfulGlobalBrand: 'Fruitful Global™',
-                lastUpdated: 'Dernière mise à jour : ',
-                contactPara1: 'Nous serions ravis de vous entendre ! Que vous ayez des questions sur nos services, besoin d\'assistance ou que vous souhaitiez explorer des opportunités de partenariat, notre équipe est là pour vous aider.',
-                generalInquiriesTitle: 'Demandes Générales',
-                generalInquiriesPara1: 'Pour toute question générale sur Fruitful Global™ et notre écosystème, veuillez contacter :',
-                generalInquiriesEmail: 'E-mail: <a href="mailto:info@faa.zone">info@faa.zone</a>',
-                supportTitle: 'Assistance',
-                supportPara1: 'Si vous avez besoin d\'une assistance technique ou si vous rencontrez des problèmes avec votre compte, notre équipe d\'assistance est prête à vous aider :',
-                supportEmail: 'E-mail: <a href="mailto:support@faa.zone">support@faa.zone</a>',
-                supportPhone: 'Téléphone: +27 12 345 6789 (Lun-Ven, 9h - 17h SAST)',
-                partnershipsTitle: 'Partenariats et Collaborations',
-                partnershipsPara1: 'Intéressé par une collaboration avec Fruitful Global™ ou l\'intégration de votre marque dans notre écosystème ? Veuillez contacter notre équipe de partenariats :',
-                partnershipsEmail: 'E-mail: <a href="mailto:partnerships@faa.zone">partnerships@faa.zone</a>',
-                mediaTitle: 'Médias et Presse',
-                mediaPara1: 'Pour les demandes des médias, les communiqués de presse ou les demandes d\'interview, veuillez contacter :',
-                mediaEmail: 'E-mail: <a href="mailto:media@faa.zone">media@faa.zone</a>',
-                physicalAddressTitle: 'Adresse Physique',
-                physicalAddressPara1: 'Notre bureau principal est situé à :',
-                physicalAddressDetails: 'Siège de Fruitful Global™<br>123 Innovation Drive<br>Pretoria, Gauteng, 0083<br>Afrique du Sud',
-                contactFormTitle: 'Envoyez-nous un Message',
-                contactFormPara1: 'Alternativement, vous pouvez nous envoyer un message directement en utilisant le formulaire ci-dessous. Nous nous efforçons de répondre à toutes les demandes dans les 2 jours ouvrables.',
-                formNameLabel: 'Votre Nom',
-                formNamePlaceholder: 'Entrez votre nom',
-                formEmailLabel: 'Votre E-mail',
-                formEmailPlaceholder: 'Entrez votre e-mail',
-                formSubjectLabel: 'Sujet',
-                formSubjectPlaceholder: 'Sujet de votre demande',
-                formMessageLabel: 'Message',
-                formMessagePlaceholder: 'Votre message...',
-                formSubmitButton: 'Envoyer le Message',
-                // Footer links
-                footerPrivacy: 'Confidentialité',
-                footerTerms: 'Conditions',
-                footerContact: 'Contact',
-                footerCopyrightLink: 'Droits d\'Auteur',
-                footerDevelopers: 'Développeurs',
-                footerVaultMeshLink: 'VaultMesh',
-                footerFruitfulLink: 'Fruitful',
-                footerFAAZoneLink: 'FAA.Zone',
-                footerAboutLink: 'À Propos',
-                footerAccessibility: 'Accessibilité',
-                footerCopyright: '© 2025 FAA™ Treaty System™. Tous droits réservés.',
-                footerPoweredBy: 'Propulsé par 🦍 glyphes + API du Coffre. Synchronisé avec Seedwave™.'
-            },
-            ar: {
-                pageTitle: 'اتصل بنا | Fruitful Global™',
-                fruitfulBrand: 'Fruitful™',
-                navFeatures: 'الميزات',
-                navSignal: 'الإشارة',
-                navVault: 'الخزنة',
-                navTreaty: 'المعاهدة',
-                navVaultMesh: 'شبكة الكهف',
-                navAbout: 'حول',
-                navCrateDance: 'رقصة الصندوق المثمر',
-                navCareers: 'الوظائف',
-                navSecureSign: 'توقيع آمن',
-                navSignUp: 'التسجيل',
-                // Contact Us Content
-                contactTitle: 'اتصل بنا',
-                fruitfulGlobalBrand: 'Fruitful Global™',
-                lastUpdated: 'آخر تحديث: ',
-                contactPara1: 'نود أن نسمع منك! سواء كانت لديك أسئلة حول خدماتنا، أو كنت بحاجة إلى دعم، أو أردت استكشاف فرص الشراكة، فإن فريقنا هنا للمساعدة.',
-                generalInquiriesTitle: 'استفسارات عامة',
-                generalInquiriesPara1: 'للاستفسارات العامة حول Fruitful Global™ ونظامنا البيئي، يرجى التواصل مع:',
-                generalInquiriesEmail: 'البريد الإلكتروني: <a href="mailto:info@faa.zone">info@faa.zone</a>',
-                supportTitle: 'الدعم',
-                supportPara1: 'إذا كنت بحاجة إلى مساعدة فنية أو واجهت مشكلات في حسابك، فإن فريق الدعم لدينا جاهز للمساعدة:',
-                supportEmail: 'البريد الإلكتروني: <a href="mailto:support@faa.zone">support@faa.zone</a>',
-                supportPhone: 'الهاتف: +27 12 345 6789 (من الإثنين إلى الجمعة، 9 صباحًا - 5 مساءً بتوقيت جنوب إفريقيا)',
-                partnershipsTitle: 'الشراكات والتعاون',
-                partnershipsPara1: 'هل أنت مهتم بالتعاون مع Fruitful Global™ أو دمج علامتك التجارية في نظامنا البيئي؟ يرجى الاتصال بفريق الشراكات لدينا:',
-                partnershipsEmail: 'البريد الإلكتروني: <a href="mailto:partnerships@faa.zone">partnerships@faa.zone</a>',
-                mediaTitle: 'الإعلام والصحافة',
-                mediaPara1: 'للاستفسارات الإعلامية أو البيانات الصحفية أو طلبات المقابلات، يرجى الاتصال بـ:',
-                mediaEmail: 'البريد الإلكتروني: <a href="mailto:media@faa.zone">media@faa.zone</a>',
-                physicalAddressTitle: 'العنوان الفعلي',
-                physicalAddressPara1: 'يقع مكتبنا الرئيسي في:',
-                physicalAddressDetails: 'مقر Fruitful Global™ الرئيسي<br>123 Innovation Drive<br>بريتوريا، جوتنج، 0083<br>جنوب إفريقيا',
-                contactFormTitle: 'أرسل لنا رسالة',
-                contactFormPara1: 'بدلاً من ذلك، يمكنك إرسال رسالة إلينا مباشرة باستخدام النموذج أدناه. نهدف إلى الرد على جميع الاستفسارات في غضون يومي عمل.',
-                formNameLabel: 'اسمك',
-                formNamePlaceholder: 'أدخل اسمك',
-                formEmailLabel: 'بريدك الإلكتروني',
-                formEmailPlaceholder: 'أدخل بريدك الإلكتروني',
-                formSubjectLabel: 'الموضوع',
-                formSubjectPlaceholder: 'موضوع استفسارك',
-                formMessageLabel: 'الرسالة',
-                formMessagePlaceholder: 'رسالتك...',
-                formSubmitButton: 'إرسال الرسالة',
-                // Footer links
-                footerPrivacy: 'الخصوصية',
-                footerTerms: 'الشروط',
-                footerContact: 'اتصل بنا',
-                footerCopyrightLink: 'حقوق النشر',
-                footerDevelopers: 'المطورون',
-                footerVaultMeshLink: 'شبكة الكهف',
-                footerFruitfulLink: 'مثمر',
-                footerFAAZoneLink: 'FAA.Zone',
-                footerAboutLink: 'حول',
-                footerAccessibility: 'إمكانية الوصول',
-                footerCopyright: '© 2025 نظام معاهدة FAA™. جميع الحقوق محفوظة.',
-                footerPoweredBy: 'مدعوم بواسطة 🦍 الرموز + واجهة برمجة تطبيقات Vault. متزامن مع Seedwave™.'
-            },
-            zh: {
-                pageTitle: '联系我们 | 丰硕全球™',
-                fruitfulBrand: 'Fruitful™',
-                navFeatures: '功能',
-                navSignal: '信号',
-                navVault: '金库',
-                navTreaty: '条约',
-                navVaultMesh: '金库网格',
-                navAbout: '关于',
-                navCrateDance: '丰硕板条箱之舞',
-                navCareers: '职业',
-                navSecureSign: '安全签署',
-                navSignUp: '注册',
-                // Contact Us Content
-                contactTitle: '联系我们',
-                fruitfulGlobalBrand: '丰硕全球™',
-                lastUpdated: '最后更新: ',
-                contactPara1: '我们很高兴收到您的来信！无论您对我们的服务有疑问、需要支持，还是想探索合作机会，我们的团队都会随时为您提供帮助。',
-                generalInquiriesTitle: '一般咨询',
-                generalInquiriesPara1: '有关丰硕全球™和我们生态系统的一般问题，请联系：',
-                generalInquiriesEmail: '电子邮件: <a href="mailto:info@faa.zone">info@faa.zone</a>',
-                supportTitle: '支持',
-                supportPara1: '如果您需要技术援助或遇到账户问题，我们的支持团队随时准备提供帮助：',
-                supportEmail: '电子邮件: <a href="mailto:support@faa.zone">support@faa.zone</a>',
-                supportPhone: '电话: +27 12 345 6789 (周一至周五，南非标准时间上午9点至下午5点)',
-                partnershipsTitle: '合作伙伴与合作',
-                partnershipsPara1: '有兴趣与丰硕全球™合作或将您的品牌整合到我们的生态系统中吗？请联系我们的合作伙伴团队：',
-                partnershipsEmail: '电子邮件: <a href="mailto:partnerships@faa.zone">partnerships@faa.zone</a>',
-                mediaTitle: '媒体与新闻',
-                mediaPara1: '如需媒体咨询、新闻稿或采访请求，请联系：',
-                mediaEmail: '电子邮件: <a href="mailto:media@faa.zone">media@faa.zone</a>',
-                physicalAddressTitle: '实际地址',
-                physicalAddressPara1: '我们的主要办事处位于：',
-                physicalAddressDetails: '丰硕全球™总部<br>创新大道123号<br>比勒陀利亚，豪登省，0083<br>南非',
-                contactFormTitle: '给我们留言',
-                contactFormPara1: '或者，您可以使用下面的表格直接给我们发送消息。我们旨在在2个工作日内回复所有咨询。',
-                formNameLabel: '您的姓名',
-                formNamePlaceholder: '输入您的姓名',
-                formEmailLabel: '您的电子邮件',
-                formEmailPlaceholder: '输入您的电子邮件',
-                formSubjectLabel: '主题',
-                formSubjectPlaceholder: '您的咨询主题',
-                formMessageLabel: '消息',
-                formMessagePlaceholder: '您的消息...',
-                formSubmitButton: '发送消息',
-                // Footer links
-                footerPrivacy: '隐私',
-                footerTerms: '条款',
-                footerContact: '联系',
-                footerCopyrightLink: '版权',
-                footerDevelopers: '开发者',
-                footerVaultMeshLink: '金库网格',
-                footerFruitfulLink: '丰硕',
-                footerFAAZoneLink: 'FAA.Zone',
-                footerAboutLink: '关于',
-                footerAccessibility: '无障碍',
-                footerCopyright: '© 2025 FAA™ 条约系统™。保留所有权利。',
-                footerPoweredBy: '由 🦍 符文 + 金库 API 提供支持。与 Seedwave™ 同步。'
-            }
-        };
-
-        // Theme Toggle Logic
-        document.addEventListener('DOMContentLoaded', () => {
-            const body = document.body;
-            const themeToggle = document.getElementById('theme-toggle');
-            const languageToggle = document.getElementById('language-toggle');
-
-            // Load saved theme
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                body.classList.add('dark-mode');
-                themeToggle.innerText = '🌙';
-            } else {
-                themeToggle.innerText = '☀️';
-            }
-
-            // Load saved language
-            const savedLang = localStorage.getItem('language') || 'en';
-            languageToggle.value = savedLang;
-            updateLanguage(savedLang);
-
-            // Theme toggle event listener
-            themeToggle.addEventListener('click', () => {
-                if (body.classList.contains('dark-mode')) {
-                    body.classList.remove('dark-mode');
-                    localStorage.setItem('theme', 'light');
-                    themeToggle.innerText = '☀️';
-                } else {
-                    body.classList.add('dark-mode');
-                    localStorage.setItem('theme', 'dark');
-                    themeToggle.innerText = '�';
-                }
-            });
-
-            // Language toggle event listener
-            languageToggle.addEventListener('change', (event) => {
-                const newLang = event.target.value;
-                updateLanguage(newLang);
-                localStorage.setItem('language', newLang);
-            });
-
-            // Function to update text content based on selected language
-            function updateLanguage(lang) {
-                const elements = document.querySelectorAll('[data-i18n]');
-                elements.forEach(el => {
-                    const key = el.getAttribute('data-i18n');
-                    if (window.languageData[lang] && window.languageData[lang][key]) { // Use window.languageData
-                        el.innerHTML = window.languageData[lang][key];
-                    }
+            const mainLineData = [];
+            for (let i = 0; i < mainNumLines; i++) {
+                mainLineData.push({
+                    // Randomize starting position more for a scattered feel
+                    startX: Math.random() * mainCanvas.width,
+                    startY: Math.random() * mainCanvas.height,
+                    // Amplitude and frequency for vertical movement
+                    amplitudeY: Math.random() * 0.3 + 0.1,
+                    frequencyY: Math.random() * 0.02 + 0.005,
+                    // Amplitude and frequency for horizontal movement (spiral)
+                    amplitudeX: Math.random() * 0.1 + 0.01,
+                    frequencyX: Math.random() * 0.01 + 0.001,
+                    // Random vibrant and slightly unusual colors
+                    color: `hsla(${Math.random() * 360}, 100%, ${Math.random() * 50 + 50}%, ${Math.random() * 0.7 + 0.3})`,
+                    thickness: Math.random() * 3 + 1, // Varied thickness
+                    phaseOffset: Math.random() * Math.PI * 2 // Individual phase offset
                 });
-                document.title = window.languageData[lang]?.pageTitle || 'Fruitful Global'; // Use window.languageData
             }
-        });
+
+            function resizeMainCanvas() {
+                mainCanvas.width = mainCanvas.offsetWidth;
+                mainCanvas.height = mainCanvas.offsetHeight;
+            }
+            resizeMainCanvas();
+            window.addEventListener('resize', resizeMainCanvas);
+
+            let mainStartTime = Date.now();
+
+            function animateMainGraph() {
+                requestAnimationFrame(animateMainGraph);
+                mainCtx.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
+                const currentTime = Date.now();
+                const elapsedTime = currentTime - mainStartTime;
+                const pulseProgress = (elapsedTime % mainPulseDuration) / mainPulseDuration;
+                const pulseEffect = Math.sin(pulseProgress * Math.PI * 2) * mainPulseAmplitude; // Declared here
+
+                for (let i = 0; i < mainNumLines; i++) {
+                    const line = mainLineData[i];
+                    mainCtx.beginPath();
+                    mainCtx.strokeStyle = line.color;
+                    mainCtx.lineWidth = line.thickness;
+                    mainCtx.lineCap = 'round';
+
+                    // Draw a segment of the "sausage"
+                    const numSegments = 50; // Increased segments for smoother spiral
+
+                    for (let j = 0; j <= numSegments; j++) {
+                        const t = j / numSegments; // Progress along the segment
+
+                        // Calculate position with vertical bias and spiral effect
+                        const x = mainCanvas.width / 2 +
+                                  Math.sin(t * line.frequencyX * 20 + line.phaseOffset + pulseEffect * 2) * (line.amplitudeX * mainCanvas.width / 2) +
+                                  Math.cos(t * Math.PI * 4 + pulseProgress * Math.PI * 8) * (mainCanvas.width / 8 * (1 - t)); // More pronounced spiral
+
+                        const y = mainCanvas.height * t +
+                                  Math.sin(t * line.frequencyY * 20 + line.phaseOffset + pulseEffect * 3) * (line.amplitudeY * mainCanvas.height / 4);
+
+                        if (j === 0) {
+                            mainCtx.moveTo(x, y);
+                        } else {
+                            mainCtx.lineTo(x, y);
+                        }
+                    }
+                    mainCtx.stroke();
+                }
+            }
+            animateMainGraph();
+
+            // --- Footer Pulse Graph Canvas ---
+            const footerCanvas = document.getElementById('footerGraphCanvas');
+            const footerCtx = footerCanvas.getContext('2d');
+            const footerNumLines = 1000;
+            const footerLineData = [];
+            const footerPulseDuration = 3000;
+            const footerPulseAmplitude = 0.8;
+
+            for (let i = 0; i < footerNumLines; i++) {
+                footerLineData.push({
+                    offset: Math.random() * Math.PI * 2,
+                    amplitude: Math.random() * 0.1 + 0.01,
+                    frequency: Math.random() * 0.1 + 0.005,
+                    color: `rgba(${Math.floor(Math.random() * 50) + 10}, ${Math.floor(Math.random() * 150) + 100}, ${Math.floor(Math.random() * 50) + 200}, ${Math.random() * 0.5 + 0.1})`,
+                    thickness: Math.random() * 0.8 + 0.1
+                });
+            }
+
+            function resizeFooterCanvas() {
+                footerCanvas.width = footerCanvas.offsetWidth;
+                footerCanvas.height = footerCanvas.offsetHeight;
+            }
+            resizeFooterCanvas();
+            window.addEventListener('resize', resizeFooterCanvas);
+
+            let footerStartTime = Date.now();
+
+            function animateFooterGraph() {
+                requestAnimationFrame(animateFooterGraph);
+                footerCtx.clearRect(0, 0, footerCanvas.width, footerCanvas.height);
+                const currentTime = Date.now();
+                const elapsedTime = currentTime - footerStartTime;
+                const pulseProgress = (elapsedTime % footerPulseDuration) / footerPulseDuration;
+
+                for (let i = 0; i < footerNumLines; i++) {
+                    const line = footerLineData[i];
+                    footerCtx.beginPath();
+                    footerCtx.strokeStyle = line.color;
+                    footerCtx.lineWidth = line.thickness;
+                    footerCtx.lineCap = 'round';
+
+                    const pulseEffect = Math.sin(pulseProgress * Math.PI * 2) * footerPulseAmplitude;
+
+                    for (let x = 0; x <= footerCanvas.width; x += 10) {
+                        const y = footerCanvas.height / 2 +
+                                  Math.sin(x * line.frequency + line.offset + pulseEffect * 5) * (line.amplitude * footerCanvas.height / 2) +
+                                  Math.sin(pulseProgress * Math.PI * 2 + i * 0.1) * (footerCanvas.height / 10);
+
+                        if (x === 0) {
+                            footerCtx.moveTo(x, y);
+                        } else {
+                            footerCtx.lineTo(x, y);
+                        }
+                    }
+                    footerCtx.stroke();
+                }
+            }
+            animateFooterGraph();
+        };
     </script>
 </body>
 </html>
-�
