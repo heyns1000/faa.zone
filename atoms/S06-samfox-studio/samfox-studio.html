@@ -1,35 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>🦊SamFox Studio - Foxed Has Mobiles™ Master Competition Suite</title>
-    <meta name="description" content="Creative design competition platform featuring Foxed Has Mobiles™ 1/1 apparel oracle and specialized categories with symbol validation, multi-medium support, and Banimal branding">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SamFox Studio - Competition Platform | Foxed Has Mobiles™</title>
+    <meta name="description" content="SamFox Studio competition platform featuring 6 specialized categories: Foxed Has Mobiles™, Mr Fruitful's Olympic Threads, Water the Seed™ Brandborn Creations, Chaos Cartography, Crate Dance Showcase™ Stage & Nation Design, and FAA University Identity Deck">
     
     <!-- Google Fonts - Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare. com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
+        /* Custom Variables */
+        :root {
+            --gradient-orange: #ff7e5f;
+            --gradient-red: #feb47b;
+            --gradient-pink: #ff6b9d;
+            --gradient-blue: #3b82f6;
+            --gradient-purple: #8b5cf6;
+            --dark-bg: #0a0a0d;
+            --competition-blue: #3b82f6;
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f9fafb;
-            color: #1f2937;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-
-        /* Custom Animations */
-        @keyframes fadeIn {
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Animations */
+        @keyframes fade-in {
             from {
                 opacity: 0;
                 transform: translateY(20px);
@@ -39,288 +55,187 @@
                 transform: translateY(0);
             }
         }
-
-        @keyframes fadeInDelay {
-            0% {
+        
+        @keyframes slide-in {
+            from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateX(-30px);
             }
-            50% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
+            to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateX(0);
             }
         }
-
-        @keyframes pulse {
+        
+        @keyframes glow-pulse {
             0%, 100% {
-                opacity: 1;
+                box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
             }
             50% {
-                opacity:  0.5;
+                box-shadow: 0 0 20px rgba(59, 130, 246, 0.6), 0 0 30px rgba(59, 130, 246, 0.3);
             }
         }
-
-        @keyframes glow {
+        
+        @keyframes gradient-shift {
             0%, 100% {
-                box-shadow: 0 0 20px rgba(249, 115, 22, 0.5);
+                background-position: 0% 50%;
             }
             50% {
-                box-shadow: 0 0 40px rgba(249, 115, 22, 0.8);
+                background-position: 100% 50%;
             }
         }
-
-        . animate-fade-in {
-            animation: fadeIn 0.8s ease-out forwards;
+        
+        .animate-fade-in {
+            animation: fade-in 0.6s ease-out forwards;
         }
-
-        .animate-fade-in-delay {
-            animation: fadeInDelay 1.2s ease-out forwards;
+        
+        .animate-slide-in {
+            animation: slide-in 0.7s ease-out forwards;
         }
-
-        .animate-pulse {
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        
+        .animate-glow-pulse {
+            animation: glow-pulse 2s ease-in-out infinite;
         }
-
+        
+        /* Hero Gradient */
+        .hero-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #ffd200 100%);
+            background-size: 400% 400%;
+            animation: gradient-shift 15s ease infinite;
+        }
+        
+        /* Sticky Header */
+        .sticky-nav {
+            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 13, 0.95);
+            transition: all 0.3s ease;
+        }
+        
+        /* Cards */
+        .competition-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        
+        .competition-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border-left-color: var(--competition-blue);
+        }
+        
+        .price-card {
+            transition: all 0.3s ease;
+        }
+        
+        .price-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.2);
+        }
+        
+        .gallery-card {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .gallery-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .gallery-card img {
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* Buttons */
+        .cta-button {
+            background: linear-gradient(45deg, var(--competition-blue), #60a5fa);
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+        
         .hover-lift {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
-        . hover-lift:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
-
-        .hover-glow {
-            transition: all 0.3s ease;
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
         }
-
-        .hover-glow:hover {
-            animation: glow 1. 5s ease-in-out infinite;
+        
+        .mobile-menu.open {
+            max-height: 600px;
         }
-
-        .sticky-nav {
-            background:  linear-gradient(135deg, #1f2937 0%, #111827 100%);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        
+        /* FAQ Accordion */
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
         }
-
-        .gradient-text {
-            background: linear-gradient(135deg, #f97316, #ef4444, #ec4899);
+        
+        .faq-content.open {
+            max-height: 500px;
+        }
+        
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-item.open .faq-icon {
+            transform: rotate(180deg);
+        }
+        
+        /* Category Icons */
+        .category-icon {
+            font-size: 3rem;
+            background: linear-gradient(45deg, var(--competition-blue), #10b981);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
-        .card-hover {
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .card-hover:hover {
-            transform: translateY(-8px);
-            box-shadow:  0 20px 40px rgba(0, 0, 0, 0.15);
-            border-color: #f97316;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight:  600;
-        }
-
-        .progress-bar {
-            background:  linear-gradient(90deg, #f97316, #ef4444);
-            height: 8px;
-            border-radius:  9999px;
-            transition: width 0.5s ease;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .competition-card {
-            background: white;
-            border-radius: 1rem;
-            padding: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .competition-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Mobile Menu */
-        .mobile-menu {
-            display: none;
-        }
-
-        .mobile-menu. active {
-            display: block;
-        }
-
-        /* Responsive Grid */
-        . grid-responsive {
-            display: grid;
-            gap: 2rem;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        }
-
-        /* Hero Section */
-        .hero-section {
-            background: linear-gradient(135deg, #1f2937 0%, #111827 50%, #0f172a 100%);
-            min-height: 600px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right:  0;
-            bottom: 0;
-            background: radial-gradient(circle at 30% 50%, rgba(249, 115, 22, 0.1) 0%, transparent 50%);
-        }
-
-        /* Footer */
-        .footer {
-            background: #111827;
-            color: white;
-            padding: 4rem 0 2rem;
-        }
-
-        .footer a {
-            color: #9ca3af;
-            transition: color 0.3s ease;
-        }
-
-        .footer a:hover {
-            color:  white;
-        }
-
-        /* Stats Cards */
+        
+        /* Stats */
         .stat-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-left: 4px solid var(--competition-blue);
         }
-
-        .stat-card:hover {
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            transform: translateY(-3px);
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
-
-        /* Pricing Cards */
-        .pricing-card {
-            background: white;
-            border-radius: 1rem;
-            padding: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
         }
-
-        .pricing-card:hover {
-            border-color: #f97316;
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--competition-blue);
+            border-radius: 4px;
         }
-
-        .pricing-card. featured {
-            border-color: #f97316;
-            box-shadow: 0 10px 40px rgba(249, 115, 22, 0.3);
-        }
-
-        /* Button Styles */
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: 9999px;
-            font-weight: 600;
-            transition:  all 0.3s ease;
-            cursor: pointer;
-            border: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #f97316, #ef4444);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow:  0 10px 30px rgba(249, 115, 22, 0.4);
-        }
-
-        .btn-secondary {
-            background: white;
-            color: #1f2937;
-            border: 2px solid #e5e7eb;
-        }
-
-        .btn-secondary:hover {
-            background: #f9fafb;
-            border-color: #f97316;
-        }
-
-        /* Tabs */
-        .tabs {
-            display: flex;
-            gap:  1rem;
-            border-bottom: 2px solid #e5e7eb;
-            margin-bottom: 2rem;
-        }
-
-        .tab {
-            padding: 1rem 1.5rem;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            margin-bottom: -2px;
-            transition: all 0.3s ease;
-        }
-
-        .tab:hover {
-            color: #f97316;
-        }
-
-        .tab.active {
-            color: #f97316;
-            border-bottom-color: #f97316;
-            font-weight: 600;
-        }
-
-        . tab-content {
-            display:  none;
-        }
-
-        . tab-content.active {
-            display: block;
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2563eb;
         }
     </style>
 </head>
-<body>
-    <!-- Sticky Header / Navigation -->
+<body class="bg-gray-50">
+    <!-- Sticky Header -->
     <header class="sticky top-0 z-50 sticky-nav border-b border-gray-800">
         <nav class="max-w-7xl mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
@@ -330,604 +245,672 @@
                     <span class="text-white text-2xl font-bold">Banimal</span>
                 </div>
                 <div class="hidden lg:flex items-center space-x-4">
+                    <a href="#competition" class="text-gray-300 hover:text-white transition-colors text-sm">🏆 Categories</a>
                     <a href="#dashboard" class="text-gray-300 hover:text-white transition-colors text-sm">📊 Dashboard</a>
-                    <a href="#submissions" class="text-gray-300 hover:text-white transition-colors text-sm">📝 Submit</a>
+                    <a href="#pricing" class="text-gray-300 hover:text-white transition-colors text-sm">💰 Pricing</a>
+                    <a href="#noodle-saga" class="text-gray-300 hover:text-white transition-colors text-sm font-bold">🍜 Noodle Mountain</a>
+                    <a href="#rules" class="text-gray-300 hover:text-white transition-colors text-sm">📋 Rules</a>
                     <a href="#gallery" class="text-gray-300 hover:text-white transition-colors text-sm">🎨 Gallery</a>
-                    <a href="#collaboration" class="text-gray-300 hover:text-white transition-colors text-sm">🤝 Collab</a>
-                    <a href="#ai-feedback" class="text-gray-300 hover:text-white transition-colors text-sm">🤖 AI Feedback</a>
-                    <a href="#analytics" class="text-gray-300 hover:text-white transition-colors text-sm">📈 Analytics</a>
-                    <a href="#achievements" class="text-gray-300 hover:text-white transition-colors text-sm">🏆 Achievements</a>
-                    <a href="#noodle-mountain" class="text-gray-300 hover:text-white transition-colors text-sm font-bold">🍜 Noodle Mountain</a>
-                    <a href="#forum" class="text-gray-300 hover:text-white transition-colors text-sm">💬 Forum</a>
                     <a href="#faq" class="text-gray-300 hover:text-white transition-colors text-sm">❓ FAQ</a>
-                    <a href="#get-started" class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-2 rounded-full hover-glow transition-all text-sm font-semibold">🚀 Start</a>
+                    <a href="#competition" class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-full hover-lift transition-all text-sm font-semibold">🚀 Get Started</a>
                 </div>
-                <button class="lg:hidden text-white" onclick="toggleMobileMenu()">
-                    <i class="fas fa-bars"></i>
+                <button id="mobile-menu-btn" class="lg:hidden text-white">
+                    <i class="fas fa-bars text-xl"></i>
                 </button>
             </div>
             
             <!-- Mobile Menu -->
-            <div id="mobileMenu" class="mobile-menu lg:hidden mt-4 pb-4 animate-fade-in">
-                <div class="flex flex-col space-y-3">
-                    <a href="#competition" class="text-gray-300 hover:text-white transition-colors text-left">Competition</a>
-                    <a href="#dashboard" class="text-gray-300 hover:text-white transition-colors text-left">📊 Dashboard</a>
-                    <a href="#submissions" class="text-gray-300 hover:text-white transition-colors text-left">📝 Submissions</a>
-                    <a href="#gallery" class="text-gray-300 hover:text-white transition-colors text-left">🎨 Gallery</a>
-                    <a href="#collaboration" class="text-gray-300 hover:text-white transition-colors text-left">🤝 Collaboration</a>
-                    <a href="#ai-feedback" class="text-gray-300 hover: text-white transition-colors text-left">🤖 AI Feedback</a>
-                    <a href="#analytics" class="text-gray-300 hover:text-white transition-colors text-left">📈 Analytics</a>
-                    <a href="#achievements" class="text-gray-300 hover:text-white transition-colors text-left">🏆 Achievements</a>
-                    <a href="#noodle-mountain" class="text-gray-300 hover:text-white transition-colors text-left font-bold">🍜 Noodle Mountain</a>
-                    <a href="#forum" class="text-gray-300 hover:text-white transition-colors text-left">💬 Forum</a>
-                    <a href="#faq" class="text-gray-300 hover:text-white transition-colors text-left">❓ FAQ</a>
-                    <a href="#get-started" class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-full text-center mt-3">🚀 Get Started</a>
+            <div id="mobile-menu" class="mobile-menu lg:hidden mt-4">
+                <div class="flex flex-col space-y-3 pb-4">
+                    <a href="#competition" class="text-gray-300 hover:text-white transition-colors">🏆 Categories</a>
+                    <a href="#dashboard" class="text-gray-300 hover:text-white transition-colors">📊 Dashboard</a>
+                    <a href="#pricing" class="text-gray-300 hover:text-white transition-colors">💰 Pricing</a>
+                    <a href="#noodle-saga" class="text-gray-300 hover:text-white transition-colors font-bold">🍜 Noodle Mountain</a>
+                    <a href="#rules" class="text-gray-300 hover:text-white transition-colors">📋 Rules</a>
+                    <a href="#gallery" class="text-gray-300 hover:text-white transition-colors">🎨 Gallery</a>
+                    <a href="#faq" class="text-gray-300 hover:text-white transition-colors">❓ FAQ</a>
+                    <a href="#competition" class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-full text-center mt-3">🚀 Get Started</a>
                 </div>
             </div>
         </nav>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero-section" id="home">
-        <div class="max-w-7xl mx-auto px-6 text-center relative z-10">
-            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 animate-fade-in">
-                Welcome to <span class="gradient-text">SamFox Studio</span>
+    <section class="hero-gradient min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <img src="https://images.unsplash.com/photo-1516298773066-c48f8e9bd92b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080" alt="Fox background" class="w-full h-full object-cover">
+        </div>
+        <div class="text-center z-10 max-w-4xl mx-auto px-6 animate-fade-in">
+            <div class="text-8xl mb-6">🦊</div>
+            <h1 class="text-6xl md:text-8xl font-black text-white mb-6 leading-tight drop-shadow-lg">
+                Foxed Has Mobiles™
             </h1>
-            <p class="text-xl md:text-2xl text-gray-300 mb-8 animate-fade-in">
-                Master Competition Suite - Where Creativity Meets Innovation
+            <p class="text-2xl md:text-3xl text-yellow-300 italic mb-8 font-medium drop-shadow-md">
+                "The fox doesn't speak — it routes."
             </p>
-            <p class="text-lg text-gray-400 mb-12 max-w-3xl mx-auto animate-fade-in-delay">
-                Join the ultimate creative design competition platform featuring Foxed Has Mobiles™ 1/1 Apparel Oracle, 
-                Mr Fruitful™'s Olympic Threads, and 4 other specialized categories.  Multi-medium support, 
-                symbol validation, and Banimal™ branding. 
+            <p class="text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto drop-shadow-md">
+                "Not what it is — what it means."
             </p>
-            
-            <div class="flex flex-wrap justify-center gap-4 animate-fade-in-delay">
-                <a href="#get-started" class="bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold py-3 px-6 rounded-full hover-lift transition-all">
-                    🚀 Get Started
-                </a>
-                <a href="#dashboard" class="bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold py-3 px-6 rounded-full hover-lift transition-all">
-                    📊 Dashboard
-                </a>
-                <a href="#achievements" class="bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-semibold py-3 px-6 rounded-full hover-lift transition-all">
-                    🏆 Compete
-                </a>
-                <a href="#submissions" class="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold py-3 px-6 rounded-full hover-lift transition-all">
-                    📝 Submit
-                </a>
-                <a href="#gallery" class="bg-gradient-to-r from-pink-500 to-red-500 text-white font-semibold py-3 px-6 rounded-full hover-lift transition-all">
-                    🎨 Gallery
-                </a>
-            </div>
+            <a href="#competition" class="cta-button text-white font-bold py-4 px-8 rounded-full text-xl inline-flex items-center space-x-3 no-underline hover-lift animate-glow-pulse">
+                <span>↓ Enter The Archive</span>
+                <i class="fas fa-arrow-down"></i>
+            </a>
         </div>
     </section>
 
-    <!-- Competition Overview Section -->
+    <!-- Competition Categories Section -->
     <section id="competition" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-6">
-            <h2 class="section-title gradient-text">Competition Categories</h2>
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-5xl font-black text-gray-900 mb-6">📜 Master Competition Suite</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 text-left max-w-5xl mx-auto">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-gray-900">Launched By:</h4>
+                        <p class="text-gray-700">Heyns Schoeman & Baobab Whisperer</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-gray-900">Governance:</h4>
+                        <p class="text-gray-700">FAA Interbrand + Design Council</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-gray-900">Archive:</h4>
+                        <p class="text-gray-700">Vault Zero + Seed Satellite</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-gray-900">Protocol Base:</h4>
+                        <p class="text-gray-700">Atom-Level Design & Symbology</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="text-3xl font-bold text-center text-blue-600 mb-12">Competition Categories</h3>
             
-            <div class="grid-responsive">
-                <!-- Competition 1: Foxed Has Mobiles -->
-                <div class="competition-card card-hover">
-                    <div class="text-5xl mb-4">🦊</div>
-                    <h3 class="text-2xl font-bold mb-2">Foxed Has Mobiles™</h3>
-                    <p class="text-sm text-gray-500 mb-4">1/1 Apparel Oracle</p>
-                    <p class="text-gray-600 mb-4">
-                        Create unique, one-of-one apparel designs that push creative boundaries and redefine streetwear fashion.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="badge bg-orange-100 text-orange-800">Advanced</span>
-                        <span class="badge bg-blue-100 text-blue-800">R5,000 Prize</span>
-                        <span class="badge bg-green-100 text-green-800">156 Participants</span>
-                    </div>
-                    <div class="mb-4">
-                        <div class="flex justify-between text-sm mb-2">
-                            <span class="text-gray-600">Submissions</span>
-                            <span class="font-semibold">156/300</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="progress-bar" style="width: 52%"></div>
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Category 1 -->
+                <div class="competition-card bg-white p-8 rounded-xl shadow-lg animate-slide-in">
+                    <div class="flex items-start space-x-4">
+                        <div class="category-icon">🦊</div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">1. Foxed Has Mobiles™ – The 1/1 Apparel Oracle</h3>
+                            <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250" alt="Apparel design" class="w-full h-32 object-cover rounded-lg mb-4">
+                            <p class="text-gray-700 mb-4">Wearable interpretations of "Foxed Has Mobiles™". Include the phrase, embed atom-level details like hidden codes, GPS, seeds. One-of-one designs only.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">1/1 Designs</span>
+                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Hidden Tech</span>
+                                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">GPS Embedded</span>
+                            </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary w-full">Join Competition</button>
                 </div>
 
-                <!-- Competition 2: Mr Fruitful's Olympic Threads -->
-                <div class="competition-card card-hover">
-                    <div class="text-5xl mb-4">🍉</div>
-                    <h3 class="text-2xl font-bold mb-2">Mr Fruitful™'s Olympic Threads</h3>
-                    <p class="text-sm text-gray-500 mb-4">Athletic Apparel Design</p>
-                    <p class="text-gray-600 mb-4">
-                        Design cutting-edge athletic wear that combines performance with style for the modern athlete.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="badge bg-purple-100 text-purple-800">Intermediate</span>
-                        <span class="badge bg-blue-100 text-blue-800">R3,500 Prize</span>
-                        <span class="badge bg-green-100 text-green-800">142 Participants</span>
-                    </div>
-                    <div class="mb-4">
-                        <div class="flex justify-between text-sm mb-2">
-                            <span class="text-gray-600">Submissions</span>
-                            <span class="font-semibold">142/250</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="progress-bar" style="width: 57%"></div>
+                <!-- Category 2 -->
+                <div class="competition-card bg-white p-8 rounded-xl shadow-lg animate-slide-in" style="animation-delay: 0.1s;">
+                    <div class="flex items-start space-x-4">
+                        <div class="category-icon">🍉</div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">2. Mr Fruitful™'s Olympic Threads</h3>
+                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250" alt="Athletic gear" class="w-full h-32 object-cover rounded-lg mb-4">
+                            <p class="text-gray-700 mb-4">Design athlete gear for Crate Dance Olympics™. Must include hidden Baobab or Snotneus symbols. Focus: fruit, fire, function.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm">Athletic Gear</span>
+                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">Hidden Symbols</span>
+                                <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">Olympics Ready</span>
+                            </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary w-full">Join Competition</button>
                 </div>
 
-                <!-- Competition 3: Brand Creation -->
-                <div class="competition-card card-hover">
-                    <div class="text-5xl mb-4">🎨</div>
-                    <h3 class="text-2xl font-bold mb-2">Brand Creation Lab</h3>
-                    <p class="text-sm text-gray-500 mb-4">Full Brand Identity</p>
-                    <p class="text-gray-600 mb-4">
-                        Develop comprehensive brand identities from logo to messaging for fictional or real-world brands.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="badge bg-indigo-100 text-indigo-800">Advanced</span>
-                        <span class="badge bg-blue-100 text-blue-800">R4,000 Prize</span>
-                        <span class="badge bg-green-100 text-green-800">98 Participants</span>
-                    </div>
-                    <div class="mb-4">
-                        <div class="flex justify-between text-sm mb-2">
-                            <span class="text-gray-600">Submissions</span>
-                            <span class="font-semibold">98/200</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="progress-bar" style="width: 49%"></div>
+                <!-- Category 3 -->
+                <div class="competition-card bg-white p-8 rounded-xl shadow-lg animate-slide-in" style="animation-delay: 0.2s;">
+                    <div class="flex items-start space-x-4">
+                        <div class="category-icon">📦</div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">3. Water the Seed™ – Brandborn Creations</h3>
+                            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250" alt="Brand design" class="w-full h-32 object-cover rounded-lg mb-4">
+                            <p class="text-gray-700 mb-4">Create logos, frames, packaging for any of 139+ FAA brands. Any medium accepted — even painted dirt.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm">139+ Brands</span>
+                                <span class="bg-pink-100 text-pink-800 px-3 py-1 rounded-full text-sm">Any Medium</span>
+                                <span class="bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-sm">Creative Freedom</span>
+                            </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary w-full">Join Competition</button>
                 </div>
 
-                <!-- Competition 4: Chaos Cartography -->
-                <div class="competition-card card-hover">
-                    <div class="text-5xl mb-4">🗺️</div>
-                    <h3 class="text-2xl font-bold mb-2">Chaos Cartography</h3>
-                    <p class="text-sm text-gray-500 mb-4">Abstract Map Design</p>
-                    <p class="text-gray-600 mb-4">
-                        Create imaginative, abstract maps that blend art with functionality in unexpected ways.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="badge bg-teal-100 text-teal-800">Intermediate</span>
-                        <span class="badge bg-blue-100 text-blue-800">R3,000 Prize</span>
-                        <span class="badge bg-green-100 text-green-800">87 Participants</span>
-                    </div>
-                    <div class="mb-4">
-                        <div class="flex justify-between text-sm mb-2">
-                            <span class="text-gray-600">Submissions</span>
-                            <span class="font-semibold">87/180</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="progress-bar" style="width: 48%"></div>
+                <!-- Category 4 -->
+                <div class="competition-card bg-white p-8 rounded-xl shadow-lg animate-slide-in" style="animation-delay: 0.3s;">
+                    <div class="flex items-start space-x-4">
+                        <div class="category-icon">🧬</div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">4. Playing with the Seed™ – Chaos Cartography</h3>
+                            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250" alt="Chaos art" class="w-full h-32 object-cover rounded-lg mb-4">
+                            <p class="text-gray-700 mb-4">Submit memes, glitchwear, absurdist artifacts representing brand collapse into new culture.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">Meme Culture</span>
+                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Glitch Art</span>
+                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">Absurdist</span>
+                            </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary w-full">Join Competition</button>
                 </div>
 
-                <!-- Competition 5: Digital Art Arena -->
-                <div class="competition-card card-hover">
-                    <div class="text-5xl mb-4">🎭</div>
-                    <h3 class="text-2xl font-bold mb-2">Digital Art Arena</h3>
-                    <p class="text-sm text-gray-500 mb-4">Multi-Medium Digital Art</p>
-                    <p class="text-gray-600 mb-4">
-                        Showcase your digital artistry across any medium:  illustration, 3D, animation, or mixed media.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="badge bg-pink-100 text-pink-800">All Levels</span>
-                        <span class="badge bg-blue-100 text-blue-800">R4,500 Prize</span>
-                        <span class="badge bg-green-100 text-green-800">201 Participants</span>
-                    </div>
-                    <div class="mb-4">
-                        <div class="flex justify-between text-sm mb-2">
-                            <span class="text-gray-600">Submissions</span>
-                            <span class="font-semibold">201/350</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="progress-bar" style="width: 57%"></div>
+                <!-- Category 5 -->
+                <div class="competition-card bg-white p-8 rounded-xl shadow-lg animate-slide-in" style="animation-delay: 0.4s;">
+                    <div class="flex items-start space-x-4">
+                        <div class="category-icon">🌍</div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">5. Crate Dance Showcase™: Stage & Nation Design</h3>
+                            <img src="https://images.unsplash.com/photo-1587293852726-70cdb56c2866?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250" alt="Stage design" class="w-full h-32 object-cover rounded-lg mb-4">
+                            <p class="text-gray-700 mb-4">Stage and nation layouts made from crates. 2D / 3D blueprints. Cosmic bridges welcome.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Crate Design</span>
+                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">3D Blueprints</span>
+                                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">Cosmic Bridges</span>
+                            </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary w-full">Join Competition</button>
                 </div>
 
-                <!-- Competition 6: Typography Thunder -->
-                <div class="competition-card card-hover">
-                    <div class="text-5xl mb-4">✍️</div>
-                    <h3 class="text-2xl font-bold mb-2">Typography Thunder</h3>
-                    <p class="text-sm text-gray-500 mb-4">Creative Typography</p>
-                    <p class="text-gray-600 mb-4">
-                        Design innovative typographic compositions that tell stories and evoke emotions through letterforms.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="badge bg-yellow-100 text-yellow-800">Beginner-Friendly</span>
-                        <span class="badge bg-blue-100 text-blue-800">R2,500 Prize</span>
-                        <span class="badge bg-green-100 text-green-800">164 Participants</span>
-                    </div>
-                    <div class="mb-4">
-                        <div class="flex justify-between text-sm mb-2">
-                            <span class="text-gray-600">Submissions</span>
-                            <span class="font-semibold">164/280</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="progress-bar" style="width: 59%"></div>
+                <!-- Category 6 -->
+                <div class="competition-card bg-white p-8 rounded-xl shadow-lg animate-slide-in" style="animation-delay: 0.5s;">
+                    <div class="flex items-start space-x-4">
+                        <div class="category-icon">🎓</div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">6. FAA University Identity Deck</h3>
+                            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250" alt="University branding" class="w-full h-32 object-cover rounded-lg mb-4">
+                            <p class="text-gray-700 mb-4">Create FAA University student identity assets: cards, robes, stamps, crests with Baobab + Compliance Seal + Snotneus Welcome.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Identity Cards</span>
+                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Baobab Symbols</span>
+                                <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm">Compliance Seal</span>
+                            </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary w-full">Join Competition</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Dashboard Stats Section -->
-    <section id="dashboard" class="py-20 bg-gradient-to-br from-orange-50 to-red-50">
+    <!-- Dashboard Statistics Section -->
+    <section id="dashboard" class="py-20 bg-gradient-to-br from-blue-50 to-purple-50">
         <div class="max-w-7xl mx-auto px-6">
-            <h2 class="section-title gradient-text">Competition Dashboard</h2>
+            <h2 class="text-4xl font-black text-gray-900 mb-12 text-center">📊 Competition Dashboard</h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                <div class="stat-card">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="text-3xl">📊</div>
-                        <div class="text-green-500 text-sm font-semibold">↑ 15. 2%</div>
-                    </div>
-                    <div class="text-3xl font-bold mb-2">847</div>
-                    <div class="text-gray-600 text-sm">Total Submissions</div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="stat-card bg-white p-6 rounded-xl shadow-lg animate-fade-in">
+                    <div class="text-4xl mb-2">👥</div>
+                    <div class="text-3xl font-bold text-gray-900">1,247</div>
+                    <div class="text-gray-600">Active Participants</div>
                 </div>
-
-                <div class="stat-card">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="text-3xl">👥</div>
-                        <div class="text-green-500 text-sm font-semibold">↑ 8.7%</div>
-                    </div>
-                    <div class="text-3xl font-bold mb-2">1,456</div>
-                    <div class="text-gray-600 text-sm">Active Participants</div>
+                <div class="stat-card bg-white p-6 rounded-xl shadow-lg animate-fade-in" style="animation-delay: 0.1s;">
+                    <div class="text-4xl mb-2">🎨</div>
+                    <div class="text-3xl font-bold text-gray-900">694</div>
+                    <div class="text-gray-600">Total Submissions</div>
                 </div>
-
-                <div class="stat-card">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="text-3xl">🏆</div>
-                        <div class="text-blue-500 text-sm font-semibold">83. 2%</div>
-                    </div>
-                    <div class="text-3xl font-bold mb-2">4. 7★</div>
-                    <div class="text-gray-600 text-sm">Average Rating</div>
+                <div class="stat-card bg-white p-6 rounded-xl shadow-lg animate-fade-in" style="animation-delay: 0.2s;">
+                    <div class="text-4xl mb-2">🏆</div>
+                    <div class="text-3xl font-bold text-gray-900">42</div>
+                    <div class="text-gray-600">Days Remaining</div>
                 </div>
-
-                <div class="stat-card">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="text-3xl">👁️</div>
-                        <div class="text-green-500 text-sm font-semibold">↑ 22.4%</div>
-                    </div>
-                    <div class="text-3xl font-bold mb-2">23,847</div>
-                    <div class="text-gray-600 text-sm">Total Views</div>
+                <div class="stat-card bg-white p-6 rounded-xl shadow-lg animate-fade-in" style="animation-delay: 0.3s;">
+                    <div class="text-4xl mb-2">💎</div>
+                    <div class="text-3xl font-bold text-gray-900">$25K</div>
+                    <div class="text-gray-600">Prize Pool</div>
                 </div>
             </div>
-
-            <!-- Recent Activity -->
-            <div class="bg-white rounded-lg shadow-lg p-6">
-                <h3 class="text-2xl font-bold mb-6">Recent Activity</h3>
+            
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">Recent Activity</h3>
                 <div class="space-y-4">
-                    <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                    <div class="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
                         <div class="text-2xl">🦊</div>
                         <div class="flex-1">
-                            <div class="font-semibold">New submission in Foxed Has Mobiles™</div>
-                            <div class="text-sm text-gray-600">Alex Chen submitted "Neon Fox Streetwear Collection"</div>
+                            <div class="font-semibold text-gray-900">New submission in Foxed Has Mobiles™</div>
+                            <div class="text-sm text-gray-600">Alex Chen submitted "Neon Fox Streetwear" • 2 hours ago</div>
                         </div>
-                        <div class="text-sm text-gray-500">2 mins ago</div>
+                        <div class="text-blue-600 font-semibold">+234 🔥</div>
                     </div>
-
-                    <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                    <div class="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
                         <div class="text-2xl">🍉</div>
                         <div class="flex-1">
-                            <div class="font-semibold">New submission in Olympic Threads</div>
-                            <div class="text-sm text-gray-600">Maria Rodriguez submitted "Dynamic Sprint Collection"</div>
+                            <div class="font-semibold text-gray-900">Olympic Threads update</div>
+                            <div class="text-sm text-gray-600">Maya Rodriguez updated portfolio • 5 hours ago</div>
                         </div>
-                        <div class="text-sm text-gray-500">15 mins ago</div>
+                        <div class="text-green-600 font-semibold">+189 ⭐</div>
                     </div>
-
-                    <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-                        <div class="text-2xl">🎨</div>
+                    <div class="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+                        <div class="text-2xl">📦</div>
                         <div class="flex-1">
-                            <div class="font-semibold">Achievement unlocked! </div>
-                            <div class="text-sm text-gray-600">Jamie Lee earned "First Submission" badge</div>
+                            <div class="font-semibold text-gray-900">Brand Creation Lab featured</div>
+                            <div class="text-sm text-gray-600">Jordan Kim's design got featured • 1 day ago</div>
                         </div>
-                        <div class="text-sm text-gray-500">1 hour ago</div>
+                        <div class="text-purple-600 font-semibold">+156 💜</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Pricing / Products Section -->
-    <section id="products" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <h2 class="section-title gradient-text">FAA. ZONE™ Pricing Packages</h2>
-            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-                Choose the perfect package to access our competition submission tools, resources, and exclusive benefits.
-            </p>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <!-- FAA.ZONE Pricing Section -->
+    <section id="pricing" class="py-20 bg-gray-100">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <div class="flex items-center justify-center space-x-3 mb-6">
+                    <span class="text-5xl">🦍</span>
+                    <h2 class="text-4xl font-black text-gray-900">FAA.ZONE™</h2>
+                </div>
+                <h3 class="text-3xl font-bold text-gray-900 mb-6">
+                    Choose Your <span class="text-blue-600">Package</span>
+                </h3>
+                <p class="text-xl text-gray-700">Select the tier that fits your creative journey</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
                 <!-- Starter Package -->
-                <div class="pricing-card">
-                    <div class="text-4xl mb-4">🌱</div>
-                    <h3 class="text-2xl font-bold mb-2">Starter</h3>
-                    <div class="text-4xl font-bold mb-4">R149<span class="text-lg text-gray-500">/mo</span></div>
-                    <ul class="space-y-3 mb-6">
-                        <li class="flex items-center gap-2">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Submit to 2 competitions</span>
+                <div class="price-card bg-white p-8 rounded-xl shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Starter Package</h3>
+                    <p class="text-gray-600 mb-6">Perfect for individual creators</p>
+                    <div class="text-4xl font-black text-blue-600 mb-6">R 199.00</div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Basic API Access</span>
                         </li>
-                        <li class="flex items-center gap-2">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Basic analytics dashboard</span>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Standard Analytics Dashboard</span>
                         </li>
-                        <li class="flex items-center gap-2">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Community forum access</span>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Community Support</span>
                         </li>
-                        <li class="flex items-center gap-2">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Email support</span>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Up to 5 Users</span>
                         </li>
                     </ul>
-                    <button class="btn btn-secondary w-full">Get Started</button>
+                    <button class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+                        Choose Starter
+                    </button>
                 </div>
 
-                <!-- Professional Package (Featured) -->
-                <div class="pricing-card featured">
-                    <div class="absolute top-4 right-4 bg-orange-500 text-white text-xs px-3 py-1 rounded-full font-semibold">
-                        POPULAR
+                <!-- Professional Package (Popular) -->
+                <div class="price-card bg-gradient-to-br from-blue-600 to-purple-600 p-8 rounded-xl shadow-xl transform scale-105">
+                    <div class="bg-yellow-400 text-gray-900 font-bold px-3 py-1 rounded-full inline-block mb-4 text-sm">
+                        MOST POPULAR
                     </div>
-                    <div class="text-4xl mb-4">🚀</div>
-                    <h3 class="text-2xl font-bold mb-2">Professional</h3>
-                    <div class="text-4xl font-bold mb-4">R349<span class="text-lg text-gray-500">/mo</span></div>
-                    <ul class="space-y-3 mb-6">
-                        <li class="flex items-center gap-2">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Submit to ALL competitions</span>
+                    <h3 class="text-2xl font-bold text-white mb-2">Professional Package</h3>
+                    <p class="text-blue-100 mb-6">For growing teams and businesses</p>
+                    <div class="text-4xl font-black text-white mb-6">R 499.00</div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-yellow-300 mt-1 mr-3"></i>
+                            <span class="text-white">Advanced API Access</span>
                         </li>
-                        <li class="flex items-center gap-2">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Advanced analytics & insights</span>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-yellow-300 mt-1 mr-3"></i>
+                            <span class="text-white">Premium Analytics & Reporting</span>
                         </li>
-                        <li class="flex items-center gap-2">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>AI-powered feedback</span>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-yellow-300 mt-1 mr-3"></i>
+                            <span class="text-white">Dedicated Priority Support</span>
                         </li>
-                        <li class="flex items-center gap-2">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Priority support</span>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-yellow-300 mt-1 mr-3"></i>
+                            <span class="text-white">Unlimited Users</span>
                         </li>
-                        <li class="flex items-center gap-2">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Collaboration tools</span>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-yellow-300 mt-1 mr-3"></i>
+                            <span class="text-white">Custom Data Integrations</span>
                         </li>
                     </ul>
-                    <button class="btn btn-primary w-full">Get Started</button>
+                    <button class="w-full bg-white text-blue-600 py-3 rounded-lg hover:bg-gray-100 transition-colors font-bold">
+                        Choose Professional
+                    </button>
                 </div>
 
                 <!-- Enterprise Package -->
-                <div class="pricing-card">
-                    <div class="text-4xl mb-4">⭐</div>
-                    <h3 class="text-2xl font-bold mb-2">Enterprise</h3>
-                    <div class="text-4xl font-bold mb-4">R799<span class="text-lg text-gray-500">/mo</span></div>
-                    <ul class="space-y-3 mb-6">
-                        <li class="flex items-center gap-2">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Everything in Professional</span>
+                <div class="price-card bg-white p-8 rounded-xl shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Enterprise Package</h3>
+                    <p class="text-gray-600 mb-6">For large-scale operations</p>
+                    <div class="text-4xl font-black text-blue-600 mb-6">R 1,200.00</div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">All Professional Features</span>
                         </li>
-                        <li class="flex items-center gap-2">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Unlimited team members</span>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Dedicated Account Manager</span>
                         </li>
-                        <li class="flex items-center gap-2">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Custom branding options</span>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">24/7 Phone Support</span>
                         </li>
-                        <li class="flex items-center gap-2">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>Dedicated account manager</span>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Enhanced Custom Integrations</span>
                         </li>
-                        <li class="flex items-center gap-2">
-                            <i class="fas fa-check text-green-500"></i>
-                            <span>API access</span>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">On-site Training & Setup</span>
                         </li>
                     </ul>
-                    <button class="btn btn-secondary w-full">Contact Sales</button>
+                    <button class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+                        Choose Enterprise
+                    </button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Noodle Mountain Saga -->
-    <section id="noodle-mountain" class="py-20 bg-gradient-to-br from-amber-50 to-orange-50">
-        <div class="max-w-4xl mx-auto px-6">
-            <h2 class="section-title" style="background:  linear-gradient(135deg, #f59e0b, #ea580c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-                🍜 The Noodle Mountain Saga
-            </h2>
-
-            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
-                <h3 class="text-2xl font-bold mb-4 text-amber-800">The Legend Begins</h3>
-                <p class="text-gray-700 leading-relaxed mb-4">
-                    In the beginning, there was the <strong>Noodle Mountain</strong> — a majestic peak of twisted, 
-                    tangled pasta, rising from the depths of imagination. This was no ordinary mountain; it was a 
-                    symbol of complexity, creativity, and the beautiful chaos of design.
-                </p>
-                <p class="text-gray-700 leading-relaxed mb-4">
-                    Upon this mountain, a humble <strong>white canvas</strong> stretched across the landscape, 
-                    pristine and pure, waiting for the touch of creative genius. But the canvas was not alone. 
-                </p>
+    <!-- Noodle Mountain Saga Section -->
+    <section id="noodle-saga" class="py-20 bg-gradient-to-b from-blue-900 to-purple-900 text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20">
+            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080" alt="Mountain landscape" class="w-full h-full object-cover">
+        </div>
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-black mb-6">🍜 The Noodle Mountain Saga</h2>
+                <p class="text-xl text-blue-100 mb-8">From Pot to Paradise: Our Epic Journey</p>
             </div>
-
-            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
-                <h3 class="text-2xl font-bold mb-4 text-amber-800">The Birth of Fruitful™</h3>
-                <p class="text-gray-700 leading-relaxed mb-4">
-                    Rising from the summit emerged <strong>Fruitful™</strong> — the corporate header, gleaming with 
-                    professional polish and strategic vision. Like a banner planted on a conquered peak, Fruitful™ 
-                    declared its presence with confidence and clarity.
-                </p>
-                <p class="text-gray-700 leading-relaxed">
-                    This header wasn't just decoration; it was a beacon, a guide, a promise of structure amid the 
-                    creative chaos of the Noodle Mountain below. 
-                </p>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
-                <h3 class="text-2xl font-bold mb-4 text-amber-800">Enter Banimal™</h3>
-                <p class="text-gray-700 leading-relaxed mb-4">
-                    Beneath this fantastical realm, a new, solid foundation emerged:  the <strong>Banimal™</strong> 
-                    footer. Like a corporate header, yet grounded in the earth, this "winter brown grass" expanse 
-                    provides a clear, visible deployment area. 
-                </p>
-                <p class="text-gray-700 leading-relaxed mb-4">
-                    It's here, on this stable ground, that the sheep can truly play, finding their space (about 25% 
-                    of the white canvas, with a proud 2mm border from the edges).
-                </p>
-                <div class="bg-amber-50 rounded-lg p-6 border-2 border-amber-200">
-                    <h4 class="text-xl font-semibold mb-3 text-amber-800">Banimal™:  Kind Creatures.  Global Impact.</h4>
-                    <p class="text-gray-700 leading-relaxed">
-                        The Banimal™ philosophy is simple yet profound: create space for kind creatures to thrive, 
-                        while making a global impact through thoughtful design and compassionate innovation.
+            
+            <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-8 mb-12">
+                <div class="text-center mb-8">
+                    <div class="text-6xl mb-4">🏔️</div>
+                    <h3 class="text-2xl font-bold mb-4">The Legendary Journey</h3>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8 mb-8">
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">🍜</div>
+                        <h4 class="font-bold text-xl mb-2">The Beginning</h4>
+                        <p class="text-blue-100">In a humble pot, noodles swirled with dreams of greatness</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">⛰️</div>
+                        <h4 class="font-bold text-xl mb-2">The Ascent</h4>
+                        <p class="text-blue-100">Rising through challenges, transforming into mountains</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">🌟</div>
+                        <h4 class="font-bold text-xl mb-2">The Summit</h4>
+                        <p class="text-blue-100">Reaching peaks of creativity and innovation</p>
+                    </div>
+                </div>
+                
+                <div class="prose prose-invert max-w-none">
+                    <p class="text-lg text-blue-50 leading-relaxed">
+                        Once upon a time, in the valleys of creativity, humble noodles began their journey. 
+                        They swirled in pots of possibility, absorbing the flavors of innovation and the spices of imagination. 
+                        As they cooked, they dreamed of becoming more than just sustenance—they aspired to be mountains.
+                    </p>
+                    <p class="text-lg text-blue-50 leading-relaxed mt-4">
+                        Through determination and the power of collective creativity, these noodles transformed. 
+                        They stacked upon each other, forming peaks that touched the clouds. Each strand represented 
+                        a story, a design, a dream realized. This is the Noodle Mountain—where every submission 
+                        adds another layer to our ever-growing landscape of innovation.
                     </p>
                 </div>
             </div>
-
-            <div class="bg-white rounded-lg shadow-lg p-8">
-                <h3 class="text-2xl font-bold mb-4 text-amber-800">The Canvas Complete</h3>
-                <p class="text-gray-700 leading-relaxed">
-                    And so, the composition was complete:  Noodle Mountain reaching for the skies, Fruitful™ crowning 
-                    the peak, a white canvas of infinite possibility stretched between, and Banimal™ providing the 
-                    solid ground beneath. A canvas born from simplicity, elevated by imagination, and sustained by 
-                    kind creatures and global impact! 
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Rules Section -->
-    <section id="rules" class="py-20 bg-white">
-        <div class="max-w-4xl mx-auto px-6">
-            <h2 class="section-title gradient-text">Competition Rules & Guidelines</h2>
-
-            <div class="space-y-6">
-                <div class="bg-gradient-to-r from-orange-50 to-red-50 rounded-lg p-6 border-l-4 border-orange-500">
-                    <h3 class="text-xl font-bold mb-3 flex items-center gap-2">
-                        <span>📋</span> Submission Requirements
-                    </h3>
-                    <ul class="space-y-2 text-gray-700">
-                        <li>• All work must be original and created specifically for this competition</li>
-                        <li>• Multiple file formats accepted:  PNG, JPG, PDF, AI, PSD, SVG</li>
-                        <li>• Maximum file size: 50MB per submission</li>
-                        <li>• Include a brief description (100-500 words) of your concept</li>
-                    </ul>
-                </div>
-
-                <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-lg p-6 border-l-4 border-blue-500">
-                    <h3 class="text-xl font-bold mb-3 flex items-center gap-2">
-                        <span>⚖️</span> Judging Criteria
-                    </h3>
-                    <ul class="space-y-2 text-gray-700">
-                        <li>• <strong>Creativity & Originality (40%):</strong> Unique concepts and innovative approaches</li>
-                        <li>• <strong>Technical Excellence (30%):</strong> Execution quality and attention to detail</li>
-                        <li>• <strong>Concept Clarity (20%):</strong> Clear communication of ideas and purpose</li>
-                        <li>• <strong>Impact & Relevance (10%):</strong> Potential real-world application and appeal</li>
-                    </ul>
-                </div>
-
-                <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-6 border-l-4 border-green-500">
-                    <h3 class="text-xl font-bold mb-3 flex items-center gap-2">
-                        <span>🏆</span> Prizes & Recognition
-                    </h3>
-                    <ul class="space-y-2 text-gray-700">
-                        <li>• Cash prizes ranging from R2,500 to R5,000 per category</li>
-                        <li>• Featured placement in our digital gallery</li>
-                        <li>• Certificate of achievement for all winners</li>
-                        <li>• Potential collaboration opportunities with industry partners</li>
-                    </ul>
-                </div>
-
-                <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-6 border-l-4 border-purple-500">
-                    <h3 class="text-xl font-bold mb-3 flex items-center gap-2">
-                        <span>📅</span> Important Deadlines
-                    </h3>
-                    <ul class="space-y-2 text-gray-700">
-                        <li>• Submission deadline: February 15, 2025 at 11:59 PM</li>
-                        <li>• Judging period: February 16-28, 2025</li>
-                        <li>• Winners announced: March 1, 2025</li>
-                        <li>• Prize distribution: Within 14 days of announcement</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Gallery Section -->
-    <section id="gallery" class="py-20 bg-gradient-to-br from-pink-50 to-purple-50">
-        <div class="max-w-7xl mx-auto px-6">
-            <h2 class="section-title gradient-text">Featured Gallery</h2>
             
-            <div class="flex justify-center gap-4 mb-8">
-                <button class="btn btn-primary" onclick="filterGallery('all')">All</button>
-                <button class="btn btn-secondary" onclick="filterGallery('foxed')">🦊 Foxed</button>
-                <button class="btn btn-secondary" onclick="filterGallery('olympic')">🍉 Olympic</button>
-                <button class="btn btn-secondary" onclick="filterGallery('brand')">🎨 Brand</button>
+            <div class="text-center">
+                <a href="#competition" class="bg-white text-purple-900 px-8 py-4 rounded-full font-bold text-lg hover-lift inline-flex items-center space-x-3">
+                    <span>Join the Journey</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
+        </div>
+    </section>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Rules and Guidelines Section -->
+    <section id="rules" class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-4xl font-black text-gray-900 mb-12 text-center">📋 Competition Rules & Guidelines</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-xl">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                        <i class="fas fa-clipboard-check text-blue-600 mr-3"></i>
+                        Submission Guidelines
+                    </h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span>All submissions must be original work created by the participant</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span>File formats: .jpg, .png, .svg, .mp4, .pdf (max 100MB)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span>Include project description (min 100 words)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span>Multiple submissions allowed across categories</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span>Deadline: Feb 28, 2025 at 11:59 PM SAST</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-gradient-to-br from-purple-50 to-pink-50 p-8 rounded-xl">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                        <i class="fas fa-gavel text-purple-600 mr-3"></i>
+                        Judging Criteria
+                    </h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <i class="fas fa-star text-yellow-500 mt-1 mr-3"></i>
+                            <span><strong>Creativity & Innovation (40%)</strong> - Originality and unique approach</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-star text-yellow-500 mt-1 mr-3"></i>
+                            <span><strong>Technical Execution (35%)</strong> - Quality and craftsmanship</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-star text-yellow-500 mt-1 mr-3"></i>
+                            <span><strong>Brand Alignment (25%)</strong> - Adherence to category requirements</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-star text-yellow-500 mt-1 mr-3"></i>
+                            <span>Expert panel reviews all submissions</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-star text-yellow-500 mt-1 mr-3"></i>
+                            <span>Winners announced via email and dashboard</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-gradient-to-br from-green-50 to-emerald-50 p-8 rounded-xl">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                        <i class="fas fa-trophy text-green-600 mr-3"></i>
+                        Prizes & Recognition
+                    </h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <i class="fas fa-medal text-yellow-500 mt-1 mr-3"></i>
+                            <span><strong>Grand Prize:</strong> R 25,000 + Feature placement</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-medal text-gray-400 mt-1 mr-3"></i>
+                            <span><strong>Category Winners:</strong> R 5,000 each + Portfolio feature</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-medal text-orange-500 mt-1 mr-3"></i>
+                            <span><strong>Runners-Up:</strong> R 1,000 + Gallery showcase</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-certificate text-blue-500 mt-1 mr-3"></i>
+                            <span>All participants receive completion certificate</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-certificate text-blue-500 mt-1 mr-3"></i>
+                            <span>Top 50 designs featured in annual showcase</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-gradient-to-br from-red-50 to-orange-50 p-8 rounded-xl">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                        <i class="fas fa-exclamation-triangle text-red-600 mr-3"></i>
+                        Important Notes
+                    </h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <i class="fas fa-info-circle text-red-500 mt-1 mr-3"></i>
+                            <span>No plagiarism - all work must be original</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-info-circle text-red-500 mt-1 mr-3"></i>
+                            <span>By submitting, you grant display rights to FAA</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-info-circle text-red-500 mt-1 mr-3"></i>
+                            <span>You retain full ownership of your designs</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-info-circle text-red-500 mt-1 mr-3"></i>
+                            <span>Inappropriate content will be disqualified</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-info-circle text-red-500 mt-1 mr-3"></i>
+                            <span>Decisions of judges are final</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Gallery Section -->
+    <section id="gallery" class="py-20 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black text-gray-900 mb-6">🎨 Featured Gallery</h2>
+                <p class="text-xl text-gray-700">Showcasing outstanding submissions from our talented community</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Gallery Item 1 -->
-                <div class="bg-white rounded-lg overflow-hidden shadow-lg hover-lift">
-                    <div class="h-64 bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center text-white text-6xl">
-                        🦊
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-bold text-lg mb-2">Neon Fox Streetwear</h3>
-                        <p class="text-sm text-gray-600 mb-3">By Alex Chen</p>
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-3 text-sm text-gray-500">
-                                <span>❤️ 234</span>
-                                <span>👁️ 1,205</span>
-                            </div>
-                            <span class="badge bg-orange-100 text-orange-800">4.8★</span>
+                <div class="gallery-card bg-white rounded-xl shadow-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=300&fit=crop" alt="Neon Fox Design" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl">🦊</span>
+                            <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-semibold">FEATURED</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Neon Fox Streetwear</h3>
+                        <p class="text-gray-600 text-sm mb-3">By Alex Chen</p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span class="flex items-center"><i class="fas fa-heart text-red-500 mr-1"></i> 234</span>
+                            <span class="flex items-center"><i class="fas fa-eye text-blue-500 mr-1"></i> 1,205</span>
+                            <span class="flex items-center"><i class="fas fa-star text-yellow-500 mr-1"></i> 4.8</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Gallery Item 2 -->
-                <div class="bg-white rounded-lg overflow-hidden shadow-lg hover-lift">
-                    <div class="h-64 bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-white text-6xl">
-                        🍉
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-bold text-lg mb-2">Dynamic Sprint Collection</h3>
-                        <p class="text-sm text-gray-600 mb-3">By Maria Rodriguez</p>
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-3 text-sm text-gray-500">
-                                <span>❤️ 189</span>
-                                <span>👁️ 987</span>
-                            </div>
-                            <span class="badge bg-green-100 text-green-800">4.6★</span>
+                <div class="gallery-card bg-white rounded-xl shadow-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1544966503-7cc5ac882d5e?w=400&h=300&fit=crop" alt="Olympic Design" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl">🍉</span>
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-semibold">TRENDING</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Fruit Fusion Athletic</h3>
+                        <p class="text-gray-600 text-sm mb-3">By Maya Rodriguez</p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span class="flex items-center"><i class="fas fa-heart text-red-500 mr-1"></i> 189</span>
+                            <span class="flex items-center"><i class="fas fa-eye text-blue-500 mr-1"></i> 892</span>
+                            <span class="flex items-center"><i class="fas fa-star text-yellow-500 mr-1"></i> 4.6</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Gallery Item 3 -->
-                <div class="bg-white rounded-lg overflow-hidden shadow-lg hover-lift">
-                    <div class="h-64 bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center text-white text-6xl">
-                        🎨
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-bold text-lg mb-2">Urban Identity Project</h3>
-                        <p class="text-sm text-gray-600 mb-3">By Jamie Lee</p>
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-3 text-sm text-gray-500">
-                                <span>❤️ 312</span>
-                                <span>👁️ 1,543</span>
-                            </div>
-                            <span class="badge bg-purple-100 text-purple-800">4.9★</span>
+                <div class="gallery-card bg-white rounded-xl shadow-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=300&fit=crop" alt="Brand Identity" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl">📦</span>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-semibold">NEW</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Sustainable Seed Brand</h3>
+                        <p class="text-gray-600 text-sm mb-3">By Jordan Kim</p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span class="flex items-center"><i class="fas fa-heart text-red-500 mr-1"></i> 156</span>
+                            <span class="flex items-center"><i class="fas fa-eye text-blue-500 mr-1"></i> 743</span>
+                            <span class="flex items-center"><i class="fas fa-star text-yellow-500 mr-1"></i> 4.7</span>
                         </div>
                     </div>
                 </div>
+
+                <!-- Gallery Item 4 -->
+                <div class="gallery-card bg-white rounded-xl shadow-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop" alt="Chaos Art" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl">🧬</span>
+                            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs font-semibold">POPULAR</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Mind Map Chaos</h3>
+                        <p class="text-gray-600 text-sm mb-3">By River Thompson</p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span class="flex items-center"><i class="fas fa-heart text-red-500 mr-1"></i> 298</span>
+                            <span class="flex items-center"><i class="fas fa-eye text-blue-500 mr-1"></i> 1,456</span>
+                            <span class="flex items-center"><i class="fas fa-star text-yellow-500 mr-1"></i> 4.9</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 5 -->
+                <div class="gallery-card bg-white rounded-xl shadow-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=400&h=300&fit=crop" alt="Stage Design" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl">🌍</span>
+                            <span class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full text-xs font-semibold">EDITOR'S PICK</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Cosmic Crate Bridge</h3>
+                        <p class="text-gray-600 text-sm mb-3">By Taylor Swift</p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span class="flex items-center"><i class="fas fa-heart text-red-500 mr-1"></i> 267</span>
+                            <span class="flex items-center"><i class="fas fa-eye text-blue-500 mr-1"></i> 1,123</span>
+                            <span class="flex items-center"><i class="fas fa-star text-yellow-500 mr-1"></i> 4.8</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 6 -->
+                <div class="gallery-card bg-white rounded-xl shadow-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=300&fit=crop" alt="University Design" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl">🎓</span>
+                            <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs font-semibold">RISING STAR</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">FAA Identity System</h3>
+                        <p class="text-gray-600 text-sm mb-3">By Morgan Lee</p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span class="flex items-center"><i class="fas fa-heart text-red-500 mr-1"></i> 178</span>
+                            <span class="flex items-center"><i class="fas fa-eye text-blue-500 mr-1"></i> 834</span>
+                            <span class="flex items-center"><i class="fas fa-star text-yellow-500 mr-1"></i> 4.5</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#competition" class="bg-blue-600 text-white px-8 py-4 rounded-full font-bold text-lg hover-lift inline-flex items-center space-x-3">
+                    <span>View Full Gallery</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
         </div>
     </section>
@@ -935,74 +918,115 @@
     <!-- FAQ Section -->
     <section id="faq" class="py-20 bg-white">
         <div class="max-w-4xl mx-auto px-6">
-            <h2 class="section-title gradient-text">Frequently Asked Questions</h2>
-
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black text-gray-900 mb-6">❓ Frequently Asked Questions</h2>
+                <p class="text-xl text-gray-700">Find answers to common questions about the competition</p>
+            </div>
+            
             <div class="space-y-4">
-                <div class="bg-gray-50 rounded-lg p-6 cursor-pointer hover:bg-gray-100 transition" onclick="toggleFAQ(1)">
-                    <div class="flex items-center justify-between">
-                        <h3 class="font-bold text-lg">How do I submit my work?</h3>
-                        <i class="fas fa-chevron-down" id="faq-icon-1"></i>
-                    </div>
-                    <div id="faq-content-1" class="hidden mt-4 text-gray-700">
-                        Navigate to the Submissions page, select your competition category, upload your files, 
-                        fill in the required information, and click Submit. You'll receive a confirmation email 
-                        once your submission is processed.
-                    </div>
-                </div>
-
-                <div class="bg-gray-50 rounded-lg p-6 cursor-pointer hover: bg-gray-100 transition" onclick="toggleFAQ(2)">
-                    <div class="flex items-center justify-between">
-                        <h3 class="font-bold text-lg">Can I submit to multiple competitions?</h3>
-                        <i class="fas fa-chevron-down" id="faq-icon-2"></i>
-                    </div>
-                    <div id="faq-content-2" class="hidden mt-4 text-gray-700">
-                        Yes! Your subscription tier determines how many competitions you can enter.  Starter members 
-                        can submit to 2 competitions, while Professional and Enterprise members have unlimited access.
+                <!-- FAQ Item 1 -->
+                <div class="faq-item bg-gray-50 rounded-lg overflow-hidden">
+                    <button class="faq-trigger w-full text-left p-6 flex items-center justify-between hover:bg-gray-100 transition-colors" onclick="toggleFAQ(this)">
+                        <span class="font-bold text-lg text-gray-900">What is the Foxed Has Mobiles™ Master Competition Suite?</span>
+                        <i class="fas fa-chevron-down faq-icon text-blue-600 text-xl"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-0">
+                        <p class="text-gray-700 pb-6">The Foxed Has Mobiles™ Master Competition Suite is a comprehensive creative design platform featuring six specialized competition categories: 1/1 Apparel Oracle, Olympic Threads, Brandborn Creations, Chaos Cartography, Stage & Nation Design, and University Identity Deck. Each category focuses on different aspects of creative design and innovation.</p>
                     </div>
                 </div>
 
-                <div class="bg-gray-50 rounded-lg p-6 cursor-pointer hover:bg-gray-100 transition" onclick="toggleFAQ(3)">
-                    <div class="flex items-center justify-between">
-                        <h3 class="font-bold text-lg">What file formats are accepted?</h3>
-                        <i class="fas fa-chevron-down" id="faq-icon-3"></i>
-                    </div>
-                    <div id="faq-content-3" class="hidden mt-4 text-gray-700">
-                        We accept PNG, JPG, PDF, AI, PSD, SVG, and other common design file formats. 
-                        Maximum file size is 50MB per submission.  For video submissions, MP4 and MOV formats are supported.
-                    </div>
-                </div>
-
-                <div class="bg-gray-50 rounded-lg p-6 cursor-pointer hover:bg-gray-100 transition" onclick="toggleFAQ(4)">
-                    <div class="flex items-center justify-between">
-                        <h3 class="font-bold text-lg">How are winners selected?</h3>
-                        <i class="fas fa-chevron-down" id="faq-icon-4"></i>
-                    </div>
-                    <div id="faq-content-4" class="hidden mt-4 text-gray-700">
-                        Winners are selected by our panel of industry experts based on creativity (40%), 
-                        technical excellence (30%), concept clarity (20%), and impact (10%). 
-                        The judging process is blind to ensure fairness.
+                <!-- FAQ Item 2 -->
+                <div class="faq-item bg-gray-50 rounded-lg overflow-hidden">
+                    <button class="faq-trigger w-full text-left p-6 flex items-center justify-between hover:bg-gray-100 transition-colors" onclick="toggleFAQ(this)">
+                        <span class="font-bold text-lg text-gray-900">How do I submit my work?</span>
+                        <i class="fas fa-chevron-down faq-icon text-blue-600 text-xl"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-0">
+                        <p class="text-gray-700 pb-6">To submit your work, click on the "Get Started" button, select your category, upload your files (accepted formats: .jpg, .png, .svg, .mp4, .pdf up to 100MB), provide a detailed description, and complete the submission form. You'll receive a confirmation email once your submission is received.</p>
                     </div>
                 </div>
 
-                <div class="bg-gray-50 rounded-lg p-6 cursor-pointer hover:bg-gray-100 transition" onclick="toggleFAQ(5)">
-                    <div class="flex items-center justify-between">
-                        <h3 class="font-bold text-lg">What rights do I retain over my work?</h3>
-                        <i class="fas fa-chevron-down" id="faq-icon-5"></i>
-                    </div>
-                    <div id="faq-content-5" class="hidden mt-4 text-gray-700">
-                        You retain full ownership and copyright of your submissions. By entering, you grant us 
-                        permission to display your work in our gallery and promotional materials with proper attribution.
+                <!-- FAQ Item 3 -->
+                <div class="faq-item bg-gray-50 rounded-lg overflow-hidden">
+                    <button class="faq-trigger w-full text-left p-6 flex items-center justify-between hover:bg-gray-100 transition-colors" onclick="toggleFAQ(this)">
+                        <span class="font-bold text-lg text-gray-900">What are the submission deadlines?</span>
+                        <i class="fas fa-chevron-down faq-icon text-blue-600 text-xl"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-0">
+                        <p class="text-gray-700 pb-6">Deadlines vary by category: Foxed Has Mobiles™ (Feb 15, 2025), Mr Fruitful™'s Olympic Threads (Feb 10, 2025), Water the Seed™ (Feb 20, 2025), Playing with the Seed™ (Feb 18, 2025), Crate Dance Showcase™ (Feb 25, 2025), FAA University Identity Deck (Feb 28, 2025). All deadlines are at 11:59 PM SAST.</p>
                     </div>
                 </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-item bg-gray-50 rounded-lg overflow-hidden">
+                    <button class="faq-trigger w-full text-left p-6 flex items-center justify-between hover:bg-gray-100 transition-colors" onclick="toggleFAQ(this)">
+                        <span class="font-bold text-lg text-gray-900">What's included in each FAA.ZONE™ pricing tier?</span>
+                        <i class="fas fa-chevron-down faq-icon text-blue-600 text-xl"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-0">
+                        <p class="text-gray-700 pb-6">Starter (R199): Basic submission tools, email support, standard review. Professional (R499): Advanced tools, priority support, detailed feedback, portfolio showcase. Enterprise (R1200): All tools, 1-on-1 mentoring, premium feedback, marketing support. All tiers include blockchain verification and real-time tracking.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="faq-item bg-gray-50 rounded-lg overflow-hidden">
+                    <button class="faq-trigger w-full text-left p-6 flex items-center justify-between hover:bg-gray-100 transition-colors" onclick="toggleFAQ(this)">
+                        <span class="font-bold text-lg text-gray-900">How are submissions judged?</span>
+                        <i class="fas fa-chevron-down faq-icon text-blue-600 text-xl"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-0">
+                        <p class="text-gray-700 pb-6">Judging follows a standardized rubric: 40% Creativity & Innovation, 35% Technical Execution, 25% Brand Alignment. Each category has specialized judges with expertise in that field. Judging takes place over 2 weeks after submission deadlines, with winners announced via email and dashboard notifications.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 6 -->
+                <div class="faq-item bg-gray-50 rounded-lg overflow-hidden">
+                    <button class="faq-trigger w-full text-left p-6 flex items-center justify-between hover:bg-gray-100 transition-colors" onclick="toggleFAQ(this)">
+                        <span class="font-bold text-lg text-gray-900">Can I submit to multiple categories?</span>
+                        <i class="fas fa-chevron-down faq-icon text-blue-600 text-xl"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-0">
+                        <p class="text-gray-700 pb-6">Yes! You can submit multiple entries across different categories. Each submission is evaluated independently. However, please ensure each submission meets the specific requirements of its category.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 7 -->
+                <div class="faq-item bg-gray-50 rounded-lg overflow-hidden">
+                    <button class="faq-trigger w-full text-left p-6 flex items-center justify-between hover:bg-gray-100 transition-colors" onclick="toggleFAQ(this)">
+                        <span class="font-bold text-lg text-gray-900">What prizes can I win?</span>
+                        <i class="fas fa-chevron-down faq-icon text-blue-600 text-xl"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-0">
+                        <p class="text-gray-700 pb-6">Grand Prize: R 25,000 + Feature placement. Category Winners: R 5,000 each + Portfolio feature. Runners-Up: R 1,000 + Gallery showcase. All participants receive a completion certificate, and top 50 designs are featured in our annual showcase.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 8 -->
+                <div class="faq-item bg-gray-50 rounded-lg overflow-hidden">
+                    <button class="faq-trigger w-full text-left p-6 flex items-center justify-between hover:bg-gray-100 transition-colors" onclick="toggleFAQ(this)">
+                        <span class="font-bold text-lg text-gray-900">Do I retain ownership of my designs?</span>
+                        <i class="fas fa-chevron-down faq-icon text-blue-600 text-xl"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-0">
+                        <p class="text-gray-700 pb-6">Yes, you retain full ownership of your designs. By submitting, you grant FAA display rights for promotional purposes, but you maintain all intellectual property rights and can use your work freely.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <p class="text-gray-600 mb-4">Still have questions?</p>
+                <a href="#" class="text-blue-600 font-semibold hover:text-blue-700 inline-flex items-center">
+                    <span>Contact Support</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- Banimal Footer -->
-    <footer class="footer" id="footer">
+    <footer class="bg-gray-900 text-white py-16">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 md: grid-cols-4 gap-8 mb-12">
-                <!-- Brand Column -->
+            <div class="grid md:grid-cols-4 gap-8 mb-12">
                 <div>
                     <div class="flex items-center space-x-3 mb-6">
                         <span class="text-2xl font-bold">Fruitful™</span>
@@ -1013,60 +1037,60 @@
                         Revolutionary competition platform fostering creativity and innovation across multiple design disciplines.
                     </p>
                     <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover: text-white transition-colors">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors" aria-label="Twitter">
                             <i class="fab fa-twitter text-xl"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn">
                             <i class="fab fa-linkedin text-xl"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors" aria-label="Instagram">
                             <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors" aria-label="Facebook">
+                            <i class="fab fa-facebook text-xl"></i>
                         </a>
                     </div>
                 </div>
-
-                <!-- Competition Column -->
+                
                 <div>
                     <h4 class="text-lg font-bold mb-4">Competition</h4>
                     <ul class="space-y-2 text-gray-400">
-                        <li><a href="#competition">Categories</a></li>
-                        <li><a href="#rules">Rules</a></li>
-                        <li><a href="#submissions">Submissions</a></li>
-                        <li><a href="#gallery">Winners</a></li>
+                        <li><a href="#competition" class="hover:text-white transition-colors">Categories</a></li>
+                        <li><a href="#rules" class="hover:text-white transition-colors">Rules</a></li>
+                        <li><a href="#gallery" class="hover:text-white transition-colors">Gallery</a></li>
+                        <li><a href="#dashboard" class="hover:text-white transition-colors">Dashboard</a></li>
                     </ul>
                 </div>
-
-                <!-- Platform Column -->
+                
                 <div>
                     <h4 class="text-lg font-bold mb-4">Platform</h4>
                     <ul class="space-y-2 text-gray-400">
-                        <li><a href="#products">FAA.ZONE</a></li>
-                        <li><a href="#">API Access</a></li>
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Support</a></li>
+                        <li><a href="#pricing" class="hover:text-white transition-colors">FAA.ZONE™</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">API Access</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Support</a></li>
                     </ul>
                 </div>
-
-                <!-- About Column -->
+                
                 <div>
                     <h4 class="text-lg font-bold mb-4">About</h4>
                     <ul class="space-y-2 text-gray-400">
-                        <li><a href="#">Our Story</a></li>
-                        <li><a href="#">Team</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li><a href="#noodle-saga" class="hover:text-white transition-colors">Our Story</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Team</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
                     </ul>
                 </div>
             </div>
-
+            
             <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
                 <p class="text-gray-400 text-sm mb-4 md:mb-0">
-                    &copy; 2025 Fruitful™ | Banimal.  All rights reserved.
+                    &copy; 2025 Fruitful™ | Banimal. All rights reserved.
                 </p>
                 <div class="flex space-x-6 text-sm text-gray-400">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
-                    <a href="#">Cookie Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                    <a href="#" class="hover:text-white transition-colors">Cookie Policy</a>
                 </div>
             </div>
         </div>
@@ -1075,81 +1099,88 @@
     <!-- JavaScript -->
     <script>
         // Mobile Menu Toggle
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('active');
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('open');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('mobile-menu').classList.remove('open');
+            });
+        });
+
+        // FAQ Accordion
+        function toggleFAQ(button) {
+            const faqItem = button.parentElement;
+            const faqContent = faqItem.querySelector('.faq-content');
+            const isOpen = faqItem.classList.contains('open');
+            
+            // Close all other FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                if (item !== faqItem) {
+                    item.classList.remove('open');
+                    item.querySelector('.faq-content').classList.remove('open');
+                }
+            });
+            
+            // Toggle current FAQ item
+            if (isOpen) {
+                faqItem.classList.remove('open');
+                faqContent.classList.remove('open');
+            } else {
+                faqItem.classList.add('open');
+                faqContent.classList.add('open');
+            }
         }
 
-        // Smooth Scrolling
+        // Smooth scroll for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
-                e. preventDefault();
-                const target = document.querySelector(this. getAttribute('href'));
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target. scrollIntoView({
+                    target.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
                     });
-                    // Close mobile menu if open
-                    const menu = document.getElementById('mobileMenu');
-                    menu.classList. remove('active');
                 }
             });
         });
 
-        // FAQ Toggle
-        function toggleFAQ(id) {
-            const content = document.getElementById(`faq-content-${id}`);
-            const icon = document. getElementById(`faq-icon-${id}`);
-            
-            if (content.classList.contains('hidden')) {
-                content.classList. remove('hidden');
-                icon. classList.remove('fa-chevron-down');
-                icon.classList.add('fa-chevron-up');
-            } else {
-                content.classList.add('hidden');
-                icon.classList.remove('fa-chevron-up');
-                icon.classList.add('fa-chevron-down');
-            }
-        }
-
-        // Gallery Filter (placeholder function)
-        function filterGallery(category) {
-            console.log('Filtering gallery by:', category);
-            // Add your gallery filtering logic here
-        }
-
-        // Animate elements on scroll
+        // Scroll-based animations for cards
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -100px 0px'
         };
 
         const observer = new IntersectionObserver((entries) => {
-            entries. forEach(entry => {
+            entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target. style.opacity = '1';
-                    entry.target.style. transform = 'translateY(0)';
+                    entry.target.classList.add('animate-fade-in');
                 }
             });
         }, observerOptions);
 
-        // Observe all cards and sections
-        document.querySelectorAll('.competition-card, .stat-card, .pricing-card').forEach((el) => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
+        // Observe all cards that should animate
+        document.querySelectorAll('.competition-card, .price-card, .gallery-card, .stat-card').forEach(card => {
+            observer.observe(card);
         });
 
-        // Add loading animation
-        window.addEventListener('load', () => {
-            document.body.style.opacity = '0';
-            setTimeout(() => {
-                document.body.style.transition = 'opacity 0.5s ease';
-                document.body.style.opacity = '1';
-            }, 100);
+        // Add sticky header background on scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.sticky-nav');
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.boxShadow = 'none';
+            }
         });
+
+        // Console welcome message
+        console.log('%c🦊 Welcome to SamFox Studio Competition Platform!', 'font-size: 20px; color: #3b82f6; font-weight: bold;');
+        console.log('%cExplore 6 exciting competition categories and unleash your creativity!', 'font-size: 14px; color: #6b7280;');
     </script>
 </body>
 </html>

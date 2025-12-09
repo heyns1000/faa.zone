@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-12-09 | FGP--samfox | main | `public/welcome-to-samfox-studio.html` | `09b30667` | 🦊SamFox Studio - Foxed Has Mobiles™ Master Co | 55680 | 75 | 3 | 118.5 |
+| 2 | 2025-12-09 | Foxed-Has-Mobiles | main | `samfox-standalone/samfox-competition.html` | `29874430` | SamFox Studio - Competition Platform | Foxed  | 67709 | 77 | 1 | 113.8 |
