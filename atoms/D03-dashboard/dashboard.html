@@ -5,904 +5,722 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fruitful™ Global Dashboard - All Canvases & Epic Journey</title>
     <link rel="icon" href="/favicon.ico">
-    
-    <!-- Tailwind CSS CDN for modern styling -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'inter': ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        'fruitful-blue': '#007bff',
-                        'fruitful-green': '#00e393',
-                        'dark-bg': '#0a0a0d',
-                        'dark-card': '#1c1c21',
-                        'dark-border': '#3a3a42',
-                    }
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    'competition-blue': '#007bff',
+                    'success-green': '#00e393',
+                    'accent-blue': '#4A90E2',
+                    'dark-header': '#0a0a0d',
+                    'light-bg': '#f8f8f8'
+                },
+                fontFamily: {
+                    'inter': ['Inter', 'sans-serif']
+                },
+                animation: {
+                    'pulse-bg': 'pulseBG 12s ease-in-out infinite',
+                    'float': 'float 6s ease-in-out infinite'
                 }
             }
-        };
+        }
+    };
     </script>
-    
-    <!-- Google Fonts - Inter for clean typography -->
+    <!-- Google Fonts - Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
     <style>
-        /* CSS Custom Properties for Theme System */
         :root {
-            /* Light Theme (Default) */
-            --bg-color: #f8f8f8;
-            --text-color: #000000;
-            --muted-text-color: #333333;
-            --border-color: #cccccc;
-            --card-bg: #ffffff;
-            --button-bg: #ffffff;
-            --button-text: #000000;
-            --input-bg: #f9fafb;
-            --input-border: #d1d5db;
-            --header-bg: #0a0a0d;
-            --accent-color: #007bff;
-            --success-color: #00e393;
+            --dark-bg: #0a0a0d;
+            --primary-glow: #00e393;
+            --secondary-glow: #007bff;
+            --card-bg-dark: #1c1c21;
+            --border-dark: #3a3a42;
         }
 
-        /* Dark Mode */
-        [data-theme="dark"] {
-            --bg-color: #121212;
-            --text-color: #e0e0e0;
-            --muted-text-color: #aaaaaa;
-            --border-color: #444444;
-            --card-bg: #1c1c1c;
-            --button-bg: #282828;
-            --button-text: #ffffff;
-            --input-bg: #333333;
-            --input-border: #555555;
-            --header-bg: #0a0a0d;
-            --accent-color: #4A90E2;
-            --success-color: #00e393;
+        @keyframes pulseBG {
+            0%, 100% { background: radial-gradient(circle at center, #f9fafb, #e0e7ff); }
+            50% { background: radial-gradient(circle at center, #e0e7ff, #f9fafb); }
         }
 
-        /* Hyper Mode */
-        [data-theme="hyper"] {
-            --bg-color: #0d0d1a;
-            --text-color: #c0f0ff;
-            --muted-text-color: #88ccee;
-            --border-color: #3a1a5a;
-            --card-bg: #1a1a33;
-            --button-bg: #6a0dad;
-            --button-text: #e0e0e0;
-            --input-bg: #2b0c4b;
-            --input-border: #6a0dad;
-            --header-bg: #0a0a0d;
-            --accent-color: #6a0dad;
-            --success-color: #ff6666;
-        }
-
-        /* Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
             line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
         }
 
-        /* Header Styling */
-        .sticky-header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background-color: var(--header-bg);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        .hero-gradient {
+            background: radial-gradient(circle at center, #f9fafb, #e0e7ff);
+            animation: pulseBG 12s ease-in-out infinite;
         }
 
-        .main-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
+        .competition-card {
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
         }
 
-        .logo-group {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .competition-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-color: #007bff;
         }
 
-        .logo-group a {
-            color: #ffffff;
-            font-size: 1.75rem;
-            font-weight: 800;
-            text-decoration: none;
-            transition: color 0.2s ease;
+        .price-card {
+            transition: all 0.3s ease;
         }
 
-        .logo-group a:hover {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .logo-separator {
-            color: #bbbbbb;
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .header-nav {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        .nav-links a {
-            color: #e0e0e0;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.2s ease;
-        }
-
-        .nav-links a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-        }
-
-        /* Theme Switcher */
-        .theme-switcher {
-            display: flex;
-            gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 0.5rem;
-            border-radius: 12px;
-        }
-
-        .theme-btn {
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 8px;
-            background: transparent;
-            color: #e0e0e0;
-            cursor: pointer;
-            font-size: 0.875rem;
-            font-weight: 600;
-            transition: all 0.2s ease;
-        }
-
-        .theme-btn.active {
-            background: var(--accent-color);
-            color: white;
-        }
-
-        .theme-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        /* Hero Section - Foxed Has Mobiles */
-        .foxed-hero {
-            background: linear-gradient(135deg, #f9fafb 0%, #e0e7ff 50%, #ddd6fe 100%);
-            min-height: 85vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 4rem 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        [data-theme="dark"] .foxed-hero {
-            background: linear-gradient(135deg, #1e1e2e 0%, #2d3748 50%, #4a5568 100%);
-        }
-
-        [data-theme="hyper"] .foxed-hero {
-            background: linear-gradient(135deg, #0d0d1a 0%, #1a1a33 50%, #2d1b69 100%);
-        }
-
-        .foxed-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23000" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-            animation: pulse 8s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.6; }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 1000px;
-        }
-
-        .hero-title {
-            font-size: clamp(3rem, 8vw, 5.5rem);
-            font-weight: 900;
-            color: #000000;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-        }
-
-        [data-theme="dark"] .hero-title {
-            color: #ffffff;
-        }
-
-        [data-theme="hyper"] .hero-title {
-            color: #c0f0ff;
-        }
-
-        .hero-slogan {
-            font-size: 1.5rem;
-            font-style: italic;
-            color: var(--accent-color);
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        .hero-subtitle {
-            font-size: 1.25rem;
-            color: var(--muted-text-color);
-            margin-bottom: 3rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+        .price-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
         }
 
         .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            padding: 1.25rem 3rem;
-            background: linear-gradient(135deg, var(--accent-color), #4A90E2);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+            background: linear-gradient(45deg, #007bff, #4A90E2);
             transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
         }
 
         .cta-button:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 12px 35px rgba(0, 123, 255, 0.4);
+            background: linear-gradient(45deg, #4A90E2, #007bff);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 123, 255, 0.4);
         }
 
-        /* Dashboard Sections */
-        .dashboard-section {
-            padding: 5rem 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-            background-color: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
-            transition: background-color 0.3s ease;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            text-align: center;
-            margin-bottom: 1rem;
-            color: var(--text-color);
-        }
-
-        .section-subtitle {
-            font-size: 1.25rem;
-            text-align: center;
-            color: var(--muted-text-color);
-            margin-bottom: 4rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Canvas Grid */
-        .canvas-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .canvas-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .canvas-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-        }
-
-        .canvas-card h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--text-color);
-        }
-
-        .canvas-card p {
-            color: var(--muted-text-color);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        .canvas-features {
-            list-style: none;
-            margin-bottom: 2rem;
-        }
-
-        .canvas-features li {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--muted-text-color);
-        }
-
-        .canvas-features li i {
-            color: var(--success-color);
-            width: 16px;
-        }
-
-        /* Product Cards */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .product-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2.5rem;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.2);
-        }
-
-        .product-card.featured {
-            border: 2px solid var(--accent-color);
-            position: relative;
-        }
-
-        .product-card.featured::before {
-            content: 'POPULAR';
+        .ant-canvas {
             position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--accent-color);
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
         }
 
-        .product-title {
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--text-color);
-        }
-
-        .product-price {
-            font-size: 3rem;
-            font-weight: 900;
-            color: var(--accent-color);
-            margin-bottom: 1rem;
-        }
-
-        .product-price-period {
-            font-size: 1rem;
-            color: var(--muted-text-color);
-            font-weight: 400;
-        }
-
-        .product-features {
-            list-style: none;
-            margin: 2rem 0;
-            text-align: left;
-        }
-
-        .product-features li {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-            color: var(--muted-text-color);
-        }
-
-        .product-features li i {
-            color: var(--success-color);
-            width: 16px;
-        }
-
-        /* Stats Section */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .stat-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--accent-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--muted-text-color);
-            font-weight: 600;
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .main-nav {
-                flex-direction: column;
-                gap: 1rem;
-                padding: 1rem;
-            }
-
-            .header-nav {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .foxed-hero {
-                min-height: 70vh;
-                padding: 3rem 1rem;
-            }
-
-            .dashboard-section {
-                padding: 3rem 1rem;
-            }
-
-            .canvas-grid,
-            .products-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        /* Utility Classes */
-        .fade-in {
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .gradient-text {
-            background: linear-gradient(135deg, var(--accent-color), #4A90E2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .floating-icon {
+            animation: float 6s ease-in-out infinite;
         }
     </style>
 </head>
-<body data-theme="light">
-    <!-- @COMPONENT: StickyHeader -->
-    <header class="sticky-header">
-        <nav class="main-nav">
-            <div class="logo-group">
-                <a href="#" data-mock="true">Fruitful™</a>
-                <span class="logo-separator">|</span>
-                <a href="#" data-mock="true">Banimal</a>
-            </div>
-            <div class="header-nav">
-                <div class="nav-links">
-                    <a href="#dashboard" data-mock="true">Dashboard</a>
-                    <a href="#canvases" data-mock="true">Canvases</a>
-                    <a href="#products" data-mock="true">Products</a>
-                    <a href="#analytics" data-mock="true">Analytics</a>
+<body class="bg-gray-50">
+    <!-- @COMPONENT: Header [navigation and branding] -->
+    <header class="sticky top-0 z-50 bg-dark-header shadow-xl">
+        <nav class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <a href="#" class="text-white text-2xl font-black tracking-tight hover:text-gray-300 transition-colors">
+                        Fruitful™
+                    </a>
+                    <span class="text-gray-400 text-xl font-semibold">|</span>
+                    <a href="#" class="text-white text-xl font-bold hover:text-gray-300 transition-colors">
+                        Banimal
+                    </a>
                 </div>
-                <div class="theme-switcher">
-                    <button class="theme-btn active" data-theme="light">Light</button>
-                    <button class="theme-btn" data-theme="dark">Dark</button>
-                    <button class="theme-btn" data-theme="hyper">Hyper</button>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#competitions" class="text-gray-300 hover:text-white transition-colors font-medium">Competitions</a>
+                    <a href="#products" class="text-gray-300 hover:text-white transition-colors font-medium">Products</a>
+                    <a href="#journey" class="text-gray-300 hover:text-white transition-colors font-medium">Epic Journey</a>
+                    <a href="#rules" class="text-gray-300 hover:text-white transition-colors font-medium">Rules</a>
+                </div>
+
+                <div class="md:hidden">
+                    <button class="text-white hover:text-gray-300">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
                 </div>
             </div>
         </nav>
     </header>
-    <!-- @END_COMPONENT: StickyHeader -->
+    <!-- @END_COMPONENT: Header -->
 
-    <main>
-        <!-- @COMPONENT: FoxedHeroSection -->
-        <section class="foxed-hero fade-in">
-            <div class="hero-content">
-                <h1 class="hero-title">Foxed Has Mobiles</h1>
-                <p class="hero-slogan">"Smart Mobility, Extraordinary Journey"</p>
-                <p class="hero-subtitle">
-                    Experience the future of mobile technology with our comprehensive dashboard system. 
-                    Track, analyze, and optimize your mobile ecosystem with powerful canvas-based tools.
+    <main class="min-h-screen">
+        <!-- @COMPONENT: FoxedHero [main hero section with animated background] -->
+        <section id="foxed-hero" class="relative min-h-screen hero-gradient flex items-center justify-center overflow-hidden">
+            <!-- Animated ant route canvas background -->
+            <canvas id="ant-route-canvas" class="ant-canvas"></canvas>
+            
+            <div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
+                <div class="floating-icon text-8xl mb-8">🦊</div>
+                <h1 class="text-6xl md:text-8xl font-black text-gray-900 leading-tight mb-6">
+                    Foxed Has Mobiles™
+                </h1>
+                <p class="text-2xl md:text-3xl text-competition-blue font-medium italic mb-8">
+                    "The fox doesn't speak — it routes."
                 </p>
-                <button class="cta-button" data-event="click:handleCtaClick">
-                    <i class="fas fa-rocket"></i>
-                    <span data-mock="true">Explore Dashboard</span>
-                </button>
+                <p class="text-xl md:text-2xl text-gray-700 mb-12 max-w-3xl mx-auto">
+                    "Not what it is — what it means."
+                </p>
+                <a href="#master-competition" class="cta-button text-white px-8 py-4 rounded-full text-lg font-bold inline-flex items-center space-x-2 hover:scale-105 transition-transform">
+                    <span>↓ Enter The Archive</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
         </section>
-        <!-- @END_COMPONENT: FoxedHeroSection -->
+        <!-- @END_COMPONENT: FoxedHero -->
 
-        <!-- @COMPONENT: CanvasesSection -->
-        <section class="dashboard-section" id="canvases">
-            <h2 class="section-title">Global Canvas System</h2>
-            <p class="section-subtitle">
-                Powerful canvas tools for comprehensive mobile competition tracking and analytics
-            </p>
-            
-            <div class="canvas-grid">
-                <!-- @MAP: canvases.map(canvas => ( -->
-                <div class="canvas-card fade-in" data-mock="true">
-                    <h3>Mobile Analytics Canvas</h3>
-                    <p>Real-time mobile performance tracking with advanced visualization and competitive analysis tools.</p>
-                    <ul class="canvas-features">
-                        <li><i class="fas fa-check"></i> Real-time performance metrics</li>
-                        <li><i class="fas fa-check"></i> Competitive benchmarking</li>
-                        <li><i class="fas fa-check"></i> Advanced data visualization</li>
-                        <li><i class="fas fa-check"></i> Custom reporting tools</li>
-                    </ul>
-                    <button class="cta-button" style="font-size: 0.9rem; padding: 0.75rem 2rem;" data-mock="true">
-                        <i class="fas fa-chart-line"></i> View Canvas
-                    </button>
+        <!-- @COMPONENT: MasterCompetition [competition overview and categories] -->
+        <section id="master-competition" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-5xl font-black text-gray-900 mb-6">📜 Master Competition Suite</h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-left max-w-5xl mx-auto mb-12">
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <h3 class="font-bold text-gray-900 mb-2">Launched By</h3>
+                            <p class="text-gray-700">Heyns Schoeman & Baobab Whisperer Protocols</p>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <h3 class="font-bold text-gray-900 mb-2">Governance</h3>
+                            <p class="text-gray-700">FAA Interbrand + Yield Design Council</p>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <h3 class="font-bold text-gray-900 mb-2">Archive</h3>
+                            <p class="text-gray-700">Vault Zero + Seed Satellite Nodes</p>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <h3 class="font-bold text-gray-900 mb-2">Protocol Base</h3>
+                            <p class="text-gray-700">Atom-Level Design & Interbrand Symbology</p>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="canvas-card fade-in" data-mock="true">
-                    <h3>Competition Tracker</h3>
-                    <p>Monitor competitor strategies, track market movements, and identify emerging opportunities.</p>
-                    <ul class="canvas-features">
-                        <li><i class="fas fa-check"></i> Competitor analysis</li>
-                        <li><i class="fas fa-check"></i> Market trend tracking</li>
-                        <li><i class="fas fa-check"></i> Opportunity identification</li>
-                        <li><i class="fas fa-check"></i> Strategic insights</li>
-                    </ul>
-                    <button class="cta-button" style="font-size: 0.9rem; padding: 0.75rem 2rem;" data-mock="true">
-                        <i class="fas fa-crosshairs"></i> Track Now
-                    </button>
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold text-competition-blue mb-8">Competition Categories</h3>
                 </div>
 
-                <div class="canvas-card fade-in" data-mock="true">
-                    <h3>Epic Journey Mapper</h3>
-                    <p>Visualize user journeys, map customer touchpoints, and optimize experience pathways.</p>
-                    <ul class="canvas-features">
-                        <li><i class="fas fa-check"></i> Journey visualization</li>
-                        <li><i class="fas fa-check"></i> Touchpoint mapping</li>
-                        <li><i class="fas fa-check"></i> Experience optimization</li>
-                        <li><i class="fas fa-check"></i> Conversion tracking</li>
-                    </ul>
-                    <button class="cta-button" style="font-size: 0.9rem; padding: 0.75rem 2rem;" data-mock="true">
-                        <i class="fas fa-map"></i> Map Journey
-                    </button>
-                </div>
+                <!-- @MAP: competitionCategories.map(category => ( -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="competition-card bg-white p-8 rounded-2xl shadow-lg">
+                        <div class="text-4xl mb-4">🦊</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Foxed Has Mobiles™ – The 1/1 Apparel Oracle</h3>
+                        <p class="text-gray-600 mb-6">Wearable interpretations of "Foxed Has Mobiles™". Include the phrase, embed atom-level details like hidden codes, GPS, seeds. One-of-one designs only.</p>
+                        <!-- Stock photo of creative apparel design with fox motifs -->
+                        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400" alt="Creative apparel design showcase" class="w-full h-32 object-cover rounded-lg mb-4">
+                        <div class="text-sm text-gray-500">Category 1 • Apparel Design</div>
+                    </div>
 
-                <div class="canvas-card fade-in" data-mock="true">
-                    <h3>Banimal Integration Hub</h3>
-                    <p>Seamlessly integrate with Banimal ecosystem for enhanced mobile management and control.</p>
-                    <ul class="canvas-features">
-                        <li><i class="fas fa-check"></i> Ecosystem integration</li>
-                        <li><i class="fas fa-check"></i> Unified dashboard</li>
-                        <li><i class="fas fa-check"></i> Cross-platform sync</li>
-                        <li><i class="fas fa-check"></i> Advanced automation</li>
-                    </ul>
-                    <button class="cta-button" style="font-size: 0.9rem; padding: 0.75rem 2rem;" data-mock="true">
-                        <i class="fas fa-link"></i> Integrate
-                    </button>
-                </div>
+                    <div class="competition-card bg-white p-8 rounded-2xl shadow-lg">
+                        <div class="text-4xl mb-4">🍉</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Mr Fruitful™'s Olympic Threads</h3>
+                        <p class="text-gray-600 mb-6">Design athlete gear for Crate Dance Olympics™. Must include hidden Baobab or Snotneus symbols. Focus: fruit, fire, function.</p>
+                        <!-- Athletic wear design inspiration -->
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400" alt="Olympic athletic wear design" class="w-full h-32 object-cover rounded-lg mb-4">
+                        <div class="text-sm text-gray-500">Category 2 • Athletic Wear</div>
+                    </div>
 
-                <div class="canvas-card fade-in" data-mock="true">
-                    <h3>Pastel Theme Designer</h3>
-                    <p>Create beautiful, accessible interfaces with our comprehensive pastel color system.</p>
-                    <ul class="canvas-features">
-                        <li><i class="fas fa-check"></i> 15+ pastel color variants</li>
-                        <li><i class="fas fa-check"></i> Accessibility compliance</li>
-                        <li><i class="fas fa-check"></i> Theme customization</li>
-                        <li><i class="fas fa-check"></i> Real-time preview</li>
-                    </ul>
-                    <button class="cta-button" style="font-size: 0.9rem; padding: 0.75rem 2rem;" data-mock="true">
-                        <i class="fas fa-palette"></i> Design
-                    </button>
-                </div>
+                    <div class="competition-card bg-white p-8 rounded-2xl shadow-lg">
+                        <div class="text-4xl mb-4">📦</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Water the Seed™ – Brandborn Creations</h3>
+                        <p class="text-gray-600 mb-6">Create logos, frames, packaging for any of 139+ FAA brands. Any medium accepted — even painted dirt.</p>
+                        <!-- Brand identity design workspace -->
+                        <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400" alt="Brand identity design workspace" class="w-full h-32 object-cover rounded-lg mb-4">
+                        <div class="text-sm text-gray-500">Category 3 • Brand Identity</div>
+                    </div>
 
-                <div class="canvas-card fade-in" data-mock="true">
-                    <h3>Performance Monitor</h3>
-                    <p>Monitor system performance, track uptime, and ensure optimal mobile experience delivery.</p>
-                    <ul class="canvas-features">
-                        <li><i class="fas fa-check"></i> Real-time monitoring</li>
-                        <li><i class="fas fa-check"></i> Performance alerts</li>
-                        <li><i class="fas fa-check"></i> Uptime tracking</li>
-                        <li><i class="fas fa-check"></i> Optimization suggestions</li>
-                    </ul>
-                    <button class="cta-button" style="font-size: 0.9rem; padding: 0.75rem 2rem;" data-mock="true">
-                        <i class="fas fa-tachometer-alt"></i> Monitor
-                    </button>
+                    <div class="competition-card bg-white p-8 rounded-2xl shadow-lg">
+                        <div class="text-4xl mb-4">🧬</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Playing with the Seed™ – Chaos Cartography</h3>
+                        <p class="text-gray-600 mb-6">Submit memes, glitchwear, absurdist artifacts representing brand collapse into new culture.</p>
+                        <!-- Creative digital art and memes -->
+                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400" alt="Digital creative art and design" class="w-full h-32 object-cover rounded-lg mb-4">
+                        <div class="text-sm text-gray-500">Category 4 • Digital Art</div>
+                    </div>
+
+                    <div class="competition-card bg-white p-8 rounded-2xl shadow-lg">
+                        <div class="text-4xl mb-4">🌍</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Crate Dance Showcase™: Stage & Nation Design</h3>
+                        <p class="text-gray-600 mb-6">Stage and nation layouts made from crates. 2D / 3D blueprints. Cosmic bridges welcome.</p>
+                        <!-- Architectural stage design with crates -->
+                        <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400" alt="Stage design and architectural layout" class="w-full h-32 object-cover rounded-lg mb-4">
+                        <div class="text-sm text-gray-500">Category 5 • Stage Design</div>
+                    </div>
+
+                    <div class="competition-card bg-white p-8 rounded-2xl shadow-lg">
+                        <div class="text-4xl mb-4">🎓</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">FAA University Identity Deck</h3>
+                        <p class="text-gray-600 mb-6">Create FAA University student identity assets: cards, robes, stamps, crests with Baobab + Compliance Seal + Snotneus Welcome.</p>
+                        <!-- University identity design elements -->
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400" alt="University identity design elements" class="w-full h-32 object-cover rounded-lg mb-4">
+                        <div class="text-sm text-gray-500">Category 6 • Identity Design</div>
+                    </div>
                 </div>
                 <!-- @END_MAP )) -->
+
+                <div class="text-center mt-16">
+                    <a href="#rules" class="cta-button text-white px-8 py-4 rounded-full text-lg font-bold inline-flex items-center space-x-2">
+                        <span>View Challenge Rules</span>
+                        <i class="fas fa-gavel"></i>
+                    </a>
+                </div>
             </div>
         </section>
-        <!-- @END_COMPONENT: CanvasesSection -->
+        <!-- @END_COMPONENT: MasterCompetition -->
 
-        <!-- @COMPONENT: ProductsSection -->
-        <section class="dashboard-section" id="products">
-            <h2 class="section-title">Pricing Plans</h2>
-            <p class="section-subtitle">
-                Choose the perfect plan for your mobile management needs
-            </p>
-            
-            <div class="products-grid">
-                <!-- @MAP: products.map(product => ( -->
-                <div class="product-card fade-in" data-mock="true">
-                    <h3 class="product-title">Starter</h3>
-                    <div class="product-price">
-                        $29<span class="product-price-period">/month</span>
+        <!-- @COMPONENT: ProductsSection [FAA.ZONE pricing cards with currency conversion] -->
+        <section id="products" class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <div class="flex items-center justify-center space-x-3 mb-8">
+                        <span class="text-5xl">🦍</span>
+                        <h2 class="text-5xl font-black text-gray-900">FAA.ZONE™</h2>
                     </div>
-                    <ul class="product-features">
-                        <li><i class="fas fa-check"></i> Up to 5 mobile devices</li>
-                        <li><i class="fas fa-check"></i> Basic analytics dashboard</li>
-                        <li><i class="fas fa-check"></i> Email support</li>
-                        <li><i class="fas fa-check"></i> Monthly reports</li>
-                        <li><i class="fas fa-check"></i> Standard integrations</li>
-                    </ul>
-                    <button class="cta-button" data-mock="true">
-                        <i class="fas fa-rocket"></i> Get Started
-                    </button>
+                    <h3 class="text-3xl font-bold text-gray-800 mb-4">
+                        Explore Our <span class="text-indigo-600">Products</span>
+                    </h3>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                        Choose the package that best fits your needs and proceed to a secure checkout.
+                    </p>
                 </div>
 
-                <div class="product-card featured fade-in" data-mock="true">
-                    <h3 class="product-title">Professional</h3>
-                    <div class="product-price">
-                        $79<span class="product-price-period">/month</span>
+                <!-- Currency Selector -->
+                <div class="flex justify-center mb-12">
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
+                        <label for="currency-select" class="text-gray-700 font-medium">Display prices in:</label>
+                        <select id="currency-select" class="p-3 border border-gray-300 rounded-lg bg-white text-gray-800 font-medium">
+                            <option value="ZAR">ZAR (R)</option>
+                            <option value="USD">USD ($)</option>
+                            <option value="EUR">EUR (€)</option>
+                            <option value="GBP">GBP (£)</option>
+                        </select>
                     </div>
-                    <ul class="product-features">
-                        <li><i class="fas fa-check"></i> Up to 25 mobile devices</li>
-                        <li><i class="fas fa-check"></i> Advanced analytics + AI insights</li>
-                        <li><i class="fas fa-check"></i> Priority support</li>
-                        <li><i class="fas fa-check"></i> Real-time monitoring</li>
-                        <li><i class="fas fa-check"></i> Custom integrations</li>
-                        <li><i class="fas fa-check"></i> Team collaboration tools</li>
-                    </ul>
-                    <button class="cta-button" data-mock="true">
-                        <i class="fas fa-crown"></i> Go Pro
-                    </button>
                 </div>
 
-                <div class="product-card fade-in" data-mock="true">
-                    <h3 class="product-title">Enterprise</h3>
-                    <div class="product-price">
-                        $199<span class="product-price-period">/month</span>
+                <!-- Pricing Cards -->
+                <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <div class="price-card bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Starter Package</h3>
+                        <p class="text-gray-600 mb-6">Ideal for individuals and small teams beginning their digital journey.</p>
+                        <ul class="space-y-3 mb-8 text-gray-700">
+                            <li class="flex items-center space-x-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>Basic API Access</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>Standard Analytics Dashboard</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>Community Support</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>Up to 5 Users</span>
+                            </li>
+                        </ul>
+                        <div class="text-3xl font-black text-gray-900 mb-6" data-bind="pricing.starter">
+                            R 199.00 <span class="text-lg font-normal text-gray-500">/ month</span>
+                        </div>
+                        <button class="w-full bg-indigo-600 text-white font-bold py-4 px-6 rounded-xl hover:bg-indigo-700 transition-colors">
+                            Subscribe Now
+                        </button>
                     </div>
-                    <ul class="product-features">
-                        <li><i class="fas fa-check"></i> Unlimited mobile devices</li>
-                        <li><i class="fas fa-check"></i> Full canvas system access</li>
-                        <li><i class="fas fa-check"></i> 24/7 dedicated support</li>
-                        <li><i class="fas fa-check"></i> Custom development</li>
-                        <li><i class="fas fa-check"></i> On-premise deployment</li>
-                        <li><i class="fas fa-check"></i> Advanced security features</li>
-                    </ul>
-                    <button class="cta-button" data-mock="true">
-                        <i class="fas fa-building"></i> Contact Sales
-                    </button>
+
+                    <div class="price-card bg-white p-8 rounded-2xl shadow-xl border-2 border-indigo-600 relative">
+                        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                            <span class="bg-indigo-600 text-white px-4 py-2 rounded-full text-sm font-bold">Most Popular</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Business Package</h3>
+                        <p class="text-gray-600 mb-6">Comprehensive tools for growing businesses and advanced operations.</p>
+                        <ul class="space-y-3 mb-8 text-gray-700">
+                            <li class="flex items-center space-x-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>Advanced API Access</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>Premium Analytics & Reporting</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>Dedicated Priority Support</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>Unlimited Users</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>Custom Data Integrations</span>
+                            </li>
+                        </ul>
+                        <div class="text-3xl font-black text-gray-900 mb-6" data-bind="pricing.business">
+                            R 499.00 <span class="text-lg font-normal text-gray-500">/ month</span>
+                        </div>
+                        <button class="w-full bg-indigo-600 text-white font-bold py-4 px-6 rounded-xl hover:bg-indigo-700 transition-colors">
+                            Subscribe Now
+                        </button>
+                    </div>
+
+                    <div class="price-card bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Enterprise Package</h3>
+                        <p class="text-gray-600 mb-6">Full-scale solutions for large organizations and custom needs.</p>
+                        <ul class="space-y-3 mb-8 text-gray-700">
+                            <li class="flex items-center space-x-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>All Business Package Features</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>Dedicated Account Manager</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>24/7 Phone Support</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>Enhanced Custom Integrations</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>On-site Training & Setup</span>
+                            </li>
+                        </ul>
+                        <div class="text-3xl font-black text-gray-900 mb-6" data-bind="pricing.enterprise">
+                            R 1200.00 <span class="text-lg font-normal text-gray-500">/ month</span>
+                        </div>
+                        <button class="w-full bg-indigo-600 text-white font-bold py-4 px-6 rounded-xl hover:bg-indigo-700 transition-colors">
+                            Subscribe Now
+                        </button>
+                    </div>
                 </div>
-                <!-- @END_MAP )) -->
             </div>
         </section>
         <!-- @END_COMPONENT: ProductsSection -->
 
-        <!-- @COMPONENT: AnalyticsSection -->
-        <section class="dashboard-section" id="analytics">
-            <h2 class="section-title">Platform Analytics</h2>
-            <p class="section-subtitle">
-                Real-time insights into your mobile ecosystem performance
-            </p>
-            
-            <div class="stats-grid">
-                <!-- @MAP: stats.map(stat => ( -->
-                <div class="stat-card fade-in" data-mock="true">
-                    <div class="stat-number" data-bind="stats.activeDevices">12,847</div>
-                    <div class="stat-label">Active Devices</div>
+        <!-- @COMPONENT: NoodleMountainSaga [epic journey visualization] -->
+        <section id="journey" class="py-20 bg-gradient-to-b from-purple-900 to-indigo-900 text-white relative overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6 relative z-10">
+                <div class="text-center mb-16">
+                    <h2 class="text-5xl font-black mb-6">The Noodle Mountain Saga</h2>
+                    <p class="text-2xl text-purple-200 mb-8">From Pot to Paradise: Our Epic Journey Rendered in Full Detail</p>
                 </div>
-                <div class="stat-card fade-in" data-mock="true">
-                    <div class="stat-number" data-bind="stats.canvasesDeployed">156</div>
-                    <div class="stat-label">Canvases Deployed</div>
-                </div>
-                <div class="stat-card fade-in" data-mock="true">
-                    <div class="stat-number" data-bind="stats.dataProcessed">2.4TB</div>
-                    <div class="stat-label">Data Processed</div>
-                </div>
-                <div class="stat-card fade-in" data-mock="true">
-                    <div class="stat-number" data-bind="stats.uptime">99.9%</div>
-                    <div class="stat-label">System Uptime</div>
-                </div>
-                <div class="stat-card fade-in" data-mock="true">
-                    <div class="stat-number" data-bind="stats.competitions">47</div>
-                    <div class="stat-label">Active Competitions</div>
-                </div>
-                <div class="stat-card fade-in" data-mock="true">
-                    <div class="stat-number" data-bind="stats.participants">8,392</div>
-                    <div class="stat-label">Participants</div>
-                </div>
-                <!-- @END_MAP )) -->
-            </div>
 
-            <div style="margin-top: 4rem; text-align: center;">
-                <button class="cta-button" data-mock="true">
-                    <i class="fas fa-chart-bar"></i>
-                    View Detailed Analytics
-                </button>
+                <!-- Epic landscape with mountain, sheep, and sunrise -->
+                <div class="relative h-96 bg-gradient-to-t from-green-800 via-blue-400 to-yellow-300 rounded-2xl overflow-hidden shadow-2xl">
+                    <!-- Sun -->
+                    <div class="absolute top-8 right-16 w-24 h-24 bg-yellow-400 rounded-full shadow-2xl opacity-90"></div>
+                    
+                    <!-- Mountains -->
+                    <div class="absolute bottom-0 left-0 w-full h-64">
+                        <div class="absolute bottom-0 left-0 w-0 h-0 border-l-[200px] border-l-transparent border-r-[200px] border-r-transparent border-b-[160px] border-b-gray-700"></div>
+                        <div class="absolute bottom-0 left-32 w-0 h-0 border-l-[150px] border-l-transparent border-r-[150px] border-r-transparent border-b-[120px] border-b-gray-800"></div>
+                        <div class="absolute bottom-0 right-0 w-0 h-0 border-l-[180px] border-l-transparent border-r-[180px] border-r-transparent border-b-[140px] border-b-gray-600"></div>
+                    </div>
+
+                    <!-- Noodle Path -->
+                    <svg class="absolute inset-0 w-full h-full" viewBox="0 0 800 400" preserveAspectRatio="none">
+                        <!-- Melting snow gradient path -->
+                        <defs>
+                            <linearGradient id="snowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#ffffff" />
+                                <stop offset="50%" style="stop-color:#add8e6" />
+                                <stop offset="100%" style="stop-color:#008000" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M 50 200 Q 200 100 400 180 T 750 220" stroke="url(#snowGradient)" stroke-width="8" fill="none" stroke-linecap="round" />
+                        <path d="M 50 200 Q 200 100 400 180 T 750 220" stroke="#000000" stroke-width="3" fill="none" stroke-linecap="round" />
+                    </svg>
+
+                    <!-- Sheep -->
+                    <div class="absolute top-16 left-32 text-4xl">🐑</div>
+                    <div class="absolute top-24 right-48 text-4xl">🐑</div>
+                    <div class="absolute bottom-32 left-64 text-4xl">🐑</div>
+                    <div class="absolute bottom-20 right-32 text-4xl">🐑</div>
+                </div>
+
+                <div class="text-center mt-12">
+                    <p class="text-xl text-purple-200 max-w-4xl mx-auto leading-relaxed">
+                        Experience the transformative journey through mountains, valleys, and digital landscapes where 
+                        innovation meets tradition, and where every step forward reveals new possibilities in the 
+                        vast ecosystem of creative expression.
+                    </p>
+                </div>
             </div>
         </section>
-        <!-- @END_COMPONENT: AnalyticsSection -->
+        <!-- @END_COMPONENT: NoodleMountainSaga -->
+
+        <!-- @COMPONENT: CompetitionRules [detailed rules and requirements] -->
+        <section id="rules" class="py-20 bg-white">
+            <div class="max-w-5xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-5xl font-black text-gray-900 mb-6">Competition Rules & Requirements</h2>
+                    <p class="text-xl text-gray-600">Complete guidelines for participation in the Master Competition Suite</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div class="space-y-8">
+                        <div class="bg-gray-50 p-8 rounded-2xl">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                                <i class="fas fa-file-alt text-competition-blue mr-3"></i>
+                                Submission Requirements
+                            </h3>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                    <span>All designs must include atom-level details: hidden codes, GPS coordinates, or embedded seeds</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                    <span>Baobab and Snotneus symbols integration required where specified</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                    <span>Original work only - no copying or derivative submissions</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                    <span>High-resolution files (minimum 300 DPI for print designs)</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-50 p-8 rounded-2xl">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                                <i class="fas fa-users text-competition-blue mr-3"></i>
+                                Eligibility
+                            </h3>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-globe text-indigo-500 mt-1"></i>
+                                    <span>Open to participants worldwide</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-birthday-cake text-indigo-500 mt-1"></i>
+                                    <span>Must be 18+ years old</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-user-check text-indigo-500 mt-1"></i>
+                                    <span>Both amateurs and professionals welcome</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-id-card text-indigo-500 mt-1"></i>
+                                    <span>Valid registration with verified contact information</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="space-y-8">
+                        <div class="bg-gray-50 p-8 rounded-2xl">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                                <i class="fas fa-trophy text-competition-blue mr-3"></i>
+                                Judging Criteria
+                            </h3>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-star text-yellow-500 mt-1"></i>
+                                    <span>Technical skill and execution quality</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-star text-yellow-500 mt-1"></i>
+                                    <span>Creativity and original interpretation</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-star text-yellow-500 mt-1"></i>
+                                    <span>Integration of required symbols and elements</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-star text-yellow-500 mt-1"></i>
+                                    <span>Innovation in medium and approach</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-50 p-8 rounded-2xl">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                                <i class="fas fa-calendar-alt text-competition-blue mr-3"></i>
+                                Important Dates
+                            </h3>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-play text-green-500 mt-1"></i>
+                                    <span>Competition Launch: January 15, 2025</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-upload text-blue-500 mt-1"></i>
+                                    <span>Submission Deadline: March 31, 2025</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-eye text-purple-500 mt-1"></i>
+                                    <span>Judging Period: April 1-15, 2025</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-trophy text-gold mt-1"></i>
+                                    <span>Winner Announcement: April 30, 2025</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-16">
+                    <a href="#foxed-hero" class="cta-button text-white px-8 py-4 rounded-full text-lg font-bold inline-flex items-center space-x-2">
+                        <span>Start Your Submission</span>
+                        <i class="fas fa-upload"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <!-- @END_COMPONENT: CompetitionRules -->
     </main>
 
-    <script>
-        // Theme switching functionality
-        (function() {
-            const themeButtons = document.querySelectorAll('.theme-btn');
-            const body = document.body;
+    <!-- @COMPONENT: Footer [copyright and links] -->
+    <footer class="bg-dark-header text-white py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Fruitful™ Global</h3>
+                    <p class="text-gray-300">Pioneering the future of creative competitions and digital innovation.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-3">Competitions</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-white transition-colors">Foxed Has Mobiles™</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Olympic Threads</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Brand Creations</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-3">Platform</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-white transition-colors">FAA.ZONE™</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Archive System</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Governance</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-3">Support</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-white transition-colors">Rules & Guidelines</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact Support</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Community</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2025 Fruitful™ Global Dashboard. All rights reserved. | Interactive SPA v1.0</p>
+            </div>
+        </div>
+    </footer>
+    <!-- @END_COMPONENT: Footer -->
 
-            // TODO: Implement theme persistence in localStorage
-            function setTheme(theme) {
-                body.setAttribute('data-theme', theme);
-                themeButtons.forEach(btn => {
-                    btn.classList.toggle('active', btn.getAttribute('data-theme') === theme);
+    <script>
+        (function() {
+            // TODO: Implement currency conversion functionality
+            // TODO: Implement ant route canvas animation
+            // TODO: Add smooth scrolling navigation
+            
+            // Currency conversion rates (mock data for demonstration)
+            const exchangeRates = {
+                'ZAR': { 'ZAR': 1, 'USD': 0.055, 'EUR': 0.052, 'GBP': 0.044 },
+                'USD': { 'ZAR': 18.2, 'USD': 1, 'EUR': 0.95, 'GBP': 0.8 },
+                'EUR': { 'ZAR': 19.2, 'USD': 1.05, 'EUR': 1, 'GBP': 0.84 },
+                'GBP': { 'ZAR': 22.8, 'USD': 1.25, 'EUR': 1.19, 'GBP': 1 }
+            };
+
+            const basePrices = {
+                starter: 199.00,
+                business: 499.00,
+                enterprise: 1200.00
+            };
+
+            const currencySymbols = {
+                'ZAR': 'R',
+                'USD': '$',
+                'EUR': '€',
+                'GBP': '£'
+            };
+
+            // Currency selector change handler
+            document.getElementById('currency-select').addEventListener('change', function() {
+                const selectedCurrency = this.value;
+                updatePrices(selectedCurrency);
+            });
+
+            function updatePrices(currency) {
+                const priceElements = document.querySelectorAll('[data-bind*="pricing"]');
+                priceElements.forEach(element => {
+                    const packageType = element.getAttribute('data-bind').split('.')[1];
+                    const basePrice = basePrices[packageType];
+                    const convertedPrice = (basePrice * exchangeRates['ZAR'][currency]).toFixed(2);
+                    const symbol = currencySymbols[currency];
+                    
+                    element.innerHTML = `${symbol} ${convertedPrice} <span class="text-lg font-normal text-gray-500">/ month</span>`;
                 });
             }
 
-            themeButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const theme = this.getAttribute('data-theme');
-                    setTheme(theme);
-                    // TODO: Save theme preference to localStorage
-                });
-            });
-
-            // Initialize with saved theme or default
-            // TODO: Load theme from localStorage
-            setTheme('light');
-        })();
-
-        // Smooth scrolling for navigation links
-        (function() {
-            const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-            
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
+            // Ant route canvas animation
+            const canvas = document.getElementById('ant-route-canvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                
+                function resizeCanvas() {
+                    canvas.width = canvas.offsetWidth;
+                    canvas.height = canvas.offsetHeight;
+                }
+                
+                function drawAntRoute() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
                     
-                    if (targetElement) {
-                        targetElement.scrollIntoView({
+                    // Draw subtle animated ant routes
+                    ctx.strokeStyle = 'rgba(0, 123, 255, 0.1)';
+                    ctx.lineWidth = 2;
+                    
+                    const time = Date.now() * 0.001;
+                    
+                    for (let i = 0; i < 5; i++) {
+                        ctx.beginPath();
+                        const startX = (Math.sin(time + i) + 1) * canvas.width * 0.5;
+                        const startY = (Math.cos(time + i * 0.5) + 1) * canvas.height * 0.5;
+                        const endX = startX + Math.sin(time + i + 1) * 200;
+                        const endY = startY + Math.cos(time + i + 1) * 200;
+                        
+                        ctx.moveTo(startX, startY);
+                        ctx.lineTo(endX, endY);
+                        ctx.stroke();
+                    }
+                    
+                    requestAnimationFrame(drawAntRoute);
+                }
+                
+                window.addEventListener('resize', resizeCanvas);
+                resizeCanvas();
+                drawAntRoute();
+            }
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
                             behavior: 'smooth',
                             block: 'start'
                         });
                     }
                 });
             });
-        })();
 
-        // Fade in animation on scroll
-        (function() {
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver(function(entries) {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
+            // Mobile menu toggle (basic implementation)
+            const mobileMenuBtn = document.querySelector('.md\\:hidden button');
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    // TODO: Implement mobile menu toggle functionality
+                    console.log('Mobile menu toggle clicked');
                 });
-            }, observerOptions);
-
-            // Observe elements with fade-in class
-            document.querySelectorAll('.fade-in').forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(20px)';
-                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                observer.observe(el);
-            });
+            }
         })();
-
-        // CTA button click handler
-        // TODO: Implement actual navigation and analytics tracking
-        document.querySelectorAll('.cta-button').forEach(button => {
-            button.addEventListener('click', function() {
-                console.log('CTA clicked:', this.textContent.trim());
-                // TODO: Implement actual functionality based on button context
-            });
-        });
-
-        // Performance monitoring simulation
-        // TODO: Replace with actual performance monitoring implementation
-        function updateStats() {
-            const statNumbers = document.querySelectorAll('.stat-number');
-            statNumbers.forEach(stat => {
-                const currentValue = parseInt(stat.textContent.replace(/[^\d]/g, ''));
-                if (Math.random() > 0.7) { // 30% chance to update
-                    const variation = Math.floor(Math.random() * 10) - 5;
-                    const newValue = Math.max(0, currentValue + variation);
-                    const originalText = stat.textContent;
-                    const suffix = originalText.replace(/[\d,]/g, '');
-                    stat.textContent = newValue.toLocaleString() + suffix;
-                }
-            });
-        }
-
-        // Update stats every 30 seconds
-        setInterval(updateStats, 30000);
     </script>
 </body>
 </html>
