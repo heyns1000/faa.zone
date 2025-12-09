@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-12-09 | claimroot | main | `public/examples/tree-widget-dynamic.html` | `1ff3fcae` | Dynamic Tree Widget - ClaimRoot | 2460 | 1 | 1 | 28.2 |
+| 2 | 2025-12-09 | claimroot | history | `public/examples/tree-widget-dynamic.html` | `3c597a96` | Dynamic Tree Widget - ClaimRoot | 2056 | 1 | 1 | 28.2 |
