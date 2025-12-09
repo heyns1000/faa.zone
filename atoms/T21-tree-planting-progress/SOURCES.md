@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-12-09 | claimroot | main | `public/examples/tree-widget-example.html` | `15df7e4d` | Tree Planting Progress - ClaimRoot | 2392 | 2 | 0 | 27.2 |
+| 2 | 2025-12-09 | claimroot | history | `public/examples/tree-widget-example.html` | `5bb48d1f` | Tree Planting Progress - ClaimRoot | 2392 | 2 | 0 | 27.2 |
