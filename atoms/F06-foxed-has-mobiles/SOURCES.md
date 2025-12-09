@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-09-06 | ThesisGallery | main | `attached_assets/foxed-has-mobiles_1757167943937.html` | `e1bc5252` | Foxed Has Mobiles™ | FAA Official Competition | 6735 | 17 | 0 | 42.7 |
+| 2 | 2025-12-09 | Foxed-Has-Mobiles | history | `Foxed-Has-Mobiles/.local/state/replit/agent/design_reference/ef7239c8-ba62-456b-a2aa-1559ae2fc222/5a734443-5552-4bd9-80b4-604319a7de2f.html` | `fbfdc4b5` | Foxed Has Mobiles - Professional Mobile Phone | 31819 | 44 | 0 | 61.2 |
