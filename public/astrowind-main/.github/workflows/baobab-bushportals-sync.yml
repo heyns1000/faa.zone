@@ -8,24 +8,24 @@ on:
     types:
       - completed
   schedule:
-    - cron: '*/9 * * * *' # Every 9 minutes (VaultMesh pulse)
+    - cron: '*/9 * * * *'  # Every 9 minutes (VaultMesh pulse)
 
 jobs:
   baobab-activate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      
+
       - name: Install Dependencies
         run: |
           cd public/astrowind-main
           npm ci
-      
+
       - name: Activate Baobab Tree
         run: |
           cd public/astrowind-main
@@ -34,12 +34,12 @@ jobs:
           JEKYLL_JOB_ID: '57823282000'
           JEKYLL_RUN_ID: '20142299943'
           GITHUB_USER: 'heyns1000'
-      
+
       - name: Report to Bushportals
         run: |
           cd public/astrowind-main
           npm run bushportals-sync
-      
+
       - name: Monitor Jekyll Build
         run: |
           cd public/astrowind-main
