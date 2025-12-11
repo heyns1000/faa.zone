@@ -2,6 +2,7 @@
 
 # FAA.Zone Pre-Deployment Validation Script
 # Run this script before pushing changes to verify basic setup
+# Make executable with: chmod +x validate.sh
 
 set -e
 
