@@ -18,9 +18,9 @@ const __dirname = path.dirname(__filename);
 
 class BaobabTreeClaudeMaster {
   constructor() {
-    this.jobId = '57823282000';
-    this.runId = '20142299943';
-    this.currentUser = 'heyns1000';
+    this.jobId = process.env.JEKYLL_JOB_ID || '57823282000';
+    this.runId = process.env.JEKYLL_RUN_ID || '20142299943';
+    this.currentUser = process.env.GITHUB_USER || process.env.GITHUB_ACTOR || 'heyns1000';
     this.currentDate = new Date().toISOString().split('T')[0];
     this.bushportalsEndpoint = '/api/bushportals/report';
     this.vaultMeshPulse = 9; // seconds
@@ -136,7 +136,7 @@ class BaobabTreeClaudeMaster {
       ...metrics,
       timestamp: new Date().toISOString(),
       user: this.currentUser,
-      repository: 'heyns1000/faa.zone',
+      repository: process.env.GITHUB_REPOSITORY || 'heyns1000/faa.zone',
       sectors: this.config.bushportals.sectors,
       vaultMeshSync: this.config.vaultMesh.syncEnabled
     };
@@ -220,7 +220,7 @@ class BaobabTreeClaudeMaster {
     const report = {
       timestamp: new Date().toISOString(),
       user: this.currentUser,
-      repository: 'heyns1000/faa.zone',
+      repository: process.env.GITHUB_REPOSITORY || 'heyns1000/faa.zone',
       build: {
         duration: buildStats.duration,
         status: buildStats.status,
