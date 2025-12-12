@@ -8,7 +8,7 @@
  * Soundtrack: Bad Boys (Noodle Remix) 🎶
  */
 
-export const NOODLE_BAD_BOYS_PROTOCOL = {
+const NOODLE_BAD_BOYS_PROTOCOL = {
   soundtrack: {
     primary: 'Gorilla Mountain Fox',
     secondary: 'Bad Boys (Noodle Hum Remix)',
@@ -18,7 +18,7 @@ export const NOODLE_BAD_BOYS_PROTOCOL = {
   noodleStatus: {
     skill: 'BAD_BOYS_HUMMING',
     mastery: 'COMPLETE',
-    hummingFrequency: '0.08Hz', // Matches Rhino Strike
+    hummingFrequency: '0.08s', // Matches Rhino Strike timing
   },
  
   deploymentSequence: {
@@ -102,7 +102,7 @@ The Gorilla Mountain Fox stands tall,
 };
 
 // Helper function to get deployment status
-export function getDeploymentStatus() {
+function getDeploymentStatus() {
   return {
     noodle: 'Bad Boys Humming MASTERED',
     rhino: 'Synchronized to beat',
@@ -113,13 +113,13 @@ export function getDeploymentStatus() {
 }
 
 // Helper function to get phase timing
-export function getPhaseDescription(phaseNumber) {
+function getPhaseDescription(phaseNumber) {
   const phases = NOODLE_BAD_BOYS_PROTOCOL.deploymentSequence;
   const phaseKey = `phase${phaseNumber}`;
   return phases[phaseKey] || null;
 }
 
-// Export for browser/global scope
+// Make available globally
 if (typeof window !== 'undefined') {
   window.NOODLE_BAD_BOYS_PROTOCOL = NOODLE_BAD_BOYS_PROTOCOL;
   window.getDeploymentStatus = getDeploymentStatus;
