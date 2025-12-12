@@ -499,19 +499,15 @@
         // --- INITIALIZATION FUNCTIONS (Moved to top for hoisting guarantee) ---
         function createParticles() {
             const container = document.getElementById('particles-container');
-            if (!container) return;
-            
-            // Use DocumentFragment for better performance
-            const fragment = document.createDocumentFragment();
+            if (!container) return; 
             for (let i = 0; i < 50; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 particle.style.left = Math.random() * 100 + '%';
                 particle.style.top = Math.random() * 100 + '%';
                 particle.style.animationDelay = Math.random() * 6 + 's';
-                fragment.appendChild(particle);
+                container.appendChild(particle);
             }
-            container.appendChild(fragment);
         }
 
         // --- DATA AND INITIALIZATION ---
@@ -552,11 +548,6 @@
                     soundtrack: '[Noodle humming intensifies]',
                     timing: 9.0,
                 },
-                phase4: {
-                    action: 'GORILLA_MOUNTAIN_FOX',
-                    soundtrack: 'Bad Boys (Finale)',
-                    timing: 84.0, // 84 repos
-                },
             },
         };
 
@@ -569,19 +560,52 @@
         const TOYNEST_REPO = 'https://github.com/heyns1000/toynest.seedwave.faa.zone.git';
         const TOYNEST_ENABLED = true;
 
+        // **NOODLE BAD BOYS PROTOCOL**
+        const NOODLE_BAD_BOYS_PROTOCOL = {
+            soundtrack: {
+                primary: 'Gorilla Mountain Fox',
+                secondary: 'Bad Boys (Noodle Hum Remix)',
+                certification: 'MASTERED',
+            },
+            
+            noodleStatus: {
+                skill: 'BAD_BOYS_HUMMING',
+                mastery: 'COMPLETE',
+                hummingFrequency: '0.08Hz', // Matches Rhino Strike
+            },
+            
+            deploymentSequence: {
+                phase1: {
+                    action: 'RHINO_STRIKE',
+                    soundtrack: 'Bad boys, bad boys...',
+                    timing: 0.08,
+                },
+                phase2: {
+                    action: 'ANT_LATTICE_COLLAPSE',
+                    soundtrack: 'Whatcha gonna do...',
+                    timing: 0.08,
+                },
+                phase3: {
+                    action: 'T_SHIRT_WHITE',
+                    soundtrack: '[Noodle humming intensifies]',
+                    timing: 9.0,
+                },
+                phase4: {
+                    action: 'GORILLA_MOUNTAIN_FOX',
+                    soundtrack: 'Bad Boys (Finale)',
+                    timing: 84.0, // 84 repos
+                },
+            },
+        };
+
         // --- COUNTDOWN LOGIC (Original HotStack Timer) ---
         let minutes = 2;
         let seconds = 52;
-        let countdownDisplay = null; // Cache DOM element
         
         function updateCountdown() {
-            if (!countdownDisplay) {
-                countdownDisplay = document.getElementById('countdown-display');
-            }
-            if (!countdownDisplay) return;
-            
+            const display = document.getElementById('countdown-display');
             const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            countdownDisplay.textContent = formattedTime;
+            display.textContent = formattedTime;
             
             if (seconds > 0) {
                 seconds--;
@@ -673,78 +697,55 @@
         }
 
         // --- LIVE STATUS LOGGER ---
-        let statusLogElement = null; // Cache DOM element
-        
         function addStatusLog(message) {
-            if (!statusLogElement) {
-                statusLogElement = document.getElementById('status-log');
-            }
-            if (!statusLogElement) return;
-            
+            const log = document.getElementById('status-log');
+            if (!log) return;
             const time = new Date().toLocaleTimeString();
             const logEntry = document.createElement('div');
             logEntry.innerHTML = `<span class="text-blue-400">[${time}]</span> ${message}`;
-            statusLogElement.appendChild(logEntry);
-            
-            // Keep only last 10 entries - optimize by checking length before scrolling
-            const children = statusLogElement.children;
-            if (children.length > 10) {
-                statusLogElement.removeChild(children[0]);
+            log.appendChild(logEntry);
+            log.scrollTop = log.scrollHeight;
+
+            // Keep only last 10 entries
+            if (log.children.length > 10) {
+                log.removeChild(log.firstChild);
             }
-            statusLogElement.scrollTop = statusLogElement.scrollHeight;
         }
 
         // --- BAD BOYS DEPLOYMENT SEQUENCE ---
-        let badBoysTimeouts = []; // Track timeouts for potential cleanup
-        
         function executeBadBoysSequence() {
-            // Clear any existing timeouts
-            badBoysTimeouts.forEach(timeout => clearTimeout(timeout));
-            badBoysTimeouts = [];
-            
             const sequence = NOODLE_BAD_BOYS_PROTOCOL.deploymentSequence;
             
             // Phase 1: Rhino Strike (synchronized at 0.08s)
-            badBoysTimeouts.push(setTimeout(() => {
+            setTimeout(() => {
                 addStatusLog(`🎵 "${sequence.phase1.soundtrack}" 🦏 ${sequence.phase1.action} at ${sequence.phase1.timing}s`);
-            }, sequence.phase1.timing * 1000));
+            }, sequence.phase1.timing * 1000);
             
             // Phase 2: Ant Lattice Collapse (synchronized at 0.08s, slightly after Phase 1)
-            badBoysTimeouts.push(setTimeout(() => {
+            setTimeout(() => {
                 addStatusLog(`🎶 "${sequence.phase2.soundtrack}" 🐜 ${sequence.phase2.action}`);
-            }, sequence.phase2.timing * 1000 + 50)); // 50ms after Phase 1 for visual sequencing
+            }, sequence.phase2.timing * 1000 + 50); // 50ms after Phase 1 for visual sequencing
             
             // Phase 3: T-Shirt White Transformation (at 9 seconds)
-            badBoysTimeouts.push(setTimeout(() => {
+            setTimeout(() => {
                 addStatusLog(`🎵 "${sequence.phase3.soundtrack}" 👕 ${sequence.phase3.action} transformation`);
-            }, sequence.phase3.timing * 1000));
+            }, sequence.phase3.timing * 1000);
             
             // Final: Gorilla Mountain Fox Complete (1 second after Phase 3)
-            badBoysTimeouts.push(setTimeout(() => {
+            setTimeout(() => {
                 addStatusLog('🎶 🦍🏔️🦊 Gorilla Mountain Fox deployment complete!');
-                // Clear timeouts after completion
-                badBoysTimeouts = [];
-            }, (sequence.phase3.timing + 1) * 1000));
+            }, (sequence.phase3.timing + 1) * 1000);
         }
 
         // --- MODAL CONTROL ---
-        let modal = null; // Cache modal reference
-        let collapseIdeaInput = null; // Cache input reference
-        
+        const modal = document.getElementById('zero-signup-modal');
         function openZeroSignupPortal() {
-            if (!modal) {
-                modal = document.getElementById('zero-signup-modal');
-            }
-            if (!collapseIdeaInput) {
-                collapseIdeaInput = document.getElementById('collapse-idea-input');
-            }
-            if (!modal) return;
-            
             modal.classList.remove('hidden');
             modal.classList.add('flex');
             addStatusLog('🔑 Zero-Signup Portal opened.');
             
             // Ensure metrics are fresh when portal opens
+            const metrics = calculateCollapseMetrics();
             const payfastIdElement = modal.querySelector('#payfast-id');
             const userNumberElement = modal.querySelector('#user-number');
 
@@ -752,32 +753,21 @@
             if (userNumberElement) userNumberElement.textContent = '---';
             
             // Focus on the input inside the modal
-            if (collapseIdeaInput) collapseIdeaInput.focus();
+            document.getElementById('collapse-idea-input').focus();
         }
 
         function closeZeroSignupPortal() {
-            if (!modal) {
-                modal = document.getElementById('zero-signup-modal');
-            }
-            if (!modal) return;
-            
             modal.classList.add('hidden');
             modal.classList.remove('flex');
             addStatusLog('🚪 Zero-Signup Portal closed.');
             // Clear input on close
-            if (!collapseIdeaInput) {
-                collapseIdeaInput = document.getElementById('collapse-idea-input');
-            }
-            if (collapseIdeaInput) collapseIdeaInput.value = "";
+            document.getElementById('collapse-idea-input').value = "";
         }
 
         // --- SHANANA DEPLOYMENT LOGIC (ACCESS INITIATION) ---
 
         function deployShanana() {
-            if (!collapseIdeaInput) {
-                collapseIdeaInput = document.getElementById('collapse-idea-input');
-            }
-            const input = collapseIdeaInput ? collapseIdeaInput.value.trim() : '';
+            const input = document.getElementById('collapse-idea-input').value.trim();
             
             // **HOTSTACK LICENSING LOCK CHECK**
             if (HOTSTACK_LICENSE_STATUS !== 'MASTERED') {
@@ -801,14 +791,9 @@
                 return;
             }
             
-            if (!modal) {
-                modal = document.getElementById('zero-signup-modal');
-            }
-            if (!modal) return;
-            
             // Highlight Intake Portal and show processing status
             const intakeCard = modal.querySelector('.card');
-            if (intakeCard) intakeCard.style.boxShadow = '0 0 40px rgba(255, 184, 0, 0.9)'; 
+            intakeCard.style.boxShadow = '0 0 40px rgba(255, 184, 0, 0.9)'; 
             
             const payfastIdElement = modal.querySelector('#payfast-id');
             const userNumberElement = modal.querySelector('#user-number');
@@ -850,8 +835,8 @@ Your identity is the timestamp of your creation.
 - Status: Connected to Git, Figma, Gemini, Replit.
 (Welcome to the Zero-Signup Nexus! 🎵)`);
                 
-                if (intakeCard) intakeCard.style.boxShadow = '0 0 0 rgba(255, 184, 0, 0.1)'; // Reset shadow
-                if (collapseIdeaInput) collapseIdeaInput.value = "";
+                intakeCard.style.boxShadow = '0 0 0 rgba(255, 184, 0, 0.1)'; // Reset shadow
+                document.getElementById('collapse-idea-input').value = "";
                 closeZeroSignupPortal();
                 updateMetricsDisplay();
             }, 1500); // 1.5 second simulation for dramatic effect
@@ -859,70 +844,45 @@ Your identity is the timestamp of your creation.
 
 
         // --- DRAG & DROP LOGIC ---
-        let dropZone = null; // Cache drop zone reference
+        const dropZone = document.getElementById('omnidrop-zone');
         
-        function initializeDropZone() {
-            dropZone = document.getElementById('omnidrop-zone');
-            if (!dropZone) return;
+        dropZone.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.style.borderColor = '#f59e0b';
+            this.style.background = 'rgba(251, 191, 36, 0.2)';
+        });
+        
+        dropZone.addEventListener('dragleave', function(e) {
+            this.style.borderColor = '#fbbf24';
+            this.style.background = 'rgba(251, 191, 36, 0.05)';
+        });
+        
+        dropZone.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.style.borderColor = '#fbbf24';
+            this.style.background = 'rgba(251, 191, 36, 0.05)';
             
-            dropZone.addEventListener('dragover', function(e) {
-                e.preventDefault();
-                this.style.borderColor = '#f59e0b';
-                this.style.background = 'rgba(251, 191, 36, 0.2)';
-            });
-            
-            dropZone.addEventListener('dragleave', function(e) {
-                this.style.borderColor = '#fbbf24';
-                this.style.background = 'rgba(251, 191, 36, 0.05)';
-            });
-            
-            dropZone.addEventListener('drop', function(e) {
-                e.preventDefault();
-                this.style.borderColor = '#fbbf24';
-                this.style.background = 'rgba(251, 191, 36, 0.05)';
-                
-                const files = e.dataTransfer.files;
-                if (files.length > 0) {
-                    addStatusLog(`📂 ${files.length} file(s) detected for Omnidrop`);
-                    addStatusLog('⚠️ Note: File processing requires backend server connection.');
-                    addStatusLog('🔗 Switch to the Replit environment for full functionality.');
-                    // In a live Replit environment, the API call logic would be here
-                }
-            });
-        }
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                addStatusLog(`📂 ${files.length} file(s) detected for Omnidrop`);
+                addStatusLog('⚠️ Note: File processing requires backend server connection.');
+                addStatusLog('🔗 Switch to the Replit environment for full functionality.');
+                // In a live Replit environment, the API call logic would be here
+            }
+        });
         
         // --- REFERRAL COPY LOGIC ---
-        let copyReferralBtn = null; // Cache button reference
-        let copyReferralTimeout = null; // Track timeout for cleanup
-        
-        function initializeCopyReferral() {
-            copyReferralBtn = document.getElementById('copy-referral');
-            if (!copyReferralBtn) return;
-            
-            copyReferralBtn.addEventListener('click', function() {
-                navigator.clipboard.writeText('https://replit.com/refer/heynsschoeman');
-                this.textContent = 'Copied!';
-                addStatusLog('📋 Referral link copied to clipboard');
-                
-                // Clear existing timeout if any
-                if (copyReferralTimeout) {
-                    clearTimeout(copyReferralTimeout);
-                }
-                
-                copyReferralTimeout = setTimeout(() => {
-                    if (copyReferralBtn) {
-                        copyReferralBtn.textContent = 'Copy Link';
-                    }
-                    copyReferralTimeout = null;
-                }, 2000);
-            });
-        }
+        document.getElementById('copy-referral').addEventListener('click', function() {
+            navigator.clipboard.writeText('https://replit.com/refer/heynsschoeman');
+            this.textContent = 'Copied!';
+            addStatusLog('📋 Referral link copied to clipboard');
+            setTimeout(() => {
+                this.textContent = 'Copy Link';
+            }, 2000);
+        });
 
 
         // --- INITIALIZATION ---
-        let metricsInterval = null;
-        let countdownInterval = null;
-        
         document.addEventListener('DOMContentLoaded', async () => {
             createParticles();
             addStatusLog('🔥 HotStack™ system loading...');
@@ -936,8 +896,6 @@ Your identity is the timestamp of your creation.
                 addStatusLog('🦍 Gorilla Mountain Fox Trinity: APPROVED');
             } else {
                 addStatusLog('⚠️ Bad Boys Protocol: INCOMPLETE');
-            }
-            
             // Check Bad Boys Protocol Certification
             if (NOODLE_BAD_BOYS_PROTOCOL.soundtrack.certification === 'MASTERED') {
                 addStatusLog('🎵 Bad Boys Protocol: CERTIFIED ✅');
@@ -959,18 +917,9 @@ Your identity is the timestamp of your creation.
             addStatusLog('✅ All systems operational');
             addStatusLog('🍜 The Noodle is ready with Bad Boys humming!');
 
-            // Initialize event listeners
-            initializeDropZone();
-            initializeCopyReferral();
-
             updateMetricsDisplay();
-            
-            // Clear any existing intervals before setting new ones
-            if (metricsInterval) clearInterval(metricsInterval);
-            if (countdownInterval) clearInterval(countdownInterval);
-            
-            metricsInterval = setInterval(updateMetricsDisplay, 900); // Heartbeat tied to Collapse Interval
-            countdownInterval = setInterval(updateCountdown, 1000); // Start Countdown Timer
+            setInterval(updateMetricsDisplay, 900); // Heartbeat tied to Collapse Interval
+            setInterval(updateCountdown, 1000); // Start Countdown Timer
 
             // Expose functions to global scope for button clicks
             window.openZeroSignupPortal = openZeroSignupPortal;
