@@ -17,3 +17,4 @@
 | 11 | 2025-12-12 | hotstack | history | `index.html` | `a7d935eb` | 🔥 HotStack™ | Banimal Ecosystem Intake | 49594 | 32 | 13 | 92.0 |
 | 12 | 2025-12-12 | hotstack | copilot/add-bad-boys-song-certification | `index.html` | `b210edae` | 🔥 HotStack™ | Banimal Ecosystem Intake | 47303 | 32 | 11 | 87.7 |
 | 13 | 2025-12-12 | hotstack | history | `index.html` | `94b4ba69` | 🔥 HotStack™ | Banimal Ecosystem Intake | 43164 | 31 | 10 | 84.3 |
+| 14 | 2025-12-12 | hotstack | copilot/update-bad-boys-song-status | `index.html` | `01e56bc3` | 🔥 HotStack™ | Banimal Ecosystem Intake | 36454 | 29 | 11 | 83.6 |
