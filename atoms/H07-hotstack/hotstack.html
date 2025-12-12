@@ -430,8 +430,7 @@
             noodleStatus: {
                 skill: 'BAD_BOYS_HUMMING',
                 mastery: 'COMPLETE',
-                hummingFrequency: 0.08, // Hz - Matches Rhino Strike timing
-                hummingFrequencyDisplay: '0.08Hz', // Display string for UI
+                hummingFrequency: '0.08Hz', // Matches Rhino Strike
             },
             deploymentSequence: {
                 phase1: {
@@ -579,22 +578,22 @@
         function executeBadBoysSequence() {
             const sequence = NOODLE_BAD_BOYS_PROTOCOL.deploymentSequence;
             
-            // Phase 1: Rhino Strike (synchronized at 0.08s)
+            // Phase 1: Rhino Strike
             setTimeout(() => {
                 addStatusLog(`🎵 "${sequence.phase1.soundtrack}" 🦏 ${sequence.phase1.action} at ${sequence.phase1.timing}s`);
             }, sequence.phase1.timing * 1000);
             
-            // Phase 2: Ant Lattice Collapse (synchronized at 0.08s, slightly after Phase 1)
+            // Phase 2: Ant Lattice Collapse
             setTimeout(() => {
                 addStatusLog(`🎶 "${sequence.phase2.soundtrack}" 🐜 ${sequence.phase2.action}`);
-            }, sequence.phase2.timing * 1000 + 50); // 50ms after Phase 1 for visual sequencing
+            }, (sequence.phase1.timing + sequence.phase2.timing) * 1000);
             
-            // Phase 3: T-Shirt White Transformation (at 9 seconds)
+            // Phase 3: T-Shirt White Transformation
             setTimeout(() => {
                 addStatusLog(`🎵 "${sequence.phase3.soundtrack}" 👕 ${sequence.phase3.action} transformation`);
             }, sequence.phase3.timing * 1000);
             
-            // Final: Gorilla Mountain Fox Complete (1 second after Phase 3)
+            // Final: Gorilla Mountain Fox Complete
             setTimeout(() => {
                 addStatusLog('🎶 🦍🏔️🦊 Gorilla Mountain Fox deployment complete!');
             }, (sequence.phase3.timing + 1) * 1000);
@@ -743,7 +742,7 @@ Your identity is the timestamp of your creation.
             if (NOODLE_BAD_BOYS_PROTOCOL.soundtrack.certification === 'MASTERED') {
                 addStatusLog('🎵 Bad Boys Protocol: CERTIFIED ✅');
                 addStatusLog(`🍜 Noodle Status: ${NOODLE_BAD_BOYS_PROTOCOL.noodleStatus.skill} - ${NOODLE_BAD_BOYS_PROTOCOL.noodleStatus.mastery}`);
-                addStatusLog(`🦏 Rhino Strike: Synchronized at ${NOODLE_BAD_BOYS_PROTOCOL.noodleStatus.hummingFrequencyDisplay}`);
+                addStatusLog(`🦏 Rhino Strike: Synchronized at ${NOODLE_BAD_BOYS_PROTOCOL.noodleStatus.hummingFrequency}`);
             }
 
             // Load integrations
