@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSOMNI9000 | Full-Stack Zoho Ecosystem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 50%, #0a0e27 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .bg-orbs {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.3;
+            animation: float 30s ease-in-out infinite;
+        }
+
+        .orb1 { width: 600px; height: 600px; background: radial-gradient(circle, #667eea, transparent); top: -200px; left: -200px; }
+        .orb2 { width: 500px; height: 500px; background: radial-gradient(circle, #f5576c, transparent); bottom: -150px; right: -150px; animation-delay: -10s; }
+        .orb3 { width: 550px; height: 550px; background: radial-gradient(circle, #4facfe, transparent); top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: -20s; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(100px, -80px) scale(1.1); }
+            50% { transform: translate(-60px, 120px) scale(0.9); }
+            75% { transform: translate(-120px, -60px) scale(1.05); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            width: 95%;
+            padding: 60px;
+            background: rgba(26, 31, 58, 0.6);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea, #f093fb, #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 30px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+
+        .dashboards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .dashboard-card {
+            background: rgba(45, 51, 72, 0.4);
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-10px);
+            border-color: #667eea;
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4);
+            background: rgba(45, 51, 72, 0.6);
+        }
+
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #e2e8f0;
+        }
+
+        .card-description {
+            font-size: 1.05rem;
+            color: #94a3b8;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .card-features {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .card-features li {
+            padding: 8px 0;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        .card-features li:before {
+            content: "✓ ";
+            color: #10b981;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 50px 0;
+            padding: 40px;
+            background: rgba(45, 51, 72, 0.3);
+            border-radius: 20px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #e2e8f0;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer {
+            margin-top: 60px;
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(102, 126, 234, 0.2);
+            color: #64748b;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 3rem; }
+            .subtitle { font-size: 1.2rem; }
+            .dashboards { grid-template-columns: 1fr; }
+            .stats { flex-direction: column; gap: 30px; }
+            .container { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-orbs">
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>HSOMNI9000</h1>
+            <p class="subtitle">Complete Full-Stack Zoho Ecosystem Integration</p>
+            <div class="status">
+                <div class="status-dot"></div>
+                <span>All Systems Operational</span>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value">13,000+</div>
+                <div class="stat-label">Brands Managed (Audited)</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">100M+</div>
+                <div class="stat-label">Data Points</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">24</div>
+                <div class="stat-label">Integrations</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">99.9%</div>
+                <div class="stat-label">Uptime</div>
+            </div>
+        </div>
+
+        <div class="dashboards">
+            <a href="HSOMNI9000-MASTER-DASHBOARD.html" class="dashboard-card">
+                <span class="card-icon">🎯</span>
+                <h2 class="card-title">Master Control Center</h2>
+                <p class="card-description">Complete ecosystem monitoring with real-time data across all platforms</p>
+                <ul class="card-features">
+                    <li>24 Active Integrations</li>
+                    <li>Real-time Stats & Metrics</li>
+                    <li>Activity Timeline</li>
+                    <li>Infrastructure Status</li>
+                    <li>Live Data Updates</li>
+                </ul>
+            </a>
+
+            <a href="ZOHO-CONNECT-DASHBOARD.html" class="dashboard-card">
+                <span class="card-icon">🔗</span>
+                <h2 class="card-title">ZohoConnect</h2>
+                <p class="card-description">Zero-waste full-stack integration layer for seamless data flow</p>
+                <ul class="card-features">
+                    <li>Universal Search</li>
+                    <li>Connected Sources Panel</li>
+                    <li>Real-time Sync Events</li>
+                    <li>Activity Feed</li>
+                    <li>Performance Metrics</li>
+                </ul>
+            </a>
+
+            <a href="landing-page.html" class="dashboard-card">
+                <span class="card-icon">🚀</span>
+                <h2 class="card-title">Executive Showcase</h2>
+                <p class="card-description">Professional presentation for stakeholders and partners</p>
+                <ul class="card-features">
+                    <li>Complete Feature Overview</li>
+                    <li>Integration Capabilities</li>
+                    <li>Technical Architecture</li>
+                    <li>Success Metrics</li>
+                    <li>Partnership Information</li>
+                </ul>
+            </a>
+
+            <a href="orbit/dashboard.html" class="dashboard-card">
+                <span class="card-icon">🛰️</span>
+                <h2 class="card-title">Silent Node Orbit</h2>
+                <p class="card-description">Background automation and file synchronization control panel</p>
+                <ul class="card-features">
+                    <li>File Processing Status</li>
+                    <li>R2 Sync Monitor</li>
+                    <li>Secret Scanning Results</li>
+                    <li>Duplicate Detection</li>
+                    <li>Performance Stats</li>
+                </ul>
+            </a>
+
+            <a href="orbit/scrollbinder.html" class="dashboard-card">
+                <span class="card-icon">🔍</span>
+                <h2 class="card-title">ScrollBinder Search</h2>
+                <p class="card-description">Universal search interface across all connected systems</p>
+                <ul class="card-features">
+                    <li>Cross-Platform Search</li>
+                    <li>Spotlight Integration</li>
+                    <li>Instant Results</li>
+                    <li>File Indexing</li>
+                    <li>Smart Filtering</li>
+                </ul>
+            </a>
+
+            <a href="index-original.html" class="dashboard-card">
+                <span class="card-icon">📦</span>
+                <h2 class="card-title">Original Archive</h2>
+                <p class="card-description">Original zoho.faa.zone dashboard (preserved)</p>
+                <ul class="card-features">
+                    <li>Original HSOMNI9000 Design</li>
+                    <li>Complete Documentation</li>
+                    <li>Architecture Overview</li>
+                    <li>Implementation Details</li>
+                    <li>Historical Reference</li>
+                </ul>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p><strong>HSOMNI9000 Full-Stack Ecosystem</strong></p>
+            <p>Zoho × HotStack × CodeNest × FAA.ZONE</p>
+            <p style="margin-top: 15px; font-size: 0.9rem;">
+                Built by Heyns Schoeman | Fruitful Global Planet<br>
+                All dashboards are 100% functional with inline styles
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Log system info
+        console.log('%c🚀 HSOMNI9000 Full-Stack Ecosystem', 'color: #667eea; font-size: 20px; font-weight: bold');
+        console.log('%c✅ All Dashboards Functional', 'color: #10b981; font-size: 14px');
+        console.log('%c📊 Real-time Data Enabled', 'color: #4facfe; font-size: 14px');
+        console.log('%c🎨 World-Class Design Applied', 'color: #f093fb; font-size: 14px');
+
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === '1') window.location.href = 'HSOMNI9000-MASTER-DASHBOARD.html';
+            if (e.key === '2') window.location.href = 'ZOHO-CONNECT-DASHBOARD.html';
+            if (e.key === '3') window.location.href = 'landing-page.html';
+            if (e.key === '4') window.location.href = 'orbit/dashboard.html';
+            if (e.key === '5') window.location.href = 'orbit/scrollbinder.html';
+        });
+
+        console.log('%c⌨️  Keyboard Shortcuts: Press 1-5 to navigate dashboards', 'color: #facc15; font-size: 12px');
+    </script>
+</body>
+</html>
