@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-12-12 | codenest | copilot/update-repository-count-and-translation-system | `bad-boys-protocol-demo.html` | `56bd0e4a` | 🎵 Bad Boys Noodle Protocol - Live Demonstrati | 16290 | 5 | 4 | 41.6 |
+| 2 | 2025-12-25 | codenest | resolve-conflicts-manually | `bad-boys-protocol-demo.html` | `0e09f846` | 🎵 Bad Boys Noodle Protocol - Live Demonstrati | 16290 | 5 | 4 | 41.6 |
