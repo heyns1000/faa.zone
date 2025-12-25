@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-12-11 | codenest | copilot/update-repository-count-and-translation-system | `hotstack-dashboard/index.html` | `808201c3` | 🎯 HotStack Admin Dashboard | FAA.zone™ | 22768 | 27 | 0 | 63.3 |
+| 2 | 2025-12-25 | codenest | resolve-conflicts-manually | `hotstack-dashboard/index.html` | `66858a37` | 🎯 HotStack Admin Dashboard | FAA.zone™ | 22768 | 27 | 0 | 63.3 |
