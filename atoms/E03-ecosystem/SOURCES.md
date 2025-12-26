@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-12-05 | codenest | resolve-conflicts-manually | `packages/faa-zone/public/ecosystem.html` | `30561734` | FAA™ Global Ecosystem - Interactive Dashboard | 30898 | 30 | 9 | 76.1 |
+| 2 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/apps/seedwave-core/public/ecosystem-dashboard.html` | `2b0a3794` | FAA™ Global Ecosystem - Interactive Dashboard | 29456 | 26 | 9 | 71.9 |
