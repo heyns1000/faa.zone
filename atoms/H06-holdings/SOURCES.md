@@ -6,3 +6,4 @@
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-07-02 | interns.seedwave.faa.zone | history | `public/respitories.html` | `be8daef5` | Fruitful Holdings | Repository & Legal Hub | 71363 | 29 | 9 | 68.5 |
 | 2 | 2025-07-20 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/legal-main/public/respitories/index.html` | `78425c4b` | Fruitful Holdings | Repository & Legal Hub | 126120 | 1 | 9 | 38.6 |
+| 3 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/apps/seedwave-core/public/Respitory.html` | `6d8c9ab1` | Fruitful Holdings | Repository | 87940 | 1 | 6 | 27.8 |
