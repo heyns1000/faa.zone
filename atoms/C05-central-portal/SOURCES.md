@@ -9,3 +9,4 @@
 | 3 | 2025-07-08 | interns.seedwave.faa.zone | history | `public/index.html` | `0ab9731a` | Central Portal | Seedwave™ powered by Fruitfu | 163032 | 104 | 7 | 164.3 |
 | 4 | 2025-07-08 | interns.seedwave.faa.zone | history | `public/index.html` | `d43fee99` | Central Portal | Seedwave™ powered by Fruitfu | 54341 | 104 | 0 | 139.4 |
 | 5 | 2025-07-20 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/interns.seedwave.faa.zone-main/public/index.html` | `4002333c` | Central Portal | Seedwave™ powered by Fruitfu | 54347 | 104 | 0 | 139.4 |
+| 6 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/seedwave-sectors/index/public/portalnest.html` | `64e64335` | Central Portal | Seedwave™ powered by Fruitfu | 217406 | 75 | 7 | 136.7 |
