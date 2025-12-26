@@ -399,25 +399,41 @@
                 </button>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
                 <div class="metric-card">
-                    <h4>Total FSF Projects</h4>
+                    <h4>Total Projects</h4>
                     <p id="totalProjectsCount">0</p>
                 </div>
                 <div class="metric-card">
                     <h4>Active Soil Nodes</h4>
                     <p id="liveScrollsCount">0</p>
                 </div>
+                 <div class="metric-card">
+                    <h4>Total Brands</h4>
+                    <p id="totalBrandsCount">0</p>
+                </div>
                 <div class="metric-card">
-                    <h4>Yield Royalties (Q2)</h4>
+                    <h4>Total Sub-Nodes</h4>
+                    <p id="totalSubNodesCount">0</p>
+                </div>
+                <div class="metric-card">
+                    <h4>Yield Royalties</h4>
                     <p id="monthlyRoyalties">$0.00</p>
                 </div>
             </div>
 
-            <div class="panel">
-                <h3>FSF System Health Overview</h3>
-                <div class="chart-container" style="height:300px;">
-                    <canvas id="systemHealthChart"></canvas>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="panel">
+                    <h3>FSF System Health Overview</h3>
+                    <div class="chart-container" style="height:300px;">
+                        <canvas id="systemHealthChart"></canvas>
+                    </div>
+                </div>
+                 <div class="panel">
+                    <h3>Project Distribution</h3>
+                    <div class="chart-container" style="height:300px;">
+                        <canvas id="projectDistributionChart"></canvas>
+                    </div>
                 </div>
             </div>
         </section>
@@ -676,6 +692,14 @@
                         backgroundColor: ['#22c55e', '#84cc16', '#facc15', '#a16207'],
                         hoverOffset: 4
                     }]
+                },
+                projectDistribution: {
+                     labels: ['Soil & Data', 'Marketplace', 'Logistics', 'Crop Management'],
+                     datasets: [{
+                        data: [45, 25, 15, 15],
+                        backgroundColor: ['#ca8a04', '#16a34a', '#f59e0b', '#84cc16'],
+                        hoverOffset: 4
+                    }]
                 }
             },
             dnsRecords: [
@@ -769,7 +793,11 @@
         function renderViewContent(viewId) {
             Object.values(currentChartInstances).forEach(chart => chart?.destroy());
 
-            if (viewId === 'dashboard') { updateDashboardMetrics(); renderSystemHealthChart(); } 
+            if (viewId === 'dashboard') { 
+                updateDashboardMetrics(); 
+                renderSystemHealthChart(); 
+                renderProjectDistributionChart();
+            } 
             else if (viewId === 'projects') { renderProjects(); } 
             else if (viewId === 'ecosystem-map') { renderEcosystemMap(); } 
             else if (viewId === 'analytics') { renderAnalyticsCharts(); }
@@ -781,6 +809,8 @@
             document.getElementById('totalProjectsCount').textContent = appData.dashboard.totalProjects;
             document.getElementById('liveScrollsCount').textContent = appData.dashboard.liveScrolls;
             document.getElementById('monthlyRoyalties').textContent = `$${appData.dashboard.monthlyRoyalties.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
+            document.getElementById('totalBrandsCount').textContent = fsfBrands.length;
+            document.getElementById('totalSubNodesCount').textContent = fsfSubNodes.flat().length;
         }
         
         function renderChart(canvasId, type, data, options) {
@@ -795,11 +825,21 @@
                         y: { ticks: { color: isLight ? appData.colors.textDark : appData.colors.textLight }, grid: { color: 'rgba(128,128,128,0.1)' } }
                     }
                 };
+                // For pie/doughnut charts, we don't need scales.
+                if (type === 'pie' || type === 'doughnut') {
+                    delete defaultOptions.scales;
+                }
                 currentChartInstances[canvasId] = new Chart(ctx, { type, data, options: { ...defaultOptions, ...options } });
             }
         }
 
         function renderSystemHealthChart() { renderChart('systemHealthChart', 'line', appData.dashboard.systemHealth, {}); }
+        function renderProjectDistributionChart() { 
+            renderChart('projectDistributionChart', 'pie', appData.analytics.projectDistribution, {
+                 plugins: { legend: { position: 'right' } } 
+            }); 
+        }
+
         function renderAnalyticsCharts() {
             renderChart('deploymentTrendsChart', 'bar', appData.analytics.deploymentTrends, { scales: { y: { beginAtZero: true } } });
             renderChart('royaltyDistributionChart', 'doughnut', appData.analytics.royaltyDistribution, { plugins: { legend: { position: 'right' } } });
