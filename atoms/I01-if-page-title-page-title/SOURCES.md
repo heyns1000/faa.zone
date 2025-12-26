@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-12-11 | faa.zone | history | `docs/_layouts/default.html` | `f244c1de` | {% if page.title %}{{ page.title }} | {% endi | 1235 | 2 | 0 | 27.1 |
+| 2 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/faa-zone/docs/_layouts/default.html` | `cafcf69a` |  | 997 | 2 | 0 | 27.1 |
