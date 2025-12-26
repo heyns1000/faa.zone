@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-07-20 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/legal-main/public/tripot/index.html` | `2f754572` | TRIPOT Business Rescue Portal | 169221 | 107 | 29 | 222.1 |
+| 2 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/templates/tripot/index.html` | `5294e5dc` | TRIPOT Business Rescue Portal | 198286 | 142 | 31 | 271.9 |

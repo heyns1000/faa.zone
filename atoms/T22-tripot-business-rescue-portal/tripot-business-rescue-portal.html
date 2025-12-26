@@ -600,6 +600,7 @@
             border-radius: 30px;
             font-weight: 800;
             font-size: 1.25rem;
+            cursor: pointer;
             transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
             box-shadow: 0 5px 20px rgba(0,0,0,0.4);
             letter-spacing: 0.08em;
@@ -616,7 +617,7 @@
             animation: bounceEmoji 1s infinite alternate;
         }
 
-        /* Core Brand Landing Page Content (repurposed for Company Profile) */
+        /* Core Brand Landing Page Content (now repurposed for Company Profile) */
         #company-profile-page {
             background: linear-gradient(135deg, var(--core-brand-bg-start), var(--core-brand-bg-end)); /* Use specific core brand colors */
             min-height: 100vh; /* Ensure it takes full viewport height */
@@ -972,6 +973,20 @@
             .operational-content-area {
                 width: 100%;
             }
+
+            /* Specific styles for file upload and dropdowns on small screens */
+            .file-upload-area {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+            .file-upload-area i {
+                font-size: 3rem;
+            }
+            .dropdown-menu {
+                position: static; /* Make it flow with content */
+                width: 100%;
+                margin-top: 0.5rem;
+            }
         }
     </style>
 </head>
@@ -1294,9 +1309,44 @@
                 <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('key-meetings')">
                     <i class="fas fa-calendar-alt"></i> Key Meetings
                 </a>
+                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('minutes-of-meeting-panel')">
+                    <i class="fas fa-clipboard-list"></i> Minutes of Meeting
+                </a>
                 <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('portal-settings')">
                     <i class="fas fa-cog"></i> Portal Settings
                 </a>
+
+                <!-- NEW Dashboard Sidebar Items -->
+                <h2 class="text-xl font-semibold dashboard-primary-text mt-6 mb-4">Functional Areas</h2>
+                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('creditors-panel')">
+                    <i class="fas fa-handshake"></i> Creditors
+                </a>
+                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('securesign-panel')">
+                    <i class="fas fa-file-signature"></i> SecureSign
+                </a>
+                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('product-category-panel')">
+                    <i class="fas fa-boxes"></i> Product Category
+                </a>
+                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('clients-panel')">
+                    <i class="fas fa-user-tie"></i> Clients
+                </a>
+                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('attorneys-index-panel')">
+                    <i class="fas fa-gavel"></i> Attorneys Index
+                </a>
+                <!-- End NEW Dashboard Sidebar Items -->
+
+                 <!-- Supplier Selection for Signup (Placeholder - Moved into dashboard for context) -->
+                <div class="mt-auto pt-8 border-t border-gray-700 w-full">
+                    <h3 class="text-lg font-semibold text-gray-400 mb-3">Supplier Signup (Placeholder)</h3>
+                    <select id="supplierSelect" class="w-full px-3 py-2 rounded-lg bg-gray-700 border dashboard-border-dark dashboard-text-light focus:outline-none focus:ring-2 focus:ring-primary-color">
+                        <option value="">Select Supplier</option>
+                        <option value="supplier1">Supplier A Inc.</option>
+                        <option value="supplier2">B&B Enterprises</option>
+                        <option value="supplier3">C-Tech Solutions</option>
+                    </select>
+                    <button class="px-6 py-3 bg-primary-color text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-200 mt-4 w-full">Register Supplier</button>
+                </div>
+
             </nav>
 
             <main class="flex-grow p-8 dashboard-main-content-bg overflow-y-auto dashboard-main-content">
@@ -1598,7 +1648,7 @@
                                         </div>
                                         <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
                                             <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Stakeholder Communication Plan:</h4>
-                                            <p class="dashboard-muted-text"><strong>Outcome:</strong> Agreement on a transparent communication strategy for all creditors, suppliers, and staff.</p>
+                                            <p class="dashboard-muted-text"><strong>Outcome:</strong> Agreement on a transparent communication strategy for all creditors, staff, and partners.</p>
                                             <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Draft initial notification letters and prepare for ongoing updates.</p>
                                         </div>
                                     </div>
@@ -1615,6 +1665,48 @@
                                         <li><strong>HUMAN RESOURCES:</strong> Develop a plan for potential staff reinstatement and retention under the business rescue plan.</li>
                                     </ul>
                                 </div>
+                            </div>
+                        </section>
+
+                        <!-- NEW: Minutes of Meeting Panel -->
+                        <section id="minutes-of-meeting-panel" class="hidden mb-8 dashboard-card">
+                            <h2 class="text-3xl font-bold dashboard-primary-text mb-6">Minutes of Meeting: TRIPOT (PTY) LTD - Business Rescue Resolution</h2>
+                            <div class="space-y-4 dashboard-muted-text text-sm">
+                                <p class="font-bold text-base dashboard-text-light">Registration Number: 2021/132487/07</p>
+
+                                <h3 class="font-semibold dashboard-primary-text mt-6 mb-2">Meeting Details:</h3>
+                                <p><strong>Date:</strong> 26th June 2025</p>
+                                <p><strong>Time:</strong> 11:45 AM</p>
+                                <p><strong>Location:</strong> 40 Zanie Straat, Newmark Estate, Pretoria</p>
+                                <p><strong>Attendees:</strong> Mr. Heyns Schoeman (Sole Director, Identity Number: 8803035153082)</p>
+                                <p class="text-xs italic dashboard-muted-text">(*Note: Legal Counsel and Financial Advisor were consulted, but the formal meeting for this resolution was conducted by the sole director.)*</p>
+
+                                <h3 class="font-semibold dashboard-primary-text mt-6 mb-2">Meeting Purpose:</h3>
+                                <p>To discuss the financial distress of the Company and to pass a resolution for the voluntary commencement of business rescue proceedings in terms of Section 129(1) of the Companies Act, 71 of 2008.</p>
+
+                                <h3 class="font-semibold dashboard-primary-text mt-6 mb-2">Background/Preamble (WHEREAS):</h3>
+                                <p>The Company, TRIPOT (PTY) LTD, a wholesale business, is experiencing significant financial distress due to unforeseen delays in stock imports. This has resulted in outstanding obligations to creditors and inability to meet current financial commitments, including rental arrears for its premises.</p>
+                                <p>A critical court date is scheduled for 1 July 2025, where the landlord intends to execute a hypothec over the Company's movable assets, including essential office equipment.</p>
+                                <p>Despite these challenges, the Director believes there are reasonable prospects for rescuing the Company. This belief is supported by:</p>
+                                <ul class="list-disc list-inside ml-4 space-y-1">
+                                    <li>Valuable inventory that will be captured and valued.</li>
+                                    <li>Certainty regarding existing sales orders.</li>
+                                    <li>Strong relationships with importers willing to supply private label stock on a Cash on Delivery (COD) basis, enabling managed sales to national retail chains.</li>
+                                    <li>The potential for strategic reinstatement of key personnel to drive sales and business continuity.</li>
+                                </ul>
+
+                                <div class="bg-gray-700 p-4 rounded-lg italic text-yellow-300 border border-gray-600 mt-4 mb-4">
+                                    The initiation of business rescue proceedings is deemed necessary and appropriate to prevent immediate asset liquidation, manage current inventory, secure future stock supply, and ultimately preserve employment while maximizing returns for creditors.
+                                </div>
+
+                                <h3 class="font-semibold dashboard-primary-text mt-6 mb-2">Resolutions (IT IS HEREBY RESOLVED THAT)</h3>
+                                <ol class="list-decimal list-inside ml-4 space-y-1">
+                                    <li><strong>Commencement of Business Rescue:</strong> The Company, TRIPOT (PTY) LTD, hereby voluntarily commences business rescue proceedings, effective immediately, in terms of Section 129(1) of the Companies Act, 71 of 2008.</li>
+                                    <li><strong>Filing with CIPC:</strong> Mr. Heyns Schoeman, in his capacity as the sole director, is authorized to take all necessary steps to formally file the Notice of Beginning of Business Rescue Proceedings (Form COR123.1) with the Companies and Intellectual Property Commission (CIPC) immediately.</li>
+                                    <li><strong>Appointment of Business Rescue Practitioner (BRP):</strong> The director is further authorized to engage with the Company's legal representatives to appoint a suitably qualified, experienced, and cost-efficient business rescue practitioner as soon as practically possible, as required by the Companies Act.</li>
+                                    <li><strong>Creditor Notification:</strong> All creditors of the Company shall be notified of these proceedings within the prescribed timelines as stipulated by the Companies Act.</li>
+                                    <li><strong>General Authorisation:</strong> The director is authorized to do all such things and and sign all such documents as may be required to give effect to these resolutions and the business rescue proceedings.</li>
+                                </ol>
                             </div>
                         </section>
 
@@ -1694,6 +1786,168 @@
                                 </div>
                             </div>
                         </section>
+
+                        <!-- NEW: Creditors Panel -->
+                        <section id="creditors-panel" class="hidden mb-8 dashboard-card">
+                            <h2 class="text-3xl font-bold dashboard-primary-text mb-6">Creditors Management</h2>
+                            <p class="dashboard-muted-text mb-4">
+                                Upload invoices, statements, delivery notes, legal letters, letters of demand, and signed NDAs here.
+                            </p>
+                            <div class="file-upload-area p-8 border-2 border-dashed border-gray-600 rounded-lg text-center cursor-pointer hover:border-blue-500 transition duration-200">
+                                <input type="file" multiple class="hidden" id="creditorsFileInput">
+                                <label for="creditorsFileInput" class="block w-full h-full cursor-pointer">
+                                    <i class="fas fa-cloud-upload-alt text-5xl text-gray-400 mb-3"></i>
+                                    <p class="text-lg dashboard-text-light">Drag & Drop Files Here or Click to Browse</p>
+                                    <p class="text-sm dashboard-muted-text mt-1">Supported formats: PDF, JPG, PNG, DOCX</p>
+                                </label>
+                            </div>
+                            <div id="creditorsFileList" class="mt-4 text-sm dashboard-text-light"></div>
+                            <button class="px-6 py-3 bg-primary-color text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-200 mt-6">Upload Documents</button>
+                        </section>
+
+                        <!-- NEW: SecureSign Panel -->
+                        <section id="securesign-panel" class="hidden mb-8 dashboard-card">
+                            <h2 class="text-3xl font-bold dashboard-primary-text mb-6">SecureSign Document Signing</h2>
+                            <p class="dashboard-muted-text mb-4">
+                                Securely sign documents online. The Non-Disclosure Agreement for Tripot Pty Ltd is loaded below.
+                            </p>
+                            <textarea class="w-full p-4 h-64 rounded-lg bg-gray-700 border dashboard-border-dark dashboard-text-light placeholder-dashboard-muted-text focus:outline-none focus:ring-2 focus:ring-purple-400" placeholder="Signed NDA for Tripot Pty Ltd will appear here..." readonly>
+This Non-Disclosure Agreement ("Agreement") is made effective as of [Date], by and between TRIPOT (Pty) Ltd, a company duly registered under the laws of South Africa, with its principal place of business at [Tripot Address] ("Disclosing Party"), and [Recipient Name], an individual/entity with its principal place of business/address at [Recipient Address] ("Receiving Party").
+
+WHEREAS, the Disclosing Party possesses certain confidential and proprietary information relating to its business operations, clients, products, services, and strategies; and
+WHEREAS, the Receiving Party may be exposed to such confidential information in the course of discussions or collaboration with the Disclosing Party;
+NOW, THEREFORE, in consideration of the mutual covenants and agreements contained herein, the parties agree as follows:
+
+1.  Confidential Information. "Confidential Information" shall mean any and all information disclosed by the Disclosing Party to the Receiving Party, whether orally, visually, in writing, or by any other means, that is designated as confidential or that, by its nature, would reasonably be understood to be confidential. This includes, but is not limited to, business plans, financial data, customer lists, technical data, product designs, marketing strategies, and any other proprietary information.
+
+2.  Obligations of Receiving Party. The Receiving Party agrees:
+    a. To use the Confidential Information solely for the purpose of [Specify purpose, e.g., evaluating a potential business relationship].
+    b. To maintain the Confidential Information in strict confidence and to take all reasonable measures to protect it from unauthorized disclosure, use, or access.
+    c. Not to disclose, reproduce, or distribute the Confidential Information to any third party without the prior written consent of the Disclosing Party.
+    d. To restrict access to the Confidential Information to its employees, agents, or contractors who have a legitimate need to know for the specified purpose and who are bound by confidentiality obligations at least as restrictive as those contained herein.
+
+3.  Exclusions. This Agreement shall not apply to information that:
+    a. Is or becomes publicly available through no fault of the Receiving Party.
+    b. Was known to the Receiving Party prior to its disclosure by the Disclosing Party, without breach of any confidentiality obligation.
+    c. Is independently developed by the Receiving Party without reference to the Confidential Information.
+    d. Is rightfully obtained by the Receiving Party from a third party without restriction on disclosure.
+    e. Is required to be disclosed by law or by a governmental authority, provided that the Receiving Party gives prior written notice to the Disclosing Party to allow for protective measures.
+
+4.  Term. This Agreement shall remain in effect for a period of five (5) years from the Effective Date, or until the Confidential Information no longer qualifies as confidential, whichever occurs first.
+
+5.  Return of Information. Upon the request of the Disclosing Party, the Receiving Party shall promptly return or destroy all Confidential Information (and all copies thereof) in its possession or control.
+
+6.  Governing Law. This Agreement shall be governed by and construed in accordance with the laws of South Africa.
+
+IN WITNESS WHEREOF, the parties have executed this Agreement as of the Effective Date.
+
+TRIPOT (Pty) Ltd
+
+By: __________________________
+Name:
+Title:
+
+[Receiving Party Name]
+
+By: __________________________
+Name:
+Title:
+                            </textarea>
+                            <button class="px-6 py-3 bg-primary-color text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-200 mt-6">Sign Document</button>
+                        </section>
+
+                        <!-- NEW: Product Category Panel -->
+                        <section id="product-category-panel" class="hidden mb-8 dashboard-card">
+                            <h2 class="text-3xl font-bold dashboard-primary-text mb-6">Product Category Management</h2>
+                            <p class="dashboard-muted-text mb-4">Manage and organize your product categories for better inventory and sales tracking.</p>
+                            <div class="flex items-center gap-4 mb-6">
+                                <input type="text" id="newCategoryInput" class="flex-grow p-3 rounded-lg bg-gray-700 border dashboard-border-dark dashboard-text-light placeholder-dashboard-muted-text focus:outline-none focus:ring-2 focus:ring-primary-color" placeholder="New Category Name">
+                                <button onclick="addCategory()" class="px-6 py-3 bg-primary-color text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-200">Add Category</button>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-semibold dashboard-text-light mb-3">Existing Categories:</h3>
+                                <ul id="categoryList" class="list-disc list-inside ml-4 dashboard-muted-text space-y-2">
+                                    <li>Electronics</li>
+                                    <li>Apparel</li>
+                                    <li>Home Goods</li>
+                                    <li>Automotive</li>
+                                    <li>Services</li>
+                                </ul>
+                            </div>
+                        </section>
+
+                        <!-- NEW: Clients Panel -->
+                        <section id="clients-panel" class="hidden mb-8 dashboard-card">
+                            <h2 class="text-3xl font-bold dashboard-primary-text mb-6">Client Management</h2>
+                            <p class="dashboard-muted-text mb-4" id="clientsPanelInfo">
+                                Select a sector to view and manage clients associated with TRIPOT.
+                            </p>
+
+                            <div class="relative inline-block text-left w-full md:w-auto mb-6">
+                                <button type="button" id="clientsSectorDropdownBtn" class="inline-flex justify-center w-full rounded-md border border-gray-600 shadow-sm px-4 py-2 bg-gray-700 text-sm font-medium text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-blue-500" aria-haspopup="true" aria-expanded="true">
+                                    Select Client Sector
+                                    <i class="-mr-1 ml-2 h-5 w-5 fas fa-chevron-down"></i>
+                                </button>
+
+                                <div id="clientsSectorDropdown" class="origin-top-right absolute right-0 mt-2 w-full md:w-56 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5 hidden z-10">
+                                    <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="clientsSectorDropdownBtn">
+                                        <a href="javascript:void(0)" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-700" role="menuitem" data-sector="retail">Retail</a>
+                                        <a href="javascript:void(0)" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-700" role="menuitem" data-sector="manufacturing">Manufacturing</a>
+                                        <a href="javascript:void(0)" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-700" role="menuitem" data-sector="food-beverage">Food & Beverage</a>
+                                        <a href="javascript:void(0)" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-700" role="menuitem" data-sector="other">Other</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="clientsSectorDisplay" class="hidden">
+                                <h3 class="text-2xl font-semibold dashboard-text-light mb-4" id="currentClientSectorTitle"></h3>
+                                <div class="flex items-center gap-4 mb-6">
+                                    <input type="text" id="newClientInput" class="flex-grow p-3 rounded-lg bg-gray-700 border dashboard-border-dark dashboard-text-light placeholder-dashboard-muted-text focus:outline-none focus:ring-2 focus:ring-primary-color" placeholder="Add New Client Name">
+                                    <button onclick="addClient()" class="px-6 py-3 bg-primary-color text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-200">Add Client</button>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-semibold dashboard-text-light mb-3">Clients in this Sector:</h4>
+                                    <ul id="clientList" class="list-disc list-inside ml-4 dashboard-muted-text space-y-2">
+                                        <!-- Clients will be dynamically loaded here -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- NEW: Attorneys Index Panel -->
+                        <section id="attorneys-index-panel" class="hidden mb-8 dashboard-card">
+                            <h2 class="text-3xl font-bold dashboard-primary-text mb-6">Attorneys on Record</h2>
+                            <p class="dashboard-muted-text mb-6">
+                                Browse and message our registered legal counsel for any business rescue related queries.
+                            </p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <div class="dashboard-sub-card p-6 rounded-lg shadow-md border dashboard-border-dark">
+                                    <h3 class="text-xl font-semibold dashboard-text-light mb-2">Adv. Legal Eagle</h3>
+                                    <p class="dashboard-muted-text text-sm mb-2">Specialization: Corporate Law, Business Rescue</p>
+                                    <p class="dashboard-muted-text text-sm">Contact: legal.eagle@example.com</p>
+                                    <button class="px-4 py-2 bg-secondary-color text-white rounded-md hover:bg-purple-600 transition duration-200 mt-4"><i class="fas fa-comment-dots mr-2"></i>Message</button>
+                                </div>
+                                <div class="dashboard-sub-card p-6 rounded-lg shadow-md border dashboard-border-dark">
+                                    <h3 class="text-xl font-semibold dashboard-text-light mb-2">Att. Justice Firm</h3>
+                                    <p class="dashboard-muted-text text-sm mb-2">Specialization: Litigation, Insolvency</p>
+                                    <p class="dashboard-muted-text text-sm">Contact: justice.firm@example.com</p>
+                                    <button class="px-4 py-2 bg-secondary-color text-white rounded-md hover:bg-purple-600 transition duration-200 mt-4"><i class="fas fa-comment-dots mr-2"></i>Message</button>
+                                </div>
+                                <div class="dashboard-sub-card p-6 rounded-lg shadow-md border dashboard-border-dark">
+                                    <h3 class="text-xl font-semibold dashboard-text-light mb-2">Ms. Veritas Counsel</h3>
+                                    <p class="dashboard-muted-text text-sm mb-2">Specialization: Commercial Contracts, Compliance</p>
+                                    <p class="dashboard-muted-text text-sm">Contact: veritas.counsel@example.com</p>
+                                    <button class="px-4 py-2 bg-secondary-color text-white rounded-md hover:bg-purple-600 transition duration-200 mt-4"><i class="fas fa-comment-dots mr-2"></i>Message</button>
+                                </div>
+                            </div>
+
+                            <div class="mt-8 dashboard-card p-6 rounded-lg border dashboard-border-dark">
+                                <h3 class="text-2xl font-semibold dashboard-text-light mb-4">Chat with Legal Team</h3>
+                                <textarea class="w-full p-3 h-32 rounded-lg bg-gray-700 border dashboard-border-dark dashboard-text-light placeholder-dashboard-muted-text focus:outline-none focus:ring-2 focus:ring-primary-color mb-4" placeholder="Type your message to the legal team here..."></textarea>
+                                <button class="px-6 py-3 bg-primary-color text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-200 w-full">Send Secure Message</button>
+                            </div>
+                        </section>
+
                     </div>
                 </div>
             </main>
@@ -1730,7 +1984,7 @@
             GOOGLE_MAPS_API_KEY: "AIzaSyBPG8dG29cl0TvYRGyLozejGed5Wj5Ab80",
 
             // Spotify (Access Token - Note: These are short-lived. A backend would refresh them.)
-            SPOTIFY_ACCESS_TOKEN: "BQBDSZ232IQmSLV1BROkxqdwNMoGhtitKOJBjDzE-Lu9YKsSK1RKVwXNfYfncP2wf6Fj6xcYlnGD75baEqOmd3XtxhUhB-X6koPd92H9S0rQBqZ0HSKpsb04HiAme_FtqVLket7_s07gH9y1nxuPhbRyxp0r59oXtovV-uw0lCt2B7Mh5OmN3untEAGhfg6a6AZsaWLsv02dh6zKOQ_6DXHvCHZWxcVmoggu4eLA2NrqAf8rFRSNOw6HQpaN-VZkJWblznWQ0pT7ynzjpKOPlM_70N7vOLIZF8XnRmN1Oe784V-XfYNV-j1x1kdXGEpzlx1", // Long token, likely for API calls, not embeds.
+            SPOTIFY_ACCESS_TOKEN: "BQBDSZ232IQmSLV1BROkxqdwNMoGhtitKOJBjDzE-Lu9YKsSK1RKVwXNfYfncP2wf6Fj6xcYlnGD75baEqOmd3XtxhUhB-X6koPd92H9S0rQBqZ0HSKpsb04HiAme_FtVVLket7_s07gH9y1nxuPhbRyxp0r59oXtovV-uw0lCt2B7Mh5OmN3untEAGhfg6a6AZsaWLsv02dh6zKOQ_6DXHvCHZWxcVmoggu4eLA2NrqAf8rFRSNOw6HQpaN-VZkJWblznWQ0pT7ynzjpKOPlM_70N7vOLIZF8XnRmN1Oe784V-XfYNV-j1x1kdXGEpzlx1", // Long token, likely for API calls, not embeds.
 
             // Gemini AI (already present)
             GEMINI_API_KEY: "AIzaSyBGSDZATtITv5iIoB3rgKHBpWx9MrufxXE",
@@ -1739,7 +1993,7 @@
             XERO_CLIENT_ID: "81B3573D453040508996432C5DAD565B",
             XERO_CLIENT_SECRET: "FIaJGmsaCcKR3Z8kWxPnQd04EhYy6_bImPmoitQDP1U6Smaq", // Highly sensitive!
             XERO_REDIRECT_URI: "https://seedwave.faa.zone/admin_panel_xero.html",
-            XERO_WEBHOOK_KEY: "2fd5LQV0TQDI3572Er/sg66zqEbl8mFWRyfX3XkoKFZGRLK2cZPGpWV/j4yMTU7aUpbgBCfeZkuHnQIwD/0igw==", // Highly sensitive!
+            XERO_WEBHOOK_KEY: "2fd5LQV0TQDI3572Er/sg66zqEbl8mFWRyfX3XkoKFZGRLK2cZPGWPV/j4yMTU7aUpbgBCfeZkuHnQIwD/0igw==", // Highly sensitive!
         };
 
 
@@ -2243,18 +2497,22 @@
         // Full Resolution Modal (re-used from previous business_rescue_spa)
         const resolutionModal = document.getElementById('resolution-modal');
         const closeModalBtn = document.getElementById('close-modal-btn');
-        closeModalBtn.addEventListener('click', () => {
-            resolutionModal.classList.add('opacity-0');
-            resolutionModal.querySelector('.modal-content').classList.add('scale-95');
-            setTimeout(() => {
-                resolutionModal.classList.add('hidden');
-            }, 300);
-        });
-        resolutionModal.addEventListener('click', (event) => {
-            if (event.target === resolutionModal) {
-                closeModalBtn.click(); // Use the existing close logic
-            }
-        });
+        if(closeModalBtn) { // Check if element exists before adding listener
+            closeModalBtn.addEventListener('click', () => {
+                resolutionModal.classList.add('opacity-0');
+                resolutionModal.querySelector('.modal-content').classList.add('scale-95');
+                setTimeout(() => {
+                    resolutionModal.classList.add('hidden');
+                }, 300);
+            });
+        }
+        if(resolutionModal) { // Check if element exists
+            resolutionModal.addEventListener('click', (event) => {
+                if (event.target === resolutionModal) {
+                    closeModalBtn.click(); // Use the existing close logic
+                }
+            });
+        }
 
 
         // --- Dashboard Specific Functions ---
@@ -2994,6 +3252,116 @@
         function hideSubNodeDetails() {
             document.getElementById('subNodeDetailsContainer').classList.add('hidden');
             document.getElementById('subNodeGrid').classList.remove('hidden');
+        }
+
+        // --- NEW FUNCTIONS FOR CUSTOM SECTIONS ---
+
+        // Creditors File Upload Logic
+        const creditorsFileInput = document.getElementById('creditorsFileInput');
+        const creditorsFileList = document.getElementById('creditorsFileList');
+
+        if (creditorsFileInput) {
+            creditorsFileInput.addEventListener('change', (event) => {
+                const files = event.target.files;
+                creditorsFileList.innerHTML = ''; // Clear previous list
+                if (files.length > 0) {
+                    for (let i = 0; i < files.length; i++) {
+                        const file = files[i];
+                        const p = document.createElement('p');
+                        p.textContent = `Uploaded: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
+                        creditorsFileList.appendChild(p);
+                    }
+                } else {
+                    const p = document.createElement('p');
+                    p.textContent = 'No files selected.';
+                    creditorsFileList.appendChild(p);
+                }
+            });
+        }
+
+        // Product Category functions
+        function addCategory() {
+            const newCategoryInput = document.getElementById('newCategoryInput');
+            const categoryList = document.getElementById('categoryList');
+            const categoryName = newCategoryInput.value.trim();
+
+            if (categoryName) {
+                const listItem = document.createElement('li');
+                listItem.textContent = categoryName;
+                categoryList.appendChild(listItem);
+                newCategoryInput.value = ''; // Clear input
+            } else {
+                showCustomModal("Input Error", "Please enter a category name.", false, null, "OK");
+            }
+        }
+
+        // Clients functions
+        let currentClientSector = '';
+        const clientsSectorDropdownBtn = document.getElementById('clientsSectorDropdownBtn');
+        const clientsSectorDropdown = document.getElementById('clientsSectorDropdown');
+        const clientsPanelInfo = document.getElementById('clientsPanelInfo');
+        const clientsSectorDisplay = document.getElementById('clientsSectorDisplay');
+        const currentClientSectorTitle = document.getElementById('currentClientSectorTitle');
+        const newClientInput = document.getElementById('newClientInput');
+        const clientList = document.getElementById('clientList');
+
+        // Toggle clients sector dropdown
+        if (clientsSectorDropdownBtn) {
+            clientsSectorDropdownBtn.addEventListener('click', () => {
+                clientsSectorDropdown.classList.toggle('hidden');
+            });
+        }
+
+        // Handle client sector selection
+        clientsSectorDropdown?.querySelectorAll('a').forEach(item => {
+            item.addEventListener('click', (event) => {
+                event.preventDefault();
+                clientsSectorDropdown.classList.add('hidden'); // Hide dropdown
+
+                currentClientSector = item.dataset.sector;
+                clientsSectorDropdownBtn.textContent = `Sector: ${item.textContent}`;
+                clientsSectorDropdownBtn.appendChild(document.createElement('i')).className = "-mr-1 ml-2 h-5 w-5 fas fa-chevron-down";
+
+
+                clientsPanelInfo.classList.add('hidden'); // Hide initial info
+                clientsSectorDisplay.classList.remove('hidden'); // Show sector-specific display
+                currentClientSectorTitle.textContent = `Clients in ${item.textContent} Sector`;
+                clientList.innerHTML = ''; // Clear previous clients
+
+                // Populate client list based on sector (Placeholder Data)
+                const clientsBySector = {
+                    'retail': ['Pick n Pay', 'Builders Warehouse', 'Makro', 'Outdoor Warehouse', 'Other National Retailers'],
+                    'manufacturing': ['Manufacturing Client 1', 'Manufacturing Client 2'],
+                    'food-beverage': ['KFC', 'Food & Beverage Client 1'],
+                    'other': ['Plantalnd', 'Other Sector Client 1']
+                };
+
+                const clients = clientsBySector[currentClientSector] || [];
+                if (clients.length > 0) {
+                    clients.forEach(client => {
+                        const li = document.createElement('li');
+                        li.textContent = client;
+                        clientList.appendChild(li);
+                    });
+                } else {
+                    const li = document.createElement('li');
+                    li.textContent = 'No clients listed for this sector yet.';
+                    clientList.appendChild(li);
+                }
+            });
+        });
+
+        // Add client function
+        function addClient() {
+            const clientName = newClientInput.value.trim();
+            if (clientName) {
+                const listItem = document.createElement('li');
+                listItem.textContent = clientName;
+                clientList.appendChild(listItem);
+                newClientInput.value = ''; // Clear input
+            } else {
+                showCustomModal("Input Error", "Please enter a client name.", false, null, "OK");
+            }
         }
 
 
