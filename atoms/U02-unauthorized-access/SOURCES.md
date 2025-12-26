@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-06-10 | seedwave | history | `public/unauthorized.html` | `523faf1d` | Unauthorized Access - 🦍 FAA.ZONE™ | 5301 | 6 | 0 | 31.5 |
+| 2 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/apps/seedwave-core/public/unauthorized.html` | `23aa6f74` | Unauthorized Access - 🦍 FAA.ZONE™ | 5313 | 6 | 0 | 31.5 |
