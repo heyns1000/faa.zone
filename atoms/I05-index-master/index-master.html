@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="dynamicTitle">Fruitful Global™ | Sector Index</title>
+    <title id="dynamicTitle">TRIPOT Business Rescue Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Leaflet CSS for OpenStreetMap -->
+    <!-- Leaflet CSS for OpenStreetMap (kept for consistency with the base template, though not strictly used in the new context) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
      crossorigin=""/>
@@ -16,36 +16,55 @@
     <style>
         /* Define a consistent color palette for Dashboard components within the overall dark theme */
         :root {
-            --primary-color: #22c55e; /* Vibrant green */
-            --secondary-color: #3b82f6; /* Blue for accents */
-            --dark-bg-dashboard: #1a1a1d; /* Deep charcoal for dashboard specific elements */
-            --medium-dark-bg-dashboard: #2a2a2e; /* Slightly lighter charcoal for dashboard specifics */
+            /* TRIPOT Business Rescue Theme Colors */
+            --primary-color: #3b82f6; /* Strong Blue for emphasis */
+            --secondary-color: #8b5cf6; /* Softer Purple for accents */
+            --accent-color: #f97316; /* Orange for warnings/highlights */
+            --button-color: #3b82f6; /* Blue for buttons */
+            --button-color-dark: #2563eb; /* Darker blue for button hover */
+            --background-gradient-start: #1f215a; /* Dark blue-purple */
+            --background-gradient-end: #0d1117; /* Very dark charcoal */
+            --text-color: #e2e8f0; /* Light gray for readability */
+            --muted-text: #a0aec0; /* Muted gray */
+            --card-bg: #1a1b20; /* Dark card background */
+            --border-color: rgba(255,255,255,0.1); /* Subtle white border */
+
+            /* Dashboard specific colors, adapting to the new overall theme */
+            --dark-bg-dashboard: #1a1a1d; /* Deep charcoal */
+            --medium-dark-bg-dashboard: #2a2a2e; /* Slightly lighter charcoal */
             --card-bg-dashboard: #374151; /* Dark gray for dashboard cards */
             --text-light-dashboard: #e0e0e0;
             --text-muted-dashboard: #9ca3af;
             --border-color-dashboard: #4b5563;
+            --hover-bg-light: rgba(255, 255, 255, 0.1); /* Hover for navigation */
 
-            /* Default Theme Colors (fallback/initial) */
-            --sector-primary-color: #6366f1; /* Purple */
-            --sector-secondary-color: #a855f7; /* Lighter Purple */
-            --sector-accent-color: #f97316; /* Orange */
-            --sector-button-color: #c084fc; /* Another purple for CTAs */
-            --sector-background-gradient-start: #1f215a;
-            --sector-background-gradient-end: #3b0764;
-            --sector-text-color: #e2e8f0;
-            --sector-muted-text: #a0aec0;
-            --sector-card-bg: #1a1b20;
-            --sector-border-color: rgba(255,255,255,0.1);
-
-            /* Consolidated Fruitful Logo Color (now white) */
+            /* Consolidated Fruitful Logo Color (now white) - Not used for TRIPOT branding directly */
             --fruitful-corporate-white: #ffffff;
+
+            /* Core brand specific variables (will be dynamically set for TRIPOT) */
+            --core-brand-bg-start: var(--background-gradient-start);
+            --core-brand-bg-end: var(--background-gradient-end);
+            --core-brand-text-color: var(--text-color);
+            --core-brand-dark-text: var(--text-color);
+            --core-brand-muted-text: var(--muted-text);
+            --core-brand-accent-color: var(--accent-color);
+            --core-brand-button-color: var(--button-color);
+            --core-brand-button-color-dark: var(--button-color-dark);
+
+            /* Featured core brand specific variables (will be dynamically set for TRIPOT) */
+            --featured-core-brand-bg-start: var(--background-gradient-start);
+            --featured-core-brand-bg-end: var(--background-gradient-end);
+            --featured-core-brand-text-color: var(--text-color);
+            --featured-core-brand-muted-text: var(--muted-text);
+            --featured-core-brand-button-color: var(--button-color);
+            --featured-core-brand-button-color-dark: var(--button-color-dark);
         }
 
-        /* Base Styles - Cooler, darker, more vibrant (from Landing Page, prioritized) */
+        /* Base Styles */
         body {
             font-family: 'Inter', sans-serif;
             background-color: #0d1117; /* Darker base background */
-            color: #e2e8f0; /* Lighter text for contrast */
+            color: var(--text-color); /* Lighter text for contrast */
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -98,16 +117,16 @@
             align-items: center;
         }
         header h1 {
-            color: #e2e8f0; /* Light text for logo */
+            color: var(--text-color); /* Light text for logo */
             font-weight: 800;
             font-size: 1.6rem;
             letter-spacing: -0.03em;
-            background: linear-gradient(90deg, var(--sector-primary-color), var(--sector-secondary-color)); /* Vibrant gradient for logo text */
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); /* Vibrant gradient for logo text */
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         header nav a {
-            color: #a0aec0; /* Muted gray for nav links */
+            color: var(--muted-text); /* Muted gray for nav links */
             font-size: 0.95rem;
             font-weight: 500;
             padding: 0.6rem 1rem;
@@ -116,7 +135,7 @@
             position: relative;
         }
         header nav a:hover {
-            color: #e2e8f0; /* Brighter on hover */
+            color: var(--text-color); /* Brighter on hover */
             background-color: rgba(99, 102, 241, 0.1); /* Subtle purple tint on hover */
             transform: translateY(-2px); /* Slight lift */
         }
@@ -127,28 +146,13 @@
             bottom: -2px;
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, var(--sector-secondary-color), var(--sector-primary-color));
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
             transition: all 0.3s ease-out;
             transform: translateX(-50%);
             border-radius: 1px;
         }
         header nav a:hover::after {
             width: 80%;
-        }
-        header nav a.header-sign-up { /* Sign Up button */
-            background: linear-gradient(90deg, var(--sector-primary-color), var(--sector-secondary-color)); /* Vibrant gradient */
-            color: white;
-            padding: 0.7rem 1.4rem;
-            border-radius: 25px; /* More pill-shaped */
-            font-weight: 700;
-            font-size: 0.95rem;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
-            transition: all 0.3s ease-out;
-        }
-        header nav a.header-sign-up:hover {
-            filter: brightness(1.15);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.4), 0 0 15px rgba(168, 85, 247, 0.5); /* Subtle glow */
         }
         /* Active link for both landing page sections and dashboard toggle */
         .header-nav-active {
@@ -157,18 +161,18 @@
         }
         .header-nav-active::after {
             width: 100% !important;
-            background: linear-gradient(90deg, var(--sector-secondary-color), var(--sector-primary-color)) !important;
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color)) !important;
         }
 
         /* Hero Section - Dynamic and impactful */
         .hero-section {
-            background: linear-gradient(135deg, var(--sector-background-gradient-start), var(--sector-background-gradient-end)); /* Deeper, richer gradient */
+            background: linear-gradient(135deg, var(--background-gradient-start), var(--background-gradient-end)); /* Deeper, richer gradient */
             min-height: 80vh;
             padding: 8rem 2rem;
             border-bottom-left-radius: 60px;
             border-bottom-right-radius: 60px;
             box-shadow: 0 15px 50px rgba(0,0,0,0.7);
-            color: var(--sector-text-color);
+            color: var(--text-color);
             position: relative;
             overflow: hidden;
             animation: fadeInScale 1s ease-out;
@@ -207,14 +211,14 @@
             text-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
         .hero-section h2 span {
-            background: linear-gradient(90deg, var(--sector-accent-color), var(--sector-secondary-color)); /* Warm gradient accent */
+            background: linear-gradient(90deg, var(--accent-color), var(--secondary-color)); /* Warm gradient accent */
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .hero-section p {
             font-size: 1.3rem;
             font-weight: 300; /* Lighter weight for body text */
-            color: var(--sector-muted-text); /* Slightly muted white */
+            color: var(--muted-text); /* Slightly muted white */
             margin-top: 2rem;
             margin-bottom: 3rem;
             max-width: 900px;
@@ -223,7 +227,7 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: linear-gradient(90deg, var(--sector-primary-color), var(--sector-button-color)); /* Brighter purple gradient */
+            background: linear-gradient(90deg, var(--primary-color), var(--button-color)); /* Brighter purple gradient */
             color: white;
             padding: 1rem 2.5rem;
             border-radius: 30px;
@@ -237,7 +241,7 @@
         .cta-button:hover {
             filter: brightness(1.2);
             transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.5), 0 0 25px rgba(192, 132, 252, 0.8); /* Subtle glow */
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5), 0 0 25px rgba(139, 92, 246, 0.8); /* Subtle glow using a blue/purple hue */
         }
         .cta-button span { /* Re-add emoji for "cooler" vibe if desired */
             display: inline-block;
@@ -256,7 +260,7 @@
             background-color: #121317; /* Darker section background */
             box-shadow: inset 0 5px 20px rgba(0,0,0,0.2); /* Inner shadow for depth */
             border-bottom: 1px solid rgba(255,255,255,0.08); /* Subtle separator */
-            color: var(--sector-text-color);
+            color: var(--text-color);
         }
         .landing-section:nth-of-type(odd) { /* Alternate background for sections */
             background-color: #0d1117;
@@ -265,7 +269,7 @@
             border-bottom: none;
         }
         .landing-section h2, .landing-section h3 {
-            color: var(--sector-text-color);
+            color: var(--text-color);
             font-weight: 800;
             letter-spacing: -0.03em;
             margin-bottom: 2.5rem;
@@ -273,241 +277,175 @@
             text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
         .landing-section p {
-            color: var(--sector-muted-text);
+            color: var(--muted-text);
             font-size: 1.15rem;
             line-height: 1.6;
         }
 
         /* Feature Cards - Glowing and interactive */
         .feature-card {
-            background-color: var(--sector-card-bg); /* Dark card background */
+            background-color: var(--card-bg); /* Dark card background */
             border-radius: 16px;
             padding: 2.5rem;
             box-shadow: 0 5px 20px rgba(0,0,0,0.6);
             transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease-in-out, border-color 0.3s ease;
-            border: 1px solid var(--sector-border-color);
+            border: 1px solid var(--border-color);
         }
         .feature-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 25px var(--sector-secondary-color); /* Stronger glow on hover */
-            border-color: var(--sector-secondary-color); /* Purple border on hover */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 25px var(--secondary-color); /* Stronger glow on hover */
+            border-color: var(--secondary-color); /* Purple border on hover */
         }
         .feature-card div:first-child { /* Icon */
             font-size: 3rem;
             margin-bottom: 1.5rem;
-            color: var(--sector-primary-color); /* Electric blue for icons */
-            text-shadow: 0 0 15px rgba(0, 191, 255, 0.6); /* Icon glow */
+            color: var(--primary-color); /* Electric blue for icons */
+            text-shadow: 0 0 15px rgba(59, 130, 246, 0.6); /* Icon glow based on primary blue */
         }
         .feature-card h4 {
             font-size: 1.4rem;
             font-weight: 700;
-            color: var(--sector-text-color);
+            color: var(--text-color);
             margin-bottom: 0.75rem;
         }
         .feature-card p {
             font-size: 1rem;
-            color: var(--sector-muted-text);
+            color: var(--muted-text);
         }
 
-        /* Share Signal Section - Digital display feel */
-        #shareprice {
-            background-color: var(--sector-card-bg);
-            color: var(--sector-text-color);
+        /* Countdown Section (adapted from original business_rescue_spa) */
+        .countdown-section {
+            background-color: rgba(251, 191, 36, 0.1); /* amber-100 with opacity */
+            border-left: 4px solid #f59e0b; /* amber-500 */
+            color: #d97706; /* amber-900 */
+            padding: 1.5rem;
+            border-radius: 0.5rem 0 0 0.5rem; /* rounded-r-lg but only left side now */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .countdown-section h2 {
+            color: #d97706; /* amber-900 */
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: none; /* Override default section h2 text-shadow */
+        }
+        .countdown-section p {
+            color: #d97706;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .countdown-timer-box {
+            background-color: rgba(255, 255, 255, 0.1); /* white/60 adapted for dark theme */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+        .countdown-timer-box p {
+            color: var(--text-color); /* Changed to light text for visibility */
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        #countdown-timer {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #ef4444; /* red-600 */
+            margin-top: 0.5rem;
+        }
+        .countdown-timer-box .text-xs {
+            color: var(--muted-text); /* Muted gray for consistency */
+            margin-top: 0.25rem;
+        }
+
+
+        /* Share Signal Section - Digital display feel (repurposed for sales momentum) */
+        #sales-momentum {
+            background-color: var(--card-bg);
+            color: var(--text-color);
             padding: 5rem 2rem;
             border-bottom: 1px solid rgba(255,255,255,0.08);
             box-shadow: inset 0 5px 20px rgba(0,0,0,0.2);
         }
-        #shareprice h2 {
+        #sales-momentum h2 {
             font-size: 2.2rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            color: var(--sector-text-color);
+            color: var(--text-color);
         }
-        #price {
+        #sales-value {
             font-size: 4rem;
             font-weight: 800;
             color: var(--primary-color); /* Neon green for price */
             letter-spacing: -0.03em;
-            text-shadow: 0 0 20px rgba(0, 227, 147, 0.6); /* Strong glow */
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.6); /* Strong glow based on primary blue */
             animation: pricePulse 2s infinite alternate;
         }
         @keyframes pricePulse {
-            from { text-shadow: 0 0 10px rgba(0, 227, 147, 0.4); }
-            to { text-shadow: 0 0 25px rgba(0, 227, 147, 0.8); }
+            from { text-shadow: 0 0 10px rgba(59, 130, 246, 0.4); }
+            to { text-shadow: 0 0 25px rgba(59, 130, 246, 0.8); }
         }
-        #timestamp {
-            color: var(--sector-muted-text);
+        #momentum-timestamp {
+            color: var(--muted-text);
             font-size: 0.9rem;
         }
 
-        /* Seedwave Growth - Dynamic chart */
-        #seedwave {
+        /* Seedwave Growth - Dynamic chart (repurposed for sales recovery) */
+        #sales-recovery-chart {
             background-color: #0d1117;
             padding: 6rem 2rem;
             border-bottom: 1px solid rgba(255,255,255,0.08);
             box-shadow: inset 0 5px 20px rgba(0,0,0,0.2);
         }
-        #seedwave h2 {
+        #sales-recovery-chart h2 {
             font-size: 2.8rem;
             font-weight: 800;
             margin-bottom: 3rem;
-            color: var(--sector-text-color);
+            color: var(--text-color);
         }
-        #seedwave .w-full {
-            background-color: var(--sector-card-bg);
+        #sales-recovery-chart .w-full {
+            background-color: var(--card-bg);
             border: 1px solid rgba(255,255,255,0.15);
             padding: 2rem;
             border-radius: 16px;
             box-shadow: 0 5px 25px rgba(0,0,0,0.6);
         }
 
-        /* Founder's Note - Evocative text block */
-        .landing-section.bg-gray-700 { /* Founder's Note */
-            background-color: #121317;
-            color: var(--sector-text-color);
-            padding: 6rem 2rem;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            box-shadow: inset 0 5px 20px rgba(0,0,0,0.2);
-        }
-        .landing-section.bg-gray-700 h2 {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--sector-text-color);
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-            animation: textGlow 3s infinite alternate;
-        }
-        @keyframes textGlow {
-            from { text-shadow: 0 0 5px rgba(255,255,255,0.2); }
-            to { text-shadow: 0 0 15px rgba(255,255,255,0.5); }
-        }
-        .landing-section.bg-gray-700 p {
-            font-size: 1.2rem;
-            color: var(--sector-muted-text);
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .landing-section.bg-gray-700 p.italic {
-            color: var(--sector-muted-text);
-            font-style: italic;
-        }
-        .landing-section.bg-gray-700 p.font-semibold {
-            color: var(--primary-color); /* Electric blue signature */
-            font-weight: 600;
-            margin-top: 2.5rem;
-            text-shadow: 0 0 8px rgba(0, 191, 255, 0.4);
-        }
-
-        /* Vault Terminal Access - Futuristic interface */
-        #vault-access {
+        /* Commitment Section (repurposed from Treaty Section) */
+        #commitment-section {
             background-color: #0d1117;
             padding: 6rem 2rem;
             border-bottom: 1px solid rgba(255,255,255,0.08);
             box-shadow: inset 0 5px 20px rgba(0,0,0,0.2);
         }
-        #vault-access h3 {
+        #commitment-section h2 {
             font-size: 2.8rem;
             font-weight: 800;
-            color: var(--sector-text-color);
-            margin-bottom: 3rem;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-        #vault-access .w-full.h-\[800px\] { /* Iframe container */
-            background-color: #000000;
-            border: 3px solid var(--primary-color); /* Neon green border */
-            border-radius: 12px;
-            box-shadow: 0 0 30px rgba(0, 227, 147, 0.5); /* Stronger glow */
-            overflow: hidden;
-        }
-        .terminal-btn {
-            background-color: var(--sector-card-bg);
-            color: var(--primary-color); /* Electric blue text */
-            padding: 1.2rem 1.8rem;
-            border-radius: 10px;
-            font-weight: 600;
-            transition: all 0.2s ease-in-out;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-            border: 1px solid #333333;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        .terminal-btn:hover {
-            background-color: #2a2c33;
-            color: var(--sector-text-color);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5), 0 0 20px var(--primary-color);
-            border-color: var(--primary-color);
-        }
-        .terminal-btn.ring { /* Active state */
-            border-color: var(--primary-color); /* Neon green active ring */
-            box-shadow: 0 0 0 3px rgba(0, 227, 147, 0.5);
-        }
-
-        /* Sector Scrolls - Grid of glowing links */
-        .landing-section.bg-gray-800.text-center { /* Sector Scrolls */
-            background-color: #121317;
-            padding: 6rem 2rem;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            box-shadow: inset 0 5px 20px rgba(0,0,0,0.2);
-        }
-        .landing-section.bg-gray-800.text-center h2 {
-            font-size: 2.8rem;
-            font-weight: 800;
-            margin-bottom: 3rem;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-            color: var(--sector-text-color);
-        }
-        .glyph {
-            background-color: var(--sector-card-bg);
-            color: var(--primary-color); /* Electric blue text */
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            font-weight: 600;
-            transition: all 0.2s ease-in-out;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-            border: 1px solid #333333;
-        }
-        .glyph:hover {
-            background-color: #2a2c33;
-            color: var(--sector-text-color);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5), 0 0 15px var(--primary-color);
-            border-color: var(--primary-color);
-        }
-
-        /* Treaty Section - Powerful statement */
-        #treaty {
-            background-color: #0d1117;
-            padding: 6rem 2rem;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            box-shadow: inset 0 5px 20px rgba(0,0,0,0.2);
-        }
-        #treaty h2 {
-            font-size: 2.8rem;
-            font-weight: 800;
-            color: var(--sector-text-color);
+            color: var(--text-color);
             margin-bottom: 2rem;
             text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
-        #treaty p {
+        #commitment-section p {
             font-size: 1.2rem;
-            color: var(--sector-muted-text);
+            color: var(--muted-text);
             max-width: 700px;
             margin-left: auto;
             margin-right: auto;
             margin-bottom: 2.5rem;
         }
-        #treaty blockquote {
+        #commitment-section blockquote {
             font-size: 1.8rem;
-            color: var(--primary-color); /* Neon green for quote */
+            color: var(--primary-color); /* Blue for quote */
             font-weight: 700;
             line-height: 1.4;
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
-            text-shadow: 0 0 15px rgba(0, 227, 147, 0.5);
+            text-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
         }
-        #treaty blockquote::before, #treaty blockquote::after {
+        #commitment-section blockquote::before, #commitment-section blockquote::after {
             content: '“';
             font-size: 3em;
             line-height: 0.1;
@@ -515,89 +453,89 @@
             color: #333333; /* Muted quote color */
             margin-right: 0.1em;
         }
-        #treaty blockquote::after {
+        #commitment-section blockquote::after {
             content: '”';
             margin-left: 0.05em;
         }
 
-        /* Signal Packet - Hacker console feel */
-        .landing-section.py-10.text-xs.text-center { /* Signal Packet */
+        /* Business Rescue Log (repurposed from Signal Packet) */
+        .business-rescue-log {
             background-color: #0a0a0a;
             color: var(--primary-color);
             padding: 4rem 2rem;
             border-bottom: 1px solid #333;
             box-shadow: inset 0 5px 20px rgba(0,0,0,0.4);
         }
-        .landing-section.py-10.text-xs.text-center pre {
+        .business-rescue-log pre {
             background-color: #000000;
-            border: 1px solid var(--primary-color); /* Neon green border */
+            border: 1px solid var(--primary-color); /* Blue border */
             border-radius: 10px;
             padding: 2rem;
-            box-shadow: 0 0 20px rgba(0, 227, 147, 0.4); /* Strong glow */
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); /* Strong glow */
             white-space: pre-wrap;
             word-break: break-all;
             font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
             font-size: 0.9rem;
         }
 
-        /* VaultMesh Executive Summary - Structured and powerful */
-        #vaultmesh {
+        /* Executive Summary (repurposed from VaultMesh) */
+        #executive-summary {
             background-color: #121317;
             padding: 6rem 2rem;
-            color: var(--sector-text-color);
+            color: var(--text-color);
             border-bottom: 1px solid rgba(255,255,255,0.08);
             box-shadow: inset 0 5px 20px rgba(0,0,0,0.2);
         }
-        #vaultmesh h2 {
+        #executive-summary h2 {
             font-size: 2.8rem;
             font-weight: 800;
-            color: var(--sector-text-color);
+            color: var(--text-color);
             margin-bottom: 2rem;
             text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
-        #vaultmesh h2.text-purple-400 {
-            background: linear-gradient(90deg, var(--sector-primary-color), var(--sector-secondary-color));
+        #executive-summary h2.text-purple-400 { /* This class is now unused as text is dynamically set */
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        #vaultmesh h3 {
+        #executive-summary h3 {
             font-size: 1.6rem;
             font-weight: 700;
-            color: var(--sector-text-color);
+            color: var(--text-color);
             margin-top: 3rem;
             margin-bottom: 1.2rem;
         }
-        #vaultmesh p {
+        #executive-summary p {
             font-size: 1.1rem;
-            color: var(--sector-muted-text);
+            color: var(--muted-text);
             line-height: 1.6;
         }
-        #vaultmesh ul {
+        #executive-summary ul {
             list-style-type: none; /* Remove default bullets */
             padding-left: 0;
             margin-left: 0;
-            color: var(--sector-muted-text);
+            color: var(--muted-text);
         }
-        #vaultmesh ul li {
+        #executive-summary ul li {
             font-size: 1.1rem;
             margin-bottom: 0.75rem;
             position: relative;
             padding-left: 1.5rem;
         }
-        #vaultmesh ul li::before { /* Custom bullet point */
+        #executive-summary ul li::before { /* Custom bullet point */
             content: '•';
             position: absolute;
             left: 0;
-            color: var(--primary-color); /* Electric blue bullet */
+            color: var(--primary-color); /* Blue bullet */
             font-size: 1.2em;
             line-height: 1;
             top: 0.1em;
         }
-        #vaultmesh ul.list-decimal li::before { /* Ensure decimal still works if applied */
+        #executive-summary ul.list-decimal li::before { /* Ensure decimal still works if applied */
             content: counter(list-item) ".";
-            color: var(--primary-color); /* Neon green for numbered lists */
+            color: var(--primary-color); /* Blue for numbered lists */
         }
-        #vaultmesh code {
+        #executive-summary code {
             background-color: #2a2c33;
             padding: 0.3em 0.6em;
             border-radius: 6px;
@@ -606,32 +544,32 @@
             border: 1px solid #444444;
         }
 
-        /* About Section - Clean and impactful */
-        #about {
+        /* About Section - Clean and impactful (repurposed) */
+        #about-br {
             background-color: #0d1117;
             padding: 6rem 2rem;
-            color: var(--sector-text-color);
+            color: var(--text-color);
             border-bottom: 1px solid rgba(255,255,255,0.08);
             box-shadow: inset 0 5px 20px rgba(0,0,0,0.2);
         }
-        #about h3 {
+        #about-br h3 {
             font-size: 2.8rem;
             font-weight: 800;
-            color: var(--sector-text-color);
+            color: var(--text-color);
             margin-bottom: 2rem;
             text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
-        #about p {
+        #about-br p {
             font-size: 1.2rem;
-            color: var(--sector-muted-text);
+            color: var(--muted-text);
             max-width: 900px;
             margin-left: auto;
             margin-right: auto;
         }
 
-        /* Call to Action Section - Bold and inviting */
-        #cta-landing { /* Renamed to avoid conflict with dashboard CTA button */
-            background: linear-gradient(135deg, var(--sector-background-gradient-start), var(--sector-background-gradient-end)); /* Strong purple gradient */
+        /* Call to Action Section - Bold and inviting (repurposed) */
+        #contact-brm { /* Renamed to avoid conflict with dashboard CTA button */
+            background: linear-gradient(135deg, var(--background-gradient-start), var(--background-gradient-end)); /* Strong purple gradient */
             padding: 8rem 2rem;
             color: white;
             text-align: center;
@@ -639,7 +577,7 @@
             border-top-right-radius: 60px;
             box-shadow: 0 -15px 50px rgba(0,0,0,0.7);
         }
-        #cta-landing h3 {
+        #contact-brm h3 {
             font-size: 3.5rem;
             font-weight: 900;
             color: white;
@@ -647,17 +585,17 @@
             line-height: 1.1;
             text-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
-        #cta-landing p {
+        #contact-brm p {
             font-size: 1.3rem;
-            color: var(--sector-muted-text);
+            color: var(--muted-text);
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
             margin-bottom: 3rem;
         }
-        #cta-landing .cta-button {
-            background: var(--primary-color); /* Neon green button */
-            color: #1a1a1a;
+        #contact-brm .cta-button {
+            background: var(--primary-color); /* Blue button */
+            color: #1a1a1a; /* Dark text on button */
             padding: 1.2rem 3rem;
             border-radius: 30px;
             font-weight: 800;
@@ -667,34 +605,83 @@
             letter-spacing: 0.08em;
             text-transform: uppercase;
         }
-        #cta-landing .cta-button:hover {
+        #contact-brm .cta-button:hover {
             filter: brightness(1.2);
             transform: translateY(-5px) scale(1.03);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.5), 0 0 30px rgba(0, 227, 147, 0.8);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5), 0 0 30px rgba(59, 130, 246, 0.8); /* Blue glow */
         }
-        #cta-landing .cta-button span {
+        #contact-brm .cta-button span {
             display: inline-block;
             margin-left: 0.75rem;
             animation: bounceEmoji 1s infinite alternate;
         }
 
-        /* Footer - Subtly integrated */
-        footer {
-            background-color: #0a0a0a;
-            color: #6e6e73;
-            padding: 2.5rem;
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            box-shadow: inset 0 5px 15px rgba(0,0,0,0.3);
+        /* Core Brand Landing Page Content (repurposed for Company Profile) */
+        #company-profile-page {
+            background: linear-gradient(135deg, var(--core-brand-bg-start), var(--core-brand-bg-end)); /* Use specific core brand colors */
+            min-height: 100vh; /* Ensure it takes full viewport height */
+            padding: 8rem 2rem;
+            display: flex; /* Use flex to center content */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+            color: var(--core-brand-text-color);
+            position: relative; /* For canvas z-index */
+            z-index: 10; /* Ensure it's above other sections if they overlap */
+            overflow: hidden; /* To contain particles */
         }
-        footer a {
-            color: #6e6e73;
-            text-decoration: none;
-            transition: color 0.2s ease;
+
+        /* Ensure canvas is behind content but visible */
+        #company-profile-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* Behind content */
         }
-        footer a:hover {
-            color: #e2e8f0;
+
+        .company-profile-content {
+            position: relative;
+            z-index: 5; /* Above canvas */
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .company-profile-content h1 {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            color: var(--core-brand-text-color);
+            text-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        }
+        .company-profile-content h1 span {
+            background: linear-gradient(90deg, var(--core-brand-accent-color), var(--core-brand-button-color)); /* Accent color */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .company-profile-content p {
+            font-size: 1.3rem;
+            color: var(--core-brand-muted-text);
+            margin-top: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .company-profile-cta-button {
+            background: linear-gradient(90deg, var(--core-brand-button-color), var(--core-brand-button-color-dark)); /* Use core brand specific button colors */
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.15rem;
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .company-profile-cta-button:hover {
+            filter: brightness(1.2);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5), 0 0 25px var(--core-brand-button-color);
         }
 
         /* Dashboard Specific Styles (Adapted for overall theme) */
@@ -1473,6 +1460,21 @@
                 <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('settings')">
                     <i class="fas fa-cog"></i> Settings
                 </a>
+                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('creditors-panel')">
+                    <i class="fas fa-handshake"></i> Creditors
+                </a>
+                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('securesign-panel')">
+                    <i class="fas fa-signature"></i> SecureSign
+                </a>
+                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('product-category-panel')">
+                    <i class="fas fa-tags"></i> Product Category
+                </a>
+                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('clients-panel')">
+                    <i class="fas fa-user-tie"></i> Clients
+                </a>
+                <a href="javascript:void(0)" class="dashboard-sidebar-nav-item" onclick="showDashboardSection('attorneys-index-panel')">
+                    <i class="fas fa-gavel"></i> Attorneys Index
+                </a>
             </nav>
 
             <main class="flex-grow p-8 dashboard-main-content-bg overflow-y-auto dashboard-main-content">
@@ -1731,6 +1733,42 @@
                                 <strong>Security Alert!</strong> For production, never expose your API key directly in client-side code. Use a backend server to proxy your AI requests.
                             </div>
 
+                            <!-- Smart Text Editor Section -->
+                            <div class="mb-8">
+                                <h3 class="text-xl font-semibold dashboard-text-light mb-3">✍️ Smart Text Editor</h3>
+                                <p class="dashboard-muted-text mb-3">Enter your text below to use advanced AI™ tools for analysis and generation.</p>
+                                <textarea id="smartTextEditorInput" rows="8" class="w-full p-3 rounded-lg bg-gray-700 border dashboard-border-dark dashboard-text-light placeholder-dashboard-muted-text focus:outline-none focus:ring-2 focus:ring-purple-400" placeholder="Type or paste your text here..."></textarea>
+
+                                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+                                    <button id="btnSummarizeText" class="px-4 py-2 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition duration-200 text-sm">
+                                        Summarize
+                                    </button>
+                                    <button id="btnContinueText" class="px-4 py-2 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition duration-200 text-sm">
+                                        Continue Writing
+                                    </button>
+                                    <button id="btnCorrectGrammar" class="px-4 py-2 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition duration-200 text-sm">
+                                        Correct Grammar
+                                    </button>
+                                    <button id="btnParaphraseText" class="px-4 py-2 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition duration-200 text-sm">
+                                        Paraphrase
+                                    </button>
+                                    <button id="btnAnalyzeSentiment" class="px-4 py-2 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition duration-200 text-sm">
+                                        Analyze Sentiment
+                                    </button>
+                                    <button id="btnExtractKeywords" class="px-4 py-2 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition duration-200 text-sm">
+                                        Extract Keywords
+                                    </button>
+                                </div>
+
+                                <div class="mt-4 p-4 bg-gray-700 rounded-lg border dashboard-border-dark">
+                                    <h4 class="text-lg font-semibold dashboard-text-light mb-2" id="smartTextResultTitle">Smart Text Output:</h4>
+                                    <div id="smartTextResultContent" class="dashboard-text-light whitespace-pre-wrap min-h-[50px] flex items-center justify-center">
+                                        Your AI™ generated text will appear here.
+                                    </div>
+                                    <div id="smartTextError" class="text-red-400 mt-2 hidden"></div>
+                                </div>
+                            </div>
+
                             <!-- General Gemini Prompt -->
                             <div class="mb-8">
                                 <h3 class="text-xl font-semibold dashboard-text-light mb-3">General Query ✨</h3>
@@ -1746,24 +1784,6 @@
                                     <div id="geminiError" class="text-red-400 mt-2 hidden"></div>
                                 </div>
                             </div>
-
-                            <!-- New: Sector Trend Analysis Feature -->
-                            <div class="mb-8">
-                                <h3 class="text-xl font-semibold dashboard-text-light mb-3">Sector Trend Analysis ✨</h3>
-                                <p class="dashboard-muted-text mb-3">Get current trends, future outlook, and key players for a specified sector.</p>
-                                <input type="text" id="sectorTrendInput" placeholder="e.g., Technology, Healthcare, Finance" class="w-full p-3 rounded-lg bg-gray-700 border dashboard-border-dark dashboard-text-light placeholder-dashboard-muted-text focus:outline-none focus:ring-2 focus:ring-purple-400 mb-4">
-                                <button id="getSectorTrendAnalysisBtn" class="px-6 py-3 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition duration-200 self-end">
-                                    Analyze Sector Trends
-                                </button>
-                                <div class="mt-4 p-4 bg-gray-700 rounded-lg border dashboard-border-dark">
-                                    <h4 class="text-lg font-semibold dashboard-text-light mb-2">Sector Trend Analysis Response:</h4>
-                                    <div id="sectorTrendAnalysisResponse" class="dashboard-text-light whitespace-pre-wrap">
-                                        Enter a sector (e.g., Technology, Healthcare) and click "Analyze Sector Trends" to get insights.
-                                    </div>
-                                    <div id="sectorTrendAnalysisError" class="text-red-400 mt-2 hidden"></div>
-                                </div>
-                            </div>
-
 
                             <!-- Coding Partner Feature -->
                             <div class="mb-8">
@@ -1826,7 +1846,7 @@
                             </div>
                         </section>
 
-                        <section id="meeting-minutes" class="mb-8 dashboard-card">
+                        <section id="meeting-minutes" class="hidden mb-8 dashboard-card">
                             <h2 class="text-3xl font-bold dashboard-primary-text mb-6">Meeting Minutes: Fruitful™ Dashboard Development</h2>
                             <p class="text-lg dashboard-muted-text mb-4">A quick recap of our discussions regarding API integrations and future features.</p>
 
@@ -1834,183 +1854,257 @@
                                 <div>
                                     <h3 class="text-2xl font-semibold dashboard-text-light mb-3">Meeting Details:</h3>
                                     <ul class="list-disc list-inside ml-4 dashboard-text-light space-y-1">
-                                        <li><strong>Date:</strong> June 26, 2025</li>
-                                        <li><strong>Time:</strong> 02:16 AM SAST (Silver Lakes Golf Estate, Gauteng, South Africa)</li>
-                                        <li><strong>Attendees:</strong> Fruitful™ Dashboard Development Team (User and Gemini AI™)</li>
+                                        <li><strong>Date:</strong> June 23, 2025</li>
+                                        <li><strong>Time:</strong> 18:45 SAST (6:45 PM, Silver Lakes Golf Estate, Gauteng, South Africa)</li>
+                                        <li><strong>Attendees:</strong> Fruitful™ Dashboard Development Team (represented by user and Gemini AI™)</li>
+                                        <li><strong>Focus:</strong> Reviewing API integrations and future features.</li>
                                     </ul>
                                 </div>
 
                                 <div>
-                                    <h3 class="text-2xl font-semibold dashboard-text-light mb-3">1. Progress Update (June 26, 2025 - 02:16 AM SAST):</h3>
+                                    <h3 class="text-2xl font-semibold dashboard-text-light mb-3">1. Review of Previous API Discussions:</h3>
                                     <div class="space-y-4 ml-4">
                                         <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">API Key Consolidation & Implementation:</h4>
-                                            <p class="dashboard-muted-text"><strong>Status:</strong> All provided API keys (PayPal, Google Maps, Spotify, Gemini AI™, Xero) have been successfully added to the `window.API_KEYS` object.</p>
-                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Implemented mock functions (`mockPayPalSdkIntegration`, `callGeminiAPI`) to demonstrate usage of these keys. Security warnings regarding client-side exposure are prominent.</p>
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Design Styling API Key:</h4>
+                                            <p class="dashboard-muted-text"><strong>Conclusion:</strong> No single "API key" for generic styling. Styling handled primarily by CSS (e.g., Tailwind CSS). Specific design services (e.g., Google Fonts, mapping APIs with custom styles) *would* require their own API keys.</p>
+                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Continue using Tailwind CSS. Explore specific API-driven styling if a particular design service is integrated.</p>
                                         </div>
                                         <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Settings Section Functionality:</h4>
-                                            <p class="dashboard-muted-text"><strong>Status:</strong> Mock functionality for "Profile Settings" (save), "Notification Preferences" (toggle), and "Theme Settings" (dark mode toggle) is now in place.</p>
-                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> These provide a user experience, pending actual backend integration for persistence.</p>
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Language Toggler:</h4>
+                                            <p class="dashboard-muted-text"><strong>Conclusion:</strong> Achieved via JavaScript logic and `data-key` attributes for translatable text. No external API key strictly necessary for the toggler if translations are stored locally.</p>
+                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Current implementation is good. For complex internationalization, consider dedicated I18n JavaScript libraries or a translation API if dynamic, on-the-fly translation is required.</p>
                                         </div>
                                         <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Sign In/Sign Up Forms:</h4>
-                                            <p class="dashboard-muted-text"><strong>Status:</strong> Basic HTML forms for Sign In and Sign Up are implemented with mock `handleSignIn()` and `handleSignUp()` functions. They simulate success/failure.</p>
-                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Ready for Firebase/Google authentication integration.</p>
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Selector to Change All Text in HTML with Script:</h4>
+                                            <p class="dashboard-muted-text"><strong>Conclusion:</strong> `document.querySelectorAll()` with specific tag names or custom attributes is the best method for targeted text manipulation. Use `document.querySelectorAll('*')` with extreme caution.</p>
+                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Continue using specific selectors for controlled text modification.</p>
                                         </div>
                                         <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Dashboard Access & Visibility:</h4>
-                                            <p class="dashboard-muted-text"><strong>Status:</strong> A prominent "Go to Dashboard (Dev Access)" button has been added to the landing page for direct, development-time access, bypassing sign-in/sign-up. The header "Dashboard" link also correctly navigates.</p>
-                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Confirmed visibility and navigation.</p>
-                                        </div>
-                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Sub-Node "Learn More" Functionality:</h4>
-                                            <p class="dashboard-muted-text"><strong>Status:</strong> The "Learn More" links on sub-node cards in the "Sub-Node Index" now correctly open an internal detail view within the dashboard (similar to the Music section).</p>
-                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Mock content is displayed for each sub-node, preparing for detailed AI Logic sector integration.</p>
-                                        </div>
-                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">TradeMark™ Symbol Integration:</h4>
-                                            <p class="dashboard-muted-text"><strong>Status:</strong> All specified brand names and technologies across the entire HTML document (e.g., Fruitful™, FAA™, VaultMesh™, Gemini AI™) have been updated with the ™ symbol.</p>
-                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Consistent branding maintained.</p>
-                                        </div>
-                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
-                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2"><strong>NEW FEATURE: Sector Trend Analysis (Gemini AI™)</strong></h4>
-                                            <p class="dashboard-muted-text"><strong>Description:</strong> Added a new input field and button within the "AI Gemini™" section to allow users to request trend analysis for specific sectors (e.g., "Technology", "Healthcare").</p>
-                                            <p class="dashboard-muted-text mt-1"><strong>Functionality:</strong> Calls the Gemini AI™ API with a tailored prompt to generate a summary of current trends, future outlook, and key players for the given sector.</p>
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">General Helpful API Categories (Recap):</h4>
+                                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
+                                                <li>**Mapping & Location:** Google Maps Platform (requires key).</li>
+                                                <li>**Data & Information:** OpenWeatherMap (key), REST Countries (often no key), News API (key), Free Dictionary (no key).</li>
+                                                <li>**Authentication & User Management:** Firebase Auth, Auth0.</li>
+                                                <li>**Payment Processing:** Stripe (key), PayPal (credentials).</li>
+                                                <li>**AI/ML:** OpenAI (key), Hugging Face Inference API (key), **Gemini AI™ API (key - our current focus!)**.</li>
+                                                <li>**Image/Media:** Pexels API / Unsplash API (keys).</li>
+                                                <li>**Utility:** Bitly API (key), SendGrid API / Mailgun API (keys).</li>
+                                            </ul>
+                                            <p class="api-key-warning mt-3">
+                                                <strong>CRITICAL SECURITY NOTE:</strong> Never expose API keys directly in client-side code. Use a backend server or strict restrictions.
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <h3 class="text-2xl font-semibold dashboard-text-light mb-3">Page Routes & Navigation Summary:</h3>
-                                    <ul class="list-disc list-inside ml-4 dashboard-text-light space-y-1">
-                                        <li><strong>Home (`#hero-section`):</strong> Default landing page.</li>
-                                        <li><strong>Features (`#features`):</strong> Displays core platform features.</li>
-                                        <li><strong>Core Brand (`#core-brand-landing-page`):</strong> Detailed landing page for the primary brand of the selected sector (e.g., Fruitful Innovations™, Banimal™).</li>
-                                        <li><strong>Signal (`#shareprice`):</strong> Live share signal display.</li>
-                                        <li><strong>Vault (`#vault-access`):</strong> Access to various sector-specific iframe terminals.</li>
-                                        <li><strong>Treaty (`#treaty`):</strong> Information about the Treaty System™.</li>
-                                        <li><strong>VaultMesh™ (`#vaultmesh`):</strong> Executive summary of the VaultMesh™ framework.</li>
-                                        <li><strong>About (`#about`):</strong> About Fruitful Innovations™.</li>
-                                        <li><strong>Sign Up (`#sign-up-section`):</strong> User registration form.</li>
-                                        <li><strong>Sign In (`#sign-in-section`):</strong> User login form.</li>
-                                        <li><strong>Dashboard (`#fruitful-dashboard-wrapper`):</strong> Main user dashboard with multiple sub-sections.</li>
-                                        <li>
-                                            <strong>Dashboard Sub-Sections (accessed via sidebar):</strong>
-                                            <ul class="list-disc list-inside ml-6 text-sm dashboard-muted-text">
-                                                <li>`overview`: General sector statistics.</li>
-                                                <li>`core-brand-dashboard-panel`: Detailed view of the core brand within the dashboard.</li>
-                                                <li>`sub-node-index`: Grid of sub-nodes; clicking "Learn More" dynamically loads `subNodeDetailsContainer`.</li>
-                                                <li>`analytics`: Data analytics placeholders.</li>
-                                                <li>`admin-panel`: Admin controls with AI™ assistant.</li>
-                                                <li>`music`: Music and media embeds with sub-navigation.</li>
-                                                <li>`ai-gemini`: Gemini AI™ interaction panel (General, Coding, Career, **Sector Trend Analysis**).</li>
-                                                <li>`maps`: Google Maps and Leaflet.js integrations.</li>
-                                                <li>`meeting-minutes`: This very document.</li>
-                                                <li>`settings`: User settings and API key display.</li>
-                                            </ul>
-                                        </li>
-                                    </ul>
+                                    <h3 class="text-2xl font-semibold dashboard-text-light mb-3">2. Gemini AI™ Integration (Current Progress & Understanding):</h3>
+                                    <div class="space-y-4 ml-4">
+                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">What does a Gemini AI™ API Key do? (for "Baby Staff"):</h4>
+                                            <p class="dashboard-text-light mb-2">Imagine the Gemini AI™ as a super-smart robot brain that lives far away in a Google data center. This robot brain can do amazing things like talk like a human, understand pictures, summarize long texts, and write code.</p>
+                                            <p class="dashboard-text-light mb-2">**Your Gemini AI™ API Key is like a special secret VIP pass** that allows your Fruitful™ Dashboard to "talk" to this super-smart robot brain. It tells Google it's *our* dashboard asking, keeps track of usage, and ensures safe communication.</p>
+                                            <p class="dashboard-text-light">**Crucial Point for "Baby Staff":** This API key is a **secret!** Never show it to anyone who shouldn't have access, and never put it directly into code that everyone can see (like the HTML if it's on a public website). It's like your house key – keep it safe!</p>
+                                        </div>
+                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Key Acquisition:</h4>
+                                            <p class="dashboard-muted-text">API keys are obtained via <a href="https://aistudio.google.com/" target="_blank" class="dashboard-secondary-text hover:underline">Google AI Studio</a>.</p>
+                                        </div>
+                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Current Dashboard Implementation:</h4>
+                                            <p class="dashboard-muted-text">A new "AI Gemini™" section has been added with a general prompt area, plus new specialized "Coding Partner" and "Career Guide" features, all powered by Gemini AI™. The API key for Gemini is now explicitly set using the key you provided (`AIzaSyBGSDZATtITv5iIoB3rgKHBpWx9MrufxXE`).</p>
+                                            <p class="api-key-warning mt-2">
+                                                <strong>ACTION REQUIRED for PRODUCTION:</strong> While the key is now in the code, for any production deployment, move this API call to a secure backend server to protect your key.
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div>
-                                    <h3 class="text-2xl font-semibold dashboard-text-light mb-3">Prompt for Gemini AI™: Generating New Sector Configurations (Copy & Paste)</h3>
-                                    <p class="dashboard-muted-text mb-4">Use the following detailed prompt when asking Gemini AI™ to generate a new sector configuration. Replace the placeholder values with your desired sector details. Ensure the response is in pure JSON format, exactly matching the structure provided.</p>
-                                    <textarea onclick="this.select()" readonly class="w-full p-4 rounded-lg bg-gray-800 border dashboard-border-dark text-green-400 font-mono text-sm leading-relaxed cursor-pointer" rows="30">
-Please act as an expert in JSON data structures and content creation for a futuristic, blockchain-inspired global platform. Your task is to generate a complete JSON object for a new "sector configuration" that will be dynamically loaded into a web application.
+                                    <h3 class="text-2xl font-semibold dashboard-text-light mb-3">3. Discussion of New API-related Features for Fruitful™ Dashboard:</h3>
+                                    <div class="space-y-6 ml-4">
+                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2"><i class="fas fa-code"></i> Coding Partner Integration:</h4>
+                                            <p class="dashboard-muted-text"><strong>Concept:</strong> Use Gemini AI™'s code generation and explanation capabilities.</p>
+                                            <p class="dashboard-muted-text"><strong>API(s) to explore:</strong> Gemini AI™ API (already integrated).</p>
+                                            <p class="dashboard-muted-text"><strong>Implementation Idea:</strong> Integrated into "AI Gemini™" section with dedicated input/output.</p>
+                                        </div>
+                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2"><i class="fas fa-graduation-cap"></i> Career Guide Integration:</h4>
+                                            <p class="dashboard-muted-text"><strong>Concept:</strong> Leverage AI™ to provide career advice, resume tips, interview prep, or learning paths.</p>
+                                            <p class="dashboard-muted-text"><strong>API(s) to explore:</strong> Gemini AI™ API (primary), potentially specialized career APIs for structured data.</p>
+                                            <p class="dashboard-muted-text"><strong>Implementation Idea:</strong> New "Career Insights" section where users input goals/questions for AI™-generated guidance.</p>
+                                        </div>
+                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2"><i class="fas fa-mobile-alt"></i> "🦊 Foxed Has Mobiles™" - Product Data/Inventory Integration:</h4>
+                                            <p class="dashboard-muted-text"><strong>Concept:</strong> Pull mobile product data (names, specs, prices, stock) from a dedicated system.</p>
+                                            <p class="dashboard-muted-text"><strong>API(s) to explore:</strong> Likely a **custom API** from "Foxed Has Mobiles™" or a third-party e-commerce platform API (Shopify, WooCommerce).</p>
+                                            <p class="dashboard-muted-text"><strong>Action:</strong> Contact "Foxed Has Mobiles™" for API documentation and keys.</p>
+                                        </div>
+                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2"><i class="fas fa-shield-alt"></i> "🌳 Baobab Security Network™" - Security Monitoring:</h4>
+                                            <p class="dashboard-muted-text"><strong>Concept:</strong> Display security alerts, network status, or security logs.</p>
+                                            <p class="dashboard-muted-text"><strong>API(s) to explore:</strong> Likely a **custom API** from "Baobab Security Network™".</p>
+                                            <p class="dashboard-muted-text"><strong>Action:</strong> Obtain API documentation and credentials from "Baobab Security Network™".</p>
+                                        </div>
+                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2"><i class="fas fa-shopping-cart"></i> "🌱Global_Complete_purchase™" & "🌱Global_checkout_success™" - E-commerce Analytics:</h4>
+                                            <p class="dashboard-muted-text"><strong>Concept:</strong> Track successful purchases and checkout completions.</p>
+                                            <p class="dashboard-muted-text"><strong>API(s) to explore:</strong> Google Analytics Data API, Custom E-commerce Platform API, CRM/ERP APIs.</p>
+                                            <p class="dashboard-muted-text"><strong>Implementation Idea:</strong> New charts/metrics in "Data Analytics" showing conversion rates, successful purchases, checkout funnel performance.</p>
+                                        </div>
+                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2"><i class="fas fa-cogs"></i> Xero Accounting Integration:</h4>
+                                            <p class="dashboard-muted-text"><strong>Concept:</strong> Integrate with Xero for accounting data (invoices, payments, etc.).</p>
+                                            <p class="dashboard-muted-text"><strong>API(s) to explore:</strong> Xero API (OAuth 2.0).</p>
+                                            <p class="api-key-warning mt-2">
+                                                <strong>CRITICAL SECURITY NOTE:</strong> Xero Client ID, Client Secret, and Webhook Key **MUST** be handled on a secure backend server. They should never be directly exposed in client-side code. This setup will require a full OAuth 2.0 flow initiated from your server.
+                                            </p>
+                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Develop server-side logic for Xero OAuth and API calls. Client-side will only initiate the OAuth flow to the backend.</p>
+                                        </div>
+                                        <div class="dashboard-card p-4 rounded-lg border dashboard-border-dark">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2"><i class="fab fa-paypal"></i> PayPal Integration:</h4>
+                                            <p class="dashboard-muted-text"><strong>Concept:</strong> Integrate various PayPal functionalities for payments (SDK, Hosted Buttons).</p>
+                                            <p class="dashboard-muted-text"><strong>API(s) to explore:</strong> PayPal JavaScript SDK, PayPal Buttons API.</p>
+                                            <p class="api-key-warning mt-2">
+                                                <strong>SECURITY NOTE:</strong> While PayPal SDK `client-id` can be on the frontend, for critical operations and security best practices, server-side processing for payments is highly recommended. Hosted Button IDs are less sensitive but still should be managed carefully.
+                                            </p>
+                                            <p class="dashboard-muted-text mt-1"><strong>Action:</strong> Implement PayPal SDK and/or Hosted Buttons where relevant on payment-related pages, ensuring server-side validation for actual transactions.</p>
+                                            <button onclick="mockPayPalSdkIntegration()" class="px-4 py-2 bg-blue-500 text-white rounded-md mt-2 text-sm hover:bg-blue-600">Test PayPal SDK (Mock)</button>
+                                        </div>
+                                    </div>
+                                </div>
 
-The new sector should be named "Environmental Guardian™". This sector will focus on sustainable technologies, ecological preservation, and green energy innovations.
+                                <div>
+                                    <h3 class="text-2xl font-semibold dashboard-text-light mb-3">4. Live Demos (for Visual Learners / "Baby Staff"):</h3>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div class="dashboard-card p-4 rounded-lg shadow-md border dashboard-border-dark flex flex-col items-center">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Live Google Map</h4>
+                                            <p class="dashboard-muted-text mb-3">A real-time map, demonstrating location services. (Replace with your actual embed!)</p>
+                                            <div class="w-full h-64 bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center">
+                                                <iframe src="YOUR_GOOGLE_MAP_EMBED_CODE" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                                                <span class="dashboard-muted-text absolute text-center">**PLACEHOLDER MAP**<br>Get your embed code from Google Maps.</span>
+                                            </div>
+                                        </div>
+                                        <div class="dashboard-card p-4 rounded-lg shadow-md border dashboard-border-dark flex flex-col items-center">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Live YouTube Video</h4>
+                                            <p class="dashboard-muted-text mb-3">An embedded video, showing media integration. (Replace with your actual embed!)</p>
+                                            <div class="w-full h-64 bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center">
+                                                <iframe width="100%" height="100%" src="YOUR_YOUTUBE_EMBED_CODE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                                <span class="dashboard-muted-text absolute text-center">**PLACEHOLDER VIDEO**<br>Get your embed code from YouTube.</span>
+                                            </div>
+                                        </div>
+                                        <div class="dashboard-card p-4 rounded-lg shadow-md border dashboard-border-dark flex flex-col items-center">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Live Spotify Music</h4>
+                                            <p class="dashboard-muted-text mb-3">Interactive Spotify embeds for albums/tracks.</p>
+                                            <div class="w-full h-64 bg-gray-800 rounded-lg overflow-hidden flex flex-col items-center justify-center space-y-2 p-2">
+                                                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/3RyjFxsU9hcmg14vqzUUMy?utm_source=generator" width="90%" height="100" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                                                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2kdQY3b6dDRGonyIzcWljc?utm_source=generator" width="90%" height="100" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                                                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/6Xe9wT5xeZETPwtaP2ynUz?utm_source=generator" width="90%" height="100" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                                            </div>
+                                        </div>
+                                        <div class="dashboard-card p-4 rounded-lg shadow-md border dashboard-border-dark flex flex-col items-center">
+                                            <h4 class="text-xl font-medium dashboard-secondary-text mb-2">Gemini AI™ Test (re-iterated)</h4>
+                                            <p class="dashboard-muted-text mb-3">See our core AI™ integration in action.</p>
+                                            <div class="w-full h-64 bg-gray-800 rounded-lg p-4 overflow-auto text-sm dashboard-text-light">
+                                                <p>This is where our Gemini AI™ interacts. You can test it in the "AI Gemini™" section!</p>
+                                                <p class="mt-2 dashboard-muted-text">Example: Ask the AI™ "What is the capital of France?"</p>
+                                                <p class="mt-2 text-red-400">**Remember to add your actual API Key!**</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-The JSON output MUST adhere strictly to the following structure and data types. Ensure all fields are present and valid.
+                                <div>
+                                    <h3 class="text-2xl font-semibold dashboard-text-light mb-3">5. Action Items for the Team:</h3>
+                                    <ul class="list-disc list-inside ml-4 dashboard-text-light space-y-2">
+                                        <li>**IMMEDIATE & CRITICAL:** Replace `YOUR_GEMINI_API_KEY` in the JavaScript with your actual key from Google AI Studio.</li>
+                                        <li>**SECURITY:** Begin planning for secure backend proxying of all API calls for production deployment.</li>
+                                        <li>**API ACQUISITION:** Contact "Foxed Has Mobiles™" and "Baobab Security Network™" for their API documentation and access credentials.</li>
+                                        <li>**ANALYTICS:** Investigate Google Analytics Data API or e-commerce platform APIs for detailed purchase/checkout event tracking.</li>
+                                        <li>**UI/UX:** Brainstorm and design user interfaces for "Coding Partner" and "Career Guide" functionalities.</li>
+                                        <li>**EMBED CODES:** Generate actual embed codes for the live demos (Google Maps, YouTube, Spotify) to make this section truly "live" for the team.</li>
+                                        <li>**AUTHENTICATION:** Implement Firebase/Google authentication for "Sign In" and "Sign Up" sections to enable user accounts.</li>
+                                        <li>**SETTINGS:** Develop functionality for the "Settings" panel (e.g., saving user preferences, updating profile).</li>
+                                        <li>**CONTINUOUS LEARNING:** Encourage "baby staff" to review API documentation for any integrated service to understand capabilities and limitations.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
 
-```json
-{
-    "name": "Environmental Guardian™",
-    "shortName": "EcoGuard™",
-    "description": "Leading the charge in sustainable technologies and ecological preservation. Discover innovations in green energy, waste management, and biodiversity protection within the Fruitful Global™ ecosystem.",
-    "heroHeadline": "Guardians of the Earth: <br> <span>Innovate for a Sustainable Future.</span>",
-    "heroSubtitle": "Dedicated to fostering a planet where technology and nature coexist, driving impactful solutions for environmental stewardship across all sectors.",
-    "ctaButtonText": "Join the Green Mission <span>🌱</span>",
-    "colors": {
-        "primary": "#34D399",
-        "secondary": "#10B981",
-        "accent": "#60A5FA",
-        "button": "#059669",
-        "buttonDark": "#047857",
-        "bgStart": "#143C2D",
-        "bgEnd": "#0A1D13",
-        "textColor": "#ECFDF5",
-        "mutedText": "#A7F3D0",
-        "cardBg": "#1D4133",
-        "borderColor": "rgba(52,211,153,0.2)"
-    },
-    "coreBrand": {
-        "id": "gaia-systems",
-        "name": "Gaia Systems™",
-        "slogan": "Harmony Through Technology.",
-        "description": "Gaia Systems™ is the core brand of the Environmental Guardian™ Sector, pioneering advanced solutions for ecological sustainability and resource management.",
-        "subDescription": "Gaia Systems™ integrates cutting-edge AI™ and blockchain technologies to monitor environmental health, optimize resource allocation, and facilitate global conservation efforts within the Fruitful Global™ Treaty Grid. Our mission is to build a greener, more resilient planet.",
-        "icon": "fas fa-globe-americas",
-        "highlights": [
-            "AI™-Driven Ecological Monitoring & Prediction",
-            "Blockchain for Carbon Credit & Resource Tracking",
-            "Sustainable Resource Optimization Algorithms",
-            "Global Biodiversity Preservation Initiatives"
-        ],
-        "link": "#",
-        "shopLink": "#",
-        "colors": {
-            "primary": "#34D399",
-            "accent": "#60A5FA",
-            "text": "#1A2E28",
-            "mutedText": "#4B7A6A",
-            "bgStart": "#D1FAE5",
-            "bgEnd": "#A7F3D0",
-            "button": "#059669",
-            "buttonDark": "#047857"
-        },
-        "canvasColors": ["rgba(209, 250, 229, ", "rgba(167, 243, 208, "]
-    },
-    "features": [
-        { "icon": "♻️", "title": "Circular Economy Tools", "description": "Facilitate waste reduction and resource reuse with intelligent circular economy solutions." },
-        { "icon": "⚡", "title": "Renewable Energy Analytics", "description": "Optimize green energy production and consumption with AI™-powered insights and grid management." },
-        { "icon": "🌳", "title": "Biodiversity Protection", "description": "Support global conservation efforts through traceable impact funding and ecological monitoring." },
-        { "icon": "🌊", "title": "Water Resource Management", "description": "Implement smart water usage systems and pollution control measures for sustainable aquatic ecosystems." },
-        { "icon": "☁️", "title": "Atmospheric Carbon Capture", "description": "Explore and invest in innovative technologies for reducing atmospheric carbon and combating climate change." },
-        { "icon": "🔬", "title": "Green Innovation Hub", "description": "Access a curated marketplace of eco-friendly innovations and connect with leading sustainable startups." }
-    ],
-    "terminals": [
-        { "name": "EcoScan™ Terminal", "url": "eco-scan.html", "icon": "🍃" },
-        { "name": "Carbon Trace GPT™", "url": "carbon-trace.html", "icon": "📊" },
-        { "name": "BioDiversity Monitor GPT™", "url": "biodiversity-monitor.html", "icon": "🐾" }
-    ],
-    "subNodes": [
-        { "id": "eco-sensor-network", "name": "EcoSensor™ Network", "description": "Global network of IoT sensors for real-time environmental data collection.", "icon": "fas fa-wifi", "link": "#" },
-        { "id": "hydro-flow-optimization", "name": "HydroFlow™ Optimization", "description": "AI™-driven systems for efficient water distribution and purity control.", "icon": "fas fa-water", "link": "#" },
-        { "id": "waste-to-wealth", "name": "Waste2Wealth™ Protocol", "description": "Blockchain-enabled platform for transparent waste management and resource recovery.", "icon": "fas fa-recycle", "link": "#" }
-    ],
-    "dashboard": {
-        "overviewDescription": "The Environmental Guardian™ dashboard provides critical insights into global ecological health, renewable energy adoption, and the impact of sustainable initiatives within the Fruitful Global™ ecosystem. Monitor key environmental metrics and track your contribution to a greener planet."
-    }
-}
-```
+                        <section id="settings" class="hidden mb-8 dashboard-card">
+                            <h2 class="text-3xl font-bold dashboard-primary-text mb-6">Settings</h2>
+                            <p class="dashboard-muted-text mb-4">
+                                Manage your account preferences, notifications, and application settings.
+                            </p>
 
-**After Gemini AI™ generates the JSON:**
-1.  Copy the entire JSON output.
-2.  Open your `global_sector_template.html` file.
-3.  Locate the `window.allSectorConfigs` object in the `<script>` tag.
-4.  Paste the new JSON object as a new entry, using its `id` (e.g., `"environmental-guardian"`) as the key.
-    ```javascript
-    window.allSectorConfigs = {
-        // ... existing sectors ...
-        "environmental-guardian": {
-            // PASTE GEMINI'S JSON OUTPUT HERE
-        }
-    };
-    ```
-5.  Save the file.
-6.  Refresh your page. The new sector should now appear in the "Sector Index" dropdown in the header, and selecting it will dynamically update the entire page with its content and colors.
-                                    </textarea>
+                            <div class="space-y-6">
+                                <div class="dashboard-sub-card">
+                                    <h3 class="text-xl font-semibold dashboard-text-light mb-3">Profile Settings</h3>
+                                    <div class="flex flex-col gap-4">
+                                        <div>
+                                            <label for="userName" class="block text-sm font-medium dashboard-muted-text mb-1">Full Name</label>
+                                            <input type="text" id="userName" value="[Your Name]" class="w-full px-3 py-2 rounded-lg bg-gray-700 border dashboard-border-dark dashboard-text-light focus:outline-none focus:ring-2 focus:ring-primary-color">
+                                        </div>
+                                        <div>
+                                            <label for="userEmail" class="block text-sm font-medium dashboard-muted-text mb-1">Email Address</label>
+                                            <input type="email" id="userEmail" value="[Your Email]" class="w-full px-3 py-2 rounded-lg bg-gray-700 border dashboard-border-dark dashboard-text-light focus:outline-none focus:ring-2 focus:ring-primary-color" disabled>
+                                            <p class="text-xs text-gray-500 mt-1">Email cannot be changed here.</p>
+                                        </div>
+                                        <button onclick="saveProfileSettings()" class="px-6 py-3 bg-primary-color text-white font-semibold rounded-lg hover:bg-green-600 transition duration-200 self-start">
+                                            Save Profile
+                                        </button>
+                                        <div id="profileSaveMessage" class="mt-2 text-sm text-green-400 hidden"></div>
+                                    </div>
+                                </div>
+
+                                <div class="dashboard-sub-card">
+                                    <h3 class="text-xl font-semibold dashboard-text-light mb-3">Notification Preferences</h3>
+                                    <div class="flex items-center justify-between mb-3">
+                                        <span class="dashboard-muted-text">Email Notifications</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" id="emailNotifications" checked onchange="toggleNotification('Email')">
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="dashboard-muted-text">Push Notifications</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" id="pushNotifications" onchange="toggleNotification('Push')">
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="dashboard-sub-card">
+                                    <h3 class="text-xl font-semibold dashboard-text-light mb-3">Theme Settings</h3>
+                                    <div class="flex items-center justify-between">
+                                        <span class="dashboard-muted-text">Dark Mode</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" id="darkModeToggle" checked onchange="toggleDarkMode(this)">
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-2">
+                                        Note: Theme changes currently apply globally based on primary sector configuration.
+                                    </p>
+                                </div>
+
+                                <div class="dashboard-sub-card">
+                                    <h3 class="text-xl font-semibold dashboard-text-light mb-3">API Key Management</h3>
+                                    <p class="dashboard-muted-text mb-4">
+                                        View and manage API keys for integrations. For security, sensitive keys are not editable here.
+                                    </p>
+                                    <div class="space-y-3 text-sm dashboard-text-light">
+                                        <p><strong>Google Maps API Key:</strong> <code>[Configured in script, not displayed for security]</code></p>
+                                        <p><strong>Gemini AI™ API Key:</strong> <code>[Configured in script, not displayed for security]</code></p>
+                                        <p><strong>PayPal SDK Client ID:</strong> <code>${window.API_KEYS.PAYPAL_SDK_CLIENT_ID}</code> <span class="text-yellow-400 text-xs">(For client-side; server-side processing recommended)</span></p>
+                                        <p><strong>Xero Client ID:</strong> <code>${window.API_KEYS.XERO_CLIENT_ID}</code> <span class="text-red-400 text-xs">(Backend Only!)</span></p>
+                                        <p><strong>Xero Redirect URI:</strong> <code>${window.API_KEYS.XERO_REDIRECT_URI}</code> <span class="text-red-400 text-xs">(Backend Only!)</span></p>
+                                        <p class="api-key-warning mt-3">
+                                            <strong>SECURITY ALERT:</strong> The above values are shown for demonstration. In a real application, most API keys (especially secrets) should be managed **only on your backend server** and never exposed client-side.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </section>
@@ -2049,7 +2143,7 @@ The JSON output MUST adhere strictly to the following structure and data types. 
             GOOGLE_MAPS_API_KEY: "AIzaSyBPG8dG29cl0TvYRGyLozejGed5Wj5Ab80",
 
             // Spotify (Access Token - Note: These are short-lived. A backend would refresh them.)
-            SPOTIFY_ACCESS_TOKEN: "BQBDSZ232IQmSLV1BROkxqdwNMoGhtitKOJBjDzE-Lu9YKsSK1RKVwXNfYfncP2wf6Fj6xcYlnGD75baEqOmd3XtxhUhB-X6koPd92H9S0rQBqZ0HSKpsb04HiAme_FtqVLket7_s07gH9y1nxuPhbRyxp0r59oXtovV-uw0lCt2B7Mh5OmN3untEAGhfg6a6AZsaWLsv02dh6zKOQ_6DXHvCHZWxcVmoggu4eLA2NrqAf8rFRSNOw6HQpaN-VZkJWblznWQ0pT7ynzjpKOPlM_70N7vOLIZF8XnRmN1Oe784V-XfYNV-j1x1kdXGEpzlx1", // Long token, likely for API calls, not embeds.
+            SPOTIFY_ACCESS_TOKEN: "BQBDSZ232IQmSLV1BROkxqdwNMoGhtitKOJBjDzE-Lu9YKsSK1RKVwXNfYfncP2wf6Fj6xcYlnGD75baEqOmd3XtxhUhB-X6koPd92H9S0rQBqZ0HSKpsb04HiAme_FtW5153OmN3untEAGhfg6a6AZsaWLsv02dh6zKOQ_6DXHvCHZWxcVmoggu4eLA2NrqAf8rFRSNOw6HQpaN-VZkJWblznWQ0pT7ynzjpKOPlM_70N7vOLIZF8XnRmN1Oe784V-XfYNV-j1x1kdXGEpzlx1", // Long token, likely for API calls, not embeds.
 
             // Gemini AI (already present)
             GEMINI_API_KEY: "AIzaSyBGSDZATtITv5iIoB3rgKHBpWx9MrufxXE",
@@ -2064,217 +2158,284 @@ The JSON output MUST adhere strictly to the following structure and data types. 
 
         // --- GLOBAL CONFIGURATION FOR ALL SECTORS ---
         window.allSectorConfigs = {
-            "fruitful-global": {
-                name: "Fruitful™ Global",
-                shortName: "Fruitful™",
-                description: "Innovate. Connect. Thrive. Discover a new era of collaboration and sustainable growth with Fruitful™'s cutting-edge platform.",
-                heroHeadline: "Innovate. Connect. <span class='dynamic-accent-text'>Thrive.</span>",
-                heroSubtitle: "Discover a new era of collaboration and sustainable growth with Fruitful™'s cutting-edge platform.",
-                ctaButtonText: "Get Started Today <span>🚀</span>",
+            "tripot-business-rescue": {
+                name: "TRIPOT Business Rescue Portal",
+                shortName: "TRIPOT BR",
+                description: "Your dedicated portal for all information regarding TRIPOT (PTY) LTD's business rescue proceedings. Transparency and collaboration for a successful recovery.",
+                heroHeadline: "TRIPOT Business Rescue: <br> <span>Charting a Path to Recovery.</span>",
+                heroSubtitle: "Access critical updates, key documents, and the strategic plan for TRIPOT (PTY) LTD's financial restructuring and operational revival.",
+                ctaButtonText: "Explore the Plan <span>➡️</span>",
                 colors: {
-                    primary: "#6366f1", // Purple
-                    secondary: "#a855f7", // Lighter Purple
-                    accent: "#f97316", // Orange
-                    button: "#c084fc",
-                    buttonDark: "#8b5cf6",
-                    bgStart: "#1f215a",
-                    bgEnd: "#3b0764",
+                    primary: "#3b82f6", // Strong Blue for emphasis
+                    secondary: "#8b5cf6", // Softer Purple for accents
+                    accent: "#f97316", // Orange for warnings/highlights
+                    button: "#3b82f6",
+                    buttonDark: "#2563eb",
+                    bgStart: "#1f215a", // Dark blue-purple
+                    bgEnd: "#0d1117", // Very dark charcoal
                     textColor: "#e2e8f0",
                     mutedText: "#a0aec0",
                     cardBg: "#1a1b20",
                     borderColor: "rgba(255,255,255,0.1)",
                 },
                 coreBrand: {
-                    id: "fruitful-innovations",
-                    name: "Fruitful Innovations™",
-                    slogan: "The original spirit of progress.",
-                    description: "This panel provides a detailed overview of the core brand for the currently selected sector. It includes its mission, key functionalities, and its overall contribution to the Fruitful™ ecosystem.",
-                    subDescription: "Fruitful Innovations™ is the foundational pillar of the entire FAA.Zone™ ecosystem, driving forward the core principles of collaboration, sustainability, and AI™-powered growth. It encompasses the overarching vision and strategic initiatives that guide all other sectors and brands within Fruitful Global™.",
-                    icon: "fas fa-leaf",
+                    id: "tripot-profile",
+                    name: "TRIPOT (PTY) LTD",
+                    slogan: "Wholesale Excellence, Resilient Future.",
+                    description: "This section details the operational profile of TRIPOT (PTY) LTD, a wholesale business with established vendor networks at national chains and significant import relationships.",
+                    subDescription: "Founded in 2021, TRIPOT (PTY) LTD is a wholesale business recognized for its vendor numbers with major retailers like Pick n Pay, Est Africa, Mica, and Build It. Despite recent import delays, the company holds valuable private label stock and is committed to its recovery and staff retention.",
+                    icon: "fas fa-warehouse",
                     highlights: [
-                        "Architecting the entire Treaty System™ infrastructure.",
-                        "Developing core AI™ models for cross-sector insights.",
-                        "Establishing global partnerships for sustainable growth.",
-                        "Overseeing the ethical and technological roadmap of FAA.Zone™."
+                        "Established vendor relationships with national chains (Pick n Pay, Mica, Build It).",
+                        "Sole distributor for a key international import partner.",
+                        "Millions of Rands in private label stock secured in warehousing.",
+                        "No bank loans, overdrafts, or significant external debt (excluding rental agreements)."
+                    ],
+                    link: "#", // Will link internally to the dashboard's company details
+                    shopLink: "mailto:info@tripot.co.za", // Repurpose for general inquiries
+                    colors: { // Using main sector colors for consistency within the core brand section
+                        primary: "#3b82f6",
+                        accent: "#f97316",
+                        text: "#e2e8f0",
+                        mutedText: "#a0aec0",
+                        bgStart: "#1f215a",
+                        bgEnd: "#0d1117",
+                        button: "#3b82f6",
+                        buttonDark: "#2563eb"
+                    },
+                    canvasColors: ['rgba(59, 130, 246, ', 'rgba(139, 92, 246, '], // Blue/Purple for particles
+                },
+                features: [ // Key Pillars of the Business Rescue Plan
+                    { icon: "🔒", title: "Asset Preservation", description: "Safeguarding company assets from immediate liquidation, including essential office equipment." },
+                    { icon: "⚙️", title: "Operational Continuity", description: "Ensuring business operations continue by leveraging existing stock and import relationships." },
+                    { icon: "🤝", title: "Stakeholder Transparency", description: "Maintaining open, clear, and frequent communication with creditors, staff, and partners." },
+                    { icon: "📈", title: "Sales & Profit Revival", description: "Implementing aggressive strategies to accelerate sales, utilize inventory, and return to profitability." },
+                    { icon: "🧑‍💼", title: "Staff Reinstatement", description: "Prioritizing the reinstatement of experienced and qualified personnel to drive sales and recovery." },
+                    { icon: "💸", title: "Debt Restructuring", description: "Working with the Business Rescue Practitioner to manage and restructure outstanding financial obligations effectively." }
+                ],
+                terminals: [ // Key Documents & Stakeholder Portals
+                    { name: "Official Resolution", url: "#full-resolution-modal", icon: "📜" }, // Special internal link
+                    { name: "Creditor Information", url: "mailto:creditors@tripot.co.za", icon: "🏦" },
+                    { name: "Staff Communications", url: "mailto:staff@tripot.co.za", icon: "👥" },
+                    { name: "Legal Correspondence", url: "mailto:legal@tripot.co.za", icon: "⚖️" }
+                ],
+                subNodes: [ // Key Operational Areas under BR
+                    { id: "sales-division", name: "Sales & Distribution", description: "Focus on leveraging existing sales orders and national vendor numbers to generate immediate revenue.", icon: "fas fa-chart-line", link: "#" },
+                    { id: "imports-logistics", name: "Imports & Logistics", description: "Managing inbound stock, optimizing supply chain post-delay, and ensuring timely delivery of goods.", icon: "fas fa-truck-loading", link: "#" },
+                    { id: "finance-admin", name: "Finance & Administration", description: "Handling creditor communications, managing financial records, and ensuring legal compliance.", icon: "fas fa-file-invoice-dollar", link: "#" },
+                    { id: "human-resources", name: "Human Resources", description: "Managing staff retention, welfare, and implementing plans for potential reinstatement of key personnel.", icon: "fas fa-users-gear", link: "#" }
+                ],
+                dashboard: {
+                    overviewDescription: "This dashboard provides a comprehensive overview of TRIPOT (PTY) LTD's business rescue proceedings, offering insights into key operational areas, financial status, and strategic actions for recovery.",
+                }
+            },
+            "retail-ecommerce": {
+                name: "Retail & E-commerce Hub",
+                shortName: "Retail E-com",
+                description: "Connecting consumers with innovative products through seamless online and offline channels.",
+                heroHeadline: "Retail & E-commerce: <br> <span>Connecting Markets. Empowering Growth.</span>",
+                heroSubtitle: "Our platform drives modern retail experiences, from seamless online marketplaces to efficient physical store integrations, powered by intelligent analytics.",
+                ctaButtonText: "Explore Retail Solutions <span>🛒</span>",
+                colors: {
+                    primary: "#f59e0b", // Amber
+                    secondary: "#ef4444", // Red
+                    accent: "#3b82f6", // Blue
+                    button: "#f59e0b",
+                    buttonDark: "#d97706",
+                    bgStart: "#1a1b20",
+                    bgEnd: "#0d1117",
+                    textColor: "#e2e8f0",
+                    mutedText: "#a0aec0",
+                    cardBg: "#1f2128",
+                    borderColor: "rgba(255,255,255,0.1)",
+                },
+                coreBrand: {
+                    id: "omnichannel-retail",
+                    name: "OmniChannel Retail™",
+                    slogan: "Seamless Shopping Experiences.",
+                    description: "Driving the future of retail by unifying online and offline consumer journeys, enhancing engagement and conversion.",
+                    subDescription: "OmniChannel Retail™ integrates diverse sales touchpoints – from intuitive e-commerce platforms to smart physical store solutions – ensuring a cohesive and personalized shopping experience for every customer.",
+                    icon: "fas fa-store",
+                    highlights: [
+                        "Unified E-commerce & Physical Store Management",
+                        "Personalized Customer Journeys & Loyalty Programs",
+                        "Inventory Optimization & Supply Chain Integration",
+                        "Data-Driven Sales Forecasting & Marketing"
                     ],
                     link: "#",
                     shopLink: "#",
                     colors: {
-                        primary: "#22c55e", // Green
-                        accent: "#3b82f6", // Blue
-                        text: "#333333",
-                        mutedText: "#666666",
-                        bgStart: "#F0F9FF", // Light Blue
-                        bgEnd: "#E0F2FE", // Slightly darker Light Blue
-                        button: "#22c55e", // Green
-                        buttonDark: "#16a34a"
+                        primary: "#f59e0b",
+                        accent: "#3b82f6",
+                        text: "#e2e8f0",
+                        mutedText: "#a0aec0",
+                        bgStart: "#1a1b20",
+                        bgEnd: "#0d1117",
+                        button: "#f59e0b",
+                        buttonDark: "#d97706"
                     },
-                    canvasColors: ['rgba(224, 242, 254, ', 'rgba(240, 249, 255, '], // for canvas particles
+                    canvasColors: ['rgba(245, 158, 11, ', 'rgba(239, 68, 68, '],
                 },
                 features: [
-                    { icon: "💡", title: "AI™-Powered Insights", description: "Leverage advanced AI™ to gain deep insights, optimize operations, and make smarter decisions." },
-                    { icon: "🤝", title: "Global Collaboration", description: "Connect with thousands of independent brands and partners worldwide, fostering a network of mutual growth." },
-                    { icon: "🌱", title: "Sustainable Solutions", description: "Champion eco-friendly practices and contribute to a healthier planet through our curated marketplace." },
-                    { icon: "🔒", title: "Secure VaultMesh™", description: "Protect your data and transactions with our state-of-the-art blockchain-inspired security protocols." },
-                    { icon: "📈", title: "Real-time Analytics", description: "Monitor your progress and impact with intuitive dashboards and real-time performance metrics." },
-                    { icon: "🌐", title: "OmniScroll™ Integration", description: "Seamlessly integrate with our OmniScroll™ ledger for transparent and efficient record-keeping." }
+                    { icon: "🛍️", title: "Integrated Sales Channels", description: "Manage online stores, physical outlets, and social commerce from a single platform." },
+                    { icon: "📊", title: "Advanced Analytics", description: "Gain insights into customer behavior, sales trends, and inventory performance." },
+                    { icon: "🛒", title: "Personalized Experiences", description: "Deliver tailored recommendations and promotions to enhance customer loyalty." },
+                    { icon: "📦", title: "Smart Inventory Management", description: "Optimize stock levels and streamline order fulfillment across all channels." },
+                    { icon: "💳", title: "Secure Payment Gateways", description: "Offer diverse and secure payment options for a frictionless checkout experience." },
+                    { icon: "💬", title: "Customer Engagement Tools", description: "Utilize integrated CRM and communication tools to build strong customer relationships." }
                 ],
                 terminals: [
-                    { name: "VaultMaster™ Terminal", url: "vault-master.html", icon: "🦍" },
-                    { name: "Cube Lattice GPT™", url: "cube-lattice.html", icon: "🧱" },
-                    { name: "Global View GPT™", url: "global-view.html", icon: "🌍" },
-                    { name: "Freight Ops GPT™", url: "freight-ops.html", icon: "🚚" },
-                    { name: "Loop Watch GPT™", url: "loop-watch.html", icon: "♻️" },
-                    { name: "Seedwave™ GPT", url: "seedwave.html", icon: "🌱" },
-                    { name: "Distribution GPT™", url: "distribution.html", icon: "📦" },
-                    { name: "Signal GPT™", url: "signal.html", icon: "🔐" },
-                    { name: "7038 FAA™ Brands", url: "faa-brands.html", icon: "📦" }
+                    { name: "Sales Analytics Terminal", url: "#", icon: "📈" },
+                    { name: "Customer Insights Terminal", url: "#", icon: "👤" },
+                    { name: "Inventory Control Terminal", url: "#", icon: "📦" }
                 ],
                 subNodes: [
-                    { id: "omnisignal", name: "OmniSignal™", description: "Advanced multi-protocol messaging for decentralized apps.", icon: "fas fa-broadcast-tower", link: "#" },
-                    { id: "pulsegrid", name: "PulseGrid™", description: "High-performance data orchestration grid.", icon: "fas fa-network-wired", link: "#" },
-                    { id: "vaultdna", name: "VaultDNA™", description: "Immutable digital fingerprints for content.", icon: "fas fa-fingerprint", link: "#" },
-                    { id: "claimroot", name: "ClaimRoot™", description: "Anchors digital claims and timestamps.", icon: "fas fa-clock", link: "#" },
-                    { id: "scrollclaim", name: "ScrollClaim™ Contracts", description: "Programmable wrappers for digital rights.", icon: "fas fa-file-contract", link: "#" },
-                    { id: "ghosttrace", name: "GhostTrace™ Gen2", description: "Next-gen traceability protocol.", icon: "fas fa-ghost", link: "#" },
-                    { id: "baobab-terminal", name: "Baobab Terminal™", description: "CLI for Treaty Grid interaction.", icon: "fas fa-tree", link: "#" }
+                    { id: "ecom-analytics", name: "E-commerce Analytics", description: "Provides deep insights into online sales performance, conversion rates, and user behavior.", icon: "fas fa-chart-pie", link: "#" },
+                    { id: "pos-integration", name: "POS Integration", description: "Seamlessly connect physical Point of Sale systems with online inventory and customer data.", icon: "fas fa-cash-register", link: "#" },
+                    { id: "crm-solutions", name: "CRM Solutions", description: "Manage customer relationships, track interactions, and personalize marketing efforts.", icon: "fas fa-users", link: "#" }
                 ],
                 dashboard: {
-                    overviewDescription: "This sector represents the overarching Fruitful Global™ initiatives and serves as the central hub for all operations. It provides a holistic view of the ecosystem's performance and strategic direction.",
+                    overviewDescription: "The Retail & E-commerce Hub dashboard provides real-time insights into sales performance, customer engagement, and inventory health across all integrated channels."
                 }
             },
-            "banimal-sector": {
-                name: "Banimal™ Sector",
-                shortName: "Banimal™",
-                description: "Step into the heartwarming world of Banimal™, where every purchase creates a ripple of kindness. Discover thoughtful baby essentials and innovative lighting solutions.",
-                heroHeadline: "Banimal™: <br> <span>🐑Kind Creatures. Global Impact.</span>",
-                heroSubtitle: "Discover Banimal™'s world of thoughtful baby essentials & innovative lighting. For every purchase, we deliver the same item to a child in need, identified by the Baobab Security Network™'s data-driven insights.",
-                ctaButtonText: "Explore Banimal™'s World <i class='fas fa-arrow-right'></i>",
+            "logistics-supply-chain": {
+                name: "Logistics & Supply Chain Orchestration",
+                shortName: "LogiChain",
+                description: "Optimizing global supply chains with intelligent automation and real-time tracking.",
+                heroHeadline: "Logistics & Supply Chain: <br> <span>Seamless Flow. Global Reach.</span>",
+                heroSubtitle: "From raw materials to customer delivery, our platform orchestrates every step of your supply chain with precision, efficiency, and transparency.",
+                ctaButtonText: "Streamline Operations <span>🚚</span>",
                 colors: {
-                    primary: "#90EE90", // Soft Green
-                    secondary: "#6B8E23", // Darker Green
-                    accent: "#66B2FF", // Gentle Blue
-                    button: "#90EE90",
-                    buttonDark: "#6B8E23",
-                    bgStart: "#FFF0ED", // Soft Peach
-                    bgEnd: "#FFFAF5", // Cream
-                    textColor: "#333333",
-                    mutedText: "#666666",
-                    cardBg: "#FDF5E6", // Light creamy background
-                    borderColor: "rgba(0,0,0,0.05)",
+                    primary: "#10b981", // Emerald
+                    secondary: "#06b6d4", // Cyan
+                    accent: "#f97316", // Orange
+                    button: "#10b981",
+                    buttonDark: "#059669",
+                    bgStart: "#1a202c",
+                    bgEnd: "#0d1117",
+                    textColor: "#e2e8f0",
+                    mutedText: "#a0aec0",
+                    cardBg: "#1f2128",
+                    borderColor: "rgba(255,255,255,0.1)",
                 },
                 coreBrand: {
-                    id: "banimal",
-                    name: "Banimal™",
-                    slogan: "Kind Creatures. Global Impact.",
-                    description: "Banimal™ is the core brand of the Banimal™ Sector, dedicated to creating thoughtful products that also contribute to social good. Its mission is to combine ethical commerce with impactful philanthropy.",
-                    subDescription: "**For every Banimal™ item purchased, an identical item is donated to a child in need, powered by insights from the Baobab Security Network™.** Experience meaningful impact with every choice.",
-                    icon: "fas fa-paw",
+                    id: "global-logistix",
+                    name: "Global Logistix™",
+                    slogan: "Precision in Motion.",
+                    description: "Revolutionizing supply chain management with AI-driven optimization, predictive analytics, and end-to-end visibility.",
+                    subDescription: "Global Logistix™ provides a comprehensive suite of tools for managing complex logistics networks, ensuring efficient movement of goods, reduced costs, and enhanced reliability across international borders.",
+                    icon: "fas fa-truck-fast",
                     highlights: [
-                        "Ethical Baby Essentials",
-                        "Innovative Lighting Solutions",
-                        "One-for-One Donation Model",
-                        "Partnership with Baobab Security Network™ for Needs Identification"
+                        "AI-Powered Route Optimization",
+                        "Real-time Shipment Tracking & Alerts",
+                        "Automated Warehouse Management",
+                        "Predictive Demand Forecasting for Inventory"
                     ],
-                    link: "global_brands.html",
-                    shopLink: "https://www.banimal.co.za/",
-                    colors: {
-                        primary: "#90EE90", // Green
-                        accent: "#66B2FF", // Blue
-                        text: "#333333",
-                        mutedText: "#666666",
-                        bgStart: "#FFF0ED",
-                        bgEnd: "#FFFAF5",
-                        button: "#90EE90",
-                        buttonDark: "#6B8E23"
-                    },
-                    canvasColors: ['rgba(255, 240, 237, ', 'rgba(248, 220, 220, '], // for canvas particles
-                },
-                features: [
-                    { icon: "👶", title: "Thoughtful Baby Essentials", description: "Carefully designed products for infants, focusing on safety, comfort, and sustainable materials." },
-                    { icon: "💡", title: "Innovative Lighting", description: "Creative and energy-efficient lighting solutions that enhance living spaces with unique designs." },
-                    { icon: "💖", title: "Impactful Philanthropy", description: "Every purchase directly contributes to a child in need, fostering a direct and transparent cycle of giving." },
-                    { icon: "🌳", title: "Baobab Network™ Insights", description: "Donations are guided by data from the Baobab Security Network™, ensuring aid reaches those most in need." },
-                    { icon: "♻️", title: "Sustainable Sourcing", description: "Commitment to environmentally friendly materials and production processes to minimize ecological footprint." },
-                    { icon: "🌐", title: "Global Reach", description: "Brings positive impact to communities worldwide through a network of trusted partners and distribution channels." }
-                ],
-                terminals: [], // Banimal might not have terminals, or specific ones.
-                subNodes: [
-                    { id: "baobab-security-network", name: "Baobab Security Network™", description: "Identifies and verifies humanitarian needs globally.", icon: "fas fa-shield-alt", link: "#" },
-                    { id: "little-lights", name: "Little Lights™", description: "Sub-brand for innovative children's lighting.", icon: "fas fa-lightbulb", link: "#" },
-                    { id: "cozy-creatures", name: "Cozy Creatures™", description: "Sub-brand for soft baby textiles and plush toys.", icon: "fas fa-teddy-bear", link: "#" }
-                ],
-                dashboard: {
-                    overviewDescription: "The Banimal™ Sector Dashboard provides an overview of ethical commerce, philanthropic impact, and product performance within the Banimal™ ecosystem. Track donations, product reach, and community engagement.",
-                }
-            },
-            // Add more sectors here following the same structure
-            "ai-logic-grid": {
-                name: "AI™, Logic & Grid Systems",
-                shortName: "AI™, Logic",
-                description: "Powering intelligence, data orchestration, and decentralized networks.",
-                heroHeadline: "AI™, Logic & Grid Systems: <br> <span>Powering the Future of Data.</span>",
-                heroSubtitle: "At the forefront of innovation, developing intelligent automation and data management protocols for the Fruitful Global™ Treaty Grid.",
-                ctaButtonText: "Explore AI™ Solutions <span>✨</span>",
-                colors: {
-                    primary: "#0071e3", // Apple Blue
-                    secondary: "#30d158", // Apple Green
-                    accent: "#B8860B", // Corporate gold accent
-                    button: "#30d158",
-                    buttonDark: "#28a745",
-                    bgStart: "#1b0033", // Purple from original AI page
-                    bgEnd: "#1a1a1c", // Deep black/dark grey
-                    textColor: "#f5f5f7",
-                    mutedText: "#b0b0b0",
-                    cardBg: "#2a2a2e",
-                    borderColor: "#3a3a3e",
-                },
-                coreBrand: {
-                    id: "codenest-ai",
-                    name: "CodeNest™ AI™",
-                    slogan: "Intelligent Scroll Development",
-                    description: "Revolutionize your web scroll projects with AI™-powered code generation, optimization, and seamless deployment. Your direct portal to the scroll economy.",
-                    subDescription: "CodeNest™ AI™ leverages advanced machine learning to automate development workflows, enhance code quality, and accelerate time-to-market for digital scrolls across the Fruitful Global™ Treaty Grid.",
-                    icon: "fas fa-brain",
-                    highlights: [
-                        "AI™-Powered Code Generation & Optimization",
-                        "Seamless Deployment to Treaty Grid",
-                        "Enhanced Scroll Economy Integration",
-                        "Automated Workflow Solutions"
-                    ],
-                    link: "/brands/codenest_desktop_dashboard.html",
+                    link: "#",
                     shopLink: "#",
                     colors: {
-                        primary: "#0071e3", // Apple Blue
-                        accent: "#B8860B", // Corporate gold accent
-                        text: "#1d1d1f",
-                        mutedText: "#666666",
-                        bgStart: "#F5F5F7",
-                        bgEnd: "#EBEBEB",
-                        button: "#0071e3",
-                        buttonDark: "#005bb5"
+                        primary: "#10b981",
+                        accent: "#f97316",
+                        text: "#e2e8f0",
+                        mutedText: "#a0aec0",
+                        bgStart: "#1a202c",
+                        bgEnd: "#0d1117",
+                        button: "#10b981",
+                        buttonDark: "#059669"
                     },
-                    canvasColors: ['rgba(245, 245, 247, ', 'rgba(235, 235, 235, '], // for canvas particles
+                    canvasColors: ['rgba(16, 185, 129, ', 'rgba(6, 182, 212, '],
                 },
                 features: [
-                    { icon: "🤖", title: "Intelligent Automation", description: "Automate complex tasks and decision-making processes across the grid with adaptive AI™ algorithms." },
-                    { icon: "🗄️", title: "Data Orchestration", description: "Efficiently manage and secure vast datasets with our robust data grids and synchronization protocols." },
-                    { icon: "🔗", title: "Decentralized Networks", description: "Operate on a secure, distributed ledger, ensuring transparency and resilience for all operations." },
-                    { icon: "🔮", title: "Predictive Analytics", description: "Utilize AI™ to forecast trends, anticipate challenges, and identify new opportunities for growth." },
-                    { icon: "📜", title: "Automated Reporting", description: "Streamline compliance and regulatory reporting with AI™-driven data aggregation and generation." },
-                    { icon: "⚡", title: "Scalable Infrastructure", description: "Build and deploy solutions that scale effortlessly to meet global demands and expanding data needs." }
+                    { icon: "🗺️", title: "Route Optimization", description: "Leverage AI algorithms to find the most efficient and cost-effective delivery routes." },
+                    { icon: "📦", title: "Warehouse Automation", description: "Automate inventory management, picking, packing, and shipping processes." },
+                    { icon: "🛰️", title: "Real-time Tracking", description: "Monitor shipments globally with live updates and predictive arrival times." },
+                    { icon: "🔗", title: "Supplier Integration", description: "Seamlessly connect with your suppliers for streamlined procurement and communication." },
+                    { icon: "🔍", title: "Demand Forecasting", description: "Use advanced analytics to predict future demand and optimize inventory levels." },
+                    { icon: "🚢", title: "Freight Management", description: "Manage sea, air, and ground freight operations with comprehensive tools." }
                 ],
-                terminals: [], // AI Logic has its own dashboard terminals from the previous file.
+                terminals: [
+                    { name: "Route Planner Terminal", url: "#", icon: "🗺️" },
+                    { name: "Warehouse Control Terminal", url: "#", icon: "🏭" },
+                    { name: "Shipment Tracking Terminal", url: "#", icon: "🛰️" }
+                ],
                 subNodes: [
-                    { id: "omnisignal-ai", name: "OmniSignal™ AI™", description: "AI™-enhanced multi-protocol messaging and signaling.", icon: "fas fa-robot", link: "#" },
-                    { id: "pulsegrid-ai", name: "PulseGrid™ AI™", description: "AI™-optimized data orchestration grid for performance.", icon: "fas fa-microchip", link: "#" },
-                    { id: "vaultdna-ai", name: "VaultDNA™ AI™", description: "AI™-driven immutable digital fingerprints for enhanced security.", icon: "fas fa-fingerprint", link: "#" }
+                    { id: "inventory-optimizer", name: "Inventory Optimizer", description: "AI-driven system for dynamic inventory level management and cost reduction.", icon: "fas fa-boxes", link: "#" },
+                    { id: "fleet-manager", name: "Fleet Manager", description: "Tools for managing vehicle fleets, driver assignments, and maintenance schedules.", icon: "fas fa-truck", link: "#" },
+                    { id: "customs-bridge", name: "Customs Bridge", description: "Streamlines international customs documentation and compliance for smooth cross-border trade.", icon: "fas fa-passport", link: "#" }
                 ],
                 dashboard: {
-                    overviewDescription: "The AI™, Logic & Grid Systems dashboard provides deep insights into the performance of our intelligent automation and data management protocols. Monitor AI™ model efficiency, data grid utilization, and network health.",
+                    overviewDescription: "The Logistics & Supply Chain Orchestration dashboard provides a comprehensive view of your entire supply chain, from inventory levels and shipment statuses to delivery performance and cost analysis."
                 }
             },
-            // Default sector if none is specified or found
+            "finance-investments": {
+                name: "Finance & Investments Platform",
+                shortName: "FinVest",
+                description: "Empowering smart financial decisions and secure investment opportunities.",
+                heroHeadline: "Finance & Investments: <br> <span>Grow Your Capital. Secure Your Future.</span>",
+                heroSubtitle: "Our platform offers cutting-edge tools for wealth management, investment analysis, and secure financial transactions, tailored for the modern investor.",
+                ctaButtonText: "Start Investing Today <span>💰</span>",
+                colors: {
+                    primary: "#f9a825", // Yellow-Orange
+                    secondary: "#e65100", // Dark Orange
+                    accent: "#3b82f6", // Blue
+                    button: "#f9a825",
+                    buttonDark: "#f59e0b",
+                    bgStart: "#1a1a1d",
+                    bgEnd: "#0d1117",
+                    textColor: "#e2e8f0",
+                    mutedText: "#a0aec0",
+                    cardBg: "#1f2128",
+                    borderColor: "rgba(255,255,255,0.1)",
+                },
+                coreBrand: {
+                    id: "wealth-nexus",
+                    name: "Wealth Nexus™",
+                    slogan: "Intelligent Capital Growth.",
+                    description: "An AI-powered wealth management solution providing personalized investment strategies, real-time market analysis, and secure portfolio tracking.",
+                    subDescription: "Wealth Nexus™ leverages advanced algorithms and financial expertise to offer bespoke investment advice, optimize portfolio performance, and identify emerging market opportunities, all within a highly secure and intuitive interface.",
+                    icon: "fas fa-wallet",
+                    highlights: [
+                        "AI-Driven Portfolio Optimization",
+                        "Real-time Market Data & Insights",
+                        "Automated Tax-Loss Harvesting",
+                        "Secure & Compliant Transaction Processing"
+                    ],
+                    link: "#",
+                    shopLink: "#",
+                    colors: {
+                        primary: "#f9a825",
+                        accent: "#3b82f6",
+                        text: "#e2e8f0",
+                        mutedText: "#a0aec0",
+                        bgStart: "#1a1a1d",
+                        bgEnd: "#0d1117",
+                        button: "#f9a825",
+                        buttonDark: "#f59e0b"
+                    },
+                    canvasColors: ['rgba(249, 168, 37, ', 'rgba(230, 81, 0, '],
+                },
+                features: [
+                    { icon: "📈", title: "Portfolio Management", description: "Track and manage your investments with real-time updates and performance metrics." },
+                    { icon: "🧠", title: "AI Investment Advisor", description: "Receive personalized investment recommendations based on your financial goals and risk tolerance." },
+                    { icon: "🔒", title: "Secure Transactions", description: "Conduct all financial operations with industry-leading security protocols." },
+                    { icon: "🌐", title: "Global Market Access", description: "Explore and invest in diverse markets and asset classes worldwide." },
+                    { icon: "📉", title: "Risk Assessment Tools", description: "Evaluate and manage investment risks with advanced analytical tools." },
+                    { icon: "📊", title: "Financial Reporting", description: "Generate comprehensive reports on your financial health and investment performance." }
+                ],
+                terminals: [
+                    { name: "Market Data Terminal", url: "#", icon: "📈" },
+                    { name: "Portfolio Analyzer Terminal", url: "#", icon: "🔎" },
+                    { name: "Transaction Log Terminal", url: "#", icon: "📜" }
+                ],
+                subNodes: [
+                    { id: "algo-trading", name: "Algo Trading Engine", description: "Automated trading strategies driven by high-frequency market data and AI.", icon: "fas fa-robot", link: "#" },
+                    { id: "tax-optimizer", name: "Tax Optimizer", description: "AI-driven tool to minimize tax liabilities on investments and capital gains.", icon: "fas fa-calculator", link: "#" },
+                    { id: "crypto-vault", name: "Crypto Vault Services", description: "Secure storage and management solutions for digital assets and cryptocurrencies.", icon: "fas fa-lock", link: "#" }
+                ],
+                dashboard: {
+                    overviewDescription: "The Finance & Investments Platform dashboard offers a holistic view of your financial portfolio, market performance, and investment opportunities, enabling informed decision-making."
+                }
+            },
             "default": {
                 name: "Fruitful™ Global",
                 shortName: "Fruitful™",
@@ -2541,10 +2702,10 @@ The JSON output MUST adhere strictly to the following structure and data types. 
                 }
 
             } else {
-                 // Hide core brand specific sections if no core brand is defined for the sector
-                 coreBrandLandingPage.classList.add('hidden');
-                 // Also ensure the header link for core brand is hidden or appropriately handled
-                 document.getElementById('headerCoreBrandLink').classList.add('hidden');
+                // Hide core brand specific sections if no core brand is defined for the sector
+                coreBrandLandingPage.classList.add('hidden');
+                // Also ensure the header link for core brand is hidden or appropriately handled
+                document.getElementById('headerCoreBrandLink').classList.add('hidden');
             }
 
 
@@ -2575,7 +2736,7 @@ The JSON output MUST adhere strictly to the following structure and data types. 
                     coreBrandDashboardCta.href = currentCoreBrand.link;
                 }
             } else {
-                 coreBrandDashboardPanel.classList.add('hidden');
+                coreBrandDashboardPanel.classList.add('hidden');
             }
 
             // Update Sub-Node Index Dashboard Panel
@@ -2803,21 +2964,28 @@ The JSON output MUST adhere strictly to the following structure and data types. 
         // --- Dashboard Specific Functions ---
 
         // This function initializes the Leaflet map (from dashboard)
+        let leafletMapInstance2 = null; // Use a new instance variable for this map
         function initLeafletMap() {
             const mapContainer = document.getElementById("leaflet-map-container");
-            if (!mapContainer || leafletMapInstance) return; // Prevent re-initialization
+            if (!mapContainer) return;
+
+            // Destroy existing map instance if it exists to prevent duplicates
+            if (leafletMapInstance2) {
+                leafletMapInstance2.remove();
+                leafletMapInstance2 = null;
+            }
 
             // Initialize the map and set its view to chosen geographical coordinates and a zoom level (London)
-            leafletMapInstance = L.map(mapContainer).setView([51.505, -0.09], 13);
+            leafletMapInstance2 = L.map(mapContainer).setView([51.505, -0.09], 13);
 
             // Add an OpenStreetMap tile layer to the map
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
                 attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            }).addTo(leafletMapInstance);
+            }).addTo(leafletMapInstance2);
 
             // Add a marker to the map
-            const marker = L.marker([51.5, -0.09]).addTo(leafletMapInstance);
+            const marker = L.marker([51.5, -0.09]).addTo(leafletMapInstance2);
 
             // Add a popup to the marker
             marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
@@ -2902,10 +3070,13 @@ The JSON output MUST adhere strictly to the following structure and data types. 
         // Helper function for making API calls to Gemini™
         async function callGeminiAPI(prompt, responseDiv, errorDiv) {
             responseDiv.textContent = 'Generating response...';
+            responseDiv.classList.remove('text-red-400'); // Remove error styling
+            responseDiv.classList.add('text-blue-400'); // Add loading styling
             errorDiv.classList.add('hidden'); // Hide previous errors
 
             if (!prompt) {
                 responseDiv.textContent = 'Please enter a prompt.';
+                responseDiv.classList.remove('text-blue-400');
                 return;
             }
 
@@ -2913,6 +3084,8 @@ The JSON output MUST adhere strictly to the following structure and data types. 
                 responseDiv.textContent = '';
                 errorDiv.textContent = 'Error: Gemini AI™ API Key is missing or invalid. Please ensure it\'s set correctly.';
                 errorDiv.classList.remove('hidden');
+                responseDiv.classList.remove('text-blue-400');
+                responseDiv.classList.add('text-red-400');
                 return;
             }
 
@@ -2939,14 +3112,114 @@ The JSON output MUST adhere strictly to the following structure and data types. 
                 const data = await response.json();
                 const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from AI™.';
                 responseDiv.textContent = aiResponse;
+                responseDiv.classList.remove('text-blue-400');
+                responseDiv.classList.add('dashboard-text-light'); // Reset to normal text color
 
             } catch (error) {
                 console.error("Error calling Gemini AI™ API:", error);
                 responseDiv.textContent = ''; // Clear "Generating response..."
                 errorDiv.textContent = `Failed to get AI™ response: ${error.message}. Check your Gemini AI™ API key and network.`;
                 errorDiv.classList.remove('hidden');
+                responseDiv.classList.remove('text-blue-400');
+                responseDiv.classList.add('text-red-400');
             }
         }
+
+        // --- Smart Text Editor Logic ---
+        let smartTextInput = null;
+        let smartTextResultContent = null;
+        let smartTextResultTitle = null;
+        let smartTextErrorDiv = null;
+
+        function clearSmartTextResults() {
+            smartTextResultContent.textContent = 'Your AI™ generated text will appear here.';
+            smartTextResultContent.classList.remove('text-red-400', 'text-blue-400');
+            smartTextResultContent.classList.add('dashboard-text-light'); // Default color
+            smartTextResultTitle.textContent = 'Smart Text Output:';
+            smartTextErrorDiv.classList.add('hidden');
+        }
+
+        async function handleSmartTextOperation(operationType, promptModifier) {
+            const text = smartTextInput.value.trim();
+            clearSmartTextResults(); // Clear all previous results before new operation
+
+            if (!text) {
+                smartTextResultContent.textContent = "Please enter some text to process.";
+                smartTextResultContent.classList.add('text-red-400');
+                return;
+            }
+
+            smartTextResultContent.textContent = 'Processing...';
+            smartTextResultContent.classList.remove('dashboard-text-light');
+            smartTextResultContent.classList.add('text-blue-400'); // Indicate loading
+
+            let prompt = "";
+            let newTitle = "";
+
+            switch (operationType) {
+                case 'summarize':
+                    prompt = `Summarize the following text:\n\n"${text}"`;
+                    newTitle = "Summary:";
+                    break;
+                case 'continue':
+                    prompt = `Continue the following text. Provide a natural continuation, without repeating the original text. Make sure the continuation is coherent and relevant to the provided text:\n\n"${text}"`;
+                    newTitle = "Text Continuation:";
+                    break;
+                case 'grammar':
+                    prompt = `Review the following text for grammar and spelling errors. If there are errors, provide the corrected version. If no errors, state that the text is correct and provide the original text. Text:\n\n"${text}"`;
+                    newTitle = "Grammar & Spelling Check:";
+                    break;
+                case 'paraphrase':
+                    prompt = `Paraphrase the following text in a clear and concise way, providing a few different variations. Text:\n\n"${text}"`;
+                    newTitle = "Paraphrased Text:";
+                    break;
+                case 'sentiment':
+                    prompt = `Analyze the sentiment of the following text (e.g., positive, negative, neutral) and provide a brief explanation:\n\n"${text}"`;
+                    newTitle = "Sentiment Analysis:";
+                    break;
+                case 'keywords':
+                    prompt = `Extract the most important keywords and key phrases from the following text, listed as a comma-separated list:\n\n"${text}"`;
+                    newTitle = "Extracted Keywords:";
+                    break;
+                default:
+                    smartTextResultContent.textContent = "Invalid operation.";
+                    smartTextResultContent.classList.add('text-red-400');
+                    smartTextResultContent.classList.remove('text-blue-400');
+                    return;
+            }
+
+            // Apply specific prompt modifier if provided (e.g., "Act as a coding assistant")
+            if (promptModifier) {
+                prompt = `${promptModifier} ${prompt}`;
+            }
+
+            smartTextResultTitle.textContent = newTitle;
+            await callGeminiAPI(prompt, smartTextResultContent, smartTextErrorDiv);
+
+            // Special handling for 'continue' to append text to input
+            if (operationType === 'continue' && !smartTextErrorDiv.classList.contains('hidden')) {
+                // Only append if there was no error during generation
+                smartTextInput.value += smartTextResultContent.textContent;
+                smartTextResultContent.textContent = "Text continued in input box."; // Inform user
+            }
+        }
+
+
+        // Event listeners for Smart Text Editor Buttons
+        document.addEventListener('DOMContentLoaded', () => {
+            smartTextInput = document.getElementById('smartTextEditorInput');
+            smartTextResultContent = document.getElementById('smartTextResultContent');
+            smartTextResultTitle = document.getElementById('smartTextResultTitle');
+            smartTextErrorDiv = document.getElementById('smartTextError');
+
+            document.getElementById('btnSummarizeText')?.addEventListener('click', () => handleSmartTextOperation('summarize'));
+            document.getElementById('btnContinueText')?.addEventListener('click', () => handleSmartTextOperation('continue'));
+            document.getElementById('btnCorrectGrammar')?.addEventListener('click', () => handleSmartTextOperation('grammar'));
+            document.getElementById('btnParaphraseText')?.addEventListener('click', () => handleSmartTextOperation('paraphrase'));
+            document.getElementById('btnAnalyzeSentiment')?.addEventListener('click', () => handleSmartTextOperation('sentiment'));
+            document.getElementById('btnExtractKeywords')?.addEventListener('click', () => handleSmartTextOperation('keywords'));
+        });
+
 
         // Event listener for General Query (Dashboard)
         document.addEventListener('click', async (event) => {
@@ -2955,23 +3228,6 @@ The JSON output MUST adhere strictly to the following structure and data types. 
                 const responseDiv = document.getElementById('geminiResponse');
                 const errorDiv = document.getElementById('geminiError');
                 callGeminiAPI(promptText, responseDiv, errorDiv);
-            }
-        });
-
-        // Event listener for Sector Trend Analysis (Dashboard)
-        document.addEventListener('click', async (event) => {
-            if (event.target && event.target.id === 'getSectorTrendAnalysisBtn') {
-                const sectorName = document.getElementById('sectorTrendInput').value.trim();
-                const responseDiv = document.getElementById('sectorTrendAnalysisResponse');
-                const errorDiv = document.getElementById('sectorTrendAnalysisError');
-                if (!sectorName) {
-                    responseDiv.textContent = '';
-                    errorDiv.textContent = 'Please enter a sector name (e.g., Technology, Healthcare).';
-                    errorDiv.classList.remove('hidden');
-                    return;
-                }
-                const prompt = `Analyze the "${sectorName}" sector. Provide a summary of its current trends, future outlook, and list 3-5 key players in that sector. Keep it concise, around 150-200 words.`;
-                callGeminiAPI(prompt, responseDiv, errorDiv);
             }
         });
 
@@ -3050,6 +3306,9 @@ The JSON output MUST adhere strictly to the following structure and data types. 
                     this.x = Math.random() * coreBrandCanvas.width;
                     this.y = Math.random() * coreBrandCanvas.height;
                     this.alpha = 0;
+                    this.speed = Math.random() * 0.3 + 0.05;
+                    this.directionX = Math.random() * 2 - 1;
+                    this.directionY = Math.random() * 2 - 1;
                 }
             }
 
@@ -3213,8 +3472,58 @@ The JSON output MUST adhere strictly to the following structure and data types. 
             console.log(`Mock PayPal SDK Integration triggered with Client ID: ${paypalClientId}`);
             // In a real scenario, you'd load the PayPal JS SDK script here dynamically
             // and then render a PayPal button or perform a mock payment intent.
+            // For now, we use a simple alert-like modal replacement for user feedback.
             showCustomModal("PayPal SDK Integration (Mock)", `Attempting to initialize PayPal SDK with ID: <br><code>${paypalClientId}</code>.<br>This is a mock call.`);
         }
+
+        // Custom Modal Function (replaces alert/confirm)
+        function showCustomModal(title, message, isConfirm = false, onConfirm = null) {
+            const modalId = 'custom-modal';
+            let modal = document.getElementById(modalId);
+
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = modalId;
+                modal.className = 'fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[100]';
+                modal.innerHTML = `
+                    <div class="bg-gray-800 p-8 rounded-lg shadow-xl max-w-sm w-full border border-gray-700">
+                        <h3 class="text-2xl font-bold text-white mb-4" id="custom-modal-title"></h3>
+                        <p class="text-gray-300 mb-6" id="custom-modal-message"></p>
+                        <div class="flex justify-end space-x-4">
+                            <button id="custom-modal-cancel" class="px-5 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition duration-200">Cancel</button>
+                            <button id="custom-modal-confirm" class="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200">OK</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+            }
+
+            document.getElementById('custom-modal-title').innerHTML = title;
+            document.getElementById('custom-modal-message').innerHTML = message;
+
+            const confirmButton = document.getElementById('custom-modal-confirm');
+            const cancelButton = document.getElementById('custom-modal-cancel');
+
+            if (isConfirm) {
+                cancelButton.classList.remove('hidden');
+                confirmButton.onclick = () => {
+                    modal.classList.add('hidden');
+                    if (onConfirm) onConfirm();
+                };
+                cancelButton.onclick = () => {
+                    modal.classList.add('hidden');
+                    if (onConfirm) onConfirm();
+                };
+            } else {
+                cancelButton.classList.add('hidden');
+                confirmButton.onclick = () => {
+                    modal.classList.add('hidden');
+                };
+            }
+
+            modal.classList.remove('hidden');
+        }
+
 
         // --- Sub-Node Details Display Function (NEW) ---
         function showSubNodeDetails(nodeId) {
@@ -3425,6 +3734,133 @@ The JSON output MUST adhere strictly to the following structure and data types. 
                                 <li>Machine learning for tamper detection</li>
                             </ul>
                             <p class="dashboard-muted-text mt-4">The ultimate guardian for digital intellectual property.</p>
+                        `;
+                        break;
+                    case 'ecom-analytics':
+                        contentHtml = `
+                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> E-commerce Analytics provides a deep dive into online sales performance, user engagement, and conversion funnels for the Retail & E-commerce Hub. It helps identify trends and areas for optimization.</p>
+                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Metrics Tracked:</h4>
+                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
+                                <li>Sales Revenue & Growth</li>
+                                <li>Conversion Rates (e.g., Cart-to-Purchase)</li>
+                                <li>Customer Acquisition Cost (CAC)</li>
+                                <li>Average Order Value (AOV)</li>
+                                <li>Website Traffic & Bounce Rate</li>
+                                <li>Product Performance & Best Sellers</li>
+                            </ul>
+                            <p class="dashboard-muted-text mt-4">Essential for data-driven decision-making in retail operations.</p>
+                        `;
+                        break;
+                    case 'pos-integration':
+                        contentHtml = `
+                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> POS (Point of Sale) Integration ensures seamless data flow between physical retail stores and online platforms within the Retail & E-commerce Hub. This unifies inventory, sales data, and customer profiles across all channels.</p>
+                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Benefits:</h4>
+                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
+                                <li>Real-time inventory synchronization (prevents overselling)</li>
+                                <li>Unified customer profiles (online and in-store purchase history)</li>
+                                <li>Consistent pricing and promotions across channels</li>
+                                <li>Streamlined returns and exchanges</li>
+                                <li>Improved sales reporting and analytics</li>
+                            </ul>
+                            <p class="dashboard-muted-text mt-4">Creating a truly omnichannel experience for both businesses and customers.</p>
+                        `;
+                        break;
+                    case 'crm-solutions':
+                        contentHtml = `
+                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> CRM (Customer Relationship Management) Solutions within the Retail & E-commerce Hub centralize customer data to foster stronger relationships, personalize interactions, and optimize marketing efforts.</p>
+                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Features:</h4>
+                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
+                                <li>Comprehensive customer profiles (contact info, purchase history, preferences)</li>
+                                <li>Automated marketing campaigns (email, SMS)</li>
+                                <li>Customer service tracking and support ticketing</li>
+                                <li>Sales lead management</li>
+                                <li>Customer segmentation for targeted outreach</li>
+                            </ul>
+                            <p class="dashboard-muted-text mt-4">Turning customer data into actionable insights for sustained business growth.</p>
+                        `;
+                        break;
+                    case 'inventory-optimizer':
+                        contentHtml = `
+                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> The Inventory Optimizer is an AI-driven sub-node within Logistics & Supply Chain Orchestration, designed to dynamically manage inventory levels, predict demand fluctuations, and minimize carrying costs while preventing stockouts.</p>
+                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Optimization Capabilities:</h4>
+                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
+                                <li>Real-time stock level monitoring</li>
+                                <li>Automated reorder point calculations</li>
+                                <li>Predictive demand forecasting based on historical data and external factors</li>
+                                <li>Identification of slow-moving or excess inventory</li>
+                                <li>Warehouse space optimization recommendations</li>
+                            </ul>
+                            <p class="dashboard-muted-text mt-4">Ensuring the right product is in the right place at the right time, every time.</p>
+                        `;
+                        break;
+                    case 'fleet-manager':
+                        contentHtml = `
+                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> The Fleet Manager provides comprehensive tools for overseeing and optimizing transportation assets within the Logistics & Supply Chain Orchestration. It enables efficient planning, tracking, and maintenance of delivery and transport vehicles.</p>
+                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Management Features:</h4>
+                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
+                                <li>Vehicle tracking (GPS integration) and route adherence monitoring</li>
+                                <li>Driver assignment and scheduling</li>
+                                <li>Fuel consumption and cost tracking</li>
+                                <li>Preventative maintenance scheduling and alerts</li>
+                                <li>Compliance with transportation regulations</li>
+                            </ul>
+                            <p class="dashboard-muted-text mt-4">Maximizing vehicle utilization and minimizing operational expenses for efficient logistics.</p>
+                        `;
+                        break;
+                    case 'customs-bridge':
+                        contentHtml = `
+                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> Customs Bridge simplifies complex international customs procedures and ensures compliance for goods moving through the Logistics & Supply Chain Orchestration network. It automates documentation and facilitates smooth cross-border trade.</p>
+                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Key Functions:</h4>
+                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
+                                <li>Automated generation of customs declarations and invoices</li>
+                                <li>Real-time updates on tariff codes and import/export regulations</li>
+                                <li>Integration with customs authorities for faster clearance</li>
+                                <li>Risk assessment for potential customs delays</li>
+                                <li>Digital archiving of all trade documentation</li>
+                            </ul>
+                            <p class="dashboard-muted-text mt-4">Accelerating international shipments and reducing compliance burdens.</p>
+                        `;
+                        break;
+                    case 'algo-trading':
+                        contentHtml = `
+                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> The Algo Trading Engine within the Finance & Investments Platform offers automated trading strategies. It executes trades based on predefined algorithms, leveraging real-time market data to identify and act on opportunities faster than human traders.</p>
+                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Capabilities:</h4>
+                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
+                                <li>High-frequency trade execution</li>
+                                <li>Automated risk management protocols</li>
+                                <li>Backtesting and optimization of trading strategies</li>
+                                <li>Integration with various exchanges and brokers</li>
+                                <li>Sentiment analysis integration for market signals</li>
+                            </ul>
+                            <p class="dashboard-muted-text mt-4">Designed for sophisticated investors seeking automated, data-driven trading advantages.</p>
+                        `;
+                        break;
+                    case 'tax-optimizer':
+                        contentHtml = `
+                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> The Tax Optimizer is an intelligent tool within the Finance & Investments Platform designed to help users minimize their tax liabilities on investments and capital gains. It provides recommendations based on current tax laws and individual financial situations.</p>
+                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Key Benefits:</h4>
+                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
+                                <li>Automated identification of tax-loss harvesting opportunities</li>
+                                <li>Personalized advice on tax-efficient investment strategies</li>
+                                <li>Calculation of capital gains and losses</li>
+                                <li>Integration with accounting platforms (e.g., Xero for detailed reporting)</li>
+                                <li>Compliance checks against relevant tax regulations</li>
+                            </ul>
+                            <p class="dashboard-muted-text mt-4">Maximizing after-tax returns on your investments.</p>
+                        `;
+                        break;
+                    case 'crypto-vault':
+                        contentHtml = `
+                            <p class="dashboard-text-light mb-3"><strong>Details:</strong> Crypto Vault Services within the Finance & Investments Platform provide highly secure storage and management solutions for a wide range of digital assets and cryptocurrencies. It combines institutional-grade security with user-friendly access.</p>
+                            <h4 class="text-xl font-semibold dashboard-text-light mb-2">Security Features:</h4>
+                            <ul class="list-disc list-inside ml-4 dashboard-muted-text space-y-1">
+                                <li>Multi-signature (multi-sig) wallet support</li>
+                                <li>Hardware security module (HSM) protection</li>
+                                <li>Cold storage (offline) options for large holdings</li>
+                                <li>Regular security audits and penetration testing</li>
+                                <li>Insurance coverage for stored assets (where applicable)</li>
+                            </ul>
+                            <p class="dashboard-muted-text mt-4">The ultimate secure haven for your digital wealth.</p>
                         `;
                         break;
                     default:
