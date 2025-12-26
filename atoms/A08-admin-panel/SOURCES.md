@@ -19,3 +19,4 @@
 | 13 | 2025-06-22 | seedwave | history | `public/admin_panel_xero.html` | `3fa548f3` | Seedwave Admin Panel | 34041 | 10 | 0 | 39.4 |
 | 14 | 2025-06-22 | seedwave | history | `public/admin_panel_xero.html` | `ccb8f070` | Seedwave Admin Panel | 33754 | 10 | 0 | 39.4 |
 | 15 | 2025-06-22 | seedwave | history | `public/admin_panel_xero.html` | `1b81a3c0` | Seedwave Admin Panel | 33228 | 10 | 0 | 39.3 |
+| 16 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/apps/seedwave-core/public/admin_panel_xero.html` | `0d8d87fd` | Seedwave Admin Panel | 22188 | 10 | 1 | 40.2 |
