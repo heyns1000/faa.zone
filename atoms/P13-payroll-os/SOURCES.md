@@ -11,3 +11,4 @@
 | 5 | 2025-09-06 | ThesisGallery | main | `attached_assets/index_1757168144979.html` | `7d4ca1c6` | 🧬 FAA™ Payroll OS — Master Index | 11140 | 41 | 0 | 68.1 |
 | 6 | 2025-09-06 | ThesisGallery | main | `attached_assets/intelligence-hub_1757168144980.html` | `efe2c445` | 📈 FAA Payroll OS — Intelligence Hub | 6614 | 17 | 0 | 31.2 |
 | 7 | 2025-09-06 | ThesisGallery | main | `client/src/pages/payroll-features.html` | `91177969` | 🔧 FAA™ Payroll OS — Features Matrix | 21940 | 31 | 0 | 58.2 |
+| 8 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/apps/payroll/index.html` | `de25b69c` | 🧬 FAA™ Payroll OS — Master Index | 213386 | 26 | 11 | 70.3 |
