@@ -8,3 +8,4 @@
 | 2 | 2025-09-06 | ThesisGallery | main | `attached_assets/admin-portal-approval_1757168526806.html` | `f4150ae5` | Seedwave™ Access Portal | 7243 | 3 | 2 | 37.7 |
 | 3 | 2025-12-05 | codenest | resolve-conflicts-manually | `packages/faa-zone/public/admin/admin-portal-approval.html` | `e8ad568c` | Seedwave™ Access Portal | 26860 | 7 | 1 | 44.7 |
 | 4 | 2025-12-05 | codenest | resolve-conflicts-manually | `packages/faa-zone/public/admin/app.html` | `6c645cff` | Seedwave™ Access Portal | 7242 | 3 | 2 | 37.7 |
+| 5 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/apps/seedwave-core/public/access-portal.html` | `34c91587` | 🦁 Seedwave™ Access Portal | 24742 | 6 | 2 | 42.5 |
