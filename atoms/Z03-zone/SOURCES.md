@@ -12,3 +12,4 @@
 | 6 | 2025-09-06 | ThesisGallery | main | `attached_assets/quick-view_1757167915618.html` | `1f37e5b1` | FAA.Zone — Pulse Dashboard | 13722 | 53 | 1 | 81.4 |
 | 7 | 2025-09-06 | ThesisGallery | main | `attached_assets/scrollmap_1757167915617.html` | `3d9195d3` | FAA.Zone — 🗺️ ScrollMap Dashboard | 3918 | 9 | 0 | 34.4 |
 | 8 | 2025-09-06 | ThesisGallery | main | `attached_assets/sector-grid_1757167915616.html` | `3a7399bd` | FAA.Zone — Sector Grid | 7707 | 27 | 1 | 47.8 |
+| 9 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/apps/seedwave-core/public/clause-index.html` | `7037735a` | FAA.Zone — 📜 Clause Index | 21609 | 50 | 1 | 74.3 |
