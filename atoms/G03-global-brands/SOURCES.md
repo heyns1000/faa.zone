@@ -11,3 +11,4 @@
 | 5 | 2025-06-20 | seedwave | history | `public/global_brands.html` | `2ff6d7f6` | Seedwave™ - Global Pulse & Master Brands | 59941 | 10 | 19 | 74.0 |
 | 6 | 2025-06-20 | seedwave | history | `public/global_brands.html` | `df132ee3` | Seedwave™ - Global Pulse & Master Brands | 47612 | 11 | 13 | 62.6 |
 | 7 | 2025-06-21 | seedwave | history | `public/global_brands.html` | `8e7ba08a` | Seedwave™ - Global Pulse & Master Brands | 86873 | 18 | 24 | 99.7 |
+| 8 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/apps/seedwave-core/public/global_brands.html` | `71a045e1` | Seedwave™ - Global Pulse & Master Brands | 86882 | 18 | 24 | 99.7 |
