@@ -1,401 +1,1069 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📦 FAA.ZONE - Packaging & Logistics Dashboard</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fruitful | FAA™ Nutrition & Food Chain Dashboard</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Chart.js for data visualization (kept for potential future use, but simplified data) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.js"></script>
     <style>
+        /* Define Fruitful Global Color Palette and Base Styles */
+        :root {
+            /* Dark Mode Defaults */
+            --primary-color: #0071e3; /* Apple Blue */
+            --secondary-color: #30d158; /* Apple Green */
+            --text-color-light: #f5f5f7; /* Light text on dark backgrounds */
+            --text-color-dark: #1d1d1f; /* Dark text on light backgrounds - used for some components that flip colors */
+            --bg-color-dark: #1a1a1c; /* Deep black/dark grey */
+            --card-bg-dark: #2a2a2e; /* Darker grey for dark cards */
+            --border-color-dark: #3a3a3e; /* Subtle dark border */
+            --accent-gold: #B8860B; /* Corporate gold accent */
+            --status-active: #30d158; /* Green for active */
+            --status-pending: #f59e0b; /* Amber for pending */
+            --status-draft: #6e6e73; /* Gray for draft */
+            --status-error: #ef4444; /* Red for error */
+
+            /* Light Mode Variables (will override dark mode) */
+            --light-primary-color: #0071e3;
+            --light-secondary-color: #30d158;
+            --light-text-color-light: #1d1d1f; /* Dark text for light mode body */
+            --light-text-color-dark: #1d1d1f; /* Dark text for light mode body content */
+            --light-bg-color-dark: #ffffff; /* White background for light mode */
+            --light-card-bg-dark: #fcfcfc; /* Off-white for light cards */
+            --light-border-color-dark: #e8e8ed; /* Subtle light border */
+        }
+
+        /* Base Body Styling - Defaults to dark mode based on root variables */
         body {
             font-family: 'Inter', sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            background-color: var(--bg-color-dark);
+            color: var(--text-color-light); /* Main text color based on mode */
+            min-height: 100vh;
+            display: flex;
+            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for theme change */
+            margin: 0;
+            padding: 0;
         }
-        /* Custom scrollbar for dark theme */
-        ::-webkit-scrollbar {
-            width: 8px;
+
+        /* Light Mode specific overrides */
+        body.light-mode {
+            background-color: var(--light-bg-color-dark);
+            color: var(--light-text-color-light);
+
+            /* Overrides for specific components in light mode */
+            .sidebar, .panel, .metric-card, .brand-card, .chart-container, .custom-modal-content {
+                background-color: var(--light-card-bg-dark);
+                border-color: var(--light-border-color-dark);
+                box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* Lighter shadow */
+            }
+            .sidebar-header .logo-text {
+                color: var(--light-text-color-light); /* Fruitful part darker */
+            }
+            .nav-list a {
+                color: var(--light-text-color-dark); /* Darker nav text */
+            }
+            .nav-list a:hover {
+                background-color: rgba(0, 113, 227, 0.05); /* Lighter hover background */
+                color: var(--light-primary-color);
+            }
+            .nav-list a.active {
+                background-color: var(--light-primary-color);
+                color: white;
+            }
+            .nav-icon {
+                color: var(--accent-gold); /* Gold remains contrast */
+            }
+            .panel h3, .panel h4 {
+                color: var(--accent-gold); /* Gold remains contrast */
+            }
+            .panel p, .brand-card p, .form-control label, .form-control input, .form-control select, .form-control textarea {
+                color: var(--light-text-color-dark); /* Darker text for readability */
+            }
+            .form-control input[type="text"],
+            .form-control input[type="email"],
+            .form-control input[type="password"],
+            .form-control select,
+            .form-control textarea {
+                background-color: #ebebeb; /* Lighter input fields */
+                border-color: #d1d1d1;
+                color: var(--light-text-color-light); /* Input text darker */
+            }
+            .brand-card {
+                background-color: #f0f0f0; /* Lighter brand cards in light mode */
+                border-color: #d1d1d1;
+            }
+            .brand-actions button {
+                color: var(--bg-color-dark); /* Dark button text */
+            }
+            .brand-actions button.secondary {
+                color: var(--light-primary-color);
+                border-color: var(--light-primary-color);
+            }
+            .brand-actions button.secondary:hover {
+                background-color: rgba(0, 113, 227, 0.08);
+            }
         }
-        ::-webkit-scrollbar-track {
-            background: #2d3748; /* bg-gray-800 */
+
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 280px; /* Wider sidebar */
+            background-color: var(--card-bg-dark);
+            padding: 1.5rem 1rem;
+            border-right: 1px solid var(--border-color-dark);
+            box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            overflow-y: auto; /* Scrollable sidebar */
         }
-        ::-webkit-scrollbar-thumb {
-            background: #4a5568; /* bg-gray-600 */
-            border-radius: 4px;
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative; /* For theme toggle button positioning */
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #6b7280; /* bg-gray-500 */
-        }
-        /* Specific styling for the "Coming Soon" badge */
-        .coming-soon-badge {
+        .sidebar-header .theme-toggle {
             position: absolute;
-            top: 0.5rem; /* Adjust as needed */
-            right: 0.5rem; /* Adjust as needed */
-            background-color: #f59e0b; /* Amber-500 */
-            color: #1f2937; /* Gray-800 */
-            font-size: 0.75rem;
-            font-weight: bold;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px; /* Full rounded */
-            z-index: 10;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            top: 0;
+            right: 0;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color-light); /* Icon color changes with theme */
+            transition: color 0.3s ease;
+        }
+        .sidebar-header .theme-toggle:hover {
+            color: var(--primary-color);
+        }
+        .sidebar-header .logo-text {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #FFFFFF; /* Fruitful part in white */
+            line-height: 1; /* Adjust line height for better alignment */
+        }
+        .sidebar-header .logo-text span {
+            color: var(--secondary-color); /* Nutrition & Food Chain part in green */
+            font-size: 0.8em; /* Make 'Nutrition & Food Chain' slightly smaller relative to 'Fruitful' */
+            letter-spacing: -0.02em; /* Tighter spacing for "Nutrition & Food Chain" */
+        }
+        .nav-list a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            color: var(--text-color-light); /* Nav text color changes with theme */
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease-in-out;
+            background-color: transparent;
+        }
+        .nav-list a:hover {
+            background-color: rgba(0, 113, 227, 0.1);
+            color: var(--primary-color);
+        }
+        .nav-list a.active {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0, 113, 227, 0.3);
+        }
+        .nav-list a.active .nav-icon {
+            color: white;
+        }
+        .nav-icon {
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+            transition: color 0.2s ease;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex-grow: 1;
+            padding: 2.5rem;
+            background-color: var(--bg-color-dark); /* Background changes with theme */
+            overflow-y: auto; /* Scrollable main content */
+        }
+
+        /* General Panel Styling */
+        .panel {
+            background-color: var(--card-bg-dark); /* Panel background changes with theme */
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--border-color-dark); /* Border changes with theme */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .panel h3, .panel h4 {
+            color: var(--accent-gold);
+            font-weight: 700;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+        }
+        .panel h3 { font-size: 1.8rem; }
+        .panel h4 { font-size: 1.4rem; }
+        .panel p {
+            color: var(--text-color-light); /* Paragraph text changes with theme */
+            line-height: 1.6;
+        }
+
+        /* Metric Cards */
+        .metric-card {
+            background-color: var(--card-bg-dark); /* Metric card background changes with theme */
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color-dark); /* Border changes with theme */
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .metric-card h4 {
+            font-size: 1rem;
+            color: var(--text-color-light); /* Metric title changes with theme */
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        .metric-card p {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin: 0;
+            line-height: 1.1;
+        }
+
+        /* Brand Grid */
+        .brand-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .brand-card {
+            background-color: #1a1a1a; /* Brand card background (slightly lighter dark) */
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid #3a3a3e; /* Border based on this card's color */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        /* Light mode specific override for brand card background */
+        body.light-mode .brand-card {
+            background-color: #f0f0f0; /* Lighter brand cards in light mode */
+            border-color: #d1d1d1;
+        }
+
+        .brand-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+        .brand-card h4 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        .brand-card p {
+            font-size: 0.9rem;
+            color: var(--text-color-light); /* Brand card text color changes with theme */
+            margin-bottom: 0.4rem;
+        }
+        /* Light mode specific override for brand card text */
+        body.light-mode .brand-card p {
+            color: var(--text-color-dark);
+        }
+        .brand-status {
+            font-weight: 600;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            display: inline-block;
+            font-size: 0.8rem;
+        }
+        .status-active { background-color: var(--status-active); color: white; }
+        .status-pending { background-color: var(--status-pending); color: white; }
+        .status-draft { background-color: var(--status-draft); color: white; }
+        .status-error { background-color: var(--status-error); color: white; }
+        .brand-actions button {
+            background-color: var(--accent-gold);
+            color: var(--dark-bg);
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 0.8rem;
+            margin-right: 0.5rem;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .brand-actions button:hover {
+            background-color: #DAA520;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+        .brand-actions button.secondary {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+        .brand-actions button.secondary:hover {
+            background-color: rgba(0, 113, 227, 0.1);
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Form styling (kept for completeness of template, though not used in this specific dashboard) */
+        .form-control {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        .form-control label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-color-light);
+        }
+        .form-control input[type="text"],
+        .form-control input[type="email"],
+        .form-control input[type="password"],
+        .form-control select,
+        .form-control textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color-dark);
+            background-color: #3a3a3e;
+            color: var(--text-color-light);
+            font-size: 1rem;
+            transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+        }
+        .form-control input:focus, .form-control select:focus, .form-control textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.3);
+        }
+        .form-action-button {
+            background-color: var(--secondary-color);
+            color: var(--dark-bg);
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-top: 1rem;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .form-action-button:hover {
+            background-color: #28a745;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(48, 209, 88, 0.3);
+        }
+        .form-action-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        /* Chart styling (kept for completeness of template, but simplified data) */
+        .chart-container {
+            position: relative;
+            height: 300px; /* Fixed height for charts */
+            background-color: var(--bg-color-dark);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color-dark);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Utility for hidden views */
+        .view-hidden {
+            display: none !important; /* Use !important to ensure it overrides other styles */
+        }
+
+        /* Custom Modal for Alerts */
+        .custom-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.75);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .custom-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .custom-modal-content {
+            background-color: var(--card-bg-dark);
+            color: var(--text-color-light);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            border: 1px solid var(--border-color-dark);
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .custom-modal-overlay.active .custom-modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .custom-modal-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 0.5rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Mobile Layout */
+        @media (max-width: 767px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                padding: 1rem;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color-dark);
+                flex-direction: row; /* Horizontal layout for mobile nav */
+                justify-content: space-around;
+                flex-wrap: wrap; /* Allow nav items to wrap */
+                position: sticky;
+                top: 0;
+                z-index: 40;
+            }
+            .sidebar-header {
+                width: 100%;
+                margin-bottom: 1rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: auto;
+            }
+            .sidebar-header .theme-toggle {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-left: 1rem;
+            }
+            .sidebar-header .logo-text {
+                font-size: 1.5rem;
+                letter-spacing: -0.01em;
+            }
+            .sidebar-header .logo-text span {
+                font-size: 0.8em;
+            }
+            .nav-list {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 100%;
+            }
+            .nav-list a {
+                margin: 0.2rem 0.3rem;
+                padding: 0.5rem 0.6rem;
+                font-size: 0.75rem;
+                gap: 0.5rem;
+                flex-grow: 1;
+                justify-content: center;
+            }
+            .nav-list a .nav-icon {
+                font-size: 0.9rem;
+                margin-right: 0.2rem;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+            .panel {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            .panel h3 { font-size: 1.5rem; margin-bottom: 1rem;}
+            .panel h4 { font-size: 1.2rem; margin-bottom: 0.8rem;}
+            .metric-card p { font-size: 2rem; }
+            .brand-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .brand-actions button {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.8rem;
+                margin-right: 0.3rem;
+                margin-top: 0.5rem;
+            }
+            .form-control {
+                margin-bottom: 1rem;
+            }
+            .form-control input, .form-control select, .form-control textarea {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+            .form-action-button {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            .chart-container {
+                height: 250px;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
-
-    <!-- Global Header -->
-    <header id="global-header" class="bg-gray-800 shadow-lg py-4 px-6 md:px-10 sticky top-0 z-50">
-        <div class="container mx-auto flex items-start justify-between flex-wrap">
-            <!-- Left: Logo and Main Title -->
-            <div class="flex items-center mb-4 md:mb-0">
-                <span class="text-3xl mr-3">📦</span>
-                <!-- The main title link, now pointing to the root of the SPA -->
-                <a href="/" class="text-2xl md:text-3xl font-bold text-gray-100 hover:text-white transition-colors duration-200" id="main-title-link">
-                    FAA.ZONE <span class="text-gray-100">Sovereign Scrolls</span>
-                </a>
-            </div>
-
-            <!-- Right: Subtitle and Main Navigation Links -->
-            <div class="flex flex-col items-center md:items-end w-full md:w-auto">
-                <span class="text-xl md:text-2xl text-gray-400 mb-2 mt-4 md:mt-0">Global Supply Chain Grid</span>
-                <nav class="w-full md:w-auto">
-                    <ul class="flex flex-wrap justify-center md:justify-end space-x-2 md:space-x-4 text-sm md:text-base">
-                        <!-- Main navigation links now point to conceptual external paths -->
-                        <li><a href="/" class="px-3 py-2 rounded-md hover:bg-gray-700 transition-colors duration-200" id="nav-sector-dashboard">Sector Dashboard</a></li>
-                        <li><a href="/admin.html" class="px-3 py-2 rounded-md hover:bg-gray-700 transition-colors duration-200" id="nav-admin">Admin Login</a></li>
-                        <li><a href="/nodes.html" class="px-3 py-2 rounded-md hover:bg-gray-700 transition-colors duration-200" id="nav-nodes">Node Setup</a></li>
-                        <li><a href="/portal.html" class="px-3 py-2 rounded-md hover:bg-gray-700 transition-colors duration-200" id="nav-portal">Distributor Portal</a></li>
-                        <li><a href="/monitor.html" class="px-3 py-2 rounded-md hover:bg-gray-700 transition-colors duration-200" id="nav-monitor">Pulse Monitor</a></li>
-                        <li><a href="/pricing.html" class="px-3 py-2 rounded-md hover:bg-gray-700 transition-colors duration-200" id="nav-pricing">Pricing</a></li>
-                        <li><a href="/support.html" class="px-3 py-2 rounded-md hover:bg-gray-700 transition-colors duration-200" id="nav-support">Support</a></li>
-                    </ul>
-                </nav>
-            </div>
+<body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <!-- Updated Logo to reflect Nutrition & Food Chain -->
+            <h2 class="logo-text">Fruitful™ | <span>Nutrition & Food Chain</span></h2>
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+                <i class="fas fa-sun"></i> <!-- Default to sun icon for dark mode -->
+            </button>
         </div>
-    </header>
+        <nav class="nav-list">
+            <!-- Simplified Navigation for Nutrition Dashboard -->
+            <a href="#nutrition-dashboard" class="active" data-view="nutrition-dashboard">
+                <span class="inline-block text-xl align-middle mr-2">✿✿</span> Dashboard
+            </a>
+            <a href="#nutrition-brands" data-view="nutrition-brands">
+                <i class="fas fa-seedling nav-icon"></i> Brands
+            </a>
+            <a href="#nutrition-pricing" data-view="nutrition-pricing">
+                <i class="fas fa-dollar-sign nav-icon"></i> Pricing
+            </a>
+            <a href="#nutrition-analytics" data-view="nutrition-analytics">
+                <i class="fas fa-chart-line nav-icon"></i> Analytics
+            </a>
+            <!-- Removed all other CodeNest-specific links -->
+        </nav>
+    </aside>
 
-    <!-- Main Content Area - Dynamic View Container -->
-    <main id="main-content" class="flex-grow container mx-auto px-6 py-8 md:py-12">
-        <!-- Content will be injected here by JavaScript -->
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Nutrition & Food Chain Dashboard View (Home) -->
+        <section id="nutrition-dashboard-view" class="view">
+            <div class="panel">
+                <h3 class="flex items-center">
+                    <span class="inline-block text-3xl align-middle mr-3 transform rotate-12">✿✿</span>
+                    Welcome to the FAA™ Nutrition & Food Chain Dashboard
+                </h3>
+                <p class="mb-4">
+                    Explore our innovative solutions for a sustainable future in nutrition and food supply.
+                    Our platform leverages advanced technology to optimize food production, enhance traceability,
+                    and ensure nutritional integrity across the global food chain.
+                </p>
+                <p class="mt-3 text-md sm:text-lg text-gray-500">
+                    Core Brands: <span class="font-bold text-blue-400">20</span> |
+                    Total Nodes: <span class="font-bold text-green-400">80</span> |
+                    Payout Tier: <span class="font-bold text-purple-400">B+</span> |
+                    Region: <span class="font-bold text-indigo-400">Global</span>
+                </p>
+            </div>
+
+            <!-- Global Metrics Section -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                <div class="metric-card">
+                    <h4>Monthly Fee (Basic Tier)</h4>
+                    <p>$48</p>
+                </div>
+                <div class="metric-card">
+                    <h4>Annual Fee (Basic Tier)</h4>
+                    <p>$500</p>
+                </div>
+                <div class="metric-card">
+                    <h4>Global Market Value</h4>
+                    <p>$500B+</p>
+                </div>
+            </div>
+
+            <!-- Quick Access to Brands -->
+            <div class="panel">
+                <h3 class="mb-4">Explore Our Core Brands</h3>
+                <p class="mb-6 text-gray-400">
+                    Click on any brand below to learn more about its specific role and offerings within the Nutrition & Food Chain ecosystem.
+                </p>
+                <div id="quickBrandsList" class="brand-grid">
+                    <!-- Top 6 brands will be loaded here -->
+                </div>
+                <div class="text-center mt-6">
+                    <button class="form-action-button" onclick="showView('nutrition-brands')">
+                        <i class="fas fa-seedling mr-2"></i> View All 20 Brands
+                    </button>
+                </div>
+            </div>
+
+            <!-- Simplified Analytics Chart for Dashboard Home -->
+            <div class="panel">
+                <h3>Sector Performance Snapshot</h3>
+                <div class="chart-container">
+                    <canvas id="sectorPerformanceChartHome"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nutrition Brands View -->
+        <section id="nutrition-brands-view" class="view view-hidden">
+            <div class="panel">
+                <h3 class="mb-4"><i class="fas fa-seedling mr-2"></i> All Nutrition & Food Chain Brands</h3>
+                <p class="mb-6 text-gray-400">
+                    A comprehensive overview of all 20 core brands operating within the FAA™ Nutrition & Food Chain sector.
+                    Each brand plays a vital role in ensuring a robust and sustainable global food ecosystem.
+                </p>
+                <div id="allBrandsList" class="brand-grid">
+                    <!-- All 20 brands with descriptions will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Nutrition Pricing View -->
+        <section id="nutrition-pricing-view" class="view view-hidden">
+            <div class="panel">
+                <h3 class="mb-4"><i class="fas fa-dollar-sign mr-2"></i> Flexible Pricing Structures</h3>
+                <p class="mb-6 text-gray-400">
+                    Choose the tier that best fits your operational scale and needs. All tiers are integrated with
+                    ClaimRoot™ for secure licensing and VaultPay™ for seamless transactions.
+                </p>
+                <div id="pricingCards" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Pricing cards will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Nutrition Analytics View -->
+        <section id="nutrition-analytics-view" class="view view-hidden">
+            <div class="panel">
+                <h3 class="mb-4"><i class="fas fa-chart-line mr-2"></i> Nutrition Sector Analytics</h3>
+                <p class="mb-6 text-gray-400">
+                    Detailed insights into the performance and growth trends within the Nutrition & Food Chain sector.
+                </p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="chart-container">
+                        <h4>Deployment Trends</h4>
+                        <canvas id="nutritionDeploymentTrendsChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h4>Market Share Distribution</h4>
+                        <canvas id="nutritionMarketShareChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hidden sections from original template (kept structure but not content) -->
+        <!-- These sections are included to maintain the overall template structure but will remain hidden and empty -->
+        <section id="projects-view" class="view view-hidden"></section>
+        <section id="new-project-view" class="view view-hidden"></section>
+        <section id="scroll-builder-view" class="view view-hidden"></section>
+        <section id="ecosystem-map-view" class="view view-hidden"></section>
+        <section id="global-checkout-view" class="view view-hidden"></section>
+        <section id="templates-view" class="view view-hidden"></section>
+        <section id="licenses-view" class="view view-hidden"></section>
+        <section id="analytics-view" class="view view-hidden"></section>
+        <section id="api-keys-view" class="view view-hidden"></section>
+        <section id="settings-view" class="view view-hidden"></section>
+        <section id="login-view" class="view view-hidden"></section>
+        <section id="signup-view" class="view view-hidden"></section>
+        <section id="editor-workspace-view" class="view view-hidden"></section>
     </main>
 
-    <!-- Global Footer -->
-    <footer class="bg-gray-800 py-6 px-6 md:px-10 mt-12">
-        <div class="container mx-auto text-center text-gray-400 text-sm">
-            <p>&copy; 2025 FAA.ZONE Sovereign Scrolls. All rights reserved.</p>
-            <p class="mt-2">
-                Part of the Global Supply Chain Grid · Powered by VaultMesh™ & TreatyMesh™ Protocols.
-            </p>
-            <div class="flex flex-wrap justify-center space-x-4 mt-4">
-                <a href="#" class="hover:text-white transition-colors duration-200">Privacy Policy</a>
-                <span class="text-gray-600">|</span>
-                <a href="#" class="hover:text-white transition-colors duration-200">Terms of Service</a>
-                <span class="text-gray-600">|</span>
-                <a href="#" class="hover:text-white transition-colors duration-200">Contact Support</a>
-            </div>
+    <!-- Custom Modal for Alerts (standard app alerts) -->
+    <div id="customModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-gray-800 text-white p-6 rounded-lg shadow-xl text-center max-w-sm">
+            <p id="customModalMessage"></p>
         </div>
-    </footer>
+    </div>
 
     <script>
-        // --- 1. Data Definitions ---
-        const brands = [
-            {
-                name: 'CrateLogic™',
-                purpose: 'Intelligent Container Management',
-                icon: '📦',
-                color: 'green',
-                path: '/sectors/packaging-logistics/cratelogic/index.html', // External path
-                subnodes: ['BoxNode™', 'CrateMap™', 'PackSync™', 'CrateSync™'],
-                isCompleted: true
-            },
-            {
-                name: 'PackChain™',
-                purpose: 'Supply Chain Traceability',
-                icon: '🔗',
-                color: 'blue',
-                path: '/sectors/packaging-logistics/packchain/index.html',
-                subnodes: ['VendorPack™', 'LabelTrace™', 'ShipGrid™', 'ScrollWrap™'],
-                isCompleted: true
-            },
-            {
-                name: 'LabelFlow™',
-                purpose: 'Automated Labeling & Identification',
-                icon: '🏷️',
-                color: 'purple',
-                path: '/sectors/packaging-logistics/labelflow/index.html',
-                subnodes: ['PrintNode™', 'ScrollCode™', 'InkRoute™', 'LabelSync™'],
-                isCompleted: true
-            },
-            {
-                name: 'SortFleet™',
-                purpose: 'Automated Logistics Routing',
-                icon: '🚚',
-                color: 'orange',
-                path: '/sectors/packaging-logistics/sortfleet/index.html',
-                subnodes: ['SortPulse™', 'BinLogic™', 'FleetTrack™', 'ScrollSort™'],
-                isCompleted: true
-            },
-            {
-                name: 'RouteMesh™',
-                purpose: 'Dynamic Delivery Network Optimization',
-                icon: '🌐',
-                color: 'cyan',
-                path: '/sectors/packaging-logistics/routemesh/index.html',
-                subnodes: ['NodeMap™', 'GeoSignal™', 'DropLink™', 'RouteFlow™'],
-                isCompleted: true
-            },
-            {
-                name: 'LogiStack™',
-                purpose: 'Warehouse Automation & Inventory',
-                icon: '🏭',
-                color: 'indigo',
-                path: '/sectors/packaging-logistics/logistack/index.html',
-                subnodes: ['ScrollStack™', 'YieldSync™', 'PayoutRoute™', 'StackNode™'],
-                isCompleted: true
-            },
-            {
-                name: 'CargoVault™',
-                purpose: 'Secure Cargo & Asset Tracking',
-                icon: '🔒',
-                color: 'red',
-                path: '/sectors/packaging-logistics/cargovault/index.html',
-                subnodes: ['VaultLink™', 'WeightTag™', 'CargoScan™', 'CargoClaim™'],
-                isCompleted: true
-            },
-            {
-                name: 'PalletPath™',
-                purpose: 'Pallet & Shipment Flow Management',
-                icon: '🛤️',
-                color: 'lime',
-                path: '/sectors/packaging-logistics/palletpath/index.html', // Placeholder path
-                subnodes: ['PathFinder™', 'RackTrace™', 'GridStore™', 'LoadMark™'],
-                isCompleted: false // Not yet completed
-            },
-            {
-                name: 'DeliveryX™',
-                purpose: 'Last-Mile Delivery Solution',
-                icon: '🚀',
-                color: 'yellow',
-                path: '/sectors/packaging-logistics/deliveryx/index.html', // Placeholder path
-                subnodes: ['LastMile™', 'ScanDrop™', 'AgentTrack™', 'QuickChain™'],
-                isCompleted: false // Not yet completed
-            },
-            {
-                name: 'DropLoop™',
-                purpose: 'Returns & Reverse Logistics',
-                icon: '🔄',
-                color: 'pink',
-                path: '/sectors/packaging-logistics/droploop/index.html', // Placeholder path
-                subnodes: ['LoopID™', 'VendorDrop™', 'TimeGate™', 'LoopConfirm™'],
-                isCompleted: false // Not yet completed
-            },
-            // Add more brands here as needed, setting isCompleted: false
-        ];
-
-        // --- 2. Dynamic Content Generator Functions ---
-        
-        // This function is now only used for "Coming Soon" brands within the SPA context.
-        // For completed brands, the links will navigate to external HTML files.
-        function generateBrandComingSoonContent(brand) {
-            const colorClass = brand.color;
-            return `
-                <div class="space-y-12">
-                    <!-- Brand Introduction Section (Simplified for Coming Soon) -->
-                    <section class="text-center mb-12 bg-gray-800 rounded-lg shadow-xl p-8 border border-gray-700">
-                        <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">
-                            ${brand.icon} ${brand.name} - Coming Soon!
-                        </h2>
-                        <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
-                            The full dashboard for ${brand.name} is currently under active development as part of the FAA.ZONE's Global Supply Chain Grid expansion.
-                            We're working hard to bring you comprehensive insights and control for ${brand.purpose}.
-                        </p>
-                        <p class="text-2xl font-semibold text-${colorClass}-400 mt-8">
-                            Stay tuned for updates!
-                        </p>
-                    </section>
-                </div>
-            `;
-        }
-
-        // Function to render the main sector dashboard
-        function renderSectorDashboard() {
-            mainContent.innerHTML = `
-                <!-- Sector Introduction -->
-                <section class="text-center mb-12">
-                    <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">
-                        📦 Packaging & Logistics Sector - FAA.ZONE Sovereign Scrolls
-                    </h2>
-                    <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
-                        Welcome to the Global Supply Chain Grid, where the future of intelligent packaging and seamless logistics unfolds. Our sector drives efficiency, security, and transparency across the world's most complex supply networks, powered by VaultMesh™ and TreatyMesh™ protocols.
-                    </p>
-                </section>
-
-                <!-- Operational Metrics -->
-                <section class="mb-12">
-                    <h3 class="text-3xl font-semibold text-gray-400 mb-6 text-center">Operational Metrics</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="bg-gray-800 rounded-lg shadow-xl p-6 text-center border border-gray-700">
-                            <p class="text-5xl font-bold text-gray-400 mb-2">1.2 Trillion</p>
-                            <p class="text-xl text-gray-300">Global Throughput (Units/Year)</p>
-                        </div>
-                        <div class="bg-gray-800 rounded-lg shadow-xl p-6 text-center border border-gray-700">
-                            <p class="text-5xl font-bold text-gray-400 mb-2">8,750+</p>
-                            <p class="text-xl text-gray-300">Active Distribution Hubs</p>
-                        </div>
-                        <div class="bg-gray-800 rounded-lg shadow-xl p-6 text-center border border-gray-700">
-                            <p class="text-5xl font-bold text-gray-400 mb-2">48 Hours</p>
-                            <p class="text-xl text-gray-300">Average Supply Chain Latency</p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Core Brands / Nodes Navigation -->
-                <section>
-                    <h3 class="text-3xl font-semibold text-gray-400 mb-6 text-center">Core Brands / Nodes</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="brands-grid">
-                        ${brands.map(brand => `
-                            <div class="relative">
-                                ${!brand.isCompleted ? `<span class="coming-soon-badge">Coming Soon</span>` : ''}
-                                <!-- Link now points to external HTML file for completed brands, or internal hash for coming soon -->
-                                <a href="${brand.isCompleted ? brand.path : `#brand-${brand.name.toLowerCase().replace(/™/g, '').replace(/\s/g, '')}`}"
-                                   class="block brand-link ${!brand.isCompleted ? 'pointer-events-none opacity-50' : ''}"
-                                   data-brand="${brand.name.toLowerCase().replace(/™/g, '').replace(/\s/g, '')}"
-                                   ${!brand.isCompleted ? 'onclick="return false;"' : ''} <!-- Prevent navigation for coming soon -->
-                                >
-                                    <div class="bg-gray-800 rounded-lg shadow-xl p-6 text-center border border-gray-700 hover:border-${brand.color}-500 transition-all duration-300 h-full flex flex-col justify-between">
-                                        <div>
-                                            <span class="text-4xl mb-4 block">${brand.icon}</span>
-                                            <h4 class="text-2xl font-semibold text-white mb-2">${brand.name}</h4>
-                                            <p class="text-gray-400">${brand.purpose}</p>
-                                        </div>
-                                        <button class="mt-4 w-full bg-${brand.color}-600 ${!brand.isCompleted ? 'bg-gray-700 text-gray-300 cursor-not-allowed' : `hover:bg-${brand.color}-700 text-white`} font-bold py-3 px-6 rounded-md transition-colors duration-200 shadow-md" ${!brand.isCompleted ? 'disabled' : ''}>
-                                            ${brand.isCompleted ? `Explore ${brand.name}` : 'Under Development'}
-                                        </button>
-                                    </div>
-                                </a>
-                            </div>
-                        `).join('')}
-                    </div>
-                </section>
-            `;
-            // Reset header color for sector dashboard
-            updateHeaderStyle('gray');
-            setActiveNav('nav-sector-dashboard');
-        }
-
-        // Function to render a specific brand's "Coming Soon" dashboard (if not completed)
-        function renderBrandDashboard(brandName) {
-            const brand = brands.find(b => b.name.toLowerCase().replace(/™/g, '').replace(/\s/g, '') === brandName);
-            if (brand && !brand.isCompleted) {
-                mainContent.innerHTML = generateBrandComingSoonContent(brand);
-                updateHeaderStyle(brand.color);
-                setActiveNav(null); // No main nav item active for brand pages
-                // Add a back button for "Coming Soon" pages
-                mainContent.insertAdjacentHTML('afterbegin', `
-                    <div class="mb-8 text-center">
-                        <a href="/" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors duration-200">
-                            &larr; Back to Sector Dashboard
-                        </a>
-                    </div>
-                `);
-            } else {
-                // If a completed brand is somehow accessed via hash (which shouldn't happen with direct links)
-                // or if an unknown hash is provided
-                renderNotFound();
-            }
-        }
-
-        // Function to render a "Not Found" page
-        function renderNotFound() {
-            mainContent.innerHTML = `
-                <section class="text-center py-12 bg-gray-800 rounded-lg shadow-xl p-8 border border-gray-700">
-                    <h2 class="text-4xl font-bold text-red-500 mb-4">404 - Page Not Found</h2>
-                    <p class="text-xl text-gray-300">The requested brand or page could not be found.</p>
-                    <div class="mt-8">
-                        <a href="/" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors duration-200">
-                            &larr; Back to Sector Dashboard
-                        </a>
-                    </div>
-                </section>
-            `;
-            updateHeaderStyle('red'); // Use red for 404
-            setActiveNav(null);
-        }
-
-        // Function to set active navigation link
-        function setActiveNav(activeId) {
-            navLinks.forEach(link => {
-                link.classList.remove('bg-gray-700', 'bg-green-700', 'bg-blue-700', 'bg-purple-700', 'bg-orange-700', 'bg-cyan-700', 'bg-indigo-700', 'bg-red-700', 'bg-yellow-600', 'bg-lime-600', 'bg-pink-600');
-                link.classList.add('hover:bg-gray-700');
-            });
-            const activeLink = document.getElementById(activeId);
-            if (activeLink) {
-                activeLink.classList.remove('hover:bg-gray-700');
-                activeLink.classList.add('bg-gray-700');
-            }
-        }
-        
-        // --- 3. Rendering Logic & Event Listeners ---
-        const mainContent = document.getElementById('main-content');
-        const navLinks = document.querySelectorAll('#global-header nav ul li a');
-        const mainTitleLink = document.getElementById('main-title-link');
-
-        // Function to update the header style based on the brand
-        function updateHeaderStyle(brandColor) {
-            if (mainTitleLink) {
-                // Remove all previous brand colors
-                mainTitleLink.classList.remove(
-                    'text-green-400', 'text-blue-400', 'text-purple-400', 'text-orange-400',
-                    'text-cyan-400', 'text-indigo-400', 'text-red-400', 'text-yellow-400',
-                    'text-lime-400', 'text-pink-400', 'text-gray-100'
-                );
-                // Add the new brand color or default to gray for sector dashboard
-                mainTitleLink.classList.add(`text-${brandColor}-400`);
-
-                // Ensure the "Sovereign Scrolls" span remains gray-100
-                const sovereignScrollsSpan = mainTitleLink.querySelector('span');
-                if (sovereignScrollsSpan) {
-                    sovereignScrollsSpan.classList.remove(
-                        'text-green-400', 'text-blue-400', 'text-purple-400', 'text-orange-400',
-                        'text-cyan-400', 'text-indigo-400', 'text-red-400', 'text-yellow-400',
-                        'text-lime-400', 'text-pink-400'
-                    );
-                    sovereignScrollsSpan.classList.add('text-gray-100');
+        // --- Nutrition & Food Chain Data (Centralized for this dashboard) ---
+        const nutritionData = {
+            sectorName: "✿ Nutrition & Food Chain",
+            repoName: "nutrition-seedwave-admin",
+            baseUrl: "nutrition.seedwave.faa.zone",
+            coreBrandsCount: 20,
+            totalNodesCount: 80,
+            payoutTier: "B+",
+            region: "Global",
+            monthlyFeeBasic: 48,
+            annualFeeBasic: 500,
+            globalMarketValue: "500B+",
+            brands: [
+                {
+                    name: "AgriNest™",
+                    description: "Provides comprehensive farm management and data synchronization solutions, optimizing agricultural processes from seed to harvest.",
+                    subnodes: ["CropTag", "SoilPath", "YieldSync", "VaultHarvest"],
+                    status: "active"
+                },
+                {
+                    name: "FreshSync™",
+                    description: "Offers real-time supply chain transparency for fresh produce, ensuring traceability and quality from farm to consumer.",
+                    subnodes: ["NestGrain", "PulseField", "FarmTrack", "ClaimRoot"],
+                    status: "active"
+                },
+                {
+                    name: "CropLoop™",
+                    description: "Develops circular economy solutions for agricultural waste and nutrient recycling, fostering sustainable farming practices.",
+                    subnodes: ["CycleGrain", "VaultCrop", "YieldClaim", "FieldDrop"],
+                    status: "active"
+                },
+                {
+                    name: "SoilGrid™",
+                    description: "Specializes in advanced soil health monitoring and optimization, utilizing sensor networks and data analytics for precision agriculture.",
+                    subnodes: ["SoilBeam", "FarmYield", "VaultNest", "TagField"],
+                    status: "active"
+                },
+                {
+                    name: "NutritionClaim™",
+                    description: "Secures nutritional data and provenance using blockchain technology, providing verifiable information about food products.",
+                    subnodes: ["NutritionDrop", "ClaimVault", "SeedTrack", "EchoField"],
+                    status: "active"
+                },
+                {
+                    name: "AquaNest™",
+                    description: "Manages sustainable aquaculture and aquatic food chain systems, focusing on ecological balance and efficient resource use.",
+                    subnodes: ["AquaTrack", "GrainClaim", "VaultSync", "HarvestEcho"],
+                    status: "active"
+                },
+                { name: "GrainVault™", description: "Secure storage and tracking for grain harvests, minimizing loss and ensuring quality.", subnodes: ["GrainTrack", "YieldNest", "VaultMap", "SoilNode"], status: "active" },
+                { name: "HarvestClaim™", description: "Automates and verifies harvest claims for farmers, streamlining payouts and compliance.", subnodes: ["ClaimCrop", "PulseHarvest", "RootVault", "NestLoop"], status: "active" },
+                { name: "PulseCrop™", description: "Monitors crop health using pulse sensing technology, providing early alerts for disease or nutrient deficiency.", subnodes: ["PulseSoilX", "VaultGrain", "FieldClaim", "TrackEcho"], status: "active" },
+                { name: "YieldField™", description: "Predictive analytics for crop yield optimization, helping farmers maximize output.", subnodes: ["SoilDrop", "PlantClaim", "YieldProof", "VaultRoot"], status: "active" },
+                { name: "RootMap™", description: "Maps and analyzes root system development for improved plant health and nutrient absorption.", subnodes: ["FarmGrid", "VaultPath", "CropPanel", "EchoHarvest"], status: "active" },
+                { name: "FoodProof™", description: "Blockchain-based food authentication system, verifying origin and journey of food products.", subnodes: ["FoodYield", "TrackSeed", "SoilNodeX", "PulseNest"], status: "active" },
+                { name: "SeedCycle™", description: "Manages seed lifecycle and genetic traceability for sustainable crop development.", subnodes: ["SeedRoot", "ClaimPanel", "DropVault", "CropSync"], status: "active" },
+                { name: "PlantTrack™", description: "Real-time tracking of plant growth and environmental conditions for optimal cultivation.", subnodes: ["TrackCrop", "VaultField", "EchoGrain", "YieldPath"], status: "active" },
+                { name: "CropVault™", description: "Secure digital vault for crop data, research, and intellectual property.", subnodes: ["VaultFarm", "PulseNestX", "ClaimGrain", "SoilEchoX"], status: "active" },
+                { name: "SoilEcho™", description: "Acoustic sensing for subsurface soil analysis, detecting water levels and soil compaction.", subnodes: ["FieldCycle", "HarvestPanel", "VaultProof", "GrainLoop"], status: "active" },
+                { name: "LoopFarm™", description: "Integrated farming systems promoting closed-loop resource management and waste reduction.", subnodes: ["FarmSync", "LoopNest", "VaultRootX", "SoilPanel"], status: "active" },
+                { name: "PulseGrain™", description: "High-frequency monitoring of grain quality and moisture content during storage.", subnodes: ["GrainYield", "ClaimDropX", "EchoNest", "VaultFieldX"], status: "active" },
+                { name: "FieldNest™", description: "Automated field monitoring and intervention systems for large-scale agriculture.", subnodes: ["NestHarvest", "PulseCropX", "TrackSoil", "VaultClaim"], status: "active" },
+                { name: "YieldSync™", description: "Synchronizes yield data across multiple farms and regions for macro-level agricultural insights.", subnodes: ["YieldFieldX", "RootMapX", "FoodProofX", "AquaNestX"], status: "active" }
+            ],
+            pricingTiers: [
+                {
+                    tier: 'Basic',
+                    priceMonthly: '$48',
+                    priceAnnual: '$500',
+                    description: 'Essential features for small-scale operations and individual farmers.',
+                    benefits: [
+                        'Core Data Sync',
+                        'Basic Analytics',
+                        'Access to 2 subnodes',
+                        'Community Support'
+                    ]
+                },
+                {
+                    tier: 'Pro',
+                    priceMonthly: '$75',
+                    priceAnnual: '$850',
+                    description: 'Advanced capabilities for growing agricultural businesses and cooperatives.',
+                    benefits: [
+                        'Enhanced Data Sync',
+                        'Predictive Analytics',
+                        'Access to 4 subnodes',
+                        'Priority Support',
+                        'Customizable Reports'
+                    ]
+                },
+                {
+                    tier: 'Enterprise',
+                    priceMonthly: 'Custom',
+                    priceAnnual: 'Custom',
+                    description: 'Tailored solutions for large-scale enterprises and global food corporations.',
+                    benefits: [
+                        'Full Protocol Access',
+                        'Blockchain Security',
+                        'Unlimited Subnode Access',
+                        'Dedicated Account Manager',
+                        'On-site Deployment & Training',
+                        'API Integration'
+                    ]
+                }
+            ],
+            analytics: { // Simplified analytics data for this specific dashboard
+                deploymentTrends: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'New Deployments',
+                        data: [10, 15, 12, 18, 16, 20],
+                        borderColor: 'var(--primary-color)',
+                        backgroundColor: 'rgba(0, 113, 227, 0.2)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                marketShare: {
+                    labels: ['AgriNest™', 'FreshSync™', 'CropLoop™', 'SoilGrid™', 'Other Brands'],
+                    datasets: [{
+                        data: [25, 18, 15, 12, 30],
+                        backgroundColor: ['#0071e3', '#30d158', '#f59e0b', '#ef4444', '#6e6e73'],
+                        hoverOffset: 4
+                    }]
                 }
             }
+        };
+
+        // Global utility function for custom modals
+        window.showCustomModal = function(title, message, autoDismiss = true) {
+            const modal = document.getElementById('customModal');
+            const modalMessage = modal.querySelector('p');
+            if (modal && modalMessage) {
+                modalMessage.innerHTML = `<strong>${title}</strong><br>${message}`;
+                modal.classList.remove('hidden');
+                if (autoDismiss) {
+                    setTimeout(() => {
+                        window.hideCustomModal();
+                    }, 3000);
+                }
+            }
+        };
+
+        window.hideCustomModal = function() {
+            document.getElementById('customModal')?.classList.add('hidden');
+        };
+
+        // Chart.js instances holder
+        let currentChartInstances = {};
+
+        // --- View Management (Client-side Router) ---
+        function showView(viewId) {
+            // Hide all views
+            document.querySelectorAll('.main-content .view').forEach(view => {
+                view.classList.add('view-hidden');
+            });
+            // Show the requested view
+            document.getElementById(`${viewId}-view`)?.classList.remove('view-hidden');
+
+            // Update active state in sidebar nav
+            document.querySelectorAll('.sidebar .nav-list a').forEach(link => {
+                if (link.getAttribute('data-view') === viewId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+
+            // Handle view-specific rendering
+            renderViewContent(viewId);
         }
-        
-        // --- 4. SPA Router Logic (Now primarily for Sector Dashboard and "Coming Soon" brands) ---
-        function handleRouting() {
-            const path = window.location.hash.slice(1);
-            if (path.startsWith('brand-')) {
-                const brandName = path.substring(6);
-                renderBrandDashboard(brandName); // This will now render the "Coming Soon" page for uncompleted brands
-            } else if (path === 'sector-dashboard' || path === '') {
-                renderSectorDashboard();
-            } else {
-                // For any other hash, or direct access to root, go to sector dashboard
-                window.location.hash = '#sector-dashboard';
-                renderSectorDashboard();
+
+        function renderViewContent(viewId) {
+            // Destroy existing charts to prevent canvas errors on view change
+            for (const chartId in currentChartInstances) {
+                if (currentChartInstances[chartId]) {
+                    currentChartInstances[chartId].destroy();
+                    currentChartInstances[chartId] = null;
+                }
+            }
+
+            if (viewId === 'nutrition-dashboard') {
+                renderNutritionDashboardHome();
+            } else if (viewId === 'nutrition-brands') {
+                renderNutritionBrands();
+            } else if (viewId === 'nutrition-pricing') {
+                renderNutritionPricing();
+            } else if (viewId === 'nutrition-analytics') {
+                renderNutritionAnalytics();
+            }
+            // No other CodeNest views are rendered in this specialized dashboard
+        }
+
+        // --- Nutrition Dashboard Home View Logic ---
+        function renderNutritionDashboardHome() {
+            // Render Quick Brands List (top 6)
+            const quickBrandsListContainer = document.getElementById('quickBrandsList');
+            if (quickBrandsListContainer) {
+                quickBrandsListContainer.innerHTML = '';
+                nutritionData.brands.slice(0, 6).forEach(brand => { // Show only first 6 for quick access
+                    const brandCard = document.createElement('div');
+                    brandCard.className = 'brand-card'; // Re-using brand-card class
+                    brandCard.innerHTML = `
+                        <h4 class="mb-2">${brand.name}</h4>
+                        <p class="text-gray-400 text-sm mb-3">${brand.description.substring(0, 80)}...</p>
+                        <button class="form-action-button text-xs px-3 py-2 mt-2" onclick="window.showCustomModal('Brand Info', '${brand.name}: ${brand.description}')">
+                            Learn More
+                        </button>
+                    `;
+                    quickBrandsListContainer.appendChild(brandCard);
+                });
+            }
+
+            // Render simplified analytics chart for home dashboard
+            const ctxHome = document.getElementById('sectorPerformanceChartHome')?.getContext('2d');
+            if (ctxHome) {
+                currentChartInstances.sectorPerformanceChartHome = new Chart(ctxHome, {
+                    type: 'line',
+                    data: nutritionData.analytics.deploymentTrends, // Using deploymentTrends for home
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: 'var(--text-color-light)',
+                                    font: { family: 'Inter' }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                ticks: { color: 'var(--text-color-light)' },
+                                grid: { color: 'var(--border-color-dark)' }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                ticks: { color: 'var(--text-color-light)' },
+                                grid: { color: 'var(--border-color-dark)' }
+                            }
+                        }
+                    }
+                });
             }
         }
 
-        // Initial render and event listeners
-        window.addEventListener('hashchange', handleRouting);
-        window.addEventListener('DOMContentLoaded', () => {
-            // Check if the URL is the root, if so, set hash to sector-dashboard
-            if (window.location.pathname === '/' && window.location.hash === '') {
-                window.location.hash = '#sector-dashboard';
+        // --- Nutrition Brands View Logic ---
+        function renderNutritionBrands() {
+            const allBrandsListContainer = document.getElementById('allBrandsList');
+            if (allBrandsListContainer) {
+                allBrandsListContainer.innerHTML = ''; // Clear existing
+                nutritionData.brands.forEach(brand => {
+                    const brandCard = document.createElement('div');
+                    brandCard.className = 'brand-card';
+                    brandCard.innerHTML = `
+                        <h4 class="mb-2">${brand.name}</h4>
+                        <p class="text-gray-400 text-sm mb-3">${brand.description}</p>
+                        <p class="text-gray-500 text-xs">Subnodes: ${brand.subnodes.join(', ')}</p>
+                        <span class="brand-status status-${brand.status} mt-3">${brand.status.toUpperCase()}</span>
+                        <div class="brand-actions">
+                            <button class="form-action-button text-xs px-3 py-2" onclick="window.showCustomModal('Brand Details', 'More detailed information for ${brand.name} coming soon!')">
+                                View Details
+                            </button>
+                        </div>
+                    `;
+                    allBrandsListContainer.appendChild(brandCard);
+                });
             }
-            handleRouting();
+        }
+
+        // --- Nutrition Pricing View Logic ---
+        function renderNutritionPricing() {
+            const pricingCardsContainer = document.getElementById('pricingCards');
+            if (pricingCardsContainer) {
+                pricingCardsContainer.innerHTML = ''; // Clear existing
+                nutritionData.pricingTiers.forEach(tier => {
+                    const pricingCard = document.createElement('div');
+                    pricingCard.className = 'bg-gray-700 p-6 rounded-lg shadow-lg border border-gray-600 hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300';
+                    pricingCard.innerHTML = `
+                        <h4 class="text-2xl font-bold text-yellow-400 mb-3">${tier.tier}</h4>
+                        <p class="text-4xl font-extrabold text-white mb-4">${tier.priceMonthly}</p>
+                        ${tier.priceAnnual !== 'Custom' ? `<p class="text-gray-400 text-sm mb-4">(${tier.priceAnnual})</p>` : `<p class="text-4xl font-extrabold text-white mb-4">Contact us for custom pricing</p>`}
+                        <p class="text-gray-300 mb-5">${tier.description}</p>
+                        <ul class="list-disc list-inside text-gray-200 space-y-2 mb-6 text-left">
+                            ${tier.benefits.map(benefit => `<li>${benefit}</li>`).join('')}
+                        </ul>
+                        <button class="form-action-button w-full bg-blue-500 hover:bg-blue-600">
+                            Choose ${tier.tier}
+                        </button>
+                    `;
+                    pricingCardsContainer.appendChild(pricingCard);
+                });
+            }
+        }
+
+        // --- Nutrition Analytics View Logic ---
+        function renderNutritionAnalytics() {
+            // Deployment Trends Chart
+            const dtCtx = document.getElementById('nutritionDeploymentTrendsChart')?.getContext('2d');
+            if (dtCtx) {
+                currentChartInstances.nutritionDeploymentTrendsChart = new Chart(dtCtx, {
+                    type: 'bar',
+                    data: nutritionData.analytics.deploymentTrends,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { labels: { color: 'var(--text-color-light)', font: { family: 'Inter' } } } },
+                        scales: {
+                            x: { ticks: { color: 'var(--text-color-light)' }, grid: { color: 'var(--border-color-dark)' } },
+                            y: { beginAtZero: true, ticks: { color: 'var(--text-color-light)' }, grid: { color: 'var(--border-color-dark)' } }
+                        }
+                    }
+                });
+            }
+
+            // Market Share Distribution Chart
+            const msCtx = document.getElementById('nutritionMarketShareChart')?.getContext('2d');
+            if (msCtx) {
+                currentChartInstances.nutritionMarketShareChart = new Chart(msCtx, {
+                    type: 'doughnut',
+                    data: nutritionData.analytics.marketShare,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'bottom', labels: { color: 'var(--text-color-light)', font: { family: 'Inter' } } } },
+                    }
+                });
+            }
+        }
+
+        // --- Initial App Setup ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set up theme toggle
+            const themeToggleBtn = document.getElementById('themeToggle');
+            if (themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', () => {
+                    document.body.classList.toggle('light-mode');
+                    const isLightMode = document.body.classList.contains('light-mode');
+                    themeToggleBtn.innerHTML = isLightMode ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+                    
+                    // Re-render current view to update chart colors based on new theme
+                    const currentViewId = window.location.hash.substring(1) || 'nutrition-dashboard';
+                    renderViewContent(currentViewId);
+                });
+                // Set initial icon based on default theme
+                const isLightMode = document.body.classList.contains('light-mode');
+                themeToggleBtn.innerHTML = isLightMode ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+            }
+
+            // Set up sidebar navigation clicks
+            document.querySelectorAll('.sidebar .nav-list a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault(); // Prevent default link behavior
+                    const viewId = e.currentTarget.getAttribute('data-view');
+                    if (viewId) {
+                        showView(viewId);
+                    }
+                });
+            });
+
+            // Set the initial view to the Nutrition Dashboard
+            showView('nutrition-dashboard');
         });
-
-        // No need for delegated click listener on mainContent for brand-link if they are external
-        // The `href` attribute on the `<a>` tag will handle navigation directly.
-        // The `onclick="return false;"` on coming soon brands will prevent navigation.
-
     </script>
 </body>
 </html>
