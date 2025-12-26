@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-06-23 | FGP--samfox | main | `public/Templates/global_footer.html` | `c142bf9c` | Global Footer | 5141 | 3 | 0 | 28.5 |
+| 2 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/faa-zone/docs/_includes/footer.html` | `b70d9cda` |  | 425 | 2 | 0 | 27.0 |
