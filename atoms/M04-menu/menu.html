@@ -9,69 +9,163 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+    <!-- Firebase SDKs - Essential for loading dynamic menu data -->
     <script type="module">
-        // Static data representing your ecosystem, now hardcoded
-        const allSectorsData = {
-            "agriculture": { name: "🌱 Agriculture & Biotech", repoName: "agriculture-seedwave-admin", baseUrl: "heyns1000/agriculture.seedwave.faa.zone", brands: [] },
-            "fsf": { name: "🥦 Food, Soil & Farming", repoName: "fsf-seedwave-admin", baseUrl: "heyns1000/fsf.seedwave.faa.zone", brands: [] },
-            "banking": { name: "🏦 Banking & Finance", repoName: "banking-seedwave-admin", baseUrl: "heyns1000/banking.seedwave.faa.zone", brands: [] },
-            "creative": { name: "🖋️ Creative Tech", repoName: "creative-seedwave-admin", baseUrl: "heyns1000/creative.seedwave.faa.zone", brands: [] },
-            "logistics": { name: "📦 Logistics & Packaging", repoName: "logistics-seedwave-admin", baseUrl: "heyns1000/logistics.seedwave.faa.zone", brands: [] },
-            "education-ip": { name: "📚 Education & IP", repoName: "education-ip-seedwave-admin", baseUrl: "heyns1000/education-ip.seedwave.faa.zone", brands: [] },
-            "fashion": { name: "✂ Fashion & Identity", repoName: "fashion-seedwave-admin", baseUrl: "heyns1000/fashion.seedwave.faa.zone", brands: [] },
-            "gaming": { name: "🎮 Gaming & Simulation", repoName: "gaming-seedwave-admin", baseUrl: "heyns1000/gaming.seedwave.faa.zone", brands: [] },
-            "health": { name: "🧠 Health & Hygiene", repoName: "health-seedwave-admin", baseUrl: "heyns1000/health.seedwave.faa.zone", brands: [] },
-            "housing": { name: "🏗️ Housing & Infrastructure", repoName: "housing-seedwave-admin", baseUrl: "heyns1000/housing.seedwave.faa.zone", brands: [] },
-            "justice": { name: "⚖ Justice & Ethics", repoName: "justice-seedwave-admin", baseUrl: "heyns1000/justice.seedwave.faa.zone", brands: [] },
-            "knowledge": { name: "📖 Knowledge & Archives", repoName: "knowledge-seedwave-admin", baseUrl: "heyns1000/knowledge.seedwave.faa.zone", brands: [] },
-            "micromesh": { name: "☰ Micro-Mesh Logistics", repoName: "micromesh-seedwave-admin", baseUrl: "heyns1000/micromesh.seedwave.faa.zone", brands: [] },
-            "media": {
-                name: "🎬 Motion, Media & Sonic",
-                repoName: "media-sonic-seedwave-admin",
-                baseUrl: "heyns1000/media-sonic.seedwave.faa.zone",
-                brands: [
-                    { name: "Sonic Grid", subnodes: ["WullVision", "Aude Drap", "Visudan", "Handere", "Mationa", "Ciprode", "Soundbeard", "Medatsce", "MelonDies"] },
-                    { name: "VisualFlow", subnodes: ["RenderEngine", "MotionPath", "ColorSync"] },
-                    { name: "AudioPulse", subnodes: ["SoundscapeGen", "VoiceID", "MixMaster"] }
-                ]
-            },
-            "nutrition": { name: "✿ Nutrition & Food Chain", repoName: "nutrition-seedwave-admin", baseUrl: "heyns1000/nutrition.seedwave.faa.zone", brands: [] },
-            "ai-logic": { name: "🧠 AI, Logic & Grid", repoName: "ai-logic-seedwave-admin", baseUrl: "heyns1000/ai-logic.seedwave.faa.zone", brands: [] },
-            "packaging": { name: "📦 Packaging & Materials", repoName: "packaging-seedwave-admin", baseUrl: "heyns1000/packaging.seedwave.faa.zone", brands: [] },
-            "quantum": { name: "✴️ Quantum Protocols", repoName: "quantum-seedwave-admin", baseUrl: "heyns1000/quantum.seedwave.faa.zone", brands: [] },
-            "ritual": { name: "☯ Ritual & Culture", repoName: "ritual-seedwave-admin", baseUrl: "heyns1000/ritual.seedwave.faa.zone", brands: [] },
-            "saas": { name: "🔑 SaaS & Licensing", repoName: "saas-seedwave-admin", baseUrl: "heyns1000/saas.seedwave.faa.zone", brands: [] },
-            "trade": { name: "🧺 Trade Systems", repoName: "trade-seedwave-admin", baseUrl: "heyns1000/trade.seedwave.faa.zone", brands: [] },
-            "utilities": { name: "🔋 Utilities & Energy", repoName: "utilities-seedwave-admin", baseUrl: "heyns1000/utilities.seedwave.faa.zone", brands: [] },
-            "voice": { name: "🎙️ Voice & Audio", repoName: "voice-seedwave-admin", baseUrl: "heyns1000/voice.seedwave.faa.zone", brands: [] },
-            "webless": { name: "📡 Webless Tech & Nodes", repoName: "webless-seedwave-admin", baseUrl: "heyns1000/webless.seedwave.faa.zone", brands: [] },
-            "nft": { name: "🔁 NFT & Ownership", repoName: "nft-seedwave-admin", baseUrl: "heyns1000/nft.seedwave.faa.zone", brands: [] },
-            "education-youth": { name: "🎓 Education & Youth", repoName: "education-youth-seedwave-admin", baseUrl: "heyns1000/education-youth.seedwave.faa.zone", brands: [] },
-            "zerowaste": { name: "♻️ Zero Waste", repoName: "zerowaste-seedwave-admin", baseUrl: "heyns1000/zerowaste.seedwave.faa.zone", brands: [] },
-            "professional": { name: "🧾 Professional Services", repoName: "professional-seedwave-admin", baseUrl: "heyns1000/professional.seedwave.faa.zone", brands: [] },
-            "payroll-mining": { name: "🪙 Payroll Mining & Accounting", repoName: "payroll-mining-seedwave-admin", baseUrl: "heyns1000/payroll-mining.seedwave.faa.zone", brands: [] },
-            "mining": { name: "⛏️ Mining & Resources", repoName: "mining-seedwave-admin", baseUrl: "heyns1000/mining.seedwave.faa.zone", brands: [] },
-            "wildlife": { name: "🦁 Wildlife & Habitat", repoName: "wildlife-seedwave-admin", baseUrl: "heyns1000/wildlife.seedwave.faa.zone", brands: [] },
-            "admin-panel": { name: "⚙️ Admin Panel", repoName: "admin-panel-seedwave-admin", baseUrl: "heyns1000/admin-panel.seedwave.faa.zone", brands: [] },
-            // Top-level custom domains
-            "faa.zone": { name: "FAA.Zone Portal", baseUrl: "heyns1000/faa.zone", brands: [], repoName: "faa-zone-portal" },
-            "seedwave": { name: "Seedwave Platform", baseUrl: "heyns1000/seedwave", brands: [], repoName: "seedwave-platform" },
-            "vaultmesh": { name: "VaultMesh", baseUrl: "heyns1000/vaultmesh", brands: [], repoName: "vaultmesh-project" },
-            "baobab": { name: "Baobab Network", baseUrl: "heyns1000/baobab", brands: [], repoName: "baobab-network" },
-            "fruitful": { name: "Fruitful Global", baseUrl: "heyns1000/fruitful", brands: [], repoName: "fruitful-global" },
-            "samfox": { name: "SamFox Initiative", baseUrl: "heyns1000/samfox", brands: [], repoName: "samfox-initiative" },
-            "tripot": { name: "Tripot Innovations", baseUrl: "heyns1000/tripot", brands: [], repoName: "tripot-innovations" },
-            "legal": { name: "Legal & Compliance", baseUrl: "heyns1000/legal", brands: [], repoName: "legal-portal" },
-            "omnigrid": { name: "OmniGrid System", baseUrl: "heyns1000/omnigrid", brands: [], repoName: "omnigrid-system" },
-            "portal": { name: "Central Portal", baseUrl: "heyns1000/portal", brands: [], repoName: "central-portal" },
-            "careers": { name: "Careers at Fruitful", baseUrl: "heyns1000/careers", brands: [], repoName: "careers-portal" },
-            "payment": { name: "Secure Payments", baseUrl: "heyns1000/payment", brands: [], repoName: "payment-gateway" },
-            "noodle.juice": { name: "Noodle Juice", baseUrl: "heyns1000/noodle.juice", brands: [], repoName: "noodle-juice-app" },
-            "astrowind": { name: "AstroWind Platform", baseUrl: "heyns1000/astrowind", brands: [], repoName: "astrowind-project" },
-            "cloudflare-docs": { name: "Cloudflare Documentation", baseUrl: "heyns1000/cloudflare-docs", brands: [], repoName: "cloudflare-docs" },
-            "faa-vault-ui": { name: "FAA Vault UI", baseUrl: "heyns1000/faa-vault-ui", brands: [], repoName: "faa-vault-ui" },
-            "portfolio-responsive-complete": { name: "Portfolio Hub", baseUrl: "heyns1000/portfolio-responsive-complete", brands: [], repoName: "portfolio-hub" }
-        };
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+        import { getFirestore, getDocs, collection, onSnapshot, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+
+        // Global variables for Firebase (will be populated at runtime by Canvas environment)
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        // Initialize Firebase
+        let app;
+        let db;
+        let auth;
+        let userId = 'loading'; // Default user ID state
+
+        let allSectorsData = {}; // Will store sectors data from Firestore
+
+        try {
+            app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+
+            console.log("Firebase app initialized.");
+
+            // Listen for authentication state changes
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    userId = user.uid;
+                    console.log("Firebase authentication successful. User ID:", userId);
+                    document.getElementById('currentUserIdDisplay').textContent = `User ID: ${userId}`;
+                    // Load public sector data once authenticated
+                    loadEcosystemData();
+                } else {
+                    console.log("No Firebase user found. Attempting anonymous sign-in or custom token...");
+                    // Sign in anonymously if no user is found
+                    try {
+                        if (initialAuthToken) {
+                            await signInWithCustomToken(auth, initialAuthToken);
+                            console.log("Signed in with custom token.");
+                        } else {
+                            await signInAnonymously(auth);
+                            console.log("Signed in anonymously.");
+                        }
+                    } catch (error) {
+                        console.error("Firebase Anonymous Sign-in or Custom Token failed:", error);
+                        // window.showCustomModal is not defined here yet, use console
+                        console.error('Auth Error: Failed to authenticate with Firebase. Some features may not work.');
+                    }
+                }
+            });
+
+        } catch (error) {
+            console.error("Failed to initialize Firebase:", error);
+            console.error('Firebase Error: Failed to initialize Firebase. Please check your configuration.');
+        }
+
+        /**
+         * Loads ecosystem data from Firestore and sets up real-time listener.
+         */
+        async function loadEcosystemData() {
+            if (!db) {
+                console.error("Firestore not initialized for ecosystem data loading.");
+                return;
+            }
+            const publicDataPath = `artifacts/${appId}/public/data`;
+            const sectorsCollectionRef = collection(db, `${publicDataPath}/sectors`);
+            console.log(`Attempting to load data from Firestore collection: ${sectorsCollectionRef.path}`);
+
+            // Check if collection is empty and seed if necessary
+            const initialSnapshot = await getDocs(sectorsCollectionRef);
+            if (initialSnapshot.empty) {
+                console.log(`Firestore collection ${sectorsCollectionRef.path} is empty. Seeding initial data...`);
+                const defaultSectors = {
+                    "agriculture": { name: "🌱 Agriculture & Biotech", repoName: "agriculture-seedwave-admin", baseUrl: "heyns1000/agriculture.seedwave.faa.zone", brands: [] },
+                    "fsf": { name: "🥦 Food, Soil & Farming", repoName: "fsf-seedwave-admin", baseUrl: "heyns1000/fsf.seedwave.faa.zone", brands: [] },
+                    "banking": { name: "🏦 Banking & Finance", repoName: "banking-seedwave-admin", baseUrl: "heyns1000/banking.seedwave.faa.zone", brands: [] },
+                    "creative": { name: "🖋️ Creative Tech", repoName: "creative-seedwave-admin", baseUrl: "heyns1000/creative.seedwave.faa.zone", brands: [] },
+                    "logistics": { name: "📦 Logistics & Packaging", repoName: "logistics-seedwave-admin", baseUrl: "heyns1000/logistics.seedwave.faa.zone", brands: [] },
+                    "education-ip": { name: "📚 Education & IP", repoName: "education-ip-seedwave-admin", baseUrl: "heyns1000/education-ip.seedwave.faa.zone", brands: [] },
+                    "fashion": { name: "✂ Fashion & Identity", repoName: "fashion-seedwave-admin", baseUrl: "heyns1000/fashion.seedwave.faa.zone", brands: [] },
+                    "gaming": { name: "🎮 Gaming & Simulation", repoName: "gaming-seedwave-admin", baseUrl: "heyns1000/gaming.seedwave.faa.zone", brands: [] },
+                    "health": { name: "🧠 Health & Hygiene", repoName: "health-seedwave-admin", baseUrl: "heyns1000/health.seedwave.faa.zone", brands: [] },
+                    "housing": { name: "🏗️ Housing & Infrastructure", repoName: "housing-seedwave-admin", baseUrl: "heyns1000/housing.seedwave.faa.zone", brands: [] },
+                    "justice": { name: "⚖ Justice & Ethics", repoName: "justice-seedwave-admin", baseUrl: "heyns1000/justice.seedwave.faa.zone", brands: [] },
+                    "knowledge": { name: "📖 Knowledge & Archives", repoName: "knowledge-seedwave-admin", baseUrl: "heyns1000/knowledge.seedwave.faa.zone", brands: [] },
+                    "micromesh": { name: "☰ Micro-Mesh Logistics", repoName: "micromesh-seedwave-admin", baseUrl: "heyns1000/micromesh.seedwave.faa.zone", brands: [] },
+                    "media": {
+                        name: "🎬 Motion, Media & Sonic",
+                        repoName: "media-sonic-seedwave-admin",
+                        baseUrl: "heyns1000/media-sonic.seedwave.faa.zone",
+                        brands: [
+                            { name: "Sonic Grid", subnodes: ["WullVision", "Aude Drap", "Visudan", "Handere", "Mationa", "Ciprode", "Soundbeard", "Medatsce", "MelonDies"] },
+                            { name: "VisualFlow", subnodes: ["RenderEngine", "MotionPath", "ColorSync"] },
+                            { name: "AudioPulse", subnodes: ["SoundscapeGen", "VoiceID", "MixMaster"] }
+                        ]
+                    },
+                    "nutrition": { name: "✿ Nutrition & Food Chain", repoName: "nutrition-seedwave-admin", baseUrl: "heyns1000/nutrition.seedwave.faa.zone", brands: [] },
+                    "ai-logic": { name: "🧠 AI, Logic & Grid", repoName: "ai-logic-seedwave-admin", baseUrl: "heyns1000/ai-logic.seedwave.faa.zone", brands: [] },
+                    "packaging": { name: "📦 Packaging & Materials", repoName: "packaging-seedwave-admin", baseUrl: "heyns1000/packaging.seedwave.faa.zone", brands: [] },
+                    "quantum": { name: "✴️ Quantum Protocols", repoName: "quantum-seedwave-admin", baseUrl: "heyns1000/quantum.seedwave.faa.zone", brands: [] },
+                    "ritual": { name: "☯ Ritual & Culture", repoName: "ritual-seedwave-admin", baseUrl: "heyns1000/ritual.seedwave.faa.zone", brands: [] },
+                    "saas": { name: "🔑 SaaS & Licensing", repoName: "saas-seedwave-admin", baseUrl: "heyns1000/saas.seedwave.faa.zone", brands: [] },
+                    "trade": { name: "🧺 Trade Systems", repoName: "trade-seedwave-admin", baseUrl: "heyns1000/trade.seedwave.faa.zone", brands: [] },
+                    "utilities": { name: "🔋 Utilities & Energy", repoName: "utilities-seedwave-admin", baseUrl: "heyns1000/utilities.seedwave.faa.zone", brands: [] },
+                    "voice": { name: "🎙️ Voice & Audio", repoName: "voice-seedwave-admin", baseUrl: "heyns1000/voice.seedwave.faa.zone", brands: [] },
+                    "webless": { name: "📡 Webless Tech & Nodes", repoName: "webless-seedwave-admin", baseUrl: "heyns1000/webless.seedwave.faa.zone", brands: [] },
+                    "nft": { name: "🔁 NFT & Ownership", repoName: "nft-seedwave-admin", baseUrl: "heyns1000/nft.seedwave.faa.zone", brands: [] },
+                    "education-youth": { name: "🎓 Education & Youth", repoName: "education-youth-seedwave-admin", baseUrl: "heyns1000/education-youth.seedwave.faa.zone", brands: [] },
+                    "zerowaste": { name: "♻️ Zero Waste", repoName: "zerowaste-seedwave-admin", baseUrl: "heyns1000/zerowaste.seedwave.faa.zone", brands: [] },
+                    "professional": { name: "🧾 Professional Services", repoName: "professional-seedwave-admin", baseUrl: "heyns1000/professional.seedwave.faa.zone", brands: [] },
+                    "payroll-mining": { name: "🪙 Payroll Mining & Accounting", repoName: "payroll-mining-seedwave-admin", baseUrl: "heyns1000/payroll-mining.seedwave.faa.zone", brands: [] },
+                    "mining": { name: "⛏️ Mining & Resources", repoName: "mining-seedwave-admin", baseUrl: "heyns1000/mining.seedwave.faa.zone", brands: [] },
+                    "wildlife": { name: "🦁 Wildlife & Habitat", repoName: "wildlife-seedwave-admin", baseUrl: "heyns1000/wildlife.seedwave.faa.zone", brands: [] },
+                    "admin-panel": { name: "⚙️ Admin Panel", repoName: "admin-panel-seedwave-admin", baseUrl: "heyns1000/admin-panel.seedwave.faa.zone", brands: [] },
+                    // Top-level custom domains
+                    "faa.zone": { name: "FAA.Zone Portal", baseUrl: "heyns1000/faa.zone", brands: [], repoName: "faa-zone-portal" },
+                    "seedwave": { name: "Seedwave Platform", baseUrl: "heyns1000/seedwave", brands: [], repoName: "seedwave-platform" },
+                    "vaultmesh": { name: "VaultMesh", baseUrl: "heyns1000/vaultmesh", brands: [], repoName: "vaultmesh-project" },
+                    "baobab": { name: "Baobab Network", baseUrl: "heyns1000/baobab", brands: [], repoName: "baobab-network" },
+                    "fruitful": { name: "Fruitful Global", baseUrl: "heyns1000/fruitful", brands: [], repoName: "fruitful-global" },
+                    "samfox": { name: "SamFox Initiative", baseUrl: "heyns1000/samfox", brands: [], repoName: "samfox-initiative" },
+                    "tripot": { name: "Tripot Innovations", baseUrl: "heyns1000/tripot", brands: [], repoName: "tripot-innovations" },
+                    "legal": { name: "Legal & Compliance", baseUrl: "heyns1000/legal", brands: [], repoName: "legal-portal" },
+                    "omnigrid": { name: "OmniGrid System", baseUrl: "heyns1000/omnigrid", brands: [], repoName: "omnigrid-system" },
+                    "portal": { name: "Central Portal", baseUrl: "heyns1000/portal", brands: [], repoName: "central-portal" },
+                    "careers": { name: "Careers at Fruitful", baseUrl: "heyns1000/careers", brands: [], repoName: "careers-portal" },
+                    "payment": { name: "Secure Payments", baseUrl: "heyns1000/payment", brands: [], repoName: "payment-gateway" },
+                    "noodle.juice": { name: "Noodle Juice", baseUrl: "heyns1000/noodle.juice", brands: [], repoName: "noodle-juice-app" },
+                    "astrowind": { name: "AstroWind Platform", baseUrl: "heyns1000/astrowind", brands: [], repoName: "astrowind-project" },
+                    "cloudflare-docs": { name: "Cloudflare Documentation", baseUrl: "heyns1000/cloudflare-docs", brands: [], repoName: "cloudflare-docs" },
+                    "faa-vault-ui": { name: "FAA Vault UI", baseUrl: "heyns1000/faa-vault-ui", brands: [], repoName: "faa-vault-ui" },
+                    "portfolio-responsive-complete": { name: "Portfolio Hub", baseUrl: "heyns1000/portfolio-responsive-complete", brands: [], repoName: "portfolio-hub" }
+                };
+
+                for (const key in defaultSectors) {
+                    if (defaultSectors.hasOwnProperty(key)) {
+                        console.log(`Seeding document: ${key}`);
+                        await setDoc(doc(db, sectorsCollectionRef.path, key), defaultSectors[key]);
+                    }
+                }
+                console.log("Initial ecosystem data seeding complete.");
+            }
+
+            onSnapshot(sectorsCollectionRef, (snapshot) => {
+                allSectorsData = {};
+                snapshot.forEach((doc) => {
+                    allSectorsData[doc.id] = doc.data();
+                });
+                console.log("Firestore data received via onSnapshot:", allSectorsData);
+                renderMenu(); // Re-render the menu when data changes
+            }, (error) => {
+                console.error("Error listening to sectors collection:", error);
+                // Can't use showCustomModal directly here as it's defined later in main script
+            });
+        }
 
         // Add a simplified version of callGeminiAPI for this context
         window.callGeminiAPI = async function(prompt, statusElement, buttonElement, type) {
@@ -736,41 +830,41 @@
         /* Responsive adjustments (Copied from Dashboard) */
         @media (max-width: 767px) {
             body {
-                flex-direction: column;
+                flex-direction: column; /* Stack sidebar and main content on mobile */
             }
             .sidebar {
                 width: 100%;
-                height: auto;
+                height: auto; /* Allow sidebar height to adjust */
                 padding: 1rem;
                 border-right: none;
                 border-bottom: 1px solid var(--border-color-dark);
-                flex-direction: row;
+                flex-direction: row; /* Horizontal layout for mobile nav */
                 justify-content: space-around;
-                flex-wrap: wrap;
-                position: sticky;
+                flex-wrap: wrap; /* Allow nav items to wrap */
+                position: sticky; /* Keep sidebar visible on scroll */
                 top: 0;
-                z-index: 40;
+                z-index: 40; /* Ensure it's above main content when scrolling */
             }
             .sidebar-header {
                 width: 100%;
                 margin-bottom: 1rem;
-                display: flex;
-                justify-content: center;
+                display: flex; /* Make it a flex container to center logo */
+                justify-content: center; /* Center logo horizontally */
                 align-items: center;
-                height: auto;
+                height: auto; /* Allow height to adjust */
             }
             .sidebar-header .theme-toggle {
-                position: relative;
+                position: relative; /* Adjust position for mobile, remove absolute positioning */
                 top: auto;
                 right: auto;
-                margin-left: 1rem;
+                margin-left: 1rem; /* Add some spacing */
             }
             .sidebar-header .logo-text {
-                font-size: 1.5rem;
+                font-size: 1.5rem; /* Adjust font size for mobile */
                 letter-spacing: -0.01em;
             }
             .sidebar-header .logo-text span {
-                font-size: 0.8em;
+                font-size: 0.8em; /* Keep relative size */
             }
             .nav-list {
                 display: flex;
@@ -779,63 +873,28 @@
                 width: 100%;
             }
             .nav-list a {
-                margin: 0.2rem 0.3rem;
+                margin: 0.2rem 0.3rem; /* Tighter spacing for mobile nav items */
                 padding: 0.5rem 0.6rem;
-                font-size: 0.75rem;
-                gap: 0.5rem;
-                flex-grow: 1;
-                justify-content: center;
+                font-size: 0.75rem; /* Smaller font size */
+                gap: 0.5rem; /* Smaller gap for icon/text */
+                flex-grow: 1; /* Allow items to stretch to fill space */
+                justify-content: center; /* Center text within small buttons */
             }
             .nav-list a .nav-icon {
-                font-size: 0.9rem;
+                font-size: 0.9rem; /* Smaller icon on mobile */
                 margin-right: 0.2rem;
             }
 
             .main-content {
-                padding: 1rem;
+                padding: 1rem; /* Reduced padding for main content */
             }
             .panel {
-                padding: 1.5rem;
+                padding: 1.5rem; /* Reduced panel padding */
                 margin-bottom: 1.5rem;
             }
+            .panel h1 { font-size: 2rem; margin-bottom: 1rem;}
             .panel h3 { font-size: 1.5rem; margin-bottom: 1rem;}
             .panel h4 { font-size: 1.2rem; margin-bottom: 0.8rem;}
-            .metric-card p { font-size: 2rem; }
-            .project-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            .project-actions button {
-                padding: 0.5rem 0.8rem;
-                font-size: 0.8rem;
-                margin-right: 0.3rem;
-                margin-top: 0.5rem;
-            }
-            .form-control {
-                margin-bottom: 1rem;
-            }
-            .form-control input, .form-control select, .form-control textarea {
-                padding: 0.6rem;
-                font-size: 0.9rem;
-            }
-            .form-action-button {
-                padding: 0.7rem 1.2rem;
-                font-size: 0.9rem;
-            }
-            .chart-container {
-                height: 250px;
-            }
-            .api-key-table th, .api-key-table td {
-                padding: 0.6rem;
-                font-size: 0.8rem;
-            }
-            .api-key-value {
-                font-size: 0.7rem;
-            }
-            .security-note {
-                padding: 0.8rem;
-                font-size: 0.8rem;
-            }
         }
     </style>
 </head>
@@ -844,8 +903,7 @@
         <div class="sidebar-header">
             <h2 class="logo-text">Fruitful™ | <span>MenuNest™</span></h2>
             <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
-                <i class="fas fa-sun"></i> <!-- Default to sun icon for dark mode -->
-            </button>
+                <i class="fas fa-sun"></i> </button>
         </div>
         <nav class="nav-list">
             <a href="#" class="active">
