@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/apps/seedwave-core/public/scrollmap.html` | `7e131a45` | ScrollMap | FAA Portal | 151276 | 22 | 17 | 95.2 |
+| 2 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/apps/seedwave-core/public/sector-grid.html` | `e5d75f69` | ScrollMap | FAA Portal | 144780 | 25 | 16 | 92.7 |
