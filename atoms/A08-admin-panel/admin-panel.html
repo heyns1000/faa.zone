@@ -3,398 +3,341 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seedwave Admin Panel</title>
-    <!-- Google Analytics 4 (GA4) Tracking Code -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S4ZB8QV782"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-S4ZB8QV782'); // Your actual GA4 Measurement ID
-    </script>
-
-    <!-- Content Security Policy (CSP) to allow Firebase, Xero, and Tailwind resources -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.tailwindcss.com https://www.gstatic.com https://apis.google.com https://www.googletagmanager.com 'unsafe-inline'; connect-src 'self' https://identity.xero.com https://api.xero.com https://firestore.googleapis.com https://securetoken.googleapis.com https://*.firebaseio.com https://*.firebaseapp.com https://accounts.google.com https://www.googleapis.com https://firebaseauth.googleapis.com https://www.google-analytics.com https://stats.g.doubleclick.net https://identitytoolkit.googleapis.com https://auth.firebase.com; frame-src 'self' https://*.firebaseapp.com https://accounts.google.com; img-src 'self' data: https://www.google.com; style-src 'self' 'unsafe-inline'; font-src 'self';">
-    <!-- Tailwind CSS CDN -->
+    <title>Seedwave™ Global Admin Panel - Dashboard Selector</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: "Inter", sans-serif;
-            background-color: #f0f2f5;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            font-family: 'Inter', sans-serif;
         }
-        .sidebar {
-            background-color: #2c3e50; /* Dark blue-grey */
-            color: #ecf0f1; /* Light grey */
-            width: 250px;
-            padding: 1.5rem;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
         }
-        .sidebar a {
-            display: block;
-            padding: 0.75rem 1rem;
-            margin-bottom: 0.5rem;
-            border-radius: 0.5rem;
-            color: #ecf0f1;
-            transition: background-color 0.2s ease;
+        .dashboard-card {
+            transition: all 0.3s ease;
         }
-        .sidebar a:hover {
-            background-color: #34495e; /* Slightly lighter dark blue-grey */
+        .dashboard-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.3);
         }
-        .header {
-            background-color: #ffffff;
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .category-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
         }
-        .content {
-            flex-grow: 1;
-            padding: 2rem;
-            background-color: #ffffff;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin: 1.5rem;
-        }
-        /* Message Box Styling */
-        .message-box {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: #4CAF50; /* Green */
-            color: white;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            display: none; /* Hidden by default */
-        }
-        .message-box.error {
-            background-color: #f44336; /* Red */
-        }
+        .admin-badge { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; }
+        .sector-badge { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; }
+        .planet-badge { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; }
     </style>
 </head>
-<body class="flex">
-    <div id="messageBox" class="message-box"></div>
+<body class="gradient-bg min-h-screen">
 
-    <aside class="sidebar">
-        <h1 class="text-2xl font-bold mb-6 text-center">Seedwave Admin</h1>
-        <nav>
-            <a href="#" class="flex items-center space-x-2" onclick="loadContent('dashboard')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-                </svg>
-                <span>Dashboard</span>
-            </a>
-            <a href="#" class="flex items-center space-x-2" onclick="loadContent('users')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17.555 16.705a1 1 0 01-.767.319H3.212a1 1 0 01-.765-.319 4 4 0 01.127-5.918 4.002 4.002 0 014.606-.827 4.004 4.004 0 012.392-.152l1.645 1.645c.42.42.97.653 1.53.653.56 0 1.11-.233 1.53-.653l1.645-1.645a4.002 4.002 0 012.392.152 4 4 0 01.127 5.918z" />
-                </svg>
-                <span>Users</span>
-            </a>
-            <a href="#" class="flex items-center space-x-2" onclick="loadContent('orders')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v3a4 4 0 00-4 4v3a2 2 0 002 2h12a2 2 0 002-2v-3a4 4 0 00-4-4V6a4 4 0 00-4-4zm-4 4a2 2 0 114 0v3a2 2 0 11-4 0V6zm6 0a2 2 0 10-4 0v3a2 2 0 104 0V6z" clip-rule="evenodd" />
-                </svg>
-                <span>Orders</span>
-            </a>
-            <a href="#" class="flex items-center space-x-2" onclick="loadContent('products')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm12 12H4V6h12v10z" clip-rule="evenodd" />
-                </svg>
-                <span>Products</span>
-            </a>
-            <a href="#" class="flex items-center space-x-2" onclick="loadContent('reports')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M5 3a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2H5zm12 12H5V5h10v10zM10 7a1 1 0 011 1v4a1 1 0 11-2 0V8a1 1 0 011-1z" clip-rule="evenodd" />
-                </svg>
-                <span>Reports</span>
-            </a>
-            <a href="#" class="flex items-center space-x-2" onclick="loadContent('settings')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.3-.874-2.823.715-2.126 2.056a1.532 1.532 0 01-.582 2.286c-1.56.38-1.56 2.6 0 2.98a1.532 1.532 0 01.582 2.286c-.874 1.3.715 2.823 2.056 2.126a1.532 1.532 0 012.286.582c.38 1.56 2.6 1.56 2.98 0a1.532 1.532 0 012.286-.582c1.3.874 2.823-.715 2.126-2.056a1.532 1.532 0 01.582-2.286c1.56-.38 1.56-2.6 0-2.98a1.532 1.532 0 01-.582-2.286c.874-1.3-.715-2.823-2.056-2.126a1.532 1.532 0 01-2.286-.582zM10 11a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
-                </svg>
-                <span>Settings</span>
-            </a>
-             <a href="#" class="flex items-center space-x-2" onclick="loadContent('xero-integration')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v4a1 1 0 102 0V8z" clip-rule="evenodd" />
-                </svg>
-                <span>Xero Integration</span>
-            </a>
-        </nav>
-    </aside>
-
-    <div class="flex-1 flex flex-col">
-        <header class="header">
-            <h2 class="text-2xl font-semibold text-gray-800" id="current-page-title">Dashboard</h2>
-            <div class="flex items-center space-x-4">
-                <span class="text-gray-600" id="welcome-message">Welcome, Admin!</span>
-                <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200" onclick="logout()">Logout</button>
-            </div>
-        </header>
-
-        <main class="content" id="main-content">
-            <!-- Content will be loaded dynamically or replaced here -->
-            <h3 class="text-xl font-semibold text-gray-700 mb-4">Overview</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-gray-100 p-6 rounded-lg shadow">
-                    <p class="text-gray-500">Total Users</p>
-                    <p class="text-3xl font-bold text-gray-800">1,234</p>
+    <!-- Top Navigation -->
+    <nav class="bg-gray-900/50 backdrop-blur-lg border-b border-gray-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <h1 class="text-2xl font-extrabold text-white">Seedwave™</h1>
+                    <span class="text-sm text-gray-400">Global Admin Panel</span>
                 </div>
-                <div class="bg-gray-100 p-6 rounded-lg shadow">
-                    <p class="text-gray-500">Total Orders</p>
-                    <p class="text-3xl font-bold text-gray-800">567</p>
+
+                <!-- Search Bar -->
+                <div class="flex-1 max-w-xl mx-8">
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search dashboards..."
+                        class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none"
+                    />
                 </div>
-                <div class="bg-gray-100 p-6 rounded-lg shadow">
-                    <p class="text-gray-500">Revenue (Monthly)</p>
-                    <p class="text-3xl font-bold text-gray-800">$12,345</p>
+
+                <!-- User Menu -->
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        <span class="text-xs text-gray-400">VaultMesh™</span>
+                    </div>
+                    <div class="text-right">
+                        <p id="userName" class="text-sm font-semibold text-white">Loading...</p>
+                        <p id="userRole" class="text-xs text-gray-400">...</p>
+                    </div>
+                    <button
+                        id="logoutButton"
+                        class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-lg transition"
+                    >
+                        Logout
+                    </button>
                 </div>
             </div>
-        </main>
-    </div>
+        </div>
+    </nav>
 
-    <!-- Firebase SDKs -->
-    <script type="module">
-        console.log("Seedwave Admin Panel script loaded."); // Added for debugging
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js"; // Updated to 11.9.1
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js"; // Updated to 11.9.1
-        import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js"; // Updated to 11.9.1
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-        // Firebase Configuration (YOUR ACTUAL FIREBASE CONFIG)
-        // This was copied from your Firebase Console's "Add Firebase SDK" step.
-        const firebaseConfig = {
-            apiKey: "AIzaSyCR3mbgoiiCkRyaAm5BSWBWBFwut0MDCW8",
-            authDomain: "faa-nexus.firebaseapp.com",
-            projectId: "faa-nexus",
-            storageBucket: "faa-nexus.firebasestorage.app",
-            messagingSenderId: "459816542686",
-            appId: "1:459816542686:web:7fc0596fb70e2e6b753d4f",
-            measurementId: "G-S4ZB8QV782"
-        };
+        <!-- Header -->
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold text-white mb-2">Select Dashboard</h2>
+            <p class="text-gray-400">Access all 50+ dashboards across Admin, Seedwave Sectors, and Fruitful Planet</p>
+        </div>
 
-        // Use Firebase project ID from your config for consistent appId
-        const appId = firebaseConfig.projectId; 
-        // In a live environment, initialAuthToken is not applicable unless you have a custom token generation process
-        // For simple deployment, signInAnonymously will be used if no custom token is provided.
-        const initialAuthToken = null; 
+        <!-- Category Tabs -->
+        <div class="flex gap-2 mb-6 overflow-x-auto pb-2">
+            <button class="category-tab active px-4 py-2 bg-purple-600 text-white rounded-lg font-semibold whitespace-nowrap" data-category="all">
+                All Dashboards
+            </button>
+            <button class="category-tab px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-semibold whitespace-nowrap" data-category="admin">
+                Admin Panels (8)
+            </button>
+            <button class="category-tab px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-semibold whitespace-nowrap" data-category="sector">
+                Seedwave Sectors (31)
+            </button>
+            <button class="category-tab px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-semibold whitespace-nowrap" data-category="planet">
+                Fruitful Planet (13)
+            </button>
+        </div>
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+        <!-- Dashboard Grid -->
+        <div id="dashboardGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <!-- Dashboards will be inserted here -->
+        </div>
 
-        let currentUser = null; // Store current Firebase user
+        <!-- No Results Message -->
+        <div id="noResults" class="hidden text-center py-12">
+            <p class="text-gray-400 text-lg">No dashboards found</p>
+        </div>
 
-        // Show a message box - Made globally accessible
-        window.showMessageBox = function(message, type = 'success') {
-            const messageBox = document.getElementById('messageBox');
-            messageBox.textContent = message;
-            messageBox.className = `message-box ${type}`;
-            messageBox.style.display = 'block';
-            setTimeout(() => {
-                messageBox.style.display = 'none';
-            }, 5000); // Hide after 5 seconds
+    </main>
+
+    <script>
+        // Dashboard data
+        const dashboards = [
+            // Admin Panels (8)
+            { name: 'Admin Panel', url: 'admin-panel.html', category: 'admin', description: 'Main admin control panel' },
+            { name: 'Admin Portal', url: 'admin-portal.html', category: 'admin', description: 'Admin portal access' },
+            { name: 'Admin License Ledger', url: 'admin-license-ledger.html', category: 'admin', description: 'License management' },
+            { name: 'Heyns Admin Panel', url: 'heyns_admin_panel.html', category: 'admin', description: 'Personal admin panel' },
+            { name: 'Heyns Admin Panel (PayPal)', url: 'heyns_admin_panel_paypal.html', category: 'admin', description: 'PayPal integration' },
+            { name: 'Admin Panel (Xero)', url: 'admin_panel_xero.html', category: 'admin', description: 'Xero accounting' },
+            { name: 'Ecosystem Dashboard', url: 'ecosystem-dashboard.html', category: 'admin', description: 'Ecosystem overview' },
+            { name: 'Fruitful Dashboard', url: 'fruitful_dashboard.html', category: 'admin', description: 'Fruitful metrics' },
+
+            // Seedwave Sectors (31)
+            { name: '🌱 Agriculture', url: 'sectors/agriculture/', category: 'sector', description: 'Agriculture & Biotech' },
+            { name: '🧠 AI Logic', url: 'sectors/ai-logic/', category: 'sector', description: 'AI, Logic & Grid' },
+            { name: '🏦 Banking', url: 'sectors/banking/', category: 'sector', description: 'Banking & Finance' },
+            { name: '📚 Education IP', url: 'sectors/education-ip/', category: 'sector', description: 'Education & IP' },
+            { name: '🎓 Education Youth', url: 'sectors/education-youth/', category: 'sector', description: 'Youth Education' },
+            { name: '🥦 FSF', url: 'sectors/fsf/', category: 'sector', description: 'Food, Soil & Farming' },
+            { name: '🏗️ Housing', url: 'sectors/housing/', category: 'sector', description: 'Housing & Infrastructure' },
+            { name: '📖 Knowledge', url: 'sectors/knowledge/', category: 'sector', description: 'Knowledge & Archives' },
+            { name: '📦 Logistics', url: 'sectors/logistics/', category: 'sector', description: 'Logistics & Packaging' },
+            { name: '🎬 Media', url: 'sectors/media/', category: 'sector', description: 'Motion, Media & Sonic' },
+            { name: '🎙️ Media Sonic', url: 'sectors/media-sonic/', category: 'sector', description: 'Audio & Sound' },
+            { name: '☰ Micromesh', url: 'sectors/micromesh/', category: 'sector', description: 'Micro-Mesh Logistics' },
+            { name: '⛏️ Mining', url: 'sectors/mining/', category: 'sector', description: 'Mining & Resources' },
+            { name: '✿ Nutrition', url: 'sectors/nutrition/', category: 'sector', description: 'Nutrition & Food Chain' },
+            { name: '🪙 Payroll Mining', url: 'sectors/payroll-mining/', category: 'sector', description: 'Payroll & Mining' },
+            { name: '🧾 Professional', url: 'sectors/professional/', category: 'sector', description: 'Professional Services' },
+            { name: '✴️ Quantum', url: 'sectors/quantum/', category: 'sector', description: 'Quantum Protocols' },
+            { name: '☯ Ritual', url: 'sectors/ritual/', category: 'sector', description: 'Ritual & Culture' },
+            { name: '🔑 SaaS', url: 'sectors/saas/', category: 'sector', description: 'SaaS & Licensing' },
+            { name: '🧸 ToyNest', url: 'sectors/toynest/', category: 'sector', description: 'Toys & Play' },
+            { name: '🧺 Trade', url: 'sectors/trade/', category: 'sector', description: 'Trade Systems' },
+            { name: '🔋 Utilities', url: 'sectors/utilities/', category: 'sector', description: 'Utilities & Energy' },
+            { name: '🎙️ Voice', url: 'sectors/voice/', category: 'sector', description: 'Voice & Audio' },
+            { name: '📡 Webless', url: 'sectors/webless/', category: 'sector', description: 'Webless Tech & Nodes' },
+            { name: '🦁 Wildlife', url: 'sectors/wildlife/', category: 'sector', description: 'Wildlife & Habitat' },
+            { name: '♻️ Zero Waste', url: 'sectors/zerowaste/', category: 'sector', description: 'Zero Waste' },
+            { name: '⚖️ Justice', url: 'sectors/justice/', category: 'sector', description: 'Justice & Ethics' },
+            { name: '🎓 Interns', url: 'sectors/interns/', category: 'sector', description: 'Internship Program' },
+            { name: '☰ Menu', url: 'sectors/menu/', category: 'sector', description: 'Menu System' },
+            { name: '📊 Index', url: 'sectors/index/', category: 'sector', description: 'Sector Index' },
+            { name: '🧾 Payroll Mining Org', url: 'sectors/payroll-mining-org/', category: 'sector', description: 'Payroll Organization' },
+
+            // Fruitful Planet Dashboards (13)
+            { name: '🌬️ Air Quality', url: 'planet/air-quality', category: 'planet', description: 'Air quality monitoring' },
+            { name: '🌳 Baobab SPA', url: 'planet/baobab-spa', category: 'planet', description: 'Baobab security network' },
+            { name: '🤝 Community Resilience', url: 'planet/community-resilience', category: 'planet', description: 'Community support' },
+            { name: '🌲 Deforestation', url: 'planet/deforestation', category: 'planet', description: 'Forest conservation' },
+            { name: '💼 Economic Empowerment', url: 'planet/economic-empowerment', category: 'planet', description: 'Economic development' },
+            { name: '⚡ Energy Optimization', url: 'planet/energy-optimization', category: 'planet', description: 'Energy efficiency' },
+            { name: '🔌 Eskom Crisis', url: 'planet/eskom-crisis', category: 'planet', description: 'Energy crisis management' },
+            { name: '🏥 Global Health', url: 'planet/global-health', category: 'planet', description: 'Health monitoring' },
+            { name: '🏜️ Land Degradation', url: 'planet/land-degradation', category: 'planet', description: 'Land restoration' },
+            { name: '🌊 Ocean Plastic', url: 'planet/ocean-plastic', category: 'planet', description: 'Ocean cleanup' },
+            { name: '📊 Resource Management', url: 'planet/resource-management', category: 'planet', description: 'Resource tracking' },
+            { name: '💧 Water Security', url: 'planet/water-security', category: 'planet', description: 'Water access' },
+            { name: '🦁 Wildlife Protection', url: 'planet/wildlife-protection', category: 'planet', description: 'Wildlife conservation' },
+        ];
+
+        let currentUser = null;
+        let currentCategory = 'all';
+        let searchQuery = '';
+
+        // Initialize
+        async function init() {
+            await checkAuth();
+            setupEventListeners();
+            renderDashboards();
         }
 
-        // Authenticate with Firebase - Made globally accessible
-        window.firebaseAuth = async function() {
+        // Check authentication
+        async function checkAuth() {
             try {
-                // In a live environment, if no custom token, sign in anonymously
-                if (initialAuthToken) { // This will only be true if a custom token is explicitly provided
-                    await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                    await signInAnonymously(auth); // Sign in anonymously for simple access in live deployment
+                const response = await fetch('/api/auth/status');
+                const data = await response.json();
+
+                if (!data.authenticated) {
+                    window.location.href = 'login.html';
+                    return;
                 }
-                console.log("Firebase authentication successful.");
+
+                currentUser = data.user;
+                document.getElementById('userName').textContent = `${currentUser.firstName} ${currentUser.lastName}`;
+                document.getElementById('userRole').textContent = currentUser.role.toUpperCase();
             } catch (error) {
-                console.error("Firebase authentication failed:", error);
-                window.showMessageBox("Failed to authenticate with Firebase. Check console for details.", "error");
+                console.error('Auth check error:', error);
+                window.location.href = 'login.html';
             }
         }
 
-        // Listen for auth state changes to set currentUser and load initial content
-        onAuthStateChanged(auth, (user) => {
-            currentUser = user;
-            if (currentUser) {
-                document.getElementById('welcome-message').textContent = `Welcome, ${currentUser.uid}!`;
-                console.log("Firebase User ID:", currentUser.uid);
-            } else {
-                document.getElementById('welcome-message').textContent = `Welcome! (Not logged in)`;
-                console.log("No Firebase user logged in.");
-            }
-        });
-
-        // Logout function - Made globally accessible
-        window.logout = async function() {
-            try {
-                await signOut(auth);
-                window.showMessageBox("Logged out successfully.");
-                location.reload(); // Simple reload for demonstration
-            } catch (error) {
-                console.error("Error logging out:", error);
-                window.showMessageBox("Error logging out.", "error");
-            }
-        };
-
-
-
-
-        // --- Dynamic Content Loading ---
-        const mainContentDiv = document.getElementById('main-content');
-        const currentPageTitle = document.getElementById('current-page-title');
-
-        // loadContent function - Made globally accessible
-        window.loadContent = async function(page) {
-            console.log('loadContent called with:', page); // Added for debugging
-            currentPageTitle.textContent = page.charAt(0).toUpperCase() + page.slice(1).replace('-', ' '); // Capitalize and format title
-
-            let content = '';
-            switch (page) {
-                case 'dashboard':
-                    content = `
-                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Overview</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <div class="bg-gray-100 p-6 rounded-lg shadow">
-                                <p class="text-gray-500">Total Users</p>
-                                <p class="text-3xl font-bold text-gray-800">1,234</p>
-                            </div>
-                            <div class="bg-gray-100 p-6 rounded-lg shadow">
-                                <p class="text-gray-500">Total Orders</p>
-                                <p class="text-3xl font-bold text-gray-800">567</p>
-                            </div>
-                            <div class="bg-gray-100 p-6 rounded-lg shadow">
-                                <p class="text-gray-500">Revenue (Monthly)</p>
-                                <p class="text-3xl font-bold text-gray-800">$12,345</p>
-                            </div>
-                        </div>
-                    `;
-                    break;
-                case 'users':
-                    content = `<h3 class="text-xl font-semibold text-gray-700 mb-4">User Management</h3><p>Manage your users here.</p>`;
-                    break;
-                case 'orders':
-                    content = `<h3 class="text-xl font-semibold text-gray-700 mb-4">Order Management</h3><p>View and process orders.</p>`;
-                    break;
-                case 'products':
-                    content = `<h3 class="text-xl font-semibold text-gray-700 mb-4">Product Catalog</h3><p>Manage your products.</p>`;
-                    break;
-                case 'reports':
-                    content = `<h3 class="text-xl font-semibold text-gray-700 mb-4">Reports & Analytics</h3><p>Generate various reports.</p>`;
-                    break;
-                case 'settings':
-                    content = `<h3 class="text-xl font-semibold text-gray-700 mb-4">Settings</h3><p>Adjust application settings.</p>`;
-                    break;
-                case 'xero-integration':
-                    // Check Xero connection status and load data
-                    if (currentUser) {
-                        await window.loadXeroTokens(currentUser.uid); // Load latest tokens before rendering
-                    }
-
-                    let xeroDataHtml = '';
-                    if (xeroConnectionStatus === 'Connected' && xeroTokens) {
-                        xeroDataHtml = `
-                            <p class="text-lg text-green-600 mb-4">✅ Connected to Xero!</p>
-                            <div class="flex space-x-4 mt-4">
-                                <button id="fetch-invoices-btn" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200">Fetch Recent Invoices</button>
-                                <button id="fetch-contacts-btn" class="bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600 transition duration-200">Fetch Recent Contacts</button>
-                            </div>
-                            <div id="xero-data-display" class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                                <p class="text-gray-600">Click a button above to fetch Xero data.</p>
-                            </div>
-                        `;
-                    } else {
-                        xeroDataHtml = `
-                            <p class="text-lg text-red-600 mb-4">❌ Not connected to Xero.</p>
-                            <button id="connect-xero-btn" class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition duration-200">
-                                Connect to Xero
-                            </button>
-                        `;
-                    }
-
-                    content = `
-                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Xero Integration</h3>
-                        <div class="p-6 bg-white rounded-lg shadow">
-                            ${xeroDataHtml}
-                        </div>
-                    `;
-                    break;
-                default:
-                    content = `<h3 class="text-xl font-semibold text-gray-700 mb-4">Page Not Found</h3><p>The requested page does not exist.</p>`;
-            }
-            mainContentDiv.innerHTML = content;
-
-            // Add event listeners after content is loaded
-            if (page === 'xero-integration') {
-                if (xeroConnectionStatus === 'Connected') {
-                    document.getElementById('fetch-invoices-btn').onclick = async () => {
-                        const invoices = await window.fetchXeroInvoices();
-                        const dataDisplayDiv = document.getElementById('xero-data-display');
-                        if (invoices && invoices.length > 0) {
-                            let listHtml = '<h4 class="font-semibold mt-4 mb-2">Recent Invoices:</h4><ul class="list-disc list-inside space-y-1">';
-                            invoices.forEach(invoice => {
-                                listHtml += `<li class="text-gray-700">Invoice #${invoice.InvoiceNumber || 'N/A'} - Contact: ${invoice.Contact.Name} - Total: ${invoice.Total} ${invoice.CurrencyCode} - Status: ${invoice.Status}</li>`;
-                            });
-                            listHtml += '</ul>';
-                            dataDisplayDiv.innerHTML = listHtml;
-                        } else {
-                            dataDisplayDiv.innerHTML = '<p class="text-gray-600">No invoices found or failed to fetch.</p>';
-                        }
-                    };
-
-                    document.getElementById('fetch-contacts-btn').onclick = async () => {
-                        const contacts = await window.fetchXeroContacts();
-                        const dataDisplayDiv = document.getElementById('xero-data-display');
-                        if (contacts && contacts.length > 0) {
-                            let listHtml = '<h4 class="font-semibold mt-4 mb-2">Recent Contacts:</h4><ul class="list-disc list-inside space-y-1">';
-                            contacts.forEach(contact => {
-                                listHtml += `<li class="text-gray-700">Name: ${contact.Name} - Email: ${contact.EmailAddress || 'N/A'} - Status: ${contact.ContactStatus}</li>`;
-                            });
-                            listHtml += '</ul>';
-                            dataDisplayDiv.innerHTML = listHtml;
-                        } else {
-                            dataDisplayDiv.innerHTML = '<p class="text-gray-600">No contacts found or failed to fetch.</p>';
-                        }
-                    };
-
-                } else {
-                    const connectBtn = document.getElementById('connect-xero-btn');
-                    if (connectBtn) {
-                        connectBtn.onclick = window.initiateXeroOAuth;
-                    }
+        // Setup event listeners
+        function setupEventListeners() {
+            // Logout button
+            document.getElementById('logoutButton').addEventListener('click', async () => {
+                try {
+                    await fetch('/api/auth/logout', { method: 'POST' });
+                    window.location.href = 'login.html';
+                } catch (error) {
+                    console.error('Logout error:', error);
                 }
-            }
-        };
+            });
 
-        // Handle Xero OAuth callback on page load
-        window.addEventListener('load', async () => {
-            console.log("Window loaded event fired."); // Added for debugging
-            await window.firebaseAuth(); // Authenticate Firebase user on load
+            // Search
+            document.getElementById('searchInput').addEventListener('input', (e) => {
+                searchQuery = e.target.value.toLowerCase();
+                renderDashboards();
+            });
 
-            const urlParams = new URLSearchParams(window.location.search);
-            const code = urlParams.get('code');
-            const state = urlParams.get('state');
-            const error = urlParams.get('error');
+            // Category tabs
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    currentCategory = tab.dataset.category;
 
-            if (code && state) {
-                console.log("Xero OAuth callback detected. Code:", code, "State:", state);
-                await window.exchangeCodeForTokens(code, state);
-                // Clear URL parameters to prevent re-processing on refresh
-                const newUrl = new URL(window.location.origin + window.location.pathname);
-                window.history.replaceState({}, document.title, newUrl.href);
-            } else if (error) {
-                window.showMessageBox(`Xero OAuth Error: ${error}`, "error");
-                console.error("Xero OAuth Error:", error);
-                window.loadContent('dashboard'); // Still load content on error
+                    // Update active state
+                    document.querySelectorAll('.category-tab').forEach(t => {
+                        t.classList.remove('active', 'bg-purple-600');
+                        t.classList.add('bg-gray-700', 'hover:bg-gray-600');
+                    });
+                    tab.classList.add('active', 'bg-purple-600');
+                    tab.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+
+                    renderDashboards();
+                });
+            });
+        }
+
+        // Render dashboards
+        function renderDashboards() {
+            const grid = document.getElementById('dashboardGrid');
+            const noResults = document.getElementById('noResults');
+
+            // Filter dashboards
+            const filtered = dashboards.filter(d => {
+                const matchesCategory = currentCategory === 'all' || d.category === currentCategory;
+                const matchesSearch = d.name.toLowerCase().includes(searchQuery) ||
+                                    d.description.toLowerCase().includes(searchQuery);
+                return matchesCategory && matchesSearch;
+            });
+
+            // Show/hide no results
+            if (filtered.length === 0) {
+                grid.classList.add('hidden');
+                noResults.classList.remove('hidden');
+                return;
             } else {
-                // Load default content if no OAuth redirect, or if it's the initial page load
-                window.loadContent('dashboard');
+                grid.classList.remove('hidden');
+                noResults.classList.add('hidden');
             }
-        });
+
+            // Render cards
+            grid.innerHTML = filtered.map(d => createDashboardCard(d)).join('');
+
+            // Add click listeners
+            document.querySelectorAll('.dashboard-card').forEach(card => {
+                card.addEventListener('click', async () => {
+                    const url = card.dataset.url;
+                    const name = card.dataset.name;
+
+                    // Log activity
+                    try {
+                        await fetch('/api/auth/log-activity', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                action: 'access_dashboard',
+                                metadata: { dashboard: name, url }
+                            })
+                        });
+                    } catch (error) {
+                        console.error('Log error:', error);
+                    }
+
+                    // Navigate
+                    window.location.href = url;
+                });
+            });
+        }
+
+        // Create dashboard card HTML
+        function createDashboardCard(dashboard) {
+            const categoryBadges = {
+                admin: 'admin-badge',
+                sector: 'sector-badge',
+                planet: 'planet-badge'
+            };
+
+            const categoryNames = {
+                admin: 'Admin',
+                sector: 'Sector',
+                planet: 'Planet'
+            };
+
+            return `
+                <div class="dashboard-card bg-gray-800 rounded-lg p-6 cursor-pointer border border-gray-700 hover:border-purple-500"
+                     data-url="${dashboard.url}"
+                     data-name="${dashboard.name}">
+                    <div class="flex items-start justify-between mb-3">
+                        <h3 class="text-lg font-bold text-white">${dashboard.name}</h3>
+                        <span class="category-badge ${categoryBadges[dashboard.category]}">${categoryNames[dashboard.category]}</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">${dashboard.description}</p>
+                    <div class="mt-4 flex items-center gap-2 text-xs text-gray-500">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Click to access</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // VaultMesh Pulse (9-second)
+        setInterval(() => {
+            const pulse = document.querySelector('.animate-pulse');
+            if (pulse) {
+                pulse.style.animation = 'none';
+                setTimeout(() => pulse.style.animation = '', 10);
+            }
+        }, 9000);
+
+        // Initialize on load
+        init();
     </script>
+
 </body>
 </html>
