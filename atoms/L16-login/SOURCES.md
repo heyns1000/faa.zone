@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-12-26 | codenest | copilot/fix-json-parsing-and-submodule-entry | `packages/apps/seedwave-core/public/login.html` | `10e38f8f` | Login - 🦁 Seedwave™ Admin Portal | 5354 | 7 | 0 | 33.5 |
+| 2 | 2025-12-28 | codenest | resolve-conflicts-manually | `packages/apps/seedwave-core/public/login.html` | `4259e664` | Login - Seedwave™ Global Admin Panel | 9404 | 7 | 3 | 27.4 |
