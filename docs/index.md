@@ -1,6 +1,11 @@
-![Noodle_juice_gorilla_comb](Noodle_juice_gorilla_comb.png)
+---
+layout: default
+title: Home
+---
+
+![Noodle_juice_gorilla_comb](../Noodle_juice_gorilla_comb.png)
  
-# Water the Seed"™ - Core Principles & Brand Creation
+# Water the Seed™ - Core Principles & Brand Creation
 
 ### 🌱 Introduction: "Water the Seed"™ in the FAA™ Global Ecosystem 🚀
 
@@ -47,51 +52,8 @@ In essence, ***"Water the Seed"™*** is a ***commitment*** to ensuring a brand 
 
 ---
 
-## 🔥 CodeNest Ecosystem Integration
+## Additional Resources
 
-FAA.zone is now integrated with the complete **CodeNest ecosystem** - a unified HotStack system that aggregates **87 repositories** across 6 sectors.
-
-### Key Integration Points
-
-- **🔥 HotStack**: Main integration point for file orchestration and instant builds (<3 min)
-- **🏗️ BuildNest**: Autonomous build generation with MONSTER OMNI™ chaos system
-- **🤖 AI-Logic**: LLM-based intent processing (Grok/Claude powered)
-- **💰 VaultPay**: Payment processing with royalty management
-- **📊 OmniGrid**: Universal grid system for 87 repositories
-- **🧸 ToyNest™**: NEW smart toy platform with 15% Care Loop to Banimal™
-
-### Metadata & Documentation
-
-Complete ecosystem metadata is available in the [`/metadata`](./metadata/) directory:
-- **[ecosystem.json](./metadata/ecosystem.json)**: Complete structured metadata
-- **[Metadata README](./metadata/README.md)**: Integration documentation
-- **[CodeNest README](./metadata/codenest/README.md)**: Full CodeNest documentation
-- **[Flyer Distribution](./metadata/codenest/FLYER_DISTRIBUTION.json)**: 1.2M flyer airshow plan
-
-### 87 Repository Ecosystem
-
-**6 Sectors**:
-1. **Finance** (10 repos): VaultPay, Nexus-Nair, LicenseVault, ScrollClaims, BareCart...
-2. **Health** (6 repos): Banimal (15% Care Loop), HealthTrack, Nutrition, Wildlife...
-3. **Legal** (6 repos): Legal, Compliance, Treaty Glyphs, ClaimRoot...
-4. **Build** (10 repos): BuildNest, HotStack, OmniGrid, ToyNest, VaultMesh...
-5. **AI** (3 repos): AI-Logic, Intent Processor, Automation Engine
-6. **Global** (52 repos): Fruitful Global (35 hubs), Portal, Seedwave, 35 Regional Hubs...
-
-### Features
-
-- ✅ **Zero-signup builds**: <3 minutes from upload to live site
-- ✅ **AI-powered**: Drop file + prompt → generated site
-- ✅ **Global reach**: 35 Fruitful hubs across continents
-- ✅ **VaultMesh sync**: 9-second pulse synchronization
-- ✅ **13,713 brands**: Complete brand catalog management
-- ✅ **Security**: Echo Drives 24/7 monitoring (0.08s response time)
-
-### Links
-
-- 🔗 [CodeNest Repository](https://github.com/heyns1000/codenest)
-- 🔗 [HotStack](https://hotstack.faa.zone)
-- 🔗 [BuildNest Orchestrator](https://buildnest-orchestrator.heynsschoeman.workers.dev)
-- 🔗 [ToyNest](https://toynest.faa.zone)
-
-瓷勺旋渦已築，脈買已通！ 🧸🦍🔥
+- [Global Dream](../global_dream.html)
+- [Baobab Ignition Set](../baobab_ignition_set.html)
+- [Vault Prayer](../VAULTPRAYER.HTML)
