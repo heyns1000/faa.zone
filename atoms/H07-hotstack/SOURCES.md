@@ -21,3 +21,4 @@
 | 15 | 2025-12-12 | hotstack | history | `index.html` | `9776d5ad` | 🔥 HotStack™ | Banimal Ecosystem Intake | 36229 | 29 | 11 | 83.6 |
 | 16 | 2025-12-12 | hotstack | copilot/add-vercel-json-configuration | `index.html` | `c4027825` | 🔥 HotStack™ | Banimal Ecosystem Intake | 31676 | 28 | 10 | 80.2 |
 | 17 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/hotstack/index.html` | `e83555af` | 🔥 HotStack™ | Banimal Ecosystem Intake | 49572 | 32 | 13 | 92.0 |
+| 18 | 2026-01-03 | omnigrid | pr-91 | `hotstack_deployment_interface.html` | `47e0ffa7` | HotStack - 180s Deployment Engine | OmniGrid™ | 32116 | 12 | 16 | 48.2 |
