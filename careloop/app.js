@@ -4,6 +4,8 @@
 // Configuration
 const HERITAGE_API_BASE = 'https://fruitful-api-platform.fly.dev/api/heritage';
 const GENERIC_COST_PER_ANIMAL = 240; // R240 per animal in generic routing
+const OPTIMIZED_COST_PER_ANIMAL = 150; // R150 per animal with cultural optimization
+const BAR_WIDTH_MULTIPLIER = 3; // Multiplier for visual bar representation (makes bars easier to see)
 
 // State
 let state = {
@@ -115,6 +117,11 @@ function debounce(func, wait) {
 
 // Fetch impact data from Heritage API
 async function fetchImpact() {
+    // Validate donation amount
+    if (state.donationAmount < 0) {
+        state.donationAmount = 0;
+    }
+    
     if (state.donationAmount === 0) {
         hideImpactSection();
         return;
@@ -157,7 +164,7 @@ async function fetchImpact() {
 
 // Simulate impact data (fallback when API is unavailable)
 function simulateImpact() {
-    const total = state.donationAmount;
+    const total = Math.max(0, state.donationAmount); // Ensure non-negative
     state.culturalImpact = {
         total: total,
         education: Math.round(total * 0.35),
@@ -166,7 +173,7 @@ function simulateImpact() {
         cultural_preservation: Math.round(total * 0.15),
         infrastructure: Math.round(total * 0.03),
         economic_development: Math.round(total * 0.02),
-        animals_helped_estimate: Math.round(total / 150), // R150 per animal with optimization
+        animals_helped_estimate: Math.round(total / OPTIMIZED_COST_PER_ANIMAL),
         optimization_boost: '+60%'
     };
 }
@@ -247,7 +254,7 @@ function createAllocationBar(label, amount, percentage, color, icon) {
             <span class="bar-amount">R${Math.round(amount).toLocaleString()} (${percentage}%)</span>
         </div>
         <div class="bar-track">
-            <div class="bar-fill" style="width: ${percentage * 3}%; background-color: ${color};"></div>
+            <div class="bar-fill" style="width: ${percentage * BAR_WIDTH_MULTIPLIER}%; background-color: ${color};"></div>
         </div>
     `;
 
