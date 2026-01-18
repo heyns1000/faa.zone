@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2026-01-18 | faa.zone | security/repo-cleanup | `careloop/embed.html` | `0f56842d` | Care Loop Impact Simulator - Embed | 7916 | 14 | 0 | 47.8 |
+| 2 | 2026-01-18 | faa.zone | history | `careloop/embed.html` | `246b4984` | Care Loop Impact Simulator - Embed | 7806 | 14 | 0 | 47.8 |
