@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2026-01-21 | faa.zone | security/repo-cleanup | `public/cornexconnect.html` | `f15a2c73` | CORNEXCONNECT™ | 2026 Wholesale & Bulk Pricel | 39750 | 31 | 1 | 52.3 |
+| 2 | 2026-01-21 | faa.zone | history | `public/cornexconnect.html` | `082163b7` | CORNEXCONNECT™ | 2026 Wholesale & Bulk Pricel | 39750 | 31 | 1 | 52.3 |
