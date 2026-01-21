@@ -8,7 +8,7 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏢</text></svg>">
     <!-- Metadata: FAA.Zone Sovereign Scrolls · VaultMesh Memory Structure -->
     <meta name="sector" content="FAA.Zone Housing Sector">
-    <meta name="version" content="Vault Level 10">
+    <meta name="version" content="Vault Level 11">
     <meta name="branch" content="Pretoria Central Hub">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -162,7 +162,7 @@
 
     <main class="max-w-screen-2xl mx-auto px-4 py-8">
         
-        <!-- Step 1: Tier Selection (Mandatory First Step) -->
+        <!-- Step 1: Tier Selection -->
         <section id="tier-section" class="mb-12 no-print bg-slate-50 p-8 lg:p-12 rounded-3xl border-2 border-slate-200 transition-all duration-500">
             <div class="mb-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
@@ -179,16 +179,19 @@
             </div>
             
             <div class="grid md:grid-cols-3 gap-8">
+                <!-- Updated Tier 1 Card with "Per Profile" Constraint -->
                 <div onclick="selectTier(1)" id="tCard1" class="tier-card bg-white p-8 rounded-2xl group">
                     <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest block mb-4">Tier 1: Factory Bulk</span>
-                    <p class="text-[10px] text-slate-400 font-black uppercase mb-4 italic">Target: R29,000+ per order</p>
+                    <p class="text-[10px] text-slate-400 font-black uppercase mb-4 italic leading-tight">MOQ: R29,000+ PER PROFILE<br>(No mixing to meet target)</p>
                     <div class="text-4xl font-black text-slate-900 tracking-tighter italic">R9.72 <span class="text-xs opacity-40">/m</span></div>
                 </div>
+                <!-- Tier 2 -->
                 <div onclick="selectTier(2)" id="tCard2" class="tier-card bg-white p-8 rounded-2xl group">
                     <span class="text-[10px] font-black text-indigo-600 uppercase tracking-widest block mb-4">Tier 2: Wholesale Trade</span>
                     <p class="text-[10px] text-slate-400 font-black uppercase mb-4 italic">Target: R14,500+ per order</p>
                     <div class="text-4xl font-black text-slate-900 tracking-tighter italic">R12.06 <span class="text-xs opacity-40">/m</span></div>
                 </div>
+                <!-- Tier 3 -->
                 <div onclick="selectTier(3)" id="tCard3" class="tier-card bg-white p-8 rounded-2xl group">
                     <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-4">Tier 3: Standard Retail</span>
                     <p class="text-[10px] text-slate-400 font-black uppercase mb-4 italic">MOQ: 2 Full Boxes Minimum</p>
@@ -484,6 +487,10 @@
             if (selectedTier === 0) return;
             let boxesTotal = 0, lengthTotal = 0, valueTotal = 0;
             
+            // Tier 1 Logic Variable
+            let tier1Failure = false;
+            let atLeastOneSelected = false;
+
             document.querySelectorAll(".item-row").forEach(row => {
                 const qtyInput = row.querySelector(".qty-input");
                 const printQty = row.querySelector(".print-qty-display");
@@ -491,13 +498,26 @@
                 printQty.innerText = boxes || "0";
                 
                 if (boxes > 0) {
+                    atLeastOneSelected = true;
                     const length = boxes * parseFloat(row.dataset.box);
+                    const unitPrice = parseFloat(row.dataset['t' + selectedTier]);
+                    const itemValue = length * unitPrice;
+
+                    // NEW TIER 1 CONSTRAINT: Verify R29,000 PER PROFILE
+                    if (selectedTier === 1 && itemValue < 29000) {
+                        tier1Failure = true;
+                        row.classList.remove('bg-blue-50/50');
+                        row.classList.add('bg-red-50/50');
+                    } else {
+                        row.classList.remove('bg-red-50/50');
+                        row.classList.add('bg-blue-50/50');
+                    }
+
                     boxesTotal += boxes;
                     lengthTotal += length;
-                    valueTotal += (length * parseFloat(row.dataset['t' + selectedTier]));
-                    row.classList.add('bg-blue-50/50');
+                    valueTotal += itemValue;
                 } else {
-                    row.classList.remove('bg-blue-50/50');
+                    row.classList.remove('bg-blue-50/50', 'bg-red-50/50');
                 }
             });
 
@@ -511,11 +531,22 @@
 
             const moq = document.getElementById("moqStatus");
             let compliant = false, msg = "WAITING FOR INPUT...";
-            if (boxesTotal > 0) {
-                if (selectedTier === 3) { compliant = boxesTotal >= 2; msg = compliant ? "MOQ COMPLIANT" : "MIN 2 BOXES REQ."; }
-                else if (selectedTier === 2) { compliant = valueTotal >= 14500; msg = compliant ? "VALUE COMPLIANT" : "TARGET R14,500+"; }
-                else if (selectedTier === 1) { compliant = valueTotal >= 29000; msg = compliant ? "BULK COMPLIANT" : "TARGET R29,000+"; }
+            
+            if (atLeastOneSelected) {
+                if (selectedTier === 3) { 
+                    compliant = boxesTotal >= 2; 
+                    msg = compliant ? "MOQ COMPLIANT" : "MIN 2 BOXES REQ."; 
+                }
+                else if (selectedTier === 2) { 
+                    compliant = valueTotal >= 14500; 
+                    msg = compliant ? "VALUE COMPLIANT" : "TARGET R14,500+"; 
+                }
+                else if (selectedTier === 1) { 
+                    compliant = !tier1Failure; 
+                    msg = compliant ? "BULK COMPLIANT" : "FAIL: R29k PER SKU"; 
+                }
             }
+            
             moq.innerText = msg;
             moq.className = "text-2xl font-black italic uppercase tracking-tight " + (compliant ? "text-green-600" : "text-red-500");
             
