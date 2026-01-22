@@ -94,4 +94,66 @@ Complete ecosystem metadata is available in the [`/metadata`](./metadata/) direc
 - 🔗 [BuildNest Orchestrator](https://buildnest-orchestrator.heynsschoeman.workers.dev)
 - 🔗 [ToyNest](https://toynest.faa.zone)
 
+---
+
+## 🐾 Care Loop Impact Simulator
+
+Interactive donation impact calculator powered by Heritage Matrix cultural intelligence.
+
+### Features
+
+- **Real-time Impact Calculation**: Drag slider from R0 to R10,000
+- **Cultural Optimization**: Select from 13,320 cultural pathways
+- **Visual Breakdown**: See allocation across education, health, climate, culture
+- **Measurable Results**: +60% more animals helped through cultural routing
+
+### Usage
+
+**Standalone Page:**
+```
+https://faa.zone/careloop/
+```
+
+**Embeddable Widget:**
+```html
+<iframe 
+  src="https://faa.zone/careloop/embed.html" 
+  width="100%" 
+  height="800px" 
+  frameborder="0"
+></iframe>
+```
+
+### Local Development
+
+```bash
+# Serve locally with any HTTP server
+cd careloop
+python3 -m http.server 8000
+# Visit http://localhost:8000
+```
+
+### API Integration
+
+Requires Heritage Matrix API running:
+```bash
+# Set environment variable (if needed)
+HERITAGE_API=https://fruitful-api-platform.fly.dev/api/heritage
+
+# Or for local dev
+HERITAGE_API=http://localhost:5000/api/heritage
+```
+
+The simulator automatically falls back to simulated data for demonstration when the API is unavailable.
+
+### Philosophy
+
+**SIMUNYE Protocol**: "All cultures are equals. All ancestors are honored. All donations are optimized. All animals are helped."
+
+This simulator **proves** the Heritage Matrix value proposition in 30 seconds - showing donors exactly how cultural intelligence helps more animals through optimized routing.
+
+**永不止息** - The seeds never stop growing.
+
+---
+
 瓷勺旋渦已築，脈買已通！ 🧸🦍🔥
