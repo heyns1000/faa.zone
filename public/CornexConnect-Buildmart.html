@@ -20,6 +20,7 @@
             --builders-gray: #f8fafc;
             --accent-indigo: #4f46e5;
             --emergency-red: #dc2626;
+            --success-green: #059669;
         }
 
         body {
@@ -86,6 +87,20 @@
             z-index: 200;
         }
 
+        .shortfall-badge {
+            background-color: #fef2f2;
+            color: var(--emergency-red);
+            font-size: 10px;
+            font-weight: 900;
+            padding: 4px 10px;
+            border-radius: 4px;
+            border: 1px solid #fee2e2;
+            display: inline-block;
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
         .status-dot {
             position: relative;
             height: 8px;
@@ -111,6 +126,13 @@
         @keyframes pulse-ring {
             0% { transform: scale(0.33); }
             80%, 100% { opacity: 0; }
+        }
+
+        /* Modal / Cart Page Styling */
+        #cartOverlay {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 300;
         }
 
         @media print {
@@ -184,45 +206,30 @@
                 <!-- Tier 1 -->
                 <div onclick="selectTier(1)" id="tCard1" class="tier-card bg-white p-8 rounded-2xl cursor-pointer group hover:border-blue-400">
                     <span class="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] block mb-6">Tier 1: Factory Bulk</span>
-                    <p class="text-[9px] text-slate-400 font-black uppercase mb-2 italic">MOQ Requirement:</p>
-                    <p class="text-[10px] text-slate-600 font-black uppercase mb-6 italic tracking-widest">R29,000.00 PER PROFILE</p>
+                    <p class="text-[9px] text-slate-400 font-black uppercase mb-2 italic">Constraint:</p>
+                    <p class="text-[10px] text-slate-600 font-black uppercase mb-6 italic tracking-widest">R29,000.00 PER PROFILE SELECTED</p>
                     <div class="text-5xl font-black text-slate-900 tracking-tighter italic">R9.72<span class="text-xs font-bold text-slate-300 ml-1">/m avg</span></div>
                 </div>
 
                 <!-- Tier 2 -->
                 <div onclick="selectTier(2)" id="tCard2" class="tier-card bg-white p-8 rounded-2xl cursor-pointer group hover:border-indigo-400">
                     <span class="text-[10px] font-black text-indigo-600 uppercase tracking-[0.2em] block mb-6">Tier 2: Trade Wholesale</span>
-                    <p class="text-[9px] text-slate-400 font-black uppercase mb-2 italic">Minimum Target:</p>
-                    <p class="text-[10px] text-slate-600 font-black uppercase mb-6 italic tracking-widest">R14,500.00 PER ORDER</p>
+                    <p class="text-[9px] text-slate-400 font-black uppercase mb-2 italic">Constraint:</p>
+                    <p class="text-[10px] text-slate-600 font-black uppercase mb-6 italic tracking-widest">R14,500.00 GLOBAL ORDER TOTAL</p>
                     <div class="text-5xl font-black text-slate-900 tracking-tighter italic">R12.06<span class="text-xs font-bold text-slate-300 ml-1">/m avg</span></div>
                 </div>
 
                 <!-- Tier 3 -->
                 <div onclick="selectTier(3)" id="tCard3" class="tier-card bg-white p-8 rounded-2xl cursor-pointer group hover:border-slate-400">
                     <span class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] block mb-6">Tier 3: Standard Retail</span>
-                    <p class="text-[9px] text-slate-400 font-black uppercase mb-2 italic">Minimum Quantity:</p>
-                    <p class="text-[10px] text-slate-600 font-black uppercase mb-6 italic tracking-widest">2 FULL BOXES PER ORDER</p>
+                    <p class="text-[9px] text-slate-400 font-black uppercase mb-2 italic">Constraint:</p>
+                    <p class="text-[10px] text-slate-600 font-black uppercase mb-6 italic tracking-widest">2 FULL BOXES GLOBAL MINIMUM</p>
                     <div class="text-5xl font-black text-slate-900 tracking-tighter italic">R15.08<span class="text-xs font-bold text-slate-300 ml-1">/m avg</span></div>
                 </div>
             </div>
         </section>
 
         <div id="catalog-main" class="opacity-30 pointer-events-none transition-all duration-700">
-            <!-- Catalog Info Header -->
-            <section class="mb-12 border-b border-slate-100 pb-12">
-                <div class="flex flex-col md:flex-row justify-between items-end gap-10">
-                    <div class="max-w-xl">
-                        <p class="text-[9px] font-black text-blue-600 uppercase tracking-[0.5em] mb-4">Sovereign Registry · Vault Level 13</p>
-                        <h1 id="documentTitle" class="text-6xl font-black text-slate-900 tracking-tighter uppercase italic leading-[0.9]">2026 Inventory<br>Matrix</h1>
-                        <p class="text-lg font-bold text-slate-400 mt-6 italic underline decoration-slate-200 underline-offset-8 decoration-2">Official Buildmart Africa Distribution Cycle</p>
-                    </div>
-                    <div class="text-right">
-                        <div id="priceScheduleLabel" class="bg-[#004a99] text-white px-8 py-3 rounded-lg text-[11px] font-black uppercase tracking-[0.2em] italic mb-4">Price Schedule: JAN 2026</div>
-                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-loose">Excl. 15% VAT · Unit Rates per 2.0m Production Lengths<br>Industrial Packaging Protocols Applicable</p>
-                    </div>
-                </div>
-            </section>
-
             <!-- Master Inventory Registry -->
             <div id="pricelist" class="bg-white border border-slate-200 rounded-[2rem] shadow-sm overflow-hidden mb-24">
                 <div class="overflow-x-auto">
@@ -238,11 +245,10 @@
                             </tr>
                         </thead>
                         <tbody class="text-[13px] font-bold text-slate-700">
-                            <!-- Categories & Items (Preserved from Source) -->
                             <!-- 85mm Series -->
                             <tr class="category-header bg-slate-50/50"><td colspan="5" class="px-10 py-5 italic text-[#004a99] font-black tracking-widest uppercase text-[11px]">EPS 85mm Series Range (120L / Box)</td><td class="print-only hidden"></td></tr>
                             <tr class="item-row group hover:bg-slate-50/50 transition-colors" data-code="EPS 01" data-box="120" data-t1="6.96" data-t2="10.04" data-t3="12.54">
-                                <td class="px-10 py-6"><div class="font-black text-slate-900 uppercase italic">EPS 01</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1">Cove cut cornice EPS</div></td>
+                                <td class="px-10 py-6"><div class="font-black text-slate-900 uppercase italic">EPS 01</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1">Cove cut cornice EPS</div><div class="item-shortfall-info"></div></td>
                                 <td class="text-center font-bold tracking-tighter text-slate-500 italic">55 x 55 x 85mm</td>
                                 <td class="text-center italic text-slate-400">120L (24 Packs)</td>
                                 <td class="text-center active-price text-xl font-black italic text-slate-900 px-6">R --</td>
@@ -250,7 +256,7 @@
                                 <td class="text-center print-only hidden font-black text-lg"><div class="print-val">0</div></td>
                             </tr>
                             <tr class="item-row group hover:bg-slate-50/50 transition-colors" data-code="EPS 02" data-box="120" data-t1="6.96" data-t2="10.04" data-t3="12.54">
-                                <td class="px-10 py-6"><div class="font-black text-slate-900 uppercase italic">EPS 02</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1">Sante cut cornice EPS</div></td>
+                                <td class="px-10 py-6"><div class="font-black text-slate-900 uppercase italic">EPS 02</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1">Sante cut cornice EPS</div><div class="item-shortfall-info"></div></td>
                                 <td class="text-center font-bold tracking-tighter text-slate-500 italic">55 x 55 x 85mm</td>
                                 <td class="text-center italic text-slate-400">120L (24 Packs)</td>
                                 <td class="text-center active-price text-xl font-black italic text-slate-900 px-6">R --</td>
@@ -261,7 +267,7 @@
                             <!-- 110mm Series -->
                             <tr class="category-header bg-slate-50/50"><td colspan="5" class="px-10 py-5 italic text-[#004a99] font-black tracking-widest uppercase text-[11px]">EPS 110mm Series Range (90L / Box)</td><td class="print-only hidden"></td></tr>
                             <tr class="item-row group hover:bg-slate-50/50 transition-colors" data-code="EPS 03" data-box="90" data-t1="9.72" data-t2="12.06" data-t3="15.08">
-                                <td class="px-10 py-6"><div class="font-black text-slate-900 uppercase italic">EPS 03</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1">Magic cut cornice EPS</div></td>
+                                <td class="px-10 py-6"><div class="font-black text-slate-900 uppercase italic">EPS 03</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1">Magic cut cornice EPS</div><div class="item-shortfall-info"></div></td>
                                 <td class="text-center font-bold tracking-tighter text-slate-500 italic">80 x 80 x 110mm</td>
                                 <td class="text-center italic text-slate-400">90L (18 Packs)</td>
                                 <td class="text-center active-price text-xl font-black italic text-slate-900 px-6">R --</td>
@@ -269,7 +275,7 @@
                                 <td class="text-center print-only hidden font-black text-lg"><div class="print-val">0</div></td>
                             </tr>
                             <tr class="item-row group hover:bg-slate-50/50 transition-colors" data-code="EPS 04" data-box="90" data-t1="9.72" data-t2="12.06" data-t3="15.08">
-                                <td class="px-10 py-6"><div class="font-black text-slate-900 uppercase italic">EPS 04</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1">G-One cut cornice EPS</div></td>
+                                <td class="px-10 py-6"><div class="font-black text-slate-900 uppercase italic">EPS 04</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1">G-One cut cornice EPS</div><div class="item-shortfall-info"></div></td>
                                 <td class="text-center font-bold tracking-tighter text-slate-500 italic">80 x 80 x 110mm</td>
                                 <td class="text-center italic text-slate-400">90L (18 Packs)</td>
                                 <td class="text-center active-price text-xl font-black italic text-slate-900 px-6">R --</td>
@@ -277,7 +283,7 @@
                                 <td class="text-center print-only hidden font-black text-lg"><div class="print-val">0</div></td>
                             </tr>
                             <tr class="item-row group hover:bg-slate-50/50 transition-colors" data-code="EPS 05" data-box="90" data-t1="9.72" data-t2="12.06" data-t3="15.08">
-                                <td class="px-10 py-6"><div class="font-black text-slate-900 uppercase italic">EPS 05</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1">Colonial cut cornice EPS</div></td>
+                                <td class="px-10 py-6"><div class="font-black text-slate-900 uppercase italic">EPS 05</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1">Colonial cut cornice EPS</div><div class="item-shortfall-info"></div></td>
                                 <td class="text-center font-bold tracking-tighter text-slate-500 italic">80 x 80 x 110mm</td>
                                 <td class="text-center italic text-slate-400">90L (18 Packs)</td>
                                 <td class="text-center active-price text-xl font-black italic text-slate-900 px-6">R --</td>
@@ -285,7 +291,7 @@
                                 <td class="text-center print-only hidden font-black text-lg"><div class="print-val">0</div></td>
                             </tr>
                             <tr class="item-row group hover:bg-slate-50/50 transition-colors" data-code="EPS 06" data-box="90" data-t1="9.72" data-t2="12.06" data-t3="15.08">
-                                <td class="px-10 py-6"><div class="font-black text-slate-900 uppercase italic">EPS 06</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1">Peroni cut cornice EPS</div></td>
+                                <td class="px-10 py-6"><div class="font-black text-slate-900 uppercase italic">EPS 06</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1">Peroni cut cornice EPS</div><div class="item-shortfall-info"></div></td>
                                 <td class="text-center font-bold tracking-tighter text-slate-500 italic">80 x 80 x 110mm</td>
                                 <td class="text-center italic text-slate-400">90L (18 Packs)</td>
                                 <td class="text-center active-price text-xl font-black italic text-slate-900 px-6">R --</td>
@@ -296,7 +302,7 @@
                             <!-- 140mm Series -->
                             <tr class="category-header bg-slate-50/50"><td colspan="5" class="px-10 py-5 italic text-[#004a99] font-black tracking-widest uppercase text-[11px]">EPS 140mm Series Range (70L / Box)</td><td class="print-only hidden"></td></tr>
                             <tr class="item-row group hover:bg-slate-50/50 transition-colors" data-code="EPS 07" data-box="70" data-t1="11.76" data-t2="14.54" data-t3="18.18">
-                                <td class="px-10 py-6"><div class="font-black text-slate-900 uppercase italic">EPS 07</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1">Biance cut cornice EPS</div></td>
+                                <td class="px-10 py-6"><div class="font-black text-slate-900 uppercase italic">EPS 07</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1">Biance cut cornice EPS</div><div class="item-shortfall-info"></div></td>
                                 <td class="text-center font-bold tracking-tighter text-slate-500 italic">100 x 100 x 140mm</td>
                                 <td class="text-center italic text-slate-400">70L (14 Packs)</td>
                                 <td class="text-center active-price text-xl font-black italic text-slate-900 px-6">R --</td>
@@ -304,7 +310,7 @@
                                 <td class="text-center print-only hidden font-black text-lg"><div class="print-val">0</div></td>
                             </tr>
                             <tr class="item-row group hover:bg-slate-50/50 transition-colors" data-code="EPS 08" data-box="70" data-t1="11.76" data-t2="14.54" data-t3="18.18">
-                                <td class="px-10 py-6"><div class="font-black text-slate-900 uppercase italic">EPS 08</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1">Alina cut cornice EPS</div></td>
+                                <td class="px-10 py-6"><div class="font-black text-slate-900 uppercase italic">EPS 08</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1">Alina cut cornice EPS</div><div class="item-shortfall-info"></div></td>
                                 <td class="text-center font-bold tracking-tighter text-slate-500 italic">100 x 100 x 140mm</td>
                                 <td class="text-center italic text-slate-400">70L (14 Packs)</td>
                                 <td class="text-center active-price text-xl font-black italic text-slate-900 px-6">R --</td>
@@ -312,7 +318,7 @@
                                 <td class="text-center print-only hidden font-black text-lg"><div class="print-val">0</div></td>
                             </tr>
                             <tr class="item-row group hover:bg-slate-50/50 transition-colors" data-code="EPS 09" data-box="70" data-t1="11.76" data-t2="14.54" data-t3="18.18">
-                                <td class="px-10 py-6"><div class="font-black text-slate-900 uppercase italic">EPS 09</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1">Tamara cut cornice EPS</div></td>
+                                <td class="px-10 py-6"><div class="font-black text-slate-900 uppercase italic">EPS 09</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1">Tamara cut cornice EPS</div><div class="item-shortfall-info"></div></td>
                                 <td class="text-center font-bold tracking-tighter text-slate-500 italic">100 x 100 x 140mm</td>
                                 <td class="text-center italic text-slate-400">70L (14 Packs)</td>
                                 <td class="text-center active-price text-xl font-black italic text-slate-900 px-6">R --</td>
@@ -320,7 +326,7 @@
                                 <td class="text-center print-only hidden font-black text-lg"><div class="print-val">0</div></td>
                             </tr>
                             <tr class="item-row group hover:bg-slate-50/50 transition-colors" data-code="EPS 10" data-box="70" data-t1="11.76" data-t2="14.54" data-t3="18.18">
-                                <td class="px-10 py-6"><div class="font-black text-slate-900 uppercase italic">EPS 10</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1">Troy cut cornice EPS</div></td>
+                                <td class="px-10 py-6"><div class="font-black text-slate-900 uppercase italic">EPS 10</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1">Troy cut cornice EPS</div><div class="item-shortfall-info"></div></td>
                                 <td class="text-center font-bold tracking-tighter text-slate-500 italic">100 x 100 x 140mm</td>
                                 <td class="text-center italic text-slate-400">70L (14 Packs)</td>
                                 <td class="text-center active-price text-xl font-black italic text-slate-900 px-6">R --</td>
@@ -328,7 +334,7 @@
                                 <td class="text-center print-only hidden font-black text-lg"><div class="print-val">0</div></td>
                             </tr>
                             <tr class="item-row group hover:bg-slate-50/50 transition-colors" data-code="EPS 11" data-box="70" data-t1="11.76" data-t2="14.54" data-t3="18.18">
-                                <td class="px-10 py-6"><div class="font-black text-slate-900 uppercase italic">EPS 11</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1">P-40 cut cornice EPS</div></td>
+                                <td class="px-10 py-6"><div class="font-black text-slate-900 uppercase italic">EPS 11</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1">P-40 cut cornice EPS</div><div class="item-shortfall-info"></div></td>
                                 <td class="text-center font-bold tracking-tighter text-slate-500 italic">100 x 100 x 140mm</td>
                                 <td class="text-center italic text-slate-400">70L (14 Packs)</td>
                                 <td class="text-center active-price text-xl font-black italic text-slate-900 px-6">R --</td>
@@ -339,7 +345,7 @@
                             <!-- Premium Profiles -->
                             <tr class="category-header bg-blue-50/30"><td colspan="5" class="px-10 py-5 italic text-blue-900 font-black tracking-widest uppercase text-[11px]">EPS Premium Profiles (Large High-Density Cut)</td><td class="print-only hidden"></td></tr>
                             <tr class="item-row group hover:bg-slate-50/50 transition-colors" data-code="EPS 12" data-box="140" data-t1="13.80" data-t2="17.02" data-t3="21.28">
-                                <td class="px-10 py-6"><div class="font-black text-[#004a99] uppercase italic">EPS 12 - Lisa</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1 italic">170mm High-Density Profile</div></td>
+                                <td class="px-10 py-6"><div class="font-black text-[#004a99] uppercase italic">EPS 12 - Lisa</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1 italic">170mm High-Density Profile</div><div class="item-shortfall-info"></div></td>
                                 <td class="text-center font-black italic tracking-tighter text-slate-400">130 x 130 x 170mm</td>
                                 <td class="text-center italic text-slate-400">140L (11 Pks)</td>
                                 <td class="text-center active-price text-xl font-black italic text-[#004a99] px-6">R --</td>
@@ -347,7 +353,7 @@
                                 <td class="text-center print-only hidden font-black text-lg"><div class="print-val">0</div></td>
                             </tr>
                             <tr class="item-row group hover:bg-slate-50/50 transition-colors" data-code="EPS 13" data-box="96" data-t1="13.80" data-t2="17.02" data-t3="21.28">
-                                <td class="px-10 py-6"><div class="font-black text-[#004a99] uppercase italic">EPS 13 - Gloria</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1 italic">185mm High-Density Profile</div></td>
+                                <td class="px-10 py-6"><div class="font-black text-[#004a99] uppercase italic">EPS 13 - Gloria</div><div class="text-[9px] text-slate-400 uppercase font-black tracking-tight mt-1 italic">185mm High-Density Profile</div><div class="item-shortfall-info"></div></td>
                                 <td class="text-center font-black italic tracking-tighter text-slate-400">130 x 130 x 185mm</td>
                                 <td class="text-center italic text-slate-400">96L (11 Pks)</td>
                                 <td class="text-center active-price text-xl font-black italic text-[#004a99] px-6">R --</td>
@@ -358,15 +364,16 @@
                             <!-- TOP Series -->
                             <tr class="category-header bg-indigo-50/30"><td colspan="5" class="px-10 py-5 italic text-indigo-900 font-black tracking-widest uppercase text-[11px]">Top Series 110mm Range (High Density Production)</td><td class="print-only hidden"></td></tr>
                             <tr class="item-row group hover:bg-slate-50/50 transition-colors" data-code="TOP 1" data-box="90" data-t1="9.72" data-t2="12.06" data-t3="15.08">
-                                <td class="px-10 py-6 font-black text-[#004a99] uppercase italic">TOP 1 - 110mm Biance</td>
+                                <td class="px-10 py-6 font-black text-[#004a99] uppercase italic">TOP 1 - 110mm Biance <div class="item-shortfall-info"></div></td>
                                 <td class="text-center font-bold tracking-tighter text-slate-500 italic">80 x 80 x 110mm</td>
                                 <td class="text-center italic text-slate-400">90L / 18 Pks</td>
                                 <td class="text-center active-price text-xl font-black italic text-slate-900 px-6">R --</td>
                                 <td class="px-8 text-center no-print"><input type="number" min="0" value="0" oninput="updateSummary()" class="qty-input w-24 px-3 py-3 text-center font-black rounded-lg text-lg"></td>
                                 <td class="text-center print-only hidden font-black text-lg"><div class="print-val">0</div></td>
                             </tr>
+                            <!-- (Other TOP and RAW items follow same structure...) -->
                             <tr class="item-row group hover:bg-slate-50/50 transition-colors" data-code="TOP 2" data-box="90" data-t1="9.72" data-t2="12.06" data-t3="15.08">
-                                <td class="px-10 py-6 font-black text-[#004a99] uppercase italic">TOP 2 - 110mm Alina</td>
+                                <td class="px-10 py-6 font-black text-[#004a99] uppercase italic">TOP 2 - 110mm Alina <div class="item-shortfall-info"></div></td>
                                 <td class="text-center font-bold tracking-tighter text-slate-500 italic">80 x 80 x 110mm</td>
                                 <td class="text-center italic text-slate-400">90L / 18 Pks</td>
                                 <td class="text-center active-price text-xl font-black italic text-slate-900 px-6">R --</td>
@@ -374,7 +381,7 @@
                                 <td class="text-center print-only hidden font-black text-lg"><div class="print-val">0</div></td>
                             </tr>
                             <tr class="item-row group hover:bg-slate-50/50 transition-colors" data-code="TOP 3" data-box="90" data-t1="9.72" data-t2="12.06" data-t3="15.08">
-                                <td class="px-10 py-6 font-black text-[#004a99] uppercase italic">TOP 3 - 110mm Tamara</td>
+                                <td class="px-10 py-6 font-black text-[#004a99] uppercase italic">TOP 3 - 110mm Tamara <div class="item-shortfall-info"></div></td>
                                 <td class="text-center font-bold tracking-tighter text-slate-500 italic">80 x 80 x 110mm</td>
                                 <td class="text-center italic text-slate-400">90L / 18 Pks</td>
                                 <td class="text-center active-price text-xl font-black italic text-slate-900 px-6">R --</td>
@@ -382,7 +389,7 @@
                                 <td class="text-center print-only hidden font-black text-lg"><div class="print-val">0</div></td>
                             </tr>
                             <tr class="item-row group hover:bg-slate-50/50 transition-colors" data-code="TOP 4" data-box="90" data-t1="9.72" data-t2="12.06" data-t3="15.08">
-                                <td class="px-10 py-6 font-black text-[#004a99] uppercase italic">TOP 4 - 110mm P40</td>
+                                <td class="px-10 py-6 font-black text-[#004a99] uppercase italic">TOP 4 - 110mm P40 <div class="item-shortfall-info"></div></td>
                                 <td class="text-center font-bold tracking-tighter text-slate-500 italic">80 x 80 x 110mm</td>
                                 <td class="text-center italic text-slate-400">90L / 18 Pks</td>
                                 <td class="text-center active-price text-xl font-black italic text-slate-900 px-6">R --</td>
@@ -390,10 +397,9 @@
                                 <td class="text-center print-only hidden font-black text-lg"><div class="print-val">0</div></td>
                             </tr>
 
-                            <!-- Raw Industrial -->
                             <tr class="category-header bg-amber-50/50"><td colspan="5" class="px-10 py-5 italic text-amber-900 font-black tracking-widest uppercase text-[11px]">Raw Industrial Stocks · Unpackaged Loose</td><td class="print-only hidden"></td></tr>
                             <tr class="item-row group hover:bg-amber-50/20 transition-colors" data-code="RAW 1" data-box="50" data-t1="8.72" data-t2="11.06" data-t3="14.08">
-                                <td class="px-10 py-6"><div class="font-black text-amber-800 uppercase italic">Raw 1 - 110mm Biance</div><div class="text-[9px] text-amber-600/60 font-black uppercase mt-1">Industrial Loose Packs</div></td>
+                                <td class="px-10 py-6"><div class="font-black text-amber-800 uppercase italic">Raw 1 - 110mm Biance</div><div class="text-[9px] text-amber-600/60 font-black uppercase mt-1">Industrial Loose Packs</div><div class="item-shortfall-info"></div></td>
                                 <td class="text-center font-bold tracking-tighter text-slate-500 italic">80 x 80 x 110mm</td>
                                 <td class="text-center italic text-amber-600 font-black">Loose 50 Unit Pack</td>
                                 <td class="text-center active-price text-xl font-black italic text-amber-900 px-6">R --</td>
@@ -401,7 +407,7 @@
                                 <td class="text-center print-only hidden font-black text-lg"><div class="print-val">0</div></td>
                             </tr>
                             <tr class="item-row group hover:bg-amber-50/20 transition-colors" data-code="RAW 2" data-box="50" data-t1="8.72" data-t2="11.06" data-t3="14.08">
-                                <td class="px-10 py-6"><div class="font-black text-amber-800 uppercase italic">Raw 2 - 110mm Alina</div><div class="text-[9px] text-amber-600/60 font-black uppercase mt-1">Industrial Loose Packs</div></td>
+                                <td class="px-10 py-6"><div class="font-black text-amber-800 uppercase italic">Raw 2 - 110mm Alina</div><div class="text-[9px] text-amber-600/60 font-black uppercase mt-1">Industrial Loose Packs</div><div class="item-shortfall-info"></div></td>
                                 <td class="text-center font-bold tracking-tighter text-slate-500 italic">80 x 80 x 110mm</td>
                                 <td class="text-center italic text-amber-600 font-black">Loose 50 Unit Pack</td>
                                 <td class="text-center active-price text-xl font-black italic text-amber-900 px-6">R --</td>
@@ -409,7 +415,7 @@
                                 <td class="text-center print-only hidden font-black text-lg"><div class="print-val">0</div></td>
                             </tr>
                             <tr class="item-row group hover:bg-amber-50/20 transition-colors" data-code="RAW 3" data-box="50" data-t1="8.72" data-t2="11.06" data-t3="14.08">
-                                <td class="px-10 py-6"><div class="font-black text-amber-800 uppercase italic">Raw 3 - 110mm Peroni</div><div class="text-[9px] text-amber-600/60 font-black uppercase mt-1">Industrial Loose Packs</div></td>
+                                <td class="px-10 py-6"><div class="font-black text-amber-800 uppercase italic">Raw 3 - 110mm Peroni</div><div class="text-[9px] text-amber-600/60 font-black uppercase mt-1">Industrial Loose Packs</div><div class="item-shortfall-info"></div></td>
                                 <td class="text-center font-bold tracking-tighter text-slate-500 italic">80 x 80 x 110mm</td>
                                 <td class="text-center italic text-amber-600 font-black">Loose 50 Unit Pack</td>
                                 <td class="text-center active-price text-xl font-black italic text-amber-900 px-6">R --</td>
@@ -418,25 +424,6 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
-            </div>
-
-            <!-- Print Summary -->
-            <div id="printSummary" class="print-only hidden p-12 bg-slate-50 rounded-[2.5rem] border border-slate-200 mt-12 shadow-sm">
-                <h3 id="printSummaryTitle" class="text-3xl font-black uppercase italic mb-8 tracking-tighter">Trade Quote Summary</h3>
-                <div class="grid grid-cols-2 gap-12 border-b-2 border-slate-200 pb-10 mb-10">
-                    <div>
-                        <p class="text-[9px] font-black uppercase text-slate-400 italic mb-2 tracking-[0.2em]">Order Capacity</p>
-                        <p id="pSumBoxes" class="text-5xl font-black tracking-tighter">0 Boxes</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-[9px] font-black uppercase text-slate-400 italic mb-2 tracking-[0.2em]">Est. Gross Value (Excl. VAT)</p>
-                        <p id="pSumValue" class="text-5xl font-black text-[#004a99] tracking-tighter">R 0.00</p>
-                    </div>
-                </div>
-                <div class="flex justify-between items-center opacity-60">
-                    <p id="printFooterLegal" class="text-[8px] uppercase font-black italic tracking-widest">Validated 2026 Registry · Pretoria Hub Node Verified · ISO 9001 Compliance</p>
-                    <p class="text-[8px] uppercase font-black italic tracking-widest underline underline-offset-4 decoration-2">Generated via CornexConnect™ Digital Portal</p>
                 </div>
             </div>
         </div>
@@ -457,41 +444,60 @@
         </section>
     </main>
 
-    <!-- Floating Procurement Dashboard (Optimized for Mac & Mobile Visibility) -->
+    <!-- Detailed Cart Review Overlay (Modal) -->
+    <div id="cartOverlay" class="fixed inset-0 hidden flex items-center justify-center p-6 no-print">
+        <div class="bg-white w-full max-w-4xl max-h-[85vh] rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col border border-slate-200">
+            <div class="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                <div>
+                    <h3 class="text-2xl font-black uppercase italic tracking-tighter text-slate-900">Procurement Dashboard</h3>
+                    <p class="text-[10px] font-black uppercase text-slate-400 tracking-widest mt-1">Active Selection Registry & Compliance Review</p>
+                </div>
+                <button onclick="toggleCart()" class="text-slate-400 hover:text-red-600 transition-colors">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div id="cartContent" class="p-8 overflow-y-auto flex-1">
+                <!-- Cart items will be injected here -->
+            </div>
+            <div class="p-8 border-t border-slate-100 bg-slate-50/50 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="text-center md:text-left">
+                    <p class="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1 italic">Order Authorization Status</p>
+                    <div id="modalMoqStatus" class="text-2xl font-black tracking-tighter">WAITING...</div>
+                </div>
+                <div class="flex gap-3 w-full md:w-auto">
+                    <button onclick="toggleCart()" class="flex-1 md:flex-none bg-slate-200 text-slate-600 px-8 py-4 rounded-xl font-black text-[10px] uppercase hover:bg-slate-300 transition-all">Continue Inventory Selection</button>
+                    <button id="modalExportBtn" onclick="handleExport('quote')" class="flex-1 md:flex-none bg-[#004a99] text-white px-8 py-4 rounded-xl font-black text-[10px] uppercase shadow-lg shadow-blue-100 transition-all opacity-50 pointer-events-none">Export Authorized Quote</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Procurement Dashboard -->
     <div id="cartCalculator" class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl floating-cart no-print transform translate-y-full transition-all duration-700 ease-[cubic-bezier(0.85,0,0.15,1)]">
         <div class="max-w-7xl mx-auto px-6 lg:px-8 py-6 lg:py-8 flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-10">
             <div class="flex items-center gap-8 lg:gap-16 w-full lg:w-auto justify-between lg:justify-start">
-                <div>
-                    <p class="text-[8px] lg:text-[9px] font-black text-slate-400 uppercase tracking-[0.3em] mb-2 italic">Capacity</p>
+                <div class="cursor-pointer group" onclick="toggleCart()">
+                    <p class="text-[8px] lg:text-[9px] font-black text-slate-400 uppercase tracking-[0.3em] mb-2 italic group-hover:text-blue-600 transition-colors underline underline-offset-4">Review Cart Details</p>
                     <p id="totalBoxUnits" class="text-3xl lg:text-5xl font-black text-blue-600 italic tracking-tighter leading-none">0 Boxes</p>
                 </div>
                 <div class="h-12 lg:h-16 w-px bg-slate-200"></div>
                 <div>
-                    <p class="text-[8px] lg:text-[9px] font-black text-slate-400 uppercase tracking-[0.3em] mb-2 italic">Gross Meterage (m)</p>
-                    <p id="totalQty" class="text-3xl lg:text-5xl font-black text-slate-900 italic tracking-tighter leading-none">0.0 m</p>
+                    <p class="text-[8px] lg:text-[9px] font-black text-slate-400 uppercase tracking-[0.3em] mb-2 italic">Gross Valuation</p>
+                    <p id="calcTotal" class="text-3xl lg:text-5xl font-black text-[#004a99] italic leading-none tracking-tighter">R 0.00</p>
                 </div>
             </div>
             
             <div class="flex flex-col md:flex-row items-center gap-6 lg:gap-8 w-full lg:w-auto">
-                <div class="flex items-center gap-6 w-full md:w-auto justify-between lg:justify-end">
-                    <div class="text-right">
-                        <p class="text-[8px] lg:text-[9px] font-black text-slate-400 uppercase tracking-[0.3em] mb-1 italic">Engine Status</p>
-                        <div id="moqStatus" class="text-xl lg:text-3xl font-black italic text-slate-300 uppercase tracking-tighter">UNAUTHORIZED</div>
-                    </div>
-                    <div class="h-12 lg:h-16 w-px bg-slate-200"></div>
-                    <div class="text-right bg-slate-50 px-4 lg:px-10 py-3 lg:py-5 rounded-xl border border-slate-200 min-w-[140px] lg:min-w-[240px]">
-                        <p class="text-[8px] lg:text-[9px] font-black text-slate-400 uppercase tracking-[0.3em] mb-1 italic">Est. Valuation</p>
-                        <p id="calcTotal" class="text-2xl lg:text-5xl font-black text-[#004a99] italic leading-none tracking-tighter">R 0.00</p>
-                    </div>
+                <div class="text-right w-full lg:w-auto">
+                    <p class="text-[8px] lg:text-[9px] font-black text-slate-400 uppercase tracking-[0.3em] mb-1 italic">Engine Compliance</p>
+                    <div id="moqStatus" class="text-xl lg:text-2xl font-black italic uppercase tracking-tighter">UNAUTHORIZED</div>
+                    <div id="moqDeficit" class="text-[9px] font-black text-red-500 italic mt-1 uppercase"></div>
                 </div>
                 
                 <div class="flex items-center gap-3 w-full md:w-auto">
-                    <button onclick="handleExport('quote')" class="flex-1 md:flex-none bg-slate-900 text-white px-8 py-5 rounded-xl font-black text-[10px] uppercase hover:bg-black transition-all shadow-xl">Export Selection</button>
-                    <!-- Void Button: High-Contrast Red Emergency Accent -->
-                    <button onclick="resetCart()" title="Void and Reset Order" class="bg-red-50 text-red-600 p-4 lg:p-5 rounded-xl border border-red-100 hover:bg-red-600 hover:text-white transition-all shadow-sm flex items-center justify-center group active:scale-90">
-                        <svg class="w-6 h-6 transform group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
+                    <button onclick="toggleCart()" class="flex-1 md:flex-none bg-blue-50 text-[#004a99] px-6 py-5 rounded-xl font-black text-[10px] uppercase hover:bg-blue-100 transition-all border border-blue-100">Review Shortfall</button>
+                    <button onclick="resetCart()" class="bg-red-50 text-red-600 p-4 lg:p-5 rounded-xl border border-red-100 hover:bg-red-600 hover:text-white transition-all active:scale-90">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                     </button>
                 </div>
             </div>
@@ -501,6 +507,7 @@
     <script>
         let selectedTier = 0;
         let orderBoxes = 0;
+        let activeOrder = [];
 
         function selectTier(t) {
             selectedTier = t;
@@ -509,9 +516,7 @@
             if(card) card.classList.add('selected');
             
             const catalog = document.getElementById('catalog-main');
-            if(catalog) {
-                catalog.classList.remove('opacity-30', 'pointer-events-none');
-            }
+            if(catalog) catalog.classList.remove('opacity-30', 'pointer-events-none');
             
             const tierSection = document.getElementById('tier-section');
             if(tierSection) tierSection.classList.add('bg-blue-50/30', 'border-blue-200');
@@ -524,111 +529,171 @@
             updateSummary();
         }
 
+        function toggleCart() {
+            const overlay = document.getElementById('cartOverlay');
+            overlay.classList.toggle('hidden');
+            if (!overlay.classList.contains('hidden')) renderCart();
+        }
+
         function updateSummary() {
             if (selectedTier === 0) return;
             let boxesTotal = 0, lengthTotal = 0, valueTotal = 0;
-            let tier1Failure = false;
-            let atLeastOneSelected = false;
+            let lineItemFailures = [];
+            activeOrder = [];
 
             document.querySelectorAll(".item-row").forEach(row => {
                 const qtyInput = row.querySelector(".qty-input");
                 const printValEl = row.querySelector(".print-val");
                 const boxes = parseInt(qtyInput.value) || 0;
+                const shortfallEl = row.querySelector('.item-shortfall-info');
                 
                 if (printValEl) printValEl.innerText = boxes || "0";
                 
                 if (boxes > 0) {
-                    atLeastOneSelected = true;
                     const length = boxes * parseFloat(row.dataset.box);
                     const unitPrice = parseFloat(row.dataset['t' + selectedTier]);
                     const itemValue = length * unitPrice;
+                    const code = row.dataset.code;
 
+                    let isLineCompliant = true;
+                    let lineDeficit = 0;
+
+                    // Tier 1 Logic: R29,000 PER PROFILE
                     if (selectedTier === 1 && itemValue < 29000) {
-                        tier1Failure = true;
+                        isLineCompliant = false;
+                        lineDeficit = 29000 - itemValue;
+                        lineItemFailures.push(code);
                         row.classList.add('bg-red-50');
+                        shortfallEl.innerHTML = `<span class="shortfall-badge">Shortfall: R ${lineDeficit.toLocaleString(undefined, {minimumFractionDigits: 2})}</span>`;
                     } else {
                         row.classList.remove('bg-red-50');
-                        row.classList.add('bg-blue-50/30');
+                        row.classList.add('bg-blue-50/10');
+                        shortfallEl.innerHTML = '';
                     }
 
                     boxesTotal += boxes;
                     lengthTotal += length;
                     valueTotal += itemValue;
+
+                    activeOrder.push({
+                        code: code,
+                        boxes: boxes,
+                        meterage: length,
+                        value: itemValue,
+                        compliant: isLineCompliant,
+                        deficit: lineDeficit
+                    });
                 } else {
-                    row.classList.remove('bg-blue-50/30', 'bg-red-50');
+                    row.classList.remove('bg-blue-50/10', 'bg-red-50');
+                    shortfallEl.innerHTML = '';
                 }
             });
 
             orderBoxes = boxesTotal;
             document.getElementById("totalBoxUnits").innerText = boxesTotal + " Boxes";
-            document.getElementById("totalQty").innerText = lengthTotal.toLocaleString() + " m";
             const formattedVal = "R " + valueTotal.toLocaleString(undefined, {minimumFractionDigits: 2});
             document.getElementById("calcTotal").innerText = formattedVal;
-            document.getElementById("pSumBoxes").innerText = boxesTotal + " Boxes";
-            document.getElementById("pSumValue").innerText = formattedVal;
-
-            const moq = document.getElementById("moqStatus");
-            let compliant = false, msg = "AWAITING SELECTION";
             
-            if (atLeastOneSelected) {
-                if (selectedTier === 3) { 
-                    compliant = boxesTotal >= 2; 
-                    msg = compliant ? "MOQ COMPLIANT" : "2 BOX MIN REQ."; 
+            const moq = document.getElementById("moqStatus");
+            const deficitEl = document.getElementById("moqDeficit");
+            let compliant = false, msg = "Unauthorized", deficitMsg = "";
+
+            if (activeOrder.length > 0) {
+                if (selectedTier === 3) {
+                    compliant = boxesTotal >= 2;
+                    msg = compliant ? "MOQ COMPLIANT" : "UNAUTHORIZED";
+                    if (!compliant) deficitMsg = `SHORTFALL: ${2 - boxesTotal} BOXES REMAINING`;
                 }
-                else if (selectedTier === 2) { 
-                    compliant = valueTotal >= 14500; 
-                    msg = compliant ? "VALUE COMPLIANT" : "MIN R14,500 REQ."; 
+                else if (selectedTier === 2) {
+                    compliant = valueTotal >= 14500;
+                    msg = compliant ? "VALUE COMPLIANT" : "UNAUTHORIZED";
+                    if (!compliant) deficitMsg = `SHORTFALL: R ${(14500 - valueTotal).toLocaleString()} REMAINING`;
                 }
-                else if (selectedTier === 1) { 
-                    compliant = !tier1Failure; 
-                    msg = compliant ? "BULK COMPLIANT" : "FAIL: R29k / SKU"; 
+                else if (selectedTier === 1) {
+                    compliant = lineItemFailures.length === 0;
+                    msg = compliant ? "BULK COMPLIANT" : "UNAUTHORIZED";
+                    if (!compliant) deficitMsg = `${lineItemFailures.length} SKUS BELOW R29k TARGET`;
                 }
             }
             
             moq.innerText = msg;
-            moq.className = "text-xl lg:text-3xl font-black italic uppercase tracking-tighter " + (compliant ? "text-emerald-500" : "text-rose-500");
+            moq.className = "text-xl lg:text-2xl font-black italic uppercase tracking-tighter " + (compliant ? "text-emerald-500" : "text-rose-500");
+            deficitEl.innerText = deficitMsg;
             
             const cartEl = document.getElementById("cartCalculator");
-            if (cartEl) {
-                cartEl.classList.toggle("translate-y-full", boxesTotal === 0);
-                if(boxesTotal > 0) cartEl.classList.add("shadow-2xl");
-            }
+            if (cartEl) cartEl.classList.toggle("translate-y-full", activeOrder.length === 0);
             
             const headerBtnText = document.getElementById("headerBtnText");
-            if (headerBtnText) {
-                headerBtnText.innerText = boxesTotal > 0 ? "Export Selection" : "Export Matrix";
+            if (headerBtnText) headerBtnText.innerText = compliant ? "Export Authorized Registry" : "Review Compliance Errors";
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cartContent');
+            if (activeOrder.length === 0) {
+                container.innerHTML = '<div class="text-center py-20 text-slate-300 font-bold uppercase italic">Your Procurement Cart is Empty</div>';
+                return;
             }
+
+            let html = '<div class="space-y-4">';
+            activeOrder.forEach(item => {
+                html += `
+                <div class="flex items-center justify-between p-6 bg-slate-50 rounded-2xl border border-slate-100">
+                    <div>
+                        <span class="text-xs font-black text-slate-400 uppercase tracking-widest">${item.code}</span>
+                        <p class="text-lg font-black italic text-slate-900">${item.meterage.toLocaleString()} m <span class="text-xs opacity-40 font-bold ml-1">(${item.boxes} Boxes)</span></p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xl font-black italic text-[#004a99]">R ${item.value.toLocaleString(undefined, {minimumFractionDigits:2})}</p>
+                        ${!item.compliant ? `<p class="text-[9px] font-black text-red-600 uppercase mt-1 italic">Shortfall: R ${item.deficit.toLocaleString()}</p>` : `<p class="text-[9px] font-black text-emerald-600 uppercase mt-1 italic">Line Authorized</p>`}
+                    </div>
+                </div>`;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+
+            // Sync Modal Status
+            const moqMain = document.getElementById("moqStatus");
+            const modalMoq = document.getElementById("modalMoqStatus");
+            const modalBtn = document.getElementById("modalExportBtn");
+            
+            modalMoq.innerText = moqMain.innerText;
+            modalMoq.className = moqMain.className;
+            
+            const isCompliant = moqMain.classList.contains('text-emerald-500');
+            modalBtn.classList.toggle('opacity-50', !isCompliant);
+            modalBtn.classList.toggle('pointer-events-none', !isCompliant);
         }
 
         async function handleExport(mode = 'quote') {
+            const isCompliant = document.getElementById("moqStatus").classList.contains('text-emerald-500');
+            if(!isCompliant) {
+                toggleCart();
+                return;
+            }
+
             const btn = document.getElementById("mainExportBtn");
             const originalText = btn.innerHTML;
-            btn.innerHTML = '<span class="animate-pulse">PROCESSING...</span>';
+            btn.innerHTML = '<span class="animate-pulse">AUTHORIZING PDF...</span>';
             
             await new Promise(r => setTimeout(r, 600));
 
-            const isSelection = orderBoxes > 0;
+            const isSelection = activeOrder.length > 0;
             const docTitle = document.getElementById("documentTitle");
             const priceLabel = document.getElementById("priceScheduleLabel");
             const printSumTitle = document.getElementById("printSummaryTitle");
-            const printLegal = document.getElementById("printFooterLegal");
             
             const cache = {
                 title: docTitle.innerText,
-                label: priceLabel.innerText,
-                sum: printSumTitle.innerText,
-                legal: printLegal.innerText
+                label: priceLabel.innerText
             };
 
             if (isSelection) {
                 if (mode === 'so') {
                     docTitle.innerText = "CORPORATE SALES ORDER";
                     priceLabel.innerText = "Confirmed Request";
-                    printSumTitle.innerText = "Sales Order Summary";
-                    printLegal.innerText = "CornexConnect™ Corporate Purchase Intent · Valid for 72h · Pretoria Hub";
                 } else {
-                    docTitle.innerText = "Official Selection Registry";
-                    priceLabel.innerText = "Authorized Trade Quote";
+                    docTitle.innerText = "Authorized Procurement Selection";
+                    priceLabel.innerText = "Verified Trade Registry";
                 }
                 
                 document.querySelectorAll(".item-row").forEach(row => {
@@ -653,8 +718,6 @@
                 btn.innerHTML = originalText;
                 docTitle.innerText = cache.title;
                 priceLabel.innerText = cache.label;
-                printSumTitle.innerText = cache.sum;
-                printLegal.innerText = cache.legal;
                 document.querySelectorAll(".hidden-print").forEach(el => el.classList.remove("hidden-print"));
             }, 800);
         }
@@ -662,7 +725,6 @@
         function resetCart() {
             document.querySelectorAll(".qty-input").forEach(i => i.value = 0);
             updateSummary();
-            // Scroll to top to reset perspective
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
