@@ -6,3 +6,4 @@
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-04-20 | faa.zone | history | `docs/terminals/loop-watch.html` | `b15f1c09` | ♻️ Loop Watch GPT | 2391 | 2 | 1 | 30.2 |
 | 2 | 2025-09-06 | ThesisGallery | main | `attached_assets/loop-watch_1757167915620.html` | `34dad17d` | ♻️ Loop Watch GPT | 2968 | 3 | 2 | 34.3 |
+| 3 | 2026-01-31 | baobab-bush-portal | main | `client/public/terminals/loop-watch.html` | `155a37a3` | Loop Watch GPT - FAA.zone | 7368 | 0 | 0 | 25.7 |
