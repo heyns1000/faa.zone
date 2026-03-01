@@ -275,17 +275,37 @@
 
         /* image zone */
         .hat-img {
-            background: linear-gradient(135deg, #F5EDD8 0%, #E0CBa0 100%);
-            height: 220px;
+            background: linear-gradient(135deg, #F5EDD8 0%, #E0CB90 100%);
+            aspect-ratio: 1 / 1;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             overflow: hidden;
         }
-        .hat-card.list-view .hat-img { height: 100%; border-radius: 0; }
-        .hat-emoji { font-size: 5.5rem; transition: transform .3s; }
+        .hat-img img.hat-photo {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .35s ease;
+        }
+        .hat-card:hover .hat-photo { transform: scale(1.06); }
+        .hat-card.list-view .hat-img { aspect-ratio: unset; height: 100%; border-radius: 0; }
+        .hat-emoji { font-size: 5.5rem; transition: transform .3s; position: relative; z-index: 1; }
         .hat-card:hover .hat-emoji { transform: rotate(-6deg) scale(1.08); }
+
+        /* Lekker Local badge */
+        .lekker-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 48px;
+            height: 48px;
+            z-index: 5;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,.25));
+        }
 
         /* tier badge */
         .tier-badge {
@@ -720,7 +740,10 @@
 
 <!-- ── NAV ── -->
 <nav>
-    <a class="nav-brand" href="index.html">Fruitful <span>Global</span></a>
+    <a class="nav-brand" href="index.html">
+        <img src="img/fruitful-logo.png" alt="Fruitful" style="height:30px;width:auto;" onerror="this.style.display='none'">
+        Fruitful <span>Artisan Hat Co.</span>
+    </a>
     <ul class="nav-links">
         <li><a href="#collection" class="active">Collection</a></li>
         <li><a href="#artisan">Artisan</a></li>
@@ -933,7 +956,7 @@
 // ── Data ──
 const HATS = [
     {
-        id: 'untshontsho', emoji: '🎩', tier: 'pro',
+        id: 'untshontsho', emoji: '🎩', img: 'img/hat-ingonyama.png', tier: 'pro',
         name: 'uNtshontsho', meaning: 'The Cape Buffalo',
         artisan: 'Grand Sibangilizwe Maghandlela',
         desc: 'Natural straw fedora with vibrant checkered geometric beadwork and the signature Fruitful emblem on the crown.',
@@ -941,7 +964,7 @@ const HATS = [
         price: 295, cat: 'fedora', link: 'untshontsho.html'
     },
     {
-        id: 'ubhejane', emoji: '🎩', tier: 'pro',
+        id: 'ubhejane', emoji: '🎩', img: 'img/fedora.png', tier: 'pro',
         name: 'uBhejane', meaning: 'The Rhinoceros',
         artisan: 'Grand Sibangilizwe Maghandlela',
         desc: 'White straw fedora with traditional Xhosa and Zulu beadwork along the brim and a patterned band.',
@@ -949,7 +972,7 @@ const HATS = [
         price: 295, cat: 'fedora', link: '#'
     },
     {
-        id: 'ingwe', emoji: '🎩', tier: 'pro',
+        id: 'ingwe', emoji: '🎩', img: 'img/hat-panama.png', tier: 'pro',
         name: 'iNgwe', meaning: 'The Leopard',
         artisan: 'Grand Sibangilizwe Maghandlela',
         desc: 'Bold spotted-pattern beadwork on natural straw — the leopard\'s stealth and grace woven into every bead.',
@@ -957,7 +980,7 @@ const HATS = [
         price: 295, cat: 'fedora', link: '#'
     },
     {
-        id: 'indlovu', emoji: '🎩', tier: 'pro',
+        id: 'indlovu', emoji: '🎩', img: 'img/hat-indlovu.jpg', tier: 'pro',
         name: 'iNdlovu', meaning: 'The Elephant',
         artisan: 'Grand Sibangilizwe Maghandlela',
         desc: 'Wide-brimmed straw fedora with rich earth-tone beadwork symbolising wisdom and long memory.',
@@ -965,7 +988,7 @@ const HATS = [
         price: 295, cat: 'fedora', link: '#'
     },
     {
-        id: 'kitchen-hat', emoji: '👨‍🍳', tier: 'pro',
+        id: 'kitchen-hat', emoji: '👨‍🍳', img: 'img/kitchen.png', tier: 'pro',
         name: "Grand's Kitchen Hat", meaning: 'The Artisan Chef',
         artisan: 'Grand Sibangilizwe Maghandlela',
         desc: 'Artisan-crafted kitchen headwear with Fruitful branding — the pro tier for culinary creatives.',
@@ -973,7 +996,7 @@ const HATS = [
         price: 295, cat: 'kitchen', link: '#'
     },
     {
-        id: 'kids-apron', emoji: '👧', tier: 'starter',
+        id: 'kids-apron', emoji: '👧', img: 'img/fruitful-kids.png', tier: 'starter',
         name: 'Kids Kitchen Apron', meaning: 'Fruitful Kids',
         artisan: 'Grand Sibangilizwe Maghandlela',
         desc: 'Colourful handcrafted apron for young creatives — the Starter subscription renewal piece.',
@@ -993,8 +1016,10 @@ function renderGrid(list) {
     grid.innerHTML = list.map(h => `
         <div class="hat-card${isListView ? ' list-view' : ''}" onclick="window.location.href='${h.link}'">
             <div class="hat-img">
-                <span class="hat-emoji">${h.emoji}</span>
+                ${h.img ? `<img class="hat-photo" src="${h.img}" alt="${h.name}" loading="lazy" onerror="this.style.display='none'">` : ''}
+                <span class="hat-emoji" style="${h.img ? 'opacity:0;' : ''}">${h.emoji}</span>
                 <span class="tier-badge tier-${h.tier}">${h.tier === 'pro' ? 'Pro' : h.tier === 'starter' ? 'Starter' : 'Core'}</span>
+                <img class="lekker-badge" src="img/lekker-locals.png" alt="Lekker Local" onerror="this.style.display='none'">
                 <button class="wishlist-btn" onclick="event.stopPropagation();toggleWish(this)" title="Save">
                     <i class="far fa-heart"></i>
                 </button>
