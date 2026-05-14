@@ -3,267 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌐 VaultMesh™ | HealthChain™ Core Protocol Overview</title>
+    <title>🌐 VaultMesh™ | MediaChain™ Core Protocol Overview</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        :root {
-            --text-color-light: #1d1d1f;
-            --text-color-dark: #f5f5f7;
-            --bg-color-light: #f5f5f7;
-            --bg-color-dark: #1a1a1c;
-            --card-bg-light: #ffffff;
-            --card-bg-dark: #2a2a2e;
-            --border-color-light: #e8e8ed;
-            --border-color-dark: #3a3a3e;
-            --sector-color: #00897B;
-            --sector-accent-color: #00695C;
-            --muted-text-light: #6e6e73;
-            --muted-text-dark: #a0a0a5;
-            --pro-card-bg-light: #e0f2f1;
-            --pro-card-bg-dark: #3c3c42;
-            --pro-border-light: #80cbc4;
-            --pro-border-dark: #5c5c63;
-            --pro-button-color: #00897B;
-            --pro-button-hover-color: #00695C;
-            --enterprise-card-bg-light: #e8f5e9;
-            --enterprise-card-bg-dark: #222225;
-            --enterprise-border-light: #a5d6a7;
-            --enterprise-border-dark: #4a4a50;
-            --enterprise-button-color: #2E7D32;
-            --enterprise-button-hover-color: #1B5E20;
-        }
-        body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; transition: background-color 0.3s ease, color 0.3s ease; -webkit-font-smoothing: antialiased; display: flex; flex-direction: column; min-height: 100vh; }
-        .light-mode { background-color: var(--bg-color-light); color: var(--text-color-light); }
-        .dark-mode { background-color: var(--bg-color-dark); color: var(--text-color-dark); }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .section-padding { padding: 80px 20px; background-color: var(--card-bg-light); border-bottom: 1px solid var(--border-color-light); border-top: 1px solid var(--border-color-light); transition: background-color 0.3s ease, border-color 0.3s ease; }
-        .dark-mode .section-padding { background-color: var(--card-bg-dark); border-bottom-color: var(--border-color-dark); border-top-color: var(--border-color-dark); }
-        .section-title { font-size: 2.2rem; font-weight: 700; text-align: center; margin-bottom: 50px; color: var(--text-color-light); }
-        .dark-mode .section-title { color: var(--text-color-dark); }
-        .sector-hero { text-align: center; padding: 100px 20px; background: linear-gradient(135deg, var(--sector-color) 0%, var(--sector-accent-color) 100%); color: white; border-radius: 12px; margin: 20px auto; max-width: 1200px; box-shadow: 0 10px 30px rgba(0,137,123,0.4); }
-        .sector-hero h1 { font-size: 4rem; font-weight: 800; line-height: 1.1; margin-bottom: 20px; letter-spacing: -0.05em; color: white; text-shadow: 2px 2px 8px rgba(0,0,0,0.3); }
-        .sector-hero p { font-size: 1.5rem; max-width: 900px; margin: 0 auto 40px; line-height: 1.5; color: rgba(255,255,255,0.9); }
-        .cta-button { display: inline-block; background-color: white; color: var(--sector-color); padding: 15px 40px; font-size: 1.1rem; font-weight: 600; border-radius: 30px; text-decoration: none; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: all 0.2s ease; }
-        .cta-button:hover { background-color: #f0f0f0; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
-        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
-        .feature-card { background-color: var(--card-bg-light); padding: 30px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); border: 1px solid var(--border-color-light); transition: background-color 0.3s ease, border-color 0.3s ease; }
-        .dark-mode .feature-card { background-color: var(--card-bg-dark); border-color: var(--border-color-dark); }
-        .feature-card .icon { font-size: 2.5rem; color: var(--sector-color); margin-bottom: 15px; }
-        .feature-card h3 { font-size: 1.5rem; font-weight: 600; margin-bottom: 10px; color: var(--text-color-light); }
-        .dark-mode .feature-card h3 { color: var(--text-color-dark); }
-        .feature-card p { font-size: 1rem; color: var(--muted-text-light); line-height: 1.6; }
-        .dark-mode .feature-card p { color: var(--muted-text-dark); }
-        .pricing-section { padding: 80px 20px; text-align: center; }
-        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-top: 50px; align-items: start; justify-content: center; }
-        .pricing-card { background-color: var(--card-bg-light); padding: 40px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); border: 1px solid var(--border-color-light); display: flex; flex-direction: column; transition: all 0.2s ease; max-width: 450px; margin: 0 auto; }
-        .dark-mode .pricing-card { background-color: var(--card-bg-dark); border-color: var(--border-color-dark); }
-        .pricing-card:hover { transform: translateY(-8px); box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
-        .pricing-card.highlight { border-color: var(--sector-color); box-shadow: 0 8px 25px rgba(0,137,123,0.3); transform: translateY(-8px); }
-        .pricing-card.pro-card { background-color: var(--pro-card-bg-light); border-color: var(--pro-border-light); }
-        .dark-mode .pricing-card.pro-card { background-color: var(--pro-card-bg-dark); border-color: var(--pro-border-dark); }
-        .pricing-card.enterprise-card { background-color: var(--enterprise-card-bg-light); border-color: var(--enterprise-border-light); }
-        .dark-mode .pricing-card.enterprise-card { background-color: var(--enterprise-card-bg-dark); border-color: var(--enterprise-border-dark); }
-        .pricing-card h3 { font-size: 1.8rem; font-weight: 700; margin-bottom: 10px; color: var(--text-color-light); text-align: center; }
-        .dark-mode .pricing-card h3 { color: var(--text-color-dark); }
-        .price { font-size: 2.5rem; font-weight: 800; margin-bottom: 15px; text-align: center; color: var(--sector-color); }
-        .pricing-card.pro-card .price { color: var(--pro-button-color); }
-        .pricing-card.enterprise-card .price { color: var(--enterprise-button-color); }
-        .price-description { font-size: 0.95rem; color: var(--muted-text-light); margin-bottom: 15px; text-align: center; }
-        .dark-mode .price-description { color: var(--muted-text-dark); }
-        .pricing-card ul { list-style: none; padding: 0; margin-bottom: 20px; flex-grow: 1; }
-        .pricing-card ul li { font-size: 0.95rem; color: var(--muted-text-light); margin-bottom: 8px; display: flex; align-items: center; }
-        .dark-mode .pricing-card ul li { color: var(--muted-text-dark); }
-        .pricing-card ul li i { color: var(--sector-color); margin-right: 10px; }
-        .pricing-card.pro-card ul li i { color: var(--pro-button-color); }
-        .pricing-card.enterprise-card ul li i { color: var(--enterprise-button-color); }
-        .price-button { display: block; width: 100%; padding: 14px 20px; background-color: var(--sector-color); color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; text-align: center; text-decoration: none; transition: all 0.2s ease; margin-top: 20px; }
-        .price-button:hover { background-color: var(--sector-accent-color); transform: translateY(-2px); }
-        .pricing-card.pro-card .price-button { background-color: var(--pro-button-color); }
-        .pricing-card.pro-card .price-button:hover { background-color: var(--pro-button-hover-color); }
-        .pricing-card.enterprise-card .price-button { background-color: var(--enterprise-button-color); }
-        .pricing-card.enterprise-card .price-button:hover { background-color: var(--enterprise-button-hover-color); }
-        .metadata-metrics-section { background-color: var(--card-bg-light); padding: 80px 20px; text-align: center; }
-        .dark-mode .metadata-metrics-section { background-color: var(--card-bg-dark); }
-        .metadata-metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 50px; }
-        .metadata-card { background-color: var(--bg-color-light); padding: 30px; border-radius: 12px; border: 1px solid var(--border-color-light); text-align: left; }
-        .dark-mode .metadata-card { background-color: var(--bg-color-dark); border-color: var(--border-color-dark); }
-        .metadata-card h3 { font-size: 1.5rem; font-weight: 600; color: var(--text-color-light); margin-bottom: 15px; }
-        .dark-mode .metadata-card h3 { color: var(--text-color-dark); }
-        .metadata-card ul { list-style: none; padding: 0; margin: 0; }
-        .metadata-card ul li { font-size: 0.95rem; color: var(--muted-text-light); margin-bottom: 8px; line-height: 1.5; }
-        .dark-mode .metadata-card ul li { color: var(--muted-text-dark); }
-        .metadata-card ul li strong { color: var(--text-color-light); }
-        .dark-mode .metadata-card ul li strong { color: var(--text-color-dark); }
-        .disclaimer-section { background-color: var(--bg-color-light); padding: 40px 20px; text-align: center; font-size: 0.9rem; color: #cc0000; border-top: 1px solid var(--border-color-light); margin-top: 40px; }
-        .dark-mode .disclaimer-section { background-color: var(--bg-color-dark); border-top-color: var(--border-color-dark); }
-        .main-footer { background-color: var(--card-bg-light); border-top: 1px solid var(--border-color-light); padding: 40px 0; margin-top: auto; }
-        .dark-mode .main-footer { background-color: var(--card-bg-dark); border-top-color: var(--border-color-dark); }
-        .copyright { font-size: 0.8rem; color: var(--muted-text-light); line-height: 1.4; margin-top: 10px; }
-        .dark-mode .copyright { color: var(--muted-text-dark); }
-        @media (max-width: 768px) { .sector-hero h1 { font-size: 3rem; } .sector-hero p { font-size: 1.2rem; } .section-title { font-size: 1.8rem; } .pricing-grid { grid-template-columns: 1fr; } .metadata-metrics-grid { grid-template-columns: 1fr; } }
+        :root{--text-color-light:#1d1d1f;--text-color-dark:#f5f5f7;--bg-color-light:#f5f5f7;--bg-color-dark:#1a1a1c;--card-bg-light:#ffffff;--card-bg-dark:#2a2a2e;--border-color-light:#e8e8ed;--border-color-dark:#3a3a3e;--sector-color:#1565C0;--sector-accent-color:#0D47A1;--muted-text-light:#6e6e73;--muted-text-dark:#a0a0a5;--pro-card-bg-light:#e3f2fd;--pro-card-bg-dark:#3c3c42;--pro-border-light:#90caf9;--pro-border-dark:#5c5c63;--pro-button-color:#1565C0;--pro-button-hover-color:#0D47A1;--enterprise-card-bg-light:#e8eaf6;--enterprise-card-bg-dark:#222225;--enterprise-border-light:#9fa8da;--enterprise-border-dark:#4a4a50;--enterprise-button-color:#283593;--enterprise-button-hover-color:#1a237e;}
+        body{font-family:'Inter',sans-serif;margin:0;padding:0;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;min-height:100vh;}
+        .light-mode{background-color:var(--bg-color-light);color:var(--text-color-light);}.dark-mode{background-color:var(--bg-color-dark);color:var(--text-color-dark);}
+        .container{max-width:1200px;margin:0 auto;padding:0 20px;}
+        .section-padding{padding:80px 20px;background-color:var(--card-bg-light);border-bottom:1px solid var(--border-color-light);border-top:1px solid var(--border-color-light);}
+        .dark-mode .section-padding{background-color:var(--card-bg-dark);border-color:var(--border-color-dark);}
+        .section-title{font-size:2.2rem;font-weight:700;text-align:center;margin-bottom:50px;color:var(--text-color-light);}
+        .dark-mode .section-title{color:var(--text-color-dark);}
+        .sector-hero{text-align:center;padding:100px 20px;background:linear-gradient(135deg,var(--sector-color) 0%,var(--sector-accent-color) 100%);color:white;border-radius:12px;margin:20px auto;max-width:1200px;box-shadow:0 10px 30px rgba(21,101,192,0.4);}
+        .sector-hero h1{font-size:4rem;font-weight:800;line-height:1.1;margin-bottom:20px;letter-spacing:-0.05em;color:white;text-shadow:2px 2px 8px rgba(0,0,0,0.3);}
+        .sector-hero p{font-size:1.5rem;max-width:900px;margin:0 auto 40px;line-height:1.5;color:rgba(255,255,255,0.9);}
+        .cta-button{display:inline-block;background-color:white;color:var(--sector-color);padding:15px 40px;font-size:1.1rem;font-weight:600;border-radius:30px;text-decoration:none;transition:all 0.2s ease;}
+        .cta-button:hover{background-color:#f0f0f0;transform:translateY(-3px);}
+        .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;margin-top:40px;}
+        .feature-card{background-color:var(--card-bg-light);padding:30px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.08);border:1px solid var(--border-color-light);}
+        .dark-mode .feature-card{background-color:var(--card-bg-dark);border-color:var(--border-color-dark);}
+        .feature-card .icon{font-size:2.5rem;color:var(--sector-color);margin-bottom:15px;}
+        .feature-card h3{font-size:1.5rem;font-weight:600;margin-bottom:10px;color:var(--text-color-light);}
+        .dark-mode .feature-card h3{color:var(--text-color-dark);}
+        .feature-card p{font-size:1rem;color:var(--muted-text-light);line-height:1.6;}
+        .dark-mode .feature-card p{color:var(--muted-text-dark);}
+        .pricing-section{padding:80px 20px;text-align:center;}
+        .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:30px;margin-top:50px;align-items:start;}
+        .pricing-card{background-color:var(--card-bg-light);padding:40px;border-radius:12px;box-shadow:0 5px 20px rgba(0,0,0,0.1);border:1px solid var(--border-color-light);display:flex;flex-direction:column;transition:all 0.2s ease;max-width:450px;margin:0 auto;}
+        .dark-mode .pricing-card{background-color:var(--card-bg-dark);border-color:var(--border-color-dark);}
+        .pricing-card:hover{transform:translateY(-8px);}
+        .pricing-card.highlight{border-color:var(--sector-color);box-shadow:0 8px 25px rgba(21,101,192,0.3);transform:translateY(-8px);}
+        .pricing-card.pro-card{background-color:var(--pro-card-bg-light);border-color:var(--pro-border-light);}
+        .dark-mode .pricing-card.pro-card{background-color:var(--pro-card-bg-dark);border-color:var(--pro-border-dark);}
+        .pricing-card.enterprise-card{background-color:var(--enterprise-card-bg-light);border-color:var(--enterprise-border-light);}
+        .dark-mode .pricing-card.enterprise-card{background-color:var(--enterprise-card-bg-dark);border-color:var(--enterprise-border-dark);}
+        .pricing-card h3{font-size:1.8rem;font-weight:700;margin-bottom:10px;color:var(--text-color-light);text-align:center;}
+        .dark-mode .pricing-card h3{color:var(--text-color-dark);}
+        .price{font-size:2.5rem;font-weight:800;margin-bottom:15px;text-align:center;color:var(--sector-color);}
+        .pricing-card.pro-card .price{color:var(--pro-button-color);}.pricing-card.enterprise-card .price{color:var(--enterprise-button-color);}
+        .price-description{font-size:0.95rem;color:var(--muted-text-light);margin-bottom:15px;text-align:center;}
+        .pricing-card ul{list-style:none;padding:0;margin-bottom:20px;flex-grow:1;}
+        .pricing-card ul li{font-size:0.95rem;color:var(--muted-text-light);margin-bottom:8px;display:flex;align-items:center;}
+        .dark-mode .pricing-card ul li{color:var(--muted-text-dark);}
+        .pricing-card ul li i{color:var(--sector-color);margin-right:10px;}
+        .pricing-card.pro-card ul li i{color:var(--pro-button-color);}.pricing-card.enterprise-card ul li i{color:var(--enterprise-button-color);}
+        .price-button{display:block;width:100%;padding:14px 20px;background-color:var(--sector-color);color:white;border-radius:8px;font-size:1rem;font-weight:600;text-align:center;text-decoration:none;transition:all 0.2s ease;margin-top:20px;}
+        .price-button:hover{background-color:var(--sector-accent-color);transform:translateY(-2px);}
+        .pricing-card.pro-card .price-button{background-color:var(--pro-button-color);}.pricing-card.enterprise-card .price-button{background-color:var(--enterprise-button-color);}
+        .metadata-metrics-section{background-color:var(--card-bg-light);padding:80px 20px;text-align:center;}
+        .dark-mode .metadata-metrics-section{background-color:var(--card-bg-dark);}
+        .metadata-metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;margin-top:50px;}
+        .metadata-card{background-color:var(--bg-color-light);padding:30px;border-radius:12px;border:1px solid var(--border-color-light);text-align:left;}
+        .dark-mode .metadata-card{background-color:var(--bg-color-dark);border-color:var(--border-color-dark);}
+        .metadata-card h3{font-size:1.5rem;font-weight:600;color:var(--text-color-light);margin-bottom:15px;}
+        .dark-mode .metadata-card h3{color:var(--text-color-dark);}
+        .metadata-card ul{list-style:none;padding:0;margin:0;}
+        .metadata-card ul li{font-size:0.95rem;color:var(--muted-text-light);margin-bottom:8px;}
+        .dark-mode .metadata-card ul li{color:var(--muted-text-dark);}
+        .metadata-card ul li strong{color:var(--text-color-light);}
+        .dark-mode .metadata-card ul li strong{color:var(--text-color-dark);}
+        .disclaimer-section{padding:40px 20px;text-align:center;font-size:0.9rem;color:#cc0000;border-top:1px solid var(--border-color-light);margin-top:40px;}
+        .main-footer{background-color:var(--card-bg-light);border-top:1px solid var(--border-color-light);padding:40px 0;margin-top:auto;}
+        .dark-mode .main-footer{background-color:var(--card-bg-dark);}
+        .copyright{font-size:0.8rem;color:var(--muted-text-light);margin-top:10px;}
+        @media(max-width:768px){.sector-hero h1{font-size:3rem;}.pricing-grid{grid-template-columns:1fr;}}
     </style>
 </head>
 <body class="light-mode">
-    <main>
-        <section id="overview" class="sector-hero">
-            <div class="container">
-                <h1>VaultMesh™ | HealthChain™ Core Protocol</h1>
-                <p>HealthChain™ is a powerful FAA.zone™ framework empowering the Health &amp; Wellness sector with advanced automation and data management. It connects effortlessly to the PulseGrid™ for optimized workflow and compliance.</p>
-                <a href="#pricing" class="cta-button">View Pricing &rarr;</a>
-            </div>
-        </section>
-
-        <section id="features" class="section-padding">
-            <div class="container">
-                <h2 class="section-title">Key Features</h2>
-                <div class="feature-grid">
-                    <div class="feature-card"><i class="fas fa-link icon"></i><h3>Direct Integration</h3><p>Direct integration with FAA 🧠 Health Management System for seamless multi-provider operations and data continuity.</p></div>
-                    <div class="feature-card"><i class="fas fa-sync-alt icon"></i><h3>Advanced Data Sync</h3><p>Real-time data synchronization with MindNode™ for up-to-date patient records and clinical workflow management.</p></div>
-                    <div class="feature-card"><i class="fas fa-shield-alt icon"></i><h3>Real-time Compliance</h3><p>Ensure robust regulatory adherence with VaultLink™ — covering HIPAA, GDPR, and jurisdiction-specific health mandates.</p></div>
-                    <div class="feature-card"><i class="fas fa-expand-arrows-alt icon"></i><h3>Scalable Architecture</h3><p>Unleash massive scalability for x21 power expansion across hospital networks, clinics, and telehealth platforms.</p></div>
-                    <div class="feature-card"><i class="fas fa-chart-line icon"></i><h3>Predictive Analytics</h3><p>Leverage advanced predictive analytics for patient outcome forecasting, readmission risk, and population health management.</p></div>
-                    <div class="feature-card"><i class="fas fa-puzzle-piece icon"></i><h3>Open API Access</h3><p>Full API access for seamless interoperability with existing EHR, HIS, and lab information systems via HL7 FHIR standards.</p></div>
-                    <div class="feature-card"><i class="fas fa-lock icon"></i><h3>Blockchain Security</h3><p>Immutable, blockchain-secured patient data provenance ensuring unalterable audit trails for medical records and consent.</p></div>
-                    <div class="feature-card"><i class="fas fa-file-invoice icon"></i><h3>One-click Reporting</h3><p>Generate comprehensive HIPAA-compliant regulatory reports, billing summaries, and detailed clinical audit documentation.</p></div>
-                    <div class="feature-card"><i class="fas fa-network-wired icon"></i><h3>Self-optimizing Nodes</h3><p>Intelligent, self-optimizing health data nodes that dynamically balance load across distributed clinical environments.</p></div>
-                    <div class="feature-card"><i class="fas fa-brain icon"></i><h3>Secure Multi-party Computation</h3><p>Enable secure collaborative health data analysis across multiple institutions without exposing raw patient data.</p></div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section-padding">
-            <div class="container">
-                <h2 class="section-title">Why Trust 🌐 VaultMesh™?</h2>
-                <p style="text-align:center; max-width:800px; margin:0 auto 20px; color:var(--muted-text-light); font-size:1.1rem; line-height:1.7;">At <strong>VaultMesh™</strong>, we architect the core infrastructure powering the FAA.zone™ ecosystem — providing a <strong>robust, immutable, and universally accessible fabric</strong> for critical health information, distributed clinical processes, and global compliance frameworks.</p>
-                <div style="text-align:center; margin-top:30px;">
-                    <p style="font-size:1.1rem; font-weight:600; color:var(--text-color-light);">Built on principles by:</p>
-                    <p style="font-size:1.3rem; font-weight:700; color:var(--sector-color); margin:8px 0;">Heyns Schoeman™</p>
-                    <p style="color:var(--muted-text-light);">Founder | FAA Global™ | FAA.zone™ 🌍 &mdash; "Sustain. Protect. Empower."</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="section-padding">
-            <div class="container">
-                <h2 class="section-title">VaultMesh™ Subnodes</h2>
-                <div class="feature-grid">
-                    <div class="feature-card"><i class="fas fa-brain icon"></i><h3>MindNode™</h3><p>Specialized nodes for mental health analytics, cognitive monitoring, and AI-driven behavioural pattern analysis across care pathways.</p></div>
-                    <div class="feature-card"><i class="fas fa-heartbeat icon"></i><h3>VitaSync™</h3><p>Real-time vital signs monitoring with intelligent alerting and predictive health deterioration detection for acute care environments.</p></div>
-                    <div class="feature-card"><i class="fas fa-stethoscope icon"></i><h3>HealTrace™</h3><p>Comprehensive treatment outcome tracking with evidence-based protocol recommendations and clinical efficacy scoring systems.</p></div>
-                    <div class="feature-card"><i class="fas fa-shield-virus icon"></i><h3>PulseGuard™</h3><p>Advanced cardiac and biometric security protocols ensuring patient data integrity, medical record protection, and access governance.</p></div>
-                </div>
-            </div>
-        </section>
-
-        <section class="metadata-metrics-section section-padding">
-            <div class="container">
-                <h2 class="section-title">FAA Metadata &amp; Real-Time Metrics</h2>
-                <div class="metadata-metrics-grid">
-                    <div class="metadata-card">
-                        <h3>FAA Metadata &amp; Compliance</h3>
-                        <ul>
-                            <li><strong>Product ID:</strong> HLTH-4821</li>
-                            <li><strong>VaultID:</strong> VAULT-3756</li>
-                            <li><strong>Signal Echo Layer:</strong> Layer Beta v4.3</li>
-                            <li><strong>Deployment Zone:</strong> Zone F 3</li>
-                            <li><strong>Security Rating:</strong> FAA-SEC A</li>
-                            <li><strong>Active Nodes:</strong> 847</li>
-                            <li><strong>Last Audit:</strong> 2025-09-12</li>
-                            <li><strong>Compliance Status:</strong> Active &amp; Certified</li>
-                        </ul>
-                    </div>
-                    <div class="metadata-card">
-                        <h3>Real-Time Metrics Overview</h3>
-                        <ul>
-                            <li><strong>Current Pulse Activity:</strong> 88.34 pulses/sec</li>
-                            <li><strong>Data Volume Processed (24h):</strong> 142.67 TB</li>
-                            <li><strong>Latency Average:</strong> 28.14 ms</li>
-                        </ul>
-                        <h4 style="margin-top:20px; font-size:1.1rem; color:var(--text-color-light);">VaultTrace™ Ledger Entries:</h4>
-                        <ul>
-                            <li>#8821 - HLTH Pulse Tx - Confirmed</li>
-                            <li>#7643 - HEALTH Data Sync - Completed</li>
-                            <li>#9012 - Node Activation Confirm - Active</li>
-                            <li>#4501 - VaultTrace™ Audit - Passed</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="pricing" class="pricing-section section-padding">
-            <div class="container">
-                <h2 class="section-title">Flexible Pricing for Every Operation</h2>
-                <div class="pricing-grid">
-                    <div class="pricing-card">
-                        <h3>🧠 Health &amp; Wellness Starter</h3>
-                        <p class="price">$30.56</p>
-                        <p class="price-description">Unlock powerful features for Starter success.</p>
-                        <ul>
-                            <li><i class="fas fa-check-circle"></i> Basic API Access</li>
-                            <li><i class="fas fa-check-circle"></i> Standard Analytics Dashboard</li>
-                            <li><i class="fas fa-check-circle"></i> Community Support</li>
-                            <li><i class="fas fa-check-circle"></i> Up to 5 Users</li>
-                            <li><i class="fas fa-check-circle"></i> 50 GB Data Storage</li>
-                        </ul>
-                        <a href="mailto:sales@faa.zone?subject=HealthChain™ Starter Package" class="price-button">Get Started</a>
-                    </div>
-                    <div class="pricing-card highlight pro-card">
-                        <h3>🧠 Health &amp; Wellness Pro</h3>
-                        <p class="price">$76.39</p>
-                        <p class="price-description">Unlock powerful features for Pro success.</p>
-                        <ul>
-                            <li><i class="fas fa-check-circle"></i> Advanced API Access</li>
-                            <li><i class="fas fa-check-circle"></i> Premium Analytics &amp; Reporting</li>
-                            <li><i class="fas fa-check-circle"></i> Dedicated Priority Support</li>
-                            <li><i class="fas fa-check-circle"></i> Unlimited Users</li>
-                            <li><i class="fas fa-check-circle"></i> Custom Data Integrations</li>
-                        </ul>
-                        <a href="mailto:sales@faa.zone?subject=HealthChain™ Pro Package" class="price-button">Upgrade to Pro</a>
-                    </div>
-                    <div class="pricing-card enterprise-card">
-                        <h3>🧠 Health &amp; Wellness Enterprise</h3>
-                        <p class="price">$152.78</p>
-                        <p class="price-description">Unlock powerful features for Enterprise success.</p>
-                        <ul>
-                            <li><i class="fas fa-check-circle"></i> All Pro Package Features</li>
-                            <li><i class="fas fa-check-circle"></i> Dedicated Account Manager</li>
-                            <li><i class="fas fa-check-circle"></i> 24/7 Phone Support</li>
-                            <li><i class="fas fa-check-circle"></i> Enhanced Custom Integrations</li>
-                            <li><i class="fas fa-check-circle"></i> On-site Training &amp; Setup</li>
-                        </ul>
-                        <a href="mailto:sales@faa.zone?subject=HealthChain™ Enterprise Package" class="price-button">Contact Sales</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="disclaimer-section">
-            <div class="container">
-                <p><strong>Disclaimer:</strong> This page is a static HTML demonstration. It does NOT process any real financial transactions or interact with live payment gateways. All displayed prices and metrics are illustrative. For actual FAA.zone™ services, please refer to our official secure platforms.</p>
-            </div>
-        </section>
-    </main>
-
-    <footer class="main-footer">
+<main>
+    <section id="overview" class="sector-hero">
         <div class="container">
-            <div class="footer-content">
-                <div>
-                    <span style="font-weight:700; color:var(--sector-color);">FAA.zone™</span> / <span style="font-weight:600;">VaultMesh™ | HealthChain™</span>
-                    <p class="copyright">&copy; 2025 Fruitful Holdings (Pty) Ltd. All systems, symbols, and brand echoes protected by the Omni Present Copyright™.</p>
+            <h1>VaultMesh™ | MediaChain™ Core Protocol</h1>
+            <p>MediaChain™ is a powerful FAA.zone™ framework empowering the Media &amp; Broadcasting sector with content rights management, multi-platform distribution, and real-time broadcast compliance infrastructure.</p>
+            <a href="#pricing" class="cta-button">View Pricing &rarr;</a>
+        </div>
+    </section>
+    <section id="features" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Key Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card"><i class="fas fa-link icon"></i><h3>Direct Integration</h3><p>Direct integration with FAA 📺 Media Management System for seamless multi-platform content operations and rights tracking.</p></div>
+                <div class="feature-card"><i class="fas fa-sync-alt icon"></i><h3>Content Data Sync</h3><p>Real-time synchronization with BroadNode™ for live content metadata, rights windows, and broadcast scheduling management.</p></div>
+                <div class="feature-card"><i class="fas fa-shield-alt icon"></i><h3>Broadcast Compliance</h3><p>Ensure robust regulatory adherence with VaultLink™ — covering broadcast licensing, content ratings, and regional media regulations.</p></div>
+                <div class="feature-card"><i class="fas fa-expand-arrows-alt icon"></i><h3>Scalable Architecture</h3><p>Unleash x21 power expansion across broadcast networks, streaming platforms, and global content distribution systems.</p></div>
+                <div class="feature-card"><i class="fas fa-chart-line icon"></i><h3>Audience Analytics</h3><p>Advanced audience analytics for viewership tracking, content performance, and cross-platform engagement measurement.</p></div>
+                <div class="feature-card"><i class="fas fa-puzzle-piece icon"></i><h3>Open API Access</h3><p>Full API access for integration with MAM systems, CMS platforms, ad-tech stacks, and OTT delivery infrastructure.</p></div>
+                <div class="feature-card"><i class="fas fa-lock icon"></i><h3>DRM &amp; Rights Security</h3><p>Blockchain-secured digital rights management ensuring content protection, piracy prevention, and revenue leakage control.</p></div>
+                <div class="feature-card"><i class="fas fa-file-invoice icon"></i><h3>One-click Reporting</h3><p>Generate rights clearance reports, broadcast compliance audits, and content usage summaries in a single action.</p></div>
+                <div class="feature-card"><i class="fas fa-network-wired icon"></i><h3>Self-optimizing Nodes</h3><p>Intelligent CDN and broadcast node optimisation for adaptive bitrate delivery and global audience latency reduction.</p></div>
+                <div class="feature-card"><i class="fas fa-brain icon"></i><h3>AI Content Intelligence</h3><p>Machine learning-driven content recommendation, classification, and metadata enrichment for discoverability and monetisation.</p></div>
+            </div>
+        </div>
+    </section>
+    <section class="section-padding">
+        <div class="container">
+            <h2 class="section-title">VaultMesh™ Subnodes</h2>
+            <div class="feature-grid">
+                <div class="feature-card"><i class="fas fa-broadcast-tower icon"></i><h3>BroadNode™</h3><p>Distributed broadcast infrastructure nodes — managing live transmission, satellite uplink scheduling, and multi-region signal distribution.</p></div>
+                <div class="feature-card"><i class="fas fa-film icon"></i><h3>ContentSync™</h3><p>Content metadata and rights synchronisation across platforms — ensuring consistent licensing windows, localisation, and availability data.</p></div>
+                <div class="feature-card"><i class="fas fa-stream icon"></i><h3>StreamTrace™</h3><p>Real-time streaming analytics and trace logging — monitoring viewer quality of experience, buffering events, and CDN performance.</p></div>
+                <div class="feature-card"><i class="fas fa-newspaper icon"></i><h3>PublishVault™</h3><p>Secure content publishing vault protecting pre-release media assets, embargo schedules, and editorial pipeline integrity.</p></div>
+            </div>
+        </div>
+    </section>
+    <section class="metadata-metrics-section section-padding">
+        <div class="container">
+            <h2 class="section-title">FAA Metadata &amp; Real-Time Metrics</h2>
+            <div class="metadata-metrics-grid">
+                <div class="metadata-card">
+                    <h3>FAA Metadata &amp; Compliance</h3>
+                    <ul>
+                        <li><strong>Product ID:</strong> MDIA-3421</li>
+                        <li><strong>VaultID:</strong> VAULT-6782</li>
+                        <li><strong>Signal Echo Layer:</strong> Layer Beta v4.1</li>
+                        <li><strong>Deployment Zone:</strong> Zone C 4</li>
+                        <li><strong>Security Rating:</strong> FAA-SEC A</li>
+                        <li><strong>Active Nodes:</strong> 923</li>
+                        <li><strong>Last Audit:</strong> 2025-10-15</li>
+                        <li><strong>Compliance Status:</strong> Active &amp; Certified</li>
+                    </ul>
+                </div>
+                <div class="metadata-card">
+                    <h3>Real-Time Metrics Overview</h3>
+                    <ul>
+                        <li><strong>Current Pulse Activity:</strong> 104.56 pulses/sec</li>
+                        <li><strong>Data Volume Processed (24h):</strong> 312.88 TB</li>
+                        <li><strong>Latency Average:</strong> 18.34 ms</li>
+                    </ul>
+                    <h4 style="margin-top:20px;font-size:1.1rem;color:var(--text-color-light);">VaultTrace™ Ledger Entries:</h4>
+                    <ul>
+                        <li>#9934 - MDIA Pulse Tx - Confirmed</li>
+                        <li>#8712 - MEDIA Data Sync - Completed</li>
+                        <li>#10445 - BroadNode™ Activation - Active</li>
+                        <li>#6234 - VaultTrace™ Audit - Passed</li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                document.body.classList.replace('light-mode', 'dark-mode');
-            }
-        });
-    </script>
-</body>
-</html>
+    </section>
+    <section id="pricing" class="pricing-section section-padding">
+        <div class="container">
+            <h2 class="section-title">Flexible Pricing for Every Operation</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card"><h3>📺 Media Starter</h3><p class="price">$41.67</p><p class="price-description">Unlock powerful features for Starter success.</p><ul><li><i class="fas fa-check-circle"></i> Basic API Access</li><li><i class="fas fa-check-circle"></i> Standard Analytics Dashboard</li><li><i class="fas fa-check-circle"></i> Community Support</li><li><i class="fas fa-check-circle"></i> Up to 5 Users</li><li><i class="fas fa-check-circle"></i> 50 GB Data Storage</li></ul><a href="mailto:sales@faa.zone?subject=MediaChain™ Starter" class="price-button">Get Started</a></div>
+                <div class="pricing-card highlight pro-card"><h3>📺 Media Pro</h3><p class="price">$104.17</p><p class="price-description">Unlock powerful features for Pro success.</p><ul><li><i class="fas fa-check-circle"></i> Advanced API Access</li><li><i class="fas fa-check-circle"></i> Premium Analytics &amp; Reporting</li><li><i class="fas fa-check-circle"></i> Dedicated Priority Support</li><li><i class="fas fa-check-circle"></i> Unlimited Users</li><li><i class="fas fa-check-circle"></i> Custom Data Integrations</li></ul><a href="mailto:sales@faa.zone?subject=MediaChain™ Pro" class="price-button">Upgrade to Pro</a></div>
+                <div class="pricing-card enterprise-card"><h3>📺 Media Enterprise</h3><p class="price">$208.33</p><p class="price-description">Unlock powerful features for Enterprise success.</p><ul><li><i class="fas fa-check-circle"></i> All Pro Package Features</li><li><i class="fas fa-check-circle"></i> Dedicated Account Manager</li><li><i class="fas fa-check-circle"></i> 24/7 Phone Support</li><li><i class="fas fa-check-circle"></i> Enhanced Custom Integrations</li><li><i class="fas fa-check-circle"></i> On-site Training &amp; Setup</li></ul><a href="mailto:sales@faa.zone?subject=MediaChain™ Enterprise" class="price-button">Contact Sales</a></div>
+            </div>
+        </div>
+    </section>
+    <section class="disclaimer-section"><div class="container"><p><strong>Disclaimer:</strong> Static HTML demonstration only. No real transactions. All prices and metrics are illustrative.</p></div></section>
+</main>
+<footer class="main-footer"><div class="container"><span style="font-weight:700;color:var(--sector-color);">FAA.zone™</span> / <span style="font-weight:600;">VaultMesh™ | MediaChain™</span><p class="copyright">&copy; 2025 Fruitful Holdings (Pty) Ltd. All systems, symbols, and brand echoes protected by the Omni Present Copyright™.</p></div></footer>
+<script>document.addEventListener('DOMContentLoaded',()=>{if(window.matchMedia('(prefers-color-scheme: dark)').matches)document.body.classList.replace('light-mode','dark-mode');});</script>
+</body></html>
