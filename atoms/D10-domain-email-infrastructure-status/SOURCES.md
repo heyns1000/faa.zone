@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-07-20 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/legal-main/public/wethinkcode.html` | `f13e015d` | Domain & Email Infrastructure Status | 18177 | 11 | 0 | 37.8 |
+| 2 | 2026-06-12 | codenest | main | `docs/dashboards/domain-email-infrastructure-status.html` | `999f9e1b` | Domain & Email Infrastructure Status | 3129 | 3 | 0 | 28.3 |
