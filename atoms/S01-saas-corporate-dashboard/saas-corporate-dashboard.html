@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAA™ SaaS Corporate Dashboard</title>
+    <link rel="icon" href="/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #1a1a2e; color: #e2e8f0; margin: 0; display: flex; min-height: 100vh; overflow: hidden; }
+        .sidebar { width: 280px; background-color: #16162a; padding: 1.5rem 1rem; flex-shrink: 0; display: flex; flex-direction: column; border-right: 1px solid #2a2a3e; overflow-y: auto; }
+        .nav-item { display: flex; align-items: center; padding: 0.8rem 1rem; margin-bottom: 0.5rem; border-radius: 0.75rem; font-weight: 500; color: #cbd5e1; cursor: pointer; }
+        .nav-item.active { background-color: #4f46e5; color: white; }
+        .main-content-wrapper { flex-grow: 1; padding: 1.5rem; overflow-y: auto; }
+        .card { background-color: #16162a; border-radius: 1rem; padding: 1.5rem; border: 1px solid #2a2a3e; }
+        .dashboard-section { display: none; }
+        .dashboard-section.active { display: block; }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div style="font-size:1.8rem;font-weight:800;color:#6366f1;margin-bottom:2rem;">FAA™</div>
+        <nav class="flex flex-col flex-grow">
+            <div class="nav-item active" data-section="dashboard"><i class="fas fa-th-large mr-3"></i> Dashboard</div>
+            <div class="nav-item" data-section="product-portfolio"><i class="fas fa-cube mr-3"></i> Product Portfolio</div>
+            <div class="nav-item" data-section="analytics"><i class="fas fa-chart-line mr-3"></i> Analytics</div>
+        </nav>
+    </aside>
+    <div class="main-content-wrapper">
+        <section id="dashboard" class="dashboard-section active">
+            <h1 class="text-3xl font-bold text-white mb-6">Dashboard Overview</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="card"><p class="text-slate-400 text-sm font-bold uppercase">Total Global Units</p><div style="font-size:2.2rem;font-weight:800;color:white;">2,612,824</div></div>
+                <div class="card"><p class="text-slate-400 text-sm font-bold uppercase">Total Annual SaaS Capital</p><div style="font-size:2.2rem;font-weight:800;color:white;">$885,291,835</div></div>
+            </div>
+        </section>
+    </div>
+    <script>
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                document.querySelectorAll('.dashboard-section').forEach(s => s.classList.remove('active'));
+                item.classList.add('active');
+                const sec = document.getElementById(item.dataset.section);
+                if (sec) sec.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
