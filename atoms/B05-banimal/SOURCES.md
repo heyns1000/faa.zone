@@ -14,3 +14,4 @@
 | 8 | 2025-06-20 | seedwave | history | `public/homepage.html` | `c88efe79` | Banimal™ - Kind Creatures, Global Impact | 12945 | 3 | 3 | 27.0 |
 | 9 | 2025-06-20 | seedwave | history | `public/homepage.html` | `f020e1f0` | Banimal™ - Kind Creatures, Global Impact | 13435 | 3 | 3 | 18.7 |
 | 10 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/apps/seedwave-core/public/homepage.html` | `6ecc10ff` | Banimal™ - Kind Creatures, Global Impact | 14048 | 5 | 3 | 37.4 |
+| 11 | 2026-06-12 | codenest | main | `docs/products/banimal-ecommerce-spa.html` | `507c53b7` | Banimal™ | Eco-Friendly Baby Essentials - FAA | 19954 | 32 | 5 | 75.0 |
