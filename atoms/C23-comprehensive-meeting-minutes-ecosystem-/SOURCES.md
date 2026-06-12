@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2026-06-12 | codenest | main | `docs/legal/faa-ecosystem-development-minutes.html` | `74a3337f` | Comprehensive Meeting Minutes: FAA™ Ecosystem | 9415 | 17 | 0 | 42.9 |
+| 2 | 2026-06-12 | codenest | main | `docs/legal/faa-ecosystem-meeting-minutes-restyled.html` | `1062a052` | Comprehensive Meeting Minutes: FAA™ Ecosystem | 8941 | 11 | 0 | 36.9 |
