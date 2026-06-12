@@ -16,3 +16,4 @@
 | 10 | 2025-07-20 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/interns.seedwave.faa.zone-main/public/legal/index.html` | `461ea1ec` | FAA.ZONE™ Legal & Documentation Hub | 39237 | 46 | 0 | 74.9 |
 | 11 | 2025-07-20 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/legal-main/index.html` | `64cb7f1b` | FAA.ZONE™ Legal & Documentation Hub | 41721 | 50 | 0 | 79.2 |
 | 12 | 2025-07-20 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/legal-main/public/index.html` | `5590d6be` | FAA.ZONE™ Legal & Documentation Hub | 40532 | 49 | 0 | 78.1 |
+| 13 | 2026-06-12 | codenest | main | `docs/legal/legal-faa-zone-repo-index.html` | `6e40ee21` | FAA.ZONE™ Legal & Documentation Hub | 21262 | 37 | 0 | 64.1 |
