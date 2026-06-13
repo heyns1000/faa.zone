@@ -8,3 +8,4 @@
 | 2 | 2025-07-05 | payment | history | `public/master_license_pricing.html` | `9e3f1400` | Ecosystem Explorer | 163275 | 3 | 4 | 52.3 |
 | 3 | 2025-07-20 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/interns.seedwave.faa.zone-main/public/master_license.html` | `1b71fb99` | Ecosystem Explorer | 194582 | 3 | 4 | 55.5 |
 | 4 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/fruitful/crate-dance/public/ecosystem_explorer.html` | `9464873c` | Ecosystem Explorer | 194872 | 3 | 4 | 55.5 |
+| 5 | 2026-06-13 | codenest | main | `docs/ecosystem/ecosystem-explorer.html` | `9ff37a46` | Ecosystem Explorer | 168240 | 12 | 3 | 59.8 |
