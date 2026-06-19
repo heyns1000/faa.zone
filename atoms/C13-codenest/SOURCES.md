@@ -6,3 +6,4 @@
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-09-06 | ThesisGallery | main | `attached_assets/index_1757168491097.html` | `c5f99298` | CodeNest™ – FAA-Certified Web Dev Scroll Stud | 3622 | 5 | 0 | 30.4 |
 | 2 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/faa-zone/public/codenest.html` | `ce67449e` | 🔥 CodeNest - Unified HotStack Ecosystem | FAA | 35343 | 38 | 0 | 66.5 |
+| 3 | 2026-06-19 | codenest | main | `apps/codenest-panel/index.html` | `da9bb876` | CodeNest — Research & Brief | 3164 | 4 | 0 | 33.3 |
