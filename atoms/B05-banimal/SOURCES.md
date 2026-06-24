@@ -16,3 +16,4 @@
 | 10 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/apps/seedwave-core/public/homepage.html` | `6ecc10ff` | Banimal™ - Kind Creatures, Global Impact | 14048 | 5 | 3 | 37.4 |
 | 11 | 2026-06-12 | codenest | main | `docs/products/banimal-ecommerce-spa.html` | `507c53b7` | Banimal™ | Eco-Friendly Baby Essentials - FAA | 19954 | 32 | 5 | 75.0 |
 | 12 | 2026-06-24 | FGP--banimal-global-loop | vercel-agent/returns-refund-policy | `dist/index.html` | `96e93e0e` | Banimal — 100% Cotton Babygrows & Bibs | Sout | 7626 | 0 | 4 | 33.8 |
+| 13 | 2026-06-24 | FGP--banimal-global-loop | v0/fruitfulplanetchange-4823-859d8102 | `dist/index.html` | `c4285959` | Banimal — 100% Cotton Babygrows & Bibs | Sout | 7046 | 0 | 4 | 33.7 |
