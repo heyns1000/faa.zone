@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2026-07-12 | Blockbox | replit-main | `attached_assets/branded-documents/5_Brand_Strategy.html` | `82025fe6` | Block Box Brand Strategy | 6335 | 12 | 0 | 37.6 |
+| 2 | 2026-07-12 | Blockbox | replit-main | `attached_assets/branded-documents/BlockBox_Brand_Strategy_Yellow_Label_System.html` | `58ad5b7c` | Block Box Brand Strategy | 25211 | 40 | 0 | 67.5 |
