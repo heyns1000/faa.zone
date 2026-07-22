@@ -19,3 +19,4 @@
 | 13 | 2026-06-24 | FGP--banimal-global-loop | v0/fruitfulplanetchange-4823-859d8102 | `dist/index.html` | `c4285959` | Banimal — 100% Cotton Babygrows & Bibs | Sout | 7046 | 0 | 4 | 33.7 |
 | 14 | 2026-06-24 | banimal | v0/fruitfulplanetchange-4823-fbce6314 | `dist/index.html` | `19e70d5b` | Banimal — 100% Cotton Babygrows & Bibs | Sout | 7034 | 0 | 4 | 33.7 |
 | 15 | 2026-07-02 | banimal | claude/banimal-vercel-review-1f0p7b-3 | `dist/index.html` | `3ada89e5` | Banimal — 100% Cotton Babygrows & Bibs | Sout | 6838 | 0 | 4 | 33.7 |
+| 16 | 2026-07-22 | FGP--banimal-global-loop | vercel-agent/smart-basket-upsell | `dist/index.html` | `f9b1b376` | Banimal — 100% Cotton Babygrows & Bibs | Sout | 15332 | 2 | 9 | 47.5 |
