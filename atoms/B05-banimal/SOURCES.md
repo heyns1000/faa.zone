@@ -21,3 +21,4 @@
 | 15 | 2026-07-02 | banimal | claude/banimal-vercel-review-1f0p7b-3 | `dist/index.html` | `3ada89e5` | Banimal — 100% Cotton Babygrows & Bibs | Sout | 6838 | 0 | 4 | 33.7 |
 | 16 | 2026-07-22 | FGP--banimal-global-loop | vercel-agent/smart-basket-upsell | `dist/index.html` | `f9b1b376` | Banimal — 100% Cotton Babygrows & Bibs | Sout | 15332 | 2 | 9 | 47.5 |
 | 17 | 2026-07-22 | FGP--banimal-global-loop | vercel-agent/checkout-trust-analytics | `dist/index.html` | `0afda851` | Banimal — 100% Cotton Babygrows & Bibs | Sout | 7754 | 0 | 4 | 33.8 |
+| 18 | 2026-07-22 | FGP--banimal-global-loop | history | `dist/index.html` | `2a6f2c0d` | Banimal — 100% Cotton Babygrows & Bibs | Sout | 7688 | 0 | 4 | 33.8 |
