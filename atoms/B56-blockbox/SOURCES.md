@@ -6,3 +6,4 @@
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2026-07-24 | Blockbox | replit-main | `attached_assets/Blockbox_-_Replit_1784934880818.html` | `d655832a` | Blockbox - ReplitNew tab | 1340972 | 117 | 3 | 408.0 |
 | 2 | 2026-07-24 | Blockbox | replit-main | `attached_assets/Blockbox_-_Replit_SCAM_APP_1784935502807.html` | `d36513af` | Blockbox - ReplitNew tab | 1439006 | 122 | 3 | 417.0 |
+| 3 | 2026-07-25 | Blockbox | replit-main | `attached_assets/Blockbox_-_Replit_scammer_vibe_coding_con_replit_reportt_1784937195104.html` | `8188299f` | Blockbox - ReplitNew tab | 1762161 | 132 | 3 | 474.0 |
