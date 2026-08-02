@@ -13,3 +13,4 @@
 | 7 | 2026-08-02 | FGP--BlockBox | blockbox-1aug-final | `attached_assets/EPS07_Alina_Block_Box_CI_Complete_Standalone_1785687483629.html` | `6749e8ed` | EPS07 Alina — Block Box Product Specification | 16362 | 5 | 0 | 31.6 |
 | 8 | 2026-08-02 | FGP--BlockBox | blockbox-1aug-final | `attached_assets/EPS08_Bianca_Block_Box_CI_Complete_Standalone_1785687483628.html` | `9f27e482` | EPS08 Bianca — Block Box Product Specificatio | 16374 | 5 | 0 | 31.6 |
 | 9 | 2026-08-02 | FGP--BlockBox | blockbox-1aug-final | `attached_assets/EPS09_P40_Block_Box_CI_Complete_Standalone_1785687483628.html` | `fad01d3d` | EPS09 P40 — Block Box Product Specification | 16338 | 5 | 0 | 31.6 |
+| 10 | 2026-08-02 | FGP--BlockBox | blockbox-1aug-final | `attached_assets/EPS10_Tamara_Block_Box_CI_Complete_Standalone_1785687483628.html` | `a2807b82` | EPS10 Tamara — Block Box Product Specificatio | 16374 | 5 | 0 | 31.6 |
