@@ -15,3 +15,4 @@
 | 9 | 2026-08-02 | FGP--BlockBox | blockbox-1aug-final | `attached_assets/EPS09_P40_Block_Box_CI_Complete_Standalone_1785687483628.html` | `fad01d3d` | EPS09 P40 — Block Box Product Specification | 16338 | 5 | 0 | 31.6 |
 | 10 | 2026-08-02 | FGP--BlockBox | blockbox-1aug-final | `attached_assets/EPS10_Tamara_Block_Box_CI_Complete_Standalone_1785687483628.html` | `a2807b82` | EPS10 Tamara — Block Box Product Specificatio | 16374 | 5 | 0 | 31.6 |
 | 11 | 2026-08-02 | FGP--BlockBox | blockbox-1aug-final | `attached_assets/EPS11_Lisa_Block_Box_CI_Complete_Standalone_1785687483628.html` | `54fba510` | EPS11 Lisa — Block Box Product Specification | 16322 | 5 | 0 | 31.6 |
+| 12 | 2026-08-02 | FGP--BlockBox | blockbox-1aug-final | `attached_assets/EPS12_Gloria_Block_Box_CI_Complete_Standalone_1785687483629.html` | `f6f8f0c7` | EPS12 Gloria — Block Box Product Specificatio | 16346 | 5 | 0 | 31.6 |
