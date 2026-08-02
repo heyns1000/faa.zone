@@ -10,3 +10,4 @@
 | 4 | 2026-08-02 | FGP--BlockBox | blockbox-1aug-final | `attached_assets/EPS04_Gone_Block_Box_CI_Complete_Standalone_1785687483629.html` | `67e37c63` | EPS04 Gone — Block Box Product Specification | 16328 | 5 | 0 | 31.6 |
 | 5 | 2026-08-02 | FGP--BlockBox | blockbox-1aug-final | `attached_assets/EPS05_Magic_Block_Box_CI_Complete_Standalone_1785687483629.html` | `2e12bfb4` | EPS05 Magic — Block Box Product Specification | 16340 | 5 | 0 | 31.6 |
 | 6 | 2026-08-02 | FGP--BlockBox | blockbox-1aug-final | `attached_assets/EPS06_Colonial_Block_Box_CI_Complete_Standalone_1785687483627.html` | `eb4895dc` | EPS06 Colonial — Block Box Product Specificat | 16376 | 5 | 0 | 31.6 |
+| 7 | 2026-08-02 | FGP--BlockBox | blockbox-1aug-final | `attached_assets/EPS07_Alina_Block_Box_CI_Complete_Standalone_1785687483629.html` | `6749e8ed` | EPS07 Alina — Block Box Product Specification | 16362 | 5 | 0 | 31.6 |
