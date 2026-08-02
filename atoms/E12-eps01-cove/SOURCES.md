@@ -7,3 +7,4 @@
 | 1 | 2026-08-02 | FGP--BlockBox | blockbox-1aug-final | `attached_assets/EPS01_Cove_Block_Box_CI_Complete_Standalone_1785687483626.html` | `c26351a3` | EPS01 Cove — Block Box Product Specification | 16344 | 5 | 0 | 31.6 |
 | 2 | 2026-08-02 | FGP--BlockBox | blockbox-1aug-final | `attached_assets/EPS02_Sante_Block_Box_CI_Complete_Standalone_1785687483629.html` | `2fd3a7a6` | EPS02 Sante — Block Box Product Specification | 16356 | 5 | 0 | 31.6 |
 | 3 | 2026-08-02 | FGP--BlockBox | blockbox-1aug-final | `attached_assets/EPS03_Peroni_Block_Box_CI_Complete_Standalone_1785687483626.html` | `a1cd788f` | EPS03 Peroni — Block Box Product Specificatio | 16352 | 5 | 0 | 31.6 |
+| 4 | 2026-08-02 | FGP--BlockBox | blockbox-1aug-final | `attached_assets/EPS04_Gone_Block_Box_CI_Complete_Standalone_1785687483629.html` | `67e37c63` | EPS04 Gone — Block Box Product Specification | 16328 | 5 | 0 | 31.6 |
