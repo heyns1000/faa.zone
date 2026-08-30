@@ -1,117 +1,192 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banimal™ — Archived from origin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Georgia&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#231F20; --cream:#FBF4E4; --artcream:#F0EEDA; --paper:#FFFFFF;
+    --rule:#DED5BE; --muted:#6B655A;
+    --sage:#577D60; --sage-soft:#E4EEE6;
+    --coral:#F16B6E; --coral-soft:#FCE7E7;
+    --dustyrose:#B95F56;
+    --teal:#1E9F97; --teal-soft:#E1F0EE;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#EDE7DA; --cream:#1B1A17; --artcream:#232019; --paper:#201D18;
+      --rule:#3A362E; --muted:#B3AA98;
+      --sage:#8FB89A; --sage-soft:#23302A;
+      --coral:#E2938B; --coral-soft:#332521;
+      --dustyrose:#E2938B;
+      --teal:#7FC9C2; --teal-soft:#1E2E2C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#EDE7DA; --cream:#1B1A17; --artcream:#232019; --paper:#201D18;
+    --rule:#3A362E; --muted:#B3AA98;
+    --sage:#8FB89A; --sage-soft:#23302A;
+    --coral:#E2938B; --coral-soft:#332521;
+    --dustyrose:#E2938B;
+    --teal:#7FC9C2; --teal-soft:#1E2E2C;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--cream); color:var(--ink);
+    font-family:Georgia,'Times New Roman',serif; line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{ font-family:'JetBrains Mono',Menlo,Consolas,monospace; }
+  h1,h2{ font-family:'Baloo 2',sans-serif; font-weight:700; text-wrap:balance; letter-spacing:-.01em; margin:0; }
+  a{ color:var(--dustyrose); }
 
-    <title>Banimal — 100% Cotton Babygrows &amp; Bibs | South African Baby Brand</title>
-    <meta
-      name="description"
-      content="Banimal crafts premium 100% cotton babygrows and bandana bibs — thoughtfully designed baby essentials from South Africa, shipping worldwide. Soft, breathable, beautifully made."
-    />
-    <meta name="theme-color" content="#f6f1e7" />
-    <meta name="author" content="Banimal" />
-    <link rel="canonical" href="https://banimal.co.za/" />
-    <link rel="icon" type="image/x-icon" href="./favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png" />
+  .utilitybar{
+    position:sticky; top:0; z-index:40; background:var(--cream);
+    border-bottom:1px solid var(--rule); backdrop-filter:blur(6px);
+  }
+  .utilitybar .inner{
+    max-width:920px; margin:0 auto; padding:12px 28px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  }
+  .crumb{ display:inline-flex; align-items:center; gap:7px; font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:.02em; color:var(--muted); }
+  .crumb img{ height:14px; width:auto; }
+  .crumb .banimal-logo{ height:11px; }
+  .crumb b{ color:var(--ink); font-weight:600; }
+  .status-pill{
+    font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.04em;
+    color:var(--dustyrose); background:var(--coral-soft); border:1px solid var(--rule);
+    border-radius:100px; padding:3px 10px; white-space:nowrap;
+  }
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Banimal" />
-    <meta property="og:title" content="Banimal — 100% Cotton Babygrows &amp; Bibs" />
-    <meta
-      property="og:description"
-      content="Premium 100% cotton baby essentials, thoughtfully designed in South Africa and shipped worldwide."
-    />
-    <meta property="og:url" content="https://banimal.co.za/" />
-    <meta property="og:image" content="https://banimal.co.za/og-image.png" />
-    <meta property="og:locale" content="en_ZA" />
+  .wrap{ max-width:920px; margin:0 auto; padding:0 28px; }
+  header.page{ padding:56px 0 10px; }
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--dustyrose); margin-bottom:14px; }
+  header.page h1{ font-size:clamp(1.8rem,4vw,2.6rem); }
+  header.page p{ font-size:16px; color:var(--muted); max-width:64ch; margin:14px 0 0; }
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Banimal — 100% Cotton Babygrows &amp; Bibs" />
-    <meta
-      name="twitter:description"
-      content="Premium 100% cotton baby essentials, thoughtfully designed in South Africa and shipped worldwide."
-    />
-    <meta name="twitter:image" content="https://banimal.co.za/og-image.png" />
+  .provenance{
+    margin-top:24px; background:var(--artcream); border:1px solid var(--rule); border-radius:12px;
+    padding:16px 20px; font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--muted);
+  }
+  .provenance b{ color:var(--ink); }
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Inter:wght@300..700&family=Noto+Sans+Arabic:wght@400..700&family=IBM+Plex+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Banimal — dark mode (warm charcoal, NYC-precise) + system-aware, persisted -->
-    <style id="banimal-theme-polish">
-      html { color-scheme: light; }
-      html.dark { color-scheme: dark; }
-      html, body { transition: background-color .45s cubic-bezier(.4,0,.2,1), color .45s cubic-bezier(.4,0,.2,1); }
-      html.dark img:not([src*=".svg"]) { filter: brightness(.94) contrast(1.02); }
-      #banimal-theme-toggle {
-        position: fixed; right: 1.5rem; bottom: 1.5rem; z-index: 2147483000;
-        width: 46px; height: 46px; display: grid; place-items: center;
-        border-radius: 9999px; cursor: pointer; padding: 0;
-        background: hsl(var(--card) / .72);
-        border: 1px solid hsl(var(--border));
-        color: hsl(var(--foreground));
-        -webkit-backdrop-filter: saturate(1.4) blur(14px); backdrop-filter: saturate(1.4) blur(14px);
-        box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 8px 24px -8px rgba(0,0,0,.22);
-        transition: transform .35s cubic-bezier(.34,1.56,.64,1), background .45s ease, border-color .45s ease, box-shadow .45s ease;
-      }
-      #banimal-theme-toggle:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 2px 4px rgba(0,0,0,.10), 0 14px 34px -10px rgba(0,0,0,.30); }
-      #banimal-theme-toggle:active { transform: translateY(0) scale(.97); }
-      #banimal-theme-toggle:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 3px; }
-      #banimal-theme-toggle svg { width: 20px; height: 20px; transition: opacity .4s ease, transform .5s cubic-bezier(.4,0,.2,1); }
-      #banimal-theme-toggle .bt-sun { position: absolute; opacity: 1; transform: rotate(0) scale(1); }
-      #banimal-theme-toggle .bt-moon { position: absolute; opacity: 0; transform: rotate(-90deg) scale(.6); }
-      html.dark #banimal-theme-toggle .bt-sun { opacity: 0; transform: rotate(90deg) scale(.6); }
-      html.dark #banimal-theme-toggle .bt-moon { opacity: 1; transform: rotate(0) scale(1); }
-      @media (prefers-reduced-motion: reduce) { html, body, #banimal-theme-toggle, #banimal-theme-toggle svg { transition: none !important; } }
-    </style>
-    <script>
-      (function () {
-        var KEY = 'banimal-theme';
-        var root = document.documentElement;
-        function systemDark(){ return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; }
-        function resolve(){ var s = localStorage.getItem(KEY); return s ? s === 'dark' : systemDark(); }
-        function apply(dark){ root.classList.toggle('dark', !!dark); }
-        // Apply before first paint — no flash.
-        apply(resolve());
-        // Follow the OS while the user hasn't made an explicit choice.
-        if (window.matchMedia) {
-          window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
-            if (!localStorage.getItem(KEY)) apply(e.matches);
-          });
-        }
-        function mount(){
-          if (document.getElementById('banimal-theme-toggle')) return;
-          var btn = document.createElement('button');
-          btn.id = 'banimal-theme-toggle';
-          btn.type = 'button';
-          btn.setAttribute('aria-label', 'Toggle dark mode');
-          btn.setAttribute('title', 'Toggle theme');
-          btn.innerHTML =
-            '<svg class="bt-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2.6M12 19v2.6M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.4 12H5M19 12h2.6M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>' +
-            '<svg class="bt-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8 8 0 1 1 9.8 3.5a6.4 6.4 0 0 0 10.7 10.7Z"/></svg>';
-          btn.addEventListener('click', function () {
-            var dark = !root.classList.contains('dark');
-            apply(dark);
-            localStorage.setItem(KEY, dark ? 'dark' : 'light');
-          });
-          document.body.appendChild(btn);
-        }
-        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount);
-        else mount();
-      })();
-    </script>
+  section{ padding:40px 0; border-top:1px solid var(--rule); }
+  section h2{ font-size:20px; margin-bottom:14px; }
 
-    <script type="module" crossorigin src="./assets/index-BANv26-checkout-fix.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-DMs94wb6.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+  .items{ display:flex; flex-direction:column; gap:12px; }
+  .item{
+    background:var(--paper); border:1px solid var(--rule); border-radius:12px;
+    padding:16px 20px; display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  }
+  .item .name{ font-weight:700; font-size:15px; }
+  .item .path{ font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--muted); display:block; margin-top:2px; }
+  .item .desc{ font-size:13.5px; color:var(--muted); max-width:52ch; }
+  .item .tag{
+    font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.06em; text-transform:uppercase;
+    padding:3px 9px; border-radius:100px; background:var(--sage-soft); color:var(--sage); white-space:nowrap;
+  }
+
+  footer{ padding:30px 0 10px; }
+  footer .fwrap{
+    display:grid; grid-template-columns:auto 1fr; gap:14px 24px; align-items:center;
+    border-top:2px solid var(--ink); padding-top:20px;
+  }
+  footer .fmark{ background:#FFFFFF; border:2px solid var(--ink); border-radius:10px; padding:8px 12px; width:fit-content; }
+  footer .fmark img{ height:32px; width:auto; display:block; filter:grayscale(1); }
+  footer .finfo{ text-align:right; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); }
+  @media (max-width:560px){ footer .fwrap{ grid-template-columns:1fr; } footer .finfo{ text-align:left; } }
+</style>
+</head>
+<body>
+
+<div class="utilitybar">
+  <div class="inner">
+    <span class="crumb"><img data-icon-ink="brand-assets/samfox-icon-verified-ink.png" data-icon-cream="brand-assets/samfox-icon-verified-cream.png" src="brand-assets/samfox-icon-verified-ink.png" alt="" /> <b>Sam Fox™</b> / <img class="banimal-logo" data-icon-ink="brand-assets/banimal-logo-ink.png" data-icon-cream="brand-assets/banimal-logo-white.png" src="brand-assets/banimal-logo-ink.png" alt="Banimal™" /> Legal archive</span>
+    <span class="status-pill">archived 2026-08-30</span>
+  </div>
+</div>
+
+<div class="wrap">
+  <header class="page">
+    <div class="eyebrow">heyns1000/legal · Banimal/</div>
+    <h1>Six files, moved out of the servable path</h1>
+    <p>Not part of the Banimal™ product — early-days artifacts, one-off documents, and legacy scaffolding that were sitting in <code class="mono">heyns1000/banimal</code>'s working tree. Duplicated here for the record; nothing was removed from the origin repository.</p>
+    <div class="provenance">
+      <b>Origin:</b> heyns1000/banimal @ <span class="mono">9002948</span> · 2026-08-30 09:58 SAST<br>
+      <b>Copy semantics:</b> additive only — these are duplicates, not the originals. The origin repository is unchanged.
+    </div>
+  </header>
+
+  <section>
+    <h2>The six</h2>
+    <div class="items">
+      <div class="item">
+        <div><div class="name">Banimal Store Integration Guide.zip</div><span class="path">Banimal Store Integration Guide.zip</span></div>
+        <div class="desc">A frozen, 63-file snapshot of the whole app as it stood 2025-12-31 — a time capsule, not a release.</div>
+        <span class="tag">snapshot</span>
+      </div>
+      <div class="item">
+        <div><div class="name">WordPress plugin — legacy baseline</div><span class="path">wordpress-plugin-legacy/</span></div>
+        <div class="desc">The v4.7.8 baseline plugin, pre-dating the current thin signed-client design. Named "legacy" by its own author.</div>
+        <span class="tag">legacy</span>
+      </div>
+      <div class="item">
+        <div><div class="name">Vito_Stroller.html.archived</div><span class="path">archive/Vito_Stroller.html.archived</span></div>
+        <div class="desc">An unrelated stroller-import cost model with real supplier links — never part of this codebase. HTML-escaped inert.</div>
+        <span class="tag">unrelated</span>
+      </div>
+      <div class="item">
+        <div><div class="name">New_stroller.png</div><span class="path">New_stroller.png</span></div>
+        <div class="desc">Companion image to the stroller document above.</div>
+        <span class="tag">unrelated</span>
+      </div>
+      <div class="item">
+        <div><div class="name">banimal_api_connector.html (×2)</div><span class="path">banimal_api_connector.html, banimal_api_connector_15-01.html</span></div>
+        <div class="desc">Two near-identical AI-mockup "API monitor" pages referencing an invented FAA Inline Verification Mandate — never wired to the real API.</div>
+        <span class="tag">mockup</span>
+      </div>
+      <div class="item">
+        <div><div class="name">assets manifest</div><span class="path">assets-manifest</span></div>
+        <div class="desc">45-byte plain-text manifest that only ever pointed at the two files above — dangling now that Vito_Stroller is archived.</div>
+        <span class="tag">stale</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="fwrap">
+      <div class="fmark"><img src="brand-assets/banimal-logo-ink.png" alt="Banimal™" /></div>
+      <div class="finfo">
+        <div>Banimal™ Legal archive · duplicated from heyns1000/banimal</div>
+        <div>© 2026 Fruitful Shops (Pty) Ltd · Artwork © Sam Fox™</div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function () {
+  function pageIsDark() {
+    var explicit = document.documentElement.getAttribute('data-theme');
+    if (explicit === 'dark') return true;
+    if (explicit === 'light') return false;
+    return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  }
+  function applyIconTheme() {
+    var dark = pageIsDark();
+    document.querySelectorAll('[data-icon-ink]').forEach(function (el) {
+      el.setAttribute('src', dark ? el.getAttribute('data-icon-cream') : el.getAttribute('data-icon-ink'));
+    });
+  }
+  applyIconTheme();
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyIconTheme);
+  }
+})();
+</script>
+</body>
 </html>
