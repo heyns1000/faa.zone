@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2026-08-30 | banimal | skill-training-global-ci-rollout | `docs/connector-preview.html` | `514e2b66` | Banimal Connector Preview | 27584 | 12 | 2 | 44.8 |
+| 2 | 2026-08-30 | banimal | claude/banimal2-deploy | `docs/connector-preview.html` | `5e8a3dfa` | Banimal Connector Preview | 24864 | 11 | 0 | 39.5 |
