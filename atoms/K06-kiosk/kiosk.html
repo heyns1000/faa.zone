@@ -3,24 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fruitful Global Kiosk — Phase 1.0_gary_upload</title>
+    <title>Fruitful Kiosk — v1.0_gary_upload</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;0,900;1,700;1,900&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Fira+Code:wght@500&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* AUDITED: Golden Ticket CI Guide MASTER v2 */
-            --teal: #1E9F97;
-            --teal-bright: #47B3A8;
+            /* Golden Ticket CI Guide MASTER v2 */
+            --teal: #47B3A8;
             --red: #E63946;
-            --red-deep: #C42B37;
-            --amber: #FCB915;
-            --amber-deep: #E29A00;
+            --amber: #FFB703;
             --ink: #3A2A1B;
             --cream: #FBF4E4;
-            --sand: #F3E7CE;
-            --emerald: #10B981;
             --glass: rgba(255, 255, 255, 0.08);
-            --border: rgba(255, 255, 255, 0.14);
+            --border: rgba(255, 255, 255, 0.15);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -34,169 +29,162 @@
             user-select: none;
         }
 
-        /* High-tech ambient layer */
-        .ambient {
-            position: fixed; inset: 0;
-            background: radial-gradient(circle at 70% 30%, rgba(30, 159, 151, 0.15) 0%, transparent 60%),
-                        radial-gradient(circle at 20% 80%, rgba(230, 57, 70, 0.1) 0%, transparent 50%);
+        .glow-bg {
+            position: fixed;
+            top: 50%; left: 50%;
+            width: 150%; height: 150%;
+            background: radial-gradient(circle at center, rgba(71, 179, 168, 0.1) 0%, rgba(230, 57, 70, 0.05) 40%, rgba(58, 42, 27, 0) 70%);
+            transform: translate(-50%, -50%);
             z-index: -1;
         }
 
-        /* HEADER: Established Brand Lockup */
         header {
-            flex: none;
-            padding: 50px 60px 20px;
+            flex: none; padding: 40px 50px;
             display: flex; justify-content: space-between; align-items: center;
+            background: linear-gradient(to bottom, var(--ink), transparent);
         }
-        .brand { display: flex; align-items: center; gap: 20px; }
-        .brand img { width: 68px; height: 68px; border-radius: 50%; background: #fff; padding: 4px; box-shadow: 0 0 30px rgba(0,0,0,0.4); }
-        .wordmark { font-style: italic; font-weight: 900; font-size: 44px; color: var(--red); text-transform: lowercase; letter-spacing: -0.04em; }
+        .logo-box { display: flex; align-items: center; gap: 15px; }
+        .logo-box img { width: 64px; height: 64px; border-radius: 50%; object-fit: contain; background: white; border: 2px solid var(--teal); }
+        .brand-text { font-weight: 900; font-size: 42px; font-style: italic; color: var(--red); letter-spacing: -0.04em; }
 
-        .status-chip {
-            background: var(--teal); color: #fff;
-            padding: 12px 28px; border-radius: 999px;
-            font-family: 'Fira Code', monospace; font-size: 14px; font-weight: 700;
-            text-transform: uppercase; display: flex; align-items: center; gap: 12px;
+        .kiosk-status {
+            background: var(--teal); color: white;
+            padding: 10px 24px; border-radius: 999px;
+            font-size: 16px; font-weight: 800; text-transform: uppercase;
+            display: flex; align-items: center; gap: 10px;
         }
-        .dot { width: 10px; height: 10px; background: var(--amber); border-radius: 50%; box-shadow: 0 0 15px var(--amber); animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        .dot { width: 10px; height: 10px; background: var(--amber); border-radius: 50%; box-shadow: 0 0 12px var(--amber); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-        /* SCREENS */
-        .screen { position: absolute; inset: 0; display: none; flex-direction: column; padding: 140px 60px 100px; }
-        .screen.on { display: flex; }
+        .screen { position: absolute; inset: 0; display: none; flex-direction: column; padding: 130px 50px 100px; }
+        .screen.active { display: flex; }
 
-        /* HOME: Established Copy */
-        .home-content { text-align: center; justify-content: center; }
-        .headline { font-style: italic; font-weight: 900; text-transform: uppercase; font-size: 92px; line-height: 0.84; margin-bottom: 30px; letter-spacing: -0.01em; }
+        .headline { font-size: 88px; font-weight: 900; font-style: italic; text-transform: uppercase; line-height: 0.82; margin-bottom: 25px; }
         .headline span { color: var(--red); }
-        .subcopy { font-size: 28px; color: var(--teal-bright); font-weight: 600; max-width: 800px; margin: 0 auto 70px; line-height: 1.4; }
+        .subheadline { font-size: 26px; color: var(--teal); font-weight: 600; margin-bottom: 60px; max-width: 90%; }
         
-        .start-btn {
-            background: var(--red); color: #fff; padding: 50px; border-radius: 40px;
-            font-style: italic; font-weight: 900; font-size: 48px; text-transform: uppercase;
-            border: none; box-shadow: 0 18px 0 var(--red-deep); cursor: pointer; transition: all 0.1s;
+        .cta-btn {
+            background: var(--red); color: white; padding: 45px; border-radius: 35px;
+            font-size: 42px; font-weight: 900; font-style: italic; text-transform: uppercase;
+            border: none; box-shadow: 0 15px 0 #C42B37; cursor: pointer; transition: all 0.1s;
         }
-        .start-btn:active { transform: translateY(10px); box-shadow: 0 8px 0 var(--red-deep); }
+        .cta-btn:active { transform: translateY(10px); box-shadow: 0 5px 0 #C42B37; }
 
-        /* BROWSE: Menu Grid */
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; flex: 1; overflow-y: auto; padding-bottom: 150px; }
-        .cat-tag { font-family: 'Fira Code', monospace; font-size: 24px; font-weight: 900; text-transform: uppercase; color: var(--teal); border-bottom: 3px solid var(--sand); padding-bottom: 15px; grid-column: span 2; margin-top: 50px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; flex: 1; overflow-y: auto; padding-bottom: 140px; }
+        .section-tag { font-size: 24px; font-weight: 900; text-transform: uppercase; color: var(--teal); border-bottom: 2px solid var(--border); padding-bottom: 12px; grid-column: span 2; margin-top: 40px; }
 
-        .item-card { background: var(--glass); border: 2px solid var(--border); border-radius: 40px; padding: 30px; backdrop-filter: blur(25px); display: flex; flex-direction: column; gap: 20px; }
-        .item-card img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 25px; border: 2px solid var(--border); }
-        .item-name { font-size: 24px; font-weight: 700; color: #fff; }
-        .item-price { font-family: 'Fira Code', monospace; font-size: 22px; color: var(--amber); font-weight: 700; }
+        .card { background: var(--glass); border: 1px solid var(--border); border-radius: 32px; padding: 25px; backdrop-filter: blur(20px); display: flex; flex-direction: column; gap: 15px; }
+        .card img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 20px; border: 1px solid var(--border); }
+        .card-name { font-size: 22px; font-weight: 700; color: white; }
+        .card-price { font-family: 'Fira Code', monospace; font-size: 20px; color: var(--amber); }
 
-        .add-btn { background: var(--teal); color: #fff; border: none; padding: 18px; border-radius: 15px; font-weight: 800; text-transform: uppercase; cursor: pointer; font-size: 18px; }
+        .order-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--teal); padding: 30px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+        .total-label { font-size: 14px; text-transform: uppercase; font-weight: 700; opacity: 0.9; }
+        .total-val { font-size: 40px; font-weight: 900; font-style: italic; }
+        .pay-btn { background: white; color: var(--teal); border: none; padding: 20px 40px; border-radius: 20px; font-size: 24px; font-weight: 900; text-transform: uppercase; cursor: pointer; box-shadow: 0 8px 0 rgba(0,0,0,0.1); }
 
-        /* TICKER / ORDER BAR */
-        .order-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--teal); padding: 35px 70px; display: flex; justify-content: space-between; align-items: center; z-index: 100; box-shadow: 0 -10px 40px rgba(0,0,0,0.3); }
-        .total-box .lbl { font-family: 'Fira Code', monospace; font-size: 14px; text-transform: uppercase; font-weight: 700; opacity: 0.85; }
-        .total-box .val { font-style: italic; font-weight: 900; font-size: 46px; }
-        .pay-btn { background: #fff; color: var(--teal); border: none; padding: 22px 45px; border-radius: 22px; font-size: 28px; font-weight: 900; text-transform: uppercase; cursor: pointer; }
+        .ref-box { font-family: 'Fira Code', monospace; font-size: 28px; color: var(--amber); margin-top: 30px; border: 2px dashed var(--amber); padding: 15px; display: inline-block; }
 
-        /* SPECS OVERLAY */
-        .admin-badge {
-            position: fixed; top: 130px; right: 40px; background: rgba(0,0,0,0.7); padding: 20px; border-radius: 20px;
-            font-family: 'Fira Code', monospace; font-size: 13px; color: var(--amber); border: 2px solid var(--amber); z-index: 200;
+        .v-tag { font-family: 'Fira Code', monospace; font-size: 14px; color: rgba(255,255,255,0.2); position: fixed; bottom: 20px; width: 100%; text-align: center; }
+
+        .spec-overlay {
+            position: fixed; top: 120px; right: 30px; background: rgba(0,0,0,0.7); padding: 15px; border-radius: 15px;
+            font-family: 'Fira Code', monospace; font-size: 12px; color: var(--amber); border: 1px solid var(--amber); z-index: 50;
         }
-
-        .ref-tag { font-family: 'Fira Code', monospace; font-size: 32px; color: var(--amber); margin-top: 40px; border: 3px dashed var(--amber); padding: 20px; display: inline-block; }
-        footer { position: fixed; bottom: 25px; width: 100%; text-align: center; font-family: 'Fira Code', monospace; font-size: 15px; color: rgba(255,255,255,0.25); z-index: 10; letter-spacing: 0.1em; }
     </style>
 </head>
 <body>
-    <div class="ambient"></div>
+    <div class="glow-bg"></div>
 
     <header>
-        <div class="brand">
-            <img src="art/fruitful-mark.png" alt="Fruitful Fox">
-            <div class="wordmark">fruitful™</div>
+        <div class="logo-box">
+            <img src="art/fruitful-mark.png" alt="Fruitful Mark">
+            <div class="brand-text">fruitful™</div>
         </div>
-        <div class="status-chip">
+        <div class="kiosk-status">
             <div class="dot"></div>
-            Kiosk Online
+            Online
         </div>
     </header>
 
-    <div class="admin-badge">
+    <div class="spec-overlay">
         RADIUS: 0.8m (1.6m Inner)<br>
         SHELL: 1.8m Outer<br>
-        AREA: 2.01m² Usable
+        AREA: 2.01m²
     </div>
 
-    <!-- HOME SCREEN -->
-    <div id="scr-home" class="screen on home-content">
+    <!-- HOME -->
+    <div id="home" class="screen active" style="text-align: center; justify-content: center;">
         <h1 class="headline">Buy Artisan.<br>Create Apps.<br><span>Feed Children.</span></h1>
-        <p class="subcopy">If you don't like the fruits you are growing, change the seeds.</p>
-        <button class="start-btn" onclick="nav('menu')">Tap to Start</button>
+        <p class="subheadline">If you don't like the fruits you are growing, change the seeds.</p>
+        <button class="cta-btn" onclick="nav('menu')">Tap to Start</button>
     </div>
 
-    <!-- MENU SCREEN -->
-    <div id="scr-menu" class="screen">
+    <!-- MENU -->
+    <div id="menu" class="screen">
         <div class="grid">
-            <div class="cat-tag">Art Subscriptions</div>
-            <div class="item-card">
+            <div class="section-tag">Art Subscriptions</div>
+            <div class="card">
                 <img src="art/chief-samfox.png" alt="The Chief">
-                <div class="item-name">The Chief (SamFox)</div>
-                <div class="item-price">R 165 / month</div>
-                <button class="add-btn" onclick="add('The Chief', 165)">Subscribe</button>
+                <div class="card-name">The Chief (SamFox)</div>
+                <div class="card-price">R 165 / mo</div>
+                <button class="cta-btn" style="padding:15px; font-size:18px; box-shadow:0 8px 0 #C42B37;" onclick="add('The Chief', 165)">Subscribe</button>
             </div>
-            <div class="item-card">
-                <img src="art/grand-canvas-a.jpg" alt="Grand Original">
-                <div class="item-name">Grand Machadlela</div>
-                <div class="item-price">R 245 / month</div>
-                <button class="add-btn" onclick="add('Grand Original', 245)">Subscribe</button>
+            <div class="card">
+                <img src="art/grand-canvas-a.jpg" alt="Grand Canvas">
+                <div class="card-name">Grand Original</div>
+                <div class="card-price">R 245 / mo</div>
+                <button class="cta-btn" style="padding:15px; font-size:18px; box-shadow:0 8px 0 #C42B37;" onclick="add('Grand Canvas', 245)">Subscribe</button>
             </div>
 
-            <div class="cat-tag">Golden Ticket Menu</div>
-            <div class="item-card">
-                <div class="item-name">Artisan Coffee</div>
-                <div class="item-price">R 40.00</div>
-                <button class="add-btn" onclick="add('Coffee', 40)">Add to Basket</button>
+            <div class="section-tag">Golden Ticket Menu</div>
+            <div class="card" style="justify-content:center;">
+                <div class="card-name">Artisan Coffee</div>
+                <div class="card-price">R 40.00</div>
+                <button class="cta-btn" style="padding:15px; font-size:18px; box-shadow:0 8px 0 #C42B37;" onclick="add('Coffee', 40)">Add to Basket</button>
             </div>
-            <div class="item-card">
-                <div class="item-name">Milk Pannekoek (1)</div>
-                <div class="item-price">R 15.00</div>
-                <button class="add-btn" onclick="add('Pannekoek', 15)">Add to Basket</button>
+            <div class="card" style="justify-content:center;">
+                <div class="card-name">Milk Pannekoek (1)</div>
+                <div class="card-price">R 15.00</div>
+                <button class="cta-btn" style="padding:15px; font-size:18px; box-shadow:0 8px 0 #C42B37;" onclick="add('Pannekoek', 15)">Add to Basket</button>
             </div>
         </div>
 
         <div class="order-bar" id="bar" style="display:none;">
-            <div class="total-box">
-                <div class="lbl">Total Amount</div>
-                <div class="val" id="total-val">R 0</div>
+            <div>
+                <div class="total-label">Subtotal</div>
+                <div class="total-val" id="total-txt">R 0</div>
             </div>
             <button class="pay-btn" onclick="nav('success')">Pay with Card</button>
         </div>
     </div>
 
-    <!-- SUCCESS SCREEN -->
-    <div id="scr-success" class="screen home-content">
-        <h1 class="headline" style="color:var(--teal-bright);">Thank You.</h1>
-        <p class="subcopy">Your artisan purchase feeds a child today™.</p>
-        <div class="ref-tag" id="ref-num">FFL-0000000</div>
-        <button class="start-btn" style="padding:25px; margin-top:50px; font-size:24px;" onclick="reset()">Finish</button>
+    <!-- SUCCESS -->
+    <div id="success" class="screen" style="text-align: center; justify-content: center;">
+        <h1 class="headline" style="color:var(--teal);">Thank You.</h1>
+        <p class="subheadline">Your order feeds a child today™.</p>
+        <div class="ref-box" id="ref-txt">FFL-0000000</div>
+        <button class="cta-btn" style="padding:20px; margin-top:40px;" onclick="reset()">Finish</button>
     </div>
 
-    <footer>RELEASE_AUDITED · v1.0_gary_upload · OFFICIAL_PROJECT_DATA_ONLY</footer>
+    <div class="v-tag">RELEASE_STABLE · v1.0_gary_upload · PORTRAIT_FHD</div>
 
     <script>
         let total = 0;
         function nav(id) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('on'));
-            document.getElementById('scr-' + id).classList.add('on');
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
         }
         function add(name, price) {
             total += price;
-            document.getElementById('total-val').textContent = 'R ' + total;
+            document.getElementById('total-txt').textContent = 'R ' + total;
             document.getElementById('bar').style.display = 'flex';
         }
         function reset() {
             total = 0;
-            document.getElementById('total-val').textContent = 'R 0';
+            document.getElementById('total-txt').textContent = 'R 0';
             document.getElementById('bar').style.display = 'none';
-            document.getElementById('ref-num').textContent = 'FFL-' + Math.floor(1000000 + Math.random() * 9000000);
+            document.getElementById('ref-txt').textContent = 'FFL-' + Math.floor(1000000 + Math.random() * 9000000);
             nav('home');
         }
         reset();
