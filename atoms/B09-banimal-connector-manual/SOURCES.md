@@ -6,3 +6,4 @@
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2026-08-30 | banimal | claude/samfox-ci-guide-brand-alignment | `docs/manual/user-manual.html` | `af21f661` | Banimal™ Connector Manual | 26744 | 19 | 2 | 50.7 |
 | 2 | 2026-08-30 | banimal | claude/banimal2-deploy | `docs/manual/user-manual.html` | `66021050` | Banimal™ Connector Manual | 25148 | 19 | 2 | 50.5 |
+| 3 | 2026-08-30 | banimal | claude/banimal-footer-alignment-20 | `docs/manual/user-manual.html` | `fd33dfc0` | Banimal™ Connector Manual | 25148 | 19 | 2 | 50.5 |
