@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2026-08-30 | banimal | skill-training-global-ci-rollout | `wordpress-plugin/banimal-ecosystem-connector/landing.html` | `85201e43` | Banimal™ Connector | 27854 | 15 | 3 | 48.8 |
+| 2 | 2026-08-30 | banimal | claude/banimal-manual-header-fix-22 | `wordpress-plugin/banimal-ecosystem-connector/landing.html` | `04433102` | Banimal™ Connector | 27856 | 15 | 3 | 48.8 |
