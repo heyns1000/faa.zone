@@ -5,17 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fruitful Global Kiosk — Phase 1.0_gary_upload</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Fira+Code:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;0,900;1,700;1,900&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Golden Ticket CI Guide MASTER v2 */
-            --teal: #47B3A8;
+            /* AUDITED: Golden Ticket CI Guide MASTER v2 */
+            --teal: #1E9F97;
+            --teal-bright: #47B3A8;
             --red: #E63946;
-            --amber: #FFB703;
+            --red-deep: #C42B37;
+            --amber: #FCB915;
+            --amber-deep: #E29A00;
             --ink: #3A2A1B;
             --cream: #FBF4E4;
+            --sand: #F3E7CE;
+            --emerald: #10B981;
             --glass: rgba(255, 255, 255, 0.08);
-            --border: rgba(255, 255, 255, 0.15);
+            --border: rgba(255, 255, 255, 0.14);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -23,251 +28,178 @@
             background: var(--ink);
             color: var(--cream);
             font-family: 'Inter', sans-serif;
-            width: 100vw;
-            height: 100vh;
+            width: 100vw; height: 100vh;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
+            display: flex; flex-direction: column;
             user-select: none;
         }
 
-        /* Full-screen high-tech background */
-        .glow-orbit {
-            position: fixed;
-            top: 50%; left: 50%;
-            width: 150%; height: 150%;
-            background: radial-gradient(circle at center, rgba(71, 179, 168, 0.1) 0%, rgba(230, 57, 70, 0.05) 40%, rgba(58, 42, 27, 0) 70%);
-            transform: translate(-50%, -50%);
+        /* High-tech ambient layer */
+        .ambient {
+            position: fixed; inset: 0;
+            background: radial-gradient(circle at 70% 30%, rgba(30, 159, 151, 0.15) 0%, transparent 60%),
+                        radial-gradient(circle at 20% 80%, rgba(230, 57, 70, 0.1) 0%, transparent 50%);
             z-index: -1;
         }
 
-        /* Global Header */
+        /* HEADER: Established Brand Lockup */
         header {
             flex: none;
-            padding: 50px 50px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .brand-text { font-weight: 900; font-size: 38px; font-style: italic; color: var(--red); letter-spacing: -0.04em; }
-        .kiosk-status {
-            background: var(--teal);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 999px;
-            font-size: 16px;
-            font-weight: 800;
-            text-transform: uppercase;
-            display: flex; align-items: center; gap: 10px;
-        }
-        .status-dot { width: 10px; height: 10px; background: var(--amber); border-radius: 50%; box-shadow: 0 0 12px var(--amber); animation: pulse 2s infinite; }
-
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
-
-        /* Step Machine Screens */
-        .screen {
-            position: absolute;
-            inset: 0;
-            display: none;
-            flex-direction: column;
-            padding: 120px 50px 100px;
-        }
-        .screen.active { display: flex; }
-
-        /* HOME / ATTRACTOR */
-        .home-content { text-align: center; justify-content: center; }
-        .headline { font-size: 84px; font-weight: 900; font-style: italic; text-transform: uppercase; line-height: 0.85; margin-bottom: 30px; }
-        .headline span { color: var(--red); }
-        .subheadline { font-size: 26px; color: var(--teal); font-weight: 600; margin-bottom: 60px; max-width: 80%; margin-left: auto; margin-right: auto; }
-        
-        .start-cta {
-            background: var(--red);
-            color: white;
-            padding: 40px;
-            border-radius: 30px;
-            font-size: 38px;
-            font-weight: 900;
-            font-style: italic;
-            text-transform: uppercase;
-            border: none;
-            box-shadow: 0 15px 0 #C42B37;
-            cursor: pointer;
-            width: 100%;
-            transition: all 0.1s;
-        }
-        .start-cta:active { transform: translateY(10px); box-shadow: 0 5px 0 #C42B37; }
-
-        /* BROWSE */
-        .browse-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            overflow-y: auto;
-            flex: 1;
-            padding-bottom: 120px;
-        }
-        .cat-title { font-size: 20px; font-weight: 800; text-transform: uppercase; color: var(--teal); margin: 30px 0 15px; grid-column: span 2; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
-        
-        .item-card {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 20px;
-            backdrop-filter: blur(15px);
-            display: flex; flex-direction: column; gap: 12px;
-        }
-        .item-card img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 16px; border: 1px solid var(--border); }
-        .item-name { font-size: 20px; font-weight: 700; color: white; }
-        .item-price { font-family: 'Fira Code', monospace; font-size: 18px; color: var(--amber); }
-        .add-btn { background: var(--teal); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 800; text-transform: uppercase; cursor: pointer; }
-
-        /* CART BAR */
-        .order-bar {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            background: var(--teal);
-            padding: 25px 50px;
+            padding: 50px 60px 20px;
             display: flex; justify-content: space-between; align-items: center;
-            z-index: 10;
         }
-        .order-info .label { font-size: 12px; text-transform: uppercase; font-weight: 700; opacity: 0.8; }
-        .order-info .total { font-size: 32px; font-weight: 900; font-style: italic; }
-        .checkout-btn { background: white; color: var(--teal); border: none; padding: 15px 30px; border-radius: 15px; font-size: 20px; font-weight: 900; text-transform: uppercase; cursor: pointer; }
+        .brand { display: flex; align-items: center; gap: 20px; }
+        .brand img { width: 68px; height: 68px; border-radius: 50%; background: #fff; padding: 4px; box-shadow: 0 0 30px rgba(0,0,0,0.4); }
+        .wordmark { font-style: italic; font-weight: 900; font-size: 44px; color: var(--red); text-transform: lowercase; letter-spacing: -0.04em; }
 
-        /* SUCCESS SCREEN */
-        .success-content { text-align: center; justify-content: center; }
-        .success-icon { font-size: 100px; color: var(--teal); margin-bottom: 20px; }
-        .order-ref { font-family: 'Fira Code', monospace; font-size: 24px; color: var(--amber); margin: 20px 0; }
+        .status-chip {
+            background: var(--teal); color: #fff;
+            padding: 12px 28px; border-radius: 999px;
+            font-family: 'Fira Code', monospace; font-size: 14px; font-weight: 700;
+            text-transform: uppercase; display: flex; align-items: center; gap: 12px;
+        }
+        .dot { width: 10px; height: 10px; background: var(--amber); border-radius: 50%; box-shadow: 0 0 15px var(--amber); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+        /* SCREENS */
+        .screen { position: absolute; inset: 0; display: none; flex-direction: column; padding: 140px 60px 100px; }
+        .screen.on { display: flex; }
+
+        /* HOME: Established Copy */
+        .home-content { text-align: center; justify-content: center; }
+        .headline { font-style: italic; font-weight: 900; text-transform: uppercase; font-size: 92px; line-height: 0.84; margin-bottom: 30px; letter-spacing: -0.01em; }
+        .headline span { color: var(--red); }
+        .subcopy { font-size: 28px; color: var(--teal-bright); font-weight: 600; max-width: 800px; margin: 0 auto 70px; line-height: 1.4; }
         
-        /* FOOTER VERSION TAG */
-        footer {
-            position: fixed;
-            bottom: 30px; width: 100%;
-            text-align: center;
-            z-index: 5;
+        .start-btn {
+            background: var(--red); color: #fff; padding: 50px; border-radius: 40px;
+            font-style: italic; font-weight: 900; font-size: 48px; text-transform: uppercase;
+            border: none; box-shadow: 0 18px 0 var(--red-deep); cursor: pointer; transition: all 0.1s;
         }
-        .v-tag { font-family: 'Fira Code', monospace; font-size: 12px; color: rgba(255, 255, 255, 0.25); letter-spacing: 0.15em; }
+        .start-btn:active { transform: translateY(10px); box-shadow: 0 8px 0 var(--red-deep); }
 
-        /* ADMIN SPEC OVERLAY (AS REQUESTED) */
-        .spec-badge {
-            position: fixed;
-            top: 100px; right: 20px;
-            background: rgba(0,0,0,0.5);
-            padding: 10px; border-radius: 10px;
-            font-family: 'Fira Code', monospace; font-size: 10px;
-            border: 1px solid var(--border);
+        /* BROWSE: Menu Grid */
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; flex: 1; overflow-y: auto; padding-bottom: 150px; }
+        .cat-tag { font-family: 'Fira Code', monospace; font-size: 24px; font-weight: 900; text-transform: uppercase; color: var(--teal); border-bottom: 3px solid var(--sand); padding-bottom: 15px; grid-column: span 2; margin-top: 50px; }
+
+        .item-card { background: var(--glass); border: 2px solid var(--border); border-radius: 40px; padding: 30px; backdrop-filter: blur(25px); display: flex; flex-direction: column; gap: 20px; }
+        .item-card img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 25px; border: 2px solid var(--border); }
+        .item-name { font-size: 24px; font-weight: 700; color: #fff; }
+        .item-price { font-family: 'Fira Code', monospace; font-size: 22px; color: var(--amber); font-weight: 700; }
+
+        .add-btn { background: var(--teal); color: #fff; border: none; padding: 18px; border-radius: 15px; font-weight: 800; text-transform: uppercase; cursor: pointer; font-size: 18px; }
+
+        /* TICKER / ORDER BAR */
+        .order-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--teal); padding: 35px 70px; display: flex; justify-content: space-between; align-items: center; z-index: 100; box-shadow: 0 -10px 40px rgba(0,0,0,0.3); }
+        .total-box .lbl { font-family: 'Fira Code', monospace; font-size: 14px; text-transform: uppercase; font-weight: 700; opacity: 0.85; }
+        .total-box .val { font-style: italic; font-weight: 900; font-size: 46px; }
+        .pay-btn { background: #fff; color: var(--teal); border: none; padding: 22px 45px; border-radius: 22px; font-size: 28px; font-weight: 900; text-transform: uppercase; cursor: pointer; }
+
+        /* SPECS OVERLAY */
+        .admin-badge {
+            position: fixed; top: 130px; right: 40px; background: rgba(0,0,0,0.7); padding: 20px; border-radius: 20px;
+            font-family: 'Fira Code', monospace; font-size: 13px; color: var(--amber); border: 2px solid var(--amber); z-index: 200;
         }
+
+        .ref-tag { font-family: 'Fira Code', monospace; font-size: 32px; color: var(--amber); margin-top: 40px; border: 3px dashed var(--amber); padding: 20px; display: inline-block; }
+        footer { position: fixed; bottom: 25px; width: 100%; text-align: center; font-family: 'Fira Code', monospace; font-size: 15px; color: rgba(255,255,255,0.25); z-index: 10; letter-spacing: 0.1em; }
     </style>
 </head>
 <body>
-    <div class="glow-orbit"></div>
+    <div class="ambient"></div>
 
     <header>
-        <div class="brand-text">fruitful™</div>
-        <div class="kiosk-status">
-            <div class="status-dot"></div>
-            Online
+        <div class="brand">
+            <img src="art/fruitful-mark.png" alt="Fruitful Fox">
+            <div class="wordmark">fruitful™</div>
+        </div>
+        <div class="status-chip">
+            <div class="dot"></div>
+            Kiosk Online
         </div>
     </header>
 
-    <div class="spec-badge">
+    <div class="admin-badge">
         RADIUS: 0.8m (1.6m Inner)<br>
         SHELL: 1.8m Outer<br>
-        AREA: 2.01m²
+        AREA: 2.01m² Usable
     </div>
 
-    <!-- SCREEN 1: HOME -->
-    <div id="screen-home" class="screen active home-content">
+    <!-- HOME SCREEN -->
+    <div id="scr-home" class="screen on home-content">
         <h1 class="headline">Buy Artisan.<br>Create Apps.<br><span>Feed Children.</span></h1>
-        <p class="subheadline">If you don't like the fruits you are growing, change the seeds. Tap to start your journey.</p>
-        <button class="start-cta" onclick="nav('browse')">Start Order</button>
+        <p class="subcopy">If you don't like the fruits you are growing, change the seeds.</p>
+        <button class="start-btn" onclick="nav('menu')">Tap to Start</button>
     </div>
 
-    <!-- SCREEN 2: BROWSE -->
-    <div id="screen-browse" class="screen">
-        <div class="browse-grid">
-            <div class="cat-title">Art Subscriptions</div>
+    <!-- MENU SCREEN -->
+    <div id="scr-menu" class="screen">
+        <div class="grid">
+            <div class="cat-tag">Art Subscriptions</div>
             <div class="item-card">
                 <img src="art/chief-samfox.png" alt="The Chief">
                 <div class="item-name">The Chief (SamFox)</div>
-                <div class="item-price">R 165 / mo</div>
-                <button class="add-btn" onclick="addToCart('The Chief', 165)">Subscribe</button>
+                <div class="item-price">R 165 / month</div>
+                <button class="add-btn" onclick="add('The Chief', 165)">Subscribe</button>
             </div>
             <div class="item-card">
                 <img src="art/grand-canvas-a.jpg" alt="Grand Original">
-                <div class="item-name">Grand Original Canvas</div>
-                <div class="item-price">R 245 / mo</div>
-                <button class="add-btn" onclick="addToCart('Grand Canvas', 245)">Subscribe</button>
+                <div class="item-name">Grand Machadlela</div>
+                <div class="item-price">R 245 / month</div>
+                <button class="add-btn" onclick="add('Grand Original', 245)">Subscribe</button>
             </div>
 
-            <div class="cat-title">Golden Ticket Menu</div>
+            <div class="cat-tag">Golden Ticket Menu</div>
             <div class="item-card">
                 <div class="item-name">Artisan Coffee</div>
                 <div class="item-price">R 40.00</div>
-                <button class="add-btn" onclick="addToCart('Coffee', 40)">Add to Basket</button>
-            </div>
-            <div class="item-card">
-                <div class="item-name">Smoothie</div>
-                <div class="item-price">R 60.00</div>
-                <button class="add-btn" onclick="addToCart('Smoothie', 60)">Add to Basket</button>
+                <button class="add-btn" onclick="add('Coffee', 40)">Add to Basket</button>
             </div>
             <div class="item-card">
                 <div class="item-name">Milk Pannekoek (1)</div>
                 <div class="item-price">R 15.00</div>
-                <button class="add-btn" onclick="addToCart('Pannekoek', 15)">Add to Basket</button>
+                <button class="add-btn" onclick="add('Pannekoek', 15)">Add to Basket</button>
             </div>
         </div>
 
-        <div class="order-bar" id="cart-bar" style="display: none;">
-            <div class="order-info">
-                <div class="label">Total Amount</div>
-                <div class="total" id="total-display">R 0</div>
+        <div class="order-bar" id="bar" style="display:none;">
+            <div class="total-box">
+                <div class="lbl">Total Amount</div>
+                <div class="val" id="total-val">R 0</div>
             </div>
-            <button class="checkout-btn" onclick="nav('success')">Pay Now</button>
+            <button class="pay-btn" onclick="nav('success')">Pay with Card</button>
         </div>
     </div>
 
-    <!-- SCREEN 3: SUCCESS -->
-    <div id="screen-success" class="screen success-content">
-        <div class="success-icon">✓</div>
-        <h1 class="headline">Thank You.</h1>
-        <p class="subheadline">Your order is being prepared. Every item feeds a child today™.</p>
-        <div class="order-ref" id="ref-num">FFL-8374291</div>
-        <button class="start-cta" style="padding: 20px;" onclick="resetKiosk()">Finish</button>
+    <!-- SUCCESS SCREEN -->
+    <div id="scr-success" class="screen home-content">
+        <h1 class="headline" style="color:var(--teal-bright);">Thank You.</h1>
+        <p class="subcopy">Your artisan purchase feeds a child today™.</p>
+        <div class="ref-tag" id="ref-num">FFL-0000000</div>
+        <button class="start-btn" style="padding:25px; margin-top:50px; font-size:24px;" onclick="reset()">Finish</button>
     </div>
 
-    <footer>
-        <div class="v-tag">STABLE_REL · v1.0_gary_upload · PHASE_1.0_PORTAL</div>
-    </footer>
+    <footer>RELEASE_AUDITED · v1.0_gary_upload · OFFICIAL_PROJECT_DATA_ONLY</footer>
 
     <script>
-        let cart = [];
         let total = 0;
-
         function nav(id) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById('screen-' + id).classList.add('active');
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('on'));
+            document.getElementById('scr-' + id).classList.add('on');
         }
-
-        function addToCart(name, price) {
-            cart.push({name, price});
+        function add(name, price) {
             total += price;
-            document.getElementById('total-display').textContent = 'R ' + total;
-            document.getElementById('cart-bar').style.display = 'flex';
+            document.getElementById('total-val').textContent = 'R ' + total;
+            document.getElementById('bar').style.display = 'flex';
         }
-
-        function resetKiosk() {
-            cart = [];
+        function reset() {
             total = 0;
-            document.getElementById('total-display').textContent = 'R 0';
-            document.getElementById('cart-bar').style.display = 'none';
-            // Random Ref
+            document.getElementById('total-val').textContent = 'R 0';
+            document.getElementById('bar').style.display = 'none';
             document.getElementById('ref-num').textContent = 'FFL-' + Math.floor(1000000 + Math.random() * 9000000);
             nav('home');
         }
-
-        // Generate initial ref
-        resetKiosk();
+        reset();
     </script>
 </body>
 </html>
