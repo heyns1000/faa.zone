@@ -8,186 +8,284 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Fira+Code:wght@500&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Golden Ticket CI Guide MASTER v2 */
-            --teal: #47B3A8;
+            /* Golden Ticket CI v2 */
+            --teal: #1E9F97;
+            --teal-bright: #47B3A8;
+            --teal-deep: #0E7C74;
             --red: #E63946;
-            --amber: #FFB703;
-            --ink: #3A2A1B;
+            --red-deep: #C42B37;
+            --amber: #FCB915;
             --cream: #FBF4E4;
-            --glass: rgba(255, 255, 255, 0.08);
-            --border: rgba(255, 255, 255, 0.15);
+            --ink: #3A2A1B;
+            --glass: rgba(255, 255, 255, 0.1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body {
-            background: var(--ink);
-            color: var(--cream);
-            font-family: 'Inter', sans-serif;
-            width: 100vw; height: 100vh;
-            overflow: hidden;
-            display: flex; flex-direction: column;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             user-select: none;
         }
 
-        .glow-bg {
+        body {
+            background-color: var(--ink);
+            color: var(--cream);
+            font-family: 'Inter', sans-serif;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Full-screen background vibe */
+        .bg-glow {
             position: fixed;
-            top: 50%; left: 50%;
-            width: 150%; height: 150%;
-            background: radial-gradient(circle at center, rgba(71, 179, 168, 0.1) 0%, rgba(230, 57, 70, 0.05) 40%, rgba(58, 42, 27, 0) 70%);
+            top: 50%;
+            left: 50%;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(30, 159, 151, 0.15) 0%, rgba(58, 42, 27, 0) 70%);
             transform: translate(-50%, -50%);
             z-index: -1;
+            pointer-events: none;
         }
 
         header {
-            flex: none; padding: 40px 50px;
-            display: flex; justify-content: space-between; align-items: center;
+            flex: none;
+            padding: 40px 40px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             background: linear-gradient(to bottom, var(--ink), transparent);
         }
-        .logo-box { display: flex; align-items: center; gap: 15px; }
-        .logo-box img { width: 64px; height: 64px; border-radius: 50%; object-fit: contain; background: white; border: 2px solid var(--teal); }
-        .brand-text { font-weight: 900; font-size: 42px; font-style: italic; color: var(--red); letter-spacing: -0.04em; }
 
-        .kiosk-status {
-            background: var(--teal); color: white;
-            padding: 10px 24px; border-radius: 999px;
-            font-size: 16px; font-weight: 800; text-transform: uppercase;
-            display: flex; align-items: center; gap: 10px;
+        .brand-wordmark {
+            font-weight: 900;
+            font-size: 32px;
+            font-style: italic;
+            color: var(--red);
+            letter-spacing: -0.04em;
         }
-        .dot { width: 10px; height: 10px; background: var(--amber); border-radius: 50%; box-shadow: 0 0 12px var(--amber); animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-        .screen { position: absolute; inset: 0; display: none; flex-direction: column; padding: 130px 50px 100px; }
-        .screen.active { display: flex; }
-
-        .headline { font-size: 88px; font-weight: 900; font-style: italic; text-transform: uppercase; line-height: 0.82; margin-bottom: 25px; }
-        .headline span { color: var(--red); }
-        .subheadline { font-size: 26px; color: var(--teal); font-weight: 600; margin-bottom: 60px; max-width: 90%; }
-        
-        .cta-btn {
-            background: var(--red); color: white; padding: 45px; border-radius: 35px;
-            font-size: 42px; font-weight: 900; font-style: italic; text-transform: uppercase;
-            border: none; box-shadow: 0 15px 0 #C42B37; cursor: pointer; transition: all 0.1s;
+        .status-pill {
+            background: var(--teal);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .cta-btn:active { transform: translateY(10px); box-shadow: 0 5px 0 #C42B37; }
 
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; flex: 1; overflow-y: auto; padding-bottom: 140px; }
-        .section-tag { font-size: 24px; font-weight: 900; text-transform: uppercase; color: var(--teal); border-bottom: 2px solid var(--border); padding-bottom: 12px; grid-column: span 2; margin-top: 40px; }
+        .status-pill .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--amber);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--amber);
+            animation: pulse 1.5s infinite;
+        }
 
-        .card { background: var(--glass); border: 1px solid var(--border); border-radius: 32px; padding: 25px; backdrop-filter: blur(20px); display: flex; flex-direction: column; gap: 15px; }
-        .card img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 20px; border: 1px solid var(--border); }
-        .card-name { font-size: 22px; font-weight: 700; color: white; }
-        .card-price { font-family: 'Fira Code', monospace; font-size: 20px; color: var(--amber); }
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
 
-        .order-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--teal); padding: 30px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
-        .total-label { font-size: 14px; text-transform: uppercase; font-weight: 700; opacity: 0.9; }
-        .total-val { font-size: 40px; font-weight: 900; font-style: italic; }
-        .pay-btn { background: white; color: var(--teal); border: none; padding: 20px 40px; border-radius: 20px; font-size: 24px; font-weight: 900; text-transform: uppercase; cursor: pointer; box-shadow: 0 8px 0 rgba(0,0,0,0.1); }
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 0 40px;
+            overflow-y: auto;
+            mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent);
+        }
 
-        .ref-box { font-family: 'Fira Code', monospace; font-size: 28px; color: var(--amber); margin-top: 30px; border: 2px dashed var(--amber); padding: 15px; display: inline-block; }
+        .hero-section {
+            margin-top: 40px;
+            text-align: center;
+        }
 
-        .v-tag { font-family: 'Fira Code', monospace; font-size: 14px; color: rgba(255,255,255,0.2); position: fixed; bottom: 20px; width: 100%; text-align: center; }
+        .headline {
+            font-size: 72px;
+            font-weight: 900;
+            font-style: italic;
+            line-height: 0.9;
+            text-transform: uppercase;
+            color: var(--cream);
+            margin-bottom: 20px;
+        }
 
-        .spec-overlay {
-            position: fixed; top: 120px; right: 30px; background: rgba(0,0,0,0.7); padding: 15px; border-radius: 15px;
-            font-family: 'Fira Code', monospace; font-size: 12px; color: var(--amber); border: 1px solid var(--amber); z-index: 50;
+        .headline span {
+            color: var(--red);
+        }
+
+        .sub-headline {
+            font-size: 24px;
+            color: var(--teal-bright);
+            font-weight: 600;
+            max-width: 80%;
+            margin: 0 auto 60px;
+        }
+
+        .art-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 80px;
+        }
+
+        .art-card {
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 32px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .art-card img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .art-card .label {
+            font-size: 14px;
+            text-transform: uppercase;
+            color: var(--amber);
+            font-family: 'Fira Code', monospace;
+        }
+
+        .art-card .title {
+            font-size: 28px;
+            font-weight: 800;
+            font-style: italic;
+            color: white;
+        }
+
+        .art-card .price {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--teal-bright);
+        }
+
+        footer {
+            flex: none;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            background: linear-gradient(to top, var(--ink), transparent);
+        }
+
+        .start-btn {
+            width: 100%;
+            padding: 32px;
+            background: var(--red);
+            border-radius: 24px;
+            color: white;
+            font-size: 32px;
+            font-weight: 900;
+            font-style: italic;
+            text-transform: uppercase;
+            border: none;
+            box-shadow: 0 12px 0 var(--red-deep);
+            cursor: pointer;
+            transition: all 0.1s;
+        }
+
+        .version-tag {
+            font-family: 'Fira Code', monospace;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 0.1em;
+        }
+
+        .ticker-bar {
+            width: 100%;
+            background: var(--teal-deep);
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .ticker-bar b {
+            color: var(--amber);
         }
     </style>
 </head>
 <body>
-    <div class="glow-bg"></div>
+    <div class="bg-glow"></div>
 
     <header>
-        <div class="logo-box">
-            <img src="art/fruitful-mark.png" alt="Fruitful Mark">
-            <div class="brand-text">fruitful™</div>
-        </div>
-        <div class="kiosk-status">
+        <div class="brand-wordmark">fruitful™</div>
+        <div class="status-pill">
             <div class="dot"></div>
-            Online
+            Kiosk Online
         </div>
     </header>
 
-    <div class="spec-overlay">
-        RADIUS: 0.8m (1.6m Inner)<br>
-        SHELL: 1.8m Outer<br>
-        AREA: 2.01m²
-    </div>
+    <main>
+        <div class="hero-section">
+            <h1 class="headline">Buy artisan.<br>Create apps.<br><span>Feed children.</span></h1>
+            <p class="sub-headline">Select a unique original to start your subscription and make an impact today.</p>
+        </div>
 
-    <!-- HOME -->
-    <div id="home" class="screen active" style="text-align: center; justify-content: center;">
-        <h1 class="headline">Buy Artisan.<br>Create Apps.<br><span>Feed Children.</span></h1>
-        <p class="subheadline">If you don't like the fruits you are growing, change the seeds.</p>
-        <button class="cta-btn" onclick="nav('menu')">Tap to Start</button>
-    </div>
-
-    <!-- MENU -->
-    <div id="menu" class="screen">
-        <div class="grid">
-            <div class="section-tag">Art Subscriptions</div>
-            <div class="card">
+        <div class="art-grid">
+            <!-- Featured: The Chief -->
+            <div class="art-card">
                 <img src="art/chief-samfox.png" alt="The Chief">
-                <div class="card-name">The Chief (SamFox)</div>
-                <div class="card-price">R 165 / mo</div>
-                <button class="cta-btn" style="padding:15px; font-size:18px; box-shadow:0 8px 0 #C42B37;" onclick="add('The Chief', 165)">Subscribe</button>
-            </div>
-            <div class="card">
-                <img src="art/grand-canvas-a.jpg" alt="Grand Canvas">
-                <div class="card-name">Grand Original</div>
-                <div class="card-price">R 245 / mo</div>
-                <button class="cta-btn" style="padding:15px; font-size:18px; box-shadow:0 8px 0 #C42B37;" onclick="add('Grand Canvas', 245)">Subscribe</button>
+                <div>
+                    <div class="label">Featured · SamFox</div>
+                    <div class="title">The Chief</div>
+                    <div class="price">R 165 / mo</div>
+                </div>
             </div>
 
-            <div class="section-tag">Golden Ticket Menu</div>
-            <div class="card" style="justify-content:center;">
-                <div class="card-name">Artisan Coffee</div>
-                <div class="card-price">R 40.00</div>
-                <button class="cta-btn" style="padding:15px; font-size:18px; box-shadow:0 8px 0 #C42B37;" onclick="add('Coffee', 40)">Add to Basket</button>
-            </div>
-            <div class="card" style="justify-content:center;">
-                <div class="card-name">Milk Pannekoek (1)</div>
-                <div class="card-price">R 15.00</div>
-                <button class="cta-btn" style="padding:15px; font-size:18px; box-shadow:0 8px 0 #C42B37;" onclick="add('Pannekoek', 15)">Add to Basket</button>
+            <!-- Grand Original -->
+            <div class="art-card">
+                <img src="art/grand-canvas-a.jpg" alt="Grand Original">
+                <div>
+                    <div class="label">Original · Grand</div>
+                    <div class="title">Hand-Painted</div>
+                    <div class="price">R 245 / mo</div>
+                </div>
             </div>
         </div>
 
-        <div class="order-bar" id="bar" style="display:none;">
-            <div>
-                <div class="total-label">Subtotal</div>
-                <div class="total-val" id="total-txt">R 0</div>
-            </div>
-            <button class="pay-btn" onclick="nav('success')">Pay with Card</button>
+        <div class="ticker-bar">
+            <b>1,248</b> children fed today — you are about to make it <b>1,249</b>.
         </div>
-    </div>
+    </main>
 
-    <!-- SUCCESS -->
-    <div id="success" class="screen" style="text-align: center; justify-content: center;">
-        <h1 class="headline" style="color:var(--teal);">Thank You.</h1>
-        <p class="subheadline">Your order feeds a child today™.</p>
-        <div class="ref-box" id="ref-txt">FFL-0000000</div>
-        <button class="cta-btn" style="padding:20px; margin-top:40px;" onclick="reset()">Finish</button>
-    </div>
-
-    <div class="v-tag">RELEASE_STABLE · v1.0_gary_upload · PORTRAIT_FHD</div>
+    <footer>
+        <button class="start-btn">Tap to Start</button>
+        <div class="version-tag">STABLE_REL · v1.0_gary_upload · PORTRAIT_FHD</div>
+    </footer>
 
     <script>
-        let total = 0;
-        function nav(id) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-        }
-        function add(name, price) {
-            total += price;
-            document.getElementById('total-txt').textContent = 'R ' + total;
-            document.getElementById('bar').style.display = 'flex';
-        }
-        function reset() {
-            total = 0;
-            document.getElementById('total-txt').textContent = 'R 0';
-            document.getElementById('bar').style.display = 'none';
-            document.getElementById('ref-txt').textContent = 'FFL-' + Math.floor(1000000 + Math.random() * 9000000);
-            nav('home');
-        }
-        reset();
+        // Simple interactivity for the 'real' feel
+        document.querySelector('.start-btn').addEventListener('touchstart', (e) => {
+            e.target.style.transform = 'translateY(8px)';
+            e.target.style.boxShadow = '0 4px 0 var(--red-deep)';
+        });
+        document.querySelector('.start-btn').addEventListener('touchend', (e) => {
+            e.target.style.transform = 'translateY(0)';
+            e.target.style.boxShadow = '0 12px 0 var(--red-deep)';
+        });
     </script>
 </body>
 </html>
