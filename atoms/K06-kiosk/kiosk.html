@@ -3,24 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fruitful Global Kiosk — Phase 1.0_gary_upload (Self-Contained)</title>
+    <title>Fruitful Kiosk — v1.0_gary_upload (Self-Contained)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Fira+Code:wght@500&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Golden Ticket CI Guide MASTER v2 — Precise Brand Colors */
-            --teal: #47B3A8;
+            /* Golden Ticket CI v2 */
+            --teal: #1E9F97;
+            --teal-bright: #47B3A8;
+            --teal-deep: #0E7C74;
             --red: #E63946;
-            --amber: #FFB703;
-            --ink: #3A2A1B;
+            --red-deep: #C42B37;
+            --amber: #FCB915;
             --cream: #FBF4E4;
+            --ink: #3A2A1B;
             --glass: rgba(255, 255, 255, 0.08);
             --border: rgba(255, 255, 255, 0.15);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
-            background: var(--ink);
+            background-color: var(--ink);
             color: var(--cream);
             font-family: 'Inter', sans-serif;
             width: 100vw;
@@ -31,27 +34,26 @@
             user-select: none;
         }
 
-        /* High-tech ambient background */
-        .glow-orbit {
+        .bg-glow {
             position: fixed;
             top: 50%; left: 50%;
             width: 150%; height: 150%;
-            background: radial-gradient(circle at center, rgba(71, 179, 168, 0.1) 0%, rgba(230, 57, 70, 0.05) 40%, rgba(58, 42, 27, 0) 70%);
+            background: radial-gradient(circle at center, rgba(30, 159, 151, 0.1) 0%, rgba(230, 57, 70, 0.05) 40%, rgba(58, 42, 27, 0) 70%);
             transform: translate(-50%, -50%);
             z-index: -1;
+            pointer-events: none;
         }
 
-        /* Global Header */
         header {
             flex: none;
             padding: 50px 50px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: linear-gradient(to bottom, var(--ink), transparent);
         }
+
         .logo-wrap { display: flex; align-items: center; gap: 15px; }
-        .logo-wrap img { width: 52px; height: 52px; border-radius: 50%; background: white; padding: 2px; }
+        .logo-wrap img { width: 48px; height: 48px; border-radius: 50%; }
         .brand-text { font-weight: 900; font-size: 38px; font-style: italic; color: var(--red); letter-spacing: -0.04em; }
 
         .kiosk-status {
@@ -67,7 +69,6 @@
         .status-dot { width: 10px; height: 10px; background: var(--amber); border-radius: 50%; box-shadow: 0 0 12px var(--amber); animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
 
-        /* Screen Layout */
         .screen {
             position: absolute;
             inset: 0;
@@ -77,11 +78,10 @@
         }
         .screen.active { display: flex; }
 
-        /* HOME */
         .home-content { text-align: center; justify-content: center; }
         .headline { font-size: 84px; font-weight: 900; font-style: italic; text-transform: uppercase; line-height: 0.85; margin-bottom: 30px; }
         .headline span { color: var(--red); }
-        .subheadline { font-size: 26px; color: var(--teal); font-weight: 600; margin-bottom: 60px; max-width: 80%; margin-left: auto; margin-right: auto; }
+        .subheadline { font-size: 26px; color: var(--teal-bright); font-weight: 600; margin-bottom: 60px; max-width: 80%; margin-left: auto; margin-right: auto; }
         
         .start-cta {
             background: var(--red);
@@ -100,7 +100,6 @@
         }
         .start-cta:active { transform: translateY(10px); box-shadow: 0 5px 0 #C42B37; }
 
-        /* BROWSE */
         .browse-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -109,7 +108,7 @@
             flex: 1;
             padding-bottom: 120px;
         }
-        .cat-title { font-size: 22px; font-weight: 800; text-transform: uppercase; color: var(--teal); margin: 30px 0 15px; grid-column: span 2; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .cat-title { font-size: 22px; font-weight: 800; text-transform: uppercase; color: var(--teal-bright); margin: 30px 0 15px; grid-column: span 2; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
         
         .item-card {
             background: var(--glass);
@@ -124,7 +123,6 @@
         .item-price { font-family: 'Fira Code', monospace; font-size: 18px; color: var(--amber); }
         .add-btn { background: var(--teal); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 800; text-transform: uppercase; cursor: pointer; }
 
-        /* CART BAR */
         .order-bar {
             position: fixed;
             bottom: 0; left: 0; right: 0;
@@ -137,12 +135,10 @@
         .order-info .total { font-size: 32px; font-weight: 900; font-style: italic; }
         .checkout-btn { background: white; color: var(--teal); border: none; padding: 15px 30px; border-radius: 15px; font-size: 20px; font-weight: 900; text-transform: uppercase; cursor: pointer; }
 
-        /* SUCCESS SCREEN */
         .success-content { text-align: center; justify-content: center; }
         .success-icon { font-size: 100px; color: var(--teal); margin-bottom: 20px; }
         .order-ref { font-family: 'Fira Code', monospace; font-size: 24px; color: var(--amber); margin: 20px 0; }
         
-        /* FOOTER */
         footer {
             position: fixed;
             bottom: 30px; width: 100%;
@@ -153,21 +149,21 @@
 
         .spec-badge {
             position: fixed;
-            top: 110px; right: 20px;
-            background: rgba(0,0,0,0.6);
-            padding: 12px; border-radius: 12px;
-            font-family: 'Fira Code', monospace; font-size: 11px;
-            border: 1px solid var(--amber);
-            z-index: 20; color: var(--amber);
+            top: 100px; right: 20px;
+            background: rgba(0,0,0,0.5);
+            padding: 10px; border-radius: 10px;
+            font-family: 'Fira Code', monospace; font-size: 10px;
+            border: 1px solid var(--border);
+            z-index: 20;
         }
     </style>
 </head>
 <body>
-    <div class="glow-orbit"></div>
+    <div class="bg-glow"></div>
 
     <header>
         <div class="logo-wrap">
-            <img id="brandLogo" src="" alt="Fruitful Mark">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AABgnUlEQVR4nO3de5xkV1kv/N+z1trV3ZlJJiSZIZeequ7qSoI1gEIBctOSo4AKishpFUUUUY76eo56PHq8QYh44SBewYMXzosgeOtXj4CIcpMCBQ2UESQlJNXVXT0zCZmBkIkzme7aa63n/aN2h8kwk8ylatelf9/PZz5JX6b2nu5daz1rrWc9CyAiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiKiCyejvgEionNVqVRm2u321t69e3dffvnllbC5uVuM/fBZ/4JiU0SfKoWCXnbZZbc1m820Wq0WWq1WL8fbJhpLDACIaFI4AL5arRZ6JzdXrMg3hxihqg/5l0QE1lqkPv2jqPre9Y2NP6rX667RaAQAD/2XiaYYAwAimgQCQMvF4i+JmCdaa5/pve+JiAVgH+bvBlWFtdYaEaQ+vKKzsf6qU193qHdONKbMqG+AiOghSK1WSwDoUqn0W84lPyvGPNN770WkgIfv/AHAiogNMaY+hJ4IfuH6xaWPV4qLywC0UqnMDPefQDSeOANARONKSqXSTLfb3awslH/NGPnvwYdNhToRcRfxulFEjAAaNP7nTrf7l+gPhuKA7ptoIjAAIKJxlQBIlxYWft0a++Pe+1REkgG9dgRgxBiEoN+2trH2l9nnuBxAOwaXAIhoHAmAdKlY+k3X7/zDADt/oN/2BahGEf0tAAFsD2mH4QNP9EWmXq+7er3u0M84p9EwAHRpf+m3rHM/6kPYypL9Bs3GGKMVs2uxVHolAKlWq4UhXIdoLHEJgAjAmfaGb3cGrVYrBaeGc1GtVgsnTpy4xIm8whr748GHTQhmh3hJhSK4xLleGl60trH2tlqtljSbzXSI1yQaCxzl0E5nq9WqbbVavWKx+IjZJHlWCAExyudbrdb7tr+pjrproOFHeaPTrgYkzVYrXZhfeGwym/x42kuH3fkDgCgU/ZkAPPNR1177t+Vy+d5ms8ntgTT1OANAO9kDjfxSqfQaAE9JksLTVRXeeyj0tda4JIje1Ol0jiGbmgY7hmGQZcCsAKG8sPh/DfBNWYGfYUz9fwlV7RWSQiFE/9V3rK19OLtuyOPaRKPCAIB2pOXlZbuyshKWSqWfMcY+F8BToUCIoQcAIpJYY0VE4GNoIeonVzfWX5j9dY4OB88CCEul0vusdV8bQlDk2D6pamqtEyA+7Y61tVvAAIB2AAYAtOPU63V39OjR2a3j9/+gdfZXNUaEGE+vKqeq6gGoMaZgjUEa/J/ZQuFn77jjjk4dcI1+B8FA4OJZAOGGa665yieFQyJi0F+ezL19UtX7ZmNYbB06dE/e1ybKGwMA2mkMALm+WCxZl6z2+hXlBA891bxdIMY455Cm/qbOxvovACgA4KEyF8cCCKVSacGJeZ8AJVU1GOEOpdXuOttF2hG4DZB2ouBhft7HqNlo8+HWmbc7JE3TNDhnby4XF16BfufP99AFugk3meXlZSzt33+gYMy7jMhSjBEY3c..." alt="Logo">
             <div class="brand-text">fruitful™</div>
         </div>
         <div class="kiosk-status">
@@ -194,13 +190,13 @@
         <div class="browse-grid">
             <div class="cat-title">Art Subscriptions</div>
             <div class="item-card">
-                <img id="artChief" src="" alt="The Chief">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABAAAAAQACAYAAAB/HSuDAAAQAElEQVR4Aey9B2Ak2VXv/b8VOytrNDnszM5sDl6vvWscsI3J/ngYMAaT0zNgeDyygfeMMc9kbIzBOGAccM5h89q7602zaTbNTtjJURqlVufuqur+zqlW6JZaUktqSd3SKXV1Vd147q+qS3XOufeWVnrx50uyCgO5BuQakGtArgG5BuQakGtArgG5BuQakGtArgG5Btb0NVDSIIsQEAJCQAgIASEgBISAEBACQkAICAEhsMYJAGIAWPOnWBooBISAEBACQkAICAEhIASEgBAQAuueAAEQAwBBkI8QEAJCQAgIASEgBISAEBACQkAICIG1TIDbJgYApiCrEBACQkAICAEhIASEgBAQAkJACAiBtUvAb5kYAHwM8iUEhIAQEAJCQAgIASEgBISAEBACQmCtEii3SwwAZQ7yLQSEgBAQAkJACAgBISAEhIAQEAJCYG0SGG+VGADGQchGCAgBISAEhIAQEAJCQAgIASEgBITAWiQw0SYxAEyQkK0QEAJCQAgIASEgBISAEBACQkAICIG1R2CyRWIAmEQhO0JACAgBISAEhIAQEAJCQAgIASEgBNYagan2iAFgioXsCQEhIASEgBAQAkJACAgBISAEhIAQWFsEKlojBoAKGLIrBISAEBACQkAICAEhIASEgBAQAkJgLRGobIsYACppyL4QEAJCQAgIASEgBISAEBACQkAICIG1Q6CqJWIAqMIhB0JACAgBISAEhIAQEAJCQAgIASEgBNYKgep2iAGgmoccCQEhIASEgBAQAkJACAgBISAEhIAQWBsEprVCDADTgMihEBACQkAICAEhIASEgBAQAkJACAiBtUBgehvEADCdiBwLASEgBISAEBACQkAICAEhIASEgBBofQIzWiAGgBlIJEAICAEhIASEgBAQAkJACAgBISAEhECrE5gpvxgAZjKRECEgBISAEBACQkAICAEhIASEgBAQAq1NoIb0YgCoAUWChIAQEAJCQAgIASEgBISAEBACQkAItDKBWrKLAaAWFQkTAkJACAgBISAEhIAQEAJCQAgIASHQugRqSi4GgJpYJFAICAEhIASEgBAQAkJACAgBISAEhECrEqgttxgAanORUCEgBISAEBACQkAICAEhIASEgBAQAq1JYBapxQAwCxgJFgJCQAgIASEgBISAEBACQkAICAEh0IoEZpNZDACzkZFwISAEhIAQEAJCQAgIASEgBISAEBACrUdgVonFADArGokQAkJACAgBISAEhIAQEAJCQAgIASHQagRml1cMALOzkRghIASEgBAQAkJACAgBISAEhIAQEAKtRWAOacUAMAcciRICQkAICAEhIASEgBAQAkJACAgBIdBKBOaSVQwAc9GROCEgBISAEBACQkAICAEhIASEgBAQAq1DYE5JxQAwJx6JFAJCQAgIASEgBISAEBACQkAICAEh0CoE5pZTDABz85FYISAEhIAQEAJCQAgIASEgBISAEBACrUFgHinFADAPIIkWAkJACAgBISAEhIAQEAJCQAgIASHQCgTmk1EMAPMRknghIASEgBAQAkJACAgBISAEhIAQEALNT2BeCcUAMC8iSSAEhIAQEAJCQAgIASEgBISAEBACQqDZCcwvnxgA5mckKYSAEBACQkAICAEhIASEgBAQAkJACDQ3gTqkEwNAHZAkiRAQAkJACAgBISAEhIAQEAJCQAgIgWYmUI9sYgCoh5KkEQJCQAgIASEgBISAEBACQkAICAEh0LwE6pJMDAB1YZJEQkAICAEhIASEgBAQAkJACAgBISAEmpVAfXKJAaA+TpJKCAgBISAEhIAQEAJCQAgIASEgBIRAcxKoUyoxANQJSpIJASEgBISAEBACQkAICAEhIASEgBBoRgL1yiQGgHpJSTohIASEgBAQAkJACAgBISAEhIAQEALNR6BuicQAUDcqSSgEhIAQEAJCQA..." alt="The Chief">
                 <div class="item-name">The Chief (SamFox)</div>
                 <div class="item-price">R 165 / mo</div>
                 <button class="add-btn" onclick="addToCart('The Chief', 165)">Subscribe</button>
             </div>
             <div class="item-card">
-                <img id="artGrand" src="" alt="Grand Original">
+                <img src="data:image/jpeg;base64,/9j/4QBORXhpZgAATU0AKgAAAAgAAwEaAAUAAAABAAAAMgEbAAUAAAABAAAAOgEoAAMAAAABAAIAAAAAAAAACvyAAAAnEAAK/IAAACcQAAAAAP/tAEBQaG90b3Nob3AgMy4wADhCSU0EBgAAAAAABwAIAQEAAQEAOEJJTQQlAAAAAAAQAAAAAAAAAAAAAAAAAAAAAP/iDFhJQ0NfUFJPRklMRQABAQAADEhMaW5vAhAAAG1udHJSR0IgWFlaIAfOAAIACQAGADEAAGFjc3BNU0ZUAAAAAElFQyBzUkdCAAAAAAAAAAAAAAABAAD21gABAAAAANMtSFAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEWNwcnQAAAFQAAAAM2Rlc2MAAAGEAAAAbHd0cHQAAAHwAAAAFGJrcHQAAAIEAAAAFHJYWVoAAAIYAAAAFGdYWVoAAAIsAAAAFGJYWVoAAAJAAAAAFGRtbmQAAAJUAAAAcGRtZGQAAALEAAAAiHZ1ZWQAAANMAAAAhnZpZXcAAAPUAAAAJGx1bWkAAAP4AAAAFG1lYXMAAAQMAAAAJHRlY2gAAAQwAAAADHJUUkMAAAQ8AAAIDGdUUkMAAAQ8AAAIDGJUUkMAAAQ8AAAIDHRleHQAAAAAQ29weXJpZ2h0IChjKSAxOTk4IEhld2xldHQtUGFja2FyZCBDb21wYW55AABkZXNjAAAAAAAAABJzUkdCIElFQzYxOTY2LTIuMQAAAAAAAAAAAAAAEnNSR0IgSUVDNjE5NjYtMi4xAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYWVogAAAAAAAA81EAAQAAAAEWzFhZWiAAAAAAAAAAAAAAAAAAAAAAWFlaIAAAAAAAAG+iAAA49QAAA5BYWVogAAAAAAAAYpkAALeFAAAY2lhZWiAAAAAAAAAkoAAAD4QAALbPZGVzYwAAAAAAAAAWSUVDIGh0dHA6Ly93d3cuaWVjLmNoAAAAAAAAAAAAAAAWSUVDIGh0dHA6Ly93d3cuaWVjLmNoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGRlc2MAAAAAAAAALklFQyA2MTk2Ni0yLjEgRGVmYXVsdCBSR0IgY29sb3VyIHNwYWNlIC0gc1JHQgAAAAAAAAAAAAAALklFQyA2MTk2Ni0yLjEgRGVmYXVsdCBSR0IgY29sb3VyIHNwYWNlIC0gc1JHQgAAAAAAAAAAAAAAAAAAAAAAAAAAAABkZXNjAAAAAAAAACxSZWZlcmVuY2UgVmlld2luZyBDb25kaXRpb24gaW4gSUVDNjE5NjYtMi4xAAAAAAAAAAAAAAAsUmVmZXJlbmNlIFZpZXdpbmcgQ29uZGl0aW9uIGluIElFQzYxOTY2LTIuMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdmlldwAAAAAAE6T+ABRfLgAQzxQAA+3MAAQTCwADXJ4AAAABWFlaIAAAAAAATAlWAFAAAABXH+dtZWFzAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAACjwAAAAJzaWcgAAAAAENSVCBjdXJ2AAAAAAAABAAAAAAFAAoADwAUABkAHgAjACgALQAyADcAOwBAAEUASgBPAFQAWQBeAGMAaABtAHIAdwB8AIEAhgCLAJAAlQCaAJ8ApACpAK4AsgC3ALwAwQDGAMsA0ADVANsA4ADlAOsA8AD2APsBAQEHAQ0BEwEZAR8BJQErATIBOAE+AUUBTAFSAVkBYAFnAW4BdQF8AYMBiwGSAZoBoQGpAbEBuQHBAckB0QHZAeEB6QHyAfoCAwIMAhQCHQImAi8COAJBAksCVAJdAmcCcQJ6AoQCjgKYAqICrAK2AsECywLVAuAC6wL1AwADCw==" alt="Grand Original">
                 <div class="item-name">Grand Original Canvas</div>
                 <div class="item-price">R 245 / mo</div>
                 <button class="add-btn" onclick="addToCart('Grand Canvas', 245)">Subscribe</button>
@@ -243,19 +239,10 @@
     </div>
 
     <footer>
-        <div class="v-tag">STABLE_REL · v1.0_gary_upload · OFFICIAL_BRAND_VERIFIED</div>
+        <div class="v-tag">STABLE_REL · v1.0_gary_upload · PORTRAIT_FHD · SELF_CONTAINED</div>
     </footer>
 
     <script>
-        // Official Art Assets - Embedded to prevent broken images
-        const CHIEF_B64 = "iVBORw0KGgoAAAANSUhEUgAABAAAAAQACAYAAAB/HSuDAAAQAElEQVR4nAey9B2Ak2VXv/b8VOytrNDnszM5sDl6vvWscsI3J/ngYMAaT0zNgeDyygfeMMc9kbIzBOGAccM5h89q7602zaTbNTtjJURqlVufuqur+zqlW6JZaUktqSd3SKXV1Vd147q+qS3XOufeWVnrx50uyCgO5BuQakGtArgG5BuQakGtArgG5BuQakGtArgG5Btb0NVDSIIsQEAJCQAgIASEgBISAEBACQkAICAEhsMYJAGIAWPOnWBooBISAEBACQkAICAEhIASEgBAQAuueAAEQAwBBkI8QEAJCQAgIASEgBISAEBACQkAICIG1TIDbJgYApiCrEBACQkAICAEhIASEgBAQAkJACAiBtUvAb5kYAHwM8iUEhIAQEAJCQAgIASEgBISAEBACQmCtEii3SwwAZQ7yLQSEgBAQAkJACAgBISAEhIAQEAJCYG0SGG+VGADGQchGCAgBISAEhIAQEAJCQAgIASEgBITAWiQw0SYxAEyQkK0QEAJCQAgIASEgBISAEBACQkAICIG1R2CyRWIAmEQhO0JACAgBISAEhIAQEAJCQAgIASEgBNYagan2iAFgioXsCQEhIASEgBAQAkJACAgBISAEhIAQWFsEKlojBoAKGLIrBISAEBACQkAICAEhIASEgBAQAkJGRLROVfIVEUIFInSjMJFLAhRSlRk3SuPcP6fn4OR4u5VTD6MooCSSxIkpR8wtFrWmumPfRt+DM6XBkcI8iLWN675AC1WIBr";
-        const GRAND_B64 = "/9j/4QBORXhpZgAATU0AKgAAAAgAAwEaAAUAAAABAAAAMgEbAAUAAAABAAAAOgEoAAMAAAABAAIAAAAAAAAACvyAAAAnEAAK/IAAACcQAAAAAP/tAEBQaG90b3Nob3AgMy4wADhCSU0EBgAAAAAABwAIAQEAAQEAOEJJTQQlAAAAAAAQAAAAAAAAAAAAAAAAAAAAAP/iDFhJQ0NfUFJPRklMRQABAQAADEhMaW5vAhAAAG1udHJSR0IgWFlaIAfOAAIACQAGADEAAGFjc3BNU0ZUAAAAAElFQyBzUkdCAAAAAAAAAAAAAAABAAD21gABAAAAANMtSFAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEWNwcnQAAAFQAAAAM2Rlc2MAAAGEAAAAbHd0cHQAAAHwAAAAFGJrcHQAAAIEAAAAFHJYWVoAAAIYAAAAFGdYWVoAAAIsAAAAFGJYWVoAAAJAAAAAFGRtbmQAAAJUAAAAcGRtZGQAAALEAAAAiHZ1ZWQAAANMAAAAhnZpZXcAAAPUAAAAJGx1bWkAAAP4AAAAFG1lYXMAAAQMAAAAJHRlY2gAAAQwAAAADHJUUkMAAAQ8AAAIDGdUUkMAAAQ8AAAIDGJUUkMAAAQ8AAAIDHRleHQAAAAAQ29weXJpZ2h0IChjKSAxOTk4IEhld2xldHQtUGFja2FyZCBDb21wYW55AABkZXNjAAAAAAAAABJzUkdCIElFQzYxOTY2LTIuMQAAAAAAAAAAAAAAEnNSR0IgSUVDNjE5NjYtMi4xAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYWVogAAAAAAAA81EAAQAAAAEWzFhZWiAAAAAAAAAAAAAAAAAAAAAAWFlaIAAAAAAAAG+iAAA49QAAA5BYWVogAAAAAAAAYpkAALeFAAAY2lhZWiAAAAAAAAAkoAAAD4QAALbPZGVzYwAAAAAAAAAWSUVDIGh0dHA6Ly93d3cuaWVjLmNoAAAAAAAAAAAAAAAWSUVDIGh0dHA6Ly93d3cuaWVjLmNoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGRlc2MAAAAAAAAALklFQyA2MTk2Ni0yLjEgRGVmYXVsdCBSR0IgY29sb3VyIHNwYWNlIC0gc1JHQgAAAAAAAAAAAAAALklFQyA2MTk2Ni0yLjEgRGVmYXVsdCBSR0IgY29sb3VyIHNwYWNlIC0gc1JHQgAAAAAAAAAAAAAAAAAAAAAAAAAAAABkZXNjAAAAAAAAACxSZWZlcmVuY2UgVmlld2luZyBDb25kaXRpb24gaW4gSUVDNjE5NjYtMi4xAAAAAAAAAAAAAAAsUmVmZXJlbmNlIFZpZXdpbmcgQ29uZGl0aW9uIGluIElFQzYxOTY2LTIuMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdmlldwAAAAAAE6T+ABRfLgAQzxQAA+3MAAQTCwADXJ4AAAABWFlaIAAAAAAATAlWAFAAAABXH+dtZWFzAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAACjwAAAAJzaWcgAAAAAENSVCBjdXJ2AAAAAAAABAAAAAAFAAoADwAUABkAHgAjACgALQAyADcAOwBAAEUASgBPAFQAWQBeAGMAaABtAHIAdwB8AIEAhgCLAJAAlQCaAJ8ApACpAK4AsgC3ALwAwQDGAMsA0ADVANsA4ADlAOsA8AD2APsBAQEHAQ0BEwEZAR8BJQErATIBOAE+AUUBTAFSAVkBYAFnAW4BdQF8AYMBiwGSAZoBoQGpAbEBuQHBAckB0QHZAeEB6QHyAfoCAwIMAhQCHQImAi8COAJBAksCVAJdAmcCcQJ6AoQCjgKYAqICrAK2AsECywLVAuAC6wL1AwADCw==";
-        const LOGO_B64 = "iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAACEZVhJZk1NACoAAAAIAAUBEgADAAAAAQABAAABGgAFAAAAAQAAAEoBGwAFAAAAAQAAAFIBKAADAAAAAQACAACHaQAEAAAAAQAAAFoAAAAAAAAASAAAAAEAAABIAAAAAQADoAEAAwAAAAEAAQAAoAIABAAAAAEAAAfQoAMABAAAAAEAAAfQAAAAADWbYOoAAAAGYktHRAAAAAAAAPlDu38AAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAHdElNRQfqBhQJNjpr8dRkAAAAd3RFWHRSYXcgcHJvZmlsZSB0eXBlIDhiaW0ACjhiaW0KICAgICAgNDAKMzg0MjQ5NGQwNDA0MDAwMDAwMDAwMDAwMzg0MjQ5NGQwNDI1MDAwMDAwMDAwMDEwZDQxZDhjZDk4ZjAwYjIwNGU5ODAwOTk4CmVjZjg0MjdlCqZTw44AAAAldEVYdGRhdGU6Y3JlYXRlADIwMjYtMDYtMjBUMDk6NTQ6NDIrMDA6MDDbcb6lAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDI2LTA2LTIwVDA5OjU0OjQyKzAwOjAwqiwGGQAAACh0RVh0ZGF0ZTp0aW1lc3RhbXAAMjAyNi0wNi0yMFQwOTo1NDo1NyswMDowMGOrCP8AAAARdEVYdGV4aWY6Q29sb3JTcGFjZQAxD5sCSQAAABJ0RVh0ZXhpZjpFeGlmT2Zmc2V0ADkwWYzemwAAABl0RVh0ZXhpZjpQaXhlbFhEaW1lbnNpb24AMjAwMNUrX2oAAAAZdEVYdGV4aWY6UGl4ZWxZRGltZW5zaW9uADIwMDBs0ISCAAAAAW9yTlQBz6J3mgAAgABJREFUeNrsnXdgW0Xyx2f2PRVL7r2md0KooffOj35w9N47Bxxw9HJHOzjg4I5ejnr0Xo4aeidASO+x495lybKk93Z+f7wiObQQbK1szwcc24pjzVvp7c7OznwHgGEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhmEYhhkpoGoDGIZhHIhIhJ57qzBaV1cjVjRUYsKcHO3srCApx/sJRpkd3UCGGfQUFUwERA0BwIzHu+Mdncs8uUGi4kIjmjC+ywoElms+zzw5btTy3M03XhXcbpNe1dfGMJkGOwJXMhmyDUy0+GOLjt+Btn2ttK7oyzbfxOrVpTrpTFq/J8UkPJMimaOFQVWQjzU2jOuRJ+/Fpf8Asm3upODSJlnhjUiQncCJAGU71UagZrqMcJac7Hd31xF+Sdwo0SVFWYkAtQgZMa064HCXErtEJDsY12ombFRQZAtmWOXSuLDgOJ5OJ+OtixYxkO1GHmUBasc9NuVTmRTFtDPxnLpRAKC2k2qQKZGhqOx7YtvXu54mg3bFmgm3k5HyHYVU1GYJFR1xd2XubmRx9zHcwAB0cKItwBdSVG7YAagZVpTI442H2/70SN7JJK+qkiRy7iANjbSpby1y0Bzpi8uZrCO49rwEAurZvXJWQjWrAgLSuVccVz3KQxxcQ0Lx/pXKqyzOxCiVyRQvGR6ZO0AmhBrU8Dd3/KCGzvS0SUKFonSjMJFLAhRSlRk3SuPcP6fn4OR4u5VTD6MooCSSxIkpR8wtFrWmumPfRt+DM6XBkcI8iLWN675AC1WIBr";
-
-        document.getElementById('brandLogo').src = "data:image/png;base64," + LOGO_B64;
-        document.getElementById('artChief').src = "data:image/png;base64," + CHIEF_B64;
-        document.getElementById('artGrand').src = "data:image/jpeg;base64," + GRAND_B64;
-
         let cart = [];
         let total = 0;
 
@@ -272,7 +259,8 @@
         }
 
         function resetKiosk() {
-            cart = []; total = 0;
+            cart = [];
+            total = 0;
             document.getElementById('total-display').textContent = 'R 0';
             document.getElementById('cart-bar').style.display = 'none';
             document.getElementById('ref-num').textContent = 'FFL-' + Math.floor(1000000 + Math.random() * 9000000);

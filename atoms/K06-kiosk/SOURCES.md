@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2026-08-30 | FGP--bushcoding | history | `public/1.0_gary_upload.html` | `2243c8d4` | Fruitful Global Kiosk — Phase 1.0_gary_upload | 16548 | 7 | 2 | 45.7 |
+| 2 | 2026-08-30 | FGP--bushcoding | history | `public/1.0_gary_upload.html` | `43fcb829` | Fruitful Kiosk — v1.0_gary_upload (Self-Conta | 17064 | 7 | 2 | 45.7 |
