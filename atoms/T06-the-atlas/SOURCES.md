@@ -7,3 +7,4 @@
 | 1 | 2026-08-30 | banimal | skill-training-global-ci-rollout | `docs/atlas/seedwave-atlas.html` | `19a1cdd4` | The Seedwave Atlas | 31058 | 9 | 2 | 41.1 |
 | 2 | 2026-08-30 | banimal | claude/banimal2-deploy | `docs/atlas/seedwave-atlas.html` | `238bc9cb` | The Seedwave Atlas | 31040 | 9 | 2 | 41.1 |
 | 3 | 2026-08-30 | banimal | claude/banimal-footer-alignment-20 | `docs/atlas/seedwave-atlas.html` | `4d03eacc` | The Seedwave Atlas | 31040 | 9 | 2 | 41.1 |
+| 4 | 2026-08-30 | banimal | history | `docs/atlas/seedwave-atlas.html` | `67132482` | The Seedwave Atlas | 29242 | 9 | 2 | 40.9 |
