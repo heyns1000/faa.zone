@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-06-09 | faa.zone | history | `public/legal/baobab.html` | `b1908b4f` |  | 4765 | 0 | 0 | 25.5 |
+| 2 | 2026-09-01 | baobab.faa.zone | main | `public/index.html` | `81c28441` | 🌳 Baobab | FAA Global | vs111.111 | 5709 | 4 | 0 | 29.6 |
