@@ -8,3 +8,4 @@
 | 2 | 2026-08-30 | banimal | claude/banimal2-deploy | `docs/manual/user-manual.html` | `66021050` | Banimal™ Connector Manual | 25148 | 19 | 2 | 50.5 |
 | 3 | 2026-08-30 | banimal | claude/banimal-footer-alignment-20 | `docs/manual/user-manual.html` | `fd33dfc0` | Banimal™ Connector Manual | 25148 | 19 | 2 | 50.5 |
 | 4 | 2026-08-30 | banimal | history | `docs/manual/user-manual.html` | `8f5ad608` | Banimal Connector Manual | 22641 | 19 | 0 | 46.3 |
+| 5 | 2026-09-03 | banimal | skill-training-global-ci-rollout | `docs/manual/user-manual.html` | `63689e48` | Banimal™ Connector Manual | 32496 | 41 | 2 | 73.2 |
