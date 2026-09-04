@@ -8,3 +8,4 @@
 | 2 | 2025-07-20 | FruitfulPlanetChange | v0/heyns1000-9dddb078 | `attached_assets/interns.seedwave.faa.zone-main/public/fruitful_dashboard_work_in_progress.html` | `6d5c2874` | Fruitful Planet Dashboard - Master API Templa | 195892 | 81 | 19 | 174.1 |
 | 3 | 2026-09-04 | FGP--BlockBox | blockbox-ci-guide-claude-design | `Block Box Dashboard (standalone)-print-1hkagg2.html` | `028ea006` | Block Box Dashboard | 1330695 | 0 | 21 | 97.0 |
 | 4 | 2026-09-04 | FGP--BlockBox | blockbox-ci-guide-claude-design | `Block Box Dashboard (standalone).html` | `44cedc1a` | Block Box Dashboard | 1307711 | 0 | 21 | 97.0 |
+| 5 | 2026-09-04 | FGP--BlockBox | blockbox-ci-guide-claude-design | `scratch/blockbox-dashboard-work.html` | `ad7f86d0` | Block Box Dashboard | 197267 | 82 | 19 | 175.3 |
