@@ -42,3 +42,4 @@
 | 36 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/apps/seedwave-core/public/admin-panel.html` | `b687330b` | ⚙️ seedwave.faa.zone/admin-panel.html (paypal | 189057 | 41 | 25 | 125.2 |
 | 37 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/apps/seedwave-core/public/heyns_admin_panel.html` | `5e598857` | ⚙️ Heyns Admin Portal - FAA.ZONE™ | 188061 | 40 | 20 | 112.3 |
 | 38 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/apps/seedwave-core/public/heyns_admin_panel_paypal.html` | `33a02341` | ⚙️ Heyns Admin Portal - FAA.ZONE™ | 194796 | 39 | 25 | 122.0 |
+| 39 | 2026-09-04 | FGP--BlockBox | blockbox-ci-guide-claude-design | `blockbox-admin/admin-portal.html` | `ba211c2d` | Block Box Admin Portal | 207757 | 47 | 28 | 142.6 |

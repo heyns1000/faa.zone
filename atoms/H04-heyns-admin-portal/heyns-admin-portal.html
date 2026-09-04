@@ -3,347 +3,390 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚙️ Heyns Admin Portal - FAA.ZONE™</title>
+    <title>Block Box Admin Portal</title>
+    <link rel="icon" href="/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Fredoka:wght@500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Base styles for the "Interstellar" theme */
+        /* Internship Theme Palette */
+        :root {
+            --primary-blue: #0e2148; /* Block Box Navy */
+            --secondary-green: #22c55e; /* success state, kept semantic */
+            --accent-purple: #e8622c; /* Block Box Tear Orange */
+            --text-dark: #1f2937; /* gray-800 */
+            --text-light: #f9fafb; /* gray-50 */
+            --bg-light: #eee6d6; /* Block Box Warm Paper */
+            --card-bg: #ffffff;
+            --border-light: #e5e7eb; /* gray-200 */
+            --shadow-light: rgba(0, 0, 0, 0.05);
+            --shadow-medium: rgba(0, 0, 0, 0.1);
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); /* Deep space gradient */
-            color: #E0E0E0; /* Light gray for general text */
+            font-family: 'Archivo', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
             line-height: 1.6;
-            min-height: 100vh; /* Ensure full viewport height */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
-        /* Header Styling - Adopted from FAA™ Global Ecosystem Dashboard */
+        /* Header */
         header {
-            background-color: rgba(30, 30, 45, 0.9); /* Slightly transparent dark header */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Deeper shadow */
+            background-color: var(--card-bg);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border-light);
+            padding: 1rem 2.5rem;
+            box-shadow: 0 2px 10px var(--shadow-light);
             position: sticky;
             top: 0;
             z-index: 50;
-            backdrop-filter: blur(5px); /* Subtle blur effect */
-            border-bottom: 1px solid rgba(70, 70, 90, 0.5); /* Subtle bottom border */
-            padding-top: 1.5rem; /* Equivalent to p-6/2 */
-            padding-bottom: 1.5rem;
-            padding-left: 2.5rem; /* Equivalent to lg:p-10/2 */
-            padding-right: 2.5rem;
-        }
-        header a {
-            transition: all 0.3s ease-in-out;
-            color: #C0C0C0; /* Lighter gray for links */
-            padding: 0.6rem 1rem;
-            border-radius: 0.5rem; /* More rounded */
-            font-weight: 500;
-        }
-        header a:hover {
-            background-color: rgba(60, 60, 90, 0.7); /* Darker hover background */
-            color: #93C5FD; /* Light blue accent on hover */
-            transform: translateY(-2px); /* Subtle lift effect */
-        }
-        header a.text-2xl { /* Logo specific styling */
-            color: #A78BFA; /* Purple accent for logo */
-            font-weight: 800;
-        }
-
-        /* Call-to-action Button (cta-button) */
-        .cta-button {
-            background: linear-gradient(45deg, #6B46C1, #8B5CF6); /* Purple gradient */
-            color: white;
-            padding: 0.85rem 1.8rem; /* Slightly larger padding */
-            border-radius: 0.75rem; /* More rounded */
-            font-weight: 700; /* Bolder */
-            transition: all 0.4s ease;
-            box-shadow: 0 6px 15px rgba(139, 92, 246, 0.4); /* Glow effect */
-            position: relative;
-            overflow: hidden;
-            border: none;
-            letter-spacing: 0.05em; /* Slightly spaced out text */
-            min-width: 150px; /* Ensure consistent button width */
-            text-align: center;
-        }
-        .cta-button:hover {
-            background: linear-gradient(45deg, #7C5BC7, #9B6EF9); /* Slightly lighter gradient on hover */
-            transform: translateY(-3px) scale(1.02); /* More pronounced lift and slight scale */
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.6); /* Enhanced glow */
-        }
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0%;
-            height: 0%;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            transition: all 0.7s ease-out;
-            transform: translate(-50%, -50%);
-            opacity: 0;
-        }
-        .cta-button:hover::before {
-            width: 300%;
-            height: 300%;
-            opacity: 1;
-        }
-
-        /* Product Card Styling (adapted for dark theme) */
-        .product-card {
-            background-color: rgba(25, 25, 40, 0.9); /* Dark card background */
-            border-radius: 1rem; /* More rounded */
-            border: 1px solid rgba(70, 70, 90, 0.5); /* Subtle border */
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5); /* Deeper, softer shadow */
-            transition: all 0.4s ease-in-out;
-            padding: 2rem; /* Consistent with dashboard p-8 for cards */
             display: flex;
             flex-direction: column;
-            /* text-align: center; -- Removed to allow text-left as default or from inner elements */
-            height: 500px; /* Adjusted height for optimal content fit */
-            justify-content: space-between; /* Pushes buttons to bottom */
-            position: relative;
-            z-index: 2;
+            justify-content: space-between;
+            align-items: center;
         }
-        /* Override alignment for content within product card for text-left as in products.html */
-        .product-card > div {
-            text-align: left; /* Ensure inner content aligns left */
-            align-items: flex-start;
+        header h1 {
+            color: var(--primary-blue);
+            font-weight: 800;
+            font-size: 1.8rem;
+            letter-spacing: -0.03em;
+            font-family: 'Fredoka', sans-serif;
         }
-
-        .product-card:hover {
-            transform: translateY(-8px) scale(1.01); /* More distinct lift and scale */
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7); /* Even deeper shadow on hover */
-            border-color: #A78BFA; /* Purple border on hover */
-        }
-        .product-card.featured {
-            border-color: #A78BFA; /* Purple for featured border */
-            box-shadow: 0 15px 40px rgba(167, 139, 250, 0.4); /* Featured glow */
-        }
-        .product-card h3 {
-            color: #A78BFA; /* Purple for card titles */
-        }
-        .product-card p.text-gray-400 { /* Changed from text-gray-500 to text-gray-400 for consistency with new styling */
-            color: #B0B0B0; /* Lighter gray for descriptive text */
-        }
-        .price-display {
-            color: #93C5FD; /* Light blue for prices */
-        }
-        .feature-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            text-align: left;
-            width: 100%;
-            margin-bottom: 1.5rem; /* Consistent spacing, allows flex-grow to work */
-            flex-grow: 1; /* Allows list to take available space */
-        }
-        .feature-list li {
-            margin-bottom: 0.6rem; /* Adjusted spacing */
+        header nav {
             display: flex;
-            align-items: flex-start; /* Align icon with text top */
-            color: #C0C0C0; /* Light gray for features */
-            font-size: 0.95rem; /* Slightly larger text */
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
         }
-        .feature-list li svg {
-            margin-right: 0.75rem;
-            color: #34D399; /* Green accent for checkmarks */
-            flex-shrink: 0; /* Prevent icon from shrinking */
-            width: 24px; /* Larger icon */
-            height: 24px;
+        header nav a {
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 0.375rem;
+            transition: all 0.2s ease-in-out;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+        header nav a:hover {
+            color: var(--primary-blue);
+            background-color: rgba(59, 130, 246, 0.05);
+            transform: translateY(-1px);
+        }
+        header nav a.button-style-original {
+            background-color: transparent;
+            color: var(--text-dark);
+            font-weight: 600;
+            border: 1px solid var(--border-light);
+            padding: 0.6rem 1.2rem;
+            border-radius: 1.25rem;
+            box-shadow: none;
+        }
+        header nav a.button-style-original:hover {
+            background-color: rgba(0, 0, 0, 0.03);
+            color: var(--primary-blue);
+            transform: none;
+            box-shadow: none;
         }
 
-        /* Admin specific styles (dark theme adaptation) */
-        /* Adjusted padding and margin for consistent "waterlevel blocks" */
-        .admin-main-header {
-            background-color: rgba(30, 30, 45, 0.9);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-            padding: 2.5rem; /* Adopted from dashboard p-10 */
+        header nav a.button-style-main {
+            background-color: var(--primary-blue);
+            color: var(--text-light);
+            padding: 0.6rem 1.2rem;
+            border-radius: 1.25rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 5px rgba(14, 33, 72, 0.2);
+        }
+        header nav a.button-style-main:hover {
+            background-color: #162f5c; /* Navy hover */
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(14, 33, 72, 0.3);
+        }
+
+        @media (min-width: 768px) {
+            header {
+                flex-direction: row;
+            }
+            header nav {
+                gap: 0;
+            }
+            header nav a:not(.button-style-original):not(.button-style-main) {
+                margin-right: 1.5rem;
+            }
+            header nav a.login-button {
+                margin-left: auto;
+            }
+            header nav a.button-style-original {
+                margin-left: 1rem;
+                margin-right: 0.5rem;
+            }
+            header nav a.button-style-main {
+                margin-left: 0;
+            }
+        }
+
+        /* Main Content Sections */
+        .main-content {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            background-color: var(--primary-blue);
+            color: var(--text-light) !important;
+            padding: 4rem 2rem;
             border-radius: 1rem;
-            margin-bottom: 2.5rem; /* Adopted from dashboard gap-8 for sections */
-            border-top: 8px solid #93C5FD; /* Light blue accent bar */
-            color: #E0E0E0;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(14, 33, 72, 0.35);
+            border-bottom: 4px solid #f5c518;
+        }
+        .welcome-section h2, .welcome-section p {
+            color: var(--text-light) !important;
+        }
+        .welcome-section h2 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+        .welcome-section p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Admin main sections and card styles */
+        .admin-main-header, .admin-panel-card, .chart-visual, .snapshot-box, .metric-card, .currency-converter-container {
+            background-color: var(--card-bg);
+            border-radius: 0.75rem;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 2px 10px var(--shadow-light);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .admin-main-header {
+            border-top: 6px solid var(--primary-blue);
+            padding: 2.5rem;
         }
         .admin-main-header h1 {
-            color: #93C5FD; /* Light blue for main heading */
-            font-weight: 900;
+            color: var(--primary-blue);
+            font-weight: 800;
+            font-size: 2.25rem;
         }
         .admin-main-header p {
-            color: #B0B0B0;
+            color: var(--text-dark);
+            font-size: 0.95rem;
         }
 
+        /* Admin navigation scroll */
         .admin-nav-scroll {
-            background-color: rgba(30, 30, 45, 0.9);
-            border-radius: 1rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-            padding: 1.2rem 2.5rem; /* Adjusted for p-10 from dashboard header */
-            margin-bottom: 2.5rem; /* Adopted from dashboard gap-8 for sections */
+            background-color: var(--card-bg);
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 10px var(--shadow-light);
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
             overflow-x: auto;
             white-space: nowrap;
-            border: 1px solid rgba(70, 70, 90, 0.5);
+            border: 1px solid var(--border-light);
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
         }
         .admin-nav-scroll a {
-            @apply px-4 py-2 rounded-lg text-gray-300 hover:bg-gray-700 font-medium; /* Darker hover, lighter text */
-            transition: all 0.3s ease-in-out;
+            padding: 0.6rem 1.2rem;
+            border-radius: 0.5rem;
+            color: var(--text-dark);
+            transition: all 0.2s ease-in-out;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+        .admin-nav-scroll a:hover {
+            background-color: var(--bg-light);
+            color: var(--primary-blue);
         }
         .admin-nav-scroll a.active {
-            @apply bg-indigo-800 text-indigo-200 font-semibold; /* Darker indigo for active */
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3); /* Inner shadow for active state */
+            background-color: var(--primary-blue);
+            color: var(--text-light);
+            font-weight: 600;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
         }
 
-        .admin-panel-card {
-            background-color: rgba(25, 25, 40, 0.9);
-            border-radius: 1rem;
-            border: 1px solid rgba(70, 70, 90, 0.5);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-            padding: 2.5rem; /* Adopted from dashboard p-10 */
-            margin-bottom: 2.5rem; /* Adopted from dashboard gap-8 for sections */
-            color: #E0E0E0;
+        /* General section headings */
+        h2 {
+            color: var(--text-dark);
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
         }
         .admin-panel-card h2 {
-            color: #93C5FD; /* Light blue for section titles */
+            color: var(--primary-blue);
+            text-align: left;
         }
         .admin-panel-card h3 {
-            color: #A78BFA; /* Purple for sub-titles */
-        }
-        .admin-panel-card p.text-gray-600 {
-            color: #B0B0B0;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
         }
 
-        /* Form elements (dark theme) */
+        /* Form elements */
         label {
-            color: #C0C0C0;
+            color: var(--text-dark);
         }
         input, select {
-            background-color: rgba(45, 45, 70, 0.8);
-            border: 1px solid rgba(80, 80, 100, 0.6);
-            color: #E0E0E0;
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            background-color: var(--bg-light);
+            border: 1px solid var(--border-light);
+            color: var(--text-dark);
+            padding: 0.6rem;
+            border-radius: 0.375rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
         input::placeholder {
-            color: #A0A0A0;
+            color: #9ca3af; /* gray-400 */
         }
         input:focus, select:focus {
-            border-color: #93C5FD;
+            border-color: var(--primary-blue);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.5); /* Focus glow */
+            box-shadow: 0 0 0 3px rgba(14, 33, 72, 0.3);
         }
 
-        /* Table Styling (dark theme) */
+        /* Table Styling */
         .table-header-style {
-            background-color: rgba(45, 45, 70, 0.8);
-            color: #A78BFA; /* Purple for header text */
-            font-weight: 700;
-            border-bottom: 2px solid rgba(100, 100, 120, 0.5);
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            font-weight: 600;
+            border-bottom: 2px solid var(--border-light);
         }
         .table-row-style {
-            border-bottom: 1px solid rgba(70, 70, 90, 0.5);
+            border-bottom: 1px solid var(--border-light);
         }
         .table-row-style:last-child {
             border-bottom: none;
         }
         .table-row-style:hover {
-            background-color: rgba(45, 45, 70, 0.5); /* Subtle hover for rows */
+            background-color: var(--bg-light);
         }
         .table-cell-padding {
-            padding: 1rem; /* More padding */
-            color: #E0E0E0;
+            padding: 0.8rem 1rem;
+            color: var(--text-dark);
         }
         .table-cell-padding button {
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            font-size: 0.85rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            padding: 0.4rem 0.8rem;
+            border-radius: 0.375rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px var(--shadow-light);
         }
-        .table-cell-padding button.bg-blue-500 { /* Inspect button */
-            background-color: #60A5FA; /* Brighter blue */
-            color: #1F2937;
+        .table-cell-padding button.bg-blue-500 {
+            background-color: var(--primary-blue);
+            color: white;
         }
         .table-cell-padding button.bg-blue-500:hover {
-            background-color: #3B82F6;
-            transform: translateY(-1px);
+            background-color: #2563eb;
+            transform: translateY(-0.5px);
         }
-        .table-cell-padding button.bg-green-500 { /* Deploy button */
-            background: linear-gradient(90deg, #10B981, #059669); /* Green gradient */
+        .table-cell-padding button.bg-green-500 {
+            background-color: var(--secondary-green);
             color: white;
         }
         .table-cell-padding button.bg-green-500:hover {
-            background: linear-gradient(90deg, #059669, #047857);
-            transform: translateY(-1px);
+            background-color: #16a34a;
+            transform: translateY(-0.5px);
         }
 
-        /* Metrics Cards (dark theme) - Adjusted padding to match dashboard */
-        .metric-card { /* New class for reusability */
-            background-color: rgba(35, 35, 55, 0.9); /* Dark background */
-            border: 1px solid rgba(70, 70, 90, 0.5);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        /* Metrics Cards */
+        .metric-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-light);
+            box-shadow: 0 2px 10px var(--shadow-light);
             border-radius: 0.75rem;
-            padding: 1.5rem; /* Consistent with dashboard metric cards */
-            color: #E0E0E0;
+            padding: 1.25rem;
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
         }
         .metric-card h3 {
-            color: #93C5FD; /* Light blue for metric titles */
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 1rem;
         }
         .metric-card p {
-            color: #A78BFA; /* Purple for metric values */
+            color: var(--primary-blue);
+            font-weight: 700;
+            font-size: 2.25rem;
         }
 
-
-        /* Chart container - Adjusted padding to match dashboard */
-        .w-full.bg-white.p-6.rounded-lg.shadow-inner.border.border-gray-200.h-96 {
-            background-color: rgba(25, 25, 40, 0.9);
-            border: 1px solid rgba(70, 70, 90, 0.5);
-            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3); /* Inner shadow */
-            color: #E0E0E0;
-            padding: 2.5rem; /* Consistent with dashboard p-10 */
+        /* Chart visual container */
+        .chart-visual {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-light);
+            box-shadow: 0 2px 10px var(--shadow-light);
+            color: var(--text-dark);
+            padding: 2rem;
+            border-radius: 0.75rem;
         }
-        .w-full.bg-white.p-6.rounded-lg.shadow-inner.border.border-gray-200.h-96 h3 {
-            color: #93C5FD;
+        .chart-visual h3 {
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 1.25rem;
         }
 
-        /* Sector View specific elements (currency converter and dropdown) */
-        .currency-converter-container { /* New class to control this specific block */
-            background-color: rgba(45, 45, 70, 0.8); /* Darker background for this specific block */
-            border: 1px solid rgba(80, 80, 100, 0.6);
-            color: #D0D0D0; /* Light text for general content in this block */
-            border-radius: 0.75rem; /* Consistent rounding */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow */
-            padding: 1.5rem; /* Consistent with dashboard p-6 for smaller blocks */
+        /* Currency converter */
+        .currency-converter-container {
+            background-color: var(--bg-light);
+            border: 1px solid var(--border-light);
+            color: var(--text-dark);
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 8px var(--shadow-light);
+            padding: 1rem;
         }
         .currency-converter-container label {
-            color: #D0D0D0; /* Ensure label text is also light */
+            color: var(--text-dark);
         }
-        /* Specific styling for the currency select element itself within the admin portal */
         #sector-currency-select {
-            background-color: rgba(60, 60, 90, 0.9); /* Even darker background for the select dropdown */
-            border: 1px solid rgba(100, 100, 120, 0.7);
-            color: #E0E0E0; /* Light text for the selected option */
-            min-width: 80px; /* Ensure dropdown has enough width */
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-light);
+            color: var(--text-dark);
+            min-width: 70px;
         }
         #sector-currency-select option {
-            background-color: rgba(60, 60, 90, 0.9); /* Dark background for options */
-            color: #E0E0E0; /* Light text for options */
+            background-color: var(--card-bg);
+            color: var(--text-dark);
         }
 
-        /* Toggle switch for monthly/annual */
         .toggle-switch {
             position: relative;
-            display: inline-flex; /* Use inline-flex for better control */
+            display: inline-flex;
             align-items: center;
-            justify-content: space-between; /* Space out text labels */
-            width: 180px; /* Increased width to prevent overlap */
-            height: 34px;
-            margin: 10px 0;
-            border-radius: 17px;
-            background-color: rgba(70, 70, 90, 0.8); /* Dark background */
+            justify-content: space-between;
+            width: 200px;
+            height: 30px;
+            margin: 8px 0;
+            border-radius: 15px;
+            background-color: var(--border-light);
             cursor: pointer;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3), 0 1px 0 rgba(255,255,255,0.05);
-            padding: 0 8px; /* Added padding here to control text spacing */
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+            padding: 0 6px;
         }
         .toggle-switch input {
             opacity: 0;
@@ -358,252 +401,354 @@
             right: 0;
             bottom: 0;
             background-color: transparent;
-            -webkit-transition: .4s;
-            transition: .4s;
-            border-radius: 17px;
-            display: flex; /* Use flex for text alignment */
+            transition: .3s;
+            border-radius: 15px;
+            display: flex;
             align-items: center;
-            justify-content: space-between; /* Distribute text labels */
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #C0C0C0;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #666666;
         }
         .slider:before {
             position: absolute;
             content: "";
-            height: 26px;
-            width: 85px; /* Adjusted width for slider tab */
-            left: 4px;
-            bottom: 4px;
-            background: linear-gradient(45deg, #60A5FA, #93C5FD); /* Blue gradient for toggle handle */
-            -webkit-transition: .4s;
-            transition: .4s;
-            border-radius: 13px; /* Half of height for rounded shape */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            height: 24px;
+            width: 96px;
+            left: 3px;
+            bottom: 3px;
+            background-color: var(--primary-blue);
+            transition: .3s;
+            border-radius: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
-        input:checked + .slider {
-            background-color: transparent;
-        }
-        input:focus + .slider {
-            box-shadow: 0 0 1px #93C5FD;
-        }
-        /* Adjusted translation for wider switch */
         input:checked + .slider:before {
-            -webkit-transform: translateX(88px);
-            -ms-transform: translateX(88px);
-            transform: translateX(88px);
+            transform: translateX(100px);
         }
         .slider span {
-            z-index: 1; /* Ensure text is above slider */
+            z-index: 1;
             user-select: none;
-            color: #C0C0C0; /* Default text color */
+            color: #666666;
             transition: color 0.3s ease;
-            flex-shrink: 0; /* Prevent text from shrinking */
+            flex-shrink: 0;
         }
-        /* Monthly text is active when unchecked, annual when checked */
-        .slider .annual-text {
-            margin-right: 5px; /* Adjust spacing between text labels */
-        }
-        .slider .monthly-text {
-            margin-left: 5px; /* Adjust spacing between text labels */
-        }
-        /* Color logic for toggle text based on checked state to match screenshot */
-        input:checked + .slider .annual-text { /* When checked, annual is active (white) */
+        input:checked + .slider .annual-text {
             color: white;
         }
-        input:checked + .slider .monthly-text { /* When checked, monthly is inactive (gray) */
-            color: #C0C0C0;
-        }
-        input:not(:checked) + .slider .annual-text { /* When not checked, annual is inactive (gray) */
-            color: #C0C0C0;
-        }
-        input:not(:checked) + .slider .monthly-text { /* When not checked, monthly is active (white) */
+        input:not(:checked) + .slider .monthly-text {
             color: white;
         }
-
 
         /* Footer Styling */
         footer {
-            background-color: rgba(20, 20, 35, 0.9);
-            border-top: 1px solid rgba(70, 70, 90, 0.5);
-            color: #A0A0A0; /* Slightly darker gray for footer text */
-            margin-top: auto; /* Push footer to the bottom */
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-light);
+            color: #888888;
+            margin-top: auto;
+            padding: 2rem;
         }
         .footer-logo-text {
-            color: #A78BFA;
+            color: var(--primary-blue);
             font-weight: 800;
+            font-family: 'Fredoka', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         footer a {
-            color: #C0C0C0;
-            transition: color 0.3s ease;
+            color: #666666;
+            text-decoration: none;
+            transition: color 0.2s ease;
         }
         footer a:hover {
-            color: #93C5FD;
+            color: var(--primary-blue);
         }
 
         /* Specific classes for status messages */
-        #adminStatus.text-sm.italic { /* Simplified to apply to base status */
-            color: #B0B0B0; /* Light gray for general status */
+        #adminStatus.text-sm.italic {
+            color: #666666;
         }
         #adminStatus.text-red-500 {
-            color: #F87171; /* Lighter red for errors */
+            color: #dc2626; /* red-600 */
         }
         #adminStatus.text-green-500 {
-            color: #6EE7B7; /* Lighter green for success */
+            color: #22c55e; /* green-500 */
         }
-       
+        
         /* Clear data button */
         button.text-sm.text-red-600 {
-            color: #EF4444; /* Brighter red for action */
+            color: #dc2626;
         }
         button.text-sm.text-red-600:hover {
-            color: #DC2626;
+            color: #b91c1c;
         }
 
-        /* Adjust Chart.js colors for dark theme */
+        /* Adjust Chart.js colors for light theme */
         .chartjs-render-monitor {
-            background-color: transparent !important; /* Ensure canvas background is transparent */
+            background-color: transparent !important;
         }
         /* Added for PayPal Error Message Display */
         .paypal-error-message {
             position: fixed;
             top: 20px;
             right: 20px;
-            background-color: #ffdddd;
-            color: #d8000c;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            background-color: #fef2f2; /* red-50 */
+            color: #b91c1c; /* red-700 */
+            padding: 12px 18px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             z-index: 1000;
-            font-size: 0.9rem;
-            max-width: 300px;
+            font-size: 0.85rem;
+            max-width: 280px;
             text-align: center;
             animation: fadeInOut 5s forwards;
         }
-        /* Success message styling, extends paypal-error-message */
+        /* Success message styling */
         .paypal-success-message {
-            background-color: #d4edda;
-            color: #155724;
+            background-color: #ecfdf5; /* green-50 */
+            color: #047857; /* green-700 */
         }
 
         @keyframes fadeInOut {
-            0% { opacity: 0; transform: translateY(-20px); }
+            0% { opacity: 0; transform: translateY(-10px); }
             10% { opacity: 1; transform: translateY(0); }
             90% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 0; transform: translateY(-10px); }
         }
 
         /* Styles for brand buttons (new) */
         .brand-button {
             display: inline-flex;
             align-items: center;
-            padding: 0.75rem 1.5rem;
-            margin: 0.5rem;
-            background-color: rgba(60, 60, 90, 0.7);
-            color: #A78BFA; /* Purple text */
-            border: 1px solid rgba(139, 92, 246, 0.5); /* Purple border */
-            border-radius: 9999px; /* Pill shape */
-            font-weight: 600;
-            font-size: 0.9rem;
+            padding: 0.6rem 1.2rem;
+            margin: 0.4rem;
+            background-color: var(--bg-light);
+            color: var(--primary-blue);
+            border: 1px solid var(--border-light);
+            border-radius: 9999px;
+            font-weight: 500;
+            font-size: 0.85rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            flex-grow: 1; /* Allow buttons to grow and fill space */
-            justify-content: center; /* Center text in button */
-            min-width: 120px; /* Ensure a minimum width for buttons */
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px var(--shadow-light);
+            flex-grow: 1;
+            justify-content: center;
+            min-width: 100px;
         }
         .brand-button:hover {
-            background-color: rgba(139, 92, 246, 0.2); /* Lighter purple background on hover */
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            background-color: var(--border-light);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px var(--shadow-medium);
         }
         .brand-button.active {
-            background-color: #A78BFA; /* Solid purple when active */
+            background-color: var(--primary-blue);
             color: white;
-            box-shadow: 0 4px 10px rgba(139, 92, 246, 0.6);
-            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(14, 33, 72, 0.2);
+            transform: translateY(0);
         }
         .brand-button span {
-            margin-right: 0.5rem; /* Space between glyph and text */
+            margin-right: 0.4rem;
         }
 
         /* Styles for snapshot boxes */
         .snapshot-box {
-            background-color: rgba(25, 25, 40, 0.9);
-            border-radius: 1rem;
-            border: 1px solid rgba(70, 70, 90, 0.5);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-            padding: 2.5rem;
-            margin-bottom: 2.5rem;
-            color: #E0E0E0;
+            background-color: var(--card-bg);
+            border-radius: 0.75rem;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 2px 10px var(--shadow-light);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
         }
         .snapshot-box h3 {
-            color: #93C5FD;
+            color: var(--primary-blue);
             font-weight: 700;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
         }
         .snapshot-box h4 {
-            color: #A78BFA;
+            color: var(--text-dark);
             font-weight: 600;
-            margin-top: 1.5rem;
-            margin-bottom: 0.75rem;
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
         }
         .snapshot-box ul {
             list-style: none;
             padding: 0;
         }
         .snapshot-box ul li {
-            margin-bottom: 0.4rem;
-            font-size: 0.95rem;
-            color: #C0C0C0;
+            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+            color: #4b5563; /* gray-700 */
         }
         .snapshot-box .close-button {
             float: right;
             background: none;
             border: none;
-            font-size: 1.5rem;
-            color: #F87171; /* Red close icon */
+            font-size: 1.4rem;
+            color: #dc2626; /* red-600 */
             cursor: pointer;
-            transition: color 0.3s ease;
+            transition: color 0.2s ease;
         }
         .snapshot-box .close-button:hover {
-            color: #EF4444;
+            color: #b91c1c;
         }
+
+        /* Styles for initial loading message */
+        #loading-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            z-index: 9999;
+            font-size: 1.2rem;
+            box-shadow: 0 0 15px rgba(14, 33, 72, 0.5);
+            border: 1px solid var(--primary-blue);
+            text-align: center;
+            display: block;
+        }
+
+        /* Custom Modal Styles */
+        .custom-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.75);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .custom-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .custom-modal-content {
+            background-color: var(--card-bg);
+            color: var(--text-dark);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            border: 1px solid var(--border-light);
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .custom-modal-overlay.active .custom-modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .custom-modal-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        .custom-modal-content .cta-button {
+            background-color: var(--secondary-green);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .custom-modal-content .cta-button:hover {
+            background-color: #16a34a;
+        }
+
+        /* Block Box CI override: neutralize leftover Tailwind gray/blue utility
+           classes used throughout dynamically-generated content so everything
+           renders in brand tokens (Navy / Gold / Orange / Warm Paper). */
+        .text-gray-600, .text-gray-700, .text-gray-800 { color: rgba(14,33,72,0.7) !important; }
+        .text-gray-500 { color: rgba(14,33,72,0.5) !important; }
+        .bg-gray-50, .bg-gray-100 { background-color: #eee6d6 !important; }
+        .border-gray-200, .border-gray-300 { border-color: rgba(14,33,72,0.15) !important; }
+        .hover\:bg-gray-100:hover { background-color: #eee6d6 !important; }
+        .hover\:text-gray-800:hover, .hover\:text-gray-900:hover { color: #0e2148 !important; }
+        .text-blue-600, .text-blue-700 { color: #0e2148 !important; }
     </style>
 </head>
 <body class="antialiased">
 
-    <header class="py-4 px-8">
-        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
-            <a href="index.html" class="text-2xl font-bold">🦍 FAA.ZONE™</a>
-            <nav class="flex flex-wrap justify-center md:justify-end items-center space-x-4 md:space-x-6 text-sm">
-                <a href="/">Home</a>
-                <a href="/pricing">Pricing & Plans 💰</a>
-                <a href="/products">Products</a>
-                <a href="/about">About Us ℹ️</a>
-                <a href="/contact">Contact Us 📧</a>
-            </nav>
-        </div>
+    <!-- Loading message to help diagnose blank pages -->
+    <div id="loading-message">Loading Internship Admin Portal...</div>
+
+    <header class="py-4 px-6 md:px-12 flex flex-col sm:flex-row justify-between items-center">
+        <h1 class="text-2xl font-extrabold tracking-tight mb-4 sm:mb-0" style="display:flex;align-items:center;gap:10px;">
+            <svg width="30" height="30" viewBox="0 0 100 100" style="flex:none;"><rect x="4" y="4" width="92" height="92" rx="20" fill="#0e2148"/><path d="M20 50 Q30 36 40 50 T60 50 T80 50" stroke="#f5c518" stroke-width="7" stroke-linecap="round" fill="none"/></svg>
+            Block Box Admin Portal
+        </h1>
+        <nav class="flex flex-wrap justify-center sm:justify-end items-center">
+            <a href="vaultmesh.faa.zone/index.html" class="transition-colors duration-200">Home</a>
+            <a href="#features" class="transition-colors duration-200">Features</a>
+            <a href="#shareprice" class="transition-colors duration-200">Signal</a>
+            <a href="#vault-access" class="transition-colors duration-200">Vault</a>
+            <a href="#treaty" class="transition-colors duration-200">Treaty</a>
+            <a href="#vaultmesh" class="transition-colors duration-200">VaultMesh</a>
+            <a href="#about" class="transition-colors duration-200">About</a>
+            <a href="https://faa.zone/careers/hiring-homepage.html" target="_blank" class="transition-colors duration-200">Careers</a>
+            <a href="https://seedwave.faa.zone/login.html" class="transition-colors duration-200 button-style-original login-button">Login</a>
+            <a href="https://faa.zone/legal/securesign.html" target="_blank" class="transition-colors duration-200 font-semibold px-4 py-2 rounded-full border border-gray-300 hover:bg-gray-100 hover:text-gray-900 button-style-original">SecureSign</a>
+            <a href="https://seedwave.faa.zone/signup.html" class="px-4 py-2 rounded-full font-semibold transition-colors duration-200 button-style-main">Sign Up</a>
+            <a href="https://faa.zone/contact-us.html" class="px-4 py-2 rounded-full font-semibold transition-colors duration-200 button-style-main">Contact Us</a>
+        </nav>
     </header>
 
-    <main class="main-content p-6 md:p-12 flex-grow">
-        <header class="admin-main-header">
-            <h1 class="text-3xl font-extrabold">⚙️ Heyns Admin Portal</h1>
-            <p class="text-sm mt-1">Corebrands management & AI logic deployment center.</p>
-        </header>
+    <main class="main-content flex-grow">
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <h2>Welcome back 👋</h2>
+            <p>Manage Block Box licensing partners, monitor real-time deployment metrics, and track sector-specific rollout across the Fruitful ecosystem.</p>
+        </section>
 
+        <!-- Metrics Section (Moved Up) -->
+        <section id="metrics-section" class="admin-panel-card">
+            <h2 class="text-2xl font-bold mb-6">📈 Real-Time Block Box Metrics</h2>
+            <p class="mb-8 text-gray-600">Live monitoring of key operational metrics across the ecosystem.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                <div class="metric-card">
+                    <h3 class="font-semibold text-gray-600">🧠 Active Nodes</h3>
+                    <p class="mt-1 text-3xl font-bold" id="activeNodesCount">0</p>
+                </div>
+                <div class="metric-card">
+                    <h3 class="font-semibold text-gray-600">🔐 Licenses Active</h3>
+                    <p class="mt-1 text-3xl font-bold" id="licensesActiveCount">0</p>
+                </div>
+                <div class="metric-card">
+                    <h3 class="font-semibold text-gray-600">💾 Vault Deployments</h3>
+                    <p class="mt-1 text-3xl font-bold" id="vaultDeploymentsCount">0</p>
+                </div>
+                <div class="metric-card">
+                    <h3 class="font-semibold text-gray-600">📥 Sync Logs</h3>
+                    <p class="mt-1 text-3xl font-bold" id="syncLogsCount">0</p>
+                </div>
+            </div>
+            <div class="chart-visual w-full p-8 rounded-lg border h-96">
+                <h3 class="text-xl font-bold mb-4 text-gray-600">Block Box License Activity Monitor</h3>
+                <canvas id="pulseChart" class="w-full h-full"></canvas>
+            </div>
+        </section>
+
+        <!-- Admin Navigation (Main Panel) -->
         <nav class="admin-nav-scroll flex flex-wrap gap-x-4 gap-y-2 mb-8">
             <a href="#" class="admin-nav-link" data-section="add-brand-section">➕ Add Brand & Subnodes</a>
             <a href="#" class="admin-nav-link" data-section="global-index-section">📊 Global Index</a>
-            <a href="#" class="admin-nav-link" data-section="metrics-section">📈 Real-Time Metrics</a>
             <a href="#" class="admin-nav-link" data-section="sector-view-section">🔍 Sector View</a>
+            <a href="#" class="admin-nav-link" data-section="sector-snapshot-section">📸 Sector Snapshot</a>
         </nav>
 
-
-        <section id="add-brand-section" class="admin-panel-card space-y-8">
+        <!-- Existing Admin Sections -->
+        <section id="add-brand-section" class="admin-panel-card">
             <h2 class="text-2xl font-bold">Add New Brand & Subnodes</h2>
-            <p>Manually add new core brands and their associated subnodes to the FAA.ZONE ecosystem. This updates client-side data and pushes to backend.</p>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <p class="text-gray-600">Manually add new core brands and their associated subnodes to the FAA.ZONE ecosystem. This updates client-side data and pushes to backend.</p>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8">
                 <div>
                     <label class="text-sm block font-medium mb-1">📂 Sector</label>
                     <select id="sectorSelect" class="w-full border rounded p-2"></select>
@@ -631,8 +776,8 @@
         </section>
 
         <section id="global-index-section" class="admin-panel-card hidden">
-            <h2 class="text-2xl font-bold mb-4">📊 FAA.ZONE Global Index — Core Brands Overview</h2>
-            <p class="mb-4">A comprehensive list of all core brands within the FAA.ZONE ecosystem, including backend-synced data and client-side additions.</p>
+            <h2 class="text-2xl font-bold mb-4">📊 Block Box License Index — Active Partners Overview</h2>
+            <p class="mb-4 text-gray-600">A comprehensive list of all active Block Box licensing partners, including backend-synced data and client-side additions.</p>
             <div class="overflow-x-auto snapshot-box">
                 <table class="min-w-full text-sm text-left">
                     <thead class="table-header-style">
@@ -648,41 +793,14 @@
                             <th class="px-4 py-2">Deploy</th>
                         </tr>
                     </thead>
-                    <tbody class="text-gray-200" id="faaZoneIndexTableBody"></tbody>
+                    <tbody class="text-gray-700" id="faaZoneIndexTableBody"></tbody>
                 </table>
-            </div>
-        </section>
-
-        <section id="metrics-section" class="admin-panel-card hidden">
-            <h2 class="text-2xl font-bold mb-6">📈 Real-Time FAA Pulse Metrics</h2>
-            <p class="mb-8">Live monitoring of key operational metrics across the ecosystem.</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
-                <div class="metric-card">
-                    <h3 class="font-semibold">🧠 Active Nodes</h3>
-                    <p class="text-3xl font-bold mt-2" id="activeNodesCount">0</p>
-                </div>
-                <div class="metric-card">
-                    <h3 class="font-semibold">🔐 Licenses Active</h3>
-                    <p class="text-3xl font-bold mt-2" id="licensesActiveCount">0</p>
-                </div>
-                <div class="metric-card">
-                    <h3 class="font-semibold">💾 Vault Deployments</h3>
-                    <p class="text-3xl font-bold mt-2" id="vaultDeploymentsCount">0</p>
-                </div>
-                <div class="metric-card">
-                    <h3 class="font-semibold">📥 Sync Logs</h3>
-                    <p class="text-3xl font-bold mt-2" id="syncLogsCount">0</p>
-                </div>
-            </div>
-            <div class="w-full bg-white p-8 rounded-lg shadow-inner border h-96">
-                <h3 class="text-xl font-bold mb-4">FAA Scroll Pulse Monitor</h3>
-                <canvas id="pulseChart" class="w-full h-full"></canvas>
             </div>
         </section>
 
         <section id="sector-view-section" class="admin-panel-card hidden">
             <h2 class="text-2xl font-bold mb-6">🔍 Sector-Specific View & Snapshots</h2>
-            <p class="mb-8">Select a sector to view and manage its brands and subnodes, presented with the chosen product card aesthetic.</p>
+            <p class="mb-8 text-gray-600">Select a sector to view and manage its brands and subnodes, presented with the chosen product card aesthetic.</p>
 
             <div class="mb-8 p-6 rounded-lg flex items-center justify-between mx-auto max-w-sm currency-converter-container">
                 <label for="sector-currency-select" class="font-medium text-sm">Display prices in:</label>
@@ -694,75 +812,86 @@
                 </select>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
                 <div class="col-span-full">
                     <label class="text-sm block font-medium mb-1">Select Sector:</label>
                     <select id="sectorViewSelect" class="w-full border rounded p-2"></select>
                 </div>
             </div>
-           
+            
             <div id="dynamicSectorDashboard" class="space-y-10">
-                <p class="text-gray-400 col-span-full text-center mt-10">Select a sector to view its detailed dashboard.</p>
+                <p class="text-gray-600 col-span-full text-center mt-10">Select a sector to view its detailed dashboard.</p>
             </div>
             <!-- Container for the brand-specific detailed snapshot -->
             <div id="brandDetailsContainer" class="mt-8"></div>
         </section>
 
-    </main>
-
-    <footer class="enhanced-footer text-center py-10 mt-16">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
-                <div class="text-lg footer-logo-text">FAA.ZONE™</div>
-                <p class="text-sm">ScrollGrid · PulseTrade Certified · TreatyMesh Validated</p>
-                <div class="flex space-x-4">
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Terms</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Contact</a>
+        <!-- New Sector Snapshot Section -->
+        <section id="sector-snapshot-section" class="admin-panel-card hidden">
+            <h2 class="text-2xl font-bold mb-6">📸 Sector Snapshot: All Brands Overview</h2>
+            <p class="mb-8 text-gray-600">Select a sector to view a comprehensive overview of all its brands, including their core details and pricing.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+                <div class="col-span-full">
+                    <label class="text-sm block font-medium mb-1">Select Sector for Snapshot:</label>
+                    <select id="sectorSnapshotSelect" class="w-full border rounded p-2"></select>
                 </div>
             </div>
-            <p class="text-xs mt-6">© 2025 Fruitful Holdings (Pty) Ltd. All rights reserved.</p>
+            <div id="sectorSnapshotContent" class="space-y-8">
+                <p class="text-gray-600 col-span-full text-center mt-10">Choose a sector from the dropdown to load its snapshot.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-8 mt-16">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+                <div class="text-lg footer-logo-text"><svg width="20" height="20" viewBox="0 0 100 100" style="flex:none;"><rect x="4" y="4" width="92" height="92" rx="20" fill="#0e2148"/><path d="M20 50 Q30 36 40 50 T60 50 T80 50" stroke="#f5c518" stroke-width="8" stroke-linecap="round" fill="none"/></svg>BLOCK BOX™</div>
+                <p class="text-sm">Patent Pending · Made Under License</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-600 hover:text-gray-800 transition-colors">Privacy</a>
+                    <a href="#" class="text-gray-600 hover:text-gray-800 transition-colors">Terms</a>
+                    <a href="#" class="text-gray-600 hover:text-gray-800 transition-colors">Contact</a>
+                </div>
+            </div>
+            <p class="text-xs mt-6">© 2026 Fruitful Holdings (Pty) Ltd. Block Box™ is a Fruitful Holdings brand.</p>
         </div>
     </footer>
 
     <!-- PayPal SDK (client-id now populated from your provided value) -->
-    <script src="https://www.paypal.com/sdk/js?client-id=AY-WQUCahAP77PZrkYkct446AM2Z9x8q-BNBHLNJY&currency=ZAR&vault=true&intent=subscription"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=BAAThS_oBJJ22PM5R1nVJpXoSl9c3si7TJ3ICJBTht_PAFcRprbXkTv4_wqrG37kkAjUcv3tKBOxnUGQ98&currency=ZAR&vault=true&intent=subscription" id="paypal-sdk-script"></script>
 
+    <!-- Custom Modal for Alerts (for consistent alert behavior) -->
+    <div id="customModal" class="custom-modal-overlay hidden">
+        <div class="custom-modal-content">
+            <p id="customModalMessage"></p>
+            <button onclick="hideCustomModal()" class="cta-button mt-4">OK</button>
+        </div>
+    </div>
+    
     <script type="module">
+        // Get the loading message element
+        const loadingMessage = document.getElementById('loading-message');
+
         // Wrap the entire script in an IIFE to create a private scope
         (function() {
             // --- Global Data Definitions ---
             const sectorList = {
-                "agriculture": "🌱 Agriculture & Biotech",
-                "fsf": "🥦 Food, Soil & Farming",
-                "banking": "🏦 Banking & Finance",
-                "creative": "🖋️ Creative Tech",
-                "logistics": "📦 Logistics & Packaging",
-                "education-ip": "📚 Education & IP",
-                "fashion": "✂ Fashion & Identity",
-                "gaming": "🎮 Gaming & Simulation",
-                "health": "🧠 Health & Hygiene",
-                "housing": "🏗️ Housing & Infrastructure",
-                "justice": "⚖ Justice & Ethics",
-                "knowledge": "📖 Knowledge & Archives",
-                "micromesh": "☰ Micro-Mesh Logistics",
-                "media": "🎬 Motion, Media & Sonic",
-                "nutrition": "✿ Nutrition & Food Chain",
-                "ai-logic": "🧠 AI, Logic & Grid",
-                "packaging": "📦 Packaging & Materials",
-                "quantum": "✴️ Quantum Protocols",
-                "ritual": "☯ Ritual & Culture",
-                "saas": "🔑 SaaS & Licensing",
-                "trade": "🧺 Trade Systems",
-                "utilities": "🔋 Utilities & Energy",
-                "voice": "🎙️ Voice & Audio",
-                "webless": "📡 Webless Tech & Nodes",
-                "nft": "🔁 NFT & Ownership",
-                "education-youth": "🎓 Education & Youth",
-                "zerowaste": "♻️ Zero Waste",
-                "professional": "🧾 Professional Services",
-                "payroll-mining": "🪙 Payroll Mining & Accounting",
-                "mining": "⛏️ Mining & Resources",
+                "agriculture": "🌱 Agriculture & Biotech", "fsf": "🥦 Food, Soil & Farming",
+                "banking": "🏦 Banking & Finance", "creative": "🖋️ Creative Tech",
+                "logistics": "📦 Logistics & Packaging", "education-ip": "📚 Education & IP",
+                "fashion": "✂ Fashion & Identity", "gaming": "🎮 Gaming & Simulation",
+                "health": "🧠 Health & Hygiene", "housing": "🏗️ Housing & Infrastructure",
+                "justice": "⚖ Justice & Ethics", "knowledge": "📖 Knowledge & Archives",
+                "micromesh": "☰ Micro-Mesh Logistics", "media": "🎬 Motion, Media & Sonic",
+                "nutrition": "✿ Nutrition & Food Chain", "ai-logic": "🧠 AI, Logic & Grid",
+                "packaging": "📦 Packaging & Materials", "quantum": "✴️ Quantum Protocols",
+                "ritual": "☯ Ritual & Culture", "saas": "🔑 SaaS & Licensing",
+                "trade": "🧺 Trade Systems", "utilities": "🔋 Utilities & Energy",
+                "voice": "🎙️ Voice & Audio", "webless": "📡 Webless Tech & Nodes",
+                "nft": "🔁 NFT & Ownership", "education-youth": "🎓 Education & Youth",
+                "zerowaste": "♻️ Zero Waste", "professional": "🧾 Professional Services",
+                "payroll-mining": "🪙 Payroll Mining & Accounting", "mining": "⛏️ Mining & Resources",
                 "wildlife": "🦁 Wildlife & Habitat",
                 "admin-panel": "⚙️ Admin Panel"
             };
@@ -866,7 +995,7 @@
                         name: 'FinGrid',
                         subNodes: ['Ledger Mesh','Arbitrage Core','Token Router','Tax Engine','Vault Lock','Compliance Matrix','Logistics Fin','Currency Glyph','Forecast Engine','Signal Tracker'],
                         details: {
-                            intro: "a cutting-edge FAA.ZONE solution designed for the Banking & Finance sector. It seamlessly integrates with the global PulseGrid to deliver unparalleled performance and data integrity.",
+                            intro: "FinGrid™ is the premier FAA.ZONE platform, revolutionizing Banking & Finance operations. Leveraging the global PulseGrid, it offers robust data synchronization and superior efficiency.",
                             keyFeatures: [
                                 "Direct Integration with FAA 🧾 Professional Services Mesh.",
                                 "Advanced data sync with Ledger Mesh.",
@@ -890,7 +1019,7 @@
                             },
                             realTimeMetrics: {
                                 currentPulseActivity: "90,109 pulses/sec",
-                                dataVolumeProcessed: "89.66 TB",
+                                slice: "89.66 TB",
                                 latencyAverage: "34 ms"
                             },
                             vaultTraceEntries: [
@@ -905,7 +1034,7 @@
                         name: 'TradeAmp',
                         subNodes: ['Zeno Mesh','Crux Bridge','Hive Monitor','Wire Reconciler','Bit Locker','Credit Splice','Score Vector','Zentry Core','Drift Trace','Alpha Ledger'],
                         details: {
-                            intro: "an innovative FAA.ZONE protocol, specifically engineered for the demands of the Banking & Finance industry. Its deep integration with the PulseGrid ensures secure, real-time data flows and enhanced decision-making.",
+                            intro: "TradeAmp™ optimizes global trade finance with AI-driven liquidity and AI-driven fraud detection. Integrated with PulseTrade, it ensures high-speed, compliant, and transparent financial flows.",
                             keyFeatures: [
                                 "AI-driven liquidity optimization.",
                                 "Immutable transaction ledgering.",
@@ -926,7 +1055,7 @@
                             },
                             realTimeMetrics: {
                                 currentPulseActivity: "75,200 pulses/sec",
-                                dataVolumeProcessed: "65.12 TB",
+                                slice: "65.12 TB",
                                 latencyAverage: "40 ms"
                             },
                             vaultTraceEntries: [
@@ -1358,7 +1487,7 @@
                         name: 'FrameCast',
                         subNodes: ['VideoNode', 'AudioSync', 'StreamPulse'],
                         details: {
-                            intro: "a cutting-edge FAA.ZONE solution designed for the Motion, Media & Sonic sector. It seamlessly integrates with the global PulseGrid to deliver unparalleled performance and data integrity.",
+                            intro: "FrameCast™ is a protocol for secure, verifiable media streaming. It leverages FAA.ZONE's ScrollGrid for robust content delivery and integrated VaultVision for digital rights management.",
                             keyFeatures: [
                                 "Secure, encrypted video streaming.",
                                 "Real-time audio/video synchronization.",
@@ -1404,7 +1533,7 @@
                     { name: 'FoodSense', subNodes: ['IngestTrack'], details: {} }
                 ],
                 "ai-logic": [
-                    { name: 'OmniKey', subNodes: ['BrainNode'], details: {} },
+                    { name: 'OmniKey', subNodes: ['BrainNode', 'LogicLink'], details: {} },
                     { name: 'CogniGrid', subNodes: ['SynapseNet'], details: {} }
                 ],
                 "packaging": [
@@ -1528,6 +1657,31 @@
             let currentActivePanelId = null;
             let activeBrandButton = null; // To keep track of the currently active brand button
 
+            // --- API Key Data (EMBEDDED as requested) ---
+            const apiKeysData = [
+                { service: "PayPal (SDK)", key: "BAAGdPecRsf6dw_nIrWqUen0GdW0UsBZapp1Gn62xkPdD-Vqc-4lqWAidKK8LOObXux8pHJGjXknZoar6Q", locations: ["Various checkout scrolls"] },
+                { service: "PayPal (Hosted Button)", key: "EMWGPGHNN8Y8E", context: "(Starter Package)", locations: ["HotStack™", "Various landing pages"] },
+                { service: "PayPal (Hosted Button)", key: "QGU3ZUQCMD49Q", context: "(Pro Package)", locations: ["HotStack™", "Larger brand sites"] },
+                { service: "PayPal (Hosted Button)", key: "9C88S44F93M5J", context: "(Enterprise Package)", locations: ["HotStack™", "Enterprise solutions"] },
+                { service: "PayPal (Hosted Button)", key: "YOUR_BANIMAL_PAYPAL_BUTTON_ID_HERE", context: "(Banimal Loop Plan - Placeholder)", locations: ["Banimal Loop Plan site"] },
+                { service: "Google Maps", key: "AIzaSyBPG8dG29cl0TvYRGyLozejGed5Wj5Ab80", locations: ["Location-based microsites"] },
+                { service: "Spotify (Access Token)", key: "BQBDSZ232IQmSLVbROkxqdwNMoGhtitKOJBjDzE-Lu9YKsSK1RKVwXNfYfncP2wf6Fj6xcYlnGD75baEqOmd3XtxhU...", locations: ["Music/media scrolls"] },
+                { service: "Gemini AI", key: "AIzaSyBGSDZATtITv5iIoB3rgKHBpWx9MrufxXE", locations: ["AI-powered insights scrolls", "Baobab Terminal"] },
+                { service: "Xero (Client ID)", key: "81B3573D453040508996432C5DAD565B", locations: ["Accounting/payroll integration scrolls"] },
+                { service: "Xero (Client Secret)", key: "FIaJGmsaCcKR3Z8kWxPnQd04EhYy6_bImPmoitQDP1U6Smaq", locations: ["Accounting/payroll integration scrolls"] },
+                { service: "Xero (Redirect URI)", key: "https://seedwave.faa.zone/admin_panel_xero.html", locations: ["Xero OAuth setup"] },
+                { service: "Xero (Webhook Key)", key: "2fd5LQV0TQDI3572Er/sg66zqEbl8mFWRyfX3XkoKFZGRLK2cZPGpWV/j4yMTU7aUpbgBCfeZkuHnQIwD/0igw==", locations: ["Xero webhook configurations"] }
+            ];
+
+            // Example of how to access an API key:
+            // const googleMapsKey = apiKeysData.find(k => k.service === "Google Maps")?.key;
+            // console.log("Google Maps API Key:", googleMapsKey);
+
+            // You can now use these keys in your script as needed, e.g., to configure SDKs
+            // or make authenticated API calls (keeping in mind security best practices
+            // for client-side keys, as mentioned in the original API Vault HTML).
+
+
             // --- Chart & App Logic (for dashboard metrics) ---
             let pulseChartInstance = null;
             const chartTimeLabels = Array.from({ length: 10 }, (_, i) => `T-${(9-i)*3}s`);
@@ -1546,6 +1700,8 @@
 
             // --- Currency Converter Logic ---
             let exchangeRates = {};
+            // IMPORTANT: Get your API key from https://www.exchangerate-api.com/ and replace this.
+            // Currency conversion will not work without a valid API key.
             const API_KEY = "40015d117bc7fff9495dcf28"; // Your provided API key
             const BASE_CURRENCY = 'ZAR';
 
@@ -1574,11 +1730,27 @@
             window.deploySectorPlanToPayPal = deploySectorPlanToPayPal;
             window.initiatePayPalSubscription = initiatePayPalSubscription;
             window.getCurrencySymbol = getCurrencySymbol; // Exposed
-            window.convertCurrency = convertCurrency;     // Exposed
+            window.convertCurrency = convertCurrency;      // Exposed
             window.exchangeRates = exchangeRates;
             window.BASE_CURRENCY = BASE_CURRENCY;
             window.toggleSubscriptionType = toggleSubscriptionType;
             window.displayBrandDetails = displayBrandDetails;
+
+            // --- Custom Modal Functions (copied for consistent alert behavior) ---
+            function showCustomModal(title, message) {
+                const modal = document.getElementById('customModal');
+                const modalMessage = document.getElementById('customModalMessage');
+                if (modal && modalMessage) {
+                    modalMessage.innerHTML = `<strong>${title}</strong><br>${message}`;
+                    modal.classList.add('active'); 
+                }
+            }
+
+            function hideCustomModal() {
+                document.getElementById('customModal')?.classList.remove('active');
+            }
+            window.showCustomModal = showCustomModal; // Expose to global scope
+            window.hideCustomModal = hideCustomModal; // Expose to global scope
 
 
             // --- Admin Panel Core Functions ---
@@ -1621,6 +1793,15 @@
                             displaySectorSpecificProducts(sectorViewSelect.value); // Redisplay if already selected
                         }
                     }
+                    if (sectionId === 'sector-snapshot-section') {
+                        populateSectorSnapshotSelect();
+                        const sectorSnapshotSelect = document.getElementById('sectorSnapshotSelect');
+                        if (sectorSnapshotSelect.value !== '') {
+                            displaySectorSnapshot(sectorSnapshotSelect.value);
+                        } else {
+                            document.getElementById('sectorSnapshotContent').innerHTML = '<p class="text-gray-600 col-span-full text-center mt-10">Choose a sector from the dropdown to load its snapshot.</p>';
+                        }
+                    }
                 }
             }
 
@@ -1637,7 +1818,7 @@
                     }
                 });
             }
-           
+
             function populateSectorViewSelect() {
                 const select = document.getElementById('sectorViewSelect');
                 if (!select) return;
@@ -1662,6 +1843,29 @@
                 select.addEventListener('change', handleSectorViewChange);
             }
 
+            function populateSectorSnapshotSelect() {
+                const select = document.getElementById('sectorSnapshotSelect');
+                if (!select) return;
+                select.innerHTML = '';
+
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = '--- Select a Sector ---';
+                select.appendChild(defaultOption);
+
+                Object.entries(sectorList).forEach(([key, label]) => {
+                    if (key !== 'admin-panel') {
+                        const option = document.createElement('option');
+                        option.value = key;
+                        option.textContent = label;
+                        select.appendChild(option);
+                    }
+                });
+
+                select.removeEventListener('change', handleSectorSnapshotChange);
+                select.addEventListener('change', handleSectorSnapshotChange);
+            }
+
             function handleSectorViewChange(event) {
                 const selectedSectorKey = event.target.value;
                 // Clear any previously active brand button when switching sectors
@@ -1675,7 +1879,16 @@
                 if (selectedSectorKey) {
                     displaySectorSpecificProducts(selectedSectorKey);
                 } else {
-                    document.getElementById('dynamicSectorDashboard').innerHTML = '<p class="text-gray-400 col-span-full text-center mt-8">Select a sector to view its detailed dashboard.</p>';
+                    document.getElementById('dynamicSectorDashboard').innerHTML = '<p class="text-gray-600 col-span-full text-center mt-8">Select a sector to view its detailed dashboard.</p>';
+                }
+            }
+
+            function handleSectorSnapshotChange(event) {
+                const selectedSectorKey = event.target.value;
+                if (selectedSectorKey) {
+                    displaySectorSnapshot(selectedSectorKey);
+                } else {
+                    document.getElementById('sectorSnapshotContent').innerHTML = '<p class="text-gray-600 col-span-full text-center mt-10">Choose a sector from the dropdown to load its snapshot.</p>';
                 }
             }
 
@@ -1693,19 +1906,19 @@
 
                 if (!brandName || subnodesArray.length === 0) {
                     adminStatus.textContent = "⚠️ Please fill in both brand name and at least one subnode.";
-                    addBrandBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
+                    addBrandBtn.classList.remove('cta-button'); /* Remove cta-button to allow error style to apply */
                     addBrandBtn.classList.add('bg-red-500', 'hover:bg-red-600');
                     setTimeout(() => {
                         adminStatus.textContent = "Ready to receive input.";
                         addBrandBtn.classList.remove('bg-red-500', 'hover:bg-red-600');
-                        addBrandBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
+                        addBrandBtn.classList.add('cta-button'); /* Add cta-button back */
                     }, 3000);
                     return;
                 }
 
                 // Simulate backend call
                 console.log(`Attempting to add brand "${brandName}" with subnodes [${subnodesArray.join(', ')}] to sector "${sectorKey}"`);
-               
+
                 return new Promise(resolve => {
                     setTimeout(() => { // Simulate network delay
                         if (!clientAdminData[sectorKey]) {
@@ -1723,16 +1936,20 @@
                         adminStatus.textContent = `✅ Added ${brandName} to ${sectorList[sectorKey]} (Client-side & simulated Backend).`;
                         adminStatus.classList.remove('text-red-500');
                         adminStatus.classList.add('text-green-500'); // Add success color
-                        addBrandBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
+                        addBrandBtn.classList.remove('cta-button'); /* Remove cta-button to allow success style to apply */
                         addBrandBtn.classList.add('bg-green-500', 'hover:bg-green-600');
                         addBrandBtn.innerHTML = '✔️ Added!';
-                       
+
                         // Re-render relevant sections after adding data
                         renderFaaZoneIndexTable();
                         calculateGlobalMetrics();
                         if (currentActivePanelId === 'sector-view-section' && document.getElementById('sectorViewSelect').value === sectorKey) {
                             displaySectorSpecificProducts(sectorKey); // Re-render sector view to show new brand button
                         }
+                        if (currentActivePanelId === 'sector-snapshot-section' && document.getElementById('sectorSnapshotSelect').value === sectorKey) {
+                            displaySectorSnapshot(sectorKey); // Re-render sector snapshot to show new brand
+                        }
+
 
                         brandInput.value = "";
                         subnodesInput.value = "";
@@ -1744,7 +1961,7 @@
                     adminStatus.textContent = "❌ Failed to save. Check console.";
                     adminStatus.classList.remove('text-green-500'); // Remove success color
                     adminStatus.classList.add('text-red-500'); // Add error color
-                    addBrandBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
+                        addBrandBtn.classList.remove('cta-button'); /* Remove cta-button to allow error style to apply */
                     addBrandBtn.classList.add('bg-red-500', 'hover:bg-red-600');
                     addBrandBtn.innerHTML = 'Failed!';
                 })
@@ -1753,12 +1970,12 @@
                         adminStatus.textContent = "Ready to receive input.";
                         adminStatus.classList.remove('text-green-500', 'text-red-500'); // Reset status color
                         addBrandBtn.classList.remove('bg-green-500', 'hover:bg-green-600', 'bg-red-500', 'hover:bg-red-600');
-                        addBrandBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
+                        addBrandBtn.classList.add('cta-button'); /* Add cta-button back */
                         addBrandBtn.innerHTML = '➕ Add Brand';
                     }, 3000);
                 });
             }
-           
+
             function clearAdminAddedData() {
                 localStorage.removeItem("clientAdminData");
                 clientAdminData = {};
@@ -1768,8 +1985,10 @@
                 renderFaaZoneIndexTable();
                 calculateGlobalMetrics();
                 // Clear brand details container as well when data is cleared
-                document.getElementById('dynamicSectorDashboard').innerHTML = '<p class="text-gray-400 col-span-full text-center mt-8">Select a sector to view its detailed dashboard.</p>';
+                document.getElementById('dynamicSectorDashboard').innerHTML = '<p class="text-gray-600 col-span-full text-center mt-8">Select a sector to view its detailed dashboard.</p>';
                 document.getElementById('brandDetailsContainer').innerHTML = ''; // Clear brand snapshot
+                document.getElementById('sectorSnapshotContent').innerHTML = '<p class="text-gray-600 col-span-full text-center mt-10">Choose a sector from the dropdown to load its snapshot.</p>'; // Clear snapshot content
+
 
                 const adminStatus = document.getElementById("adminStatus");
                 adminStatus.textContent = "🗑️ Client-side admin data cleared.";
@@ -1780,7 +1999,7 @@
                     adminStatus.classList.remove('text-green-500');
                 }, 3000);
             }
-           
+
             // Function to toggle between monthly and annual prices
             function toggleSubscriptionType(cardElement, isAnnualChecked) {
                 const priceSpan = cardElement.querySelector('.price-display');
@@ -1807,13 +2026,14 @@
                 if (currentCurrency !== BASE_CURRENCY && exchangeRates[currentCurrency]) {
                     convertedPrice = window.convertCurrency(newPrice, BASE_CURRENCY, currentCurrency); // Use the exposed function
                 }
-               
-                priceSpan.innerHTML = `${window.getCurrencySymbol(currentCurrency)}${convertedPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} <span class="text-xl text-gray-400">${suffix}</span>`;
+
+                priceSpan.innerHTML = `${window.getCurrencySymbol(currentCurrency)}${convertedPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} <span class="text-xl text-gray-500">${suffix}</span>`;
 
                 // Update the PayPal button's data attributes
                 const buyButton = cardElement.querySelector('.buy-now-button');
                 // Always use the base (ZAR) amount for the data-amount, as PayPal plan creation will use the ZAR value.
                 buyButton.dataset.amount = newPrice.toFixed(2);
+                // Fix: Changed 'billing-cycle' to 'billingCycle' for correct dataset access
                 buyButton.dataset.billingCycle = newBillingCycle;
                 buyButton.dataset.planKey = `${buyButton.dataset.itemName.replace(/\s/g, '_')}_${newBillingCycle}`;
             }
@@ -1832,7 +2052,7 @@
                         subnodes = [`MockNode ${brandName.slice(0,3).toUpperCase()}A™`, `MockNode ${brandName.slice(0,3).toUpperCase()}B™`];
                     }
                 }
-               
+
                 const sectorInfo = FAA_ZONE_INDEX_SUMMARY_DATA[sectorKey] || {};
                 const sectorDisplayName = sectorList[sectorKey] || sectorKey.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
 
@@ -1843,7 +2063,7 @@
                 const randomLatency = () => (Math.random() * 50 + 10).toFixed(2); // 10-60 ms
                 const randomActiveNodes = () => Math.floor(Math.random() * 1000) + 50;
                 const randomAuditDate = () => `2025-${(Math.floor(Math.random() * 12) + 1).toString().padStart(2, '0')}-${(Math.floor(Math.random() * 28) + 1).toString().padStart(2, '0')}`;
-               
+
                 const introVariations = [
                     `a cutting-edge FAA.ZONE solution designed for the ${sectorDisplayName} sector. It seamlessly integrates with the global PulseGrid to deliver unparalleled performance and data integrity.`,
                     `the premier FAA.ZONE platform, revolutionizing ${sectorDisplayName} operations. Leveraging the global PulseGrid, it offers robust data synchronization and superior efficiency.`,
@@ -1873,7 +2093,7 @@
                         selectedAdditionalFeatures.push(tempAdditionalFeatures.splice(randomIndex, 1)[0]);
                     }
                 }
-               
+
                 const allFeatures = [...coreFeatures, ...selectedAdditionalFeatures];
 
                 // Pricing tiers for snapshot, based on sector's base fee
@@ -1986,6 +2206,27 @@
                 const currentCurrency = document.getElementById('sector-currency-select').value;
                 const currencySymbol = window.getCurrencySymbol(currentCurrency); // Use exposed function
 
+                // Retrieve actual pricing from FAA_ZONE_INDEX_SUMMARY_DATA
+                const sectorPricingSummary = FAA_ZONE_INDEX_SUMMARY_DATA[sectorKey];
+                const baseMonthlyFee = parseFloat(String(sectorPricingSummary.monthlyFee).replace('$', '').replace(',', ''));
+                const annualDiscountRate = 0.15;
+
+                const snapshotPricingTiers = [
+                    {
+                        name: "Starter Node",
+                        baseMonthlyAmount: baseMonthlyFee,
+                    },
+                    {
+                        name: "Pro Grid",
+                        baseMonthlyAmount: baseMonthlyFee * 2.5,
+                    },
+                    {
+                        name: "Enterprise Omni-Sync",
+                        baseMonthlyAmount: baseMonthlyFee * 5,
+                    }
+                ];
+
+
                 let snapshotHtml = `
                     <div class="admin-panel-card mt-6">
                         <div class="flex items-center justify-between mb-6">
@@ -1999,59 +2240,49 @@
                             <!-- Core Protocol Overview -->
                             <div class="lg:col-span-2 admin-panel-card !p-6">
                                 <h4 class="text-xl font-bold mb-4">${brandSnapshotData.brandName} Core Protocol Overview</h4>
-                                <p class="text-gray-400 mb-4">
+                                <p class="text-gray-600 mb-4">
                                     ${brandSnapshotData.brandName}™ is ${brandSnapshotData.intro}
                                 </p>
-                               
+
                                 <h5 class="text-lg font-semibold mb-2 mt-4">🎛️ Key Features</h5>
-                                <ul class="list-disc list-inside text-gray-300 ml-4 mb-6">
+                                <ul class="list-disc list-inside text-gray-700 ml-4 mb-6">
                                     ${brandSnapshotData.keyFeatures.map(f => `<li>${f}</li>`).join('')}
                                 </ul>
 
                                 <h5 class="text-lg font-semibold mb-2 mt-4">📌 Subnodes</h5>
-                                <ul class="list-disc list-inside text-gray-300 ml-4 mb-6">
+                                <ul class="list-disc list-inside text-gray-700 ml-4 mb-6">
                                     ${brandSnapshotData.subnodes.map(n => `<li>${n}</li>`).join('')}
                                 </ul>
 
                                 <h5 class="text-lg font-semibold mb-2 mt-4">💳 Pricing Structure (Derived from Sector Tier Pricing)</h5>
                                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-                                    ${brandSnapshotData.pricing.map(tier => {
-                                        let displayMonthlyPrice = tier.monthlyAmount;
-                                        let displayAnnualPrice = tier.annualAmount;
+                                    ${snapshotPricingTiers.map(tier => { 
+                                        let displayMonthlyPrice = tier.baseMonthlyAmount;
+                                        let displayAnnualPrice = tier.baseMonthlyAmount * 12 * (1 - annualDiscountRate);
                                         let priceSuffix = "/ month";
                                         let displayPrice = displayMonthlyPrice;
 
-                                        // Apply currency conversion
-                                        if (currentCurrency !== BASE_CURRENCY && exchangeRates[currentCurrency]) {
-                                            displayMonthlyPrice = window.convertCurrency(displayMonthlyPrice, BASE_CURRENCY, currentCurrency); // Use exposed function
-                                            displayAnnualPrice = window.convertCurrency(displayAnnualPrice, BASE_CURRENCY, currentCurrency); // Use exposed function
-                                            displayPrice = displayMonthlyPrice; // Default to monthly on snapshot
-                                        }
-
-                                        // Check the toggle state of the first product card if available
-                                        const firstProductCard = document.querySelector('#dynamicSectorDashboard .product-card');
-                                        let isAnnualChecked = false;
-                                        if (firstProductCard) {
-                                            const toggleCheckbox = firstProductCard.querySelector('.toggle-switch input[type="checkbox"]');
-                                            if (toggleCheckbox) {
-                                                isAnnualChecked = toggleCheckbox.checked;
-                                            }
-                                        }
+                                        // Check the state of the main toggle switch on the page
+                                        const toggleCheckbox = document.querySelector('.toggle-switch input[type="checkbox"]');
+                                        let isAnnualChecked = toggleCheckbox ? toggleCheckbox.checked : false;
 
                                         if (isAnnualChecked) {
                                             displayPrice = displayAnnualPrice;
                                             priceSuffix = "/ year";
                                         }
 
+                                        // Apply currency conversion here as well
+                                        let convertedPrice = window.convertCurrency(displayPrice, BASE_CURRENCY, currentCurrency);
+
                                         return `
-                                            <div class="bg-gray-800 p-4 rounded-md border border-gray-700">
-                                                <h6 class="font-semibold text-blue-300">${tier.name}</h6>
-                                                <p class="text-xl font-bold text-blue-400 mt-1">
-                                                    ${currencySymbol}${displayPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} <span class="text-sm text-gray-400">${priceSuffix}</span>
+                                            <div class="bg-gray-50 p-4 rounded-md border border-gray-200">
+                                                <h6 class="font-semibold text-blue-600">${tier.name}</h6>
+                                                <p class="text-xl font-bold text-blue-700 mt-1">
+                                                    ${currencySymbol}${convertedPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} <span class="text-sm text-gray-500">${priceSuffix}</span>
                                                 </p>
-                                                <p class="text-gray-400 mt-2 text-xs">${tier.description}</p>
-                                                <ul class="text-xs text-gray-500 list-disc list-inside ml-3 mt-2">
-                                                    ${tier.benefits.map(b => `<li>${b}</li>`).join('')}
+                                                <p class="text-gray-600 mt-2 text-xs">${SECTOR_TIER_PRICING[tier.name.replace(/\sNode|\sGrid|\sOmni-Sync/,'')].description}</p>
+                                                <ul class="text-xs text-gray-600 list-disc list-inside ml-3 mt-2">
+                                                    ${SECTOR_TIER_PRICING[tier.name.replace(/\sNode|\sGrid|\sOmni-Sync/,'')].features.map(b => `<li>${b}</li>`).join('')}
                                                 </ul>
                                             </div>
                                         `;
@@ -2062,26 +2293,26 @@
                             <!-- FAA Data & Compliance -->
                             <div class="lg:col-span-1 admin-panel-card !p-6 space-y-4">
                                 <h4 class="text-xl font-bold mb-4">🔗 FAA Data & Compliance</h4>
-                                <ul class="list-none p-0 m-0 space-y-2 text-gray-300">
-                                    <li><span class="font-semibold text-blue-300">Product ID:</span> <code>${brandSnapshotData.metadata.productId}</code></li>
-                                    <li><span class="font-semibold text-blue-300">VaultID:</span> <code>${brandSnapshotData.metadata.vaultId}</code></li>
-                                    <li><span class="font-semibold text-blue-300">Signal Echo Layer:</span> <code>${brandSnapshotData.metadata.signalEchoLayer}</code></li>
-                                    <li><span class="font-semibold text-blue-300">Deployment Zone:</span> <code>${brandSnapshotData.metadata.deploymentZone}</code></li>
-                                    <li><span class="font-semibold text-blue-300">Security Rating:</span> <span class="font-bold text-green-500">${brandSnapshotData.metadata.securityRating}</span></li>
-                                    <li><span class="font-semibold text-blue-300">Active Nodes:</span> <code>${brandSnapshotData.metadata.activeNodes.toLocaleString()}</code></li>
-                                    <li><span class="font-semibold text-blue-300">Last Audit:</span> <code>${brandSnapshotData.metadata.lastSync}</code></li>
-                                    <li><span class="font-semibold text-blue-300">Compliance Status:</span> <span class="font-bold text-green-500">${brandSnapshotData.metadata.complianceStatus}</span></li>
+                                <ul class="list-none p-0 m-0 space-y-2 text-gray-700">
+                                    <li><span class="font-semibold text-blue-600">Product ID:</span> <code>${brandSnapshotData.metadata.productId}</code></li>
+                                    <li><span class="font-semibold text-blue-600">VaultID:</span> <code>${brandSnapshotData.metadata.vaultId}</code></li>
+                                    <li><span class="font-semibold text-blue-600">Signal Echo Layer:</span> <code>${brandSnapshotData.metadata.signalEchoLayer}</code></li>
+                                    <li><span class="font-semibold text-blue-600">Deployment Zone:</span> <code>${brandSnapshotData.metadata.deploymentZone}</code></li>
+                                    <li><span class="font-semibold text-blue-600">Security Rating:</span> <span class="font-bold text-green-600">${brandSnapshotData.metadata.securityRating}</span></li>
+                                    <li><span class="font-semibold text-blue-600">Active Nodes:</span> <code>${brandSnapshotData.metadata.activeNodes.toLocaleString()}</code></li>
+                                    <li><span class="font-semibold text-blue-600">Last Audit:</span> <code>${brandSnapshotData.metadata.lastSync}</code></li>
+                                    <li><span class="font-semibold text-blue-600">Compliance Status:</span> <span class="font-bold text-green-600">${brandSnapshotData.metadata.complianceStatus}</span></li>
                                 </ul>
 
                                 <h5 class="text-lg font-semibold mb-2 mt-4">📊 Real-Time Metrics</h5>
-                                <ul class="list-none p-0 m-0 space-y-2 text-gray-300">
-                                    <li><span class="font-semibold text-blue-300">Current Pulse Activity:</span> ${brandSnapshotData.realTimeMetrics.currentPulseActivity}</li>
-                                    <li><span class="font-semibold text-blue-300">Data Volume Processed (24h):</span> ${brandSnapshotData.realTimeMetrics.dataVolumeProcessed}</li>
-                                    <li><span class="font-semibold text-blue-300">Latency Average:</span> ${brandSnapshotData.realTimeMetrics.latencyAverage}</li>
+                                <ul class="list-none p-0 m-0 space-y-2 text-gray-700">
+                                    <li><span class="font-semibold text-blue-600">Current Pulse Activity:</span> ${brandSnapshotData.realTimeMetrics.currentPulseActivity}</li>
+                                    <li><span class="font-semibold text-blue-600">Data Volume Processed (24h):</span> ${brandSnapshotData.realTimeMetrics.dataVolumeProcessed}</li>
+                                    <li><span class="font-semibold text-blue-600">Latency Average:</span> ${brandSnapshotData.realTimeMetrics.latencyAverage}</li>
                                 </ul>
 
                                 <h5 class="text-lg font-semibold mb-2 mt-4">🧾 VaultTrace™ Ledger Entries</h5>
-                                <ul class="list-disc list-inside text-gray-300 ml-4 space-y-1">
+                                <ul class="list-disc list-inside text-gray-700 ml-4 space-y-1">
                                     ${brandSnapshotData.vaultTraceEntries.map(entry => `<li><code>${entry}</code></li>`).join('')}
                                 </ul>
                             </div>
@@ -2100,6 +2331,70 @@
                 }
             };
 
+            // --- New Sector Snapshot Function ---
+            function displaySectorSnapshot(sectorKey) {
+                const container = document.getElementById('sectorSnapshotContent');
+                if (!container) {
+                    console.error("Sector snapshot content container not found!");
+                    return;
+                }
+                container.innerHTML = ''; // Clear previous content
+
+                const sectorDisplayName = sectorList[sectorKey] || sectorKey.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                const allBrandsInSector = [...(ALL_BRANDS_DETAILS_BY_SECTOR[sectorKey] || []), ...(clientAdminData[sectorKey]?.brands || [])];
+
+                if (allBrandsInSector.length === 0) {
+                    container.innerHTML = `<p class="text-gray-600 col-span-full text-center mt-10">No brands found for ${sectorDisplayName} in the snapshot.</p>`;
+                    return;
+                }
+
+                let snapshotHtml = `
+                    <h3 class="text-xl font-bold mb-4">Overview of ${sectorDisplayName} Brands</h3>
+                    <p class="text-gray-600 mb-6">A consolidated view of all brands within the ${sectorDisplayName} sector, including their core details and pricing tiers.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                `;
+
+                allBrandsInSector.forEach(brand => {
+                    const brandSnapshotData = generateMockBrandSnapshotData(sectorKey, brand.name, brand.subNodes);
+                    // Ensure pricing is based on the sector's base fee, not a random mock value here
+                    const sectorPricingSummary = FAA_ZONE_INDEX_SUMMARY_DATA[sectorKey];
+                    const baseMonthlyFee = parseFloat(String(sectorPricingSummary.monthlyFee).replace('$', '').replace(',', ''));
+                    const annualDiscountRate = 0.15;
+
+                    const starterMonthly = baseMonthlyFee;
+                    const proMonthly = baseMonthlyFee * 2.5;
+                    const enterpriseMonthly = baseMonthlyFee * 5;
+
+                    const currentCurrency = document.getElementById('sector-currency-select').value;
+                    const currencySymbol = window.getCurrencySymbol(currentCurrency);
+
+                    const getConvertedPrice = (amount) => {
+                        return window.convertCurrency(amount, BASE_CURRENCY, currentCurrency).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                    };
+
+                    snapshotHtml += `
+                        <div class="snapshot-box !p-6">
+                            <h4 class="text-lg font-bold mb-2">${brand.name}</h4>
+                            <p class="text-sm text-gray-600 mb-4">${brandSnapshotData.intro}</p>
+                            <h5 class="font-semibold text-gray-700 mb-1">Subnodes:</h5>
+                            <ul class="list-disc list-inside text-sm text-gray-600 ml-4 mb-4">
+                                ${brand.subNodes.map(node => `<li>${node}</li>`).join('')}
+                            </ul>
+                            <h5 class="font-semibold text-gray-700 mb-1">Pricing (Monthly):</h5>
+                            <ul class="list-none p-0 m-0 text-sm text-gray-600">
+                                <li>Starter: ${currencySymbol}${getConvertedPrice(starterMonthly)}</li>
+                                <li>Pro: ${currencySymbol}${getConvertedPrice(proMonthly)}</li>
+                                <li>Enterprise: ${currencySymbol}${getConvertedPrice(enterpriseMonthly)}</li>
+                            </ul>
+                            <button class="cta-button text-xs px-3 py-1 mt-4" onclick="window.displayBrandDetails('${sectorKey}', '${brand.name}', this)">View Full Details</button>
+                        </div>
+                    `;
+                });
+
+                snapshotHtml += `</div>`;
+                container.innerHTML = snapshotHtml;
+            }
+
 
             // --- Sector-Specific Product Card Generation Function (for Admin) ---
             function displaySectorSpecificProducts(sectorKey) {
@@ -2113,7 +2408,7 @@
 
                 const sectorDispName = sectorList[sectorKey] || sectorKey.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
                 const sectorDataForPricing = FAA_ZONE_INDEX_SUMMARY_DATA[sectorKey];
-               
+
                 // Get brands from the new ALL_BRANDS_DETAILS_BY_SECTOR
                 let brandsInSector = ALL_BRANDS_DETAILS_BY_SECTOR[sectorKey] || [];
                 // Add client-added brands
@@ -2123,11 +2418,11 @@
 
 
                 if (!sectorDataForPricing || allBrandsForDisplay.length === 0) {
-                    container.innerHTML = `<p class="text-gray-400 col-span-full text-center mt-8">No detailed data or brands available for this sector yet.</p>`;
+                    container.innerHTML = `<p class="text-gray-600 col-span-full text-center mt-8">No detailed data or brands available for this sector yet.</p>`;
                     return;
                 }
 
-                // Section for Pricing Tiers (remains mostly same)
+                // Section for Pricing Tiers
                 const baseMonthlyFee = parseFloat(String(sectorDataForPricing.monthlyFee).replace('$', '').replace(',', ''));
                 const annualDiscountRate = 0.15; // 15% discount for annual
 
@@ -2147,7 +2442,7 @@
                     {
                         name: `${sectorDispName.replace(/<.*?>/g, '')} Enterprise Package`,
                         monthlyAmount: (baseMonthlyFee * 5),
-                        annualAmount: (baseMonthlyFee * 5 * 12 * (1 - annualDiscountRate)), // Corrected typo here, was 5*5*12
+                        annualAmount: (baseMonthlyFee * 5 * 12 * (1 - annualDiscountRate)),
                         tier: "Enterprise"
                     }
                 ];
@@ -2162,25 +2457,25 @@
                             <div class="product-card p-6 md:p-8 ${product.featured ? 'featured' : ''}">
                                 <div>
                                     <h3 class="text-2xl font-bold mb-4">${product.name}</h3>
-                                    <p class="text-gray-400 mb-6">Unlock powerful features for ${product.tier} success.</p>
-                                   
+                                    <p class="text-gray-600 mb-6">Unlock powerful features for ${product.tier} success.</p>
+
                                     <!-- Toggle Switch for Monthly/Annual -->
                                     <label class="toggle-switch">
                                         <input type="checkbox" onchange="window.toggleSubscriptionType(this.closest('.product-card'), this.checked)">
                                         <span class="slider">
-                                            <span class="monthly-text">Monthly (15% off)</span>
-                                            <span class="annual-text">Annual</span>
+                                            <span class="monthly-text">Monthly</span>
+                                            <span class="annual-text">Annual (15% off)</span>
                                         </span>
                                     </label>
 
                                     <div class="mb-8">
-                                        <span class="text-5xl font-extrabold ${product.featured ? 'text-blue-400' : 'text-gray-100'} price-display"
+                                        <span class="price-display"
                                             data-original-monthly-price="${product.monthlyAmount.toFixed(2)}"
                                             data-original-annual-price="${product.annualAmount.toFixed(2)}"
                                             data-currency-symbol="R"
                                             data-currency-code="ZAR"> <!-- Initial currency -->
                                             R${parseFloat(product.monthlyAmount).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}
-                                            <span class="text-xl text-gray-400">/ month</span>
+                                            <span class="text-xl text-gray-500">/ month</span>
                                         </span>
                                     </div>
                                     <ul class="feature-list mb-8">
@@ -2205,21 +2500,21 @@
                 pricingHtml += `</div>`;
                 container.innerHTML += pricingHtml;
 
-                // Section for Tier-Specific Metrics (remains mostly same)
+                // Section for Tier-Specific Metrics
                 let tierMetricsHtml = `<div class="admin-panel-card mt-20">
                     <h3 class="text-2xl font-bold mb-4">Tier-Specific Metrics for ${sectorDispName}</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">`;
-               
+
                 products.forEach(product => {
                     const tierMetrics = SECTOR_TIER_PRICING[product.tier].monthlyMetrics;
                     if (!tierMetrics) return;
 
                     tierMetricsHtml += `
                         <div class="metric-card">
-                            <h4 class="font-semibold text-xl mb-2">${product.name} Metrics</h4>
+                            <h4 class="font-semibold text-xl mb-2 text-gray-600">${product.name} Metrics</h4>
                             <ul class="list-none p-0 m-0 space-y-1">
                                 ${Object.entries(tierMetrics).map(([key, value]) => `
-                                    <li><span class="font-medium text-gray-300">${key}:</span> <span class="text-purple-300">${value}</span></li>
+                                    <li><span class="font-medium text-gray-700">${key}:</span> <span class="text-blue-600">${value}</span></li>
                                 `).join('')}
                             </ul>
                         </div>
@@ -2228,11 +2523,11 @@
                 tierMetricsHtml += `</div></div>`;
                 container.innerHTML += tierMetricsHtml;
 
-                // Section for Brands and Subnodes (NEW INTERACTIVE DISPLAY)
+                // Section for Brands and Subnodes
                 let brandsAndSnapshotHtml = `
                     <div class="admin-panel-card mt-20">
                         <h3 class="text-2xl font-bold mb-4">Brands in ${sectorDispName}</h3>
-                        <p class="mb-4 text-gray-400">Click a brand to see its detailed snapshot and associated subnodes.</p>
+                        <p class="mb-4 text-gray-600">Click a brand to see its detailed snapshot and associated subnodes.</p>
                         <div id="sectorBrandButtons" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-8">
                 `;
 
@@ -2246,8 +2541,8 @@
                 });
 
                 brandsAndSnapshotHtml += `
+                            </div>
                         </div>
-                    </div>
                 `;
                 container.innerHTML += brandsAndSnapshotHtml;
 
@@ -2271,29 +2566,28 @@
             }
 
 
-            // --- Global Metrics & Chart Functions (from previous version) ---
+            // --- Global Metrics & Chart Functions ---
             function calculateGlobalMetrics() {
                 let tempActiveNodes = 0;
                 let tempLicensesActive = 0;
                 let tempVaultDeployments = 0;
                 let tempSyncLogs = 0;
-                // These are not yet used in display, but calculated here for consistency
                 let tempAuditsRunning = 0;
                 let tempSignalZones = 0;
                 let tempScrollGridIndex = 0;
 
-                // Iterate through the new ALL_BRANDS_DETAILS_BY_SECTOR to get accurate counts
                 for (const sectorKey in ALL_BRANDS_DETAILS_BY_SECTOR) {
                     if (sectorKey === 'admin-panel') continue;
 
                     const staticBrandsInSector = ALL_BRANDS_DETAILS_BY_SECTOR[sectorKey] || [];
                     const staticBrandsCount = staticBrandsInSector.length;
-                    const staticNodesCount = staticBrandsInSector.flatMap(brand => brand.subNodes || []).length; // Flatten subNodes for count
-                   
+                    const staticNodesCount = staticBrandsInSector.flatMap(brand => brand.subNodes || []).length;
+
                     const clientAddedBrandsInSector = clientAdminData[sectorKey]?.brands || [];
                     const adminBrandsCount = clientAddedBrandsInSector.length;
                     const adminNodesCount = clientAddedBrandsInSector.flatMap(brand => brand.subNodes || []).length;
-                   
+
+
                     const totalCoreBrands = staticBrandsCount + adminBrandsCount;
                     const totalNodes = staticNodesCount + adminNodesCount;
 
@@ -2305,7 +2599,7 @@
                     tempSignalZones += Math.floor(totalCoreBrands / 3);
                     tempScrollGridIndex += (totalCoreBrands + totalNodes);
                 }
-               
+
                 currentGlobalMetrics.activeNodes = tempActiveNodes;
                 currentGlobalMetrics.licensesActive = tempLicensesActive;
                 currentGlobalMetrics.vaultDeployments = Math.round(tempVaultDeployments);
@@ -2318,10 +2612,6 @@
                 document.getElementById("licensesActiveCount").textContent = currentGlobalMetrics.licensesActive.toLocaleString();
                 document.getElementById("vaultDeploymentsCount").textContent = currentGlobalMetrics.vaultDeployments.toLocaleString();
                 document.getElementById("syncLogsCount").textContent = currentGlobalMetrics.syncLogs.toLocaleString();
-                // If you add these elements to your HTML, they will now be updated:
-                // document.getElementById("auditsRunningCount").textContent = currentGlobalMetrics.auditsRunning.toLocaleString();
-                // document.getElementById("signalZonesCount").textContent = currentGlobalMetrics.signalZones.toLocaleString();
-                // document.getElementById("scrollGridIndexCount").textContent = currentGlobalMetrics.scrollGridIndex.toLocaleString();
             }
 
             function renderDynamicPulseChart() {
@@ -2330,7 +2620,7 @@
                 const ctx = ctxEl.getContext("2d");
 
                 if (pulseChartInstance) { pulseChartInstance.destroy(); }
-               
+
                 calculateGlobalMetrics();
                 chartDataPoints.activeNodes = Array(10).fill(currentGlobalMetrics.activeNodes);
                 chartDataPoints.licensesActive = Array(10).fill(currentGlobalMetrics.licensesActive);
@@ -2342,17 +2632,17 @@
                     data: {
                         labels: [...chartTimeLabels],
                         datasets: [
-                            { label: 'Active Nodes', data: [...chartDataPoints.activeNodes], borderColor: '#60A5FA', backgroundColor: 'rgba(96, 165, 250, 0.1)', borderWidth: 2, tension: 0.3, fill: true, pointRadius: 2, pointHoverRadius: 4 },
-                            { label: 'Licenses Active', data: [...chartDataPoints.licensesActive], borderColor: '#34D399', backgroundColor: 'rgba(52, 211, 153, 0.1)', borderWidth: 2, tension: 0.3, fill: true, pointRadius: 2, pointHoverRadius: 4 },
-                            { label: 'Vault Deployments', data: [...chartDataPoints.vaultDeployments], borderColor: '#FCD34D', backgroundColor: 'rgba(252, 211, 77, 0.1)', borderWidth: 2, tension: 0.3, fill: true, pointRadius: 2, pointHoverRadius: 4 }
+                            { label: 'Active Nodes', data: [...chartDataPoints.activeNodes], borderColor: '#0e2148', backgroundColor: 'rgba(14, 33, 72, 0.1)', borderWidth: 2, tension: 0.3, fill: true, pointRadius: 2, pointHoverRadius: 4 },
+                            { label: 'Licenses Active', data: [...chartDataPoints.licensesActive], borderColor: '#e8622c', backgroundColor: 'rgba(232, 98, 44, 0.1)', borderWidth: 2, tension: 0.3, fill: true, pointRadius: 2, pointHoverRadius: 4 },
+                            { label: 'Vault Deployments', data: [...chartDataPoints.vaultDeployments], borderColor: '#c9a000', backgroundColor: 'rgba(245, 197, 24, 0.15)', borderWidth: 2, tension: 0.3, fill: true, pointRadius: 2, pointHoverRadius: 4 }
                         ]
                     },
                     options: {
                         responsive: true, maintainAspectRatio: false, animation: { duration: 500 },
-                        plugins: { legend: { display: true, position: 'top', labels: { color: "#C0C0C0" } }, tooltip: { mode: 'index', intersect: false } },
+                        plugins: { legend: { display: true, position: 'top', labels: { color: "#0e2148" } }, tooltip: { mode: 'index', intersect: false } },
                         scales: {
-                            y: { beginAtZero: true, ticks: { color: "#A0A0A0" }, title: { display: true, text: 'Count', color: '#C0C0C0'}},
-                            x: { ticks: { color: "#A0A0A0" }, title: {display: true, text: 'Time (Updates every 3s)', color: '#C0C0C0'} }
+                            y: { beginAtZero: true, grid: { color: 'rgba(14,33,72,0.1)' }, ticks: { color: "rgba(14,33,72,0.65)" }, title: { display: true, text: 'Count', color: 'rgba(14,33,72,0.65)'}},
+                            x: { ticks: { color: "rgba(14,33,72,0.65)" }, title: {display: true, text: 'Time (Updates every 3s)', color: 'rgba(14,33,72,0.65)'}, grid: { color: 'rgba(14,33,72,0.1)' } }
                         }
                     }
                 });
@@ -2360,7 +2650,7 @@
 
             function updateDynamicPulseChart() {
                 if (!pulseChartInstance) return;
-               
+
                 calculateGlobalMetrics();
 
                 chartDataPoints.activeNodes.shift();
@@ -2370,11 +2660,11 @@
                 chartDataPoints.activeNodes.push(currentGlobalMetrics.activeNodes);
                 chartDataPoints.licensesActive.push(currentGlobalMetrics.licensesActive);
                 chartDataPoints.vaultDeployments.push(currentGlobalMetrics.vaultDeployments);
-               
+
                 pulseChartInstance.data.datasets[0].data = [...chartDataPoints.activeNodes];
                 pulseChartInstance.data.datasets[1].data = [...chartDataPoints.licensesActive];
                 pulseChartInstance.data.datasets[2].data = [...chartDataPoints.vaultDeployments];
-               
+
                 pulseChartInstance.update();
             }
 
@@ -2388,7 +2678,7 @@
                 tableBody.innerHTML = ''; // Clear existing content
 
                 const sectorsToDisplay = Object.keys(FAA_ZONE_INDEX_SUMMARY_DATA);
-               
+
                 sectorsToDisplay.sort((a, b) => {
                     const nameA = sectorList[a] || a;
                     const nameB = sectorList[b] || b;
@@ -2407,7 +2697,7 @@
                     const staticBrandsInSector = ALL_BRANDS_DETAILS_BY_SECTOR[sectorKey] || [];
                     const staticBrandsCount = staticBrandsInSector.length;
                     const staticNodesCount = staticBrandsInSector.flatMap(brand => brand.subNodes || []).length;
-                   
+
                     const clientAddedBrandsInSector = clientAdminData[sectorKey]?.brands || [];
                     const adminBrandsCount = clientAddedBrandsInSector.length;
                     const adminNodesCount = clientAddedBrandsInSector.flatMap(brand => brand.subNodes || []).length;
@@ -2418,7 +2708,7 @@
 
                     const row = tableBody.insertRow();
                     row.className = 'table-row-style'; // Apply the defined row style
-                   
+
                     row.innerHTML = `
                         <td class="table-cell-padding text-xl">${summary.glyph}</td>
                         <td class="table-cell-padding font-semibold">${displayName}</td>
@@ -2429,13 +2719,13 @@
                         <td class="table-cell-padding">${summary.payoutTier}</td>
                         <td class="table-cell-padding">${summary.region}</td>
                         <td class="table-cell-padding">
-                            <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs deploy-button"
+                            <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs"
                                 data-sector-key="${sectorKey}" data-action="inspect">
                                 Inspect
                             </button>
                         </td>
                         <td class="table-cell-padding">
-                            <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-xs cta-button deploy-button"
+                            <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-xs cta-button"
                                 data-sector-key="${sectorKey}" data-action="deploy">
                                 Deploy Plan
                             </button>
@@ -2444,7 +2734,7 @@
                 });
 
                 // Attach event listeners to the new Inspect and Deploy buttons
-                document.querySelectorAll('#faaZoneIndexTableBody .deploy-button').forEach(button => {
+                document.querySelectorAll('#faaZoneIndexTableBody button').forEach(button => {
                     button.addEventListener('click', (event) => {
                         const sectorKey = event.target.dataset.sectorKey;
                         const action = event.target.dataset.action;
@@ -2530,7 +2820,7 @@
                     default: return currencyCode;
                 }
             }
-           
+
             // Function to update prices in the Sector View dynamically
             function updatePricesInSectorView(priceSpans, selectedCurrency) {
                 const selectedSymbol = window.getCurrencySymbol(selectedCurrency); // Use exposed function
@@ -2548,48 +2838,35 @@
                     }
                     // Retain the / month or / year suffix
                     const suffix = isAnnualDisplayed ? '/ year' : '/ month';
-                    priceSpan.innerHTML = `${selectedSymbol}${convertedPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} <span class="text-xl text-gray-400">${suffix}</span>`;
+                    priceSpan.innerHTML = `${selectedSymbol}${convertedPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} <span class="text-xl text-gray-500">${suffix}</span>`;
                     priceSpan.dataset.currencyCode = selectedCurrency;
                 });
             }
 
             // --- PayPal Related Functions for Admin Portal (Deploy Plan) ---
             // IMPORTANT: This is the LIVE Product ID from your PayPal Dashboard.
-            const YOUR_PAYPAL_PRODUCT_ID = 'P-07F980334R518562XNBHLNJY'; 
+            // This ID (PROD-2NC51830JC183315X) was obtained manually by creating a Product in your Live PayPal account.
+            const YOUR_PAYPAL_PRODUCT_ID = 'PROD-2NC51830JC183315X';
 
             // IMPORTANT: These PayPal Plan IDs MUST be obtained AFTER you create/deploy plans via PayPal's API or dashboard.
             // When you click "Deploy Plan" for a sector, the serverless function will log the actual PayPal Plan IDs
             // in your browser's console. You must manually copy those IDs and update this object.
             const PAYPAL_PLAN_IDS = {
-                // Example for Agriculture:
-                // "Agriculture & Biotech Starter Package_MONTHLY": "P-07F980334R518562XNBHLNJY",
-                // "Agriculture & Biotech Starter Package_ANNUAL": "P-XXXXXXXXXXXXXXXXX",
-                // "Agriculture & Biotech Pro Package_MONTHLY": "P-XXXXXXXXXXXXXXXXX",
-                // "Agriculture & Biotech Pro Package_ANNUAL": "P-XXXXXXXXXXXXXXXXX",
-                // "Agriculture & Biotech Enterprise Package_MONTHLY": "P-XXXXXXXXXXXXXXXXX",
-                // "Agriculture & Biotech Enterprise Package_ANNUAL": "P-XXXXXXXXXXXXXXXXX",
-                "Agriculture___Biotech_Starter_Package_MONTHLY": "P-88P704604S358362DMWK6EJA",
-                "Agriculture___Biotech_Starter_Package_ANNUAL": "P-19R0946258079013TMWK6MHA",
-                "Agriculture___Biotech_Pro_Package_MONTHLY": "P-1C640961U3916993UMWK6N6A",
-                "Agriculture___Biotech_Pro_Package_ANNUAL": "P-1T4078735D154083WNWK6OCA",
-                "Agriculture___Biotech_Enterprise_Package_MONTHLY": "P-7B0348737D803570ENWK6OUI",
-                "Agriculture___Biotech_Enterprise_Package_ANNUAL": "P-1R335607U9952174KMWK6QSA",
+                // "Agriculture___Biotech_Starter_Package_MONTHLY" is the plan you manually created and got its ID.
+                "Agriculture___Biotech_Starter_Package_MONTHLY": "P-1RR589971C5386049NBI327Q",
+                // The rest of the plans will be generated and their IDs should be pasted here
+                // after running the "Deploy Plan" button from your admin portal.
+                // Example for other plans (you'll paste your actual IDs here after deployment):
+                // "Agriculture___Biotech_Starter_Package_ANNUAL": "P-XXXXXXXXXXXXXXXXX",
+                // "Agriculture___Biotech_Pro_Package_MONTHLY": "P-YYYYYYYYYYYYYYYYY",
+                // "Agriculture___Biotech_Pro_Package_ANNUAL": "P-ZZZZZZZZZZZZZZZZZ",
+                // "Agriculture___Biotech_Enterprise_Package_MONTHLY": "P-AAAAAAAAAAAAAAA",
+                // "Agriculture___Biotech_Enterprise_Package_ANNUAL": "P-BBBBBBBBBBBBBBBBB",
 
-                // Banking Sector Example:
-                "Banking___Finance_Starter_Package_MONTHLY": "P-2T69436444855792FMWK6UGA",
-                "Banking___Finance_Starter_Package_ANNUAL": "P-9C590809R6866504PMWK6Y2Q",
-                "Banking___Finance_Pro_Package_MONTHLY": "P-5U7528340E633443NMWK6ZEY",
-                "Banking___Finance_Pro_Package_ANNUAL": "P-6E941198T5206380AMWK70DQ",
-                "Banking___Finance_Enterprise_Package_MONTHLY": "P-2F0174066E044941VNWK71LA",
-                "Banking___Finance_Enterprise_Package_ANNUAL": "P-9U0847971C5061445MWK724I",
-
-                // Media Sector Example:
-                "Motion,_Media___Sonic_Starter_Package_MONTHLY": "P-3V898014E4366650RMWK72UY",
-                "Motion,_Media___Sonic_Starter_Package_ANNUAL": "P-6S2208064U332150HMWK73G1",
-                "Motion,_Media___Sonic_Pro_Package_MONTHLY": "P-0Y021481H5448383LMWK748A",
-                "Motion,_Media___Sonic_Pro_Package_ANNUAL": "P-397262279T738434KMWK74XQ",
-                "Motion,_Media___Sonic_Enterprise_Package_MONTHLY": "P-5W776999K6885374NMWK75MA",
-                "Motion,_Media___Sonic_Enterprise_Package_ANNUAL": "P-8F8074900G593121CMWK76BA"
+                // Add other sectors' plan IDs here after their successful deployment:
+                // "Banking___Finance_Starter_Package_MONTHLY": "P-CCCCCCCCCCCCCCCCCC",
+                // "Banking___Finance_Starter_Package_ANNUAL": "P-DDDDDDDDDDDDDDDDDDD",
+                // ... and so on for all your monthly/annual plans across all tiers and sectors once deployed live.
             };
 
             const CURRENT_USER_ID = 'CURRENT_LOGGED_IN_USER_ID'; // Placeholder for actual user ID
@@ -2600,17 +2877,6 @@
                 deployButton.textContent = 'Deploying...';
                 deployButton.classList.remove('bg-green-500', 'hover:bg-green-600');
                 deployButton.classList.add('bg-gray-400');
-
-                if (YOUR_PAYPAL_PRODUCT_ID === 'YOUR_ACTUAL_PAYPAL_PRODUCT_ID_HERE') {
-                    showTemporaryMessage('PayPal Product ID is not configured. Please get your actual Product ID from PayPal and update YOUR_PAYPAL_PRODUCT_ID in the script. Cannot deploy plans.', 'error');
-                    console.error('PayPal Product ID is not configured correctly. Please replace YOUR_ACTUAL_PAYPAL_PRODUCT_ID_HERE with YOUR_ACTUAL_PAYPAL_PRODUCT_ID in the JavaScript.');
-                    deployButton.disabled = false;
-                    deployButton.textContent = 'Deploy Plan';
-                    deployButton.classList.remove('bg-gray-400');
-                    deployButton.classList.add('bg-green-500', 'hover:bg-green-600');
-                    return;
-                }
-
 
                 const sectorData = FAA_ZONE_INDEX_SUMMARY_DATA[sectorKey];
                 const sectorDisplayName = sectorList[sectorKey];
@@ -2628,34 +2894,33 @@
                 const annualDiscount = 0.15; // 15% discount
 
                 // Collect pricing for all tiers
-                const baseMonthlyFee = parseFloat(String(sectorData.monthlyFee).replace('$', '').replace(',', ''));
                 const monthlyPrices = {
-                    "Starter": baseMonthlyFee,
-                    "Pro": baseMonthlyFee * 2.5,
-                    "Enterprise": baseMonthlyFee * 5
+                    "Starter": parseFloat(String(sectorData.monthlyFee).replace('$', '').replace(',', '')),
+                    "Pro": parseFloat(String(sectorData.monthlyFee).replace('$', '').replace(',', '')) * 2.5,
+                    "Enterprise": parseFloat(String(sectorData.monthlyFee).replace('$', '').replace(',', '')) * 5
                 };
 
                 const annualPrices = {
-                    "Starter": (baseMonthlyFee * 12 * (1 - annualDiscount)),
-                    "Pro": (baseMonthlyFee * 2.5 * 12 * (1 - annualDiscount)),
-                    "Enterprise": (baseMonthlyFee * 5 * 12 * (1 - annualDiscount))
+                    "Starter": (monthlyPrices["Starter"] * 12 * (1 - annualDiscount)),
+                    "Pro": (monthlyPrices["Pro"] * 12 * (1 - annualDiscount)),
+                    "Enterprise": (monthlyPrices["Enterprise"] * 12 * (1 - annualDiscount)),
                 };
 
 
                 try {
-                    // This fetch call will go to your Vercel serverless function (api/paypal/index.js or api/index.js)
-                    const response = await fetch(`/api/paypal`, { // Changed URL to hit the main /api/paypal endpoint
+                    // This fetch call will go to your Vercel serverless function (api/index.js)
+                    const response = await fetch(`/api`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             action: 'create-plans-for-sector', // Specify the action for the backend
                             payload: {
-                                productId: YOUR_PAYPAL_PRODUCT_ID, // Use the actual product ID here
+                                productId: YOUR_PAYPAL_PRODUCT_ID, // Use the actual product ID here (PROD- ID)
                                 sectorKey: sectorKey,
                                 sectorDisplayName: sectorDisplayName,
                                 monthlyPrices: monthlyPrices,
                                 annualPrices: annualPrices,
-                                currencyCode: 'ZAR',
+                                currencyCode: 'ZAR', // Ensure this matches your PayPal account's capabilities or is convertible
                                 tierPricingInfo: SECTOR_TIER_PRICING
                             }
                         })
@@ -2720,122 +2985,145 @@
                     return;
                 }
 
-                // If PayPal SDK is not loaded, show an error
+                // Get a reference to the paypal SDK script tag
+                const paypalSdkScript = document.getElementById('paypal-sdk-script');
+
+                // If PayPal SDK is not loaded, show an error and prevent further execution
                 if (typeof paypal === 'undefined' || !paypal.Buttons) {
-                    showTemporaryMessage('PayPal SDK not fully loaded. Please refresh or check your internet connection.', 'error');
-                    console.error('PayPal SDK is not loaded.');
+                    // Check if running in an iframe (like Canvas preview) and if the script element exists
+                    if (window.self !== window.top && paypalSdkScript) {
+                        // In Canvas preview, remove the PayPal script to prevent "Can not read window host" error
+                        paypalSdkScript.remove();
+                        console.warn("PayPal SDK load skipped in Canvas preview to prevent 'Can not read window host' error.");
+                        showTemporaryMessage('PayPal SDK is not loaded. This is expected in the Canvas preview environment to prevent errors. Functionality will work on a live server.', 'info');
+                    } else {
+                        // For non-Canvas environments or other loading issues
+                        showTemporaryMessage('PayPal SDK not fully loaded. Please refresh or check your internet connection.', 'error');
+                        console.error('PayPal SDK is not loaded or paypal.Buttons is not available.');
+                    }
                     button.disabled = false;
                     button.textContent = originalButtonText;
-                    return;
+                    return; // Prevent PayPal button rendering if SDK is not ready
                 }
 
                 // Dynamically render a PayPal button instance for this specific transaction
-                // Note: For subscriptions, the 'createSubscription' function is key.
                 // The SDK will handle the redirect/popup for approval.
-                paypal.Buttons({
-                    style: {
-                        shape: 'rect',
-                        color: 'gold',
-                        layout: 'vertical',
-                        label: 'subscribe',
-                        height: 48
-                    },
-                    createSubscription: function(data, actions) {
-                        // This is where you pass the PayPal Plan ID.
-                        console.log(`Creating subscription for PayPal Plan ID: ${planId}`);
-                        return actions.subscription.create({
-                            plan_id: planId
-                        });
-                    },
-                    onApprove: function(data, actions) {
-                        console.log('Subscription approved! Subscription ID:', data.subscriptionID);
-                        // Send subscriptionID to your backend (Vercel serverless function) for verification and database update
-                        // Example:
-                        /*
-                        fetch(`/api/paypal?action=capture-subscription`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                subscriptionID: data.subscriptionID,
-                                planId: planId, // Send the PayPal Plan ID back for your records
-                                userId: CURRENT_USER_ID, // Include user ID if available
-                                productName: productName
-                            })
-                        })
-                        .then(response => response.json())
-                        .then(serverData => {
-                            if (serverData.success) {
-                                showTemporaryMessage('Subscription Successful! Thank you.', 'success');
-                                console.log('Server confirmed subscription:', serverData);
-                            } else {
-                                showTemporaryMessage(`Subscription verification failed: ${serverData.error || 'Unknown error'}.`, 'error');
-                                console.error('Server failed to verify subscription:', serverData);
-                            }
-                        })
-                        .catch(error => {
-                            showTemporaryMessage(`Error during subscription verification: ${error.message}.`, 'error');
-                            console.error('Error capturing subscription on backend:', error);
-                        })
-                        .finally(() => {
+                try {
+                    // Remove existing PayPal buttons to prevent duplicates
+                    const existingPaypalButtons = button.querySelectorAll('.paypal-button-container');
+                    existingPaypalButtons.forEach(btn => btn.remove());
+
+                    const paypalButtonContainer = document.createElement('div');
+                    paypalButtonContainer.className = 'paypal-button-container mt-4';
+                    button.parentNode.insertBefore(paypalButtonContainer, button.nextSibling);
+
+                    paypal.Buttons({
+                        style: {
+                            shape: 'rect',
+                            color: 'blue', /* Use blue for PayPal branding */
+                            layout: 'vertical',
+                            label: 'subscribe',
+                            height: 48
+                        },
+                        createSubscription: function(data, actions) {
+                            console.log(`Creating subscription for PayPal Plan ID: ${planId}`);
+                            return actions.subscription.create({
+                                plan_id: planId
+                            });
+                        },
+                        onApprove: function(data, actions) {
+                            console.log('Subscription approved! Subscription ID:', data.subscriptionID);
+                            showTemporaryMessage(`Subscription Confirmed! ID: ${data.subscriptionID}`, 'success');
+                            // Clean up the dynamically added PayPal button
+                            if (paypalButtonContainer) paypalButtonContainer.remove();
                             button.disabled = false;
                             button.textContent = originalButtonText;
-                        });
-                        */
-                        showTemporaryMessage(`Subscription Confirmed! ID: ${data.subscriptionID}`, 'success');
-                        button.disabled = false;
-                        button.textContent = originalButtonText;
-                    },
-                    onCancel: function (data) {
-                        console.log('Subscription cancelled by user:', data);
-                        showTemporaryMessage('PayPal subscription cancelled.', 'error');
-                        button.disabled = false;
-                        button.textContent = originalButtonText;
-                    },
-                    onError: function (err) {
-                        console.error('PayPal button error:', err);
-                        showTemporaryMessage(`PayPal payment error: ${err.message || 'Unknown error'}. Please try again.`, 'error');
-                        button.disabled = false;
-                        button.textContent = originalButtonText;
-                    }
-                }).render(button); // Render directly into the clicked button element or a temporary container
+                        },
+                        onCancel: function (data) {
+                            console.log('Subscription cancelled by user:', data);
+                            showTemporaryMessage('PayPal subscription cancelled.', 'error');
+                            if (paypalButtonContainer) paypalButtonContainer.remove();
+                            button.disabled = false;
+                            button.textContent = originalButtonText;
+                        },
+                        onError: function (err) {
+                            console.error('PayPal button error:', err);
+                            // Check for the "Can not read window host" specific error
+                            if (err.message && err.message.includes("Can not read window host")) {
+                                showTemporaryMessage(`PayPal Error: Unable to connect. This may be due to browser security settings in this preview environment. Please try in a standard browser window or deployed environment.`, 'error');
+                            } else {
+                                showTemporaryMessage(`PayPal payment error: ${err.message || 'Unknown error'}. Please try again.`, 'error');
+                            }
+                            if (paypalButtonContainer) paypalButtonContainer.remove();
+                            button.disabled = false;
+                            button.textContent = originalButtonText;
+                        }
+                    }).render(paypalButtonContainer); // Render into the new container
+                } catch (renderError) {
+                    console.error('Error rendering PayPal button:', renderError);
+                    showTemporaryMessage(`Error setting up PayPal button: ${renderError.message}.`, 'error');
+                    button.disabled = false;
+                    button.textContent = originalButtonText;
+                }
             }
 
 
             // Initial calls to populate data and display default sections on DOM Content Loaded
             document.addEventListener('DOMContentLoaded', () => {
-                populateSectorSelect();
-                populateSectorViewSelect();
-                fetchExchangeRates();
-                // Attach event listeners for main navigation
-                document.querySelectorAll('.admin-nav-link').forEach(link => {
-                    link.addEventListener('click', (event) => {
-                        event.preventDefault(); // Prevent default link behavior
-                        const sectionId = event.target.dataset.section;
-                        showAdminSection(sectionId, event.target);
-                    });
-                });
+                try {
+                    populateSectorSelect();
+                    populateSectorViewSelect();
+                    populateSectorSnapshotSelect(); // Populate for new snapshot section
+                    fetchExchangeRates();
+                    // Attach event listeners for main navigation
+                    document.querySelectorAll('.admin-nav-link').forEach(link => {
+                        link.addEventListener('click', (event) => {
+                            event.preventDefault(); // Prevent default link behavior
+                            const sectionId = event.target.dataset.section;
+                            showAdminSection(sectionId, event.target);
+                        });
+                    }); 
 
-                // Manually trigger the initial active section
-                const initialNavLink = document.querySelector('.admin-nav-link[data-section="add-brand-section"]');
-                if (initialNavLink) {
-                    showAdminSection('add-brand-section', initialNavLink);
-                }
-
-
-                // Attach event listener for add brand button
-                document.getElementById('addBrandBtn').addEventListener('click', addBrandToSector);
-                // Attach event listener for clear admin data button
-                document.getElementById('clearAdminDataBtn').addEventListener('click', clearAdminAddedData);
+                    // Manually trigger the initial active section (Metrics section is now first visible)
+                    const initialNavLink = document.querySelector('.admin-nav-link[data-section="metrics-section"]');
+                    if (initialNavLink) {
+                        showAdminSection('metrics-section', initialNavLink);
+                    }
 
 
-                // Add event listener for currency select in sector view
-                const sectorCurrencySelect = document.getElementById('sector-currency-select');
-                if (sectorCurrencySelect) {
-                    sectorCurrencySelect.addEventListener('change', (event) => {
-                        const selectedCurrency = event.target.value;
-                        const sectorPriceDisplays = document.querySelectorAll('#dynamicSectorDashboard .price-display');
-                        updatePricesInSectorView(sectorPriceDisplays, selectedCurrency);
-                    });
+                    // Attach event listener for add brand button
+                    document.getElementById('addBrandBtn').addEventListener('click', addBrandToSector);
+                    // Attach event listener for clear admin data button
+                    document.getElementById('clearAdminDataBtn').addEventListener('click', clearAdminAddedData);
+
+
+                    // Add event listener for currency select in sector view
+                    const sectorCurrencySelect = document.getElementById('sector-currency-select');
+                    if (sectorCurrencySelect) {
+                        sectorCurrencySelect.addEventListener('change', (event) => {
+                            const selectedCurrency = event.target.value;
+                            const sectorPriceDisplays = document.querySelectorAll('#dynamicSectorDashboard .price-display');
+                            updatePricesInSectorView(sectorPriceDisplays, selectedCurrency);
+                            // Also update prices in the new sector snapshot if it's visible
+                            const snapshotPriceDisplays = document.querySelectorAll('#sectorSnapshotContent .price-display');
+                            updatePricesInSectorView(snapshotPriceDisplays, selectedCurrency);
+                        });
+                    }
+                } catch (e) {
+                    console.error("Error during DOMContentLoaded setup:", e);
+                    loadingMessage.textContent = `Initialization Error: ${e.message}. Check console.`;
+                    loadingMessage.style.backgroundColor = '#d8000c'; // Red background for error
+                    loadingMessage.style.color = 'white';
+                    loadingMessage.style.padding = '20px';
+                    loadingMessage.style.borderRadius = '10px';
+                    // Ensure the loading message is shown block if an error occurs and it's not already
+                    loadingMessage.style.display = 'block';
+                } finally {
+                    // Hide the loading message once everything is attempted to load/initialize
+                    // This ensures it hides even if some subsequent async operations fail
+                    if (loadingMessage) { // Check if element exists
+                        loadingMessage.style.display = 'none';
+                    }
                 }
             });
 
