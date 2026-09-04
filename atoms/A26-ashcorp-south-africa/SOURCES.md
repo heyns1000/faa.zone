@@ -6,3 +6,4 @@
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2026-09-04 | FGP--BlockBox | blockbox-ci-guide-claude-design | `Ashcorp-Blockbox-Draft CI Guide (Landscape).dc.html` | `195d532d` |  | 48836 | 2 | 0 | 59.9 |
 | 2 | 2026-09-04 | FGP--BlockBox | blockbox-ci-guide-claude-design | `Ashcorp-Blockbox-Draft CI Guide (standalone).html` | `a0effcfb` | Ashcorp South Africa — Licensed Operator CI G | 501463 | 0 | 6 | 67.0 |
+| 3 | 2026-09-04 | FGP--BlockBox | blockbox-ci-guide-claude-design | `Ashcorp-Blockbox-Draft CI Guide.dc.html` | `db5d0afc` |  | 48812 | 2 | 0 | 59.9 |
