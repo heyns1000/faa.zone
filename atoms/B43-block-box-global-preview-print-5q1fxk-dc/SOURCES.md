@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2026-09-04 | FGP--BlockBox | blockbox-ci-guide-claude-design | `Block Box Global Preview-print-5q1fxk.dc.html` | `c4b988d8` |  | 38326 | 0 | 0 | 28.8 |
+| 2 | 2026-09-04 | FGP--BlockBox | blockbox-ci-guide-claude-design | `Block Box Global Preview.dc.html` | `a595c573` |  | 17359 | 0 | 0 | 26.7 |
