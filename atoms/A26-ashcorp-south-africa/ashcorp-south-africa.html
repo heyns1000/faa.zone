@@ -3,7 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ashcorp South Africa — CI Guide</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet data-dc-atomics>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800&amp;family=Archivo:wght@400;500;600;700&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
@@ -16,14 +21,7 @@
   .kicker{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#c0392b;font-weight:600;}
   .card{background:#fff;border-radius:16px;padding:24px;box-shadow:0 6px 20px rgba(36,59,83,0.06);}
 </style>
-<template id="__bundler_thumbnail" data-bg-color="#243b53">
-  <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
-    <rect width="200" height="140" fill="#243b53"/>
-    <polygon points="100,35 140,90 60,90" fill="#f2b134"/>
-  </svg>
-</template>
-</head>
-<body>
+</helmet>
 
 <div style="max-width:1160px;margin:0 auto;background:#eef1ee;">
 
@@ -540,9 +538,9 @@
 
 </div>
 
-<script>
-(function() {
-  const support = {
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
   dl(id, filename) {
     const el = document.getElementById(id);
     if (!el || !window.htmlToImage) { alert('Export library still loading — try again in a moment.'); return; }
@@ -551,11 +549,9 @@
       a.href = dataUrl; a.download = filename; a.click();
     }).catch(e => { console.error(e); alert('PNG export failed — see console.'); });
   }
-  };
-  const inst = {
-    dl: support.dl,
-    vals: {
-      dlOriginal: () => inst.dl('logo-original', 'ashcorp_logo_original.png'),
+  renderVals() {
+    return {
+      dlOriginal: () => this.dl('logo-original', 'ashcorp_logo_original.png'),
       dlCompanyDetails: () => this.dl('company-details-card', 'ashcorp_company_details.png'),
       dlR1Opt1: () => this.dl('logo-round1-1', 'ashcorp_logo_round1_option1.png'),
       dlR1Opt2: () => this.dl('logo-round1-2', 'ashcorp_logo_round1_option2.png'),
@@ -582,14 +578,10 @@
       dlSig6: () => this.dl('sig-opt-6', 'ashcorp_email_signature_heyns_schoeman_archmark.png'),
       dlFinal1: () => this.dl('final-logo-1', 'ashcorp_logo_horizontal_lockup.png'),
       dlFinal2: () => this.dl('final-logo-2', 'ashcorp_logo_reversed_dark_lockup.png'),
-      dlFinal3: () => inst.dl('final-logo-3', 'ashcorp_logo_stacked_white_lockup.png')
-    }
-  };
-  Object.keys(inst.vals).forEach(k => window[k] = inst.vals[k]);
-  document.querySelectorAll('button[onClick]').forEach(btn => {
-    // no-op placeholder; real binding below
-  });
-})();
+      dlFinal3: () => this.dl('final-logo-3', 'ashcorp_logo_stacked_white_lockup.png')
+    };
+  }
+}
 </script>
 </body>
 </html>
