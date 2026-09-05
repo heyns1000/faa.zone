@@ -9,3 +9,4 @@
 | 3 | 2025-12-05 | codenest | resolve-conflicts-manually | `packages/faa-zone/public/admin/admin-portal-approval.html` | `e8ad568c` | Seedwave™ Access Portal | 26860 | 7 | 1 | 44.7 |
 | 4 | 2025-12-05 | codenest | resolve-conflicts-manually | `packages/faa-zone/public/admin/app.html` | `6c645cff` | Seedwave™ Access Portal | 7242 | 3 | 2 | 37.7 |
 | 5 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/apps/seedwave-core/public/access-portal.html` | `34c91587` | 🦁 Seedwave™ Access Portal | 24742 | 6 | 2 | 42.5 |
+| 6 | 2026-09-05 | omnigrid | main | `public/admin/admin-portal-approval.html` | `32bc4992` | ⚙️ Seedwave™ Access Portal | 15724 | 35 | 7 | 82.6 |
