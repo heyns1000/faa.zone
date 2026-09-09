@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2026-09-03 | banimal | claude/shock-launch-welcome-page | `docs/index.html` | `adeb62ac` | Banimal™ Docs | 11859 | 7 | 2 | 37.2 |
+| 2 | 2026-09-09 | banimal | skill-training-global-ci-rollout | `docs/index.html` | `41cbef63` | Banimal™ Docs | 12562 | 9 | 2 | 39.3 |
