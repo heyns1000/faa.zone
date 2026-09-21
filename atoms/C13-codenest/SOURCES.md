@@ -8,3 +8,4 @@
 | 2 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/faa-zone/public/codenest.html` | `ce67449e` | 🔥 CodeNest - Unified HotStack Ecosystem | FAA | 35343 | 38 | 0 | 66.5 |
 | 3 | 2026-06-19 | codenest | main | `apps/codenest-panel/index.html` | `da9bb876` | CodeNest — Research & Brief | 3164 | 4 | 0 | 33.3 |
 | 4 | 2026-09-21 | noodle.juice | main | `public/codenest-explorer-wireframe.html` | `6d816377` | CodeNest — Explorer Ecosystem | 9335 | 20 | 0 | 52.9 |
+| 5 | 2026-09-21 | noodle.juice | history | `public/codenest-explorer-wireframe.html` | `b269a17c` | CodeNest — Explorer Ecosystem | 6385 | 8 | 0 | 40.6 |
