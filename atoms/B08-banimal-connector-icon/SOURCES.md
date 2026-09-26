@@ -6,3 +6,4 @@
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2026-08-20 | FGP--samfox | main | `public/heart-of-her-hand/banimal-connector.html` | `f4059681` | Banimal Connector Icon | 284404 | 21 | 0 | 84.4 |
 | 2 | 2026-09-03 | banimal | skill-training-global-ci-rollout | `docs/brand/banimal-connector-icons.html` | `18774ae2` | Banimal Connector Icon | 283888 | 21 | 0 | 84.4 |
+| 3 | 2026-09-26 | fruitful-superagent | main | `claude/artifacts/banimal-connector-icon-b7446ea3/index.html` | `1af3ba25` | Banimal Connector Icon | 284714 | 21 | 0 | 84.5 |
