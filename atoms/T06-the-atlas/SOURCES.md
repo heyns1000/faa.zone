@@ -11,3 +11,4 @@
 | 5 | 2026-08-30 | banimal | history | `docs/atlas/seedwave-atlas.html` | `224f4b68` | The Seedwave Atlas | 29242 | 9 | 2 | 40.9 |
 | 6 | 2026-08-30 | banimal | history | `docs/atlas/seedwave-atlas.html` | `09e01352` | The Seedwave Atlas | 27177 | 9 | 0 | 36.7 |
 | 7 | 2026-08-30 | banimal | history | `docs/atlas/seedwave-atlas.html` | `6dbe3d8d` | The Seedwave Atlas | 27402 | 9 | 0 | 36.7 |
+| 8 | 2026-09-26 | banimal | history | `docs/atlas/seedwave-atlas.html` | `10e3989e` | The Seedwave Atlas | 30201 | 9 | 2 | 41.0 |
