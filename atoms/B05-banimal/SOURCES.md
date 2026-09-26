@@ -24,3 +24,4 @@
 | 18 | 2026-07-22 | FGP--banimal-global-loop | history | `dist/index.html` | `2a6f2c0d` | Banimal — 100% Cotton Babygrows & Bibs | Sout | 7688 | 0 | 4 | 33.8 |
 | 19 | 2026-07-24 | FGP--banimal-global-loop | footer-link-audit | `dist/index.html` | `d08290bb` | Banimal — 100% Cotton Babygrows & Bibs | Sout | 6844 | 0 | 4 | 33.7 |
 | 20 | 2026-08-30 | legal | main | `Banimal/index.html` | `a692b8ac` | Banimal™ — Archived from origin | 9399 | 2 | 2 | 31.9 |
+| 21 | 2026-09-26 | fruitful-superagent | main | `claude/projects/fruitful-banimal-global-loop-019f1398/files/index.html` | `9dd2b0be` | Banimal — 100% Cotton Babygrows & Bibs | Sout | 14188 | 0 | 12 | 50.4 |
