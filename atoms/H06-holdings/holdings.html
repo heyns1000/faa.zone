@@ -1,1242 +1,900 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fruitful Holdings — Complete Vision Overview</title>
-  <style>
-    :root {
-      --bg-deep:    #020c18;
-      --bg-card:    #061426;
-      --bg-card2:   #091e34;
-      --border:     #0e2a45;
-      --green:      #16a34a;
-      --green-glow: #4ade80;
-      --amber:      #f59e0b;
-      --blue:       #3b82f6;
-      --purple:     #8b5cf6;
-      --cyan:       #06b6d4;
-      --text:       #e2e8f0;
-      --text-muted: #64748b;
-      --text-dim:   #94a3b8;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fruitful Holdings — Global Business Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+html, body { margin:0; padding:0; background:#060608; color:#EEEAF0; font-family:'Barlow',sans-serif; overflow-x:hidden; scroll-behavior:smooth; }
+:root {
+  --orange:#FF5A1F;
+  --orange2:#FF8C42;
+  --red:#E31E24;
+  --gold:#F5C842;
+  --green:#29E06F;
+  --blue:#00B4FF;
+  --panel:#0D0D12;
+  --card:#111118;
+  --line:rgba(255,255,255,0.06);
+  --text:#EEEAF0;
+  --muted:rgba(238,234,240,0.45);
+}
+*, *::before, *::after { box-sizing:border-box; }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+/* NOISE */
+body::before {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:1000;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity:.3;
+}
 
-    body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background: var(--bg-deep);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
+/* CURSOR */
+.cur { position:fixed; width:10px; height:10px; background:var(--orange); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); mix-blend-mode:difference; transition:transform .08s; }
+.cur-ring { position:fixed; width:32px; height:32px; border:1px solid var(--orange); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:all .15s ease; opacity:.6; }
 
-    /* ─── NAV ─── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(2, 12, 24, 0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 60px;
-    }
-    .nav-brand {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--green-glow);
-      letter-spacing: -0.02em;
-    }
-    .nav-brand span { color: var(--text-muted); font-weight: 400; font-size: 0.85rem; margin-left: 0.5rem; }
-    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
-    .nav-links a {
-      color: var(--text-dim);
-      text-decoration: none;
-      font-size: 0.85rem;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--green-glow); }
+/* ── HERO ── */
+.hero {
+  min-height:100vh; display:flex; flex-direction:column; justify-content:flex-end;
+  padding:48px 56px; position:relative; overflow:hidden;
+  background: radial-gradient(ellipse 80% 60% at 70% -10%, rgba(255,90,31,.12), transparent),
+              radial-gradient(ellipse 60% 40% at 10% 90%, rgba(229,30,36,.07), transparent),
+              #060608;
+}
 
-    /* ─── HERO ─── */
-    .hero {
-      background: linear-gradient(135deg, #020c18 0%, #061426 40%, #07192d 70%, #020c18 100%);
-      padding: 6rem 2rem 4rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 60% 40% at 50% 0%, rgba(22,163,74,0.12) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 60% at 80% 80%, rgba(59,130,246,0.06) 0%, transparent 60%);
-      pointer-events: none;
-    }
-    .hero-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(22,163,74,0.12);
-      border: 1px solid rgba(22,163,74,0.3);
-      color: var(--green-glow);
-      border-radius: 100px;
-      padding: 0.35rem 1rem;
-      font-size: 0.8rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-    }
-    .hero h1 {
-      font-size: clamp(2.2rem, 5vw, 4rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      margin-bottom: 1rem;
-      background: linear-gradient(135deg, #fff 0%, #cbd5e1 50%, var(--green-glow) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero-sub {
-      color: var(--text-dim);
-      font-size: 1.15rem;
-      max-width: 640px;
-      margin: 0 auto 2.5rem;
-    }
-    .hero-metrics {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-bottom: 2rem;
-    }
-    .hero-metric {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1rem 1.5rem;
-      min-width: 130px;
-      text-align: center;
-    }
-    .hero-metric .val {
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: var(--green-glow);
-      display: block;
-    }
-    .hero-metric .lbl {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
+.hero-grid {
+  position:absolute; inset:0;
+  background-image: repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(255,90,31,.03) 80px),
+                    repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(255,90,31,.03) 80px);
+  pointer-events:none;
+}
 
-    /* ─── SECTIONS ─── */
-    section {
-      padding: 4rem 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+.hero-bg-num {
+  position:absolute; top:-80px; right:-20px;
+  font-family:'Anton',sans-serif; font-size:420px; line-height:1;
+  color:rgba(255,90,31,.04); letter-spacing:-15px; pointer-events:none;
+  animation:bg-pulse 6s ease-in-out infinite;
+}
+@keyframes bg-pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
 
-    .section-label {
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--green);
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-    }
-    h2 {
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.75rem;
-    }
-    .section-intro {
-      color: var(--text-dim);
-      font-size: 1rem;
-      max-width: 700px;
-      margin-bottom: 2.5rem;
-    }
+.hero-tag {
+  font-family:'Barlow Condensed',sans-serif; font-size:11px;
+  letter-spacing:.35em; text-transform:uppercase; color:var(--orange);
+  margin-bottom:20px; display:flex; align-items:center; gap:12px; position:relative; z-index:2;
+}
+.hero-tag::before { content:''; display:block; width:36px; height:1px; background:var(--orange); }
 
-    /* ─── EMPIRE METRICS TABLE ─── */
-    .metrics-table {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      font-family: 'Courier New', monospace;
-    }
-    .metrics-table-header {
-      background: rgba(22,163,74,0.08);
-      border-bottom: 1px solid var(--border);
-      padding: 1rem 1.5rem;
-      font-size: 0.85rem;
-      color: var(--green-glow);
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-    .metrics-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.75rem 1.5rem;
-      border-bottom: 1px solid rgba(14,42,69,0.6);
-      font-size: 0.9rem;
-      transition: background 0.15s;
-    }
-    .metrics-row:hover { background: rgba(22,163,74,0.04); }
-    .metrics-row:last-child { border-bottom: none; }
-    .metrics-row .key { color: var(--text-dim); }
-    .metrics-row .val {
-      color: var(--green-glow);
-      font-weight: 700;
-      font-size: 1rem;
-    }
-    .metrics-divider {
-      border-bottom: 1px solid var(--green);
-      opacity: 0.3;
-      margin: 0.25rem 0;
-    }
-    .metrics-total {
-      background: rgba(22,163,74,0.08);
-      border-top: 1px solid rgba(22,163,74,0.3);
-    }
-    .metrics-total .key { color: var(--text); font-weight: 700; }
-    .metrics-total .val { color: var(--green-glow); font-size: 1.2rem; }
+.hero h1 {
+  font-family:'Anton',sans-serif;
+  font-size:clamp(72px,13vw,160px);
+  line-height:.9; letter-spacing:1px;
+  margin:0 0 8px; position:relative; z-index:2;
+}
+.hero h1 .o  { color:var(--orange); }
+.hero h1 .r  { color:var(--red); }
+.hero h1 .g  { color:transparent; -webkit-text-stroke:1px var(--gold); }
 
-    /* ─── GRID CARDS ─── */
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.25rem;
-    }
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.5rem;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .card:hover {
-      border-color: rgba(22,163,74,0.4);
-      transform: translateY(-2px);
-    }
-    .card-icon {
-      font-size: 1.8rem;
-      margin-bottom: 0.75rem;
-    }
-    .card h3 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin-bottom: 0.4rem;
-      color: #fff;
-    }
-    .card p {
-      font-size: 0.875rem;
-      color: var(--text-dim);
-      line-height: 1.55;
-    }
-    .card-tag {
-      display: inline-block;
-      margin-top: 0.75rem;
-      font-size: 0.7rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 0.2rem 0.6rem;
-      border-radius: 100px;
-    }
-    .tag-green  { background: rgba(22,163,74,0.15);  color: var(--green-glow); }
-    .tag-amber  { background: rgba(245,158,11,0.15); color: var(--amber); }
-    .tag-blue   { background: rgba(59,130,246,0.15); color: var(--blue); }
-    .tag-purple { background: rgba(139,92,246,0.15); color: var(--purple); }
-    .tag-cyan   { background: rgba(6,182,212,0.15);  color: var(--cyan); }
+.hero-sub {
+  font-size:16px; color:var(--muted); max-width:520px; line-height:1.8;
+  margin-bottom:60px; position:relative; z-index:2;
+}
 
-    /* ─── SEEDWAVE CONSTELLATION ─── */
-    .constellation {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 2rem;
-    }
-    .constellation-center {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    .constellation-center .domain {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--green-glow);
-      font-family: monospace;
-    }
-    .constellation-center .domain-sub { color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem; }
-    .spokes {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.75rem;
-    }
-    .spoke {
-      background: var(--bg-card2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 0.9rem 1.1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 0.875rem;
-    }
-    .spoke-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .dot-green  { background: var(--green); box-shadow: 0 0 6px var(--green); }
-    .dot-amber  { background: var(--amber); box-shadow: 0 0 6px var(--amber); }
-    .dot-blue   { background: var(--blue);  box-shadow: 0 0 6px var(--blue); }
-    .dot-cyan   { background: var(--cyan);  box-shadow: 0 0 6px var(--cyan); }
-    .spoke-domain { color: var(--green-glow); font-family: monospace; font-size: 0.8rem; }
-    .spoke-desc   { color: var(--text-muted); font-size: 0.78rem; }
+.hero-bottom { display:flex; justify-content:space-between; align-items:flex-end; position:relative; z-index:2; }
 
-    /* ─── PIPELINE FLOW ─── */
-    .pipeline {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-    .pipe-step {
-      display: flex;
-      gap: 1.5rem;
-      align-items: flex-start;
-      position: relative;
-    }
-    .pipe-step:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      left: 19px;
-      top: 40px;
-      bottom: -16px;
-      width: 2px;
-      background: linear-gradient(to bottom, var(--green), transparent);
-    }
-    .pipe-num {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(22,163,74,0.12);
-      border: 2px solid var(--green);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 0.9rem;
-      color: var(--green-glow);
-      flex-shrink: 0;
-      margin-top: 0.15rem;
-    }
-    .pipe-body {
-      flex: 1;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1rem 1.25rem;
-      margin-bottom: 1rem;
-    }
-    .pipe-body h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem; }
-    .pipe-body p  { font-size: 0.85rem; color: var(--text-dim); }
-    .pipe-body code {
-      display: inline-block;
-      margin-top: 0.4rem;
-      font-size: 0.78rem;
-      background: rgba(22,163,74,0.08);
-      color: var(--green-glow);
-      padding: 0.15rem 0.5rem;
-      border-radius: 6px;
-      font-family: monospace;
-    }
+.hero-kpi { display:flex; gap:52px; }
+.kpi-item .n { font-family:'Anton',sans-serif; font-size:52px; line-height:1; color:var(--text); display:block; }
+.kpi-item .n em { color:var(--orange); font-style:normal; }
+.kpi-item .l { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); margin-top:4px; display:block; }
 
-    /* ─── TIER TABLE ─── */
-    .tier-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.875rem;
-    }
-    .tier-table th {
-      background: rgba(22,163,74,0.08);
-      border: 1px solid var(--border);
-      padding: 0.75rem 1rem;
-      text-align: left;
-      color: var(--text-dim);
-      font-weight: 600;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-    .tier-table td {
-      border: 1px solid var(--border);
-      padding: 0.75rem 1rem;
-      color: var(--text-dim);
-    }
-    .tier-table tr:hover td { background: rgba(22,163,74,0.03); }
-    .tier-name { font-weight: 700; color: #fff; }
-    .tier-fee  { color: var(--amber); font-weight: 600; }
-    .tier-assets { color: var(--cyan); }
+.hero-cred { text-align:right; }
+.hero-cred .c1 { font-family:'Anton',sans-serif; font-size:28px; color:var(--gold); letter-spacing:2px; }
+.hero-cred .c2 { font-size:11px; color:var(--muted); letter-spacing:.15em; margin-top:4px; }
 
-    /* ─── PHILOSOPHY ─── */
-    .philosophy-flow {
-      display: flex;
-      align-items: stretch;
-      gap: 0;
-      flex-wrap: wrap;
-    }
-    .phi-step {
-      flex: 1;
-      min-width: 200px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      padding: 1.5rem;
-      text-align: center;
-      position: relative;
-    }
-    .phi-step:not(:last-child)::after {
-      content: '→';
-      position: absolute;
-      right: -0.85rem;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 1.4rem;
-      color: var(--green);
-      z-index: 2;
-    }
-    .phi-step:first-child { border-radius: 14px 0 0 14px; }
-    .phi-step:last-child  { border-radius: 0 14px 14px 0; }
-    .phi-icon { font-size: 2.2rem; margin-bottom: 0.6rem; }
-    .phi-step h4 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
-    .phi-step p  { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
+/* TICKER */
+.tick { overflow:hidden; background:var(--orange); padding:10px 0; }
+.tick-inner { display:flex; animation:tick 22s linear infinite; white-space:nowrap; }
+.tick-inner span { font-family:'Anton',sans-serif; font-size:13px; letter-spacing:.1em; color:#060608; padding:0 28px; text-transform:uppercase; }
+.tick-inner .s { color:rgba(0,0,0,.3); }
+@keyframes tick { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 
-    /* ─── ROYALTY WATERFALL ─── */
-    .waterfall {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 2rem;
-      font-family: monospace;
-    }
-    .waterfall h3 {
-      font-family: inherit;
-      font-size: 0.95rem;
-      color: var(--green-glow);
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
-    .wf-row {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 0.75rem 1rem;
-      border-radius: 8px;
-      margin-bottom: 0.5rem;
-    }
-    .wf-row:nth-child(2) { background: rgba(22,163,74,0.1); border-left: 3px solid var(--green); }
-    .wf-row:nth-child(3) { background: rgba(59,130,246,0.08); border-left: 3px solid var(--blue); }
-    .wf-row:nth-child(4) { background: rgba(139,92,246,0.08); border-left: 3px solid var(--purple); }
-    .wf-row:nth-child(5) { background: rgba(245,158,11,0.08); border-left: 3px solid var(--amber); }
-    .wf-label { flex: 1; font-size: 0.85rem; }
-    .wf-pct   { font-weight: 700; font-size: 1rem; color: var(--text); }
-    .wf-amount { color: var(--green-glow); font-size: 0.85rem; }
-    .wf-order  { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; }
-    .wf-total {
-      margin-top: 1rem;
-      border-top: 1px solid var(--border);
-      padding-top: 1rem;
-      text-align: right;
-      color: var(--text-dim);
-      font-size: 0.85rem;
-    }
-    .wf-total strong { color: var(--green-glow); }
+/* SECTIONS */
+section { padding:80px 56px; background:#060608; position:relative; }
+section+section { border-top:1px solid var(--line); }
 
-    /* ─── TECH STACK ─── */
-    .stack-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1rem;
-    }
-    .stack-col {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.25rem;
-    }
-    .stack-col h4 {
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-muted);
-      margin-bottom: 0.75rem;
-    }
-    .stack-item {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.85rem;
-      color: var(--text-dim);
-      padding: 0.3rem 0;
-      border-bottom: 1px solid rgba(14,42,69,0.5);
-    }
-    .stack-item:last-child { border-bottom: none; }
-    .stack-item::before {
-      content: '';
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--green);
-      flex-shrink: 0;
-    }
+.sec-tag {
+  font-family:'Barlow Condensed',sans-serif; font-size:10px;
+  letter-spacing:.3em; text-transform:uppercase; color:var(--orange);
+  margin-bottom:40px; display:flex; align-items:center; gap:12px;
+}
+.sec-tag::after { content:''; display:block; height:1px; width:50px; background:var(--orange); }
 
-    /* ─── GUARDIAN RING ─── */
-    .guardian-ring {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 2rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      align-items: center;
-    }
-    .ring-visual {
-      flex: 0 0 auto;
-      width: 160px;
-      height: 160px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .ring-outer, .ring-inner {
-      position: absolute;
-      border-radius: 50%;
-      border: 1.5px solid;
-      animation: rotate 20s linear infinite;
-    }
-    .ring-outer {
-      inset: 0;
-      border-color: rgba(22,163,74,0.3);
-      animation-duration: 20s;
-    }
-    .ring-inner {
-      inset: 20%;
-      border-color: rgba(59,130,246,0.4);
-      animation-direction: reverse;
-      animation-duration: 12s;
-    }
-    @keyframes rotate { to { transform: rotate(360deg); } }
-    .ring-core {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(22,163,74,0.3), rgba(22,163,74,0.05));
-      border: 1px solid rgba(22,163,74,0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      z-index: 1;
-    }
-    .ring-nodes {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      flex: 1;
-    }
-    .rnode {
-      background: var(--bg-card2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.3rem 0.7rem;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
+h2.big {
+  font-family:'Anton',sans-serif; font-size:clamp(40px,6vw,80px);
+  line-height:.95; margin-bottom:32px; letter-spacing:.5px;
+}
+h2.big .o { color:var(--orange); }
+h2.big .r { color:var(--red); }
+h2.big .y { color:var(--gold); }
+h2.big .g { color:transparent; -webkit-text-stroke:1px var(--green); }
 
-    /* ─── PULSE BAR ─── */
-    .pulse-bar {
-      background: var(--bg-card);
-      border: 1px solid rgba(22,163,74,0.3);
-      border-radius: 12px;
-      padding: 1.25rem 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-    .pulse-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 0 0 var(--green);
-      animation: pulse-anim 1.5s infinite;
-      flex-shrink: 0;
-    }
-    @keyframes pulse-anim {
-      0%   { box-shadow: 0 0 0 0 rgba(22,163,74,0.6); }
-      70%  { box-shadow: 0 0 0 10px rgba(22,163,74,0); }
-      100% { box-shadow: 0 0 0 0 rgba(22,163,74,0); }
-    }
-    .pulse-text { flex: 1; font-size: 0.9rem; }
-    .pulse-text strong { color: var(--green-glow); }
-    .pulse-stats { display: flex; gap: 2rem; flex-wrap: wrap; }
-    .pulse-stat { text-align: center; }
-    .pulse-stat .val { font-size: 1.2rem; font-weight: 700; color: var(--green-glow); }
-    .pulse-stat .lbl { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; }
+/* VISION GRID */
+.vision-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:40px; }
+.v-card { background:var(--card); padding:36px 28px; position:relative; overflow:hidden; transition:background .3s; }
+.v-card:hover { background:#15151F; }
+.v-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; }
+.v-card:nth-child(1)::before { background:var(--orange); }
+.v-card:nth-child(2)::before { background:var(--red); }
+.v-card:nth-child(3)::before { background:var(--gold); }
+.v-card:nth-child(4)::before { background:var(--green); }
+.v-card:nth-child(5)::before { background:var(--blue); }
+.v-card:nth-child(6)::before { background:var(--orange2); }
+.v-card .v-ico { font-size:28px; margin-bottom:14px; display:block; }
+.v-card h3 { font-family:'Anton',sans-serif; font-size:20px; color:var(--text); letter-spacing:.5px; margin-bottom:10px; }
+.v-card p { font-size:12px; color:var(--muted); line-height:1.7; margin:0; }
 
-    /* ─── BLOCKING ISSUES ─── */
-    .issues-list { display: flex; flex-direction: column; gap: 1rem; }
-    .issue-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--amber);
-      border-radius: 12px;
-      padding: 1.25rem 1.5rem;
-    }
-    .issue-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--amber); }
-    .issue-card p  { font-size: 0.875rem; color: var(--text-dim); }
+/* REVENUE BLOCKS */
+.rev-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:40px; }
+.rev-block { background:var(--card); padding:32px 28px; }
+.rev-block .rn { font-family:'Barlow Condensed',sans-serif; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; display:block; }
+.rev-block .ra { font-family:'Anton',sans-serif; font-size:48px; line-height:1; display:block; margin-bottom:8px; }
+.rev-block:nth-child(1) .ra { color:var(--orange); }
+.rev-block:nth-child(2) .ra { color:var(--red); }
+.rev-block:nth-child(3) .ra { color:var(--gold); }
+.rev-block:nth-child(4) .ra { color:var(--green); }
+.rev-block:nth-child(5) .ra { color:var(--blue); }
+.rev-block:nth-child(6) .ra { color:var(--orange2); }
+.rev-block .rd { font-size:12px; color:var(--muted); line-height:1.6; }
 
-    /* ─── FOOTER ─── */
-    footer {
-      background: var(--bg-card);
-      border-top: 1px solid var(--border);
-      padding: 3rem 2rem;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-    footer .footer-brand {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: var(--green-glow);
-      margin-bottom: 0.75rem;
-    }
-    footer p { margin-bottom: 0.5rem; }
-    footer .footer-tagline {
-      color: var(--text-dim);
-      font-size: 1rem;
-      margin: 1rem 0;
-    }
-    footer .footer-sig {
-      margin-top: 1.5rem;
-      font-size: 1rem;
-      color: var(--green);
-    }
+.rev-total {
+  background:rgba(255,90,31,.06); border:1px solid rgba(255,90,31,.2);
+  padding:36px 40px; margin-top:1px;
+  display:flex; justify-content:space-between; align-items:center;
+}
+.rev-total .rl { }
+.rev-total .rl .rll { font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:.25em; text-transform:uppercase; color:var(--orange); display:block; margin-bottom:4px; }
+.rev-total .rl .rls { font-size:12px; color:var(--muted); }
+.rev-total .rnum { font-family:'Anton',sans-serif; font-size:72px; color:var(--orange); line-height:1; text-shadow:0 0 60px rgba(255,90,31,.4); }
 
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 640px) {
-      nav { padding: 0 1rem; }
-      .nav-links { display: none; }
-      section { padding: 3rem 1.25rem; }
-      .hero  { padding: 4rem 1.25rem 3rem; }
-      .phi-step:not(:last-child)::after { display: none; }
-      .phi-step { border-radius: 14px !important; }
-      .philosophy-flow { gap: 0.75rem; }
-    }
-  </style>
+/* FRANCHISE TABLE */
+.fr-table { width:100%; border-collapse:collapse; margin-top:40px; }
+.fr-table th { font-family:'Barlow Condensed',sans-serif; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--orange); text-align:left; padding:14px 18px; background:var(--card); border-bottom:1px solid var(--line); }
+.fr-table td { padding:16px 18px; border-bottom:1px solid var(--line); font-size:12px; color:var(--muted); background:#060608; vertical-align:top; }
+.fr-table tr:hover td { background:rgba(255,90,31,.02); }
+.fr-table .fy { font-family:'Anton',sans-serif; font-size:16px; color:var(--text); }
+.fr-table .fv { font-family:'Anton',sans-serif; font-size:22px; color:var(--green); }
+
+/* RED BULL SECTION */
+.rb-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:40px; }
+.rb-panel { background:var(--card); padding:40px 36px; }
+.rb-panel.highlight { background:rgba(227,30,36,.05); border-left:2px solid var(--red); }
+.rb-panel .rbi { font-size:32px; margin-bottom:14px; display:block; }
+.rb-panel h4 { font-family:'Anton',sans-serif; font-size:22px; color:var(--text); letter-spacing:.5px; margin-bottom:12px; }
+.rb-panel p { font-size:13px; color:var(--muted); line-height:1.7; margin:0 0 12px; }
+.rb-panel ul { list-style:none; padding:0; margin:0; }
+.rb-panel ul li { font-size:12px; color:rgba(238,234,240,.5); padding:6px 0; border-top:1px solid rgba(255,255,255,.04); display:flex; gap:8px; align-items:flex-start; }
+.rb-panel ul li::before { content:'→'; color:var(--red); flex-shrink:0; }
+
+/* MARKET GRID */
+.mkt-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:40px; }
+.mkt-card { background:var(--card); padding:28px 24px; }
+.mkt-card .flag { font-size:32px; display:block; margin-bottom:12px; }
+.mkt-card h4 { font-family:'Anton',sans-serif; font-size:18px; color:var(--text); margin-bottom:8px; letter-spacing:.5px; }
+.mkt-card p { font-size:11px; color:var(--muted); line-height:1.6; margin:0; }
+.mkt-card .mkt-tag { font-family:'Barlow Condensed',sans-serif; font-size:9px; letter-spacing:.2em; text-transform:uppercase; padding:3px 8px; border:1px solid; margin-top:12px; display:inline-block; }
+.phase-1 .mkt-tag { color:var(--orange); border-color:rgba(255,90,31,.4); }
+.phase-2 .mkt-tag { color:var(--gold); border-color:rgba(245,200,66,.4); }
+
+/* PHASES */
+.phases { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:40px; }
+.phase { background:var(--card); padding:32px 26px; }
+.phase-bar { height:3px; margin-bottom:24px; border-radius:2px; }
+.phase:nth-child(1) .phase-bar { background:var(--orange); width:100%; }
+.phase:nth-child(2) .phase-bar { background:var(--gold); width:75%; }
+.phase:nth-child(3) .phase-bar { background:var(--red); width:50%; }
+.phase:nth-child(4) .phase-bar { background:var(--green); width:25%; }
+.phase .pl { font-family:'Barlow Condensed',sans-serif; font-size:9px; letter-spacing:.25em; text-transform:uppercase; color:var(--muted); margin-bottom:8px; display:block; }
+.phase h4 { font-family:'Anton',sans-serif; font-size:18px; color:var(--text); margin-bottom:14px; letter-spacing:.5px; }
+.phase ul { list-style:none; padding:0; margin:0; }
+.phase ul li { font-size:11px; color:var(--muted); padding:5px 0; border-top:1px solid rgba(255,255,255,.04); line-height:1.5; }
+
+/* SPONSORSHIP TIERS */
+.tier-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:40px; }
+.tier { background:var(--card); padding:36px 28px; position:relative; }
+.tier.platinum { background:rgba(245,200,66,.04); border-top:2px solid var(--gold); }
+.tier.gold-t    { background:rgba(255,90,31,.04); border-top:2px solid var(--orange); }
+.tier.silver-t  { background:rgba(0,180,255,.04); border-top:2px solid var(--blue); }
+.tier .tier-inv { font-family:'Anton',sans-serif; font-size:52px; line-height:1; margin-bottom:8px; display:block; }
+.platinum .tier-inv { color:var(--gold); }
+.gold-t .tier-inv    { color:var(--orange); }
+.silver-t .tier-inv  { color:var(--blue); }
+.tier h4 { font-family:'Anton',sans-serif; font-size:18px; letter-spacing:1px; color:var(--text); margin-bottom:14px; }
+.tier ul { list-style:none; padding:0; margin:0; }
+.tier ul li { font-size:12px; color:var(--muted); padding:6px 0; border-top:1px solid rgba(255,255,255,.04); display:flex; gap:8px; }
+.tier ul li::before { content:'✓'; flex-shrink:0; }
+.platinum li::before { color:var(--gold); }
+.gold-t li::before   { color:var(--orange); }
+.silver-t li::before { color:var(--blue); }
+
+/* FINANCIALS */
+.fin-table { width:100%; border-collapse:collapse; margin-top:40px; }
+.fin-table th { font-family:'Barlow Condensed',sans-serif; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--orange); text-align:left; padding:14px 18px; background:var(--card); border-bottom:1px solid var(--line); }
+.fin-table td { padding:14px 18px; border-bottom:1px solid var(--line); font-size:12px; color:var(--muted); background:#060608; }
+.fin-table tr:hover td { background:rgba(255,90,31,.02); }
+.fin-table .source { color:var(--text); font-weight:500; }
+.fin-table .amt { font-family:'Anton',sans-serif; font-size:18px; }
+.yr1 .amt { color:var(--orange); }
+.yr2 .amt { color:var(--gold); }
+.yr3 .amt { color:var(--green); }
+.fin-table .total-row td { background:rgba(255,90,31,.05); border-top:1px solid rgba(255,90,31,.3); }
+.fin-table .total-row .amt { font-size:24px; color:var(--orange); }
+
+/* CTA */
+.cta { padding:80px 56px; text-align:center; position:relative; overflow:hidden; background:#060608; }
+.ring { position:absolute; border-radius:50%; border:1px solid; pointer-events:none; top:50%; left:50%; transform:translate(-50%,-50%); animation:ring-out 5s ease-out infinite; }
+.ring:nth-child(1) { width:300px; height:300px; border-color:rgba(255,90,31,.15); animation-delay:0s; }
+.ring:nth-child(2) { width:500px; height:500px; border-color:rgba(255,90,31,.08); animation-delay:1.2s; }
+.ring:nth-child(3) { width:700px; height:700px; border-color:rgba(255,90,31,.04); animation-delay:2.4s; }
+@keyframes ring-out { 0%{transform:translate(-50%,-50%) scale(.85); opacity:1} 100%{transform:translate(-50%,-50%) scale(1.15); opacity:0} }
+
+.cta-tag { font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:var(--orange); margin-bottom:24px; position:relative; z-index:2; }
+.cta h2 { font-family:'Anton',sans-serif; font-size:clamp(48px,9vw,110px); line-height:.9; color:var(--text); margin-bottom:24px; position:relative; z-index:2; }
+.cta h2 .o { color:var(--orange); text-shadow:0 0 60px rgba(255,90,31,.5); }
+.cta h2 .r { color:var(--red); }
+.cta-sub { font-size:15px; color:var(--muted); max-width:480px; margin:0 auto 60px; line-height:1.8; position:relative; z-index:2; }
+
+.cta-cards { display:flex; gap:1px; background:var(--line); border:1px solid var(--line); max-width:800px; margin:0 auto; position:relative; z-index:2; }
+.cta-card { background:var(--card); padding:28px 32px; flex:1; text-align:left; }
+.cta-card .cl { font-family:'Barlow Condensed',sans-serif; font-size:9px; letter-spacing:.25em; text-transform:uppercase; color:var(--orange); display:block; margin-bottom:6px; }
+.cta-card .cv { font-family:'Anton',sans-serif; font-size:18px; color:var(--text); letter-spacing:.5px; display:block; }
+.cta-card .cs { font-size:11px; color:var(--muted); margin-top:4px; }
+
+/* FOOTER */
+footer { background:#0A0A0F; border-top:1px solid var(--line); padding:28px 56px; display:flex; justify-content:space-between; align-items:center; }
+footer .fb { font-family:'Anton',sans-serif; font-size:18px; letter-spacing:2px; color:var(--orange); }
+footer .fc { font-size:10px; color:rgba(238,234,240,.2); letter-spacing:.15em; }
+
+/* REVEAL */
+.reveal { opacity:0; transform:translateY(20px); transition:opacity .6s ease, transform .6s ease; }
+.reveal.on { opacity:1; transform:translateY(0); }
+
+/* RESPONSIVE */
+@media (max-width:768px) {
+  .hero, section, .cta { padding:48px 24px; }
+  .vision-grid, .rev-grid, .rb-grid, .mkt-grid, .phases, .tier-grid { grid-template-columns:1fr; }
+  .hero-kpi { flex-wrap:wrap; gap:24px; }
+  .hero-bottom { flex-direction:column; gap:32px; align-items:flex-start; }
+  .rev-total { flex-direction:column; gap:16px; text-align:center; }
+  .cta-cards { flex-direction:column; }
+  footer { flex-direction:column; gap:8px; text-align:center; }
+}
+</style>
 </head>
 <body>
 
-<!-- ─── NAVIGATION ─── -->
-<nav>
-  <div class="nav-brand">Fruitful Holdings<span>Complete Vision</span></div>
-  <ul class="nav-links">
-    <li><a href="#metrics">Metrics</a></li>
-    <li><a href="#infrastructure">Infrastructure</a></li>
-    <li><a href="#trinity">Trinity</a></li>
-    <li><a href="#technology">Technology</a></li>
-    <li><a href="#governance">Governance</a></li>
-    <li><a href="#philosophy">Philosophy</a></li>
-  </ul>
-</nav>
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="curRing"></div>
 
-<!-- ─── HERO ─── -->
+<!-- ── HERO ── -->
 <div class="hero">
-  <div class="hero-label">🌍 Sovereign Technology Empire</div>
-  <h1>The 13,713-Brand<br>Sovereign Tech Nation</h1>
+  <div class="hero-grid"></div>
+  <div class="hero-bg-num">391M</div>
+
+  <div class="hero-tag">Fruitful Holdings (Pty) Ltd — Business Plan 2026</div>
+
+  <h1>
+    <span class="o">CRATE</span><br>
+    <span class="g">DANCE</span><br>
+    <span class="r">GLOBAL</span>
+  </h1>
+
   <p class="hero-sub">
-    Fruitful Holdings operates as a sovereign technology ecosystem — decoupling from
-    Western SaaS dependency, anchored in Ubuntu philosophy, scaling globally across
-    77 sectors, 7 regions, and 13,713 brands.
+    Empowering communities. Amplifying creativity. Building a sovereign global movement from Mahalapye, Botswana to every dancefloor on Earth — anchored by Red Bull, powered by Ubuntu.
   </p>
-  <div class="hero-metrics">
-    <div class="hero-metric">
-      <span class="val">13,713</span>
-      <span class="lbl">Total Brands</span>
+
+  <div class="hero-bottom">
+    <div class="hero-kpi">
+      <div class="kpi-item">
+        <span class="n">R391<em>M</em></span>
+        <span class="l">5-Year Revenue</span>
+      </div>
+      <div class="kpi-item">
+        <span class="n">8<em>+</em></span>
+        <span class="l">Global Markets</span>
+      </div>
+      <div class="kpi-item">
+        <span class="n">10K<em>+</em></span>
+        <span class="l">Youth Trained</span>
+      </div>
+      <div class="kpi-item">
+        <span class="n">1K<em>+</em></span>
+        <span class="l">Jobs Created</span>
+      </div>
     </div>
-    <div class="hero-metric">
-      <span class="val">152.4%</span>
-      <span class="lbl">Target Achieved</span>
-    </div>
-    <div class="hero-metric">
-      <span class="val">77</span>
-      <span class="lbl">Sector Verticals</span>
-    </div>
-    <div class="hero-metric">
-      <span class="val">7</span>
-      <span class="lbl">Geographic Regions</span>
-    </div>
-    <div class="hero-metric">
-      <span class="val">93+</span>
-      <span class="lbl">GitHub Repos</span>
-    </div>
-    <div class="hero-metric">
-      <span class="val">9s</span>
-      <span class="lbl">VaultMesh Pulse</span>
+    <div class="hero-cred">
+      <div class="c1">FRUITFUL HOLDINGS</div>
+      <div class="c2">Heyns Schoeman (Zollie) · Founder &amp; CEO</div>
     </div>
   </div>
 </div>
 
-<!-- ─── EMPIRE METRICS ─── -->
-<section id="metrics">
-  <p class="section-label">Brand Empire</p>
-  <h2>The Numbers</h2>
-  <p class="section-intro">Three brand systems converge into one sovereign catalog — achieving 152.4% of the 9,000-brand Water the Seed target.</p>
-
-  <div class="metrics-table">
-    <div class="metrics-table-header">BRAND EMPIRE METRICS</div>
-    <div class="metrics-row">
-      <span class="key">FAA™ Brand System</span>
-      <span class="val">7,344 brands ✅</span>
-    </div>
-    <div class="metrics-row">
-      <span class="key">HSOMNI9000 Repository</span>
-      <span class="val">6,219 brands ✅</span>
-    </div>
-    <div class="metrics-row">
-      <span class="key">Seedwave Verified Brands</span>
-      <span class="val">150 brands ✅</span>
-    </div>
-    <div class="metrics-divider"></div>
-    <div class="metrics-row metrics-total">
-      <span class="key">TOTAL ECOSYSTEM</span>
-      <span class="val">13,713 BRANDS 🔥</span>
-    </div>
-    <div class="metrics-row metrics-total">
-      <span class="key">Water the Seed Target</span>
-      <span class="val">9,000 brands</span>
-    </div>
-    <div class="metrics-row metrics-total">
-      <span class="key">Achievement Ratio</span>
-      <span class="val">152.4% 🔥</span>
-    </div>
-    <div class="metrics-divider"></div>
-    <div class="metrics-row">
-      <span class="key">Geographic Divisions</span>
-      <span class="val">7 regions</span>
-    </div>
-    <div class="metrics-row">
-      <span class="key">Sector Categories</span>
-      <span class="val">77 verticals</span>
-    </div>
-    <div class="metrics-row">
-      <span class="key">Licensing Tiers</span>
-      <span class="val">4 levels (Sovereign → Market)</span>
-    </div>
-    <div class="metrics-row">
-      <span class="key">GitHub Repositories</span>
-      <span class="val">93+</span>
-    </div>
-    <div class="metrics-row">
-      <span class="key">Replit Applications</span>
-      <span class="val">67+</span>
-    </div>
-    <div class="metrics-row">
-      <span class="key">Google Drive Storage</span>
-      <span class="val">21M files · 15.7TB</span>
-    </div>
-    <div class="metrics-row">
-      <span class="key">Git Object Lattice</span>
-      <span class="val">256+ hex folders</span>
-    </div>
+<!-- TICKER -->
+<div class="tick">
+  <div class="tick-inner">
+    <span>Crate Dance Showcase</span><span class="s">✦</span>
+    <span>Red Bull Partnership</span><span class="s">✦</span>
+    <span>Sekelbos Tank</span><span class="s">✦</span>
+    <span>Ubuntu Commerce</span><span class="s">✦</span>
+    <span>13,713 Brands</span><span class="s">✦</span>
+    <span>R391M Revenue</span><span class="s">✦</span>
+    <span>8 Markets</span><span class="s">✦</span>
+    <span>Youth Empowerment</span><span class="s">✦</span>
+    <span>Franchise Global</span><span class="s">✦</span>
+    <span>Fruitful Planet Change</span><span class="s">✦</span>
+    <!-- repeat -->
+    <span>Crate Dance Showcase</span><span class="s">✦</span>
+    <span>Red Bull Partnership</span><span class="s">✦</span>
+    <span>Sekelbos Tank</span><span class="s">✦</span>
+    <span>Ubuntu Commerce</span><span class="s">✦</span>
+    <span>13,713 Brands</span><span class="s">✦</span>
+    <span>R391M Revenue</span><span class="s">✦</span>
+    <span>8 Markets</span><span class="s">✦</span>
+    <span>Youth Empowerment</span><span class="s">✦</span>
+    <span>Franchise Global</span><span class="s">✦</span>
+    <span>Fruitful Planet Change</span><span class="s">✦</span>
   </div>
-</section>
+</div>
 
-<!-- ─── INFRASTRUCTURE ─── -->
-<section id="infrastructure">
-  <p class="section-label">Infrastructure Layer</p>
-  <h2>Seedwave.FAA.Zone Constellation</h2>
-  <p class="section-intro">Eight vertically-integrated domain deployments, each autonomous with full CI/CD, independent databases, and sector-specific licensing.</p>
-
-  <div class="constellation">
-    <div class="constellation-center">
-      <div class="domain">seedwave.faa.zone</div>
-      <div class="domain-sub">Central coordination hub → 8 autonomous spokes</div>
-    </div>
-    <div class="spokes">
-      <div class="spoke">
-        <div class="spoke-dot dot-amber"></div>
-        <div>
-          <div class="spoke-domain">mining.seedwave.faa.zone</div>
-          <div class="spoke-desc">Resource extraction sector</div>
-        </div>
-      </div>
-      <div class="spoke">
-        <div class="spoke-dot dot-green"></div>
-        <div>
-          <div class="spoke-domain">agriculture.seedwave.faa.zone</div>
-          <div class="spoke-desc">Food systems sector</div>
-        </div>
-      </div>
-      <div class="spoke">
-        <div class="spoke-dot dot-cyan"></div>
-        <div>
-          <div class="spoke-domain">ritual.seedwave.faa.zone</div>
-          <div class="spoke-desc">Cultural / ceremonial sector</div>
-        </div>
-      </div>
-      <div class="spoke">
-        <div class="spoke-dot dot-green"></div>
-        <div>
-          <div class="spoke-domain">wildlife.seedwave.faa.zone</div>
-          <div class="spoke-desc">Conservation sector</div>
-        </div>
-      </div>
-      <div class="spoke">
-        <div class="spoke-dot dot-blue"></div>
-        <div>
-          <div class="spoke-domain">ai-logic.seedwave.faa.zone</div>
-          <div class="spoke-desc">Intelligence / computation</div>
-        </div>
-      </div>
-      <div class="spoke">
-        <div class="spoke-dot dot-cyan"></div>
-        <div>
-          <div class="spoke-domain">toynest.seedwave.faa.zone</div>
-          <div class="spoke-desc">Entertainment / youth</div>
-        </div>
-      </div>
-      <div class="spoke">
-        <div class="spoke-dot dot-amber"></div>
-        <div>
-          <div class="spoke-domain">interns.seedwave.faa.zone</div>
-          <div class="spoke-desc">Human capital development</div>
-        </div>
-      </div>
-      <div class="spoke">
-        <div class="spoke-dot dot-blue"></div>
-        <div>
-          <div class="spoke-domain">main/</div>
-          <div class="spoke-desc">Central coordination</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── SYSTEMS TRINITY ─── -->
-<section id="trinity">
-  <p class="section-label">Systems Layer</p>
-  <h2>The Fractal Trinity</h2>
-  <p class="section-intro">Three core systems form the planetary architecture — each handling a distinct layer of the sovereign tech empire.</p>
-
-  <div class="cards" style="margin-bottom: 3rem;">
-    <div class="card">
-      <div class="card-icon">🚀</div>
-      <h3>HotStack™ — "First Man on Mars"</h3>
-      <p>Brand intake nexus and file orchestration engine. Zero-signup instant builds: Upload file + prompt → R2 storage → AI processing → live site in under 3 minutes.</p>
-      <span class="card-tag tag-green">Cloudflare Worker</span>
-      <span class="card-tag tag-blue">hotstack.faa.zone</span>
-    </div>
-    <div class="card">
-      <div class="card-icon">🌍</div>
-      <h3>LicenseVault™ — "Earth"</h3>
-      <p>Centralized management of all 13,713 brands. TreatySync™ protocol, PayPal/Stripe integration, Google OAuth, and comprehensive brand auditing across HSOMNI9000 and FAA systems.</p>
-      <span class="card-tag tag-amber">13,713 Brands</span>
-      <span class="card-tag tag-blue">React + Neon DB</span>
-    </div>
-    <div class="card">
-      <div class="card-icon">🔥</div>
-      <h3>BuildNest™ — "Core of Planet"</h3>
-      <p>MONSTER OMNI™ chaos processing system. Gorilla Comb Logic converts complete disorganized madness into clean, deployed systems. Dual-service: Node.js + Python FastAPI.</p>
-      <span class="card-tag tag-purple">MONSTER OMNI™</span>
-      <span class="card-tag tag-blue">Docker Compose</span>
-    </div>
-  </div>
-
-  <p class="section-label" style="margin-bottom: 1.5rem;">HotStack Brand Intake Pipeline</p>
-  <div class="pipeline">
-    <div class="pipe-step">
-      <div class="pipe-num">1</div>
-      <div class="pipe-body">
-        <h4>User Upload</h4>
-        <p>Brand documentation files dropped at hotstack.faa.zone</p>
-        <code>POST /api/upload (Bearer token auth)</code>
-      </div>
-    </div>
-    <div class="pipe-step">
-      <div class="pipe-num">2</div>
-      <div class="pipe-body">
-        <h4>HotStack Edge Processing</h4>
-        <p>Cloudflare edge: file validation, de-duplication, metadata extraction, multi-format handling (PDF, JSON, images, docs)</p>
-      </div>
-    </div>
-    <div class="pipe-step">
-      <div class="pipe-num">3</div>
-      <div class="pipe-body">
-        <h4>R2 Storage</h4>
-        <p>Persistent storage with immutable audit trail and geographic replication. Zero egress fees.</p>
-        <code>hotstack-intake-bucket</code>
-      </div>
-    </div>
-    <div class="pipe-step">
-      <div class="pipe-num">4</div>
-      <div class="pipe-body">
-        <h4>Queue → Lambda Processing</h4>
-        <p>AI-Logic (Grok/Claude) extracts brand data, performs OCR/AI analysis, determines licensing tier, categorizes into 77-sector ontology, assigns geographic region</p>
-      </div>
-    </div>
-    <div class="pipe-step">
-      <div class="pipe-num">5</div>
-      <div class="pipe-body">
-        <h4>Backend Hub</h4>
-        <p>Express.js API with Drizzle ORM, brand validation workflows, OpenID Connect authentication</p>
-        <code>fruitful-global-central-backend-hub</code>
-      </div>
-    </div>
-    <div class="pipe-step">
-      <div class="pipe-num">6</div>
-      <div class="pipe-body">
-        <h4>Database Tier (PostgreSQL)</h4>
-        <p>faa_brands_table (7,344) · hsomni_brands_table (6,219) · seedwave_brands_table (150) · licensing_tiers_table · sector_categorization_table · geographic_division_table</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── TECHNOLOGY ─── -->
-<section id="technology">
-  <p class="section-label">Technology Stack</p>
-  <h2>Sovereign Infrastructure</h2>
-  <p class="section-intro">Fixed-cost infrastructure targeting $50–60/month for 80+ systems, saving $16,740/year versus PaaS. Zero vendor lock-in.</p>
-
-  <div class="stack-grid" style="margin-bottom: 2.5rem;">
-    <div class="stack-col">
-      <h4>Frontend</h4>
-      <div class="stack-item">React 18 + TypeScript</div>
-      <div class="stack-item">Vite 5 (sub-second HMR)</div>
-      <div class="stack-item">Tailwind CSS</div>
-      <div class="stack-item">Radix UI primitives</div>
-      <div class="stack-item">React Hook Form + Zod</div>
-      <div class="stack-item">Framer Motion</div>
-      <div class="stack-item">React Query</div>
-    </div>
-    <div class="stack-col">
-      <h4>Backend</h4>
-      <div class="stack-item">Cloudflare Workers</div>
-      <div class="stack-item">Node.js + Express</div>
-      <div class="stack-item">Python + FastAPI</div>
-      <div class="stack-item">PostgreSQL 14+</div>
-      <div class="stack-item">Drizzle ORM</div>
-      <div class="stack-item">Neon Serverless</div>
-      <div class="stack-item">OpenID Connect OAuth2</div>
-    </div>
-    <div class="stack-col">
-      <h4>Cloudflare Edge</h4>
-      <div class="stack-item">Workers (edge compute)</div>
-      <div class="stack-item">R2 (zero egress storage)</div>
-      <div class="stack-item">D1 (edge SQLite)</div>
-      <div class="stack-item">KV (30-day retention)</div>
-      <div class="stack-item">Queue (async ETL)</div>
-      <div class="stack-item">Email Routing</div>
-      <div class="stack-item">Pages (static hosting)</div>
-    </div>
-    <div class="stack-col">
-      <h4>Payments &amp; Auth</h4>
-      <div class="stack-item">Stripe (VaultPay™)</div>
-      <div class="stack-item">PayPal SDK</div>
-      <div class="stack-item">Google OAuth</div>
-      <div class="stack-item">Passport.js</div>
-      <div class="stack-item">Bearer token (HotStack)</div>
-    </div>
-    <div class="stack-col">
-      <h4>AI / Intelligence</h4>
-      <div class="stack-item">Claude (Anthropic API)</div>
-      <div class="stack-item">Grok (xAI)</div>
-      <div class="stack-item">AI-Logic intent engine</div>
-      <div class="stack-item">OCR pipeline</div>
-      <div class="stack-item">Vision classification</div>
-    </div>
-    <div class="stack-col">
-      <h4>Dev &amp; CI/CD</h4>
-      <div class="stack-item">GitHub Actions</div>
-      <div class="stack-item">Wrangler CLI</div>
-      <div class="stack-item">Docker Compose</div>
-      <div class="stack-item">Octokit (GitHub API)</div>
-      <div class="stack-item">Vitest</div>
-      <div class="stack-item">VaultMesh 9s pulse</div>
-    </div>
-  </div>
-
-  <!-- VaultMesh Pulse Bar -->
-  <div class="pulse-bar">
-    <div class="pulse-dot"></div>
-    <div class="pulse-text">
-      <strong>VaultMesh™ 9-Second Pulse</strong> — Heartbeat-based synchronization across all 93+ systems.
-      81 seconds = full 360° rotation. 3,504,000 annual pulse broadcasts.
-    </div>
-    <div class="pulse-stats">
-      <div class="pulse-stat">
-        <div class="val">9s</div>
-        <div class="lbl">Interval</div>
-      </div>
-      <div class="pulse-stat">
-        <div class="val">93</div>
-        <div class="lbl">Systems</div>
-      </div>
-      <div class="pulse-stat">
-        <div class="val">3.5M</div>
-        <div class="lbl">Annual Pulses</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── GOVERNANCE ─── -->
-<section id="governance">
-  <p class="section-label">Governance &amp; Licensing</p>
-  <h2>ScrollClaim™ — 5-Tier IP Framework</h2>
-  <p class="section-intro">Hierarchical licensing for all 13,713 IP assets, with mathematical precision on royalty distribution via a 4-tier waterfall.</p>
-
-  <div style="overflow-x: auto; margin-bottom: 2.5rem;">
-    <table class="tier-table">
-      <thead>
-        <tr>
-          <th>Tier</th>
-          <th>Name</th>
-          <th>Assets</th>
-          <th>Annual Fee</th>
-          <th>Royalty</th>
-          <th>Ideal For</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>💎</td>
-          <td class="tier-name">DIAMOND — Supreme</td>
-          <td class="tier-assets">13,713</td>
-          <td class="tier-fee">$50K–$500K</td>
-          <td>0% (fixed fee)</td>
-          <td>Primary ecosystem operators</td>
-        </tr>
-        <tr>
-          <td>🏆</td>
-          <td class="tier-name">PLATINUM — Strategic</td>
-          <td class="tier-assets">500</td>
-          <td class="tier-fee">$10K–$50K</td>
-          <td>2–5%</td>
-          <td>High-volume integrators</td>
-        </tr>
-        <tr>
-          <td>🥇</td>
-          <td class="tier-name">GOLD — Growth</td>
-          <td class="tier-assets">2,000</td>
-          <td class="tier-fee">$2K–$10K</td>
-          <td>5–8%</td>
-          <td>Scaling startups</td>
-        </tr>
-        <tr>
-          <td>🥈</td>
-          <td class="tier-name">SILVER — Operational</td>
-          <td class="tier-assets">5,000</td>
-          <td class="tier-fee">$500–$2K</td>
-          <td>8–10%</td>
-          <td>Small businesses</td>
-        </tr>
-        <tr>
-          <td>🥉</td>
-          <td class="tier-name">BRONZE — Read-Only</td>
-          <td class="tier-assets">13,713</td>
-          <td class="tier-fee">FREE</td>
-          <td>N/A</td>
-          <td>Researchers, evaluation</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <p class="section-label" style="margin-bottom: 1.5rem;">4-Tier Royalty Waterfall (example: $100,000 gross)</p>
-  <div class="waterfall">
-    <h3>SEQUENTIAL EXECUTION — MUST FOLLOW ORDER</h3>
-    <div class="wf-row">
-      <div class="wf-label">
-        <div style="font-weight:700; color:#fff;">Tier 1 — Samfox Care Loop (Banimals™)</div>
-        <div class="wf-order">FIRST · Paid within 24 hours · Echo Drives verified</div>
-      </div>
-      <div class="wf-pct">15%</div>
-      <div class="wf-amount">$15,000</div>
-    </div>
-    <div class="wf-row">
-      <div class="wf-label">
-        <div style="font-weight:700; color:#fff;">Tier 2 — ScrollClaim™ IP Royalties</div>
-        <div class="wf-order">SECOND · Monthly · Blockchain anchored</div>
-      </div>
-      <div class="wf-pct">10% of $85K</div>
-      <div class="wf-amount">$8,500</div>
-    </div>
-    <div class="wf-row">
-      <div class="wf-label">
-        <div style="font-weight:700; color:#fff;">Tier 3 — Creative Sustenance</div>
-        <div class="wf-order">THIRD · Bi-weekly payroll · 30-day time lock</div>
-      </div>
-      <div class="wf-pct">15% of $76.5K</div>
-      <div class="wf-amount">$11,475</div>
-    </div>
-    <div class="wf-row">
-      <div class="wf-label">
-        <div style="font-weight:700; color:#fff;">Tier 4 — VaultMesh™ Operational</div>
-        <div class="wf-order">LAST · Continuous · 3-month reserve required</div>
-      </div>
-      <div class="wf-pct">Remainder</div>
-      <div class="wf-amount">$65,025</div>
-    </div>
-    <div class="wf-total">
-      Total: $15,000 + $8,500 + $11,475 + $65,025 = <strong>$100,000 ✓</strong>
-    </div>
-  </div>
-
-  <div style="margin-top: 2.5rem;">
-    <p class="section-label" style="margin-bottom: 1rem;">OmniGrid — 32-Node Guardian Ring</p>
-    <div class="guardian-ring">
-      <div class="ring-visual">
-        <div class="ring-outer"></div>
-        <div class="ring-inner"></div>
-        <div class="ring-core">🦍</div>
-      </div>
-      <div>
-        <h3 style="font-size:1rem; margin-bottom:0.5rem;">Distributed Governance Network</h3>
-        <p style="font-size:0.875rem; color:var(--text-muted); margin-bottom:1rem;">
-          Real-time brand health monitoring across all 13,713 entries. Ant Lattice coordination
-          system with WhatsApp-based layer. VaultMesh integration for secure transactions.
-        </p>
-        <div class="ring-nodes">
-          <div class="rnode">Echo Drives</div>
-          <div class="rnode">Tazmanian Devil Protocol</div>
-          <div class="rnode">Rhino Strike 33km</div>
-          <div class="rnode">PulseGrid™ 0.9s</div>
-          <div class="rnode">OmniSignal™ Geo-Spatial</div>
-          <div class="rnode">Ghost Repo Protocol</div>
-          <div class="rnode">VaultMint™ Blockchain</div>
-          <div class="rnode">Ant Lattice</div>
-          <div class="rnode">ClaimRoot™</div>
-          <div class="rnode">Gorilla Codex</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── PHILOSOPHY ─── -->
-<section id="philosophy">
-  <p class="section-label">Ubuntu Commerce</p>
-  <h2>The Circular Economy in Code</h2>
-  <p class="section-intro">"No brand left behind, no animal forgotten." The Care Loop is hardcoded into every transaction — 15% of all revenue flows to Banimal™ wildlife rescue.</p>
-
-  <div class="philosophy-flow" style="margin-bottom: 3rem;">
-    <div class="phi-step">
-      <div class="phi-icon">🛒</div>
-      <h4>Buy Artisan</h4>
-      <p>Physical craft purchase (e.g., uNtshontsho Cape Buffalo fedora by Sibangilizwe Maghandlela). Priced at grain-level precision.</p>
-    </div>
-    <div class="phi-step">
-      <div class="phi-icon">💻</div>
-      <h4>Create Apps</h4>
-      <p>Revenue funds FAA.zone app creation. Artisan gets ongoing SaaS revenue share. Brand gains visibility across 13,713 ecosystem.</p>
-    </div>
-    <div class="phi-step">
-      <div class="phi-icon">🥞</div>
-      <h4>Eat Pancakes</h4>
-      <p>Community gathering celebrating growth. Baobab mythology guides resource distribution. Cultural anchoring in Ubuntu philosophy.</p>
-    </div>
-  </div>
-
-  <div class="cards">
-    <div class="card">
-      <div class="card-icon">🌾</div>
-      <h3>Zero-Signup Instant Builds</h3>
-      <p>Upload file + prompt → live site in under 3 minutes. No account required. Auto-subdomain + email routing. Accessible to all.</p>
-      <span class="card-tag tag-green">&lt; 3 min build</span>
-    </div>
-    <div class="card">
-      <div class="card-icon">🔒</div>
-      <h3>Sovereign Compute</h3>
-      <p>Self-hosted priority. Zero egress fees (Cloudflare R2). AI as secondary utility (LLaaS). Full infrastructure control. No PaaS lock-in.</p>
-      <span class="card-tag tag-amber">$50–60/month</span>
-    </div>
-    <div class="card">
-      <div class="card-icon">👁️</div>
-      <h3>Radical Transparency</h3>
-      <p>1 grain = $0.01 USD — grain-level price visibility. Care Loop always shown. PayPal fees disclosed. Zero surprises policy.</p>
-      <span class="card-tag tag-cyan">Grain Pricing</span>
-    </div>
-    <div class="card">
-      <div class="card-icon">♿</div>
-      <h3>Accessibility First</h3>
-      <p>WCAG 2.1 AA compliance. 44×44px touch targets. 4.5:1 contrast ratios. Full keyboard navigation and screen reader support.</p>
-      <span class="card-tag tag-blue">WCAG 2.1 AA</span>
-    </div>
-    <div class="card">
-      <div class="card-icon">🤖</div>
-      <h3>BMW GAIA × FAA.Zone</h3>
-      <p>Quantum Nexus partnership integrating automotive and AI sectors into the Seedwave constellation. The Root Pipeline — distributed intelligence architecture.</p>
-      <span class="card-tag tag-purple">Partnership</span>
-    </div>
-    <div class="card">
-      <div class="card-icon">🦒</div>
-      <h3>Banimal™ Care Loop</h3>
-      <p>15% of all revenue to wildlife rescue. 6 Banimal Barcodes across 6 continents. "First Man on Mars" can still protect Earth's animals.</p>
-      <span class="card-tag tag-green">15% Revenue</span>
-    </div>
-  </div>
-</section>
-
-<!-- ─── BLOCKING ISSUES ─── -->
+<!-- ── VISION ── -->
 <section>
-  <p class="section-label">Current Status</p>
-  <h2>Blocking Issues</h2>
-  <p class="section-intro">Two active blockers require resolution before full pipeline activation.</p>
-  <div class="issues-list">
-    <div class="issue-card">
-      <h4>⚠️ Banimal WordPress Migration</h4>
-      <p>UpdraftPlus backup files on local Mac — NOT yet uploaded to Google Drive. Blocking transfer to umwebpro@gmail.com developer. Resolution: Upload backups to Drive → Share with developer.</p>
+  <div class="sec-tag reveal">The Vision</div>
+  <h2 class="big reveal">WHAT WE<br><span class="o">ARE</span><br>BUILDING</h2>
+  <p class="reveal" style="color:var(--muted);max-width:700px;font-size:14px;line-height:1.8">Fruitful Holdings is a social enterprise fusing entertainment with community impact — creating platforms that uplift, inspire and connect. The Fruitful Crate Dance Showcase is the flagship, powered by the Sekelbos Tank artisan marketplace and the Tupperware Going Fruitful distribution network.</p>
+
+  <div class="vision-grid">
+    <div class="v-card reveal">
+      <span class="v-ico">🕺</span>
+      <h3>CRATE DANCE SHOWCASE</h3>
+      <p>Global street dance competition giving youth from underserved communities a world stage. Regional auditions → National finale → International expansion. Red Bull presenting sponsor.</p>
     </div>
-    <div class="issue-card">
-      <h4>⚠️ Replit Cross-Domain Authentication Bug</h4>
-      <p>Platform: Fruitful Planet Change (Repl ID: 8683e986-c5b5-42b9-a15e-a1354d51bac6). Mobile Safari ITP blocking cookies across replit.com/janeway.replit.dev boundary. Support ticket filed. Workaround pending: Cloudflare Worker auth wrapper.</p>
+    <div class="v-card reveal">
+      <span class="v-ico">🏺</span>
+      <h3>SEKELBOS TANK</h3>
+      <p>Vendor-driven artisan marketplace empowering local crafters, vendors and small businesses with access to global markets. 20% commission model, franchise-ready.</p>
+    </div>
+    <div class="v-card reveal">
+      <span class="v-ico">🌍</span>
+      <h3>FRUITFUL PLANET CHANGE</h3>
+      <p>Social impact engine raising awareness on poverty, inequality and unemployment through creative expression. Youth development programs integrated into every event.</p>
+    </div>
+    <div class="v-card reveal">
+      <span class="v-ico">🏪</span>
+      <h3>TUPPERWARE GOING FRUITFUL</h3>
+      <p>Repurposing Tupperware consultant networks as Fruitful direct sales agents at housewarming parties, kids' events and community gatherings. Revenue-sharing model for all parties.</p>
+    </div>
+    <div class="v-card reveal">
+      <span class="v-ico">📱</span>
+      <h3>TECHNOLOGY PLATFORM</h3>
+      <p>Online registration, virtual auditions, live streaming, POS systems via RA Cellular, data analytics for audience growth and sponsorship impact measurement across all markets.</p>
+    </div>
+    <div class="v-card reveal">
+      <span class="v-ico">🎓</span>
+      <h3>TALENT DEVELOPMENT</h3>
+      <p>Mentorship framework connecting dancers to industry leaders. Training in choreography, stage presence, social media marketing, entrepreneurship and financial literacy.</p>
     </div>
   </div>
 </section>
 
-<!-- ─── FOOTER ─── -->
-<footer>
-  <div class="footer-brand">Fruitful Holdings™</div>
-  <div class="footer-tagline">
-    The architecture is NOT a SaaS platform.<br>
-    It's a <strong style="color:var(--green-glow)">sovereign technology nation</strong> — with its own brands, governance, commerce model, and cultural foundation.
+<!-- ── REVENUE ── -->
+<section>
+  <div class="sec-tag reveal">Financial Model</div>
+  <h2 class="big reveal">SIX STREAMS.<br><span class="y">ONE MACHINE.</span></h2>
+
+  <div class="rev-grid">
+    <div class="rev-block reveal">
+      <span class="rn">Ticket Sales</span>
+      <span class="ra">R15M</span>
+      <p class="rd">10 events Year 1 × R1.5M avg. Grows to R60M in Year 3 (40 events globally).</p>
+    </div>
+    <div class="rev-block reveal">
+      <span class="rn">Sponsorship</span>
+      <span class="ra">R5M</span>
+      <p class="rd">Red Bull exclusive presenting. Platinum R1M, Gold R500K, Silver R250K per event.</p>
+    </div>
+    <div class="rev-block reveal">
+      <span class="rn">Merchandise</span>
+      <span class="ra">R1M</span>
+      <p class="rd">Red Bull × Fruitful co-branded. T-shirts, caps, accessories online + at events.</p>
+    </div>
+    <div class="rev-block reveal">
+      <span class="rn">Content Licensing</span>
+      <span class="ra">R2M</span>
+      <p class="rd">Netflix, Showmax, YouTube deal pipeline. Grows to R6M Year 3 as global reach scales.</p>
+    </div>
+    <div class="rev-block reveal">
+      <span class="rn">Franchise Fees</span>
+      <span class="ra">R3M</span>
+      <p class="rd">R250K–R500K upfront per region + 10% royalty on gross. Grows to R20M Year 3.</p>
+    </div>
+    <div class="rev-block reveal">
+      <span class="rn">Vendor Fees (Sekelbos)</span>
+      <span class="ra">R3M</span>
+      <p class="rd">300 vendors × booth fees + 20% commission at 10 events. Scales to 1,000 vendors.</p>
+    </div>
   </div>
-  <p style="color:var(--text-muted); font-size:0.8rem;">
-    13,713 brands · 77 sectors · 7 regions · 93+ repositories · 9-second VaultMesh pulse
-  </p>
-  <div class="footer-sig">瓷勺旋渦已築，脈買已通！ 🦍🔥</div>
-  <p style="margin-top:1.5rem; font-size:0.75rem; color:var(--text-muted);">
-    From Mzansi to Timbuktu · Anchored in Ubuntu · Built on Cloudflare Edge
-  </p>
+
+  <div class="rev-total reveal">
+    <div class="rl">
+      <span class="rll">3-Year Total Revenue Target</span>
+      <span class="rls">Conservative baseline · 5× upside with global scale</span>
+    </div>
+    <span class="rnum">R391M</span>
+  </div>
+</section>
+
+<!-- ── FINANCIALS BY YEAR ── -->
+<section>
+  <div class="sec-tag reveal">Year-by-Year Projections</div>
+  <h2 class="big reveal">THE NUMBERS<br><span class="g">COMPOUND</span></h2>
+
+  <table class="fin-table reveal">
+    <thead>
+      <tr>
+        <th>Revenue Source</th>
+        <th>Year 1</th>
+        <th>Year 2</th>
+        <th>Year 3</th>
+        <th>3-Year Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="yr1">
+        <td class="source">Event Ticket Sales</td>
+        <td class="amt">R15M</td>
+        <td class="amt" style="color:var(--gold)">R30M</td>
+        <td class="amt" style="color:var(--green)">R60M</td>
+        <td class="amt" style="color:var(--text)">R105M</td>
+      </tr>
+      <tr>
+        <td class="source">Sponsorship &amp; Partnerships</td>
+        <td>R5M</td><td>R6M</td><td>R12M</td><td>R23M</td>
+      </tr>
+      <tr>
+        <td class="source">Merchandise Sales</td>
+        <td>R1M</td><td>R2.5M</td><td>R5M</td><td>R8.5M</td>
+      </tr>
+      <tr>
+        <td class="source">Content Licensing</td>
+        <td>R2M</td><td>R4M</td><td>R6M</td><td>R12M</td>
+      </tr>
+      <tr>
+        <td class="source">Franchise Fees &amp; Royalties</td>
+        <td>R3M</td><td>R10M</td><td>R20M</td><td>R33M</td>
+      </tr>
+      <tr>
+        <td class="source">Vendor Fees (Sekelbos Tank)</td>
+        <td>R3M</td><td>R7.5M</td><td>R12M</td><td>R22.5M</td>
+      </tr>
+      <tr class="total-row">
+        <td class="source" style="color:var(--orange)">TOTAL</td>
+        <td class="amt">R29M</td>
+        <td class="amt" style="color:var(--gold)">R62M</td>
+        <td class="amt" style="color:var(--green)">R115M</td>
+        <td class="amt" style="font-size:28px; color:var(--orange)">R206M</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="reveal" style="color:var(--muted);font-size:11px;margin-top:16px;">Year 4–5 targets push total to R391M with international franchise scale and increased content licensing from global streaming platforms.</p>
+</section>
+
+<!-- ── RED BULL ── -->
+<section>
+  <div class="sec-tag reveal">Strategic Partnership</div>
+  <h2 class="big reveal">RED BULL<br><span class="r">FITS LIKE</span><br>A GLOVE</h2>
+  <p class="reveal" style="color:var(--muted);max-width:700px;font-size:14px;line-height:1.8">The Fruitful Crate Dance Showcase was designed with the same DNA as Red Bull's most iconic sponsorships. Youth empowerment. Creative expression. High-energy events. Urban culture. This isn't coincidence — it's convergence.</p>
+
+  <div class="rb-grid">
+    <div class="rb-panel reveal">
+      <span class="rbi">🎯</span>
+      <h4>SHARED VALUES</h4>
+      <p>Both brands champion youth empowerment, creativity, street culture and social impact. Red Bull BC One, Red Bull Dance Your Style and the Crate Dance Showcase speak the same language.</p>
+      <ul>
+        <li>Youth 16–30 demographic alignment</li>
+        <li>Street culture + dance roots</li>
+        <li>Community grassroots engagement</li>
+        <li>High-energy live experiences</li>
+      </ul>
+    </div>
+    <div class="rb-panel highlight reveal">
+      <span class="rbi">💰</span>
+      <h4>INVESTMENT ASK: R20M</h4>
+      <p>Multi-year exclusive presenting sponsorship across all Fruitful Crate Dance Showcase events globally. Red Bull becomes the face of the movement.</p>
+      <ul>
+        <li>Exclusive global presenting sponsor rights</li>
+        <li>Co-branded content creation via Red Bull Media House</li>
+        <li>Red Bull activation zones at every event</li>
+        <li>R30.75M projected return over 3 years</li>
+      </ul>
+    </div>
+    <div class="rb-panel reveal">
+      <span class="rbi">📡</span>
+      <h4>MEDIA &amp; CONTENT</h4>
+      <p>Red Bull Media House produces high-quality event content, documentaries and live streams broadcast on Red Bull TV, YouTube and digital platforms globally.</p>
+      <ul>
+        <li>Live streaming of all major events</li>
+        <li>Behind-the-scenes documentary series</li>
+        <li>Content licensing to Netflix, Showmax, YouTube</li>
+        <li>Social media amplification to youth audiences</li>
+      </ul>
+    </div>
+    <div class="rb-panel reveal">
+      <span class="rbi">🌐</span>
+      <h4>FRANCHISE GROWTH SUPPORT</h4>
+      <p>Red Bull's global network, marketing machinery and influencer relationships accelerate franchisee recruitment and event success across new markets.</p>
+      <ul>
+        <li>Franchisee recruitment through Red Bull channels</li>
+        <li>Co-funding events in new markets</li>
+        <li>Local influencer and artist engagement</li>
+        <li>Product sampling + VIP activation at every event</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── SPONSORSHIP TIERS ── -->
+<section>
+  <div class="sec-tag reveal">Sponsorship Packages</div>
+  <h2 class="big reveal">PICK YOUR<br><span class="o">LEVEL</span></h2>
+
+  <div class="tier-grid">
+    <div class="tier platinum reveal">
+      <span class="tier-inv">R1M</span>
+      <h4>PLATINUM — PER EVENT</h4>
+      <ul>
+        <li>Presenting sponsor — all branding</li>
+        <li>25% logo placement on all materials</li>
+        <li>Exclusive VIP backstage access</li>
+        <li>5-minute speaking slot at opening</li>
+        <li>5 social posts across 3 platforms</li>
+        <li>TV mentions + event coverage</li>
+        <li>500 units co-branded merchandise</li>
+        <li>Swag bags for first 500 ticket buyers</li>
+      </ul>
+    </div>
+    <div class="tier gold-t reveal">
+      <span class="tier-inv">R500K</span>
+      <h4>GOLD — PER EVENT</h4>
+      <ul>
+        <li>15% logo placement on all materials</li>
+        <li>Second-tier branding in digital ads</li>
+        <li>2 VIP tickets per event</li>
+        <li>Brand mention at event introduction</li>
+        <li>3 Instagram social media posts</li>
+        <li>Logo on official event website</li>
+      </ul>
+    </div>
+    <div class="tier silver-t reveal">
+      <span class="tier-inv">R250K</span>
+      <h4>SILVER — PER EVENT</h4>
+      <ul>
+        <li>Logo on key event signage</li>
+        <li>Social media mentions + shout-outs</li>
+        <li>Brand presence on event merchandise</li>
+        <li>In-kind support option available</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── FRANCHISE MODEL ── -->
+<section>
+  <div class="sec-tag reveal">Franchise Model</div>
+  <h2 class="big reveal">REPLICATE.<br><span class="y">SCALE.</span><br>EARN.</h2>
+
+  <table class="fr-table reveal">
+    <thead>
+      <tr>
+        <th>Year</th>
+        <th>Franchise Regions</th>
+        <th>Revenue per Region</th>
+        <th>Total Franchise Revenue</th>
+        <th>Key Markets</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="fy">Year 1</td>
+        <td>5 regions</td>
+        <td class="fv">R2.8M</td>
+        <td class="fv">R14M</td>
+        <td>SA · Kenya · Nigeria · Brazil · Mexico</td>
+      </tr>
+      <tr>
+        <td class="fy">Year 2</td>
+        <td>15 regions</td>
+        <td class="fv" style="color:var(--gold)">R3.2M</td>
+        <td class="fv" style="color:var(--gold)">R32M</td>
+        <td>+ India · Indonesia · UK · Germany · UAE</td>
+      </tr>
+      <tr>
+        <td class="fy">Year 3</td>
+        <td>20+ regions</td>
+        <td class="fv" style="color:var(--orange)">R4M</td>
+        <td class="fv" style="color:var(--orange)">R80M</td>
+        <td>Full Africa · Asia · South America · Europe</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:32px; display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line);" class="reveal">
+    <div style="background:var(--card); padding:28px;">
+      <div style="font-family:'Anton',sans-serif;font-size:40px;color:var(--orange);line-height:1">R250K<br><span style="font-size:20px">–R500K</span></div>
+      <div style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:8px">Upfront franchise fee (varies by market size)</div>
+    </div>
+    <div style="background:var(--card); padding:28px;">
+      <div style="font-family:'Anton',sans-serif;font-size:40px;color:var(--gold);line-height:1">10%</div>
+      <div style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:8px">Gross revenue royalty — 7% Fruitful · 3% Red Bull</div>
+    </div>
+    <div style="background:var(--card); padding:28px;">
+      <div style="font-family:'Anton',sans-serif;font-size:40px;color:var(--green);line-height:1">3yr</div>
+      <div style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:8px">Initial contract term · renewable for 5-year extensions</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MARKETS ── -->
+<section>
+  <div class="sec-tag reveal">Expansion Roadmap</div>
+  <h2 class="big reveal">FROM SA<br><span class="o">TO THE</span><br>WORLD</h2>
+
+  <div class="mkt-grid">
+    <div class="mkt-card phase-1 reveal">
+      <span class="flag">🇿🇦</span>
+      <h4>SOUTH AFRICA</h4>
+      <p>Base market. Vibrant youth culture, diverse dance styles, 40% pop under 25. Red Bull well-established.</p>
+      <span class="mkt-tag">Phase 1 — Launch</span>
+    </div>
+    <div class="mkt-card phase-1 reveal">
+      <span class="flag">🇳🇬</span>
+      <h4>NIGERIA</h4>
+      <p>Largest African economy. Afrobeats + hip-hop scene globally dominant. 50% pop under 30.</p>
+      <span class="mkt-tag">Phase 1 — Launch</span>
+    </div>
+    <div class="mkt-card phase-1 reveal">
+      <span class="flag">🇰🇪</span>
+      <h4>KENYA</h4>
+      <p>Strong urban dance culture in Nairobi. Red Bull present. 30%+ youth unemployment = high relevance.</p>
+      <span class="mkt-tag">Phase 1 — Launch</span>
+    </div>
+    <div class="mkt-card phase-1 reveal">
+      <span class="flag">🇧🇷</span>
+      <h4>BRAZIL</h4>
+      <p>Funk, hip-hop, samba globally recognised. São Paulo + Rio de Janeiro = massive event markets.</p>
+      <span class="mkt-tag">Phase 1 — Launch</span>
+    </div>
+    <div class="mkt-card phase-2 reveal">
+      <span class="flag">🇲🇽</span>
+      <h4>MEXICO</h4>
+      <p>Strong street event culture, young population, growing interest in urban entertainment.</p>
+      <span class="mkt-tag">Phase 1 — Launch</span>
+    </div>
+    <div class="mkt-card phase-2 reveal">
+      <span class="flag">🇮🇳</span>
+      <h4>INDIA</h4>
+      <p>Rapidly growing youth market adopting hip-hop + street dance. Delhi, Mumbai, Bangalore targets.</p>
+      <span class="mkt-tag">Phase 2 — Expand</span>
+    </div>
+    <div class="mkt-card phase-2 reveal">
+      <span class="flag">🇬🇧</span>
+      <h4>UNITED KINGDOM</h4>
+      <p>Cultural diversity, established street dance scene, large urban youth market in London + Manchester.</p>
+      <span class="mkt-tag">Phase 2 — Expand</span>
+    </div>
+    <div class="mkt-card phase-2 reveal">
+      <span class="flag">🇦🇺</span>
+      <h4>AUSTRALIA</h4>
+      <p>Multicultural pop, growing youth arts culture. Strong demand for international event brands.</p>
+      <span class="mkt-tag">Phase 2 — Expand</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── PHASES ── -->
+<section>
+  <div class="sec-tag reveal">Implementation Roadmap</div>
+  <h2 class="big reveal">FROM TODAY<br>TO <span class="r">GLOBAL</span><br>ICON</h2>
+
+  <div class="phases">
+    <div class="phase reveal">
+      <div class="phase-bar"></div>
+      <span class="pl">Phase 1 — Year 1</span>
+      <h4>AWARENESS &amp; LAUNCH</h4>
+      <ul>
+        <li>Brand identity + CI finalized</li>
+        <li>Red Bull partnership formalized</li>
+        <li>5 regional showcases SA</li>
+        <li>National grand finale</li>
+        <li>Franchise manual completed</li>
+        <li>Trademark filed — SA + USA</li>
+      </ul>
+    </div>
+    <div class="phase reveal">
+      <div class="phase-bar"></div>
+      <span class="pl">Phase 2 — Year 1–2</span>
+      <h4>AFRICA ROLLOUT</h4>
+      <ul>
+        <li>Nigeria · Kenya · Botswana launch</li>
+        <li>5 franchise regions active</li>
+        <li>Sekelbos Tank vendor network built</li>
+        <li>Content licensing deals signed</li>
+        <li>Red Bull co-branded merch launched</li>
+      </ul>
+    </div>
+    <div class="phase reveal">
+      <div class="phase-bar"></div>
+      <span class="pl">Phase 3 — Year 2–3</span>
+      <h4>INTERNATIONAL SCALE</h4>
+      <ul>
+        <li>Brazil · Mexico · India expand</li>
+        <li>15 franchise regions active</li>
+        <li>Digital platform + virtual auditions live</li>
+        <li>Netflix / Showmax content deal</li>
+        <li>Red Bull event activations global</li>
+      </ul>
+    </div>
+    <div class="phase reveal">
+      <div class="phase-bar"></div>
+      <span class="pl">Phase 4 — Year 3–5</span>
+      <h4>GLOBAL EMPIRE</h4>
+      <ul>
+        <li>20+ countries · 40 events/year</li>
+        <li>R391M revenue achieved</li>
+        <li>10,000 youth trained</li>
+        <li>1,000+ jobs created</li>
+        <li>Fruitful = global brand icon</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── LEGAL &amp; IP ── -->
+<section>
+  <div class="sec-tag reveal">Legal &amp; Trademark</div>
+  <h2 class="big reveal">PROTECT<br><span class="y">THE BRAND</span></h2>
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:40px" class="reveal">
+    <div style="background:var(--card);padding:24px">
+      <div style="font-size:20px;margin-bottom:10px">🇿🇦</div>
+      <div style="font-family:'Anton',sans-serif;font-size:16px;color:var(--text)">SOUTH AFRICA</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:6px">Class 35 + 41 · R5,000/class · Priority filing</div>
+    </div>
+    <div style="background:var(--card);padding:24px">
+      <div style="font-size:20px;margin-bottom:10px">🇳🇬</div>
+      <div style="font-family:'Anton',sans-serif;font-size:16px;color:var(--text)">NIGERIA</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:6px">Class 35 + 41 · Retail + entertainment services</div>
+    </div>
+    <div style="background:var(--card);padding:24px">
+      <div style="font-size:20px;margin-bottom:10px">🇧🇷</div>
+      <div style="font-family:'Anton',sans-serif;font-size:16px;color:var(--text)">BRAZIL</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:6px">Class 35 + 41 · Event organisation rights</div>
+    </div>
+    <div style="background:var(--card);padding:24px">
+      <div style="font-size:20px;margin-bottom:10px">🇬🇧</div>
+      <div style="font-family:'Anton',sans-serif;font-size:16px;color:var(--text)">UNITED KINGDOM</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:6px">Class 35 + 41 · Entertainment + merchandise</div>
+    </div>
+  </div>
+
+  <div style="margin-top:24px;padding:28px 32px;background:rgba(245,200,66,.04);border:1px solid rgba(245,200,66,.2)" class="reveal">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Trademark Brands — Filing via Adams &amp; Adams</div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px">
+      <span style="font-size:12px;padding:6px 14px;border:1px solid rgba(245,200,66,.3);color:var(--gold)">Fruitful™</span>
+      <span style="font-size:12px;padding:6px 14px;border:1px solid rgba(245,200,66,.3);color:var(--gold)">Fruitful.Planet.Change™</span>
+      <span style="font-size:12px;padding:6px 14px;border:1px solid rgba(245,200,66,.3);color:var(--gold)">Fruitful Sekelbos Tank™</span>
+      <span style="font-size:12px;padding:6px 14px;border:1px solid rgba(245,200,66,.3);color:var(--gold)">Fruitful Crate Dance Showcase™</span>
+      <span style="font-size:12px;padding:6px 14px;border:1px solid rgba(245,200,66,.3);color:var(--gold)">Fruitful Home™</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── SOCIAL IMPACT ── -->
+<section>
+  <div class="sec-tag reveal">Social Impact</div>
+  <h2 class="big reveal">CHANGE<br><span class="g">LIVES.</span><br>MEASURE IT.</h2>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:40px" class="reveal">
+    <div style="background:var(--card);padding:36px 28px;text-align:center">
+      <div style="font-family:'Anton',sans-serif;font-size:64px;color:var(--green);line-height:1;text-shadow:0 0 40px rgba(41,224,111,.3)">10K</div>
+      <div style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:8px">Youth trained by Year 3</div>
+      <div style="font-size:12px;color:rgba(238,234,240,.4);margin-top:8px">Dance + business development programs</div>
+    </div>
+    <div style="background:var(--card);padding:36px 28px;text-align:center">
+      <div style="font-family:'Anton',sans-serif;font-size:64px;color:var(--orange);line-height:1;text-shadow:0 0 40px rgba(255,90,31,.3)">1K+</div>
+      <div style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:8px">Jobs created</div>
+      <div style="font-size:12px;color:rgba(238,234,240,.4);margin-top:8px">Via vendor opportunities + event operations</div>
+    </div>
+    <div style="background:var(--card);padding:36px 28px;text-align:center">
+      <div style="font-family:'Anton',sans-serif;font-size:64px;color:var(--gold);line-height:1;text-shadow:0 0 40px rgba(245,200,66,.3)">8+</div>
+      <div style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:8px">Countries activated</div>
+      <div style="font-size:12px;color:rgba(238,234,240,.4);margin-top:8px">Phase 1 + 2 global rollout markets</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta">
+  <div class="ring"></div>
+  <div class="ring"></div>
+  <div class="ring"></div>
+
+  <p class="cta-tag">One movement. One decision. Global impact.</p>
+  <h2>
+    <span class="o">EMPOWER.</span><br>
+    <span class="r">INSPIRE.</span><br>
+    CHANGE THE WORLD.
+  </h2>
+  <p class="cta-sub">The Fruitful Crate Dance Showcase is ready. The franchise model is built. Red Bull is the missing spark. Together, we build the most powerful youth culture movement out of Africa.</p>
+
+  <div class="cta-cards">
+    <div class="cta-card">
+      <span class="cl">Founder</span>
+      <span class="cv">Heyns Schoeman</span>
+      <p class="cs">CEO · Fruitful Holdings (Pty) Ltd</p>
+    </div>
+    <div class="cta-card">
+      <span class="cl">Initial Funding Ask</span>
+      <span class="cv">R20,000,000</span>
+      <p class="cs">Red Bull exclusive presenting sponsorship</p>
+    </div>
+    <div class="cta-card">
+      <span class="cl">Revenue Target</span>
+      <span class="cv">R391,000,000</span>
+      <p class="cs">5-year projected total across all streams</p>
+    </div>
+    <div class="cta-card">
+      <span class="cl">Legal</span>
+      <span class="cv">Adams &amp; Adams</span>
+      <p class="cs">Trademark filing — 8 countries in progress</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fb">FRUITFUL HOLDINGS × RED BULL × GLOBAL</div>
+  <div class="fc">Empowering Communities · Amplifying Creativity · Building a Global Movement · 2026</div>
 </footer>
 
+<script>
+// Cursor
+const cur = document.getElementById('cur');
+const ring = document.getElementById('curRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+(function anim(){
+  rx+=(mx-rx)*.15; ry+=(my-ry)*.15;
+  cur.style.left=mx+'px'; cur.style.top=my+'px';
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  requestAnimationFrame(anim);
+})();
+
+// Scroll reveal
+const revs = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('on'), i*55);
+      obs.unobserve(e.target);
+    }
+  });
+},{threshold:.08});
+revs.forEach(el=>obs.observe(el));
+
+// Hero entrance
+['hero-tag','hero h1','hero-sub','hero-bottom'].forEach((s,i)=>{
+  const el = document.querySelector('.'+s.replace(' ','.'))||document.querySelector(s);
+  if(!el) return;
+  el.style.cssText='opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform .9s ease;transition-delay:'+(i*.12)+'s';
+  requestAnimationFrame(()=>{el.style.opacity='1';el.style.transform='translateY(0)'});
+});
+</script>
 </body>
 </html>

@@ -10,3 +10,4 @@
 | 4 | 2026-05-29 | fruitful | main | `fruitful-holdings-motion.html` | `e7d4b0ef` | Fruitful Holdings — Motion Document 2026 | 74379 | 58 | 1 | 92.4 |
 | 5 | 2026-05-29 | fruitful | main | `fruitful-holdings.html` | `ff46ec31` | Fruitful Holdings — Global Business Plan | 75191 | 59 | 1 | 93.5 |
 | 6 | 2026-06-02 | codenest | main | `fruitful-holdings-overview.html` | `13b4f7dd` | Fruitful Holdings — Complete Vision Overview | 42237 | 48 | 0 | 77.2 |
+| 7 | 2026-09-26 | fruitful-superagent | main | `claude/projects/elim-pottery-heritage-the-ancient-hands-019ca574/files/Fruitful_Holdings_Pitch.html` | `f8ca384e` | Fruitful Holdings — Global Business Plan | 44104 | 47 | 1 | 78.4 |
