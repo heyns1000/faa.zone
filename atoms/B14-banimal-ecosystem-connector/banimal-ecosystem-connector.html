@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banimal Ecosystem Connector - Admin Preview</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f0f0f1; }
+        .wrap { max-width: 1400px; margin: 20px auto; padding: 0 20px; }
+        h1 { font-size: 28px; margin-bottom: 10px; color: #1d2327; }
+        .subtitle { color: #646970; font-size: 14px; margin-bottom: 30px; font-style: italic; }
+        
+        .tab-nav { background: white; border-bottom: 1px solid #c3c4c7; margin-bottom: 0; }
+        .tab-nav a { display: inline-block; padding: 15px 20px; color: #50575e; text-decoration: none; border-bottom: 4px solid transparent; }
+        .tab-nav a.active { color: #2271b1; border-bottom-color: #2271b1; font-weight: 600; }
+        .tab-nav a:hover { color: #2271b1; }
+        
+        .tab-content { background: white; padding: 30px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        
+        .status-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .status-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; border-radius: 8px; }
+        .status-card.green { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        .status-card.orange { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+        .status-card.blue { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
+        .status-card h3 { font-size: 14px; opacity: 0.9; margin-bottom: 10px; }
+        .status-card .number { font-size: 36px; font-weight: 700; }
+        .status-card .label { opacity: 0.8; font-size: 13px; margin-top: 5px; }
+        
+        .connection-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .connection-table th { background: #f6f7f7; padding: 12px; text-align: left; font-weight: 600; border-bottom: 2px solid #c3c4c7; }
+        .connection-table td { padding: 12px; border-bottom: 1px solid #e0e0e0; }
+        .connection-table tr:hover { background: #f9f9f9; }
+        
+        .status-badge { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; }
+        .status-badge.connected { background: #d1fae5; color: #065f46; }
+        .status-badge.pending { background: #fef3c7; color: #92400e; }
+        .status-badge.error { background: #fee2e2; color: #991b1b; }
+        
+        .btn { display: inline-block; padding: 8px 16px; border-radius: 4px; font-size: 13px; font-weight: 500; cursor: pointer; border: none; text-decoration: none; }
+        .btn-primary { background: #2271b1; color: white; }
+        .btn-secondary { background: #f0f0f1; color: #2c3338; border: 1px solid #c3c4c7; }
+        .btn-success { background: #10b981; color: white; }
+        .btn:hover { opacity: 0.9; }
+        
+        .section { margin: 30px 0; padding: 20px; background: #f9fafb; border-left: 4px solid #2271b1; }
+        .section h2 { font-size: 18px; margin-bottom: 15px; color: #1d2327; }
+        
+        .endpoint-list { list-style: none; }
+        .endpoint-list li { padding: 8px 0; font-family: 'Courier New', monospace; font-size: 13px; color: #2563eb; }
+        
+        .action-bar { background: #f6f7f7; padding: 20px; margin-top: 30px; border-radius: 4px; }
+        .action-bar .btn { margin-right: 10px; }
+        
+        .log-viewer { background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 12px; max-height: 300px; overflow-y: auto; }
+        .log-viewer .log-line { margin: 4px 0; }
+        .log-viewer .success { color: #4ade80; }
+        .log-viewer .error { color: #f87171; }
+        .log-viewer .warning { color: #fbbf24; }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <h1>🐜 Banimal Ecosystem Connector</h1>
+        <p class="subtitle">Forged in Ant Lattice Logic by Claude Sonnet 4.5 | v4.1.1</p>
+        
+        <div class="tab-nav">
+            <a href="#" class="active">Dashboard</a>
+            <a href="#">Drive Connections</a>
+            <a href="#">Ecosystem Pull</a>
+            <a href="#">HotStack Deploy</a>
+            <a href="#">Vault Manager</a>
+            <a href="#">Sync Logs</a>
+            <a href="#">Settings</a>
+        </div>
+        
+        <div class="tab-content">
+            <div class="status-grid">
+                <div class="status-card green">
+                    <h3>Connected Drives</h3>
+                    <div class="number">2</div>
+                    <div class="label">Google Drive accounts active</div>
+                </div>
+                <div class="status-card blue">
+                    <h3>Replit Systems</h3>
+                    <div class="number">67</div>
+                    <div class="label">Private apps synchronized</div>
+                </div>
+                <div class="status-card orange">
+                    <h3>Active Vaults</h3>
+                    <div class="number">12</div>
+                    <div class="label">Ecosystem data storage</div>
+                </div>
+                <div class="status-card">
+                    <h3>Last Sync</h3>
+                    <div class="number">2m</div>
+                    <div class="label">Heartbeat active (120s cycle)</div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>📂 Drive Connection Status</h2>
+                <table class="connection-table">
+                    <thead>
+                        <tr>
+                            <th>Service</th>
+                            <th>Account</th>
+                            <th>Status</th>
+                            <th>Last Sync</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>🔵 Google Drive</td>
+                            <td><code>heynsschoeman@gmail.com</code></td>
+                            <td><span class="status-badge connected">✓ Connected</span></td>
+                            <td>2 minutes ago</td>
+                            <td><button class="btn btn-secondary">🔄 Sync</button></td>
+                        </tr>
+                        <tr>
+                            <td>🔵 Google Drive</td>
+                            <td><code>fruitful.planet.change@gmail.com</code></td>
+                            <td><span class="status-badge pending">⚠ Pending Auth</span></td>
+                            <td>Never</td>
+                            <td><button class="btn btn-primary">🔐 Connect</button></td>
+                        </tr>
+                        <tr>
+                            <td>🍎 iCloud Drive</td>
+                            <td><code>fruitful.planet.change@gmail.com</code></td>
+                            <td><span class="status-badge error">✗ Not Connected</span></td>
+                            <td>—</td>
+                            <td><button class="btn btn-primary">🔐 Connect</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="section">
+                <h2>🔌 HotStack Deployment Network</h2>
+                <table class="connection-table">
+                    <thead>
+                        <tr>
+                            <th>Station</th>
+                            <th>Region</th>
+                            <th>Apps Connected</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>🏢 Cape Town HotStack</td>
+                            <td>Western Cape</td>
+                            <td>15 apps</td>
+                            <td><span class="status-badge connected">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>🏙️ Johannesburg HotStack</td>
+                            <td>🏙️ Gauteng</td>
+                            <td>20 apps</td>
+                            <td><span class="status-badge connected">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>🌊 Durban HotStack</td>
+                            <td>KwaZulu-Natal</td>
+                            <td>12 apps</td>
+                            <td><span class="status-badge pending">Setup</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="section">
+                <h2>🗂️ Vault Storage Summary</h2>
+                <p style="margin-bottom: 15px;">Total Storage: <strong>847 MB</strong> across 12 vaults</p>
+                <table class="connection-table">
+                    <thead>
+                        <tr>
+                            <th>Vault ID</th>
+                            <th>Type</th>
+                            <th>Files</th>
+                            <th>Size</th>
+                            <th>Created</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>ECO_000001</code></td>
+                            <td>Ecosystem Data</td>
+                            <td>127 files</td>
+                            <td>245 MB</td>
+                            <td>2025-10-20</td>
+                        </tr>
+                        <tr>
+                            <td><code>RPL_000002</code></td>
+                            <td>Replit Brand</td>
+                            <td>543 files</td>
+                            <td>412 MB</td>
+                            <td>2025-10-19</td>
+                        </tr>
+                        <tr>
+                            <td><code>BCK_000003</code></td>
+                            <td>Backup Vault</td>
+                            <td>89 files</td>
+                            <td>190 MB</td>
+                            <td>2025-10-18</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="section">
+                <h2>📡 API Endpoints</h2>
+                <ul class="endpoint-list">
+                    <li>POST /wp-json/banimal/v1/update-user-profile</li>
+                    <li>POST /wp-json/banimal/v1/sync-user-product</li>
+                    <li>POST /wp-json/banimal/v1/create-or-update-product</li>
+                    <li>GET /wp-json/banimal/v4/ecosystem-sync</li>
+                    <li>GET /wp-json/banimal/v4/repository-status</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h2>📊 Recent Activity Log</h2>
+                <div class="log-viewer">
+                    <div class="log-line success">[10:24:15] ✓ Ecosystem sync complete (17 records updated)</div>
+                    <div class="log-line success">[10:22:03] ✓ Vault ECO_000001 allocated successfully</div>
+                    <div class="log-line">[10:20:45] ⚡ ANT_LATTICE heartbeat triggered</div>
+                    <div class="log-line success">[10:18:22] ✓ Google Drive sync: 13 files pulled</div>
+                    <div class="log-line warning">[10:15:10] ⚠ iCloud Drive authentication pending</div>
+                    <div class="log-line">[10:12:00] 🔄 Noodle Juice flow processing initiated</div>
+                    <div class="log-line success">[10:10:45] ✓ Mac database pull: 500 records</div>
+                    <div class="log-line">[10:08:30] 🚀 ANT_LATTICE global loop STARTED (Cycle: 120s)</div>
+                </div>
+            </div>
+            
+            <div class="action-bar">
+                <button class="btn btn-success">🔄 Sync All Drives</button>
+                <button class="btn btn-primary">⚡ Deploy Ecosystem</button>
+                <button class="btn btn-secondary">📋 View Full Logs</button>
+                <button class="btn btn-secondary">🗄️ Manage Vaults</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
