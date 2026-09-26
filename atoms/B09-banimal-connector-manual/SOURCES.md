@@ -10,3 +10,4 @@
 | 4 | 2026-08-30 | banimal | history | `docs/manual/user-manual.html` | `8f5ad608` | Banimal Connector Manual | 22641 | 19 | 0 | 46.3 |
 | 5 | 2026-09-03 | banimal | skill-training-global-ci-rollout | `docs/manual/user-manual.html` | `63689e48` | Banimal™ Connector Manual | 32496 | 41 | 2 | 73.2 |
 | 6 | 2026-09-26 | banimal | history | `docs/manual/user-manual.html` | `88c703ad` | Banimal™ Connector Manual | 29828 | 26 | 2 | 58.0 |
+| 7 | 2026-09-26 | banimal | history | `docs/manual/user-manual.html` | `a2049634` | Banimal™ Connector Manual | 29351 | 26 | 2 | 57.9 |
