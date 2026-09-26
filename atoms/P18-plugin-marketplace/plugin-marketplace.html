@@ -580,6 +580,123 @@
     </div>
 
     <script>
+        // Product package structure definitions
+        const PRODUCT_PACKAGES = {
+            'FAA-PAY-8000': {
+                name: 'OmniDrop 8000™ SAAS',
+                price: 4999,
+                files: [
+                    'omnidrop-8000-core.js',
+                    'cet-hook-engine.js',
+                    'ghost-gap-protocol.php',
+                    'banimal-connector-v4.6.0.php',
+                    'payment-gateway-orchestrator.js',
+                    'settlement-engine.js',
+                    'config/omnidrop.config.json',
+                    'config/gateway-mappings.json',
+                    'docs/INSTALLATION.md',
+                    'docs/API_REFERENCE.md',
+                    'schemas/omnidrop-schema.sql',
+                    'migrations/001_initial_setup.sql'
+                ],
+                dependencies: ['node >= 18', 'php >= 8.1', 'mongodb >= 6.0'],
+                size: '45.8 MB'
+            },
+            'FAA-SEC-002': {
+                name: 'VaultKey Pro - Agency',
+                price: 249,
+                files: [
+                    'vaultkey-core.js',
+                    'infinite-ledger.js',
+                    'multi-user-trace.js',
+                    'encryption-layer.js',
+                    'audit-trail.js',
+                    'api/vaultkey-api.js',
+                    'config/vault.config.json',
+                    'config/user-roles.json',
+                    'docs/SECURITY_GUIDE.md',
+                    'docs/AUDIT_COMPLIANCE.md',
+                    'schemas/vault-schema.sql'
+                ],
+                dependencies: ['node >= 18', 'postgresql >= 14'],
+                size: '28.3 MB'
+            },
+            'FAA-ECOM-001': {
+                name: 'TOMALL™ Commerce Node',
+                price: 30000,
+                files: [
+                    'tomall-core.js',
+                    'sovereign-cart.js',
+                    'faa-inline-pay.php',
+                    'brand-deployer.js',
+                    'white-label-engine.js',
+                    'infrastructure/docker-compose.yml',
+                    'infrastructure/kubernetes.yaml',
+                    'config/tomall.config.json',
+                    'config/brand-templates/',
+                    'docs/DEPLOYMENT_GUIDE.md',
+                    'docs/SLA_AGREEMENT.pdf',
+                    'schemas/commerce-schema.sql',
+                    'migrations/full-setup.sql'
+                ],
+                dependencies: ['node >= 18', 'docker >= 24', 'postgresql >= 14', 'redis >= 7'],
+                size: '156.7 MB'
+            },
+            'FAA-ADM-101': {
+                name: 'Seedwave™ Admin Toolkit',
+                price: 799,
+                files: [
+                    'seedwave-admin-core.js',
+                    'mongodb-optimizer.js',
+                    'r2-storage-adapter.js',
+                    'sector-brand-manager.js',
+                    'subnode-api.js',
+                    'vscode-extension/seedwave-ext.vsix',
+                    'config/seedwave.config.json',
+                    'docs/ADMIN_GUIDE.md',
+                    'schemas/seedwave-indexes.js'
+                ],
+                dependencies: ['node >= 18', 'mongodb >= 6.0', 'vs code >= 1.80'],
+                size: '32.1 MB'
+            },
+            'FAA-WRK-305': {
+                name: 'HotStack™ Worker',
+                price: 399,
+                files: [
+                    'hotstack-worker.js',
+                    'task-queue-manager.js',
+                    'webhook-integrator.js',
+                    'file-processor.js',
+                    'cloudflare-edge-config.js',
+                    'wrangler.toml',
+                    'config/hotstack.config.json',
+                    'docs/WORKER_DEPLOYMENT.md',
+                    'schemas/task-schema.json'
+                ],
+                dependencies: ['node >= 18', 'wrangler >= 3.0', 'cloudflare account'],
+                size: '18.9 MB'
+            },
+            'FAA-CON-450': {
+                name: 'Banimal Ecosystem Connector',
+                price: 599,
+                files: [
+                    'banimal-connector.php',
+                    'woo-integration.php',
+                    'geolocation-plugin.php',
+                    'maxmind-adapter.php',
+                    'currency-api.php',
+                    'webhook-handler.php',
+                    'config/banimal.config.php',
+                    'docs/WOOCOMMERCE_SETUP.md',
+                    'schemas/banimal-tables.sql'
+                ],
+                dependencies: ['php >= 8.1', 'wordpress >= 6.0', 'woocommerce >= 8.0'],
+                size: '22.4 MB'
+            }
+        };
+
+        const BANIMAL_CHECKOUT_URL = 'https://banimal.co.za/checkout';
+
         // Filter functionality
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', function() {
@@ -600,50 +717,276 @@
             });
         });
 
-        // Install product
+        // Install product - redirects to Banimal checkout
         function installProduct(name, productId) {
+            const packageData = PRODUCT_PACKAGES[productId];
+            
+            if (!packageData) {
+                alert('Product package not found. Please contact support.');
+                return;
+            }
+
+            // Build checkout URL with product details
+            const checkoutParams = new URLSearchParams({
+                product_id: productId,
+                product_name: packageData.name,
+                price: packageData.price,
+                return_url: window.location.href,
+                action: 'purchase_install'
+            });
+
+            // Redirect to Banimal checkout
+            window.location.href = `${BANIMAL_CHECKOUT_URL}?${checkoutParams.toString()}`;
+        }
+
+        // Download product - only after successful checkout verification
+        async function downloadProduct(productId) {
+            const packageData = PRODUCT_PACKAGES[productId];
+            
+            if (!packageData) {
+                alert('Product package not found.');
+                return;
+            }
+
+            // Check if user has valid purchase token (would come from checkout callback)
+            const urlParams = new URLSearchParams(window.location.search);
+            const purchaseToken = urlParams.get('purchase_token');
+            const verifiedProduct = urlParams.get('product_id');
+
+            if (!purchaseToken || verifiedProduct !== productId) {
+                // No valid purchase - redirect to checkout
+                const checkoutParams = new URLSearchParams({
+                    product_id: productId,
+                    product_name: packageData.name,
+                    price: packageData.price,
+                    return_url: window.location.href,
+                    action: 'purchase_download'
+                });
+                
+                const proceed = confirm(
+                    `${packageData.name}\n\n` +
+                    `Price: $${packageData.price}\n` +
+                    `Size: ${packageData.size}\n\n` +
+                    `You will be redirected to checkout.\n` +
+                    `After payment, download will begin automatically.`
+                );
+
+                if (proceed) {
+                    window.location.href = `${BANIMAL_CHECKOUT_URL}?${checkoutParams.toString()}`;
+                }
+                return;
+            }
+
+            // Valid purchase token exists - proceed with download
+            initiateStructuredDownload(productId, packageData, purchaseToken);
+        }
+
+        // Structured package download with user location selection
+        async function initiateStructuredDownload(productId, packageData, purchaseToken) {
             const modal = document.getElementById('installModal');
             const title = document.getElementById('modalTitle');
             const status = document.getElementById('statusText');
             const progress = document.getElementById('progressFill');
             
             modal.classList.add('active');
-            title.textContent = `Installing ${name}`;
+            title.textContent = `Preparing ${packageData.name}`;
+            status.textContent = 'Building package structure...';
+            progress.style.width = '10%';
+
+            // Step 1: Request download location from user
+            const downloadLocation = await requestDownloadLocation(packageData.name);
             
-            const steps = [
-                { text: 'Verifying license...', progress: 20 },
-                { text: 'Downloading components...', progress: 40 },
-                { text: 'Configuring environment...', progress: 60 },
-                { text: 'Running integrity checks...', progress: 80 },
-                { text: 'Finalizing installation...', progress: 100 }
-            ];
+            if (!downloadLocation) {
+                modal.classList.remove('active');
+                return;
+            }
+
+            // Step 2: Build package manifest
+            progress.style.width = '25%';
+            status.textContent = 'Generating manifest...';
             
-            let currentStep = 0;
+            const manifest = {
+                product_id: productId,
+                product_name: packageData.name,
+                version: '1.0.0',
+                purchase_token: purchaseToken,
+                download_date: new Date().toISOString(),
+                structure: packageData.files,
+                dependencies: packageData.dependencies,
+                size: packageData.size,
+                treaty_id: 'FAA-TREATY-OMNI-4321-A13XN',
+                scroll_ref: '§9.4.17 (9atm)'
+            };
+
+            // Step 3: Fetch package from CDN/API
+            progress.style.width = '50%';
+            status.textContent = 'Downloading package files...';
             
-            const interval = setInterval(() => {
-                if (currentStep < steps.length) {
-                    status.textContent = steps[currentStep].text;
-                    progress.style.width = steps[currentStep].progress + '%';
-                    currentStep++;
-                } else {
-                    clearInterval(interval);
-                    status.textContent = `✓ ${name} installed successfully!`;
-                    setTimeout(() => {
-                        modal.classList.remove('active');
-                        progress.style.width = '0%';
-                    }, 2000);
-                }
-            }, 800);
+            const packageBlob = await fetchPackageBlob(productId, purchaseToken, manifest);
+
+            // Step 4: Create structured ZIP
+            progress.style.width = '75%';
+            status.textContent = 'Creating package structure...';
+            
+            const structuredZip = await createStructuredZip(packageBlob, manifest, packageData);
+
+            // Step 5: Trigger download
+            progress.style.width = '100%';
+            status.textContent = '✓ Download starting...';
+            
+            triggerFileDownload(structuredZip, `${productId}_${Date.now()}.zip`);
+
+            setTimeout(() => {
+                status.textContent = `✓ ${packageData.name} downloaded successfully to:\n${downloadLocation}`;
+                setTimeout(() => {
+                    modal.classList.remove('active');
+                    progress.style.width = '0%';
+                }, 3000);
+            }, 1000);
         }
 
-        // Download product
-        function downloadProduct(productId) {
-            alert(`Downloading ${productId}...\n\nDownload will start shortly.\nCheck your downloads folder.`);
+        // Request download location (browser will use default + show picker)
+        async function requestDownloadLocation(productName) {
+            if ('showDirectoryPicker' in window) {
+                try {
+                    const dirHandle = await window.showDirectoryPicker({
+                        mode: 'readwrite',
+                        startIn: 'downloads'
+                    });
+                    return dirHandle.name;
+                } catch (err) {
+                    if (err.name !== 'AbortError') {
+                        console.error('Directory picker error:', err);
+                    }
+                    return null;
+                }
+            } else {
+                // Fallback: browser default downloads folder
+                return 'Downloads';
+            }
+        }
+
+        // Fetch package blob from API
+        async function fetchPackageBlob(productId, purchaseToken, manifest) {
+            // In production, this would call your API endpoint
+            // Example: await fetch(`https://api.faa.zone/download/${productId}?token=${purchaseToken}`)
+            
+            // For now, create a mock blob with manifest
+            const mockData = JSON.stringify(manifest, null, 2);
+            return new Blob([mockData], { type: 'application/json' });
+        }
+
+        // Create structured ZIP with all files and folders
+        async function createStructuredZip(packageBlob, manifest, packageData) {
+            // In production, use JSZip library to create proper structure
+            // This is a simplified version
+            
+            const zipContent = {
+                'MANIFEST.json': JSON.stringify(manifest, null, 2),
+                'README.md': generateReadme(packageData),
+                'INSTALL.sh': generateInstallScript(packageData),
+                'LICENSE.txt': generateLicense(manifest),
+                '.env.example': generateEnvTemplate(packageData)
+            };
+
+            // Create blob with structured content
+            return new Blob([JSON.stringify(zipContent, null, 2)], { 
+                type: 'application/zip' 
+            });
+        }
+
+        // Generate README for package
+        function generateReadme(packageData) {
+            return `# ${packageData.name}
+
+## Installation
+
+1. Extract this package to your desired location
+2. Review .env.example and create .env with your configuration
+3. Run: ./INSTALL.sh
+4. Follow the setup wizard
+
+## Package Contents
+
+${packageData.files.map(f => `- ${f}`).join('\n')}
+
+## Dependencies
+
+${packageData.dependencies.map(d => `- ${d}`).join('\n')}
+
+## Size
+
+${packageData.size}
+
+## Support
+
+For support, visit: https://support.faa.zone
+`;
+        }
+
+        // Generate install script
+        function generateInstallScript(packageData) {
+            return `#!/bin/bash
+echo "Installing ${packageData.name}..."
+echo "Checking dependencies..."
+# Add dependency checks here
+echo "Installation complete!"
+`;
+        }
+
+        // Generate license
+        function generateLicense(manifest) {
+            return `FAA ECOSYSTEM LICENSE
+Treaty ID: ${manifest.treaty_id}
+Scroll Ref: ${manifest.scroll_ref}
+Product: ${manifest.product_name}
+Token: ${manifest.purchase_token}
+Date: ${manifest.download_date}
+
+This software is licensed under FAA Treaty terms.
+`;
+        }
+
+        // Generate .env template
+        function generateEnvTemplate(packageData) {
+            return `# ${packageData.name} Configuration
+FAA_PRODUCT_ID=${packageData.name}
+FAA_API_KEY=your_api_key_here
+FAA_ENVIRONMENT=production
+`;
+        }
+
+        // Trigger file download
+        function triggerFileDownload(blob, filename) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
 
         // Purchase license
         function purchaseLicense(licenseName) {
-            alert(`Initiating purchase for ${licenseName} License.\n\nYou will be redirected to payment gateway.`);
+            const licenseData = {
+                'OmniKey': { price: 129000, term: '12 months', id: 'LIC-OMNI-001' },
+                'Seadwave': { price: 48000, term: '12 months', id: 'LIC-SEED-002' }
+            };
+
+            const license = licenseData[licenseName];
+            
+            const checkoutParams = new URLSearchParams({
+                product_id: license.id,
+                product_name: `${licenseName} License`,
+                price: license.price,
+                license_term: license.term,
+                return_url: window.location.href,
+                action: 'purchase_license'
+            });
+
+            window.location.href = `${BANIMAL_CHECKOUT_URL}?${checkoutParams.toString()}`;
         }
 
         // Close modal on click outside
@@ -651,6 +994,22 @@
             if (e.target === this) {
                 this.classList.remove('active');
                 document.getElementById('progressFill').style.width = '0%';
+            }
+        });
+
+        // Check for successful checkout return
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const purchaseToken = urlParams.get('purchase_token');
+            const productId = urlParams.get('product_id');
+            const status = urlParams.get('status');
+
+            if (status === 'success' && purchaseToken && productId) {
+                // Show success message and auto-trigger download
+                alert(`✓ Payment successful!\n\nYour download will begin automatically.`);
+                setTimeout(() => {
+                    downloadProduct(productId);
+                }, 1000);
             }
         });
     </script>

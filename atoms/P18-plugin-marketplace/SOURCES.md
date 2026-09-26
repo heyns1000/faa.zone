@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2026-09-26 | fruitful-superagent | main | `plans/project-merges-2026-09-26/M7/upload/faa-plugin-marketplace.html` | `38bc1c9a` | FAA Plugin Marketplace - Global Product View | 21970 | 17 | 3 | 69.2 |
+| 2 | 2026-09-26 | fruitful-superagent | main | `plans/project-merges-2026-09-26/M8/upload/faa-plugin-marketplace 2.html` | `057af629` | FAA Plugin Marketplace - Global Product View | 35606 | 17 | 12 | 88.6 |
