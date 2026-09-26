@@ -20,3 +20,4 @@
 | 14 | 2026-09-26 | fruitful | main | `baobab.html` | `77c87362` | Portal.faa.zone - Your Central Access Hub | 144095 | 98 | 19 | 185.5 |
 | 15 | 2026-09-26 | fruitful | claude/wire-all-portals | `baobab_terminal.html` | `67dcb957` | Portal.faa.zone - Your Central Access Hub | 180486 | 84 | 24 | 186.7 |
 | 16 | 2026-09-26 | fruitful | claude/remove-live-keys | `baobab_terminal.html` | `2a569bf7` | Portal.faa.zone - Your Central Access Hub | 180193 | 84 | 24 | 186.7 |
+| 17 | 2026-09-26 | fruitful | main | `landing_page.html` | `73d84050` | Portal.faa.zone - Your Central Access Hub | 132246 | 88 | 17 | 170.3 |
