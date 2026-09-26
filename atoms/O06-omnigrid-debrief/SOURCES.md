@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2026-09-05 | omnigrid | main | `docs/omnigrid-debrief.html` | `dfc6c4bf` | Omnigrid Debrief — Fruitful™ | 13553 | 8 | 0 | 34.4 |
+| 2 | 2026-09-26 | fruitful-superagent | main | `claude/artifacts/omnigrid-debrief-preview-0483a7ef/index.html` | `ae5368bd` | Omnigrid Debrief — Preview | 18605 | 10 | 0 | 38.9 |
