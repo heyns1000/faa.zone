@@ -3,906 +3,630 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HotStack - 180s Deployment Engine | OmniGrid™</title>
+    <title>ðŸ”¥ HotStackâ„¢ | Banimal Ecosystem Intake</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Courier+New:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* --- GLOBAL THEME: HOTSTACK (Rhino Gold / Dark) --- */
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #fff;
             min-height: 100vh;
-            padding: 2rem;
-            color: #333;
+            position: relative;
+            overflow-x: hidden;
         }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        header {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        header h1 {
-            color: #667eea;
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-        }
-
-        header .tagline {
-            color: #666;
-            font-size: 1.2rem;
-        }
-
-        .pulse-indicator {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            background: #4ECDC4;
+        
+        /* Animated background particles */
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fbbf24;
             border-radius: 50%;
-            margin-left: 10px;
-            animation: pulse 9s infinite;
+            animation: float 6s ease-in-out infinite;
         }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.2); }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
         }
-
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
+        
+        .hotstack-container {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
-
-        @media (max-width: 1024px) {
-            .main-grid {
-                grid-template-columns: 1fr;
-            }
+        
+        .countdown-timer {
+            font-family: 'Courier New', monospace; /* Used original font for the timer */
+            font-size: 3rem;
+            font-weight: bold;
+            color: #fbbf24;
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
         }
-
-        .card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .card h2 {
-            color: #667eea;
-            margin-bottom: 1.5rem;
-            font-size: 1.8rem;
-            border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 0.5rem;
-        }
-
-        .upload-zone {
-            border: 3px dashed #667eea;
-            border-radius: 10px;
-            padding: 3rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: #f8f9ff;
-        }
-
-        .upload-zone:hover {
-            border-color: #764ba2;
-            background: #f0f2ff;
-        }
-
-        .upload-zone.dragover {
-            background: #e8ebff;
-            border-color: #4ECDC4;
-        }
-
-        .upload-zone input[type="file"] {
-            display: none;
-        }
-
-        .upload-icon {
-            font-size: 4rem;
-            color: #667eea;
-            margin-bottom: 1rem;
-        }
-
-        .intent-input {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .intent-input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            width: 100%;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .deployment-phases {
-            display: none;
-            margin-top: 2rem;
-        }
-
-        .deployment-phases.active {
-            display: block;
-        }
-
-        .phase {
-            background: #f8f9ff;
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            border-left: 5px solid #e0e0e0;
-            transition: all 0.3s;
-        }
-
-        .phase.active {
-            border-left-color: #667eea;
-            background: #e8ebff;
-        }
-
-        .phase.complete {
-            border-left-color: #4ECDC4;
-            background: #e8fff8;
-        }
-
-        .phase h3 {
-            color: #333;
-            margin-bottom: 0.5rem;
+        
+        .activation-item {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            margin: 8px 0;
+            padding: 8px;
+            border-radius: 6px;
+            background: rgba(251, 191, 36, 0.1);
+            transition: all 0.3s ease;
         }
-
-        .phase-status {
-            font-size: 0.9rem;
-            color: #666;
+        
+        .activation-item:hover {
+            background: rgba(251, 191, 36, 0.2);
+            transform: translateX(5px);
         }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #e0e0e0;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-top: 0.5rem;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #4ECDC4 100%);
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-
-        .brand-preview {
-            background: #f8f9ff;
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-top: 1rem;
-            display: none;
-        }
-
-        .brand-preview.active {
-            display: block;
-        }
-
-        .brand-preview h4 {
-            color: #667eea;
-            margin-bottom: 1rem;
-        }
-
-        .brand-info {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-
-        .info-item {
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-        }
-
-        .info-label {
-            font-size: 0.85rem;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.25rem;
-        }
-
-        .info-value {
-            font-size: 1.1rem;
-            color: #333;
+        
+        .btn-hotstack {
+            background: linear-gradient(45deg, #fbbf24, #f59e0b);
+            border: none;
+            color: #1a1a1a;
             font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+            cursor: pointer;
+        }
+        
+        .btn-hotstack:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(251, 191, 36, 0.4);
+        }
+        
+        .drop-zone {
+            border: 2px dashed #fbbf24;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: rgba(251, 191, 36, 0.05);
+            cursor: pointer;
+        }
+        
+        .drop-zone:hover {
+            border-color: #f59e0b;
+            background: rgba(251, 191, 36, 0.1);
+        }
+        
+        .hotstack-station {
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .hotstack-station.special {
+            background: rgba(0, 100, 255, 0.1);
+            border-color: rgba(0, 100, 255, 0.5);
         }
 
-        .deployment-log {
-            background: #1e1e1e;
-            color: #4ECDC4;
-            padding: 1.5rem;
-            border-radius: 10px;
+        .hotstack-station:hover {
+            background: rgba(251, 191, 36, 0.2);
+            transform: scale(1.02);
+        }
+        /* Metrics style for dynamic injection */
+        .metric-info {
             font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            max-height: 400px;
-            overflow-y: auto;
-            line-height: 1.6;
-        }
-
-        .log-entry {
-            margin-bottom: 0.5rem;
-        }
-
-        .log-timestamp {
+            font-size: 0.85rem;
             color: #888;
+            margin-top: 10px;
+            border-top: 1px solid #333;
+            padding-top: 5px;
         }
-
-        .log-success {
-            color: #4ECDC4;
+        .metric-info span {
+            color: #fbbf24;
+            font-weight: bold;
         }
-
-        .log-error {
-            color: #ff6b6b;
-        }
-
-        .log-info {
-            color: #667eea;
-        }
-
-        .deployment-result {
-            display: none;
-            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        .deployment-result.active {
-            display: block;
-        }
-
-        .deployment-result h3 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .deployment-url {
-            background: white;
-            color: #333;
-            padding: 1rem;
-            border-radius: 8px;
-            font-size: 1.2rem;
-            word-break: break-all;
-            margin-top: 1rem;
-        }
-
-        .deployment-url a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .deployment-url a:hover {
-            text-decoration: underline;
-        }
-
-        .timer {
-            font-size: 3rem;
-            font-weight: 700;
-            color: #667eea;
-            text-align: center;
-            margin: 1rem 0;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .timer.warning {
-            color: #ffa500;
-        }
-
-        .sector-badge {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-top: 0.5rem;
+        .region-header {
+            color: #f59e0b;
+            font-weight: bold;
+            text-align: left;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(251, 191, 36, 0.3);
+            padding-bottom: 5px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🔥 HotStack Deployment Engine</h1>
-            <p class="tagline">
-                180-Second Deployment | OmniGrid™ Total Evolutionary Consolidation
-                <span class="pulse-indicator"></span>
-            </p>
-        </header>
+    <!-- Animated background particles -->
+    <div id="particles-container"></div>
 
-        <div class="main-grid">
-            <!-- Left Column: Upload & Intent -->
-            <div class="card">
-                <h2>📁 Upload or Describe</h2>
+    <main class="container mx-auto px-4 py-8 relative z-10">
+        <div class="max-w-4xl mx-auto">
+            <!-- Main HotStack Interface -->
+            <div class="hotstack-container p-8 text-center mb-8">
+                <div class="flex items-center justify-center mb-6">
+                    <h1 class="text-4xl font-bold mr-4">ðŸ”¥ HotStackâ„¢</h1>
+                </div>
+                
+                <p class="text-lg mb-2 text-gray-300">Omnidrop Your Digital Presence. Live in Minutes.</p>
+                <p class="text-xl font-semibold mb-8 text-yellow-400">Build Your Collapse.</p>
+                
+                <!-- Live Countdown Timer -->
+                <div class="countdown-timer mb-8" id="countdown-display">02:52</div>
+                
+                <!-- What Your Omnidrop Activates -->
+                <div class="text-left max-w-2xl mx-auto mb-8">
+                    <h3 class="text-xl font-semibold mb-4 text-center">What Your Omnidrop Activates:</h3>
+                    
+                    <div class="activation-item">
+                        <span class="text-yellow-400 mr-3">âš¡</span>
+                        <strong>**Rapid Deployment:**</strong> Your Scroll goes Live in under 180 seconds via Omnidrop Signal.
+                    </div>
+                    
+                    <div class="activation-item">
+                        <span class="text-yellow-400 mr-3">âš¡</span>
+                        <strong>**Integrated Ecosystem:**</strong> Auto DNS Hook + Curated Template Packs for seamless launch.
+                    </div>
+                    
+                    <div class="activation-item">
+                        <span class="text-yellow-400 mr-3">âš¡</span>
+                        <strong>**Intelligent Foundation:**</strong> Powered by ScrollStackâ„¢, VaultDNSâ„¢, and MeshNestâ„¢ protocols.
+                    </div>
+                    
+                    <div class="activation-item">
+                        <span class="text-yellow-400 mr-3">âš¡</span>
+                        <strong>**Treaty-Linked Economy:**</strong> Includes a Royalty-Linked License from Fruitful Global's Treaty Grid.
+                    </div>
+                    
+                    <div class="activation-item">
+                        <span class="text-yellow-400 mr-3">âš¡</span>
+                        <strong>**ClaimRootâ„¢ Verified:**</strong> Secure, traceable site ownership for every deployed scroll.
+                    </div>
+                </div>
+                
+                <!-- Main Action Button -->
+                <button class="btn-hotstack text-lg px-8 py-4 mb-8" id="enter-hotstack-btn" onclick="openZeroSignupPortal()">
+                    â†’ Initiate Zero-Signup Access
+                </button>
+                
+                <!-- Drop Zone (Used as the core intake area) -->
+                <div class="drop-zone" id="omnidrop-zone">
+                    <div class="text-2xl mb-2">ðŸ“‚</div>
+                    <p class="text-gray-300 mb-2">Drag & Drop HTML/PDF here to Omnidrop into CodeNestâ„¢</p>
+                    <p class="text-sm text-gray-500">(Adheres to the 3-minute rule for rapid registration)</p>
+                </div>
 
-                <!-- File Upload -->
-                <div class="upload-zone" id="uploadZone">
-                    <input type="file" id="fileInput" accept="*/*">
-                    <div class="upload-icon">📤</div>
-                    <p><strong>Drop a file here</strong> or click to upload</p>
-                    <p style="color: #999; font-size: 0.9rem; margin-top: 0.5rem;">
-                        Any file type • We'll figure out what to build
+                <!-- Hidden Zero-Signup Metrics Display -->
+                <div id="signup-metrics-display" class="metric-info hidden">
+                    <p>Current Store ID: <span id="store-id">---</span>s | Total Strikes: <span id="total-strikes">---</span></p>
+                    <p>Routemesh Trace: <span id="routemesh-id">---</span></p>
+                    <p>License Status: <span id="license-status">---</span></p>
+                </div>
+            </div>
+            
+            <!-- Global HotStack Hubs -->
+            <div class="hotstack-container p-8 mb-8">
+                <h2 class="text-2xl font-bold text-center mb-6">ðŸŒŽ Global HotStack Hubs</h2>
+                <p class="text-center text-gray-300 mb-6">Master Licensed Sectors for the Omnigrid Expansion</p>
+                
+                <!-- AFRICA HUB -->
+                <h3 class="region-header">ðŸ‡¿ðŸ‡¦ AFRICA MASTER HUB</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="hotstack-station">
+                        <h3 class="font-bold text-yellow-400">ðŸ¢ Cape Town HotStack</h3>
+                        <p class="text-sm text-gray-300">Western Cape Digital Gateway</p>
+                        <div class="mt-2">
+                            <span class="text-xs bg-green-600 px-2 py-1 rounded">ACTIVE</span>
+                        </div>
+                    </div>
+                    <div class="hotstack-station">
+                        <h3 class="font-bold text-yellow-400">ðŸ™ï¸ Johannesburg HotStack</h3>
+                        <p class="text-sm text-gray-300">Gauteng Business Hub</p>
+                        <div class="mt-2">
+                            <span class="text-xs bg-green-600 px-2 py-1 rounded">ACTIVE</span>
+                        </div>
+                    </div>
+                    <div class="hotstack-station">
+                        <h3 class="font-bold text-yellow-400">ðŸŒŠ Lagos HotStack</h3>
+                        <p class="text-sm text-gray-300">West African Economic Anchor</p>
+                        <div class="mt-2">
+                            <span class="text-xs bg-yellow-600 px-2 py-1 rounded">SETUP</span>
+                        </div>
+                    </div>
+                    <div class="hotstack-station special">
+                        <h3 class="font-bold text-yellow-400">â›°ï¸ Lesotho HotStack</h3>
+                        <p class="text-sm text-gray-300">Mountain Kingdom Treaty Node</p>
+                        <div class="mt-2">
+                            <span class="text-xs bg-blue-600 px-2 py-1 rounded">SPECIAL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NORTH AMERICA HUB -->
+                <h3 class="region-header">ðŸ‡ºðŸ‡¸ NORTH AMERICA HUB</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="hotstack-station">
+                        <h3 class="font-bold text-yellow-400">ðŸ—½ New York HotStack</h3>
+                        <p class="text-sm text-gray-300">Global FinTech Gateway</p>
+                        <div class="mt-2">
+                            <span class="text-xs bg-green-600 px-2 py-1 rounded">ACTIVE</span>
+                        </div>
+                    </div>
+                    <div class="hotstack-station">
+                        <h3 class="font-bold text-yellow-400">ðŸŒ² Toronto HotStack</h3>
+                        <p class="text-sm text-gray-300">Canadian Innovation Corridor</p>
+                        <div class="mt-2">
+                            <span class="text-xs bg-yellow-600 px-2 py-1 rounded">SETUP</span>
+                        </div>
+                    </div>
+                    <div class="hotstack-station">
+                        <h3 class="font-bold text-yellow-400">ðŸŒ‰ Silicon Valley HotStack</h3>
+                        <p class="text-sm text-gray-300">West Coast Tech Nexus</p>
+                        <div class="mt-2">
+                            <span class="text-xs bg-gray-600 px-2 py-1 rounded">PLANNED</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EURO / UK HUB -->
+                <h3 class="region-header">ðŸ‡ªðŸ‡º EUROPE & UK MASTER HUB</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="hotstack-station">
+                        <h3 class="font-bold text-yellow-400">ðŸ›ï¸ London HotStack</h3>
+                        <p class="text-sm text-gray-300">UK Financial Exchange</p>
+                        <div class="mt-2">
+                            <span class="text-xs bg-green-600 px-2 py-1 rounded">ACTIVE</span>
+                        </div>
+                    </div>
+                    <div class="hotstack-station">
+                        <h3 class="font-bold text-yellow-400">ðŸ° Berlin HotStack</h3>
+                        <p class="text-sm text-gray-300">EU Digital Compliance Anchor</p>
+                        <div class="mt-2">
+                            <span class="text-xs bg-yellow-600 px-2 py-1 rounded">SETUP</span>
+                        </div>
+                    </div>
+                    <div class="hotstack-station">
+                        <h3 class="font-bold text-yellow-400">ðŸ‡®ðŸ‡¸ Reykjavik HotStack</h3>
+                        <p class="text-sm text-gray-300">Atlantic Island Data Vault</p>
+                        <div class="mt-2">
+                            <span class="text-xs bg-blue-600 px-2 py-1 rounded">SPECIAL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ASIA / AUSTRALASIA HUB -->
+                <h3 class="region-header">ðŸ‡¯ðŸ‡µ ASIA & AUSTRALASIA HUB</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="hotstack-station">
+                        <h3 class="font-bold text-yellow-400">ðŸ—¼ Tokyo HotStack</h3>
+                        <p class="text-sm text-gray-300">Japan Robotics Gateway</p>
+                        <div class="mt-2">
+                            <span class="text-xs bg-green-600 px-2 py-1 rounded">ACTIVE</span>
+                        </div>
+                    </div>
+                    <div class="hotstack-station">
+                        <h3 class="font-bold text-yellow-400">ðŸï¸ Singapore HotStack</h3>
+                        <p class="text-sm text-gray-300">Southeast Asia Trade Nexus</p>
+                        <div class="mt-2">
+                            <span class="text-xs bg-yellow-600 px-2 py-1 rounded">SETUP</span>
+                        </div>
+                    </div>
+                    <div class="hotstack-station">
+                        <h3 class="font-bold text-yellow-400">ðŸ¦˜ Sydney HotStack</h3>
+                        <p class="text-sm text-gray-300">Australasian Data Core</p>
+                        <div class="mt-2">
+                            <span class="text-xs bg-gray-600 px-2 py-1 rounded">PLANNED</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <!-- Zero-Signup Portal Modal (The actual collapse interaction) -->
+            <div id="zero-signup-modal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50">
+                <div class="card p-8 md:p-10 rounded-2xl max-w-lg w-full bg-[#110022] border-2 border-dashed border-gray-700">
+                    <h3 class="text-2xl font-bold text-center mb-6 text-yellow-400">Zero-Signup Access Portal</h3>
+                    <p class="text-gray-400 mb-6 text-center text-sm">
+                        **No $\text{username}$ or $\text{password}$ required.** Initiate the $\text{Collapse}$ to calculate your identity.
                     </p>
-                </div>
-
-                <!-- Business Intent Input -->
-                <div style="margin-top: 2rem;">
-                    <label for="intentInput" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #333;">
-                        Or describe your business intent:
-                    </label>
-                    <textarea
-                        id="intentInput"
-                        class="intent-input"
-                        rows="4"
-                        placeholder="Example: I need a compliance dashboard for tracking legal documents and trademark filings..."
-                    ></textarea>
-
-                    <label for="sectorSelect" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #333;">
-                        Preferred Sector (optional):
-                    </label>
-                    <select id="sectorSelect" class="intent-input">
-                        <option value="">Auto-detect</option>
-                        <option value="Legal_Tech_Compliance">Legal Tech & Compliance</option>
-                        <option value="IP_Patent_Systems">IP & Patent Systems</option>
-                        <option value="Performance_Analytics">Performance Analytics</option>
-                        <option value="Algorithmic_Verification">Algorithmic Verification</option>
-                        <option value="Payment_Infrastructure">Payment Infrastructure</option>
-                        <option value="Wildlife_Conservation">Wildlife Conservation</option>
-                        <option value="Quantum_Security">Quantum Security</option>
-                        <option value="Market_Expansion">Market Expansion</option>
-                    </select>
-
-                    <button class="btn" id="deployBtn" onclick="startDeployment()">
-                        🚀 Deploy in 180 Seconds
-                    </button>
-                </div>
-
-                <!-- Brand Preview -->
-                <div class="brand-preview" id="brandPreview">
-                    <h4>🎯 Matched Brand</h4>
-                    <div class="brand-info">
-                        <div class="info-item">
-                            <div class="info-label">Brand</div>
-                            <div class="info-value" id="brandName">-</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Confidence</div>
-                            <div class="info-value" id="brandConfidence">-</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Template</div>
-                            <div class="info-value" id="brandTemplate">-</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Priority</div>
-                            <div class="info-value" id="brandPriority">-</div>
-                        </div>
+                    
+                    <textarea id="collapse-idea-input" rows="5" class="w-full p-4 bg-gray-900 border border-gray-600 rounded-lg focus:border-yellow-400 focus:ring-yellow-400 text-gray-200" placeholder="HOTSTACK Design Blueprint: Define the specific goal, UI style (e.g., 'Rhino Flare'), and target platform. The system traces your prompt to: https://github.com/heyns1000/hotstack.git"></textarea>
+                    
+                    <div class="mt-6">
+                        <p class="text-sm font-mono text-gray-500 text-center">Your Calculated Pay ID: <span id="payfast-id" class="text-yellow-400">---</span></p>
+                        <p class="text-sm font-mono text-gray-500 text-center">User Number: <span id="user-number" class="text-white">---</span> (Sector: Coffee Business)</p>
                     </div>
-                    <div id="brandSector" class="sector-badge"></div>
+                    
+                    <div class="flex justify-between items-center mt-6">
+                        <button onclick="closeZeroSignupPortal()" class="text-gray-500 hover:text-white transition text-sm">Cancel</button>
+                        <button onclick="deployShanana()" class="px-8 py-3 rounded-full text-lg font-bold action-button transition transform hover:scale-105">
+                            Collapse & Join NEXUS
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Integration with Noodle Juice Flow -->
+            <div class="hotstack-container p-8 mb-8">
+                <h2 class="text-2xl font-bold text-center mb-6">ðŸ Noodle Juice Integration</h2>
+                <div class="text-center">
+                    <h3 class="font-bold text-yellow-400 mb-4">ðŸ”— Referral System</h3>
+                    <div class="bg-gray-800 p-4 rounded-lg max-w-md mx-auto">
+                        <p class="text-xs text-gray-400 mb-2">Your Replit Referral:</p>
+                        <div class="bg-gray-900 p-2 rounded text-xs font-mono break-all">
+                            replit.com/refer/heynsschoeman
+                        </div>
+                        <button class="btn-hotstack mt-3 text-sm" id="copy-referral">Copy Link</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Live Status Console -->
+            <div class="hotstack-container p-6">
+                <h3 class="text-lg font-bold mb-4">ðŸ“Š HotStack Live Status</h3>
+                <div class="bg-black rounded-lg p-4 font-mono text-sm">
+                    <div class="text-green-400" id="status-log">
+                        <!-- Real status logs will appear here -->
+                    </div>
                 </div>
             </div>
 
-            <!-- Right Column: Deployment Progress -->
-            <div class="card">
-                <h2>⏱️ 180-Second Deployment Cycle</h2>
-
-                <div class="timer" id="timer">180</div>
-
-                <div class="deployment-phases" id="deploymentPhases">
-                    <!-- Phase 1: INHALE (0-60s) -->
-                    <div class="phase" id="phase1">
-                        <h3>
-                            <span>🌬️ Phase 1: INHALE</span>
-                            <span style="margin-left: auto; font-size: 0.9rem;" id="phase1Time">0-60s</span>
-                        </h3>
-                        <div class="phase-status" id="phase1Status">Pull template from BuildNest</div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="phase1Progress"></div>
-                        </div>
-                    </div>
-
-                    <!-- Phase 2: HOLD (60-120s) -->
-                    <div class="phase" id="phase2">
-                        <h3>
-                            <span>🫁 Phase 2: HOLD</span>
-                            <span style="margin-left: auto; font-size: 0.9rem;" id="phase2Time">60-120s</span>
-                        </h3>
-                        <div class="phase-status" id="phase2Status">Inject data & generate site</div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="phase2Progress"></div>
-                        </div>
-                    </div>
-
-                    <!-- Phase 3: EXHALE (120-180s) -->
-                    <div class="phase" id="phase3">
-                        <h3>
-                            <span>💨 Phase 3: EXHALE</span>
-                            <span style="margin-left: auto; font-size: 0.9rem;" id="phase3Time">120-180s</span>
-                        </h3>
-                        <div class="phase-status" id="phase3Status">Deploy to Replit & sync heatmap</div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="phase3Progress"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="text-align: center; margin-top: 1rem; color: #666; font-size: 0.9rem;">
-                    Pulse Cycle: 9s | Target: 180s | OmniGrid™ Ready
-                </div>
-            </div>
+            <!-- Footer -->
+            <footer class="text-center mt-8 text-gray-400 text-sm">
+                <p>Powered by Fruitful Global | ScrollSynced | Vault-Verified</p>
+                <p class="mt-2">ðŸ¦ Banimal Ecosystem | ðŸ Noodle Juice Flow | ðŸ—„ï¸ Vault Allocation</p>
+            </footer>
         </div>
-
-        <!-- Deployment Log -->
-        <div class="card">
-            <h2>📋 Deployment Log</h2>
-            <div class="deployment-log" id="deploymentLog">
-                <div class="log-entry log-info">
-                    <span class="log-timestamp">[00:00:00]</span> HotStack deployment engine ready...
-                </div>
-                <div class="log-entry log-info">
-                    <span class="log-timestamp">[00:00:00]</span> Connected to CodeNest Query API
-                </div>
-                <div class="log-entry log-info">
-                    <span class="log-timestamp">[00:00:00]</span> BuildNest template accessor initialized
-                </div>
-                <div class="log-entry log-success">
-                    <span class="log-timestamp">[00:00:00]</span> ✅ System ready for deployment
-                </div>
-            </div>
-        </div>
-
-        <!-- Deployment Result -->
-        <div class="deployment-result" id="deploymentResult">
-            <h3>🎉 Deployment Complete!</h3>
-            <p style="font-size: 1.2rem; margin-bottom: 1rem;">
-                Your site is now live and synced with the OmniGrid™ ecosystem
-            </p>
-            <div class="deployment-url">
-                <div style="margin-bottom: 0.5rem; font-size: 0.9rem; color: #666;">Deployment URL:</div>
-                <a href="#" id="deploymentUrlLink" target="_blank"></a>
-            </div>
-            <div style="margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.9;">
-                ✅ Synced to Sector Heatmap<br>
-                ✅ 9s Pulse Cycle Active<br>
-                ✅ OmniGrid™ Total Evolutionary Consolidation
-            </div>
-        </div>
-    </div>
+    </main>
 
     <script>
-        // ====================================================================
-        // HOTSTACK DEPLOYMENT ENGINE - JAVASCRIPT
-        // ====================================================================
-
-        // Configuration
-        const CONFIG = {
-            codenestApiUrl: 'http://localhost:8000',  // CodeNest Query API
-            deploymentTime: 180,  // 180 seconds total
-            phaseDurations: {
-                inhale: 60,   // 0-60s
-                hold: 60,     // 60-120s
-                exhale: 60    // 120-180s
+        // --- INITIALIZATION FUNCTIONS (Moved to top for hoisting guarantee) ---
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            if (!container) return; 
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                container.appendChild(particle);
             }
-        };
+        }
 
-        // State
-        let deploymentState = {
-            isDeploying: false,
-            startTime: null,
-            elapsedTime: 0,
-            currentPhase: null,
-            brandMatch: null,
-            templatePackage: null,
-            timer: null
-        };
+        // --- DATA AND INITIALIZATION ---
+        const ROOT_KEY = '0f19bb22-ad64-45d2-abc9-ad5686a978dc';
+        const LOCK_TIMESTAMP_MS = 1730013441000; // Ecosystem Genesis
+        const COLLAPSE_INTERVAL_MS = 900;
+        const BANIMAL_API_PULL_MS = 1730013441000 + 5000000; // Simulating API Key Pull time
+        
+        // **HOTSTACK LICENSING STATUS**
+        const HOTSTACK_LICENSE_STATUS = 'MASTERED'; // Must be 'MASTERED' to function
 
-        // ====================================================================
-        // FILE UPLOAD HANDLING
-        // ====================================================================
+        // --- COUNTDOWN LOGIC (Original HotStack Timer) ---
+        let minutes = 2;
+        let seconds = 52;
+        
+        function updateCountdown() {
+            const display = document.getElementById('countdown-display');
+            const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            display.textContent = formattedTime;
+            
+            if (seconds > 0) {
+                seconds--;
+            } else if (minutes > 0) {
+                minutes--;
+                seconds = 59;
+            } else {
+                // Reset to 3 minutes (180s)
+                minutes = 3;
+                seconds = 0;
+            }
+        }
+        
+        // --- CORE COLLAPSE PROTOCOL (IDENTITY CALCULATION) ---
 
-        const uploadZone = document.getElementById('uploadZone');
-        const fileInput = document.getElementById('fileInput');
+        function calculateCollapseMetrics(userCreationTimeMs = null) {
+            const now = new Date().getTime();
+            const timeElapsedMs = now - LOCK_TIMESTAMP_MS;
+            const storeID = timeElapsedMs / 1000;
+            const lapCount = Math.floor(timeElapsedMs / COLLAPSE_INTERVAL_MS);
+            
+            let payfastUserID = 'N/A';
+            let collapsedUserNumber = 'N/A';
+            let routemeshTraceID = btoa(storeID.toString()).substring(0, 20);
 
-        uploadZone.addEventListener('click', () => fileInput.click());
+            if (userCreationTimeMs) {
+                // Calculate Payfast User ID: (User Upload Time - Banimal API Key Pull Time)
+                const timeDiffSeconds = Math.abs((userCreationTimeMs - BANIMAL_API_PULL_MS) / 1000);
+                const rawUserID = Math.floor(timeDiffSeconds); 
+                
+                collapsedUserNumber = (rawUserID % 2300) + 1;
+                payfastUserID = `PF-${rawUserID.toString(36).toUpperCase()}`;
+            }
 
-        uploadZone.addEventListener('dragover', (e) => {
+            return {
+                storeID: storeID.toFixed(2),
+                lapCount: lapCount.toLocaleString(),
+                routemeshTraceID: routemeshTraceID,
+                payfastUserID: payfastUserID,
+                collapsedUserNumber: collapsedUserNumber
+            };
+        }
+
+        // --- UPDATE LOOP ---
+
+        function updateMetricsDisplay() {
+            const metrics = calculateCollapseMetrics();
+            
+            // Update License Status Display (Placeholder in NAV)
+            const licenseElement = document.querySelector('.hotstack-nav-item:first-child');
+            if (licenseElement) {
+                licenseElement.textContent = `AFRICA: ${HOTSTACK_LICENSE_STATUS}`;
+                if (HOTSTACK_LICENSE_STATUS === 'MASTERED') {
+                    licenseElement.classList.add('text-green-400');
+                    licenseElement.classList.remove('text-red-500');
+                } else {
+                    licenseElement.classList.remove('text-green-400');
+                    licenseElement.classList.add('text-red-500');
+                }
+            }
+        }
+
+        // --- LIVE STATUS LOGGER ---
+        function addStatusLog(message) {
+            const log = document.getElementById('status-log');
+            if (!log) return;
+            const time = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.innerHTML = `<span class="text-blue-400">[${time}]</span> ${message}`;
+            log.appendChild(logEntry);
+            log.scrollTop = log.scrollHeight;
+            
+            // Keep only last 10 entries
+            if (log.children.length > 10) {
+                log.removeChild(log.firstChild);
+            }
+        }
+
+        // --- MODAL CONTROL ---
+        const modal = document.getElementById('zero-signup-modal');
+        function openZeroSignupPortal() {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            addStatusLog('ðŸ”‘ Zero-Signup Portal opened.');
+            
+            // Ensure metrics are fresh when portal opens
+            const metrics = calculateCollapseMetrics();
+            const payfastIdElement = modal.querySelector('#payfast-id');
+            const userNumberElement = modal.querySelector('#user-number');
+
+            if (payfastIdElement) payfastIdElement.textContent = '---';
+            if (userNumberElement) userNumberElement.textContent = '---';
+            
+            // Focus on the input inside the modal
+            document.getElementById('collapse-idea-input').focus();
+        }
+
+        function closeZeroSignupPortal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            addStatusLog('ðŸšª Zero-Signup Portal closed.');
+            // Clear input on close
+            document.getElementById('collapse-idea-input').value = "";
+        }
+
+        // --- SHANANA DEPLOYMENT LOGIC (ACCESS INITIATION) ---
+
+        function deployShanana() {
+            const input = document.getElementById('collapse-idea-input').value.trim();
+            
+            // **HOTSTACK LICENSING LOCK CHECK**
+            if (HOTSTACK_LICENSE_STATUS !== 'MASTERED') {
+                 addStatusLog("âŒ CRITICAL: Master License Lock. Deployment denied.");
+                 alert("CRITICAL ERROR: System cannot work. HOTSTACK Master License is required for deployment.");
+                 return;
+            }
+
+            const userCreationTime = new Date().getTime(); 
+            const metrics = calculateCollapseMetrics(userCreationTime);
+            
+            if (input.length < 10) {
+                alert("Error: Please provide a collapsed idea (min 10 characters) to initiate access.");
+                return;
+            }
+            
+            // Highlight Intake Portal and show processing status
+            const intakeCard = modal.querySelector('.card');
+            intakeCard.style.boxShadow = '0 0 40px rgba(255, 184, 0, 0.9)'; 
+            
+            const payfastIdElement = modal.querySelector('#payfast-id');
+            const userNumberElement = modal.querySelector('#user-number');
+
+            if (payfastIdElement) payfastIdElement.textContent = 'Collapsing...';
+            if (userNumberElement) userNumberElement.textContent = 'Generating...';
+            addStatusLog(`ðŸ”„ Initiating Collapse for User #${metrics.collapsedUserNumber}...`);
+
+            // Simulate Collapse Completion
+            setTimeout(() => {
+                
+                if (payfastIdElement) payfastIdElement.textContent = metrics.payfastUserID;
+                if (userNumberElement) userNumberElement.textContent = metrics.collapsedUserNumber + ' (Assigned)';
+                
+                addStatusLog(`âœ… ACCESS GRANTED. Pay ID: ${metrics.payfastUserID}`);
+                addStatusLog('ðŸŒ Connecting to all integration points (Git, Figma, Gemini, Replit)...');
+                
+                // Final alert/notification
+                alert(`ACCESS GRANTED!
+Your identity is the timestamp of your creation.
+- Payfast User ID: ${metrics.payfastUserID}
+- User Number: ${metrics.collapsedUserNumber}
+- Status: Connected to Git, Figma, Gemini, Replit.
+(Welcome to the Zero-Signup Nexus!)`);
+                
+                intakeCard.style.boxShadow = '0 0 0 rgba(255, 184, 0, 0.1)'; // Reset shadow
+                document.getElementById('collapse-idea-input').value = "";
+                closeZeroSignupPortal();
+                updateMetricsDisplay();
+            }, 1500); // 1.5 second simulation for dramatic effect
+        }
+
+
+        // --- DRAG & DROP LOGIC ---
+        const dropZone = document.getElementById('omnidrop-zone');
+        
+        dropZone.addEventListener('dragover', function(e) {
             e.preventDefault();
-            uploadZone.classList.add('dragover');
+            this.style.borderColor = '#f59e0b';
+            this.style.background = 'rgba(251, 191, 36, 0.2)';
         });
-
-        uploadZone.addEventListener('dragleave', () => {
-            uploadZone.classList.remove('dragover');
+        
+        dropZone.addEventListener('dragleave', function(e) {
+            this.style.borderColor = '#fbbf24';
+            this.style.background = 'rgba(251, 191, 36, 0.05)';
         });
-
-        uploadZone.addEventListener('drop', (e) => {
+        
+        dropZone.addEventListener('drop', function(e) {
             e.preventDefault();
-            uploadZone.classList.remove('dragover');
-
+            this.style.borderColor = '#fbbf24';
+            this.style.background = 'rgba(251, 191, 36, 0.05)';
+            
             const files = e.dataTransfer.files;
             if (files.length > 0) {
-                handleFileUpload(files[0]);
+                addStatusLog(`ðŸ“‚ ${files.length} file(s) detected for Omnidrop`);
+                addStatusLog('âš ï¸ Note: File processing requires backend server connection.');
+                addStatusLog('ðŸ”— Switch to the Replit environment for full functionality.');
+                // In a live Replit environment, the API call logic would be here
             }
         });
-
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                handleFileUpload(e.target.files[0]);
-            }
+        
+        // --- REFERRAL COPY LOGIC ---
+        document.getElementById('copy-referral').addEventListener('click', function() {
+            navigator.clipboard.writeText('https://replit.com/refer/heynsschoeman');
+            this.textContent = 'Copied!';
+            addStatusLog('ðŸ“‹ Referral link copied to clipboard');
+            setTimeout(() => {
+                this.textContent = 'Copy Link';
+            }, 2000);
         });
 
-        function handleFileUpload(file) {
-            addLog(`📁 File uploaded: ${file.name} (${formatBytes(file.size)})`, 'info');
 
-            // Auto-populate intent based on file type
-            const intent = generateIntentFromFile(file);
-            document.getElementById('intentInput').value = intent;
-
-            addLog(`🤖 Generated intent: "${intent}"`, 'info');
-        }
-
-        function generateIntentFromFile(file) {
-            const ext = file.name.split('.').pop().toLowerCase();
-            const typeMap = {
-                'pdf': 'I need a document management system for legal compliance',
-                'csv': 'I need an analytics dashboard for data visualization',
-                'xlsx': 'I need a performance tracking platform',
-                'json': 'I need an API integration platform',
-                'html': 'I need a web deployment platform',
-                'jpg': 'I need a media management system',
-                'png': 'I need a media management system'
-            };
-
-            return typeMap[ext] || 'I need a business application platform';
-        }
-
-        function formatBytes(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
-        }
-
-        // ====================================================================
-        // DEPLOYMENT FLOW
-        // ====================================================================
-
-        async function startDeployment() {
-            if (deploymentState.isDeploying) {
-                addLog('⚠️ Deployment already in progress', 'error');
-                return;
-            }
-
-            const intent = document.getElementById('intentInput').value.trim();
-            if (!intent) {
-                addLog('❌ Please provide business intent or upload a file', 'error');
-                return;
-            }
-
-            // Reset state
-            resetDeployment();
-
-            // Start deployment
-            deploymentState.isDeploying = true;
-            deploymentState.startTime = Date.now();
-            document.getElementById('deployBtn').disabled = true;
-            document.getElementById('deploymentPhases').classList.add('active');
-
-            addLog('🚀 Starting 180-second deployment...', 'success');
-            addLog(`📝 Intent: "${intent}"`, 'info');
-
-            try {
-                // Query CodeNest for brand match
-                await queryCodeNest(intent);
-
-                // Start deployment phases
-                await executeDeploymentPhases();
-
-                // Complete deployment
-                completeDeployment();
-
-            } catch (error) {
-                addLog(`❌ Deployment failed: ${error.message}`, 'error');
-                deploymentState.isDeploying = false;
-                document.getElementById('deployBtn').disabled = false;
-            }
-        }
-
-        async function queryCodeNest(intent) {
-            addLog('🔍 Querying CodeNest for brand match...', 'info');
-
-            const sector = document.getElementById('sectorSelect').value;
-
-            // Simulate API call to CodeNest Query API
-            // In production, this would be: fetch(`${CONFIG.codenestApiUrl}/query/intent`, ...)
-
-            // Mock response
-            await sleep(2000);
-
-            const mockBrand = {
-                brand_id: 'FAA-001',
-                brand_name: 'Actuary™',
-                sector: sector || 'Legal_Tech_Compliance',
-                template_id: 'TMPL-COMPLIANCE-001',
-                template_type: 'compliance_dashboard',
-                confidence_score: 95.5,
-                deployment_priority: 'high',
-                replit_app: 'https://actuary-faa.replit.app',
-                heatmap_color: '#4ECDC4'
-            };
-
-            deploymentState.brandMatch = mockBrand;
-
-            // Show brand preview
-            showBrandPreview(mockBrand);
-
-            addLog(`✅ Brand matched: ${mockBrand.brand_name} (${mockBrand.confidence_score}% confidence)`, 'success');
-            addLog(`📋 Template: ${mockBrand.template_id} (${mockBrand.template_type})`, 'info');
-        }
-
-        function showBrandPreview(brand) {
-            document.getElementById('brandPreview').classList.add('active');
-            document.getElementById('brandName').textContent = brand.brand_name;
-            document.getElementById('brandConfidence').textContent = `${brand.confidence_score}%`;
-            document.getElementById('brandTemplate').textContent = brand.template_type.replace(/_/g, ' ');
-            document.getElementById('brandPriority').textContent = brand.deployment_priority.toUpperCase();
-
-            const sectorBadge = document.getElementById('brandSector');
-            sectorBadge.textContent = brand.sector.replace(/_/g, ' ');
-            sectorBadge.style.background = brand.heatmap_color;
-            sectorBadge.style.color = 'white';
-        }
-
-        async function executeDeploymentPhases() {
-            // Start timer
-            startTimer();
-
-            // Phase 1: INHALE (0-60s)
-            await executePhase1();
-
-            // Phase 2: HOLD (60-120s)
-            await executePhase2();
-
-            // Phase 3: EXHALE (120-180s)
-            await executePhase3();
-
-            // Stop timer
-            stopTimer();
-        }
-
-        async function executePhase1() {
-            addLog('🌬️ PHASE 1: INHALE - Pulling template from BuildNest...', 'success');
-
-            const phase = document.getElementById('phase1');
-            phase.classList.add('active');
-
-            // Simulate template fetch
-            const steps = [
-                { delay: 5000, log: '📥 Connecting to BuildNest (Google Drive)...', progress: 20 },
-                { delay: 8000, log: '🔍 Locating template: ' + deploymentState.brandMatch.template_id, progress: 40 },
-                { delay: 12000, log: '📦 Downloading template package (HTML/CSS/JS)...', progress: 60 },
-                { delay: 15000, log: '✅ Template downloaded (2.3 MB)', progress: 80 },
-                { delay: 18000, log: '🔒 Validating template integrity...', progress: 90 },
-                { delay: 20000, log: '✅ Template validation passed', progress: 100 }
-            ];
-
-            for (const step of steps) {
-                await sleep(step.delay - (steps.indexOf(step) > 0 ? steps[steps.indexOf(step) - 1].delay : 0));
-                addLog(step.log, 'info');
-                document.getElementById('phase1Progress').style.width = step.progress + '%';
-            }
-
-            phase.classList.remove('active');
-            phase.classList.add('complete');
-
-            addLog('✅ PHASE 1 COMPLETE - Template ready', 'success');
-        }
-
-        async function executePhase2() {
-            addLog('🫁 PHASE 2: HOLD - Injecting data & generating site...', 'success');
-
-            const phase = document.getElementById('phase2');
-            phase.classList.add('active');
-
-            // Simulate data injection
-            const steps = [
-                { delay: 5000, log: '🔧 Parsing template structure...', progress: 20 },
-                { delay: 8000, log: '💉 Injecting brand metadata: ' + deploymentState.brandMatch.brand_name, progress: 40 },
-                { delay: 12000, log: '🎨 Applying custom styling and branding...', progress: 60 },
-                { delay: 15000, log: '⚙️ Generating HTML/CSS/JS...', progress: 80 },
-                { delay: 18000, log: '🧪 Running pre-deployment validation...', progress: 90 },
-                { delay: 20000, log: '✅ Site generation complete', progress: 100 }
-            ];
-
-            for (const step of steps) {
-                await sleep(step.delay - (steps.indexOf(step) > 0 ? steps[steps.indexOf(step) - 1].delay : 0));
-                addLog(step.log, 'info');
-                document.getElementById('phase2Progress').style.width = step.progress + '%';
-            }
-
-            phase.classList.remove('active');
-            phase.classList.add('complete');
-
-            addLog('✅ PHASE 2 COMPLETE - Site generated', 'success');
-        }
-
-        async function executePhase3() {
-            addLog('💨 PHASE 3: EXHALE - Deploying to Replit...', 'success');
-
-            const phase = document.getElementById('phase3');
-            phase.classList.add('active');
-
-            // Simulate deployment
-            const steps = [
-                { delay: 5000, log: '🌐 Connecting to Replit: ' + deploymentState.brandMatch.replit_app, progress: 20 },
-                { delay: 8000, log: '📤 Uploading site files...', progress: 40 },
-                { delay: 12000, log: '🔧 Configuring deployment environment...', progress: 60 },
-                { delay: 15000, log: '🚀 Triggering deployment...', progress: 80 },
-                { delay: 18000, log: '🔄 Updating sector heatmap...', progress: 90 },
-                { delay: 20000, log: '✅ Deployment live!', progress: 100 }
-            ];
-
-            for (const step of steps) {
-                await sleep(step.delay - (steps.indexOf(step) > 0 ? steps[steps.indexOf(step) - 1].delay : 0));
-                addLog(step.log, 'info');
-                document.getElementById('phase3Progress').style.width = step.progress + '%';
-            }
-
-            phase.classList.remove('active');
-            phase.classList.add('complete');
-
-            addLog('✅ PHASE 3 COMPLETE - Deployment successful', 'success');
-        }
-
-        function completeDeployment() {
-            addLog('🎉 DEPLOYMENT COMPLETE - Site is live!', 'success');
-            addLog(`🌐 URL: ${deploymentState.brandMatch.replit_app}`, 'success');
-            addLog('✅ Synced to OmniGrid™ ecosystem', 'success');
-            addLog('✅ 9s pulse cycle active', 'success');
-
-            // Show result
-            const result = document.getElementById('deploymentResult');
-            result.classList.add('active');
-
-            const urlLink = document.getElementById('deploymentUrlLink');
-            urlLink.href = deploymentState.brandMatch.replit_app;
-            urlLink.textContent = deploymentState.brandMatch.replit_app;
-
-            deploymentState.isDeploying = false;
-            document.getElementById('deployBtn').disabled = false;
-        }
-
-        function resetDeployment() {
-            deploymentState.elapsedTime = 0;
-            deploymentState.currentPhase = null;
-
-            // Reset phases
-            ['phase1', 'phase2', 'phase3'].forEach(id => {
-                const phase = document.getElementById(id);
-                phase.classList.remove('active', 'complete');
-                document.getElementById(id + 'Progress').style.width = '0%';
-            });
-
-            // Hide result
-            document.getElementById('deploymentResult').classList.remove('active');
-
-            // Reset timer
-            document.getElementById('timer').textContent = '180';
-            document.getElementById('timer').classList.remove('warning');
-        }
-
-        // ====================================================================
-        // TIMER
-        // ====================================================================
-
-        function startTimer() {
-            const timerEl = document.getElementById('timer');
-            deploymentState.timer = setInterval(() => {
-                deploymentState.elapsedTime = Math.floor((Date.now() - deploymentState.startTime) / 1000);
-                const remaining = CONFIG.deploymentTime - deploymentState.elapsedTime;
-
-                timerEl.textContent = remaining;
-
-                if (remaining < 30) {
-                    timerEl.classList.add('warning');
-                }
-
-                if (remaining <= 0) {
-                    stopTimer();
-                }
-            }, 1000);
-        }
-
-        function stopTimer() {
-            if (deploymentState.timer) {
-                clearInterval(deploymentState.timer);
-                deploymentState.timer = null;
-            }
-        }
-
-        // ====================================================================
-        // LOGGING
-        // ====================================================================
-
-        function addLog(message, type = 'info') {
-            const log = document.getElementById('deploymentLog');
-            const timestamp = new Date().toISOString().substr(11, 8);
-
-            const entry = document.createElement('div');
-            entry.className = `log-entry log-${type}`;
-            entry.innerHTML = `<span class="log-timestamp">[${timestamp}]</span> ${message}`;
-
-            log.appendChild(entry);
-            log.scrollTop = log.scrollHeight;
-        }
-
-        // ====================================================================
-        // UTILITIES
-        // ====================================================================
-
-        function sleep(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
-        }
-
-        // ====================================================================
-        // INITIALIZATION
-        // ====================================================================
-
-        addLog('✅ HotStack Deployment Engine initialized', 'success');
-        addLog('🌐 OmniGrid™ Total Evolutionary Consolidation ready', 'success');
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            addStatusLog('ðŸ”¥ HotStackâ„¢ system loading...');
+            updateMetricsDisplay(); 
+            setInterval(updateMetricsDisplay, 900); // Heartbeat tied to Collapse Interval
+            setInterval(updateCountdown, 1000); // Start Countdown Timer
+            
+            // Expose functions to global scope for button clicks
+            window.openZeroSignupPortal = openZeroSignupPortal; 
+            window.closeZeroSignupPortal = closeZeroSignupPortal;
+            window.deployShanana = deployShanana;
+        });
     </script>
 </body>
 </html>
