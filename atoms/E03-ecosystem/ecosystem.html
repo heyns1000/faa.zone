@@ -3,547 +3,521 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAA™ Global Ecosystem - Interactive Dashboard</title>
-    <!-- Chosen Palette: Calm Neutral Harmony -->
-    <!-- Application Structure Plan: A single-page application with a persistent sidebar for navigation. The user starts at a high-level "Global Pulse" dashboard and can navigate to dedicated sections for the "Technology Stack," an "Ecosystem Explorer" for brands, a "Sovereign Scrolls" generator monitor, and a "License & Clause Ledger." This structure breaks down the complex blueprint into thematic, digestible parts, prioritizing user exploration over a linear report format. The goal is to provide a holistic yet browsable view of the entire FAA™ operation. -->
-    <!-- Visualization & Content Choices: Key metrics are shown as dynamic stat cards. Charts from Chart.js (Line, Bar, Doughnut, Polar Area) are used to visualize trends (Tier Growth), distributions (License Types), and comparisons (Sector Performance). The complex technology stack is simplified into an interactive diagram using HTML/CSS, revealing details on click. A filterable grid is used for the Ecosystem Explorer to manage the large number of brands. This approach uses the best visualization for each data type, ensures interactivity, and avoids overwhelming the user with text. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.js"></script>
+    <title>Fruitful™ Global Ecosystem</title>
+    <meta name="description" content="The Fruitful™ Global Ecosystem: every portal, sector, terminal and brand in one OmniGrid™, with launch readiness.">
+    <link rel="icon" href="/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --text-color-light: #1d1d1f;
+            --text-color-dark: #f5f5f7;
+            --bg-color-light: #ffffff;
+            --bg-color-dark: #1a1a1c;
+            --card-bg-light: #ffffff;
+            --card-bg-dark: #2a2a2e;
+            --border-color-light: #e8e8ed;
+            --border-color-dark: #3a3a3e;
+            --primary-color: #0071e3;
+            --secondary-color: #30d158;
+            --tertiary-color: #ff3b30;
+            --amber-color: #ff9f0a;
+            --muted-text-light: #6e6e73;
+            --muted-text-dark: #a0a0a5;
+            --soft-light: #f5f5f7;
+            --soft-dark: #222225;
+            --baobab-gold: #B8860B;
+        }
+        * { box-sizing: border-box; }
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f1f5f9; /* slate-100 */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-color-light);
+            color: var(--text-color-light);
+            margin: 0;
+            line-height: 1.45;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color .3s ease, color .3s ease;
         }
-        .app-container {
-            display: flex;
-            height: 100vh;
+        body.dark-mode { background: var(--bg-color-dark); color: var(--text-color-dark); }
+        a { color: inherit; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+
+        /* Header */
+        header.main-header {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(255,255,255,.85); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid var(--border-color-light);
         }
-        .sidebar {
-            width: 260px;
-            flex-shrink: 0;
-        }
-        .main-content {
-            flex-grow: 1;
-            overflow-y: auto;
-        }
-        .nav-link {
+        .dark-mode header.main-header { background: rgba(26,26,28,.85); border-bottom-color: var(--border-color-dark); }
+        .header-content { display: flex; align-items: center; gap: 8px; min-height: 60px; }
+        .logo-group { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+        .logo-link { text-decoration: none; }
+        .logo-fruitful { font-size: 1.4rem; font-weight: 800; letter-spacing: -.02em; }
+        .logo-separator { color: var(--muted-text-light); font-size: 1.4rem; }
+        .dark-mode .logo-separator { color: var(--muted-text-dark); }
+        .logo-omnigrid { font-size: 1.4rem; font-weight: 600; }
+        .eco-nav { display: flex; gap: 4px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
+        .eco-nav::-webkit-scrollbar { display: none; }
+        .eco-nav a { text-decoration: none; font-size: .9rem; font-weight: 500; padding: 8px 10px; border-radius: 8px; white-space: nowrap; color: var(--muted-text-light); }
+        .dark-mode .eco-nav a { color: var(--muted-text-dark); }
+        .eco-nav a:hover { color: var(--primary-color); background: var(--soft-light); }
+        .dark-mode .eco-nav a:hover { background: var(--soft-dark); }
+        .theme-btn { border: 1px solid var(--border-color-light); background: transparent; color: inherit; border-radius: 999px; padding: 6px 12px; font: inherit; font-size: .85rem; cursor: pointer; flex-shrink: 0; }
+        .dark-mode .theme-btn { border-color: var(--border-color-dark); }
+
+        /* Pulse Grid Noodle Rope Styling */
+        .pulse-grid-noodle-rope {
             display: flex;
             align-items: center;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            transition: background-color 0.2s, color 0.2s;
-            font-weight: 500;
-            color: #475569; /* slate-600 */
-        }
-        .nav-link:hover {
-            background-color: #e2e8f0; /* slate-200 */
-        }
-        .nav-link.active {
-            background-color: #4f46e5; /* indigo-600 */
-            color: white;
-            font-weight: 600;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        }
-        .chart-container {
+            height: 2px;
+            width: 120px; /* Reduced length to fit better in header */
+            background-color: var(--muted-text-light);
+            border-radius: 1px;
             position: relative;
-            width: 100%;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 20px; /* Adjusted margin */
+            opacity: 0.7;
+            flex-shrink: 0; /* Prevent noodle from shrinking */
         }
-        .chart-container-doughnut {
-            max-width: 400px;
-            height: 400px;
+        .dark-mode .pulse-grid-noodle-rope {
+            background-color: var(--muted-text-dark);
         }
-         .chart-container-bar {
-            max-width: 100%;
-            height: 400px;
+
+        .noodle-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            animation: pulse 3s infinite ease-in-out;
+        }
+        .noodle-dot.dot-stepdad {
+            width: 10px;
+            height: 10px;
+            background-color: var(--secondary-color);
+        }
+
+        /* Staggered animation delays */
+        .noodle-dot.dot-1 { left: 0%; animation-delay: 0s; }
+        .noodle-dot.dot-2 { left: 20%; animation-delay: 0.5s; }
+        .noodle-dot.dot-3 { left: 40%; animation-delay: 1s; }
+        .noodle-dot.dot-stepdad { left: 60%; animation-delay: 1.5s; }
+        .noodle-dot.dot-4 { left: 80%; animation-delay: 2s; }
+        .noodle-dot.dot-5 { left: 100%; animation-delay: 2.5s; }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+            50% { transform: translate(-50%, -50%) scale(1.5); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+        }
+        @media (max-width: 768px) {
+            .pulse-grid-noodle-rope { display: none; }
+            .eco-nav { display: none; }
+        }
+
+        /* Sections */
+        section { padding: 64px 0; }
+        section + section { border-top: 1px solid var(--border-color-light); }
+        .dark-mode section + section { border-top-color: var(--border-color-dark); }
+        h1, h2, h3 { letter-spacing: -.02em; margin: 0; }
+        .kicker { font-size: .8rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--primary-color); margin: 0 0 8px; }
+        .section-head { margin-bottom: 28px; }
+        .section-head h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; }
+        .section-head p { color: var(--muted-text-light); margin: 8px 0 0; max-width: 720px; }
+        .dark-mode .section-head p { color: var(--muted-text-dark); }
+        .anchor-alias { position: relative; top: -80px; display: block; height: 0; }
+
+        /* Hero */
+        .hero { padding: 88px 0 72px; text-align: center; }
+        .hero h1 { font-size: clamp(2.4rem, 6vw, 4.2rem); font-weight: 800; line-height: 1.05; }
+        .hero h1 .accent { color: var(--primary-color); }
+        .hero .tagline { font-size: clamp(1.05rem, 2vw, 1.3rem); color: var(--muted-text-light); max-width: 760px; margin: 18px auto 0; }
+        .dark-mode .hero .tagline { color: var(--muted-text-dark); }
+        .hero .seed { font-style: italic; margin-top: 10px; color: var(--secondary-color); font-weight: 600; }
+        .cta-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 32px; }
+        .cta { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; padding: 12px 22px; border-radius: 999px; background: var(--primary-color); color: #fff; }
+        .cta.secondary { background: transparent; color: var(--primary-color); border: 1.5px solid var(--primary-color); }
+        .readiness { max-width: 720px; margin: 44px auto 0; text-align: left; }
+        .readiness-top { display: flex; justify-content: space-between; align-items: baseline; font-weight: 600; margin-bottom: 8px; gap: 12px; flex-wrap: wrap; }
+        .readiness-top .pct { font-size: 1.6rem; font-weight: 800; }
+        .bar { display: flex; height: 12px; border-radius: 999px; overflow: hidden; background: var(--soft-light); }
+        .dark-mode .bar { background: var(--soft-dark); }
+        .bar span { display: block; height: 100%; }
+        .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 10px; font-size: .85rem; color: var(--muted-text-light); }
+        .dark-mode .legend { color: var(--muted-text-dark); }
+        .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
+
+        /* Stats */
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 44px; }
+        .stat { background: var(--soft-light); border-radius: 16px; padding: 18px; text-align: left; }
+        .dark-mode .stat { background: var(--soft-dark); }
+        .stat b { display: block; font-size: 1.8rem; font-weight: 800; letter-spacing: -.02em; }
+        .stat span { font-size: .85rem; color: var(--muted-text-light); }
+        .dark-mode .stat span { color: var(--muted-text-dark); }
+
+        /* Cards */
+        .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+        .card { display: block; text-decoration: none; background: var(--card-bg-light); border: 1px solid var(--border-color-light); border-radius: 16px; padding: 18px; transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
+        .dark-mode .card { background: var(--card-bg-dark); border-color: var(--border-color-dark); }
+        a.card:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.08); border-color: var(--primary-color); }
+        .card h3 { font-size: 1.02rem; font-weight: 700; }
+        .card .file { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .78rem; color: var(--muted-text-light); margin-top: 4px; word-break: break-all; }
+        .dark-mode .card .file { color: var(--muted-text-dark); }
+        .badges { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+        .badge { font-size: .72rem; font-weight: 600; padding: 3px 8px; border-radius: 999px; background: var(--soft-light); }
+        .dark-mode .badge { background: var(--soft-dark); }
+        .badge.ok { color: #1f8f3a; background: rgba(48,209,88,.14); }
+        .badge.warn { color: #b36b00; background: rgba(255,159,10,.16); }
+        .badge.bad { color: #c4261d; background: rgba(255,59,48,.12); }
+        .dark-mode .badge.ok { color: #5de07f; } .dark-mode .badge.warn { color: #ffbf5c; } .dark-mode .badge.bad { color: #ff7b73; }
+
+        /* Terminals */
+        .terminal-frame { width: 100%; height: 560px; border: 1px solid var(--border-color-light); border-radius: 16px; overflow: hidden; background: #0d0d0d; margin-bottom: 16px; }
+        .dark-mode .terminal-frame { border-color: var(--border-color-dark); }
+        .terminal-frame iframe { width: 100%; height: 100%; border: 0; }
+        .terminal-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+        .terminal-btn { font: inherit; font-weight: 600; text-align: left; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border-color-light); background: var(--card-bg-light); color: inherit; cursor: pointer; }
+        .dark-mode .terminal-btn { background: var(--card-bg-dark); border-color: var(--border-color-dark); }
+        .terminal-btn:hover { border-color: var(--primary-color); }
+        .terminal-btn.ring { border-color: var(--primary-color); box-shadow: 0 0 0 2px var(--primary-color); }
+
+        /* Sectors */
+        .sector-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
+        .sector { display: flex; justify-content: space-between; align-items: center; gap: 8px; text-decoration: none; padding: 14px 16px; border-radius: 12px; background: var(--soft-light); font-weight: 600; font-size: .95rem; }
+        .dark-mode .sector { background: var(--soft-dark); }
+        .sector:hover { outline: 2px solid var(--primary-color); }
+
+        /* Readiness board */
+        details.group { border: 1px solid var(--border-color-light); border-radius: 14px; margin-bottom: 10px; background: var(--card-bg-light); }
+        .dark-mode details.group { border-color: var(--border-color-dark); background: var(--card-bg-dark); }
+        details.group summary { list-style: none; cursor: pointer; padding: 16px 18px; display: flex; align-items: center; gap: 12px; font-weight: 700; }
+        details.group summary::-webkit-details-marker { display: none; }
+        details.group summary .gid { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; background: var(--primary-color); color: #fff; font-size: .85rem; flex-shrink: 0; }
+        details.group summary .gcount { margin-left: auto; font-weight: 600; font-size: .85rem; color: var(--muted-text-light); white-space: nowrap; }
+        .dark-mode details.group summary .gcount { color: var(--muted-text-dark); }
+        .minibar { width: 90px; height: 6px; border-radius: 999px; background: var(--soft-light); overflow: hidden; display: flex; flex-shrink: 0; }
+        .dark-mode .minibar { background: var(--soft-dark); }
+        .items { padding: 0 18px 14px; }
+        .item { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 10px; align-items: center; padding: 10px 0; border-top: 1px solid var(--border-color-light); font-size: .9rem; }
+        .dark-mode .item { border-top-color: var(--border-color-dark); }
+        .item .p { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .82rem; word-break: break-all; }
+        .item .from { display: block; font-family: inherit; font-size: .75rem; color: var(--muted-text-light); margin-top: 2px; }
+        .dark-mode .item .from { color: var(--muted-text-dark); }
+        .item a.preview { font-size: .8rem; font-weight: 600; color: var(--primary-color); text-decoration: none; white-space: nowrap; }
+
+        /* Intelligence */
+        .intel { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+        .intel .card b { display: block; font-size: 1.6rem; font-weight: 800; margin-top: 6px; }
+        .intel .card ul { margin: 10px 0 0; padding-left: 18px; font-size: .88rem; color: var(--muted-text-light); }
+        .dark-mode .intel .card ul { color: var(--muted-text-dark); }
+        .timeline { margin-top: 28px; border-left: 2px solid var(--border-color-light); padding-left: 20px; }
+        .dark-mode .timeline { border-left-color: var(--border-color-dark); }
+        .milestone { position: relative; padding: 6px 0 14px; }
+        .milestone::before { content: ''; position: absolute; left: -27px; top: 12px; width: 12px; height: 12px; border-radius: 50%; background: var(--secondary-color); }
+        .milestone .d { font-size: .78rem; color: var(--muted-text-light); }
+        .dark-mode .milestone .d { color: var(--muted-text-dark); }
+
+        /* Domains */
+        .domain-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+
+        footer { padding: 36px 0 48px; text-align: center; font-size: .85rem; color: var(--muted-text-light); border-top: 1px solid var(--border-color-light); }
+        .dark-mode footer { color: var(--muted-text-dark); border-top-color: var(--border-color-dark); }
+        .empty { color: var(--muted-text-light); font-size: .9rem; }
+        @media (max-width: 600px) {
+            section { padding: 48px 0; }
+            .hero { padding: 56px 0 48px; }
+            .terminal-frame { height: 420px; }
+            .item { grid-template-columns: minmax(0, 1fr) auto; }
+            .item a.preview { grid-column: 1 / -1; }
         }
     </style>
 </head>
-<body class="bg-slate-100">
-
-    <div class="app-container">
-        <!-- SIDEBAR NAVIGATION -->
-        <aside class="sidebar bg-white p-6 border-r border-slate-200 flex flex-col justify-between">
-            <div>
-                <div class="flex items-center gap-3 mb-10">
-                    <span class="text-3xl">🦍</span>
-                    <h1 class="font-bold text-xl text-slate-800">FAA.ZONE</h1>
-                </div>
-                <nav id="main-nav" class="space-y-2">
-                    <a href="#global-pulse" class="nav-link active" data-view="global-pulse">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" /><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z" /></svg>
-                        Global Pulse
-                    </a>
-                    <a href="#tech-stack" class="nav-link" data-view="tech-stack">
-                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" /></svg>
-                        Technology Stack
-                    </a>
-                    <a href="#ecosystem-explorer" class="nav-link" data-view="ecosystem-explorer">
-                       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
-                        Ecosystem Explorer
-                    </a>
-                     <a href="#sovereign-scrolls" class="nav-link" data-view="sovereign-scrolls">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd" /></svg>
-                        Sovereign Scrolls
-                    </a>
-                    <a href="#license-ledger" class="nav-link" data-view="license-ledger">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.414-1.414L11 9.586V5z" clip-rule="evenodd" /></svg>
-                        License & Clauses
-                    </a>
-                </nav>
+<body>
+    <header class="main-header">
+        <div class="container header-content">
+            <div class="logo-group">
+                <a href="#top" class="logo-link"><span class="logo-fruitful">Fruitful™</span></a>
+                <span class="logo-separator">|</span>
+                <span class="logo-omnigrid">OmniGrid™</span>
             </div>
-            <div class="text-xs text-slate-400">
-                <p>&copy; 2025 FAA.ZONE</p>
-                <p>Interactive SPA v1.0</p>
+            <div class="pulse-grid-noodle-rope">
+                <span class="noodle-dot dot-1"></span>
+                <span class="noodle-dot dot-2"></span>
+                <span class="noodle-dot dot-3"></span>
+                <span class="noodle-dot dot-stepdad"></span>
+                <span class="noodle-dot dot-4"></span>
+                <span class="noodle-dot dot-5"></span>
             </div>
-        </aside>
+            <nav class="eco-nav" aria-label="Sections">
+                <a href="#portals">Portals</a>
+                <a href="#terminals">Terminals</a>
+                <a href="#sectors">Sectors</a>
+                <a href="#readiness">Launch</a>
+                <a href="#intelligence">Intelligence</a>
+                <a href="#domains">Brands</a>
+            </nav>
+            <button class="theme-btn" id="theme-btn" type="button" aria-label="Toggle dark mode">🌙</button>
+        </div>
+    </header>
 
-        <!-- MAIN CONTENT AREA -->
-        <main class="main-content p-6 lg:p-10">
-
-            <!-- VIEW: GLOBAL PULSE -->
-            <section id="view-global-pulse" class="view space-y-8">
-                <header>
-                    <h2 class="text-3xl font-extrabold text-slate-800">Global Pulse Dashboard</h2>
-                    <p class="text-slate-500 mt-1">A high-level overview of the entire FAA™ Global Ecosystem's operational status.</p>
-                </header>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="bg-white p-6 rounded-lg shadow-sm">
-                        <h3 class="font-semibold text-slate-500">Total Brands</h3>
-                        <p class="text-3xl font-bold text-indigo-600 mt-2" id="metric-total-brands">7,038</p>
-                    </div>
-                     <div class="bg-white p-6 rounded-lg shadow-sm">
-                        <h3 class="font-semibold text-slate-500">Core Brands</h3>
-                        <p class="text-3xl font-bold text-indigo-600 mt-2" id="metric-core-brands">168</p>
-                    </div>
-                     <div class="bg-white p-6 rounded-lg shadow-sm">
-                        <h3 class="font-semibold text-slate-500">Product Nodes</h3>
-                        <p class="text-3xl font-bold text-indigo-600 mt-2" id="metric-total-nodes">~700</p>
-                    </div>
-                     <div class="bg-white p-6 rounded-lg shadow-sm">
-                        <h3 class="font-semibold text-slate-500">Total Pages</h3>
-                        <p class="text-3xl font-bold text-indigo-600 mt-2" id="metric-total-pages">780+</p>
-                    </div>
+    <main id="top">
+        <section class="hero">
+            <div class="container">
+                <p class="kicker">Fruitful™ · FAA.zone™ · OmniGrid™</p>
+                <h1>The Global <span class="accent">Ecosystem</span></h1>
+                <p class="tagline">Every portal, sector, terminal and brand in one grid. Hover the pulse above to feel the whole ecosystem breathe.</p>
+                <p class="seed">If you don't like the fruits you are growing, change the seed™</p>
+                <div class="cta-row">
+                    <a class="cta" href="omnigrid.html">🕸️ Enter the OmniGrid</a>
+                    <a class="cta secondary" href="dashboard.html">⚙️ Dashboard</a>
+                    <a class="cta secondary" href="#readiness">🚀 Launch readiness</a>
                 </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-sm">
-                        <h3 class="font-semibold text-slate-800">Ecosystem Pulse Monitor</h3>
-                        <p class="text-sm text-slate-500 mb-4">Simulated real-time signal activity across key sectors.</p>
-                        <div class="chart-container h-96">
-                            <canvas id="globalPulseChart"></canvas>
-                        </div>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-sm">
-                         <h3 class="font-semibold text-slate-800">Brand Distribution</h3>
-                         <p class="text-sm text-slate-500 mb-4">Core brands by primary sector.</p>
-                        <div class="chart-container chart-container-doughnut">
-                            <canvas id="brandDistributionChart"></canvas>
-                        </div>
-                    </div>
+                <div class="readiness" id="readiness-summary" aria-live="polite">
+                    <div class="readiness-top"><span>Launch readiness</span><span class="pct">…</span></div>
+                    <div class="bar"></div>
+                    <div class="legend"></div>
                 </div>
-            </section>
+                <div class="stats" id="stats"></div>
+            </div>
+        </section>
 
-            <!-- VIEW: TECH STACK -->
-            <section id="view-tech-stack" class="view hidden space-y-8">
-                <header>
-                    <h2 class="text-3xl font-extrabold text-slate-800">Technology Stack Blueprint</h2>
-                    <p class="text-slate-500 mt-1">An interactive overview of the core infrastructure powering the FAA™ ecosystem. Click each pillar for details.</p>
-                </header>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-                    <!-- Vercel Pillar -->
-                    <div class="bg-white p-6 rounded-lg shadow-sm border-t-4 border-black cursor-pointer tech-pillar" data-content="tech-vercel">
-                        <h3 class="text-xl font-bold">Vercel</h3>
-                        <p class="text-sm text-slate-500 mt-1">Frontend & Serverless</p>
-                    </div>
-                    <!-- Cloudflare Pillar -->
-                    <div class="bg-white p-6 rounded-lg shadow-sm border-t-4 border-orange-500 cursor-pointer tech-pillar" data-content="tech-cloudflare">
-                        <h3 class="text-xl font-bold">Cloudflare</h3>
-                        <p class="text-sm text-slate-500 mt-1">DNS, Edge & Security</p>
-                    </div>
-                    <!-- Zoho Pillar -->
-                    <div class="bg-white p-6 rounded-lg shadow-sm border-t-4 border-red-500 cursor-pointer tech-pillar" data-content="tech-zoho">
-                        <h3 class="text-xl font-bold">Zoho</h3>
-                        <p class="text-sm text-slate-500 mt-1">Email & Business APIs</p>
-                    </div>
-                    <!-- Hetzner Pillar -->
-                    <div class="bg-white p-6 rounded-lg shadow-sm border-t-4 border-blue-500 cursor-pointer tech-pillar" data-content="tech-hetzner">
-                        <h3 class="text-xl font-bold">Hetzner</h3>
-                        <p class="text-sm text-slate-500 mt-1">Backend & Storage</p>
-                    </div>
+        <section id="portals">
+            <span class="anchor-alias" id="features"></span>
+            <div class="container">
+                <div class="section-head">
+                    <p class="kicker">Portals</p>
+                    <h2>Every door, one app</h2>
+                    <p>Each portal opens inside the ecosystem. "Pulse" marks pages with the OmniGrid™ pulse noodle; "In-app" marks pages already on the in-app layer.</p>
                 </div>
+                <div class="grid" id="portal-grid"></div>
+            </div>
+        </section>
 
-                <div id="tech-stack-content" class="bg-white p-8 rounded-lg shadow-sm min-h-[300px]">
-                    <!-- Content will be injected here by JS -->
+        <section id="terminals">
+            <span class="anchor-alias" id="baobab-terminal-access"></span>
+            <div class="container">
+                <div class="section-head">
+                    <p class="kicker">Sector Terminals</p>
+                    <h2>🔐 Nine terminals, live in the grid</h2>
+                    <p>Choose a terminal. Built pages load directly; the rest render from the global snapshot until their page is built.</p>
                 </div>
-            </section>
-
-            <!-- VIEW: ECOSYSTEM EXPLORER -->
-            <section id="view-ecosystem-explorer" class="view hidden space-y-8">
-                 <header>
-                    <h2 class="text-3xl font-extrabold text-slate-800">Ecosystem Explorer</h2>
-                    <p class="text-slate-500 mt-1">Explore the 29 defined sectors and their core brands within the FAA™ Global Supply Chain Grid.</p>
-                </header>
-
-                <div class="bg-white p-6 rounded-lg shadow-sm">
-                    <label for="sector-filter" class="font-semibold text-slate-700">Filter by Sector:</label>
-                    <select id="sector-filter" class="mt-2 block w-full md:w-1/3 p-2 border border-slate-300 rounded-md">
-                        <!-- Options populated by JS -->
-                    </select>
+                <div class="terminal-frame">
+                    <iframe id="vault-frame" src="vault-master.html" title="Sector terminal" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
                 </div>
-
-                <div id="explorer-content" class="space-y-6">
-                    <!-- Sector details populated by JS -->
-                </div>
-            </section>
-            
-            <!-- VIEW: SOVEREIGN SCROLLS -->
-            <section id="view-sovereign-scrolls" class="view hidden space-y-8">
-                 <header>
-                    <h2 class="text-3xl font-extrabold text-slate-800">📜 Sovereign Scrolls Generator</h2>
-                    <p class="text-slate-500 mt-1">Monitoring the status of the automated static page generation engine.</p>
-                </header>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div class="bg-white p-8 rounded-lg shadow-sm">
-                        <h3 class="font-bold text-lg text-slate-800 mb-4">Generation Progress</h3>
-                        <div class="w-full bg-slate-200 rounded-full h-8">
-                            <div id="progress-bar" class="bg-indigo-600 h-8 rounded-full text-center text-white font-bold leading-8" style="width: 0%;">0%</div>
-                        </div>
-                        <div class="flex justify-between text-sm mt-2">
-                            <span id="pages-generated">1,171 Generated</span>
-                            <span id="pages-total">7,038 Total</span>
-                        </div>
-                        <p class="text-sm text-slate-600 mt-4">The `html-page-generator.py` module is the robust bedrock of the Sovereign Scrolls vision, architecting digital autonomy at an unprecedented scale.</p>
-                    </div>
-                     <div class="bg-white p-8 rounded-lg shadow-sm">
-                        <h3 class="font-bold text-lg text-slate-800 mb-4">Future Focus</h3>
-                        <ul class="list-disc list-inside space-y-2 text-slate-600">
-                            <li>Integrate seamlessly with the Flask Backend (`app.py`) for real-time data persistence.</li>
-                            <li>Enhance Admin Portal (`admin-portal.html`) for intuitive seed data input and deployment previews.</li>
-                            <li>Automate the full CI/CD pipeline for the massive volume of static pages via Vercel.</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            <!-- VIEW: LICENSE & CLAUSE LEDGER -->
-            <section id="view-license-ledger" class="view hidden space-y-8">
-                 <header>
-                    <h2 class="text-3xl font-extrabold text-slate-800">🔐 License & Clause Ledger</h2>
-                    <p class="text-slate-500 mt-1">An overview of the FAA™ licensing matrix and binding legal protocols.</p>
-                </header>
-
-                <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
-                     <div class="bg-white p-4 rounded-lg shadow-sm text-center">
-                        <h3 class="font-semibold text-slate-500">Tier 1 (Retail)</h3>
-                        <p class="text-2xl font-bold text-indigo-600 mt-1">1,204</p>
-                    </div>
-                     <div class="bg-white p-4 rounded-lg shadow-sm text-center">
-                        <h3 class="font-semibold text-slate-500">Tier 2 (GovMesh)</h3>
-                        <p class="text-2xl font-bold text-indigo-600 mt-1">880</p>
-                    </div>
-                     <div class="bg-white p-4 rounded-lg shadow-sm text-center">
-                        <h3 class="font-semibold text-slate-500">Tier 3 (Enterprise)</h3>
-                        <p class="text-2xl font-bold text-indigo-600 mt-1">734</p>
-                    </section>
-        </main>
-    </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-
-    // --- DATA STORE ---
-    // Data synthesized from the FAA™ Global Ecosystem Quick Reference Blueprint
-    const appData = {
-        globalMetrics: {
-            totalBrands: 7038,
-            coreBrands: 168,
-            totalNodes: 700,
-            totalPages: 780,
-        },
-        brandDistribution: {
-            labels: ['Finance', 'Logistics', 'Health', 'Education', 'Agriculture', 'AI', 'Other'],
-            data: [25, 22, 18, 15, 13, 11, 64] // Representative distribution
-        },
-        sovereignScrolls: {
-            generated: 1171,
-            total: 7038,
-        },
-        techStack: {
-            'tech-vercel': {
-                title: 'Vercel: Frontend & Serverless',
-                icon: '🚀',
-                details: 'Vercel is the primary Continuous Deployment platform, connecting to GitHub to build and deploy all FAA.zone web projects. It handles static frontend assets and dynamic Node.js serverless functions, enabling rapid, scalable, and automated deployments.',
-                features: ['Automatic Deployments from Git', 'Scalable Serverless Functions', 'Custom Domain Management', 'Secure Environment Variables', 'Instant Preview Deployments']
-            },
-            'tech-cloudflare': {
-                title: 'Cloudflare: DNS, Edge & Security',
-                icon: '☁️',
-                details: 'Cloudflare acts as the global performance and security layer. It manages all DNS routing and protects the ecosystem with its WAF, DDoS mitigation, and global CDN, ensuring high availability and fast load times worldwide.',
-                features: ['Global CDN Caching', 'Authoritative DNS Management', 'Web Application Firewall (WAF)', 'Universal SSL/TLS Encryption', 'Cloudflare Workers (Edge Computing)']
-            },
-            'tech-zoho': {
-                title: 'Zoho: Email & Business APIs',
-                icon: '✉️',
-                details: 'Zoho serves as the central nervous system for business operations. It handles all corporate email via Zoho Mail and provides a rich suite of APIs (CRM, Books, Forms) for automating client management, billing, and communication workflows.',
-                features: ['Enterprise Email Hosting (SMTP)', 'OAuth 2.0 for Authentication', 'CRM and Forms API for Data Sync', 'DMARC, SPF, DKIM for Email Security', 'Centralized User Management']
-            },
-            'tech-hetzner': {
-                title: 'Hetzner: Backend & Storage',
-                icon: '💾',
-                details: 'Hetzner provides the foundational layer for persistent data, heavy computation, and specialized backend services. It offers cost-effective, high-performance dedicated resources that complement the serverless architecture.',
-                features: ['Dedicated Cloud Servers', 'Persistent Block Storage Volumes', 'Scalable Object Storage', 'Private Networks & Firewalls', 'Load Balancers for High Availability']
-            }
-        },
-        ecosystemSectors: {
-            'agriculture': { name: '🌱 Agriculture & Biotech', brands: ['CropLink', 'SoilPulse', 'RootYield', 'AquaFarm', 'AgriMesh'], nodes: 15 },
-            'banking': { name: '🏦 Banking & Finance', brands: ['FinGrid', 'TradeAmp', 'LoopPay', 'TaxNova', 'VaultMaster', 'Gridwise', 'ZenoBank'], nodes: 45 },
-            'creative': { name: '🖋️ Creative Tech', brands: ['MediaGrid', 'StudioPath', 'SoundReel', 'EditFrame', 'MotionKit'], nodes: 12 },
-            'logistics': { name: '📦 Logistics & Packaging', brands: ['CrateLogic', 'PackChain', 'SortFleet', 'RouteMesh', 'LogiStack'], nodes: 38 },
-            'education-ip': { name: '📚 Education & IP', brands: ['EduNest', 'FormFlex', 'ScrollBooks', 'MindLift', 'GridClass'], nodes: 25 },
-            'health': { name: '🧠 Health & Hygiene', brands: ['MedVault', 'CleanCast', 'ScrollHealth', 'Hygienix', 'CareNode'], nodes: 30 },
-             'ai-logic': { name: '🧠 AI, Logic & Grid', brands: ['OmniKey', 'SignalPulse', 'MeshIndex', 'LogicEcho'], nodes: 52 },
-        },
-        licenseLedger: {
-            growth: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                datasets: [
-                    { label: 'Tier 1 - Retail', data: [120, 140, 155, 178, 190, 204], borderColor: '#4f46e5', tension: 0.3 },
-                    { label: 'Tier 2 - GovMesh', data: [75, 89, 94, 102, 110, 117], borderColor: '#10b981', tension: 0.3 },
-                    { label: 'Tier 3 - Enterprise', data: [62, 64, 70, 73, 78, 80], borderColor: '#f97316', tension: 0.3 }
-                ]
-            },
-            clauses: {
-                labels: ['IP Clause 14A', 'Sovereign Export A3', 'Experimental Tag X7', 'Tier-Sync Accord', 'VaultMesh Override'],
-                data: [722, 519, 312, 455, 188]
-            }
-        }
-    };
-    
-    // --- CHART CONFIGS ---
-    const chartColors = ['#4f46e5', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#3b82f6', '#14b8a6'];
-    const chartDefaultOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                position: 'bottom',
-                labels: {
-                    font: { size: 12, family: 'Inter' },
-                    color: '#64748b' // slate-500
-                }
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                ticks: { color: '#64748b' },
-                grid: { color: '#e2e8f0' } // slate-200
-            },
-            x: {
-                ticks: { color: '#64748b' },
-                grid: { display: false }
-            }
-        }
-    };
-
-    // --- CHART RENDERING FUNCTIONS ---
-    let charts = {};
-    function renderGlobalPulseChart() {
-        const ctx = document.getElementById('globalPulseChart')?.getContext('2d');
-        if (!ctx || charts.globalPulse) return;
-        charts.globalPulse = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['-5m', '-4m', '-3m', '-2m', '-1m', 'Now'],
-                datasets: [{
-                    label: 'Ecosystem Signal Volume',
-                    data: [1234, 1567, 1456, 1890, 1754, 2109],
-                    borderColor: '#4f46e5',
-                    backgroundColor: 'rgba(79, 70, 229, 0.1)',
-                    fill: true,
-                    tension: 0.4
-                }]
-            },
-            options: chartDefaultOptions
-        });
-    }
-
-    function renderBrandDistributionChart() {
-        const ctx = document.getElementById('brandDistributionChart')?.getContext('2d');
-        if (!ctx || charts.brandDistribution) return;
-        charts.brandDistribution = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: appData.brandDistribution.labels,
-                datasets: [{
-                    label: 'Core Brands',
-                    data: appData.brandDistribution.data,
-                    backgroundColor: chartColors,
-                    hoverOffset: 4
-                }]
-            },
-            options: { ...chartDefaultOptions, scales: { x: { display: false }, y: { display: false } } }
-        });
-    }
-    
-    function renderTierGrowthChart() {
-        const ctx = document.getElementById('tierGrowthChart')?.getContext('2d');
-        if (!ctx || charts.tierGrowth) return;
-        charts.tierGrowth = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: appData.licenseLedger.growth.labels,
-                datasets: appData.licenseLedger.growth.datasets,
-            },
-            options: { ...chartDefaultOptions, scales: { x: { stacked: true }, y: { stacked: true } } }
-        });
-    }
-
-    function renderClauseAllocationChart() {
-        const ctx = document.getElementById('clauseAllocationChart')?.getContext('2d');
-        if (!ctx || charts.clauseAllocation) return;
-        charts.clauseAllocation = new Chart(ctx, {
-            type: 'polarArea',
-            data: {
-                labels: appData.licenseLedger.clauses.labels,
-                datasets: [{
-                    label: 'Clause Allocations',
-                    data: appData.licenseLedger.clauses.data,
-                    backgroundColor: chartColors.map(c => c + 'B3'), // Add alpha
-                }]
-            },
-            options: { ...chartDefaultOptions, scales: { r: { grid: { color: '#e2e8f0' } } } }
-        });
-    }
-
-
-    // --- UI & NAVIGATION LOGIC ---
-    const navLinks = document.querySelectorAll('#main-nav .nav-link');
-    const views = document.querySelectorAll('.view');
-    const techPillars = document.querySelectorAll('.tech-pillar');
-    const techContentContainer = document.getElementById('tech-stack-content');
-    const sectorFilter = document.getElementById('sector-filter');
-    const explorerContent = document.getElementById('explorer-content');
-
-    function switchView(viewId) {
-        views.forEach(view => {
-            view.classList.toggle('hidden', view.id !== `view-${viewId}`);
-        });
-        navLinks.forEach(link => {
-            link.classList.toggle('active', link.dataset.view === viewId);
-        });
-
-        // Lazy render charts
-        if (viewId === 'global-pulse') {
-            renderGlobalPulseChart();
-            renderBrandDistributionChart();
-        }
-        if (viewId === 'license-ledger') {
-            renderTierGrowthChart();
-            renderClauseAllocationChart();
-        }
-    }
-
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const viewId = e.currentTarget.dataset.view;
-            window.location.hash = viewId;
-            switchView(viewId);
-        });
-    });
-
-    techPillars.forEach(pillar => {
-        pillar.addEventListener('click', (e) => {
-            const contentKey = e.currentTarget.dataset.content;
-            const contentData = appData.techStack[contentKey];
-            techContentContainer.innerHTML = `
-                <div class="flex items-start gap-4">
-                    <span class="text-3xl">${contentData.icon}</span>
-                    <div>
-                        <h3 class="font-bold text-lg text-slate-800">${contentData.title}</h3>
-                        <p class="mt-2 text-slate-600">${contentData.details}</p>
-                        <ul class="mt-4 list-disc list-inside text-sm text-slate-500 space-y-1">
-                            ${contentData.features.map(f => `<li>${f}</li>`).join('')}
-                        </ul>
-                    </div>
-                </div>
-            `;
-        });
-    });
-    
-    // --- ECOSYSTEM EXPLORER LOGIC ---
-    function populateSectorFilter() {
-        Object.keys(appData.ecosystemSectors).forEach(key => {
-            const option = document.createElement('option');
-            option.value = key;
-            option.textContent = appData.ecosystemSectors[key].name;
-            sectorFilter.appendChild(option);
-        });
-    }
-
-    function displaySectorInfo(sectorKey) {
-        const sector = appData.ecosystemSectors[sectorKey];
-        explorerContent.innerHTML = `
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-                <h3 class="text-xl font-bold text-indigo-700">${sector.name}</h3>
-                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <h4 class="font-semibold text-slate-600">Core Brands</h4>
-                        <ul class="mt-2 list-disc list-inside text-slate-500">
-                            ${sector.brands.map(b => `<li>${b}™</li>`).join('')}
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-slate-600">Node Count</h4>
-                        <p class="text-3xl font-bold text-slate-700 mt-1">${sector.nodes}</p>
-                         <p class="text-sm text-slate-500">active product nodes</p>
-                    </div>
+                <div class="terminal-grid">
+                    <button onclick="loadTerminal('vault-master.html')" class="terminal-btn">🦍 VaultMaster Terminal</button>
+                    <button onclick="loadTerminal('cube-lattice.html')" class="terminal-btn">🧱 Cube Lattice GPT</button>
+                    <button onclick="loadTerminal('global-view.html')" class="terminal-btn">🌍 Global View GPT</button>
+                    <button onclick="loadTerminal('freight-ops.html')" class="terminal-btn">🚚 Freight Ops GPT</button>
+                    <button onclick="loadTerminal('loop-watch.html')" class="terminal-btn">♻️ Loop Watch GPT</button>
+                    <button onclick="loadTerminal('seedwave.html')" class="terminal-btn">🌱 Seedwave GPT</button>
+                    <button onclick="loadTerminal('distribution.html')" class="terminal-btn">📦 Distribution GPT</button>
+                    <button onclick="loadTerminal('signal.html')" class="terminal-btn">🔐 Signal GPT</button>
+                    <button onclick="loadTerminal('faa-brands.html')" class="terminal-btn">📦 7038 FAA Brands</button>
                 </div>
             </div>
-        `;
-    }
+        </section>
 
-    sectorFilter.addEventListener('change', (e) => {
-        displaySectorInfo(e.target.value);
-    });
+        <section id="sectors">
+            <span class="anchor-alias" id="sector-glyphs-container"></span>
+            <div class="container">
+                <div class="section-head">
+                    <p class="kicker">Sectors</p>
+                    <h2>🧬 The sector grid</h2>
+                    <p>Every sector of the ecosystem. Open one to see it in-app.</p>
+                </div>
+                <div class="sector-grid" id="sector-grid"></div>
+            </div>
+        </section>
 
-    // --- SOVEREIGN SCROLLS PROGRESS BAR ---
-    function updateProgressBar() {
-        const progressBar = document.getElementById('progress-bar');
-        if(!progressBar) return;
-        const progress = (appData.sovereignScrolls.generated / appData.sovereignScrolls.total) * 100;
-        progressBar.style.width = `${progress}%`;
-        progressBar.textContent = `${progress.toFixed(1)}%`;
-    }
+        <section id="readiness">
+            <span class="anchor-alias" id="treaty"></span>
+            <div class="container">
+                <div class="section-head">
+                    <p class="kicker">Launch readiness</p>
+                    <h2>🚀 What stands between us and launch</h2>
+                    <p>Every page the ecosystem links to, grouped. When every item is built, the ecosystem goes live.</p>
+                </div>
+                <div id="groups"></div>
+            </div>
+        </section>
 
-    // --- INITIALIZATION ---
-    function initialize() {
-        const hash = window.location.hash.substring(1) || 'global-pulse';
-        switchView(hash);
-        
-        // Populate tech stack with the first item
-        document.querySelector('.tech-pillar').click();
+        <section id="intelligence">
+            <span class="anchor-alias" id="vaultmesh"></span>
+            <div class="container">
+                <div class="section-head">
+                    <p class="kicker">Intelligence</p>
+                    <h2>🧠 The memory behind the grid</h2>
+                    <p>Two independent AI intakes and one registry, counted, never copied.</p>
+                </div>
+                <div class="intel" id="intel"></div>
+                <div class="timeline" id="timeline"></div>
+            </div>
+        </section>
 
-        // Populate ecosystem explorer
-        populateSectorFilter();
-        displaySectorInfo(sectorFilter.value);
+        <section id="domains">
+            <span class="anchor-alias" id="shareprice"></span>
+            <div class="container">
+                <div class="section-head">
+                    <p class="kicker">Brands &amp; domains</p>
+                    <h2>🌍 The wider network</h2>
+                    <p>Brand sites linked across the ecosystem. They open in-app here and go live with the launch.</p>
+                </div>
+                <div class="domain-grid" id="domain-grid"></div>
+            </div>
+        </section>
+    </main>
 
-        // Update progress bar
-        updateProgressBar();
-    }
+    <footer>
+        <div class="container">
+            © FAA™ Treaty System™ · Fruitful™ Global Ecosystem · <span id="snapshot">snapshot loading…</span>
+        </div>
+    </footer>
 
-    initialize();
-});
-</script>
+    <script>
+    (function () {
+        'use strict';
+        var COLORS = { built: 'var(--secondary-color)', 'in-app': 'var(--primary-color)', missing: 'var(--border-color-light)' };
+        var LABEL = { built: 'Built', 'in-app': 'In-app', missing: 'Not built yet' };
+        var CLASS = { built: 'ok', 'in-app': 'warn', missing: 'bad' };
 
+        function esc(s) {
+            return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+            });
+        }
+        function $(id) { return document.getElementById(id); }
+        function fmt(n) { return n == null ? '—' : Number(n).toLocaleString('en-ZA'); }
+
+        // Theme (per-viewer convenience only)
+        var btn = $('theme-btn');
+        function applyTheme(dark) { document.body.classList.toggle('dark-mode', dark); btn.textContent = dark ? '☀️' : '🌙'; }
+        var saved = null;
+        try { saved = localStorage.getItem('eco-theme'); } catch (e) {}
+        applyTheme(saved ? saved === 'dark' : (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches));
+        btn.addEventListener('click', function () {
+            var dark = !document.body.classList.contains('dark-mode');
+            applyTheme(dark);
+            try { localStorage.setItem('eco-theme', dark ? 'dark' : 'light'); } catch (e) {}
+        });
+
+        function renderSummary(r) {
+            var total = r.total || 1, done = r.built + r.in_app;
+            var box = $('readiness-summary');
+            box.querySelector('.pct').textContent = Math.round(done * 100 / total) + '%';
+            box.querySelector('.readiness-top span').textContent = 'Launch readiness · ' + done + ' of ' + r.total + ' reachable';
+            box.querySelector('.bar').innerHTML =
+                '<span style="width:' + (r.built * 100 / total) + '%;background:' + COLORS.built + '"></span>' +
+                '<span style="width:' + (r.in_app * 100 / total) + '%;background:' + COLORS['in-app'] + '"></span>';
+            box.querySelector('.legend').innerHTML =
+                '<span><i class="dot" style="background:' + COLORS.built + '"></i>' + r.built + ' built</span>' +
+                '<span><i class="dot" style="background:' + COLORS['in-app'] + '"></i>' + r.in_app + ' in-app</span>' +
+                '<span><i class="dot" style="background:var(--tertiary-color)"></i>' + r.missing + ' not built yet</span>';
+        }
+
+        function renderStats(d) {
+            var i = d.intelligence || {}, c = i.claude || {}, p = i.perplexity || {}, a = i.applications || {}, rp = i.repos || {};
+            var stats = [
+                [d.pages.length, 'portal pages'],
+                [d.sectors.length, 'sectors'],
+                [a.applications, 'applications'],
+                [rp.total, 'repositories'],
+                [c.chats, 'Claude chats indexed'],
+                [p.records, 'Perplexity records indexed']
+            ];
+            $('stats').innerHTML = stats.map(function (s) {
+                return '<div class="stat"><b>' + fmt(s[0]) + '</b><span>' + esc(s[1]) + '</span></div>';
+            }).join('');
+        }
+
+        function renderPortals(pages) {
+            var order = ['omnigrid.html', 'dashboard.html', 'index.html', 'landing_page.html', 'explore.html', 'baobab.html',
+                'baobab_terminal.html', 'omnigrid_zone.html', 'seedwave_admin.html', 'checkout.html', 'draft.html', 'rossouw_nexus.html', 'frontend/index.html'];
+            pages = pages.filter(function (p) { return p.file !== 'ecosystem.html'; }).sort(function (x, y) {
+                var a = order.indexOf(x.file), b = order.indexOf(y.file);
+                return (a < 0 ? 99 : a) - (b < 0 ? 99 : b);
+            });
+            $('portal-grid').innerHTML = pages.map(function (p) {
+                return '<a class="card" href="' + esc(p.file) + '"><h3>' + esc(p.title) + '</h3>' +
+                    '<div class="file">' + esc(p.file) + '</div><div class="badges">' +
+                    (p.noodle ? '<span class="badge ok">Pulse</span>' : '') +
+                    '<span class="badge ' + (p.wired ? 'ok' : 'warn') + '">' + (p.wired ? 'In-app' : 'In-app via viewer') + '</span>' +
+                    '</div></a>';
+            }).join('');
+        }
+
+        function renderSectors(sectors) {
+            $('sector-grid').innerHTML = sectors.map(function (s) {
+                return '<a class="sector" href="sectors/' + esc(s.slug) + '/index.html"><span>' + esc(s.name) + '</span>' +
+                    '<span class="badge ' + CLASS[s.status] + '">' + esc(LABEL[s.status]) + '</span></a>';
+            }).join('');
+        }
+
+        function renderGroups(groups) {
+            $('groups').innerHTML = groups.map(function (g, gi) {
+                var n = g.items.length, b = 0, ia = 0;
+                g.items.forEach(function (it) { if (it.status === 'built') b++; else if (it.status === 'in-app') ia++; });
+                var items = g.items.map(function (it) {
+                    var from = it.linked_from && it.linked_from.length ? 'linked from ' + it.linked_from.join(', ') : '';
+                    return '<div class="item"><span class="p">' + esc(it.page) + (from ? '<span class="from">' + esc(from) + '</span>' : '') + '</span>' +
+                        '<span class="badge ' + CLASS[it.status] + '">' + esc(LABEL[it.status]) + '</span>' +
+                        '<a class="preview" href="' + esc(it.page) + '">Preview →</a></div>';
+                }).join('');
+                return '<details class="group"' + (gi === 0 ? ' open' : '') + '><summary><span class="gid">' + esc(g.id) + '</span>' +
+                    '<span>' + esc(g.name) + '</span><span class="gcount">' + (b + ia) + ' / ' + n + ' reachable</span>' +
+                    '<span class="minibar"><span style="width:' + (b * 100 / n) + '%;background:' + COLORS.built + '"></span>' +
+                    '<span style="width:' + (ia * 100 / n) + '%;background:' + COLORS['in-app'] + '"></span></span></summary>' +
+                    '<div class="items">' + items + '</div></details>';
+            }).join('');
+        }
+
+        function renderIntel(d) {
+            var i = d.intelligence || {}, c = i.claude, p = i.perplexity, a = i.applications, r = i.repos;
+            var cards = [];
+            if (c) cards.push('<div class="card"><h3>Claude</h3><b>' + fmt(c.chats) + ' chats</b><ul><li>' + fmt(c.projects) + ' Projects</li><li>' +
+                fmt(c.artifacts) + ' artifacts</li><li>' + fmt(c.memory_files) + ' memory files</li><li>Export ' + esc(c.export) + '</li></ul></div>');
+            if (p) cards.push('<div class="card"><h3>Perplexity</h3><b>' + fmt(p.records) + ' records</b><ul><li>' + fmt(p.links) +
+                ' relationship links</li><li>' + fmt(p.systems) + ' systems reached</li><li>Intake ' + esc(p.date) + '</li></ul></div>');
+            if (a) cards.push('<div class="card"><h3>Application registry</h3><b>' + fmt(a.applications) + ' applications</b><ul><li>' +
+                fmt(a.instances) + ' instances across platforms</li><li>Every profile and agent in one registry</li></ul></div>');
+            if (r) cards.push('<div class="card"><h3>Repositories</h3><b>' + fmt(r.total) + ' repos</b><ul><li>' + fmt(r.public) + ' public</li><li>' +
+                fmt(r.private) + ' private</li><li>Scanned for live keys</li></ul></div>');
+            $('intel').innerHTML = cards.join('') || '<p class="empty">Snapshot unavailable.</p>';
+            $('timeline').innerHTML = (d.milestones || []).map(function (m) {
+                return '<div class="milestone"><div class="d">' + esc(m.date) + '</div><strong>' + esc(m.title) + '</strong><div>' + esc(m.detail) + '</div></div>';
+            }).join('');
+        }
+
+        function renderDomains(domains) {
+            $('domain-grid').innerHTML = domains.filter(function (x) { return !/github\.com|spotify\.com/.test(x.domain); }).map(function (x) {
+                return '<a class="card" href="https://' + esc(x.domain) + '/"><h3>' + esc(x.domain) + '</h3>' +
+                    '<div class="file">linked from ' + x.pages + ' page' + (x.pages === 1 ? '' : 's') + '</div>' +
+                    '<div class="badges"><span class="badge warn">Goes live at launch</span></div></a>';
+            }).join('');
+        }
+
+        fetch('ecosystem-manifest.json', { cache: 'no-cache' })
+            .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+            .then(function (d) {
+                renderSummary(d.readiness);
+                renderStats(d);
+                renderPortals(d.pages);
+                renderSectors(d.sectors);
+                renderGroups(d.groups);
+                renderIntel(d);
+                renderDomains(d.domains);
+                $('snapshot').textContent = 'snapshot ' + d.generated_at.slice(0, 10);
+            })
+            .catch(function () {
+                $('readiness-summary').querySelector('.pct').textContent = '—';
+                $('snapshot').textContent = 'snapshot unavailable';
+                ['portal-grid', 'sector-grid', 'groups', 'intel', 'domain-grid'].forEach(function (id) {
+                    $(id).innerHTML = '<p class="empty">Ecosystem snapshot unavailable right now.</p>';
+                });
+            });
+    })();
+    </script>
+    <script src="omnigrid-app.js"></script>
 </body>
 </html>
