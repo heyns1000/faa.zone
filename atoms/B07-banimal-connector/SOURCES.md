@@ -11,3 +11,4 @@
 | 5 | 2026-08-30 | banimal | history | `wordpress-plugin/banimal-ecosystem-connector/landing.html` | `fa4b2d2f` | Banimal Connector | 25187 | 15 | 1 | 44.5 |
 | 6 | 2026-08-30 | banimal | history | `wordpress-plugin/banimal-ecosystem-connector/landing.html` | `9b863952` | Banimal Connector | 24999 | 14 | 1 | 43.5 |
 | 7 | 2026-08-30 | banimal | history | `wordpress-plugin/banimal-ecosystem-connector/landing.html` | `1ba02a66` | Banimal Connector | 19860 | 13 | 0 | 40.0 |
+| 8 | 2026-09-26 | fruitful-superagent | main | `claude/artifacts/banimal-connector-cab2e05e/index.html` | `7d7fe31f` | Banimal™ Connector | 320424 | 15 | 3 | 76.0 |
