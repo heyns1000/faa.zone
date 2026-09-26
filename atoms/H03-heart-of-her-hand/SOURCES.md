@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2026-08-20 | FGP--samfox | main | `public/heart-of-her-hand/index.html` | `f4aa9e11` | Heart of Her Hand | 380208 | 13 | 1 | 70.0 |
+| 2 | 2026-09-26 | fruitful-superagent | main | `claude/artifacts/heart-of-her-hand-4b12c2d6/index.html` | `c3238aa3` | Heart of Her Hand | 380518 | 13 | 1 | 70.0 |
