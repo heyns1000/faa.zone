@@ -6,3 +6,4 @@
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2026-08-30 | banimal | skill-training-global-ci-rollout | `docs/connector-preview.html` | `514e2b66` | Banimal Connector Preview | 27584 | 12 | 2 | 44.8 |
 | 2 | 2026-08-30 | banimal | claude/banimal2-deploy | `docs/connector-preview.html` | `5e8a3dfa` | Banimal Connector Preview | 24864 | 11 | 0 | 39.5 |
+| 3 | 2026-09-26 | fruitful-superagent | main | `claude/artifacts/banimal-connector-preview-30f65eec/index.html` | `9eaf40c2` | Banimal Connector Preview | 316482 | 11 | 2 | 71.0 |
