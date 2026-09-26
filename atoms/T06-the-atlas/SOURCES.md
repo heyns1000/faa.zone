@@ -13,3 +13,4 @@
 | 7 | 2026-08-30 | banimal | history | `docs/atlas/seedwave-atlas.html` | `6dbe3d8d` | The Seedwave Atlas | 27402 | 9 | 0 | 36.7 |
 | 8 | 2026-09-26 | banimal | history | `docs/atlas/seedwave-atlas.html` | `10e3989e` | The Seedwave Atlas | 30201 | 9 | 2 | 41.0 |
 | 9 | 2026-09-26 | fruitful-superagent | main | `claude/artifacts/the-seedwave-atlas-c408e26d/index.html` | `41e58f29` | The Seedwave Atlas | 323724 | 9 | 2 | 68.0 |
+| 10 | 2026-09-26 | fruitful-superagent | main | `claude/artifacts/the-seedwave-atlas-copy-a3e76b58/index.html` | `2744d712` | The Seedwave Atlas (Copy) | 323713 | 9 | 2 | 68.0 |
