@@ -19,3 +19,4 @@
 | 13 | 2026-09-14 | buildnest | under-r50-catalogue | `attached_assets/baobab_terminal_1756061197024.html` | `d529fb95` | Portal.faa.zone - Your Central Access Hub | 133023 | 88 | 17 | 170.4 |
 | 14 | 2026-09-26 | fruitful | main | `baobab.html` | `77c87362` | Portal.faa.zone - Your Central Access Hub | 144095 | 98 | 19 | 185.5 |
 | 15 | 2026-09-26 | fruitful | claude/wire-all-portals | `baobab_terminal.html` | `67dcb957` | Portal.faa.zone - Your Central Access Hub | 180486 | 84 | 24 | 186.7 |
+| 16 | 2026-09-26 | fruitful | claude/remove-live-keys | `baobab_terminal.html` | `2a569bf7` | Portal.faa.zone - Your Central Access Hub | 180193 | 84 | 24 | 186.7 |
