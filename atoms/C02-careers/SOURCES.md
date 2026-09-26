@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2026-09-05 | omnigrid | main | `public/careers/index.html` | `d6b3b861` | 🌍 FAA.ZONE™ Careers | 28284 | 35 | 6 | 95.8 |
+| 2 | 2026-09-26 | fruitful-superagent | main | `claude/artifacts/faazone-careers-1d65b3b7/index.html` | `960f820a` | FAA.ZONE Careers | 31270 | 15 | 6 | 77.1 |
