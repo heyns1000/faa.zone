@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-09-06 | ThesisGallery | main | `attached_assets/templates_1757168491110.html` | `24d3fe5a` | Templates – CodeNest™ | 2554 | 6 | 0 | 31.3 |
+| 2 | 2026-09-27 | fruitful | main | `sectors/ai-logic/codenest/templates.html` | `4a42728b` | Templates – CodeNest™ | 2616 | 6 | 0 | 31.3 |
