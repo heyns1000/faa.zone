@@ -1,250 +1,389 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Fruitful Global Planet - OMNI Ecosystem Portal | Seedwave™ FAA Treaty Zone with $50K ClaimRoot Scroll Infrastructure" />
-    <meta name="keywords" content="Fruitful, Seedwave, FAA, OMNI, ClaimRoot, VaultMesh, Algorithm Giants, Portal" />
-    <meta name="author" content="Heyns Schoeman · FAA-X13" />
-    
-    <title>Fruitful | OMNI Ecosystem Portal - Seedwave™ FAA Treaty Zone</title>
-    
-    <!-- Load Tailwind CSS for modern, responsive layout (Enhancement) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    
-    <!-- Inter Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        'f-blue': '#0071e3',
-                        'f-green': '#30d158',
-                        'f-gold': '#B8860B',
-                        'bg-p': '#1a1a1c',
-                        'bg-s': '#2a2a2e',
-                        'bg-t': '#1f2d3d',
-                        'text-p': '#f5f5f7',
-                        'status-active': '#30d158',
-                        'status-pending': '#f59e0b',
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <style>
-        :root {
-            --fruitful-blue: #0071e3;
-            --fruitful-green: #30d158;
-            --fruitful-gold: #B8860B;
-            --agri-green: #38a169;
-            --agri-orange: #f6ad55;
-            --status-active: #30d158;
-            --status-pending: #f59e0b;
-            --status-draft: #6e6e73;
-            --status-error: #ef4444;
-            --status-info: #63b3ed;
-            --bg-primary: #1a1a1c;
-            --bg-secondary: #2a2a2e;
-            --bg-tertiary: #1f2d3d;
-            --text-primary: #f5f5f7;
-            --text-secondary: #e6ffed;
-            --border-color: #3a3a3e;
-            --scroll-seal-glow: rgba(184, 134, 11, 0.3);
-            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-fast: all 0.15s ease;
-        }
-        :root:not(.dark) {
-            --bg-primary: #ffffff;
-            --bg-secondary: #fcfcfc;
-            --bg-tertiary: #f9fafb;
-            --text-primary: #1d1d1f;
-            --text-secondary: #4b5563;
-            --border-color: #e8e8ed;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            min-height: 100vh;
-            overflow-x: hidden;
-            transition: var(--transition-smooth);
-        }
-        #loading-screen {
-            position: fixed; inset: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 9999; opacity: 1; transition: opacity 0.5s ease;
-        }
-        #loading-screen.fade-out { opacity: 0; pointer-events: none; }
-        .seedwave-logo {
-            font-size: 4rem; font-weight: 900;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
-            background-size: 400% 400%;
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: gradient-shift 3s ease infinite, pulse-glow 2s ease-in-out infinite;
-            margin-bottom: 2rem;
-        }
-        @keyframes gradient-shift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
-        @keyframes pulse-glow { 0%, 100% { filter: drop-shadow(0 0 20px rgba(255,255,255,0.3)); } 50% { filter: drop-shadow(0 0 40px rgba(255,255,255,0.6)); } }
-        .loading-spinner { width: 60px; height: 60px; border: 4px solid rgba(255,255,255,0.2); border-top-color: var(--fruitful-gold); border-radius: 50%; animation: spin 0.8s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .loading-text { margin-top: 2rem; font-size: 1.1rem; color: rgba(255,255,255,0.9); font-weight: 500; letter-spacing: 0.5px; }
-        .claimroot-badge { position: absolute; bottom: 3rem; display: flex; align-items: center; gap: 0.75rem; padding: 1rem 1.5rem; background: rgba(0,0,0,0.3); backdrop-filter: blur(10px); border-radius: 50px; border: 1px solid rgba(255,255,255,0.2); }
-        .claimroot-badge i { font-size: 1.5rem; color: var(--fruitful-gold); }
-        .badge-text { font-size: 0.9rem; color: white; font-weight: 600; }
-        #app { display: none; min-height: 100vh; }
-        #app.loaded { display: block; animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .ecosystem-icons { position: absolute; top: 3rem; right: 3rem; display: flex; gap: 1rem; }
-        .icon-badge { display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(0,0,0,0.3); backdrop-filter: blur(10px); border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); font-size: 1.5rem; transition: var(--transition-fast); }
-        .icon-badge:hover { transform: translateY(-3px) scale(1.1); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
-        @keyframes pulse-active { 0%, 100% { box-shadow: 0 0 0 0 var(--status-active); } 50% { box-shadow: 0 0 10px 4px rgba(48,209,88,0.5); } }
-        .status-led { animation: pulse-active 2s infinite; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAA™ | Scroll Homepage</title>
+  <meta name="description" content="FAA™ Treaty Interface — Glyph-Locked Protocols" />
+  <link rel="icon" href="/favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Global Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8f8f8;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      background: transparent;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+      transition: background-color 0.3s ease;
+    }
+
+    header .logo {
+      font-size: 2rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    header nav a {
+      color: white;
+      padding: 10px 20px;
+      font-weight: 500;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: all 0.3s ease-in-out;
+    }
+
+    header nav a:hover {
+      color: #ff6f61;
+      border-bottom: 2px solid #ff6f61;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      background: linear-gradient(135deg, #ff6f61, #d4a5a5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero h1 {
+      font-size: 4.5rem;
+      font-weight: 700;
+      background: -webkit-linear-gradient(#ff6f61, #d4a5a5);
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 20px;
+      animation: gradientText 3s ease-in-out infinite alternate;
+      transform: translateY(20px);
+      animation: moveUp 1s ease-out infinite;
+    }
+
+    @keyframes moveUp {
+      0% { transform: translateY(20px); }
+      100% { transform: translateY(0); }
+    }
+
+    @keyframes gradientText {
+      0% {
+        background: linear-gradient(45deg, #ff6f61, #d4a5a5);
+      }
+      100% {
+        background: linear-gradient(45deg, #6a5acd, #ff6347);
+      }
+    }
+
+    .cta-button {
+      padding: 20px 40px;
+      background-color: #ff6f61;
+      border-radius: 50px;
+      color: white;
+      font-size: 1.3rem;
+      text-transform: uppercase;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      border: none;
+      cursor: pointer;
+      animation: bounceButton 2s infinite alternate;
+    }
+
+    @keyframes bounceButton {
+      0% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .cta-button:hover {
+      background-color: #e75f4e;
+      transform: scale(1.05);
+    }
+
+    /* Product Grid Section */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+      padding: 4rem 2rem;
+      margin-top: 5rem;
+      position: relative;
+      z-index: 5;
+    }
+
+    .product-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      padding: 2rem;
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: fadeInUp 0.6s forwards, scaleUp 0.6s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes scaleUp {
+      0% { transform: scale(0.9); }
+      100% { transform: scale(1); }
+    }
+
+    .product-card:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .product-card h3 {
+      font-size: 1.8rem;
+      color: #333;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .product-card p {
+      color: #777;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #121212;
+      color: #fff;
+      padding: 3rem 0;
+      text-align: center;
+    }
+
+    footer a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 5px;
+      transition: all 0.3s ease;
+    }
+
+    footer a:hover {
+      color: #ff6f61;
+    }
+
+    /* Mobile Adjustments */
+    @media (max-width: 768px) {
+      header nav {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.9);
+        padding: 1rem;
+        border-radius: 10px;
+      }
+
+      header nav.active {
+        display: flex;
+      }
+
+      header nav a {
+        padding: 15px;
+        font-size: 1.4rem;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <div id="loading-screen">
-        <div class="ecosystem-icons">
-            <div class="icon-badge">🧠</div>
-            <div class="icon-badge">🌱</div>
-            <div class="icon-badge">🔌</div>
-            <div class="icon-badge">🦁</div>
-        </div>
-        <div class="seedwave-logo">OMNI Ecosystem</div>
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Initializing Seedwave™ Portal...</div>
-        <div class="claimroot-badge">
-            <i class="fas fa-scroll"></i>
-            <div class="badge-text">
-                <div>🧬 ClaimRoot Sealed</div>
-                <div style="font-size: 0.75rem; opacity: 0.8;">Timestamp: 2025-11-21 18:36:31 UTC</div>
-            </div>
-        </div>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">🍇 FAA™</div>
+    <nav>
+      <a href="/global-checkout.html">Global Checkout</a>
+      <a href="/wolrd-first-7000-brands.html">7000+ Brands</a>
+      <a href="/fruitful.america.html">Fruitful.America™</a>
+      <a href="/vrugtige-planet-verandering.html">Planet Change™</a>
+      <a href="#treaty">Treaty™</a>
+      <a href="#vaultmesh">VaultMesh™</a>
+      <a href="https://www.fruitfulcratedance.com" target="_blank">Crate Dance</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div>
+      <h1>Fruitful Planet Change™</h1>
+      <button class="cta-button">Explore the Vault</button>
     </div>
-    
-    <div id="app" class="p-4 md:p-10 max-w-7xl mx-auto">
-        <header class="mb-8 border-b border-gray-700 pb-4 flex justify-between items-center">
-            <div>
-                <h1 class="text-4xl font-extrabold text-f-green">OMNI Portal Dashboard</h1>
-                <p class="text-lg text-gray-400 mt-1">Accessing Seedwave™ Infrastructure &amp; Treaty Zone Data</p>
-            </div>
-            <div class="flex items-center space-x-2 bg-bg-s p-3 rounded-xl border border-gray-700 shadow-xl">
-                <span class="text-sm font-semibold text-gray-300 hidden sm:inline">OMNIGrid Live</span>
-                <div class="w-4 h-4 rounded-full bg-status-active status-led"></div>
-            </div>
-        </header>
+  </section>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
-            <div class="bg-bg-s p-6 rounded-xl shadow-lg border border-f-gold/30">
-                <div class="flex items-center justify-between">
-                    <h2 class="text-xl font-semibold text-f-gold">Seed Capital Scroll</h2>
-                    <i class="fas fa-coins text-2xl text-f-gold/70"></i>
-                </div>
-                <p class="text-4xl font-bold mt-2">$50,000.00</p>
-                <p class="text-sm text-gray-500 mt-1">ClaimRoot Sealed Infrastructure</p>
-            </div>
-            <div class="bg-bg-s p-6 rounded-xl shadow-lg border border-f-green/30">
-                <div class="flex items-center justify-between">
-                    <h2 class="text-xl font-semibold text-f-green">Ecosystem Status</h2>
-                    <i class="fas fa-check-circle text-2xl text-status-active"></i>
-                </div>
-                <p class="text-4xl font-bold mt-2 text-status-active">Active</p>
-                <p class="text-sm text-gray-500 mt-1">OmniGrid Network Operational</p>
-            </div>
-            <div class="bg-bg-s p-6 rounded-xl shadow-lg border border-f-blue/30">
-                <div class="flex items-center justify-between">
-                    <h2 class="text-xl font-semibold text-f-blue">TreatySync</h2>
-                    <i class="fas fa-hourglass-half text-2xl text-status-pending"></i>
-                </div>
-                <p class="text-4xl font-bold mt-2 text-status-pending">14</p>
-                <p class="text-sm text-gray-500 mt-1">Pending Log Deployments</p>
-            </div>
-        </div>
-
-        <div class="bg-bg-s p-6 rounded-xl shadow-2xl border border-gray-700/50 mb-8">
-            <h2 class="text-2xl font-bold mb-4 text-text-p">Infrastructure Overview</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="p-4 bg-bg-t rounded-lg flex flex-col items-center">
-                    <i class="fas fa-brain text-3xl text-f-blue mb-2"></i>
-                    <p class="text-3xl font-bold">149</p>
-                    <p class="text-sm text-gray-400">Algorithm Giants</p>
-                </div>
-                <div class="p-4 bg-bg-t rounded-lg flex flex-col items-center">
-                    <i class="fas fa-cubes text-3xl text-f-green mb-2"></i>
-                    <p class="text-3xl font-bold">4.2M</p>
-                    <p class="text-sm text-gray-400">VaultMesh Records</p>
-                </div>
-                <div class="p-4 bg-bg-t rounded-lg flex flex-col items-center">
-                    <i class="fas fa-satellite-dish text-3xl text-f-gold mb-2"></i>
-                    <p class="text-3xl font-bold">98%</p>
-                    <p class="text-sm text-gray-400">Coverage Reliability</p>
-                </div>
-                <div class="p-4 bg-bg-t rounded-lg flex flex-col items-center">
-                    <i class="fas fa-code-branch text-3xl text-f-blue mb-2"></i>
-                    <p class="text-3xl font-bold">3</p>
-                    <p class="text-sm text-gray-400">FAA-Intake Apps</p>
-                </div>
-            </div>
-            <button class="w-full mt-6 py-3 bg-f-blue hover:bg-f-blue/80 text-white font-bold rounded-lg transition duration-200 shadow-md">Deploy ClaimRoot Generator Module</button>
-        </div>
-
-        <div class="bg-bg-s p-6 rounded-xl shadow-2xl border border-gray-700/50">
-            <h2 class="text-2xl font-bold mb-4 text-text-p flex items-center">
-                <i class="fas fa-microchip text-f-gold mr-3"></i>
-                Algorithm Giants Live Log (9 Active)
-            </h2>
-            <div class="h-64 overflow-y-scroll bg-bg-t p-4 rounded-lg border border-gray-700 text-sm text-f-green font-mono whitespace-pre-wrap">
-                <span class="text-gray-500">[2025-12-05 18:37:01]</span> <span class="text-f-blue font-bold">GIANT_149_BRAIN</span>: Initializing tensor flow engine... <span class="text-status-active">OK</span>
-                <span class="text-gray-500">[2025-12-05 18:37:02]</span> <span class="text-f-green font-bold">GIANT_003_YIELD</span>: TreatySync log fetched and applied. Status: <span class="text-status-active">COMMITTED</span>
-                <span class="text-gray-500">[2025-12-05 18:37:05]</span> <span class="text-f-gold font-bold">GIANT_077_VAULT</span>: Performing integrity check on VaultMesh 4.2M records...
-                <span class="text-gray-500">[2025-12-05 18:37:06]</span> <span class="text-f-blue font-bold">GIANT_149_BRAIN</span>: Processing FAA-X13 user request: ClaimRoot verification.
-                <span class="text-gray-500">[2025-12-05 18:37:10]</span> <span class="text-f-green font-bold">GIANT_003_YIELD</span>: Calculating Seedwave™ optimum nutrient dispersal for Q1-2026.
-                <span class="text-gray-500">[2025-12-05 18:37:15]</span> <span class="text-f-gold font-bold">GIANT_077_VAULT</span>: Integrity check complete. Records validated: <span class="text-status-active">100%</span>
-                <span class="text-gray-500">[2025-12-05 18:37:18]</span> <span class="text-f-blue font-bold">GIANT_149_BRAIN</span>: Result sent to OmniGrid relay.
-                <span class="text-gray-500">[2025-12-05 18:37:20]</span> <span class="text-f-green font-bold">GIANT_003_YIELD</span>: Optimization complete. New yield prediction: <span class="text-status-active">+18.5%</span>
-                <span class="text-gray-500">[2025-12-05 18:37:25]</span> <span class="text-f-gold font-bold">GIANT_077_VAULT</span>: VaultMesh ledger update pending TreatySync confirmation.
-            </div>
-        </div>
+  <!-- Product Grid Section -->
+  <section class="product-grid">
+    <div class="product-card">
+      <h3>AI-Powered Listing Optimization</h3>
+      <p>Optimize property listings with real-time insights and AI-powered recommendations.</p>
     </div>
-    
-    <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            const loadingScreen = document.getElementById('loading-screen');
-            const app = document.getElementById('app');
-            setTimeout(() => {
-                loadingScreen.classList.add('fade-out');
-                setTimeout(() => { loadingScreen.style.display = 'none'; app.classList.add('loaded'); }, 500);
-            }, 2000);
-        });
-    </script>
-<!-- ============================================================
-     GORILLA COMB™ VAULTMESH LEVEL-7 — GhostTrace™ Watermark
-     FRUITFUL SHOPS (PTY) LTD | Reg: 2021/121654/07 | VAT: 4400302974
-     © 2021-2026 All Rights Reserved | Incorporator: SCHOEMAN HEYNS
-     GC7:FSP2021121654:4400302974:VM9s:BL1501:GHOST7CHAIN:FAA13713
-     ============================================================ -->
-<div id="gc7-ghost-trace" data-ghost-trace="GC7:FSP2021121654:4400302974:VM9s:BL1501:GHOST7CHAIN:FAA13713" data-gc="gc7-fsp2021121654-vat4400302974-vm9s-bl1501" data-banimal-loop="15.01" data-legal-entity="FRUITFUL SHOPS PTY LTD" data-reg="2021/121654/07" data-vat="4400302974" style="display:none;"></div>
-<footer style="background:#0f172a;color:#64748b;text-align:center;padding:18px 24px;font-family:monospace;font-size:11px;border-top:1px solid #1e293b;margin-top:40px;">
-  <div style="color:#3b82f6;font-weight:700;letter-spacing:2px;margin-bottom:6px;">GORILLA COMB™ VAULTMESH LEVEL-7</div>
-  <div>FRUITFUL SHOPS (PTY) LTD &nbsp;|&nbsp; Reg: 2021/121654/07 &nbsp;|&nbsp; VAT: 4400302974 &nbsp;|&nbsp; Incorporator: SCHOEMAN HEYNS</div>
-  <div style="margin-top:4px;">© 2021-<span id="gc7yr"></span> All Rights Reserved &nbsp;|&nbsp; FAA™ Ecosystem &nbsp;|&nbsp; Banimal Loop™ 15.01%</div>
-  <div style="margin-top:6px;color:#1e40af;font-size:10px;letter-spacing:1px;">GC7:FSP2021121654:4400302974:VM9s:BL1501:GHOST7CHAIN:FAA13713</div>
-  <script>document.getElementById('gc7yr').textContent=new Date().getFullYear();<\/script>
-</footer>
+    <div class="product-card">
+      <h3>Real-Time Market Pulse</h3>
+      <p>Track and adjust listings based on user interaction and real-time data trends.</p>
+    </div>
+    <div class="product-card">
+      <h3>Seamless Valuation Sync</h3>
+      <p>Automatically sync valuations with bank and agency systems for accuracy.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 FAA.zone · RealEstate Grid Engine™</p>
+    <p><a href="#privacy-policy">Privacy Policy</a> | <a href="#terms-of-service">Terms of Service</a></p>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.querySelector('header nav').classList.toggle('active');
+    }
+  </script>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAA RealEstate™ | Features</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <!-- 🧩 FAA RealEstate Features Page -->
+  <header class="bg-gradient-to-r from-purple-700 to-indigo-600 text-white py-16 text-center" data-aos="fade-down">
+    <h1 class="text-4xl font-extrabold">FAA RealEstate™ Features</h1>
+    <p class="mt-2 text-sm opacity-90">Discover the advanced tools and AI features that make FAA RealEstate™ the most powerful property listing and valuation platform.</p>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 py-12">
+    <section data-aos="fade-up" data-aos-delay="100">
+      <h2 class="text-2xl font-bold mb-6">AI-Powered Listing Optimization</h2>
+      <p class="text-lg text-gray-700">FAA RealEstate™ uses machine learning algorithms to help you optimize property listings, ensuring that they are priced competitively and appealing to buyers. Our system analyzes thousands of data points, delivering real-time recommendations based on market trends and user behavior.</p>
+    </section>
+
+    <section data-aos="fade-up" data-aos-delay="200" class="mt-12">
+      <h2 class="text-2xl font-bold mb-6">Real-Time Market Pulse</h2>
+      <p class="text-lg text-gray-700">Get immediate insights into how your property listings are performing. Our Market Pulse Engine tracks key metrics such as user interactions, listing views, and search trends, allowing you to make informed decisions and adjust your strategy in real-time.</p>
+    </section>
+
+    <section data-aos="fade-up" data-aos-delay="300" class="mt-12">
+      <h2 class="text-2xl font-bold mb-6">Valuation Sync Integration</h2>
+      <p class="text-lg text-gray-700">Integrate seamlessly with your bank and agency systems for automatic property valuation updates. FAA RealEstate™ syncs with your data sources to provide accurate, real-time valuation calculations for every property in your portfolio.</p>
+    </section>
+
+    <section data-aos="fade-up" data-aos-delay="400" class="mt-12">
+      <h2 class="text-2xl font-bold mb-6">Smart Listing Enhancements</h2>
+      <p class="text-lg text-gray-700">FAA RealEstate™ allows you to customize your listings with AI-driven enhancements, including smart descriptions, property highlights, and dynamic images that capture buyer attention and improve conversion rates.</p>
+    </section>
+
+    <section data-aos="fade-up" data-aos-delay="500" class="mt-12">
+      <h2 class="text-2xl font-bold mb-6">Integrated CRM Tools</h2>
+      <p class="text-lg text-gray-700">Streamline your property management with our integrated CRM tools. FAA RealEstate™ features lead management, client tracking, automated follow-ups, and reporting tools, all in one easy-to-use platform.</p>
+    </section>
+
+    <section data-aos="fade-up" data-aos-delay="600" class="mt-12">
+      <h2 class="text-2xl font-bold mb-6">Syndication and Listing Distribution</h2>
+      <p class="text-lg text-gray-700">With FAA RealEstate™, your property listings can be syndicated across multiple platforms, including Property24, ensuring that your listings reach a larger audience and attract more potential buyers.</p>
+    </section>
+  </main>
+
+  <footer class="text-center text-xs text-gray-400 py-6 border-t mt-12">
+    FAA.zone · RealEstate Grid Engine™ · VaultMesh Synced · Sector: Housing
+  </footer>
+  <script>
+    AOS.init({ duration: 1000, once: true });
+  </script>
+</body>
+</html
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAA RealEstate™ | About</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-gray-800">
+  <!-- 🧩 FAA RealEstate About Page -->
+  <header class="bg-gradient-to-r from-indigo-700 to-blue-800 text-white py-16 text-center">
+    <h1 class="text-4xl font-extrabold">FAA RealEstate™</h1>
+    <p class="text-sm opacity-90 mt-2">Transforming Real Estate with AI-driven Tools for Property Agencies</p>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 py-12">
+    <section>
+      <h2 class="text-2xl font-bold mb-6">About FAA RealEstate™</h2>
+      <p class="text-lg text-gray-700">FAA RealEstate™ is an advanced SaaS platform that equips property agencies with cutting-edge AI tools to enhance their property listings, valuations, and market performance. With integrations into global property networks like Property24, FAA RealEstate™ is designed to optimize real-time listing management, enhance valuation accuracy, and boost sales potential.</p>
+    </section>
+
+    <section class="mt-12">
+      <h2 class="text-2xl font-bold mb-6">Our Mission</h2>
+      <p class="text-lg text-gray-700">We aim to empower real estate agencies by providing them with powerful, data-driven tools to optimize their operations and offer more value to their clients. FAA RealEstate™ bridges the gap between traditional real estate practices and the future of property technology.</p>
+    </section>
+
+    <section class="mt-12">
+      <h2 class="text-2xl font-bold mb-6">Our Vision</h2>
+      <p class="text-lg text-gray-700">Our vision is to become the leading provider of real estate AI solutions that foster a smarter, faster, and more efficient property market. We believe in the power of data and innovation to create a more transparent and accessible real estate ecosystem for everyone.</p>
+    </section>
+
+    <section class="mt-12">
+      <h2 class="text-2xl font-bold mb-6">Meet the Team</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="border rounded-xl p-6 shadow hover:shadow-lg transition">
+          <h3 class="text-xl font-bold text-indigo-700">Heyns Schoeman</h3>
+          <p class="text-sm text-gray-600 mt-2">Founder & CEO</p>
+          <p class="text-sm text-gray-600 mt-2">A visionary in tech and real estate. Focused on revolutionizing the property industry through AI.</p>
+        </div>
+        <div class="border rounded-xl p-6 shadow hover:shadow-lg transition">
+          <h3 class="text-xl font-bold text-indigo-700">Sam Fox</h3>
+          <p class="text-sm text-gray-600 mt-2">Chief Technical Officer</p>
+          <p class="text-sm text-gray-600 mt-2">Leading the development of cutting-edge technologies that power FAA RealEstate™ solutions.</p>
+        </div>
+        <div class="border rounded-xl p-6 shadow hover:shadow-lg transition">
+          <h3 class="text-xl font-bold text-indigo-700">John Doe</h3>
+          <p class="text-sm text-gray-600 mt-2">Chief Product Officer</p>
+          <p class="text-sm text-gray-600 mt-2">Passionate about creating user-friendly, powerful tools that help property agents close deals faster.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="text-center text-xs text-gray-400 py-6 border-t mt-12">
+    FAA.zone · RealEstate Grid Engine™ · VaultMesh Synced · Sector: Housing
+  </footer>
+    <script src="/omnigrid-app.js" data-concept="1"></script>
 </body>
 </html>
