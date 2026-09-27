@@ -1,215 +1,219 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ToyNest — Brand &amp; CI Guide (v1 draft)</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --paper:#EFE7D8; --paper-2:#F7F2E8; --ink:#241C12; --ink-2:#5C4D3A; --line:#D8CCB6;
-    --leaf:#3C6B45; --leaf-ink:#234027; --sun:#D9952B;
-    --t1:#C0473B; --t2:#3C6FA6; --t3:#4E8D5B; --t4:#D98324; --t5:#E0B53A; --t6:#6B7280;
-    --shadow:0 1px 0 #fff inset, 0 10px 30px rgba(36,28,18,.10);
-  }
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,system-ui,sans-serif;line-height:1.55}
-  .page{max-width:900px;margin:0 auto;padding:34px 26px}
-  h1,h2,h3,.wm{font-family:"Bricolage Grotesque",sans-serif;letter-spacing:-.01em}
-  .eyebrow{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:11px;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--sun);margin:0 0 12px}
-  section{border-top:2px solid var(--ink);padding:30px 0}
-  section:first-of-type{border-top:none}
-
-  /* cover */
-  .cover{min-height:66vh;display:flex;flex-direction:column;justify-content:center;border-top:none}
-  .mark{width:64px;height:64px;border-radius:16px;background:linear-gradient(150deg,var(--leaf),var(--leaf-ink));
-    position:relative;box-shadow:var(--shadow);margin-bottom:26px}
-  .mark::before{content:"";position:absolute;inset:0;border-radius:16px;
-    background:linear-gradient(transparent 31%,rgba(255,255,255,.4) 31% 35%,transparent 35%),
-      linear-gradient(90deg,transparent 31%,rgba(255,255,255,.4) 31% 35%,transparent 35%)}
-  .cover .wm{font-size:74px;font-weight:800;line-height:.9;margin:0}
-  .cover .tm{font-size:22px;color:var(--ink-2);font-weight:700}
-  .cover .sub{font-size:16px;color:var(--ink-2);margin-top:16px;max-width:52ch}
-  .cover .meta{margin-top:34px;font-size:12.5px;color:var(--ink-2);display:flex;gap:26px;flex-wrap:wrap}
-  .cover .meta b{color:var(--ink);font-weight:600}
-
-  h2{font-size:26px;font-weight:800;margin:0 0 6px}
-  .lead{color:var(--ink-2);font-size:14px;margin:0 0 22px;max-width:64ch}
-
-  /* logo */
-  .logo-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
-  .logo-box{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:26px;
-    display:flex;align-items:center;gap:16px;box-shadow:var(--shadow);min-height:120px}
-  .logo-box.dark{background:var(--ink)}
-  .logo-box .lk{display:flex;align-items:center;gap:12px}
-  .logo-box .m2{width:38px;height:38px;border-radius:10px;background:linear-gradient(150deg,var(--leaf),var(--leaf-ink));position:relative;flex:none}
-  .logo-box .m2::before{content:"";position:absolute;inset:0;border-radius:10px;
-    background:linear-gradient(transparent 31%,rgba(255,255,255,.4) 31% 35%,transparent 35%),
-      linear-gradient(90deg,transparent 31%,rgba(255,255,255,.4) 31% 35%,transparent 35%)}
-  .logo-box .name{font-family:"Bricolage Grotesque";font-weight:800;font-size:26px}
-  .logo-box.dark .name{color:var(--paper-2)}
-  .slot{border:1.5px dashed #b9a98c;border-radius:12px;padding:16px;font-size:11.5px;color:var(--ink-2);
-    background:repeating-linear-gradient(45deg,transparent,transparent 9px,rgba(185,169,140,.08) 9px,rgba(185,169,140,.08) 18px);text-align:center}
-  .slot code{font-size:11px;color:var(--leaf-ink)}
-
-  .dd{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
-  .dd h3{font-size:12px;text-transform:uppercase;letter-spacing:.05em;margin:0 0 8px}
-  .dd ul{margin:0;padding:0;list-style:none;font-size:13px;color:var(--ink-2)}
-  .dd li{padding:4px 0 4px 20px;position:relative}
-  .dd .do li::before{content:"✓";position:absolute;left:0;color:var(--leaf);font-weight:700}
-  .dd .no li::before{content:"✕";position:absolute;left:0;color:var(--t1);font-weight:700}
-
-  /* colour */
-  .sw-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-  .sw{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--paper-2);box-shadow:var(--shadow)}
-  .sw .chip{height:74px}
-  .sw .meta{padding:10px 12px}
-  .sw .meta b{font-size:12.5px;display:block}
-  .sw .meta span{font-size:11px;color:var(--ink-2)}
-  .sw .hex{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--ink)}
-
-  /* type */
-  .type-spec{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:22px 24px;box-shadow:var(--shadow)}
-  .type-spec .d1{font-family:"Bricolage Grotesque";font-weight:800;font-size:44px;line-height:1;margin:0}
-  .type-spec .d2{font-family:"Bricolage Grotesque";font-weight:700;font-size:22px;margin:14px 0 2px}
-  .type-spec p{font-size:14px;color:var(--ink-2);margin:6px 0 0}
-  .type-note{display:flex;gap:26px;flex-wrap:wrap;margin-top:16px;font-size:12.5px;color:var(--ink-2)}
-  .type-note b{color:var(--ink)}
-
-  /* cube device */
-  .faces{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:6px 0 16px}
-  .face{border-radius:12px;padding:12px 10px;color:#fff;min-height:88px;display:flex;flex-direction:column;justify-content:space-between}
-  .face b{font-family:"Bricolage Grotesque";font-weight:800;font-size:15px}
-  .face span{font-size:10.5px;opacity:.92;line-height:1.25}
-
-  /* applications */
-  .app{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:12px;box-shadow:var(--shadow)}
-  .app .lockup{font-family:"Bricolage Grotesque";font-weight:800;font-size:19px;display:flex;align-items:center;gap:10px}
-  .app .dom{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;color:var(--leaf-ink);background:#e2ecdf;padding:2px 8px;border-radius:6px}
-  .app p{font-size:13px;color:var(--ink-2);margin:8px 0 0}
-
-  .note{font-size:12px;color:var(--ink-2);border:1px solid var(--line);background:var(--paper-2);border-radius:12px;padding:14px 16px;margin-top:22px}
-
-  @media (max-width:720px){
-    .cover .wm{font-size:52px}.logo-row,.dd{grid-template-columns:1fr}.sw-grid{grid-template-columns:repeat(2,1fr)}
-    .faces{grid-template-columns:repeat(3,1fr)}
-  }
-  @media print{
-    body{background:#fff}.page{max-width:none}section{break-inside:avoid}
-    .cover{min-height:auto;padding-top:20px}
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ToyNest™ — Fruitful Smart Toys™</title>
+  <meta name="description" content="Fruitful Smart Toys™ — connected, screen-optional toys designed for hands-on discovery, built with safety and durability first." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="page">
 
-  <section class="cover">
-    <div class="mark" aria-hidden="true"></div>
-    <p class="wm cover-wm" style="margin:0"><span class="wm" style="font-size:74px;font-weight:800">ToyNest</span></p>
-    <div class="tm">Fruitful Smart Toys™</div>
-    <p class="sub">Brand &amp; Corporate Identity Guide — the core rules for how ToyNest looks, reads, and applies across the seedwave network.</p>
-    <div class="meta">
-      <div><b>Version</b> · v1 working draft</div>
-      <div><b>Owner</b> · Fruitful Shops (Pty) Ltd</div>
-      <div><b>Subnode</b> · toynest.seedwave.faa.zone</div>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a href="#top" class="brand">
+        <span class="toy-mark" aria-hidden="true">🧸</span>
+        Fruitful <span>ToyNest™</span>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#features">Why Smart</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#parents">For Families</a></li>
+          <li><a href="#partners">For Partners</a></li>
+        </ul>
+      </nav>
+      <a href="#contact" class="nav-cta">Get in Touch</a>
+      <button class="burger" id="burgerBtn" aria-label="Toggle navigation" aria-expanded="false">☰</button>
     </div>
-  </section>
+    <nav class="wrap mobile-nav" id="mobileNav">
+      <a href="#features">Why Smart</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#parents">For Families</a>
+      <a href="#partners">For Partners</a>
+      <a href="#contact">Get in Touch</a>
+    </nav>
+  </header>
 
-  <section>
-    <p class="eyebrow">01 · Logo</p>
-    <h2>The mark &amp; wordmark</h2>
-    <p class="lead">The mark is a rounded cube — a nod to the six-face age system and to tactile, handmade play. Pair it with the wordmark set in Bricolage Grotesque. Keep clear space around the lockup equal to the height of the cube.</p>
-    <div class="logo-row">
-      <div class="logo-box"><div class="lk"><div class="m2"></div><div class="name">ToyNest</div></div></div>
-      <div class="logo-box dark"><div class="lk"><div class="m2"></div><div class="name">ToyNest</div></div></div>
-    </div>
-    <div class="slot">Drop your verified master exports here to replace the CSS placeholder above —<br>
-      <code>toynest-logo-*.svg / .png (1x·2x·3x) / .eps / .pdf</code>, mirroring your Samfox asset naming.</div>
-    <div class="dd">
-      <div><h3>Do</h3><ul class="do">
-        <li>Keep the cube and wordmark locked together at the set ratio</li>
-        <li>Use the dark lockup on light photography, light on dark</li>
-        <li>Maintain clear space = one cube height on all sides</li>
-      </ul></div>
-      <div><h3>Don't</h3><ul class="no">
-        <li>Recolour the cube outside the palette below</li>
-        <li>Stretch, rotate, or add drop shadows to the mark</li>
-        <li>Set the wordmark in any font other than Bricolage Grotesque</li>
-      </ul></div>
-    </div>
-  </section>
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-inner">
+        <div class="hero-copy">
+          <span class="eyebrow">Fruitful Smart Toys™</span>
+          <h1>Play that grows <span class="accent">with</span> your child, not around them.</h1>
+          <p class="lead">ToyNest™ designs connected toys built for hands-on discovery — durable enough for real play, smart enough to adapt, and simple enough that setup takes minutes, not manuals.</p>
+          <div class="hero-actions">
+            <a href="#features" class="btn btn-primary">Explore the collection</a>
+            <a href="#partners" class="btn btn-secondary">Partner with us</a>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="blob"></div>
+          <span class="toy-emoji">🧸</span>
+          <span class="sparkle s1">✨</span>
+          <span class="sparkle s2">🌈</span>
+          <span class="sparkle s3">⭐</span>
+        </div>
+      </div>
+    </section>
 
-  <section>
-    <p class="eyebrow">02 · Colour</p>
-    <h2>Palette</h2>
-    <p class="lead">Warm, earthy base (baobab bark + savanna paper) with a single living-green primary. The six tier colours are accents only — used as small coded chips, never as full backgrounds.</p>
-    <div class="sw-grid">
-      <div class="sw"><div class="chip" style="background:var(--leaf)"></div><div class="meta"><b>Leaf</b><span class="hex">#3C6B45</span><span>Primary</span></div></div>
-      <div class="sw"><div class="chip" style="background:var(--sun)"></div><div class="meta"><b>Sun</b><span class="hex">#D9952B</span><span>Secondary</span></div></div>
-      <div class="sw"><div class="chip" style="background:var(--ink)"></div><div class="meta"><b>Bark</b><span class="hex">#241C12</span><span>Text / dark</span></div></div>
-      <div class="sw"><div class="chip" style="background:var(--paper);border-bottom:1px solid var(--line)"></div><div class="meta"><b>Paper</b><span class="hex">#EFE7D8</span><span>Background</span></div></div>
-      <div class="sw"><div class="chip" style="background:var(--t1)"></div><div class="meta"><b>Tier 3–6</b><span class="hex">#C0473B</span></div></div>
-      <div class="sw"><div class="chip" style="background:var(--t2)"></div><div class="meta"><b>Tier 6–9</b><span class="hex">#3C6FA6</span></div></div>
-      <div class="sw"><div class="chip" style="background:var(--t3)"></div><div class="meta"><b>Tier 9–12</b><span class="hex">#4E8D5B</span></div></div>
-      <div class="sw"><div class="chip" style="background:var(--t4)"></div><div class="meta"><b>Tier 12+</b><span class="hex">#D98324</span></div></div>
+    <div class="trust-strip">
+      <div class="wrap trust-row">
+        <span>🔒 Safety-first design</span>
+        <span>🔋 Long-life battery</span>
+        <span>📶 Simple app pairing</span>
+        <span>🧵 Durable, tested materials</span>
+      </div>
     </div>
-  </section>
 
-  <section>
-    <p class="eyebrow">03 · Typography</p>
-    <h2>Type system</h2>
-    <div class="type-spec">
-      <p class="d1">Aa Bb Cc</p>
-      <div class="d2">Bricolage Grotesque — display &amp; headings</div>
-      <p>Weights 700–800. Used for the wordmark, headlines, tier labels. Tight tracking (−1%).</p>
-      <div class="d2" style="font-family:Inter">Inter — body &amp; UI</div>
-      <p style="font-family:Inter">Weights 400–600. Body copy, product detail, dashboard labels, fine print.</p>
-    </div>
-    <div class="type-note">
-      <div><b>Display</b> Bricolage Grotesque 700/800</div>
-      <div><b>Body</b> Inter 400/500/600</div>
-      <div><b>Monospace</b> system UI mono (SKUs, domains, code)</div>
-    </div>
-  </section>
+    <section id="features">
+      <div class="wrap">
+        <span class="eyebrow">Why Smart</span>
+        <h2 class="section-title">Smart doesn't mean a screen.</h2>
+        <p class="section-lead">Every ToyNest™ product is built around one idea: technology should support imaginative, hands-on play — not replace it.</p>
 
-  <section>
-    <p class="eyebrow">04 · Brand device</p>
-    <h2>The six-face cube</h2>
-    <p class="lead">The signature device: six faces, one per age mode. It's the product's safety concept and the brand's graphic system in one. Use it as a selector, a packaging motif, and a section marker.</p>
-    <div class="faces">
-      <div class="face" style="background:var(--t1)"><b>3–6</b><span>Little Explorers</span></div>
-      <div class="face" style="background:var(--t2)"><b>6–9</b><span>Curious Minds</span></div>
-      <div class="face" style="background:var(--t3)"><b>9–12</b><span>Makers</span></div>
-      <div class="face" style="background:var(--t4)"><b>12+</b><span>Problem Solvers</span></div>
-      <div class="face" style="background:var(--t5)"><b>Family</b><span>Shared Play</span></div>
-      <div class="face" style="background:var(--t6)"><b>Parent</b><span>Controls</span></div>
-    </div>
-  </section>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-icon icon-blue">🎯</div>
+            <h3>Screen-optional learning</h3>
+            <p>Core play happens with your hands, not a tablet. The companion app is there for setup and parents — not required for the fun.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon icon-yellow">🛡️</div>
+            <h3>Safety by design</h3>
+            <p>Child-safe materials, sealed electronics, and parental controls are built in from the first prototype, not bolted on later.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon icon-coral">🔄</div>
+            <h3>Grows with play</h3>
+            <p>Firmware updates unlock new activities and difficulty levels over time, so one toy keeps pace as your child does.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon icon-mint">🧵</div>
+            <h3>Built to last</h3>
+            <p>Drop-tested housings and long-life batteries mean ToyNest™ toys are made for years of real play, not one holiday season.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon icon-blue">📶</div>
+            <h3>Effortless pairing</h3>
+            <p>No accounts to wrangle for kids. Parents pair a toy once from the app; children just pick it up and play.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon icon-yellow">🔐</div>
+            <h3>Privacy-respecting</h3>
+            <p>No third-party ad tracking, no unnecessary data collection — a toy's job is to play, not to profile.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <section>
-    <p class="eyebrow">05 · Applications</p>
-    <h2>In use</h2>
-    <div class="app">
-      <div class="lockup"><span class="m2" style="display:inline-block;width:26px;height:26px"></span> ToyNest <span class="dom">toynest.seedwave.faa.zone</span></div>
-      <p>Storefront lockup. The subnode domain sits beside the wordmark in mono. Checkout stays on the shared seedwave engine.</p>
-    </div>
-    <div class="app">
-      <div class="lockup">Packaging</div>
-      <p>Paper-toned box, leaf-green band, the cube device showing the age tier of the toy inside. Tier colour signals the age at a glance on shelf.</p>
-    </div>
-    <div class="app">
-      <div class="lockup">Parent dashboard</div>
-      <p>Same palette and type as this guide — the controls surface should feel like one continuous brand with the packaging and store.</p>
-    </div>
-  </section>
+    <section id="how-it-works" class="how-section">
+      <div class="wrap">
+        <span class="eyebrow">How It Works</span>
+        <h2 class="section-title">From unboxing to everyday play.</h2>
+        <p class="section-lead">Getting started with a ToyNest™ toy takes three simple steps.</p>
 
-  <div class="note">
-    <b>Status:</b> Original v1 scaffold, built to be consistent with the ToyNest identity — not a recovered copy of your Samfox master. Replace the CSS logo placeholders with your verified exports before this is used as a client deliverable. Trademark status (™ / ®) is the owner's to establish; nothing here asserts a registered mark or third-party certification.
-  </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Unbox &amp; charge</h3>
+            <p>Every toy ships ready to charge out of the box — no separate parts, no confusing manuals.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Pair with the app</h3>
+            <p>Parents scan a code to pair the toy and set preferences like play time and difficulty.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Hand it over &amp; play</h3>
+            <p>From here, it's just a toy — kids play, explore, and discover, no ongoing screen time required.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-</div>
+    <section>
+      <div class="wrap">
+        <span class="eyebrow">Two Audiences, One Promise</span>
+        <h2 class="section-title">Built for families. Ready for retail.</h2>
+
+        <div class="split">
+          <div class="split-card parents" id="parents">
+            <h3>👨‍👩‍👧 For families</h3>
+            <p>Peace of mind for parents, real play for kids.</p>
+            <ul class="check-list">
+              <li>Parental controls for play time and content</li>
+              <li>No ads, no unnecessary data collection</li>
+              <li>Designed and tested for everyday durability</li>
+            </ul>
+            <a href="#contact" class="btn btn-secondary">Ask a question</a>
+          </div>
+          <div class="split-card partners" id="partners">
+            <h3>🤝 For retail &amp; licensing partners</h3>
+            <p>Bring Fruitful Smart Toys™ to your shelves or catalog.</p>
+            <ul class="check-list">
+              <li>Wholesale and distribution enquiries welcome</li>
+              <li>Co-branding and licensing conversations open</li>
+              <li>Direct line to the product team</li>
+            </ul>
+            <a href="#contact" class="btn btn-secondary">Start a conversation</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+      <div class="wrap contact-inner">
+        <div>
+          <span class="eyebrow">Get in Touch</span>
+          <h2 class="section-title">Let's talk ToyNest™.</h2>
+          <p class="section-lead">Whether you're a parent with a question, a retailer, or a potential partner — send a note and we'll get back to you.</p>
+        </div>
+
+        <form class="contact-form" id="contactForm" novalidate>
+          <div class="form-row">
+            <label for="contactName">Name</label>
+            <input type="text" id="contactName" name="name" placeholder="Your name" data-required>
+          </div>
+          <div class="form-row">
+            <label for="contactEmail">Email</label>
+            <input type="email" id="contactEmail" name="email" placeholder="you@example.com" data-required>
+          </div>
+          <div class="form-row">
+            <label for="contactReason">I'm reaching out as a</label>
+            <select id="contactReason" name="reason">
+              <option value="parent">Parent / caregiver</option>
+              <option value="retailer">Retailer / distributor</option>
+              <option value="partner">Licensing partner</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="contactMessage">Message</label>
+            <textarea id="contactMessage" name="message" rows="4" placeholder="How can we help?" data-required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Send message</button>
+          <p class="form-note">This form doesn't send anywhere yet — a backend hookup is planned.</p>
+          <div class="form-success" id="formSuccess">Thanks — your message has been noted. We'll be in touch.</div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span>&copy; 2026 Fruitful Smart Toys™. All rights reserved.</span>
+      <ul class="footer-links">
+        <li><a href="dashboard.html">Partner dashboard</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
 </body>
 </html>

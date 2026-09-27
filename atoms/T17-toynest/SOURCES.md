@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2026-09-26 | fruitful-superagent | main | `claude/projects/toynest-fullstack-construction-plan-global-supply-chain-inte-019af80b/files/toynest-ci-guide-v1.html` | `204cb9ee` | ToyNest — Brand & CI Guide (v1 draft) | 13208 | 6 | 0 | 32.3 |
+| 2 | 2026-09-27 | toynest.seedwave.faa.zone | main | `index.html` | `8134519c` | ToyNest™ — Fruitful Smart Toys™ | 9809 | 33 | 0 | 61.0 |
