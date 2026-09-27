@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-09-06 | ThesisGallery | main | `attached_assets/newproject_1757168491107.html` | `a08004d8` | Create New Project – CodeNest™ | 3077 | 7 | 0 | 33.3 |
+| 2 | 2026-09-27 | fruitful | main | `sectors/ai-logic/codenest/newproject.html` | `0d010147` | Create New Project – CodeNest™ | 3139 | 7 | 0 | 33.3 |
