@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-09-06 | ThesisGallery | main | `attached_assets/core-node_1757167962123.html` | `f0512d41` | 🌳 Core Node™ – FAA.Zone | 4612 | 16 | 0 | 41.5 |
+| 2 | 2026-09-27 | fruitful | main | `sectors/wildlife/nodes/core-node.html` | `0396f816` | 🌳 Core Node™ – FAA.Zone | 4674 | 16 | 0 | 41.5 |
