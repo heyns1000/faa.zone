@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-12-05 | codenest | resolve-conflicts-manually | `packages/faa-zone/public/sectors/housing/index.html` | `a8786e91` | FAA™ Housing & Infrastructure Dashboard - Glo | 24315 | 43 | 4 | 61.9 |
+| 2 | 2026-09-27 | fruitful | main | `sectors/housing/overview.html` | `3cbabb97` | FAA™ Housing & Infrastructure Dashboard - Glo | 24377 | 43 | 4 | 61.9 |
