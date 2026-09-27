@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-09-06 | ThesisGallery | main | `attached_assets/autoborn-dashboard_1757168270319.html` | `62cede12` | AutoBorn™ Master Sync Grid | FAA Mining Ecosy | 17681 | 16 | 1 | 44.8 |
+| 2 | 2026-09-27 | fruitful | main | `sectors/mining/autoborn-dashboard.html` | `bb50b8ad` | AutoBorn™ Master Sync Grid | FAA Mining Ecosy | 17743 | 16 | 1 | 44.8 |
