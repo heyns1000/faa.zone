@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-09-06 | ThesisGallery | main | `attached_assets/dashboard_1757168491096.html` | `efa6c140` | CodeNest™ Desktop Dashboard | 3781 | 14 | 0 | 39.4 |
+| 2 | 2026-09-27 | fruitful | main | `sectors/ai-logic/codenest/dashboard.html` | `429786c9` | CodeNest™ Desktop Dashboard | 3843 | 14 | 0 | 39.4 |
