@@ -10,3 +10,4 @@
 | 4 | 2026-09-27 | fruitful | claude/ci-safe-on-restore | `ecosystem.html` | `29ec7344` | Fruitful™ Global Ecosystem | 37071 | 35 | 8 | 90.7 |
 | 5 | 2026-09-27 | fruitful | claude/sector-atlas | `ecosystem.html` | `368566aa` | Fruitful™ Global Ecosystem | 36320 | 34 | 8 | 89.6 |
 | 6 | 2026-09-27 | fruitful | claude/vercel-skip-log-commits | `ecosystem.html` | `aee631a3` | Fruitful™ Global Ecosystem | 36211 | 32 | 8 | 87.6 |
+| 7 | 2026-09-27 | fruitful | claude/vercel-static-output | `ecosystem.html` | `8c1b5ec6` | Fruitful™ Global Ecosystem | 35976 | 29 | 8 | 84.6 |
