@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-09-06 | ThesisGallery | main | `attached_assets/mineralvision-dashboard_1757168270329.html` | `e7a4b9a5` | MineralVision™ Dashboard | FAA Mining AI | 3765 | 7 | 0 | 32.4 |
+| 2 | 2026-09-27 | fruitful | main | `sectors/mining/mineralvision-dashboard.html` | `fdebaa49` | MineralVision™ Dashboard | FAA Mining AI | 3827 | 7 | 0 | 32.4 |
