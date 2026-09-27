@@ -6,3 +6,4 @@
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-09-06 | ThesisGallery | main | `attached_assets/dashboard_1757168144978.html` | `be5cff94` | FAA™ Payroll Dashboard | 5670 | 18 | 0 | 43.6 |
 | 2 | 2025-09-06 | ThesisGallery | main | `attached_assets/welcome-dashboard_1757168154032.html` | `d2149937` | 📊 FAA Payroll Dashboard — Real-Time Ops | 5294 | 17 | 0 | 42.5 |
+| 3 | 2026-09-27 | fruitful | main | `sectors/payroll/client/welcome-dashboard.html` | `c539c88a` | 📊 FAA Payroll Dashboard — Real-Time Ops | 5356 | 17 | 0 | 42.5 |
