@@ -14,3 +14,4 @@
 | 8 | 2025-12-26 | codenest | resolve-conflicts-manually | `packages/apps/payroll/index.html` | `de25b69c` | 🧬 FAA™ Payroll OS — Master Index | 213386 | 26 | 11 | 70.3 |
 | 9 | 2026-09-27 | fruitful | main | `sectors/payroll/ai-modules.html` | `430075ee` | 🤖 FAA Payroll OS — AI Modules | 5551 | 9 | 0 | 34.6 |
 | 10 | 2026-09-27 | fruitful | main | `sectors/payroll/global-metrics.html` | `1aa78915` | 🌍 FAA Payroll OS — Global Metrics | 9543 | 35 | 0 | 40.1 |
+| 11 | 2026-09-27 | fruitful | main | `sectors/payroll/intelligence-hub.html` | `b964bbb3` | 📈 FAA Payroll OS — Intelligence Hub | 6676 | 17 | 0 | 31.2 |
