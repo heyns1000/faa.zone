@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-09-06 | ThesisGallery | main | `attached_assets/autoborn-overview_1757168270321.html` | `df28fdb9` | AutoBorn™ Overview | FAA Mining Ecosystem | 9065 | 17 | 0 | 42.9 |
+| 2 | 2026-09-27 | fruitful | main | `sectors/mining/autoborn-overview.html` | `3d157d1d` | AutoBorn™ Overview | FAA Mining Ecosystem | 9127 | 17 | 0 | 42.9 |
