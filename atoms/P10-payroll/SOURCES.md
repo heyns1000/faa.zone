@@ -10,3 +10,4 @@
 | 4 | 2025-12-05 | codenest | resolve-conflicts-manually | `packages/faa-zone/public/payroll.html` | `cca83dd2` | FAA.ZONE™ | OmniDrop Canvas | 12823 | 16 | 1 | 20.3 |
 | 5 | 2026-09-27 | fruitful | main | `sectors/payroll/onboarding.html` | `d375567d` | 🍇 FAA Payroll – Onboarding Portal | 4427 | 16 | 0 | 42.4 |
 | 6 | 2026-09-27 | fruitful | main | `sectors/payroll/onboarding/activation.html` | `ee121319` | 🍇 FAA Payroll — Node Activation | 2756 | 5 | 0 | 30.3 |
+| 7 | 2026-09-27 | fruitful | main | `sectors/payroll/products-and-service.html` | `0abd5ddf` | 🍇 FAA™ Payroll – Sub-Features | 5663 | 15 | 0 | 40.6 |
