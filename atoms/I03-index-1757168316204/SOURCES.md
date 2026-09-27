@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-09-06 | ThesisGallery | main | `attached_assets/index_1757168316204.html` | `5036d8d4` | FAA™ | Mining Sector Unified DashboardAutoBor | 28510 | 58 | 2 | 89.9 |
+| 2 | 2026-09-27 | fruitful | main | `sectors/mining/overview-drive.html` | `b450e406` | FAA™ | Mining Sector Unified DashboardAutoBor | 28572 | 58 | 2 | 89.9 |
