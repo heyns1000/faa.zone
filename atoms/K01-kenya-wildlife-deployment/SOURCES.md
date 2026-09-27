@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-09-06 | ThesisGallery | main | `attached_assets/deployment-kenya_1757167956287.html` | `d353df0c` | 🇰🇪 Kenya Wildlife Deployment – FAA.Zone | 6213 | 10 | 0 | 35.6 |
+| 2 | 2026-09-27 | fruitful | main | `sectors/wildlife/deployment-kenya.html` | `149ae2af` | 🇰🇪 Kenya Wildlife Deployment – FAA.Zone | 6275 | 10 | 0 | 35.6 |
