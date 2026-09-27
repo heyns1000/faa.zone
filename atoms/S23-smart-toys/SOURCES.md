@@ -5,3 +5,4 @@
 | # | First seen | Repo | Branch | Path | Blob | Title | Bytes | Labels | Functions | Score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 2025-09-06 | ThesisGallery | main | `attached_assets/index_1757168457932.html` | `a8fa9c13` | Fruitful Smart Toys™ | FAA Treaty Activation | 21325 | 51 | 0 | 79.1 |
+| 2 | 2026-09-27 | fruitful | main | `sectors/education/overview.html` | `ff5a5f97` | Fruitful Smart Toys™ | FAA Treaty Activation | 21387 | 51 | 0 | 79.1 |
