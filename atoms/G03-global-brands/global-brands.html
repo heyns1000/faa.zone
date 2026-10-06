@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -29,22 +29,69 @@
             --fruitful-logo-color: #ffffff; /* Unified white for Fruitful™ | Seedwave™ */
             --fruitful-separator-color: #bbbbbb; /* Lighter grey for separator */
 
-            /* NEW: General page background and text colors (Black & White) */
+            /* NEW: General page background and text colors (Black & White - Day Mode) */
             --page-bg-light: #ffffff; /* Pure white background */
             --page-text-dark: #000000; /* Pure black text */
             --page-muted-text: #333333; /* Dark grey muted muted text */
             --page-border-light: #cccccc; /* Light grey border */
+            --card-bg-light: #ffffff;
+            --input-bg-light: #f9fafb;
+            --input-border-light: #d1d5db;
 
             /* NEW: Accent colors for metrics/charts in B&W theme (subtle grey tones) */
             --accent-blue-light: #555555; /* Medium grey for icons/values */
             --accent-green-light: #777777; /* Slightly lighter grey */
             /* IMPORTANT: The canvas animations and Chart.js lines will retain their vibrant colors explicitly in JS */
+
+            /* Theme Variables - Default (Day Mode) */
+            --bg-color: var(--page-bg-light);
+            --text-color: var(--page-text-dark);
+            --muted-text-color: var(--page-muted-text);
+            --border-color: var(--page-border-light);
+            --card-bg: var(--card-bg-light);
+            --button-bg: #ffffff;
+            --button-text: #000000;
+            --input-bg: var(--input-bg-light);
+            --input-border: var(--input-border-light);
+            --tertiary-color: #dc2626; /* For error messages, etc. */
+
+            /* Dynamic Header Top Position */
+            --announcement-bar-height: 0px; /* Default to 0, adjusted by JS */
+            --header-height: 0px; /* Adjusted by JS */
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            --bg-color: #121212; /* Deep dark background */
+            --text-color: #e0e0e0; /* Light grey text */
+            --muted-text-color: #aaaaaa; /* Lighter grey muted text */
+            --border-color: #444444; /* Darker border */
+            --card-bg: #1c1c1c; /* Darker card background */
+            --button-bg: #282828;
+            --button-text: #ffffff;
+            --input-bg: #333333;
+            --input-border: #555555;
+            --tertiary-color: #ef4444; /* Brighter red */
+        }
+
+        /* Hyper Mode (More vibrant, techy feel) */
+        body.hyper-mode {
+            --bg-color: #0d0d1a; /* Dark blue-purple */
+            --text-color: #c0f0ff; /* Light cyan text */
+            --muted-text-color: #88ccee; /* Muted cyan text */
+            --border-color: #3a1a5a; /* Dark purple border */
+            --card-bg: #1a1a33; /* Darker purple card */
+            --button-bg: #6a0dad; /* Deep purple button */
+            --button-text: #e0e0e0;
+            --input-bg: #2b0c4b;
+            --input-border: #6a0dad;
+            --tertiary-color: #ff6666; /* Vibrant red */
         }
 
         body {
             font-family: var(--font-inter);
-            background-color: var(--page-bg-light); /* Apply new light background */
-            color: var(--page-text-dark); /* Apply new dark text color */
+            background-color: var(--bg-color); /* Apply theme background */
+            color: var(--text-color); /* Apply theme text color */
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -56,6 +103,42 @@
             overflow-x: hidden; /* Prevent horizontal scrolling */
         }
 
+        /* Announcement Bar */
+        #announcement-bar {
+            background-color: #00e393; /* Primary glow color */
+            color: #121212;
+            padding: 0.75rem 1rem;
+            text-align: center;
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 60; /* Higher than header */
+            transition: all 0.3s ease-in-out;
+        }
+        #announcement-bar.hidden {
+            height: 0;
+            padding: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+        #announcement-bar .close-btn {
+            background: none;
+            border: none;
+            color: #121212;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.2rem;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+        #announcement-bar .close-btn:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
         /* Header - Background remains dark, logos are white */
         header {
             background-color: #0a0a0d; /* Solid dark background for header */
@@ -63,12 +146,13 @@
             border-bottom: 1px solid var(--border-dark);
             padding: 1rem 2rem;
             position: sticky;
-            top: 0;
+            top: var(--announcement-bar-height); /* Dynamic top based on announcement bar */
             z-index: 50;
             display: flex;
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: top 0.3s ease-in-out;
         }
 
         .header-content-wrapper {
@@ -101,6 +185,44 @@
             font-weight: 600;
             text-shadow: none; /* No glow/pulse */
         }
+
+        /* Header Controls (Theme and Language) */
+        .header-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .theme-switcher-btn {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.5rem 0.8rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .theme-switcher-btn.active {
+            background-color: var(--primary-glow); /* Greenish for active */
+            color: #121212; /* Dark text on active */
+            border-color: var(--primary-glow);
+            box-shadow: 0 0 10px rgba(0, 227, 147, 0.4);
+        }
+        .theme-switcher-btn:hover {
+            opacity: 0.8;
+        }
+
+        #languageSwitcher {
+            background-color: var(--card-bg-dark); /* Dark dropdown */
+            color: var(--fruitful-logo-color); /* White text */
+            border: 1px solid var(--border-dark);
+            border-radius: 0.5rem;
+            padding: 0.5rem 0.8rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
 
         /* New: Stock Exchange Pulse Canvas in Header */
         #header-pulse-canvas {
@@ -170,16 +292,16 @@
             justify-content: center; /* Center content horizontally */
             gap: 10px;
             padding: 0.5rem 1.5rem; /* Reduced padding for more compact button */
-            background-color: #ffffff; /* White background */
-            color: var(--page-text-dark); /* Black text */
+            background-color: var(--button-bg); /* White background */
+            color: var(--button-text); /* Black text */
             text-decoration: none;
             border-radius: 1rem; /* Rounded corners */
             font-weight: 700;
             font-size: 1.1rem;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* Softer shadow */
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid var(--page-border-light); /* Light border */
-
+            border: 1px solid var(--border-color); /* Light border */
+            
             width: 280px; /* Fixed width to align with blocks below */
             margin: 0 auto 2rem auto; /* Centered with bottom margin */
             position: relative;
@@ -208,10 +330,10 @@
         /* General Section Styling (for content below hero) */
         section {
             padding: 6rem 0rem; /* Removed horizontal padding to allow blocks to stretch to edges */
-            background-color: var(--page-bg-light); /* Now uses light background */
-            border-top: 1px solid var(--page-border-light); /* Light border */
+            background-color: var(--bg-color); /* Now uses theme background */
+            border-top: 1px solid var(--border-color); /* Theme border */
             text-align: center;
-            color: var(--page-text-dark); /* Dark text for general sections */
+            color: var(--text-color); /* Theme text color */
         }
         section:last-of-type {
             border-bottom: none; /* Remove bottom border for the last section */
@@ -220,7 +342,7 @@
         h2 {
             font-size: 3rem;
             font-weight: 800;
-            color: var(--page-text-dark); /* Dark text */
+            color: var(--text-color); /* Theme text color */
             margin-bottom: 3rem; /* Default spacing */
             text-shadow: none; /* No text shadow for clean look */
             /* Removed max-width here, will apply directly in HTML for specific headings */
@@ -239,15 +361,15 @@
         }
 
         .operational-block {
-            background-color: #ffffff; /* Pure white block background */
+            background-color: var(--card-bg); /* Pure white block background */
             border-radius: 1rem; /* Rounded corners */
             padding: 2.5rem; /* Standard padding */
             box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* Softer shadow */
-            border: 1px solid var(--page-border-light); /* Light border */
+            border: 1px solid var(--border-color); /* Light border */
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
             overflow: hidden;
-            color: var(--page-text-dark);
+            color: var(--text-color);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -261,7 +383,7 @@
         .operational-block h3 {
             font-size: 2rem; /* Larger font for impact */
             font-weight: 900; /* Extra bold */
-            color: var(--page-text-dark); /* Pure black */
+            color: var(--text-color); /* Theme color */
             line-height: 1.2;
             margin: 0; /* Remove default margin */
             padding: 0; /* Remove default padding */
@@ -270,12 +392,12 @@
 
         /* Master License Brands Section */
         #master-brands {
-            background-color: var(--page-bg-light); /* Consistent light background */
-            color: var(--page-text-dark);
+            background-color: var(--bg-color); /* Consistent theme background */
+            color: var(--text-color);
             padding-bottom: 0; /* Adjust padding for contiguous block below */
         }
         #master-brands h2 {
-            color: var(--page-text-dark);
+            color: var(--text-color);
             text-shadow: none;
             max-width: 800px; /* Specific width for this heading */
             margin-left: auto;
@@ -286,7 +408,7 @@
             font-family: monospace;
             line-height: 1;
             font-size: 1.1rem;
-            color: var(--page-muted-text);
+            color: var(--muted-text-color);
             max-width: 700px; /* Adjusted to align with heading width */
             margin: 0 auto 3rem auto;
             white-space: pre-wrap;
@@ -304,17 +426,17 @@
         }
 
         .master-brand-block {
-            background-color: #ffffff; /* Pure white block background */
+            background-color: var(--card-bg); /* Theme card background */
             border-radius: 1rem; /* Rounded corners */
             padding: 2.5rem; /* Standard padding */
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            border: 1px solid var(--page-border-light);
+            border: 1px solid var(--border-color);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            color: var(--page-text-dark);
+            color: var(--text-color);
             margin: 0; /* No negative margins */
             width: auto; /* Auto width within grid */
         }
@@ -325,7 +447,7 @@
         .master-brand-block h3 {
             font-size: 2rem;
             font-weight: 900;
-            color: var(--page-text-dark);
+            color: var(--text-color);
             line-height: 1.2;
             margin: 0;
             padding: 0;
@@ -337,8 +459,8 @@
             padding-bottom: 6rem; /* Restore bottom padding to match other sections */
             padding-left: 2rem; /* Restore padding to section */
             padding-right: 2rem; /* Restore padding to section */
-            background-color: var(--page-bg-light); /* Restore white background for the section */
-            border-top: 1px solid var(--page-border-light); /* Restore border top */
+            background-color: var(--bg-color); /* Restore theme background for the section */
+            border-top: 1px solid var(--border-color); /* Restore border top */
             position: relative; /* For the absolute positioning of the black container */
             overflow: hidden; /* Hide anything that goes outside */
         }
@@ -400,6 +522,117 @@
             z-index: 1;
         }
 
+        /* Planet Pulse Text Styling */
+        #planet-text-container {
+            margin-top: 4rem;
+            margin-bottom: 2rem;
+        }
+        #planet-text {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-shadow: 0 0 10px rgba(0, 227, 147, 0.5); /* Subtle glow */
+            animation: none; /* Start without animation */
+            transition: color 0.5s ease;
+        }
+        #planet-text.pulse-animation {
+            animation: textPulse 1.5s ease-in-out forwards;
+        }
+        @keyframes textPulse {
+            0% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.7; }
+        }
+
+        /* Gemini API Section Styling */
+        #gemini-api-section {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 4rem 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+        #gemini-api-container {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid var(--border-color);
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        #gemini-api-container h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        #promptInput {
+            width: 100%;
+            min-height: 120px;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--input-border);
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            resize: vertical;
+        }
+        #promptInput:focus {
+            outline: none;
+            border-color: var(--primary-glow);
+            box-shadow: 0 0 0 3px rgba(0, 227, 147, 0.3);
+        }
+        #generateTextBtn {
+            padding: 0.8rem 2rem;
+            border-radius: 0.75rem;
+            background-color: var(--primary-glow);
+            color: #121212;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 227, 147, 0.3);
+        }
+        #generateTextBtn:hover {
+            background-color: #00c77f;
+            transform: translateY(-2px);
+        }
+        #generateTextBtn:disabled {
+            background-color: #a0a0a0;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+        #loadingIndicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            color: var(--muted-text-color);
+        }
+        #loadingIndicator.hidden {
+            display: none;
+        }
+        #generatedTextOutput {
+            background-color: var(--input-bg);
+            padding: 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--input-border);
+            min-height: 150px;
+            white-space: pre-wrap; /* Preserves whitespace and line breaks */
+            word-wrap: break-word; /* Breaks long words */
+            overflow-y: auto;
+            max-height: 400px;
+            color: var(--text-color);
+        }
 
         /* Footer (Updated for light theme) */
         footer {
@@ -409,9 +642,12 @@
             text-align: center;
             color: var(--page-muted-text); /* Muted dark text */
             font-size: 0.9rem;
+            background-color: var(--bg-color); /* Theme background */
+            color: var(--muted-text-color); /* Theme muted text */
+            border-top: 1px solid var(--border-color);
         }
         footer a {
-            color: var(--page-muted-text); /* Muted link color */
+            color: var(--muted-text-color); /* Muted link color */
             text-decoration: none;
             transition: color 0.3s ease;
         }
@@ -451,6 +687,14 @@
             section {
                 padding: 6rem 2rem; /* Restore normal padding on tablets */
             }
+            .header-controls {
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 0.5rem;
+            }
+            .theme-switcher-btn, #languageSwitcher {
+                width: fit-content;
+            }
         }
         @media (max-width: 768px) {
             header { padding: 1rem; }
@@ -473,21 +717,45 @@
             .operational-block h3, .master-brand-block h3 { font-size: 1.5rem; }
             .art-typo-container { font-size: 0.9rem; } /* Adjust font size for art typo on mobile */
             footer { padding: 1.5rem; }
+            #planet-text { font-size: 1.8rem; }
+            #gemini-api-container h2 { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <header>
+    <!-- Announcement Bar -->
+    <div id="announcement-bar" class="announcement-bar">
+        <span>🎉 Exciting News: Seedwave™ is now live! Explore our enhanced platform.</span>
+        <button class="close-btn" aria-label="Close Announcement">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <header id="main-header">
         <div class="header-content-wrapper">
             <div class="logo-group">
-                <a href="#" class="logo-fruitful">Fruitful™</a>
+                <a href="#" class="logo-fruitful logo-link">Fruitful™</a>
                 <span class="logo-separator">|</span>
                 <span class="logo-seedwave">Seedwave™</span>
             </div>
             <!-- New: Stock Exchange Pulse Canvas in Header -->
             <canvas id="header-pulse-canvas"></canvas>
-            <!-- Right nav bar removed -->
+            <!-- Header Controls (Theme and Language) -->
+            <div class="header-controls">
+                <div class="theme-switcher-group flex gap-2">
+                    <button id="theme-day-btn" class="theme-switcher-btn active">Day</button>
+                    <button id="theme-night-btn" class="theme-switcher-btn">Night</button>
+                    <button id="theme-hyper-btn" class="theme-switcher-btn">Hyper</button>
+                </div>
+                <select id="languageSwitcher" class="text-xs">
+                    <option value="en">English</option>
+                    <option value="es">Spanish</option>
+                    <option value="fr">French</option>
+                    <option value="de">German</option>
+                    <option value="zh">Chinese</option>
+                </select>
+            </div>
         </div>
     </header>
 
@@ -567,31 +835,6 @@ Seedwave™:
                     <h3>FAA.ZONE™</h3>
                 </a>
             </div>
-
-            <div class="mt-12 p-8 bg-gray-50 rounded-lg shadow-inner max-w-xl mx-auto">
-                <h3 class="text-2xl font-bold mb-4 text-gray-800">✨ Brand Insight Generator</h3>
-                <p class="text-gray-600 mb-6">Enter a brand name to generate a marketing slogan and strategic insight, powered by Gemini AI.</p>
-                <div class="flex flex-col sm:flex-row gap-4 mb-4">
-                    <input
-                        type="text"
-                        id="brandNameInput"
-                        placeholder="e.g., HarmonyHearth™"
-                        class="flex-grow p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-800"
-                    />
-                    <button
-                        id="generateBrandInsightBtn"
-                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-md shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    >
-                        Generate Insight
-                    </button>
-                </div>
-                <div id="brandInsightLoading" class="hidden text-center text-blue-500 mt-4">
-                    <i class="fas fa-spinner fa-spin mr-2"></i> Generating insights...
-                </div>
-                <div id="brandInsightOutput" class="mt-6 p-4 bg-white border border-gray-200 rounded-md text-left text-gray-700 whitespace-pre-wrap min-h-[100px] flex items-center justify-center">
-                    <p class="text-gray-500">Insights will appear here.</p>
-                </div>
-            </div>
         </section>
 
 
@@ -618,11 +861,46 @@ Seedwave™:
             <!-- Removed paragraph here -->
         </section>
 
+        <!-- Planet Pulse Text Section (New) -->
+        <section id="planet-pulse-text-section" class="py-16 px-6 text-center">
+            <div id="planet-text-container">
+                <h2 id="planet-text" class="text-5xl font-extrabold pulse-animation">fruitful.planet.change</h2>
+            </div>
+        </section>
+
+        <!-- Gemini API Text Generation Section (New) -->
+        <section id="gemini-api-section" class="py-16 px-6 text-center">
+            <div id="gemini-api-container">
+                <h2>Generate AI-Powered Text</h2>
+                <div class="flex flex-col items-start w-full">
+                    <label for="promptInput" class="text-sm font-medium mb-2" style="color: var(--muted-text-color);">Enter your prompt:</label>
+                    <textarea id="promptInput" placeholder="e.g., Describe the future of AI in a creative way..."></textarea>
+                </div>
+                <button id="generateTextBtn">Generate Text</button>
+                <div id="loadingIndicator" class="hidden">
+                    <i class="fas fa-spinner fa-spin mr-2"></i> Generating...
+                </div>
+                <div class="flex flex-col items-start w-full">
+                    <label class="text-sm font-medium mb-2" style="color: var(--muted-text-color);">Generated Output:</label>
+                    <div id="generatedTextOutput">
+                        Your AI-generated text will appear here.
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <footer>
         <!-- Copyright removed -->
     </footer>
+
+    <!-- Placeholder for admin portal content (not visible, but for JS to find) -->
+    <div id="admin-portal-main-content-area" class="hidden">
+        <div id="some-admin-view-panel" class="admin-view-panel"></div>
+    </div>
+    <!-- Placeholder for terminal iframe (not visible, but for JS to find) -->
+    <iframe id="vault-frame" src="" class="hidden"></iframe>
 
     <script>
         // Store canvas elements and their contexts
@@ -660,7 +938,7 @@ Seedwave™:
             knittingDepth: 0.4, // Deeper loops for button arrow
             knittingFrequency: 0.08, // More frequent loops
             speed: 0.03, // Slower for a distinct feel
-            color: 'white', // This one stays white as per previous instructions
+            color: 'white', // White arrow
             lineWidth: 1.5 // Thinner line
         };
 
@@ -747,11 +1025,10 @@ Seedwave™:
             headerPulse.time += headerLoopSpeed;
 
             ctx.beginPath();
-            // REVERTED to greenish glow for header pulse
-            ctx.strokeStyle = `rgba(0, 227, 147, ${0.9 + Math.sin(headerPulse.time * 2) * 0.1})`;
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)'; // Changed to white glow
             ctx.lineWidth = 1.5;
             ctx.shadowBlur = 8;
-            ctx.shadowColor = `rgba(0, 227, 147, ${0.7 + Math.sin(headerPulse.time * 2) * 0.1})`; // REVERTED to greenish glow
+            ctx.shadowColor = 'rgba(255, 255, 255, 0.7)'; // Changed to white glow
 
             const pointWidth = canvas.width / (maxDataPoints - 1);
             for (let i = 0; i < data.length; i++) {
@@ -796,10 +1073,10 @@ Seedwave™:
             canvasObj.time += speed;
 
             ctx.beginPath();
-            ctx.strokeStyle = color; // **This remains white as requested earlier**
+            ctx.strokeStyle = color; // Already white
             ctx.lineWidth = lineWidth;
             ctx.shadowBlur = 3; // Subtle glow for button arrow
-            ctx.shadowColor = 'rgba(255, 255, 255, 0.6)'; // **This remains white glow**
+            ctx.shadowColor = 'rgba(255, 255, 255, 0.6)'; // Already white glow
 
             const startX = 0;
             const endX = canvas.width;
@@ -858,8 +1135,9 @@ Seedwave™:
             for (let i = 0; i < numRhythmicLines; i++) {
                 ctx.beginPath();
                 const offset = i * (Math.PI * 2 / numRhythmicLines);
-                const colorHue = (canvasObj.time * 200 + i * 15) % 360;
-                ctx.strokeStyle = `hsla(${colorHue}, 95%, 75%, 0.9)`;
+                // Original was HSL, changing to white with varied alpha for rhythmic feel
+                const alpha = 0.95 - (i / numRhythmicLines) * 0.8; // Vary alpha for depth
+                ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`; // Changed to white
                 ctx.lineWidth = 2.5;
 
                 for (let x = 0; x < canvas.width; x += 2) {
@@ -896,8 +1174,8 @@ Seedwave™:
             for (let i = 0; i < numWaves; i++) {
                 ctx.beginPath();
                 const radius = (canvasObj.time * waveSpacing + i * waveSpacing) % (Math.max(canvas.width, canvas.height) / 1.2) + 5;
-                const hue = (i * 20 + canvasObj.time * 100) % 360;
-                ctx.strokeStyle = `hsla(${hue}, 95%, 80%, ${0.95 - (radius / (Math.max(canvas.width, canvas.height) / 1.2))})`;
+                // Original was HSL, changing to white with varied alpha
+                ctx.strokeStyle = `rgba(255, 255, 255, ${0.95 - (radius / (Math.max(canvas.width, canvas.height) / 1.2))})`; // Changed to white
                 ctx.lineWidth = waveThickness;
                 ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
                 ctx.stroke();
@@ -905,7 +1183,7 @@ Seedwave™:
                 if (i < 7) {
                     ctx.beginPath();
                     ctx.arc(centerX, centerY, radius * 0.25, 0, Math.PI * 2);
-                    ctx.fillStyle = `hsla(${hue + 70}, 100%, 85%, ${0.6 - (radius / (Math.max(canvas.width, canvas.height) / 1.2)) * 0.6})`;
+                    ctx.fillStyle = `rgba(255, 255, 255, ${0.6 - (radius / (Math.max(canvas.width, canvas.height) / 1.2)) * 0.6})`; // Changed to white
                     ctx.fill();
                 }
             }
@@ -913,9 +1191,9 @@ Seedwave™:
             const coreRadius = 20 + Math.sin(canvasObj.time * 10) * 8;
             ctx.beginPath();
             ctx.arc(centerX, centerY, coreRadius, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(0, 227, 147, ${0.95 + Math.sin(canvasObj.time * 10) * 0.05})`;
+            ctx.fillStyle = `rgba(255, 255, 255, ${0.95 + Math.sin(canvasObj.time * 10) * 0.05})`; // Changed to white
             ctx.shadowBlur = 30;
-            ctx.shadowColor = 'rgba(0, 227, 147, 1.0)';
+            ctx.shadowColor = 'rgba(255, 255, 255, 1.0)'; // Changed to white
             ctx.fill();
             ctx.shadowBlur = 0;
 
@@ -934,7 +1212,7 @@ Seedwave™:
                 this.speed = Math.random() * 4 + 2;
                 this.alpha = 1;
                 this.decayRate = Math.random() * 0.012 + 0.006;
-                this.color = `hsl(${Math.random() * 360}, 100%, 80%)`;
+                this.color = `rgba(255, 255, 255, 1)`; // Changed to white
                 this.numRings = Math.floor(Math.random() * 6) + 5;
                 this.glowStrength = Math.random() * 25 + 15;
             }
@@ -971,8 +1249,8 @@ Seedwave™:
             const { canvas, ctx, pulses } = canvasObj;
             if (!ctx) return;
 
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = 'rgba(10, 10, 13, 0.15)'; // Intensify: More visible trails
+            /* Keep dark background for canvas animation */
+            ctx.fillStyle = 'rgba(10, 10, 13, 0.15)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             const shootingPulseSpawnRate = 0.3;
@@ -1002,7 +1280,7 @@ Seedwave™:
                 this.size = Math.random() * 2.5 + 1.5;
                 this.speedX = (Math.random() * 2 - 1);
                 this.speedY = (Math.random() * 2 - 1);
-                this.color = `hsl(${Math.random() * 360}, 100%, 80%)`;
+                this.color = `rgba(255, 255, 255, 1)`; // Changed to white
                 this.alpha = 1;
                 this.decay = 0.002;
             }
@@ -1010,6 +1288,7 @@ Seedwave™:
                 this.x += this.speedX;
                 this.y += this.speedY;
                 this.alpha -= this.decay;
+                // Check bounds using this.canvas
                 if (this.alpha < 0 || this.x < -20 || this.x > this.canvas.width + 20 || this.y < -20 || this.y > this.canvas.height + 20) {
                     this.alpha = 1;
                     this.x = Math.random() * this.canvas.width;
@@ -1031,8 +1310,8 @@ Seedwave™:
             const { canvas, ctx, particles } = canvasObj;
             if (!ctx) return;
 
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = 'rgba(10, 10, 13, 0.15)'; // Intensify: More visible trails
+            /* Keep dark background for canvas animation */
+            ctx.fillStyle = 'rgba(10, 10, 13, 0.15)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             if (particles.length === 0) {
@@ -1041,7 +1320,7 @@ Seedwave™:
                 }
             }
 
-            for (let i = particles.length - 1; i >= 0; i--) {
+            for (let i = 0; i < particles.length; i++) {
                 particles[i].update();
                 particles[i].draw(ctx);
 
@@ -1052,7 +1331,7 @@ Seedwave™:
 
                     if (distance < 120) {
                         ctx.beginPath();
-                        ctx.strokeStyle = `rgba(0, 123, 255, ${particles[i].alpha * particles[j].alpha * (1 - (distance / 120)) * 1.0})`;
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${particles[i].alpha * particles[j].alpha * (1 - (distance / 120)) * 1.0})`; // Changed to white
                         ctx.lineWidth = 0.8;
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
@@ -1076,7 +1355,7 @@ Seedwave™:
                 this.alpha = 1;
                 this.decay = Math.random() * 0.01 + 0.005;
                 this.numLines = Math.floor(Math.random() * 20) + 15;
-                this.color = `hsl(${Math.random() * 360}, 100%, 80%)`;
+                this.color = `rgba(255, 255, 255, 1)`; // Changed to white
             }
 
             update() {
@@ -1111,8 +1390,8 @@ Seedwave™:
             const { canvas, ctx, bursts } = canvasObj;
             if (!ctx) return;
 
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = 'rgba(10, 10, 13, 0.15)'; // Intensify: More visible trails
+            /* Keep dark background for canvas animation */
+            ctx.fillStyle = 'rgba(10, 10, 13, 0.15)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             const burstSpawnRate = 0.12;
@@ -1133,7 +1412,7 @@ Seedwave™:
             canvasObj.animationId = requestAnimationFrame(() => drawRadialBursts(canvasObj));
         }
 
-        // Hyperspace Warp (New) - **THIS ONE REMAINS WHITE**
+        // Hyperspace Warp (New)
         function drawHyperspaceWarp(canvasObj) {
             const { canvas, ctx } = canvasObj;
             if (!ctx) return;
@@ -1148,8 +1427,8 @@ Seedwave™:
             const lineCountX = Math.ceil(canvas.width / gridSpacing);
             const lineCountY = Math.ceil(canvas.height / gridSpacing);
 
-            // This is the "cube lattice noodle frame" and its lines are explicitly white
-            ctx.strokeStyle = `rgba(255, 255, 255, ${0.7 + (Math.sin(canvasObj.time * 0.8) + 1) / 2 * 0.3})`; // Kept white
+            /* For B&W theme, use grey tones instead of vibrant color shifts for grid lines */
+            ctx.strokeStyle = `rgba(255, 255, 255, ${0.7 + (Math.sin(canvasObj.time * 0.8) + 1) / 2 * 0.3})`; // Changed to white
             ctx.lineWidth = 1.5;
 
             // Draw horizontal lines
@@ -1218,41 +1497,6 @@ Seedwave™:
                 case 'faaZoneNodePulse':
                     drawFaaZoneNodePulse(canvasObj);
                     break;
-            }
-        }
-
-        // --- New MiniPulse class for Hyperspace Warp ---
-        class MiniPulse {
-            constructor(canvas) {
-                this.canvas = canvas;
-                this.x = Math.random() * this.canvas.width;
-                this.y = Math.random() * this.canvas.height;
-                this.radius = 0;
-                this.maxRadius = Math.random() * 8 + 4; // Small pulses
-                this.speed = Math.random() * 0.5 + 0.2; // Slower expansion
-                this.alpha = 1;
-                this.decayRate = Math.random() * 0.05 + 0.02; // Fast decay
-                this.color = 'white'; // Sparkling white
-                this.glowStrength = Math.random() * 3 + 1;
-            }
-
-            update() {
-                this.radius += this.speed;
-                this.alpha -= this.decayRate;
-                return this.alpha > 0 && this.radius < this.maxRadius;
-            }
-
-            draw(ctx) {
-                ctx.save();
-                ctx.globalAlpha = this.alpha;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
-                ctx.shadowBlur = this.glowStrength;
-                ctx.shadowColor = this.color;
-                ctx.fill();
-                ctx.shadowBlur = 0;
-                ctx.restore();
             }
         }
 
@@ -1340,12 +1584,10 @@ Seedwave™:
             const segmentWidth = nodePulseGraphSharedData.totalWidth / (nodePulseGraphSharedData.numPoints - 1);
 
             ctx.beginPath();
-            // REVERTED to dynamic vibrant colors for Node Pulse Noodle
-            const globalHue = (nodePulseGraphSharedData.time * 20) % 360;
-            ctx.strokeStyle = `hsl(${globalHue}, 80%, 60%)`; // Reverted to HSL
+            ctx.strokeStyle = 'white'; // White noodle pulse line
             ctx.lineWidth = 2; // Noodle thickness
             ctx.shadowBlur = 8; // Subtle glow
-            ctx.shadowColor = `hsl(${globalHue}, 80%, 50%)`; // Reverted to HSL
+            ctx.shadowColor = 'rgba(255, 255, 255, 0.7)'; // White glow
 
             // Draw line segment with "knitting" effect (looping in and out)
             const loopDepth = canvas.height * nodePulseGraphSharedData.knittingDepth; // How much the line "dips" or "rises"
@@ -1380,9 +1622,7 @@ Seedwave™:
             ctx.globalAlpha = 1; // Reset alpha after drawing line
 
             // Draw electricity effects
-            // REVERTED to dynamic vibrant colors for Node Pulse Electricity
-            const electricityHue = ((nodePulseGraphSharedData.time * 20) + 180) % 360; // Offset hue for electricity
-            ctx.strokeStyle = `hsla(${electricityHue}, 90%, 70%, 0.8)`; // Reverted to HSL
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)'; // Changed to white
             ctx.lineWidth = 1;
             nodePulseGraphSharedData.electricityPoints.forEach(ep => {
                 if (ep.index >= startIndex && ep.index <= endIndex) {
@@ -1440,9 +1680,135 @@ Seedwave™:
             drawNoodlePulseSegment(canvasObj, segmentStart, segmentEnd, offsetCanvasX);
         }
 
-        // Initialize all canvases and start their animations on window load
-        window.onload = function() {
-            initCanvases();
+        // Placeholder for `renderChartsForView` as its full implementation is not provided
+        function renderChartsForView(viewId) {
+            console.log(`Placeholder: Rendering charts for view: ${viewId}. (Chart.js integration for thematic changes)`);
+            // In a real application, this function would update Chart.js instances
+            // or other data visualizations based on the selected theme.
+            // For now, it just logs a message.
+        }
+
+        // Placeholder for `showMainContentView`
+        function showMainContentView(viewId) {
+            console.log(`Placeholder: Showing main content view: ${viewId}`);
+            // In a real application, this would handle showing/hiding different content sections.
+            // For now, it just logs a message.
+            // It also ensures the logo link correctly activates the main page view
+            const mainContent = document.getElementById('innovate-connect-thrive');
+            if (mainContent) {
+                // If this page has a content section with this ID, you can show it.
+                // Currently, the "initial-canvas" doesn't have distinct main content views
+                // by ID, so this is primarily a placeholder to prevent errors.
+                // For this version, we will assume 'homepage.html' is the "main" content.
+                // The current HTML structure is a single page, so no real content switching happens.
+            }
+        }
+
+
+        // --- On Load Initializations (Combined and Integrated) ---
+        window.addEventListener('DOMContentLoaded', () => {
+
+            // --- Announcement Bar Close Button ---
+            const announcementBar = document.getElementById('announcement-bar');
+            const mainHeader = document.getElementById('main-header');
+
+            if (announcementBar && mainHeader) {
+                document.querySelector('#announcement-bar .close-btn').addEventListener('click', () => {
+                    announcementBar.classList.add('hidden');
+                    // Adjust header top position after hiding announcement bar
+                    document.documentElement.style.setProperty('--announcement-bar-height', '0px');
+                    // Store preference in localStorage to keep it hidden on subsequent visits
+                    localStorage.setItem('hideAnnouncementBar', 'true');
+                });
+
+                const updateHeaderTop = () => {
+                    if (!announcementBar.classList.contains('hidden')) {
+                        const announcementHeight = announcementBar.offsetHeight;
+                        document.documentElement.style.setProperty('--announcement-bar-height', `${announcementHeight}px`);
+                    } else {
+                        document.documentElement.style.setProperty('--announcement-bar-height', '0px');
+                    }
+                    document.documentElement.style.setProperty('--header-height', `${mainHeader.offsetHeight}px`);
+                };
+
+                // Check localStorage for announcement bar preference
+                if (localStorage.getItem('hideAnnouncementBar') === 'true') {
+                    announcementBar.classList.add('hidden');
+                    document.documentElement.style.setProperty('--announcement-bar-height', '0px');
+                } else {
+                    announcementBar.classList.remove('hidden'); // Ensure visible if not hidden
+                    updateHeaderTop(); // Set initial height
+                }
+                
+                // Update on resize
+                window.addEventListener('resize', updateHeaderTop);
+                // Also update after fonts/images might load and affect layout
+                window.addEventListener('load', updateHeaderTop);
+            }
+
+            // --- Theme Switching Logic ---
+            const themeDayBtn = document.getElementById('theme-day-btn');
+            const themeNightBtn = document.getElementById('theme-night-btn');
+            const themeHyperBtn = document.getElementById('theme-hyper-btn');
+
+            function setTheme(theme) {
+                document.body.classList.remove('dark-mode', 'hyper-mode');
+                themeDayBtn?.classList.remove('active');
+                themeNightBtn?.classList.remove('active');
+                themeHyperBtn?.classList.remove('active');
+
+                if (theme === 'dark') {
+                    document.body.classList.add('dark-mode');
+                    themeNightBtn?.classList.add('active');
+                } else if (theme === 'hyper') {
+                    document.body.classList.add('hyper-mode');
+                    themeHyperBtn?.classList.add('active');
+                } else {
+                    themeDayBtn?.classList.add('active');
+                }
+                localStorage.setItem('fruitfulTheme', theme);
+                // Re-render charts to ensure they pick up new theme colors
+                const activeViewId = document.querySelector('.content-section.active')?.id ||
+                                     document.querySelector('#admin-portal-main-content-area .admin-view-panel.active')?.id;
+                if (activeViewId) {
+                    renderChartsForView(activeViewId);
+                }
+            }
+
+            if (themeDayBtn) { // Check if theme buttons exist
+                themeDayBtn.addEventListener('click', () => setTheme('day'));
+                themeNightBtn.addEventListener('click', () => setTheme('dark'));
+                themeHyperBtn.addEventListener('click', () => setTheme('hyper'));
+
+                // Load saved theme on startup
+                const savedTheme = localStorage.getItem('fruitfulTheme') || 'day';
+                setTheme(savedTheme);
+            }
+
+            // --- Language Switcher Logic ---
+            const languageSwitcher = document.getElementById('languageSwitcher');
+            const languageMap = {
+                'en': 'English',
+                'es': 'Spanish',
+                'fr': 'French',
+                'de': 'German',
+                'zh': 'Chinese'
+                // Add more languages as needed
+            };
+
+            if (languageSwitcher) {
+                languageSwitcher.addEventListener('change', (e) => {
+                    const selectedLang = e.target.value;
+                    document.documentElement.lang = selectedLang; // Update HTML lang attribute
+                    console.log(`Language changed to: ${languageMap[selectedLang] || selectedLang}`);
+                    // In a real app, you would load and display translated content here.
+                });
+                // Set initial value based on HTML's lang attribute or default to English
+                languageSwitcher.value = document.documentElement.lang || 'en';
+            }
+
+            // --- On Load Initializations for Canvases ---
+            initCanvases(); // This will initialize and start all canvas animations
 
             // Smooth scrolling for navigation links (if any were present)
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1453,73 +1819,134 @@ Seedwave™:
                     });
                 });
             });
-        };
 
+            // Initialize the default view (Innovate, Connect, Thrive) - Placeholder
+            showMainContentView('innovate-connect-thrive');
 
-        // --- Gemini API Brand Insights Generator Logic ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const generateBrandInsightBtn = document.getElementById('generateBrandInsightBtn');
-            const brandNameInput = document.getElementById('brandNameInput');
-            const brandInsightOutput = document.getElementById('brandInsightOutput');
-            const brandInsightLoading = document.getElementById('brandInsightLoading');
+            // Set initial active state for the default view's link - Placeholder
+            const defaultNavLink = document.querySelector(`[data-view-id="innovate-connect-thrive"]`);
+            if (defaultNavLink) {
+                // Ensure the logo link is also correctly activating the main page view
+                document.querySelector('.logo-link').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showMainContentView('innovate-connect-thrive');
+                });
+            }
 
-            if (generateBrandInsightBtn && brandNameInput && brandInsightOutput && brandInsightLoading) {
-                generateBrandInsightBtn.addEventListener('click', async () => {
-                    const brandName = brandNameInput.value.trim();
-                    if (!brandName) {
-                        brandInsightOutput.innerHTML = '<p class="text-red-500">Please enter a brand name.</p>';
+            // --- Load terminal iframe function ---
+            window.loadTerminal = function(iframeSrc) {
+                const vaultFrame = document.getElementById('vault-frame');
+                if (vaultFrame) {
+                    vaultFrame.src = iframeSrc;
+                    // Optional: add a class to the button that was clicked to highlight it
+                    document.querySelectorAll('.terminal-btn').forEach(btn => btn.classList.remove('ring'));
+                    // Note: event is not passed to loadTerminal when called directly
+                    // This part `event.target.classList.add('ring');` might need adjustment
+                    // if `loadTerminal` is not always called from an event listener.
+                    // For now, it's kept as is to match your provided code.
+                }
+            };
+
+            // Initialize with default terminal iframe
+            // This event listener will fire after DOMContentLoaded, potentially leading to double calls
+            // I'm changing it to be called directly within DOMContentLoaded for consistency.
+            loadTerminal('vault-master.html'); // Load default terminal on page load
+
+            // --- Planet Pulse Text Logic ---
+            const planetTextElement = document.getElementById('planet-text');
+            const planetPhrases = [
+                { text: "fruitful.planet.change", lang: "en" },
+                { text: "cambio.planeta.fructífero", lang: "es" },
+                { text: "changement.planète.fertile", lang: "fr" },
+                { text: "fruchtbarer.planet.wandel", lang: "de" },
+                { text: "富有成效的星球.变化", lang: "zh" }
+            ];
+            let currentPhraseIndex = 0;
+
+            function updatePlanetText() {
+                if (planetTextElement) {
+                    planetTextElement.classList.remove('pulse-animation'); // Remove to re-trigger animation
+                    void planetTextElement.offsetWidth; // Trigger reflow
+                    
+                    currentPhraseIndex = (currentPhraseIndex + 1) % planetPhrases.length;
+                    const nextPhrase = planetPhrases[currentPhraseIndex];
+                    
+                    planetTextElement.textContent = nextPhrase.text;
+                    planetTextElement.lang = nextPhrase.lang; // Update language attribute for accessibility/context
+                    
+                    planetTextElement.classList.add('pulse-animation'); // Add back to restart animation
+                }
+            }
+            setInterval(updatePlanetText, 3000); // Change every 3 seconds
+
+            // --- Gemini API Text Generation Logic ---
+            const generateTextBtn = document.getElementById('generateTextBtn');
+            const promptInput = document.getElementById('promptInput');
+            const generatedTextOutput = document.getElementById('generatedTextOutput');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+
+            if (generateTextBtn && promptInput && generatedTextOutput && loadingIndicator) {
+                generateTextBtn.addEventListener('click', async () => {
+                    const prompt = promptInput.value.trim();
+                    if (!prompt) {
+                        generatedTextOutput.textContent = "Please enter a prompt to generate text.";
+                        generatedTextOutput.style.color = "var(--tertiary-color)";
                         return;
                     }
 
-                    brandInsightOutput.textContent = ''; // Clear previous output
-                    brandInsightLoading.classList.remove('hidden'); // Show loading indicator
-                    generateBrandInsightBtn.disabled = true; // Disable button during generation
+                    generatedTextOutput.textContent = ''; // Clear previous output
+                    generatedTextOutput.style.color = "var(--text-color)"; // Reset color
+                    loadingIndicator.classList.remove('hidden'); // Show loading indicator
+                    generateTextBtn.disabled = true; // Disable button during generation
 
                     try {
                         let chatHistory = [];
-                        // Construct the prompt to guide Gemini's output
-                        const prompt = `Generate a concise, futuristic marketing slogan (5-10 words) and a brief strategic insight (2-3 sentences) for a brand named "${brandName}" within a decentralized, tech-sovereignty ecosystem called FAA.ZONE, which integrates music, aura enhancement, and global impact. Ensure the slogan captures innovation and the insight focuses on its unique value.`;
-
                         chatHistory.push({ role: "user", parts: [{ text: prompt }] });
                         const payload = { contents: chatHistory };
                         const apiKey = ""; // Canvas will automatically provide this during runtime
                         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
-                        console.log("Attempting to call Gemini API for brand insights with prompt:", prompt);
+                        console.log("Attempting to call Gemini API with prompt:", prompt);
                         const response = await fetch(apiUrl, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify(payload)
                         });
 
+                        console.log("Raw API Response Object:", response);
                         const result = await response.json();
-                        console.log("Parsed API Result for brand insights:", result);
+                        console.log("Parsed API Result JSON:", result);
 
                         if (result.candidates && result.candidates.length > 0 &&
                             result.candidates[0].content && result.candidates[0].content.parts &&
                             result.candidates[0].content.parts.length > 0) {
                             const text = result.candidates[0].content.parts[0].text;
-                            brandInsightOutput.textContent = text;
+                            console.log("Extracted Generated Text:", text); // Log the actual text content
+                            generatedTextOutput.textContent = text; // This should now correctly display newlines due to whitespace-pre-wrap
                         } else {
-                            brandInsightOutput.innerHTML = '<p class="text-red-500">Error: Could not generate insight. Unexpected API response or no content found.</p>';
-                            console.error("Gemini API response for brand insights was unexpected:", result);
+                            generatedTextOutput.textContent = "Error: Could not generate text. Unexpected API response structure or no candidates found.";
+                            generatedTextOutput.style.color = "var(--tertiary-color)";
+                            console.error("Gemini API response was unexpected or missing content:", result);
+                            // Also check if there are error details in the response
                             if (result.error && result.error.message) {
-                                brandInsightOutput.textContent += ` Reason: ${result.error.message}`;
+                                generatedTextOutput.textContent += ` Reason: ${result.error.message}`;
                             }
                         }
 
                     } catch (error) {
-                        brandInsightOutput.innerHTML = `<p class="text-red-500">Error: Failed to connect to Gemini API for insights. Check console for details.</p>`;
-                        console.error("Error calling Gemini API for brand insights:", error);
+                        generatedTextOutput.textContent = `Error: Failed to connect to language model. Check console for network issues or API key.`;
+                        generatedTextOutput.style.color = "var(--tertiary-color)";
+                        console.error("Error calling Gemini API:", error);
                     } finally {
-                        brandInsightLoading.classList.add('hidden'); // Hide loading indicator
-                        generateBrandInsightBtn.disabled = false; // Re-enable button
+                        loadingIndicator.classList.add('hidden'); // Hide loading indicator
+                        generateTextBtn.disabled = false; // Re-enable button
                     }
                 });
             } else {
-                console.warn("Brand Insight Generator elements (button, input, output, or loading indicator) not found in the DOM. Ensure IDs are correct.");
+                console.warn("Text generation elements (button, input, output, or loading indicator) not found in the DOM. Ensure IDs are correct.");
             }
         });
     </script>
 </body>
 </html>
+
