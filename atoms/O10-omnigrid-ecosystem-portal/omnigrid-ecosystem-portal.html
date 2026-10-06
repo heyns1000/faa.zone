@@ -249,7 +249,7 @@
             
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <!-- Terminal Buttons - All Live -->
-                <button class="terminal-button live bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200" data-terminal-id="hotstack" onclick="openTerminal('hotstack')">
+                <button class="terminal-button live bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200" onclick="openTerminal('hotstack')">
                     <div class="text-2xl mb-2">ðŸ”¥</div>
                     <div>HotStack</div>
                     <div class="text-xs opacity-75 mt-1">Data Intake</div>
@@ -511,38 +511,77 @@
 
     </div>
 
-    <!-- Terminal Router Integration -->
-    <script src="terminal-router.js"></script>
-    
     <script>
-        // Terminal routing is now handled by terminal-router.js
-        // The openTerminal() function is globally available
+        // Terminal URLs mapping
+        const TERMINALS = {
+            hotstack: 'https://hotstack.faa.zone/dashboard',
+            omnigrid: '/omnigrid',
+            seedwave: 'https://admin.faa.zone',
+            analytics: 'https://analytics.faa.zone',
+            banimal: '/global_brands.html',
+            vaultpay: '/legal/paypal_setup.html',
+            vaultmesh: '/legal/baobab.html',
+            legal: '/legal',
+            securesign: '/legal/securesign.html',
+            foxed: '/legal/foxed_got_mobiles_setup.html',
+            spotify: '/legal/spotify_intergration.html',
+            firebase: '/legal/firebase_core_minutes.html'
+        };
 
-        // Load real-time stats using integrated API
+        const TERMINAL_NAMES = {
+            hotstack: 'HotStack Data Intake',
+            omnigrid: 'OmniGrid Brand Portal',
+            seedwave: 'Seedwave Admin Panel',
+            analytics: 'Analytics Dashboard',
+            banimal: 'Banimal Global Brands',
+            vaultpay: 'VaultPay Payment System',
+            vaultmesh: 'VaultMesh Network',
+            legal: 'Legal Documentation Hub',
+            securesign: 'SecureSign NDA Portal',
+            foxed: 'Foxed Has Mobilesâ„¢',
+            spotify: 'Spotify Integration',
+            firebase: 'Firebase Core System'
+        };
+
+        // Open terminal function
+        function openTerminal(systemKey) {
+            const terminalContainer = document.getElementById('terminal-container');
+            const terminalPlaceholder = document.getElementById('terminal-placeholder');
+            const terminalIframe = document.getElementById('terminal-iframe');
+            const terminalTitle = document.getElementById('terminal-title');
+
+            // Update title
+            terminalTitle.textContent = TERMINAL_NAMES[systemKey];
+
+            // Set iframe source
+            terminalIframe.src = TERMINALS[systemKey];
+
+            // Show terminal, hide placeholder
+            terminalContainer.classList.remove('hidden');
+            terminalPlaceholder.classList.add('hidden');
+
+            // Scroll to terminal
+            terminalContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Load real-time stats
         async function loadStats() {
             try {
-                // Use the OmniGrid API integration
-                const data = await API.omnigrid.getStats();
+                // In production, this would fetch from /api/omnigrid/stats
+                // For now, using static data with animation
                 
-                if (data.success && data.stats) {
-                    // Update brands
-                    document.getElementById('stat-brands').textContent = 
-                        data.stats.brands.total.toLocaleString();
-                    
-                    // Update sectors
-                    document.getElementById('stat-sectors').textContent = 
-                        data.stats.sectors.total;
-                    
-                    // Animate pulse score
-                    animateValue('pulse-score', 0, data.stats.brands.avgPulseScore, 2000);
-                    
-                    // Update terminal count (always 12)
-                    document.getElementById('stat-terminals').textContent = '12';
-                }
+                const stats = {
+                    brands: 7038,
+                    sectors: 48,
+                    pulseScore: 85,
+                    terminals: 12
+                };
+
+                // Animate pulse score
+                animateValue('pulse-score', 0, stats.pulseScore, 2000);
+                
             } catch (error) {
                 console.error('Failed to load stats:', error);
-                // Use fallback static data
-                animateValue('pulse-score', 0, 85, 2000);
             }
         }
 
