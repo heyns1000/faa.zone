@@ -21,3 +21,11 @@ How it was chosen (all numbers from `index/atoms/A1-admin-portal*.json` in the s
 | v10 `faa.zone/public/admin-portal-8.html` | Confirmation dialog | "Yes, Clear All / Cancel", `showCustomConfirm` |
 | v1 `faa.zone/public/admin/admin-portal.html` (May 2025) | Snapshot and sector tools | `showSnapshot`, `showSmartSnapshot`, `renderSectorOutput`, `updateSectorDashboard`, `loadScrollProfile`, "📌 Subnodes", "ℹ️ Admin Status Feedback" |
 | v7 `faa.zone/public/admin-portal-5.html` | Deployment trigger | `initiateDeployment` |
+
+## Tested (6 Oct 2026, local browser)
+
+- Loads as "⚙️ Seedwave™ Admin Portal": 1,219 buttons, 128 elements with click handlers using 5 functions, all defined (0 dead handlers).
+- Expects a backend at `http://localhost:3000/api` (`loadMainDashboardData`); without it the page shows
+  "Backend Connection Error". No backend version has been found yet in the 52 repos.
+- A block of CSS renders as text at the top of the page: an unclosed or misplaced `<style>` in the source
+  (present in v13 as published). Fix belongs in the graft pass, taken from a version where it renders cleanly.
