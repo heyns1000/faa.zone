@@ -1,214 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VaultMaster Terminal - FAA.zone</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --terminal-bg: #0d1117;
-            --terminal-text: #c9d1d9;
-            --terminal-green: #3fb950;
-            --terminal-gold: #d4af37;
-            --terminal-blue: #58a6ff;
-            --terminal-border: #30363d;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--terminal-bg);
-            color: var(--terminal-text);
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-        }
-        .terminal-header {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            border-bottom: 2px solid var(--terminal-gold);
-            padding: 1.5rem 2rem;
-        }
-        .terminal-title {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--terminal-gold);
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-        .terminal-subtitle {
-            color: var(--terminal-text);
-            opacity: 0.7;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-        }
-        .terminal-body {
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .command-input {
-            background: #161b22;
-            border: 1px solid var(--terminal-border);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-        }
-        .command-input input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: var(--terminal-green);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1rem;
-            outline: none;
-        }
-        .command-input input::placeholder {
-            color: #484f58;
-        }
-        .prompt-prefix {
-            color: var(--terminal-gold);
-            font-family: 'JetBrains Mono', monospace;
-            margin-right: 0.5rem;
-        }
-        .vault-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-        .vault-card {
-            background: linear-gradient(145deg, #161b22 0%, #0d1117 100%);
-            border: 1px solid var(--terminal-border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .vault-card:hover {
-            border-color: var(--terminal-gold);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.15);
-        }
-        .vault-card-icon { font-size: 2.5rem; margin-bottom: 1rem; }
-        .vault-card-title { color: var(--terminal-gold); font-weight: 600; font-size: 1.1rem; margin-bottom: 0.5rem; }
-        .vault-card-desc { color: var(--terminal-text); opacity: 0.7; font-size: 0.9rem; line-height: 1.5; }
-        .status-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-top: 1rem;
-        }
-        .status-active { background: rgba(63, 185, 80, 0.2); color: var(--terminal-green); }
-        .status-synced { background: rgba(88, 166, 255, 0.2); color: var(--terminal-blue); }
-        .terminal-output {
-            background: #161b22;
-            border: 1px solid var(--terminal-border);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-top: 2rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            line-height: 1.8;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        .output-line { margin-bottom: 0.5rem; }
-        .output-success { color: var(--terminal-green); }
-        .output-info { color: var(--terminal-blue); }
-        .output-gold { color: var(--terminal-gold); }
-    </style>
+  <meta charset="UTF-8">
+  <title>🧝 VaultMaster Terminal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes pulse9sec {
+      0%, 100% { transform: scaleX(0); }
+      50% { transform: scaleX(1); }
+    }
+    .animate-pulse9sec {
+      animation: pulse9sec 9s infinite ease-in-out;
+      transform-origin: left;
+    }
+  </style>
 </head>
-<body>
-    <header class="terminal-header">
-        <div class="terminal-title">🦍 VaultMaster Terminal v2.1</div>
-        <div class="terminal-subtitle">FAA.zone Central Vault Access & Management System</div>
+<body class="bg-black text-white min-h-screen flex items-center justify-center px-4 relative">
+
+  <!-- OmniTreaty Pulse Line -->
+  <div class="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500 animate-pulse9sec z-50"></div>
+
+  <main class="w-full max-w-3xl border border-yellow-400 rounded-3xl shadow-2xl bg-gray-900 p-8 space-y-6">
+    <header class="text-center">
+      <h1 class="text-3xl font-bold text-yellow-400 flex items-center justify-center gap-4">
+        <span class="text-5xl animate-pulse">🦍</span> VaultMaster Terminal
+      </h1>
+      <p class="text-sm text-gray-300">Status: <span class="text-green-400 font-bold">Online</span></p>
+      <p class="text-sm text-gray-400">This terminal scroll-syncs with VaultGPT™ for treaty protocol execution.<br><span class="inline-flex items-center gap-1 mt-1">🔗 Connected to VaultMesh</span></p>
     </header>
 
-    <main class="terminal-body">
-        <div class="command-input">
-            <span class="prompt-prefix">vault@faa.zone:~$</span>
-            <input type="text" placeholder="Enter command (help, status, sectors, brands, sync)" id="commandInput">
-        </div>
+    <textarea id="prompt" rows="5" placeholder="Enter your scroll prompt..."
+      class="w-full text-white placeholder-gray-400 bg-black border border-gray-700 rounded-lg p-4 text-sm"></textarea>
 
-        <div class="vault-grid">
-            <div class="vault-card">
-                <div class="vault-card-icon">📜</div>
-                <div class="vault-card-title">ScrollClaim Manager</div>
-                <div class="vault-card-desc">Manage and deploy ScrollClaims with VaultDNA tracking and ClaimRoot verification.</div>
-                <span class="status-badge status-active">Active</span>
-            </div>
-            <div class="vault-card">
-                <div class="vault-card-icon">📡</div>
-                <div class="vault-card-title">PulseGrid Sync</div>
-                <div class="vault-card-desc">Real-time scroll presence monitoring and cross-sector synchronization.</div>
-                <span class="status-badge status-synced">Synced</span>
-            </div>
-            <div class="vault-card">
-                <div class="vault-card-icon">🔐</div>
-                <div class="vault-card-title">OmniSignal Verify</div>
-                <div class="vault-card-desc">Global scroll verification and authentication protocols.</div>
-                <span class="status-badge status-active">Active</span>
-            </div>
-            <div class="vault-card">
-                <div class="vault-card-icon">👻</div>
-                <div class="vault-card-title">GhostTrace Gen2</div>
-                <div class="vault-card-desc">Scroll interaction backtrace and forensic audit trails.</div>
-                <span class="status-badge status-synced">Monitoring</span>
-            </div>
-            <div class="vault-card">
-                <div class="vault-card-icon">💰</div>
-                <div class="vault-card-title">VaultPay Tier III</div>
-                <div class="vault-card-desc">Commercial deployment payments and royalty distribution.</div>
-                <span class="status-badge status-active">Active</span>
-            </div>
-            <div class="vault-card">
-                <div class="vault-card-icon">💎</div>
-                <div class="vault-card-title">HSOMNI9000</div>
-                <div class="vault-card-desc">Diamond-tier deployment agent with 10-11% royalty enforcement.</div>
-                <span class="status-badge status-active">Certified</span>
-            </div>
-        </div>
+    <div class="flex justify-between items-center">
+      <button id="sendBtn" class="bg-yellow-400 text-black font-bold px-6 py-3 rounded-lg shadow hover:scale-105 hover:bg-yellow-500 transition-transform duration-200">
+        ➤ Send Scroll
+      </button>
+      <button onclick="clearPrompt()" class="text-sm text-white underline ml-4">Clear</button>
+    </div>
 
-        <div class="terminal-output" id="terminalOutput">
-            <div class="output-line output-gold">========== VaultMaster Terminal - FAA.zone Vault Access ==========</div>
-            <div class="output-line output-success">[INIT] VaultMaster v2.1 initialized successfully</div>
-            <div class="output-line output-info">[SYNC] PulseGrid connection established</div>
-            <div class="output-line output-info">[AUTH] OmniSignal verification complete</div>
-            <div class="output-line output-success">[READY] All systems operational. Type 'help' for commands.</div>
-        </div>
-    </main>
+    <pre id="response" class="bg-black text-yellow-300 border border-yellow-500 rounded-lg p-4 text-base leading-relaxed whitespace-pre-wrap overflow-x-auto">
+⚡️ Vault status: Ready for OmniScroll...
+    </pre>
+  </main>
 
-    <script>
-        const commandInput = document.getElementById('commandInput');
-        const terminalOutput = document.getElementById('terminalOutput');
+  <script>
+    async function sendPrompt() {
+      const input = document.getElementById("prompt").value.trim();
+      const output = document.getElementById("response");
 
-        const commands = {
-            help: '<span class="output-gold">Commands:</span> status, sectors, brands, sync, clear, about',
-            status: '<span class="output-success">[STATUS]</span> ScrollClaims: 1,171 | Nodes: 42 | Uptime: 99.97%',
-            sectors: '<span class="output-info">[SECTORS]</span> AI & Logic, Logistics, Payroll, Finance, Media, Agriculture + 26 more',
-            brands: '<span class="output-gold">[BRANDS]</span> Total: 7,038 | Core: 168 | Nodes: ~700 | Pages: 780+',
-            sync: '<span class="output-success">[SYNC]</span> PulseGrid sync complete - 42 nodes synchronized',
-            about: '<span class="output-gold">VaultMaster Terminal v2.1</span> - FAA.zone VaultMesh Infrastructure'
-        };
+      if (!input) {
+        output.textContent = "⚠️ TreatyNotice: Please enter a scroll before dispatch.";
+        return;
+      }
 
-        commandInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                const cmd = this.value.trim().toLowerCase();
-                if (cmd === 'clear') {
-                    terminalOutput.innerHTML = '';
-                } else if (commands[cmd]) {
-                    terminalOutput.innerHTML += '<div class="output-line"><span class="output-gold">$</span> ' + cmd + '</div>';
-                    terminalOutput.innerHTML += '<div class="output-line">' + commands[cmd] + '</div>';
-                } else if (cmd) {
-                    terminalOutput.innerHTML += '<div class="output-line" style="color:#f85149;">Unknown: ' + cmd + '</div>';
-                }
-                this.value = '';
-                terminalOutput.scrollTop = terminalOutput.scrollHeight;
-            }
+      output.textContent = "🔄 TreatySync: Dispatching scroll to VaultMesh...";
+
+      try {
+        const res = await fetch("https://faa.zone/vaultbridge", {  // ✅ Correct Bridge Target
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt: input })
         });
-    </script>
+
+        if (!res.ok) throw new Error(`Bridge error: ${res.status}`);
+
+        const data = await res.json();
+        output.textContent = data.reply || "✅ VaultGPT acknowledged scroll but no content was returned.";
+      } catch (err) {
+        output.textContent = `❌ Connection failure.\n\n🧼 OmniDrop fallback initiated:\n"${input}"`;
+      }
+    }
+
+    function clearPrompt() {
+      document.getElementById("prompt").value = "";
+      document.getElementById("response").textContent = "⚡️ Vault status: Cleared. Ready for next scroll.";
+    }
+
+    document.getElementById("sendBtn").addEventListener("click", sendPrompt);
+  </script>
 </body>
 </html>
