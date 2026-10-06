@@ -27,3 +27,4 @@
 | 21 | 2026-09-26 | fruitful-superagent | main | `claude/projects/fruitful-banimal-global-loop-019f1398/files/index.html` | `9dd2b0be` | Banimal — 100% Cotton Babygrows & Bibs | Sout | 14188 | 0 | 12 | 50.4 |
 | 22 | 2026-10-06 | banimal | main | `dist/index.html` | `587b0f12` | Banimal — 100% Cotton Babygrows & Bibs | Sout | 8518 | 0 | 4 | 33.9 |
 | 23 | 2026-10-06 | banimal | claude/sam-39 | `dist/index.html` | `fbb76956` | Banimal — 100% Cotton Babygrows & Bibs | Sout | 8726 | 0 | 4 | 33.9 |
+| 24 | 2026-10-06 | banimal | skill-training-global-ci-rollout | `dist/index.html` | `210acc34` | Banimal — 100% Cotton Babygrows & Bibs | Sout | 7052 | 0 | 4 | 33.7 |
