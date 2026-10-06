@@ -3,319 +3,287 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - Seedwave™ Global Admin Panel</title>
+    <title>Sign Up - FAA.ZONE</title>
+    <link rel="icon" href="/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* Base Styles - Consistent with Apple-inspired theme */
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #f5f5f7; /* Very light gray, almost white */
+            color: #1d1d1f; /* Near black for primary text */
+            line-height: 1.4;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.95);
+
+        /* Header - Minimalist and clean */
+        header {
+            background-color: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e8e8ed;
+            padding: 1rem 2rem;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+            width: 100%;
+            position: fixed; /* Fixed header */
+            top: 0;
+            left: 0;
+            z-index: 50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h1 {
+            color: #1d1d1f;
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+        header nav a {
+            color: #424245;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            transition: all 0.2s ease-in-out;
+            text-decoration: none; /* Remove underline */
+        }
+        header nav a:hover {
+            color: #0071e3;
+            background-color: rgba(0, 0, 0, 0.03);
+        }
+
+        /* Sign Up Card */
+        .signup-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 450px; /* Slightly wider than login for more fields */
+            text-align: center;
+            margin-top: 6rem; /* Space from fixed header */
+            margin-bottom: 2rem;
+        }
+        .signup-card h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 2rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #424245;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e8e8ed;
+            border-radius: 0.5rem;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            font-size: 1rem;
+            color: #1d1d1f;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #0071e3;
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.2);
+        }
+        .signup-button {
+            background-color: #0071e3; /* Apple blue */
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            width: 100%;
+            border: none;
+            cursor: pointer;
+        }
+        .signup-button:hover {
+            background-color: #0077ed;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+        .message {
+            margin-top: 1.5rem;
+            padding: 0.8rem;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            display: none; /* Hidden by default */
+        }
+        .message.error {
+            background-color: #ffe0e0;
+            color: #cc0000;
+            border: 1px solid #ffb3b3;
+        }
+        .message.success {
+            background-color: #e0ffe0;
+            color: #008000;
+            border: 1px solid #b3ffb3;
+        }
+        .login-link {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #424245;
+        }
+        .login-link a {
+            color: #0071e3;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #f5f5f7;
+            color: #6e6e73;
+            padding: 1.5rem;
+            font-size: 0.85rem;
+            border-top: 1px solid #e8e8ed;
+            width: 100%;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .signup-card {
+                padding: 1.5rem;
+                margin-left: 1rem;
+                margin-right: 1rem;
+            }
+            .signup-card h2 {
+                font-size: 1.75rem;
+            }
         }
     </style>
 </head>
-<body class="gradient-bg min-h-screen flex items-center justify-center p-4">
+<body>
+    <header>
+        <h1 class="text-2xl font-extrabold tracking-tight">FAA.ZONE</h1>
+        <nav class="flex items-center space-x-4">
+            <a href="index.html">Home</a>
+            <a href="public-dashboard.html">Overview</a>
+            <a href="admin-login.html">Admin Login</a>
+        </nav>
+    </header>
 
-    <!-- Signup Container -->
-    <div class="glass-effect rounded-2xl shadow-2xl max-w-md w-full p-8">
-
-        <!-- Header -->
-        <div class="text-center mb-8">
-            <h1 class="text-4xl font-extrabold text-gray-900 mb-2">
-                Seedwave™
-            </h1>
-            <p class="text-gray-600 text-lg">Create Your Account</p>
-            <div class="mt-4 flex items-center justify-center gap-2 text-sm text-gray-500">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
-                </svg>
-                <span>Secured by VaultMesh™</span>
-            </div>
-        </div>
-
-        <!-- Success Message -->
-        <div id="successMessage" class="hidden bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4">
-            <div class="flex items-center gap-2">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                </svg>
-                <span>Account created! Redirecting...</span>
-            </div>
-        </div>
-
-        <!-- Error Message -->
-        <div id="errorMessage" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
-            <div class="flex items-center gap-2">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
-                </svg>
-                <span id="errorText"></span>
-            </div>
-        </div>
-
-        <!-- Signup Form -->
-        <form id="signupForm" class="space-y-4">
-
-            <!-- Name Fields Row -->
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label for="firstName" class="block text-sm font-semibold text-gray-700 mb-2">
-                        First Name
-                    </label>
-                    <input
-                        type="text"
-                        id="firstName"
-                        name="firstName"
-                        required
-                        placeholder="John"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition"
-                    />
+    <main class="flex-grow flex items-center justify-center w-full">
+        <div class="signup-card">
+            <h2>Create Your FAA.ZONE Account</h2>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="fullName" class="form-label">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" class="form-input" required>
                 </div>
-                <div>
-                    <label for="lastName" class="block text-sm font-semibold text-gray-700 mb-2">
-                        Last Name
-                    </label>
-                    <input
-                        type="text"
-                        id="lastName"
-                        name="lastName"
-                        required
-                        placeholder="Doe"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition"
-                    />
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-input" required>
                 </div>
-            </div>
-
-            <!-- Email Field -->
-            <div>
-                <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">
-                    Email Address
-                </label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    placeholder="john@example.com"
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition"
-                />
-            </div>
-
-            <!-- Password Field -->
-            <div>
-                <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">
-                    Password
-                </label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    required
-                    placeholder="••••••••"
-                    minlength="8"
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition"
-                />
-                <p class="text-xs text-gray-500 mt-1">Minimum 8 characters</p>
-            </div>
-
-            <!-- Confirm Password Field -->
-            <div>
-                <label for="confirmPassword" class="block text-sm font-semibold text-gray-700 mb-2">
-                    Confirm Password
-                </label>
-                <input
-                    type="password"
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    required
-                    placeholder="••••••••"
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition"
-                />
-            </div>
-
-            <!-- Terms & Conditions -->
-            <div class="flex items-start gap-2">
-                <input
-                    type="checkbox"
-                    id="terms"
-                    required
-                    class="w-4 h-4 mt-1 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
-                />
-                <label for="terms" class="text-sm text-gray-600">
-                    I agree to the <a href="#" class="text-purple-600 hover:text-purple-700 font-medium">Terms of Service</a> and <a href="#" class="text-purple-600 hover:text-purple-700 font-medium">Privacy Policy</a>
-                </label>
-            </div>
-
-            <!-- Submit Button -->
-            <button
-                type="submit"
-                id="signupButton"
-                class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:from-purple-700 hover:to-indigo-700 transition duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg"
-            >
-                <span id="signupButtonText">Create Account</span>
-                <svg id="signupSpinner" class="hidden animate-spin h-5 w-5 mx-auto" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-            </button>
-
-        </form>
-
-        <!-- Divider -->
-        <div class="relative my-6">
-            <div class="absolute inset-0 flex items-center">
-                <div class="w-full border-t border-gray-300"></div>
-            </div>
-            <div class="relative flex justify-center text-sm">
-                <span class="px-4 bg-white text-gray-500">or</span>
-            </div>
+                <div class="form-group">
+                    <label for="newPassword" class="form-label">Password</label>
+                    <input type="password" id="newPassword" name="newPassword" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" required>
+                </div>
+                <button type="submit" class="signup-button">Sign Up</button>
+                <div id="signupMessage" class="message"></div>
+            </form>
+            <p class="login-link">Already have an account? <a href="admin-login.html">Log In</a></p>
         </div>
+    </main>
 
-        <!-- Login Link -->
-        <div class="text-center">
-            <p class="text-gray-600">
-                Already have an account?
-                <a href="login.html" class="text-purple-600 hover:text-purple-700 font-semibold">
-                    Sign in
-                </a>
-            </p>
-        </div>
-
-        <!-- VaultMesh Pulse Indicator -->
-        <div class="mt-8 text-center">
-            <div class="flex items-center justify-center gap-2 text-xs text-gray-400">
-                <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span>VaultMesh™ Pulse Active (9s)</span>
-            </div>
-        </div>
-
-    </div>
+    <footer>
+        <p>&copy; 2025 FAA.ZONE. All Rights Reserved.</p>
+    </footer>
 
     <script>
-        // Signup form handler
-        const signupForm = document.getElementById('signupForm');
-        const errorMessage = document.getElementById('errorMessage');
-        const successMessage = document.getElementById('successMessage');
-        const errorText = document.getElementById('errorText');
-        const signupButton = document.getElementById('signupButton');
-        const signupButtonText = document.getElementById('signupButtonText');
-        const signupSpinner = document.getElementById('signupSpinner');
+        // JavaScript for simulated sign-up logic
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
 
-        function showError(message) {
-            errorText.textContent = message;
-            errorMessage.classList.remove('hidden');
-            successMessage.classList.add('hidden');
+            const fullNameInput = document.getElementById('fullName');
+            const emailInput = document.getElementById('email');
+            const newPasswordInput = document.getElementById('newPassword');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const signupMessage = document.getElementById('signupMessage');
+
+            const fullName = fullNameInput.value;
+            const email = emailInput.value;
+            const newPassword = newPasswordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+
+            signupMessage.style.display = 'none'; // Hide previous messages
+
+            // Basic client-side validation
+            if (!fullName || !email || !newPassword || !confirmPassword) {
+                signupMessage.textContent = 'Please fill in all required fields.';
+                signupMessage.className = 'message error';
+                signupMessage.style.display = 'block';
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                signupMessage.textContent = 'Passwords do not match.';
+                signupMessage.className = 'message error';
+                signupMessage.style.display = 'block';
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                signupMessage.textContent = 'Password must be at least 6 characters long.';
+                signupMessage.className = 'message error';
+                signupMessage.style.display = 'block';
+                return;
+            }
+
+            // --- Simulated Registration ---
+            // In a real application, you would send this data to a backend API
+            // for actual user creation and database storage.
+            console.log('Simulating user registration:');
+            console.log('Full Name:', fullName);
+            console.log('Email:', email);
+            console.log('Password (hashed in real app):', newPassword);
+
+            // Simulate network request delay
             setTimeout(() => {
-                errorMessage.classList.add('hidden');
-            }, 5000);
-        }
+                signupMessage.textContent = `Account created successfully for ${fullName}! You can now log in.`;
+                signupMessage.className = 'message success';
+                signupMessage.style.display = 'block';
 
-        function showSuccess() {
-            successMessage.classList.remove('hidden');
-            errorMessage.classList.add('hidden');
-        }
+                // Optionally clear the form after successful signup
+                document.getElementById('signupForm').reset();
 
-        function setLoading(loading) {
-            signupButton.disabled = loading;
-            if (loading) {
-                signupButtonText.classList.add('hidden');
-                signupSpinner.classList.remove('hidden');
-            } else {
-                signupButtonText.classList.remove('hidden');
-                signupSpinner.classList.add('hidden');
-            }
-        }
-
-        signupForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const firstName = document.getElementById('firstName').value;
-            const lastName = document.getElementById('lastName').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-
-            // Validate password match
-            if (password !== confirmPassword) {
-                showError('Passwords do not match');
-                return;
-            }
-
-            // Validate password length
-            if (password.length < 8) {
-                showError('Password must be at least 8 characters');
-                return;
-            }
-
-            setLoading(true);
-
-            try {
-                const response = await fetch('/api/auth/signup', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        firstName,
-                        lastName,
-                        email,
-                        password
-                    }),
-                });
-
-                const data = await response.json();
-
-                if (response.ok && data.success) {
-                    // Success! Show message and redirect
-                    showSuccess();
-                    setTimeout(() => {
-                        window.location.href = 'index.html';
-                    }, 1500);
-                } else {
-                    showError(data.error || 'Signup failed. Please try again.');
-                    setLoading(false);
-                }
-            } catch (error) {
-                console.error('Signup error:', error);
-                showError('Network error. Please check your connection and try again.');
-                setLoading(false);
-            }
-        });
-
-        // Check if already authenticated
-        async function checkAuth() {
-            try {
-                const response = await fetch('/api/auth/status');
-                const data = await response.json();
-
-                if (data.authenticated) {
-                    // Already logged in, redirect to dashboard
-                    window.location.href = 'index.html';
-                }
-            } catch (error) {
-                console.error('Auth check error:', error);
-            }
-        }
-
-        // Check auth on page load
-        checkAuth();
-
-        // VaultMesh Pulse animation
-        setInterval(() => {
-            const pulse = document.querySelector('.animate-pulse');
-            if (pulse) {
-                pulse.style.animation = 'none';
+                // Optionally, redirect to login page after a short delay
                 setTimeout(() => {
-                    pulse.style.animation = '';
-                }, 10);
-            }
-        }, 9000); // 9-second VaultMesh pulse
+                    // Redirect to admin-login.html (assuming it's in the root)
+                    window.location.href = 'admin-login.html'; 
+                }, 2000); // Redirect after 2 seconds
+            }, 1500); // Simulate a 1.5-second delay
+        });
     </script>
-
 </body>
 </html>
