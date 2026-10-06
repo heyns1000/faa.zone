@@ -306,6 +306,7 @@ function renderGiving(group){
       <span class="tag existing">backend already existed</span>
       <span class="tag src">worker/routes/giving.ts</span>
     </div>
+    ${ciStrip('Giving Loop · 15.01%')}
     <div class="notice"><strong>Correction on the number:</strong> "Banimal Loop 15.01%" as a universal biological/algorithmic/financial threshold (from the research .docx) is unsourced and not real. What <em>is</em> real, and already live in <code>worker/routes/giving.ts</code>: <code>GIVING_RATE = 0.1501</code> \u2014 15.01% of every pre-tax sale is donated as babygrows/bibs/layettes for children in need. This page gives that real mechanism the frontend it never had.</p></div>
 
     <div class="panel">
@@ -321,6 +322,7 @@ givingAmount = round(preTax \u00d7 GIVING_RATE, 2)
 tier = highest TIER where givingAmount >= tier.minGiving</div>
       <p style="margin-top:14px;font-size:12px;color:#8a8482">Live API contract (in-repo, ready to point at the deployed Worker): <code>POST /api/giving/calculate</code> \u2192 <code>{ orderTotalZAR, includesVAT }</code>. Swap the local <code>calculateGiving()</code> call below for a real <code>fetch()</code> once the Worker base URL is confirmed \u2014 same shape, zero rewrite.</p>
     </div>
+    ${circleNav({path:'/giving-loop', title:'Giving Loop · 15.01%'}, '\u2728 New \u00b7 Giving Loop & Baobab Hub')}
   `;
   const upd = ()=>{
     const total = Number(document.getElementById('orderTotal').value)||0;
@@ -334,6 +336,7 @@ tier = highest TIER where givingAmount >= tier.minGiving</div>
   document.getElementById('orderTotal').oninput = upd;
   document.getElementById('incVat').onchange = upd;
   upd();
+  wireCircleNav();
 }
 
 /* ============================================================
@@ -350,6 +353,7 @@ function renderBaobab(group){
       <span class="tag existing">pages already existed, scattered</span>
       <span class="tag src">baobab.faa.zone</span>
     </div>
+    ${ciStrip('Baobab Hub')}
     <div class="panel">
       <p>Baobab already had two live pages in <code>banimal-main</code> \u2014 <code>/baobab-portal</code> and <code>/baobab-ecostack</code> \u2014 wired into <code>App.tsx</code>, but with no single door into them and no link out to the <code>baobab.faa.zone</code> repo itself. This hub gives Baobab one frontend space and one backend activation point, without touching either existing page.</p>
       <div class="hub-grid">
@@ -379,7 +383,9 @@ GET  /baobab-portal             \u2192 existing React Router page
 GET  /baobab-ecostack           \u2192 existing React Router page
 GET  /baobab-hub                \u2192 this page, the front door to all of the above</div>
     </div>
+    ${circleNav({path:'/baobab-hub', title:'Baobab Hub'}, '\u2728 New \u00b7 Giving Loop & Baobab Hub')}
   `;
+  wireCircleNav();
 }
 
 /* boot on first item */
