@@ -1,930 +1,406 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style></head><body>
-<title>FAA.ZONE Careers</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@500;700;900&family=Space+Mono:wght@400;700&display=swap">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌍 FAA.ZONE™ Careers</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --faa-yellow: #facc15;
-    --faa-bg: #0a0a0a;
-    --faa-card: #1a1a1c;
-    --faa-border: #2e2e2e;
-    --apple-blue: #0071e3;
-    --apple-green: #30d158;
-    --apple-red: #ff3b30;
-    --muted: #6e6e73;
-    --text-primary: #f5f5f7;
-    --text-secondary: #a1a1a6;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--faa-bg);
-    color: var(--text-primary);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* ANIMATED GRID BACKGROUND */
-  .animated-grid-bg {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    background-image:
-      linear-gradient(45deg, #0a0a0a 25%, #1a1a1c 25%, #1a1a1c 50%, #0a0a0a 50%, #0a0a0a 75%, #1a1a1c 75%, #1a1a1c);
-    background-size: 40px 40px;
-    animation: grid-move 60s linear infinite;
-    opacity: 0.5;
-  }
-  @keyframes grid-move {
-    0% { background-position: 0 0; }
-    100% { background-position: 80px 80px; }
-  }
-
-  /* GLASSMORPHISM HEADER */
-  header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    background: rgba(26,26,28,0.9);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--faa-border);
-    padding: 0 2rem;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .header-logo {
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 900;
-    font-size: 1.1rem;
-    letter-spacing: 0.1em;
-    color: var(--faa-yellow);
-  }
-  .header-logo span { color: var(--text-secondary); font-weight: 500; }
-
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-  }
-
-  .header-stat {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--muted);
-    text-align: right;
-  }
-  .header-stat strong { color: var(--apple-green); font-size: 0.75rem; }
-
-  /* PAGE WRAPPER */
-  .page {
-    position: relative;
-    z-index: 1;
-    padding-top: 60px;
-  }
-
-  /* HERO */
-  .hero {
-    padding: 5rem 2rem 4rem;
-    max-width: 900px;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  .hero-eyebrow {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.25em;
-    color: var(--apple-blue);
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-  }
-
-  .hero-title {
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 900;
-    font-size: clamp(2.5rem, 7vw, 5rem);
-    line-height: 1.0;
-    letter-spacing: -0.01em;
-    text-wrap: balance;
-    color: var(--text-primary);
-    margin-bottom: 0.5rem;
-  }
-  .hero-title .accent { color: var(--faa-yellow); }
-
-  .hero-sub {
-    font-size: 1.05rem;
-    color: var(--text-secondary);
-    max-width: 540px;
-    margin: 1.25rem auto 0;
-    line-height: 1.65;
-    font-weight: 300;
-  }
-
-  /* PULSE NOODLE ROPE */
-  .rope-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 2.5rem auto;
-    gap: 0;
-  }
-
-  .rope-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    white-space: nowrap;
-  }
-
-  .pulse-grid-noodle-rope {
-    position: relative;
-    height: 2px;
-    width: 280px;
-    background-color: #6e6e73;
-    border-radius: 1px;
-    margin: 0 32px;
-    opacity: 0.7;
-  }
-
-  .noodle-dot {
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 8px;
-    height: 8px;
-    background: var(--apple-blue);
-    border-radius: 50%;
-    animation: pulse-dot 3s infinite;
-  }
-  .noodle-dot.dot-1 { left: 0%;   animation-delay: 0s; }
-  .noodle-dot.dot-2 { left: 20%;  animation-delay: 0.5s; }
-  .noodle-dot.dot-3 { left: 40%;  animation-delay: 1s; }
-  .noodle-dot.dot-4 { left: 60%;  animation-delay: 1.5s; }
-  .noodle-dot.dot-5 { left: 80%;  animation-delay: 2s; }
-  .noodle-dot.dot-stepdad {
-    left: 100%;
-    width: 10px;
-    height: 10px;
-    background: var(--apple-green);
-    animation-delay: 2.5s;
-  }
-
-  @keyframes pulse-dot {
-    0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(0.8); }
-    50%       { opacity: 1;   transform: translate(-50%, -50%) scale(1.4); box-shadow: 0 0 8px currentColor; }
-  }
-
-  /* STATS BAR */
-  .stats-bar {
-    display: flex;
-    justify-content: center;
-    gap: 3rem;
-    margin: 0 auto 3rem;
-    flex-wrap: wrap;
-  }
-  .stat-item { text-align: center; }
-  .stat-num {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--faa-yellow);
-    font-variant-numeric: tabular-nums;
-  }
-  .stat-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--muted);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-top: 0.2rem;
-  }
-
-  /* FILTER / SEARCH */
-  .filter-section {
-    max-width: 1100px;
-    margin: 0 auto 2rem;
-    padding: 0 2rem;
-  }
-
-  .search-row {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-
-  .search-input {
-    flex: 1;
-    min-width: 220px;
-    background: var(--faa-card);
-    border: 1px solid var(--faa-border);
-    border-radius: 8px;
-    padding: 0.65rem 1rem;
-    color: var(--text-primary);
-    font-family: 'Inter', sans-serif;
-    font-size: 0.875rem;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .search-input::placeholder { color: var(--muted); }
-  .search-input:focus { border-color: var(--faa-yellow); }
-
-  .filter-pills {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-
-  .pill {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.68rem;
-    padding: 0.4rem 0.9rem;
-    border-radius: 20px;
-    border: 1px solid var(--faa-border);
-    background: transparent;
-    color: var(--text-secondary);
-    cursor: pointer;
-    letter-spacing: 0.05em;
-    transition: all 0.18s;
-  }
-  .pill:hover { border-color: var(--faa-yellow); color: var(--faa-yellow); }
-  .pill.active {
-    background: var(--faa-yellow);
-    border-color: var(--faa-yellow);
-    color: #0a0a0a;
-    font-weight: 700;
-  }
-
-  /* JOB GRID */
-  .jobs-grid {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 2rem 5rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.25rem;
-  }
-
-  .job-card {
-    background: var(--faa-card);
-    border: 1px solid var(--faa-border);
-    border-radius: 12px;
-    padding: 1.5rem;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  .job-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 20px rgba(250,204,21,0.1);
-    border-color: rgba(250,204,21,0.3);
-  }
-  .job-card[hidden] { display: none; }
-
-  .job-dept {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-  }
-  .dept-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-  .dept-name {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  .job-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    line-height: 1.3;
-    text-wrap: balance;
-  }
-
-  .job-desc {
-    font-size: 0.82rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
-    font-weight: 300;
-  }
-
-  .job-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: auto;
-  }
-  .tag {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.6rem;
-    padding: 0.25rem 0.6rem;
-    border-radius: 4px;
-    letter-spacing: 0.05em;
-  }
-  .tag-blue  { background: rgba(0,113,227,0.15); color: var(--apple-blue); }
-  .tag-green { background: rgba(48,209,88,0.15);  color: var(--apple-green); }
-  .tag-red   { background: rgba(255,59,48,0.15);  color: var(--apple-red); }
-  .tag-yellow{ background: rgba(250,204,21,0.12); color: var(--faa-yellow); }
-
-  .job-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 0.25rem;
-  }
-  .job-type {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--apple-green);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-  .apply-btn {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.4rem 1rem;
-    border-radius: 6px;
-    background: var(--faa-yellow);
-    color: #0a0a0a;
-    border: none;
-    cursor: pointer;
-    transition: opacity 0.15s;
-  }
-  .apply-btn:hover { opacity: 0.85; }
-
-  /* NO RESULTS */
-  .no-results {
-    grid-column: 1/-1;
-    text-align: center;
-    padding: 4rem;
-    font-family: 'Space Mono', monospace;
-    color: var(--muted);
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
-  }
-
-  /* MODAL */
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 200;
-    background: rgba(0,0,0,0.8);
-    backdrop-filter: blur(4px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-  }
-  .modal-overlay[hidden] { display: none; }
-
-  .modal {
-    background: var(--faa-card);
-    border: 1px solid var(--faa-border);
-    border-radius: 16px;
-    padding: 2rem;
-    width: 100%;
-    max-width: 500px;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-
-  .modal-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
-  }
-  .modal-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--faa-yellow);
-    text-wrap: balance;
-    max-width: 380px;
-  }
-  .modal-close {
-    background: none;
-    border: none;
-    color: var(--muted);
-    font-size: 1.4rem;
-    cursor: pointer;
-    padding: 0;
-    line-height: 1;
-    flex-shrink: 0;
-  }
-  .modal-close:hover { color: var(--text-primary); }
-
-  .modal-ref {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    margin-bottom: 1.5rem;
-    padding: 0.5rem 0.75rem;
-    background: rgba(250,204,21,0.06);
-    border: 1px solid rgba(250,204,21,0.15);
-    border-radius: 6px;
-  }
-
-  .modal label {
-    display: block;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--text-secondary);
-    margin-bottom: 0.4rem;
-    margin-top: 1rem;
-    letter-spacing: 0.04em;
-  }
-
-  .modal input, .modal textarea {
-    width: 100%;
-    background: #111113;
-    border: 1px solid var(--faa-border);
-    border-radius: 8px;
-    padding: 0.65rem 0.875rem;
-    color: var(--text-primary);
-    font-family: 'Inter', sans-serif;
-    font-size: 0.875rem;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .modal input::placeholder, .modal textarea::placeholder { color: var(--muted); }
-  .modal input:focus, .modal textarea:focus { border-color: var(--faa-yellow); }
-  .modal textarea { resize: vertical; min-height: 90px; }
-
-  .modal-submit {
-    width: 100%;
-    margin-top: 1.5rem;
-    padding: 0.8rem;
-    background: var(--faa-yellow);
-    color: #0a0a0a;
-    border: none;
-    border-radius: 8px;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    cursor: pointer;
-    transition: opacity 0.15s;
-  }
-  .modal-submit:hover { opacity: 0.85; }
-
-  .modal-note {
-    margin-top: 0.75rem;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--muted);
-    text-align: center;
-    line-height: 1.6;
-  }
-
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--faa-border);
-    padding: 2rem;
-    text-align: center;
-  }
-  .footer-logo {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 900;
-    letter-spacing: 0.15em;
-    color: var(--faa-yellow);
-    margin-bottom: 0.5rem;
-  }
-  .footer-meta {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-  }
-
-  @media (max-width: 600px) {
-    .stats-bar { gap: 1.5rem; }
-    .rope-container { flex-direction: column; gap: 0.75rem; }
-    .pulse-grid-noodle-rope { width: 180px; margin: 0; }
-    .jobs-grid { grid-template-columns: 1fr; }
-  }
+  body { font-family: 'Inter', sans-serif; background: #f3f4f6; }
+  .global-header-bg { background: linear-gradient(to right, #4c51bf, #6b46c1); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+  .job-card { transition: all 0.2s; border: 1px solid #e5e7eb; }
+  .job-card:hover { border-color: #4f46e5; box-shadow: 0 8px 24px rgba(79,70,229,0.1); transform: translateY(-2px); }
+  .tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 9999px; }
+  .tag-remote { background: #dcfce7; color: #15803d; }
+  .tag-new { background: #eff6ff; color: #1d4ed8; }
+  .tag-urgent { background: #fef2f2; color: #dc2626; }
+  .tag-senior { background: #f5f3ff; color: #6d28d9; }
+  .tag-mid { background: #fff7ed; color: #c2410c; }
+  .tag-junior { background: #ecfdf5; color: #065f46; }
+  .filter-btn { border: 1px solid #d1d5db; transition: all 0.15s; }
+  .filter-btn.active, .filter-btn:hover { background: #4f46e5; color: white; border-color: #4f46e5; }
+  .apply-btn { transition: all 0.2s; }
+  .apply-btn:hover { box-shadow: 0 0 20px rgba(79,70,229,0.4); transform: translateY(-1px); }
+  .pulse-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; display: inline-block; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(1.4)} }
+  .stat-card { border-left: 4px solid; }
 </style>
+</head>
+<body>
 
-<div class="animated-grid-bg"></div>
-
-<header>
-  <div class="header-logo">FAA<span>.ZONE</span></div>
-  <div class="header-right">
-    <div class="header-stat">
-      SIMUNYE v1<br><strong>ONLINE</strong>
-    </div>
-    <div class="header-stat">
-      94 REPOS<br><strong>ACTIVE</strong>
-    </div>
+<header class="global-header-bg text-white py-8 shadow-xl">
+  <div class="container mx-auto px-6 text-center">
+    <h1 class="text-4xl font-extrabold" style="text-shadow:0 2px 4px rgba(0,0,0,0.5)">FAA.ZONE™</h1>
+    <p class="text-base opacity-90 mt-1">The Earth's Financial Allocation Architecture</p>
+    <p class="text-xs opacity-60 mt-1">Remote Careers — Ecosystem Roles — Global Impact</p>
   </div>
 </header>
 
-<div class="page">
-  <section class="hero">
-    <div class="hero-eyebrow">// OPEN POSITIONS · FULLY REMOTE · GLOBAL</div>
-    <h1 class="hero-title">BUILD THE<br><span class="accent">FUTURE</span><br>WITH US</h1>
-
-    <div class="rope-container">
-      <span class="rope-label">FAA.ZONE</span>
-      <div class="pulse-grid-noodle-rope">
-        <span class="noodle-dot dot-1"></span>
-        <span class="noodle-dot dot-2"></span>
-        <span class="noodle-dot dot-3"></span>
-        <span class="noodle-dot dot-4"></span>
-        <span class="noodle-dot dot-5"></span>
-        <span class="noodle-dot dot-stepdad"></span>
-      </div>
-      <span class="rope-label">BUILDNEST</span>
+<div class="bg-indigo-700 text-white py-4 shadow">
+  <div class="container mx-auto px-6 flex flex-wrap items-center justify-between gap-3">
+    <div>
+      <h2 class="text-xl font-bold">🌍 Remote Careers</h2>
+      <p class="text-xs opacity-70 mt-0.5">Work across the FAA · Seedwave · Fruitful · OmniGrid ecosystem</p>
     </div>
-
-    <p class="hero-sub">Join a distributed team operating across 56 sectors, building the infrastructure for the next generation of planetary-scale coordination systems.</p>
-
-    <div class="stats-bar" style="margin-top:2.5rem;">
-      <div class="stat-item">
-        <div class="stat-num">11</div>
-        <div class="stat-label">Open Roles</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">7</div>
-        <div class="stat-label">Departments</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">56</div>
-        <div class="stat-label">Sectors</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">100%</div>
-        <div class="stat-label">Remote</div>
-      </div>
+    <div class="flex gap-3">
+      <span class="text-xs bg-green-500 bg-opacity-20 text-green-200 px-3 py-1 rounded-full flex items-center gap-1">
+        <span class="pulse-dot"></span> <span id="open-count">11</span> Roles Open
+      </span>
+      <a href="/public/omnigrid_admin_portal.html" class="text-xs text-indigo-200 hover:text-white underline">← Admin Portal</a>
     </div>
-  </section>
+  </div>
+</div>
 
-  <div class="filter-section">
-    <div class="search-row">
-      <input class="search-input" type="text" id="searchInput" placeholder="Search roles, skills, departments..." oninput="filterJobs()">
+<div class="max-w-6xl mx-auto px-6 py-10">
+
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+    <div class="bg-white rounded-xl p-5 stat-card" style="border-left-color:#4f46e5">
+      <div class="text-2xl font-extrabold text-indigo-700">100%</div>
+      <div class="text-xs text-gray-500 mt-1">Remote-First Roles</div>
     </div>
-    <div class="filter-pills" id="filterPills">
-      <button class="pill active" data-dept="all" onclick="setDept(this)">ALL ROLES</button>
-      <button class="pill" data-dept="engineering" onclick="setDept(this)">ENGINEERING</button>
-      <button class="pill" data-dept="data" onclick="setDept(this)">DATA & AI</button>
-      <button class="pill" data-dept="operations" onclick="setDept(this)">OPERATIONS</button>
-      <button class="pill" data-dept="design" onclick="setDept(this)">DESIGN</button>
-      <button class="pill" data-dept="finance" onclick="setDept(this)">FINANCE</button>
-      <button class="pill" data-dept="legal" onclick="setDept(this)">LEGAL</button>
-      <button class="pill" data-dept="comms" onclick="setDept(this)">COMMS</button>
+    <div class="bg-white rounded-xl p-5 stat-card" style="border-left-color:#22c55e">
+      <div class="text-2xl font-extrabold text-green-600">11</div>
+      <div class="text-xs text-gray-500 mt-1">Open Positions</div>
+    </div>
+    <div class="bg-white rounded-xl p-5 stat-card" style="border-left-color:#a855f7">
+      <div class="text-2xl font-extrabold text-purple-600">94</div>
+      <div class="text-xs text-gray-500 mt-1">Repos in Ecosystem</div>
+    </div>
+    <div class="bg-white rounded-xl p-5 stat-card" style="border-left-color:#f59e0b">
+      <div class="text-2xl font-extrabold text-yellow-600">7</div>
+      <div class="text-xs text-gray-500 mt-1">Functional Areas</div>
     </div>
   </div>
 
-  <div class="jobs-grid" id="jobsGrid">
-    <!-- Engineering -->
-    <div class="job-card" data-dept="engineering" data-search="senior full-stack engineer typescript react node postgres distributed systems engineering">
-      <div class="job-dept">
-        <div class="dept-dot" style="background:#0071e3"></div>
-        <span class="dept-name">Engineering</span>
-      </div>
-      <div class="job-title">Senior Full-Stack Engineer</div>
-      <div class="job-desc">Design and ship scalable services spanning FAA.ZONE's 94-repository ecosystem. Own critical paths from API design through database sharding.</div>
-      <div class="job-tags">
-        <span class="tag tag-blue">TypeScript</span>
-        <span class="tag tag-blue">React</span>
-        <span class="tag tag-blue">Node.js</span>
-        <span class="tag tag-green">PostgreSQL</span>
-        <span class="tag tag-yellow">Remote-first</span>
-      </div>
-      <div class="job-footer">
-        <span class="job-type">● REMOTE · FULL-TIME</span>
-        <button class="apply-btn" onclick="openModal('Senior Full-Stack Engineer','ENG-001')">APPLY</button>
-      </div>
-    </div>
-
-    <div class="job-card" data-dept="engineering" data-search="devops infrastructure lead kubernetes terraform ci/cd engineering cloud">
-      <div class="job-dept">
-        <div class="dept-dot" style="background:#0071e3"></div>
-        <span class="dept-name">Engineering</span>
-      </div>
-      <div class="job-title">DevOps Infrastructure Lead</div>
-      <div class="job-desc">Architect and maintain the deployment fabric for SIMUNYE v1 and its 56-sector rollout. Drive zero-downtime releases across multi-cloud environments.</div>
-      <div class="job-tags">
-        <span class="tag tag-blue">Kubernetes</span>
-        <span class="tag tag-blue">Terraform</span>
-        <span class="tag tag-green">CI/CD</span>
-        <span class="tag tag-red">Security</span>
-        <span class="tag tag-yellow">Remote-first</span>
-      </div>
-      <div class="job-footer">
-        <span class="job-type">● REMOTE · FULL-TIME</span>
-        <button class="apply-btn" onclick="openModal('DevOps Infrastructure Lead','ENG-002')">APPLY</button>
-      </div>
-    </div>
-
-    <!-- Data & AI -->
-    <div class="job-card" data-dept="data" data-search="ai ml research engineer machine learning python pytorch research data ai">
-      <div class="job-dept">
-        <div class="dept-dot" style="background:#30d158"></div>
-        <span class="dept-name">Data & AI</span>
-      </div>
-      <div class="job-title">AI/ML Research Engineer</div>
-      <div class="job-desc">Push the frontier on coordination intelligence models. Design training pipelines that inform automated sector decisions across the FAA.ZONE protocol.</div>
-      <div class="job-tags">
-        <span class="tag tag-green">Python</span>
-        <span class="tag tag-green">PyTorch</span>
-        <span class="tag tag-blue">LLM Fine-tuning</span>
-        <span class="tag tag-yellow">Research</span>
-      </div>
-      <div class="job-footer">
-        <span class="job-type">● REMOTE · FULL-TIME</span>
-        <button class="apply-btn" onclick="openModal('AI/ML Research Engineer','DAI-001')">APPLY</button>
-      </div>
-    </div>
-
-    <div class="job-card" data-dept="data" data-search="data pipeline architect etl airflow kafka spark data engineering">
-      <div class="job-dept">
-        <div class="dept-dot" style="background:#30d158"></div>
-        <span class="dept-name">Data & AI</span>
-      </div>
-      <div class="job-title">Data Pipeline Architect</div>
-      <div class="job-desc">Build real-time ingestion and transformation systems that move billions of sector events per day with sub-second latency guarantees.</div>
-      <div class="job-tags">
-        <span class="tag tag-green">Apache Kafka</span>
-        <span class="tag tag-green">Airflow</span>
-        <span class="tag tag-blue">dbt</span>
-        <span class="tag tag-yellow">Streaming</span>
-      </div>
-      <div class="job-footer">
-        <span class="job-type">● REMOTE · FULL-TIME</span>
-        <button class="apply-btn" onclick="openModal('Data Pipeline Architect','DAI-002')">APPLY</button>
-      </div>
-    </div>
-
-    <!-- Operations -->
-    <div class="job-card" data-dept="operations" data-search="remote operations coordinator project management coordination operations">
-      <div class="job-dept">
-        <div class="dept-dot" style="background:#facc15"></div>
-        <span class="dept-name">Operations</span>
-      </div>
-      <div class="job-title">Remote Operations Coordinator</div>
-      <div class="job-desc">Synchronise cross-sector delivery across 40+ time zones. Own the operational rhythm that keeps 94 repositories shipping with zero-conflict cadence.</div>
-      <div class="job-tags">
-        <span class="tag tag-yellow">Cross-sector</span>
-        <span class="tag tag-blue">Async-first</span>
-        <span class="tag tag-green">Systems Thinking</span>
-      </div>
-      <div class="job-footer">
-        <span class="job-type">● REMOTE · FULL-TIME</span>
-        <button class="apply-btn" onclick="openModal('Remote Operations Coordinator','OPS-001')">APPLY</button>
-      </div>
-    </div>
-
-    <div class="job-card" data-dept="operations" data-search="sector compliance officer regulatory operations compliance governance">
-      <div class="job-dept">
-        <div class="dept-dot" style="background:#facc15"></div>
-        <span class="dept-name">Operations</span>
-      </div>
-      <div class="job-title">Sector Compliance Officer</div>
-      <div class="job-desc">Ensure SIMUNYE protocol operations meet global regulatory requirements. Interface with sector leads to maintain audit-ready documentation and controls.</div>
-      <div class="job-tags">
-        <span class="tag tag-red">Compliance</span>
-        <span class="tag tag-yellow">Governance</span>
-        <span class="tag tag-blue">Risk</span>
-        <span class="tag tag-green">Auditing</span>
-      </div>
-      <div class="job-footer">
-        <span class="job-type">● REMOTE · FULL-TIME</span>
-        <button class="apply-btn" onclick="openModal('Sector Compliance Officer','OPS-002')">APPLY</button>
-      </div>
-    </div>
-
-    <!-- Design -->
-    <div class="job-card" data-dept="design" data-search="ux product designer figma design systems user experience design">
-      <div class="job-dept">
-        <div class="dept-dot" style="background:#ff3b30"></div>
-        <span class="dept-name">Design</span>
-      </div>
-      <div class="job-title">UX / Product Designer</div>
-      <div class="job-desc">Craft the interaction layer for a planetary operating system. Translate sector complexity into intuitive interfaces used by coordinators globally.</div>
-      <div class="job-tags">
-        <span class="tag tag-red">Figma</span>
-        <span class="tag tag-red">Design Systems</span>
-        <span class="tag tag-blue">Prototyping</span>
-        <span class="tag tag-yellow">Research</span>
-      </div>
-      <div class="job-footer">
-        <span class="job-type">● REMOTE · FULL-TIME</span>
-        <button class="apply-btn" onclick="openModal('UX / Product Designer','DES-001')">APPLY</button>
-      </div>
-    </div>
-
-    <div class="job-card" data-dept="design" data-search="motion brand designer animation after effects branding identity design">
-      <div class="job-dept">
-        <div class="dept-dot" style="background:#ff3b30"></div>
-        <span class="dept-name">Design</span>
-      </div>
-      <div class="job-title">Motion & Brand Designer</div>
-      <div class="job-desc">Own the visual identity of the FAA.ZONE ecosystem — from brand guidelines through animated onboarding sequences and sector-specific design languages.</div>
-      <div class="job-tags">
-        <span class="tag tag-red">After Effects</span>
-        <span class="tag tag-red">Identity</span>
-        <span class="tag tag-blue">Motion</span>
-        <span class="tag tag-yellow">Brand</span>
-      </div>
-      <div class="job-footer">
-        <span class="job-type">● REMOTE · CONTRACT</span>
-        <button class="apply-btn" onclick="openModal('Motion & Brand Designer','DES-002')">APPLY</button>
-      </div>
-    </div>
-
-    <!-- Finance -->
-    <div class="job-card" data-dept="finance" data-search="defi protocol analyst web3 blockchain finance treasury defi">
-      <div class="job-dept">
-        <div class="dept-dot" style="background:#bf5af2"></div>
-        <span class="dept-name">Finance</span>
-      </div>
-      <div class="job-title">DeFi Protocol Analyst</div>
-      <div class="job-desc">Model and monitor the tokenomic health of FAA.ZONE's value-transfer layer. Own liquidity risk frameworks and provide sector-level financial reporting.</div>
-      <div class="job-tags">
-        <span class="tag tag-blue">Web3</span>
-        <span class="tag tag-yellow">Tokenomics</span>
-        <span class="tag tag-green">Risk Modelling</span>
-        <span class="tag tag-red">On-chain Analytics</span>
-      </div>
-      <div class="job-footer">
-        <span class="job-type">● REMOTE · FULL-TIME</span>
-        <button class="apply-btn" onclick="openModal('DeFi Protocol Analyst','FIN-001')">APPLY</button>
-      </div>
-    </div>
-
-    <div class="job-card" data-dept="finance" data-search="treasury operations lead finance accounting treasury ops">
-      <div class="job-dept">
-        <div class="dept-dot" style="background:#bf5af2"></div>
-        <span class="dept-name">Finance</span>
-      </div>
-      <div class="job-title">Treasury Operations Lead</div>
-      <div class="job-desc">Oversee multi-currency treasury operations spanning 56 active sectors. Drive cash-flow forecasting and cross-border settlement optimisation.</div>
-      <div class="job-tags">
-        <span class="tag tag-green">Multi-currency</span>
-        <span class="tag tag-yellow">Forecasting</span>
-        <span class="tag tag-blue">Settlement</span>
-        <span class="tag tag-red">FX Risk</span>
-      </div>
-      <div class="job-footer">
-        <span class="job-type">● REMOTE · FULL-TIME</span>
-        <button class="apply-btn" onclick="openModal('Treasury Operations Lead','FIN-002')">APPLY</button>
-      </div>
-    </div>
-
-    <!-- Legal -->
-    <div class="job-card" data-dept="legal" data-search="regulatory affairs specialist legal compliance international law regulatory">
-      <div class="job-dept">
-        <div class="dept-dot" style="background:#ff9f0a"></div>
-        <span class="dept-name">Legal</span>
-      </div>
-      <div class="job-title">Regulatory Affairs Specialist</div>
-      <div class="job-desc">Navigate multi-jurisdictional regulatory landscapes for a globally-distributed protocol. Advise sector leads on legal exposure and permissible operations.</div>
-      <div class="job-tags">
-        <span class="tag tag-yellow">Regulatory</span>
-        <span class="tag tag-red">International Law</span>
-        <span class="tag tag-blue">Contracts</span>
-        <span class="tag tag-green">Policy</span>
-      </div>
-      <div class="job-footer">
-        <span class="job-type">● REMOTE · FULL-TIME</span>
-        <button class="apply-btn" onclick="openModal('Regulatory Affairs Specialist','LEG-001')">APPLY</button>
-      </div>
-    </div>
-
-    <!-- Comms -->
-    <div class="job-card" data-dept="comms" data-search="community ecosystem lead communications community growth comms social">
-      <div class="job-dept">
-        <div class="dept-dot" style="background:#64d2ff"></div>
-        <span class="dept-name">Communications</span>
-      </div>
-      <div class="job-title">Community & Ecosystem Lead</div>
-      <div class="job-desc">Grow and sustain the FAA.ZONE contributor community. Coordinate developer relations, external partnerships, and public protocol communications.</div>
-      <div class="job-tags">
-        <span class="tag tag-blue">DevRel</span>
-        <span class="tag tag-green">Community</span>
-        <span class="tag tag-yellow">Partnerships</span>
-        <span class="tag tag-red">Content</span>
-      </div>
-      <div class="job-footer">
-        <span class="job-type">● REMOTE · FULL-TIME</span>
-        <button class="apply-btn" onclick="openModal('Community & Ecosystem Lead','COM-001')">APPLY</button>
-      </div>
-    </div>
-
-    <div class="no-results" id="noResults" hidden>
-      <div>// NO MATCHES FOUND</div>
-      <div style="margin-top:0.5rem;font-size:0.55rem;">TRY A DIFFERENT SEARCH OR FILTER</div>
+  <div class="bg-white rounded-xl shadow p-4 mb-8 flex flex-wrap gap-2 items-center">
+    <span class="text-xs font-semibold text-gray-500 mr-2">Filter:</span>
+    <button class="filter-btn active text-xs px-3 py-1.5 rounded-lg" onclick="filterJobs('all', this)">All Roles</button>
+    <button class="filter-btn text-xs px-3 py-1.5 rounded-lg" onclick="filterJobs('engineering', this)">⚙️ Engineering</button>
+    <button class="filter-btn text-xs px-3 py-1.5 rounded-lg" onclick="filterJobs('design', this)">🎨 Design</button>
+    <button class="filter-btn text-xs px-3 py-1.5 rounded-lg" onclick="filterJobs('operations', this)">📊 Operations</button>
+    <button class="filter-btn text-xs px-3 py-1.5 rounded-lg" onclick="filterJobs('ecosystem', this)">🌿 Ecosystem</button>
+    <button class="filter-btn text-xs px-3 py-1.5 rounded-lg" onclick="filterJobs('strategy', this)">🧭 Strategy</button>
+    <button class="filter-btn text-xs px-3 py-1.5 rounded-lg" onclick="filterJobs('finance', this)">🏦 Finance</button>
+    <button class="filter-btn text-xs px-3 py-1.5 rounded-lg" onclick="filterJobs('content', this)">🔊 Content</button>
+    <div class="ml-auto">
+      <input type="text" id="search" placeholder="Search roles..." oninput="searchJobs(this.value)" class="text-xs border rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-400">
     </div>
   </div>
 
-  <footer>
-    <div class="footer-logo">FAA.ZONE</div>
-    <div class="footer-meta">SIMUNYE v1 · 94 REPOSITORIES · 56 SECTORS · GC7:FSP2021121654:4400302974:VM9s:BL1501</div>
+  <div id="job-grid" class="space-y-4">
+
+    <div class="job-card bg-white rounded-xl p-6" data-category="engineering">
+      <div class="flex flex-wrap items-start justify-between gap-4">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-1"><span class="text-lg">⚙️</span><h3 class="text-base font-bold text-gray-800">Senior Full-Stack Engineer — OmniGrid Platform</h3></div>
+          <p class="text-xs text-gray-500 mb-3">OmniGrid · Remote (Global) · Full-time</p>
+          <p class="text-sm text-gray-600 mb-3">Own core platform development across the OmniGrid ecosystem. Build the automation engine, CI/CD pipelines, and API layer connecting 94 repositories.</p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="tag tag-remote">🌍 Remote</span><span class="tag tag-senior">Senior</span><span class="tag tag-new">New</span>
+            <span class="tag" style="background:#f0fdf4;color:#166534">TypeScript</span>
+            <span class="tag" style="background:#eff6ff;color:#1e40af">Node.js</span>
+            <span class="tag" style="background:#faf5ff;color:#7e22ce">GitHub Actions</span>
+          </div>
+        </div>
+        <div class="text-right">
+          <div class="text-sm font-bold text-indigo-700 mb-1">R65 000 – R95 000/mo</div>
+          <div class="text-xs text-gray-400 mb-3">+ Equity + Scroll Rewards</div>
+          <button class="apply-btn bg-indigo-600 text-white text-xs font-bold px-5 py-2 rounded-lg" onclick="openApply('Senior Full-Stack Engineer — OmniGrid Platform')">Apply Now →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="job-card bg-white rounded-xl p-6" data-category="engineering">
+      <div class="flex flex-wrap items-start justify-between gap-4">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-1"><span class="text-lg">🔐</span><h3 class="text-base font-bold text-gray-800">Security Engineer — FAA Ecosystem</h3></div>
+          <p class="text-xs text-gray-500 mb-3">FAA.ZONE Security · Remote · Full-time</p>
+          <p class="text-sm text-gray-600 mb-3">Implement and maintain SIMUNYE v1 security protocols, secret scanning, HMAC authentication, and compliance across the 94-repo ecosystem.</p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="tag tag-remote">🌍 Remote</span><span class="tag tag-senior">Senior</span><span class="tag tag-urgent">Urgent</span>
+            <span class="tag" style="background:#fef2f2;color:#991b1b">Security</span>
+            <span class="tag" style="background:#eff6ff;color:#1e40af">Python</span>
+            <span class="tag" style="background:#f0fdf4;color:#166534">FIPS 204</span>
+          </div>
+        </div>
+        <div class="text-right">
+          <div class="text-sm font-bold text-indigo-700 mb-1">R70 000 – R110 000/mo</div>
+          <div class="text-xs text-gray-400 mb-3">+ Equity</div>
+          <button class="apply-btn bg-indigo-600 text-white text-xs font-bold px-5 py-2 rounded-lg" onclick="openApply('Security Engineer — FAA Ecosystem')">Apply Now →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="job-card bg-white rounded-xl p-6" data-category="engineering">
+      <div class="flex flex-wrap items-start justify-between gap-4">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-1"><span class="text-lg">🌐</span><h3 class="text-base font-bold text-gray-800">Cloudflare Workers / Edge Engineer — Banimal</h3></div>
+          <p class="text-xs text-gray-500 mb-3">Banimal Project · Remote · Full-time</p>
+          <p class="text-sm text-gray-600 mb-3">Build and scale edge functions on Cloudflare Workers + D1 + R2. Own the wp-bridge, marketplace APIs, and performance optimisation.</p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="tag tag-remote">🌍 Remote</span><span class="tag tag-mid">Mid-Level</span>
+            <span class="tag" style="background:#fff7ed;color:#c2410c">Hono</span>
+            <span class="tag" style="background:#eff6ff;color:#1e40af">TypeScript</span>
+            <span class="tag" style="background:#faf5ff;color:#7e22ce">Cloudflare</span>
+          </div>
+        </div>
+        <div class="text-right">
+          <div class="text-sm font-bold text-indigo-700 mb-1">R45 000 – R70 000/mo</div>
+          <div class="text-xs text-gray-400 mb-3">+ Scroll Rewards</div>
+          <button class="apply-btn bg-indigo-600 text-white text-xs font-bold px-5 py-2 rounded-lg" onclick="openApply('Cloudflare Workers / Edge Engineer — Banimal')">Apply Now →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="job-card bg-white rounded-xl p-6" data-category="engineering">
+      <div class="flex flex-wrap items-start justify-between gap-4">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-1"><span class="text-lg">⚡</span><h3 class="text-base font-bold text-gray-800">React / Vite Frontend Engineer — Fruitful App</h3></div>
+          <p class="text-xs text-gray-500 mb-3">Fruitfulapp · Remote · Full-time or Contract</p>
+          <p class="text-sm text-gray-600 mb-3">Own the fruitfulapp frontend. Bring Fruitful Global dashboards to life with React 18/19, Tailwind, Chart.js, and Leaflet maps.</p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="tag tag-remote">🌍 Remote</span><span class="tag tag-mid">Mid-Level</span>
+            <span class="tag" style="background:#eff6ff;color:#1e40af">React</span>
+            <span class="tag" style="background:#f0fdf4;color:#166534">Tailwind</span>
+            <span class="tag" style="background:#fff7ed;color:#c2410c">Vite</span>
+          </div>
+        </div>
+        <div class="text-right">
+          <div class="text-sm font-bold text-indigo-700 mb-1">R35 000 – R60 000/mo</div>
+          <div class="text-xs text-gray-400 mb-3">+ Equity</div>
+          <button class="apply-btn bg-indigo-600 text-white text-xs font-bold px-5 py-2 rounded-lg" onclick="openApply('React / Vite Frontend Engineer — Fruitful App')">Apply Now →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="job-card bg-white rounded-xl p-6" data-category="design">
+      <div class="flex flex-wrap items-start justify-between gap-4">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-1"><span class="text-lg">🎨</span><h3 class="text-base font-bold text-gray-800">Senior UI/UX Designer — Seedwave Dashboards</h3></div>
+          <p class="text-xs text-gray-500 mb-3">Seedwave · Remote (Africa/Europe preferred) · Full-time</p>
+          <p class="text-sm text-gray-600 mb-3">Design the next generation of Seedwave and Fruitful dashboards. You'll work from our 1100+ version design library and extend it with precision, not opinion.</p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="tag tag-remote">🌍 Remote</span><span class="tag tag-senior">Senior</span><span class="tag tag-new">New</span>
+            <span class="tag" style="background:#faf5ff;color:#7e22ce">Figma</span>
+            <span class="tag" style="background:#f0fdf4;color:#166534">Tailwind</span>
+            <span class="tag" style="background:#eff6ff;color:#1e40af">Design Systems</span>
+          </div>
+        </div>
+        <div class="text-right">
+          <div class="text-sm font-bold text-indigo-700 mb-1">R50 000 – R80 000/mo</div>
+          <div class="text-xs text-gray-400 mb-3">+ Equity + Scroll</div>
+          <button class="apply-btn bg-indigo-600 text-white text-xs font-bold px-5 py-2 rounded-lg" onclick="openApply('Senior UI/UX Designer — Seedwave Dashboards')">Apply Now →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="job-card bg-white rounded-xl p-6" data-category="operations">
+      <div class="flex flex-wrap items-start justify-between gap-4">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-1"><span class="text-lg">📡</span><h3 class="text-base font-bold text-gray-800">DevOps / CI Lead — OmniGrid Automation</h3></div>
+          <p class="text-xs text-gray-500 mb-3">OmniGrid · Remote · Full-time</p>
+          <p class="text-sm text-gray-600 mb-3">Own GitHub Actions CI across 94 repos. Implement the SIMUNYE v1 automation engine. Maintain Netlify deployments and CDN pipeline.</p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="tag tag-remote">🌍 Remote</span><span class="tag tag-senior">Senior</span><span class="tag tag-urgent">Urgent</span>
+            <span class="tag" style="background:#f0fdf4;color:#166534">GitHub Actions</span>
+            <span class="tag" style="background:#eff6ff;color:#1e40af">Netlify</span>
+            <span class="tag" style="background:#fff7ed;color:#c2410c">DevOps</span>
+          </div>
+        </div>
+        <div class="text-right">
+          <div class="text-sm font-bold text-indigo-700 mb-1">R55 000 – R85 000/mo</div>
+          <div class="text-xs text-gray-400 mb-3">+ Equity</div>
+          <button class="apply-btn bg-indigo-600 text-white text-xs font-bold px-5 py-2 rounded-lg" onclick="openApply('DevOps / CI Lead — OmniGrid Automation')">Apply Now →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="job-card bg-white rounded-xl p-6" data-category="ecosystem">
+      <div class="flex flex-wrap items-start justify-between gap-4">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-1"><span class="text-lg">🌿</span><h3 class="text-base font-bold text-gray-800">Ecosystem Coordinator — Sector Sync</h3></div>
+          <p class="text-xs text-gray-500 mb-3">FAA.ZONE Ecosystem · Remote · Full-time</p>
+          <p class="text-sm text-gray-600 mb-3">Coordinate the bidirectional sync of 94 repositories. Track sector health across Agriculture, Finance, Health, Logistics, and 28 other sectors in the FAA grid.</p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="tag tag-remote">🌍 Remote</span><span class="tag tag-mid">Mid-Level</span><span class="tag tag-new">New</span>
+            <span class="tag" style="background:#f0fdf4;color:#166534">GitHub</span>
+            <span class="tag" style="background:#faf5ff;color:#7e22ce">JSON / YAML</span>
+            <span class="tag" style="background:#eff6ff;color:#1e40af">Python</span>
+          </div>
+        </div>
+        <div class="text-right">
+          <div class="text-sm font-bold text-indigo-700 mb-1">R30 000 – R50 000/mo</div>
+          <div class="text-xs text-gray-400 mb-3">+ Scroll Rewards</div>
+          <button class="apply-btn bg-indigo-600 text-white text-xs font-bold px-5 py-2 rounded-lg" onclick="openApply('Ecosystem Coordinator — Sector Sync')">Apply Now →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="job-card bg-white rounded-xl p-6" data-category="strategy">
+      <div class="flex flex-wrap items-start justify-between gap-4">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-1"><span class="text-lg">🧭</span><h3 class="text-base font-bold text-gray-800">Strategic Growth Director — Fruitful Global</h3></div>
+          <p class="text-xs text-gray-500 mb-3">Fruitful Global · Remote · Executive</p>
+          <p class="text-sm text-gray-600 mb-3">Drive sector expansion across the Fruitful Global™ index. Identify new verticals, partnership opportunities, and drive the 56-sector Seedwave roadmap.</p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="tag tag-remote">🌍 Remote</span><span class="tag tag-senior">Executive</span><span class="tag tag-new">New</span>
+            <span class="tag" style="background:#faf5ff;color:#7e22ce">Strategy</span>
+            <span class="tag" style="background:#f0fdf4;color:#166534">Partnerships</span>
+            <span class="tag" style="background:#eff6ff;color:#1e40af">ESG</span>
+          </div>
+        </div>
+        <div class="text-right">
+          <div class="text-sm font-bold text-indigo-700 mb-1">R100 000+/mo</div>
+          <div class="text-xs text-gray-400 mb-3">+ Equity + Profit Share</div>
+          <button class="apply-btn bg-indigo-600 text-white text-xs font-bold px-5 py-2 rounded-lg" onclick="openApply('Strategic Growth Director — Fruitful Global')">Apply Now →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="job-card bg-white rounded-xl p-6" data-category="finance">
+      <div class="flex flex-wrap items-start justify-between gap-4">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-1"><span class="text-lg">🏦</span><h3 class="text-base font-bold text-gray-800">VaultMesh Actuarial Analyst</h3></div>
+          <p class="text-xs text-gray-500 mb-3">VaultMesh · FAA.ZONE · Remote · Full-time</p>
+          <p class="text-sm text-gray-600 mb-3">Model risk and financial flows within the VaultMesh Actuarial Grid. Analyse scroll activity, loyalty tiers, and real-time pulse data across the FAA ecosystem.</p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="tag tag-remote">🌍 Remote</span><span class="tag tag-mid">Mid-Level</span>
+            <span class="tag" style="background:#faf5ff;color:#7e22ce">Actuarial</span>
+            <span class="tag" style="background:#f0fdf4;color:#166534">R / Python</span>
+            <span class="tag" style="background:#eff6ff;color:#1e40af">FinTech</span>
+          </div>
+        </div>
+        <div class="text-right">
+          <div class="text-sm font-bold text-indigo-700 mb-1">R45 000 – R75 000/mo</div>
+          <div class="text-xs text-gray-400 mb-3">+ Loyalty Scroll Bonus</div>
+          <button class="apply-btn bg-indigo-600 text-white text-xs font-bold px-5 py-2 rounded-lg" onclick="openApply('VaultMesh Actuarial Analyst')">Apply Now →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="job-card bg-white rounded-xl p-6" data-category="ecosystem">
+      <div class="flex flex-wrap items-start justify-between gap-4">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-1"><span class="text-lg">🦡</span><h3 class="text-base font-bold text-gray-800">CodeNest Package Manager — pnpm Workspaces</h3></div>
+          <p class="text-xs text-gray-500 mb-3">CodeNest · Remote · Full-time or Contract</p>
+          <p class="text-sm text-gray-600 mb-3">Manage the CodeNest hub's 83 pnpm workspace packages across apps, fruitful, seedwave-sectors, and infrastructure directories.</p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="tag tag-remote">🌍 Remote</span><span class="tag tag-mid">Mid-Level</span>
+            <span class="tag" style="background:#f0fdf4;color:#166534">pnpm</span>
+            <span class="tag" style="background:#eff6ff;color:#1e40af">TypeScript</span>
+            <span class="tag" style="background:#fff7ed;color:#c2410c">Monorepo</span>
+          </div>
+        </div>
+        <div class="text-right">
+          <div class="text-sm font-bold text-indigo-700 mb-1">R35 000 – R55 000/mo</div>
+          <div class="text-xs text-gray-400 mb-3">+ Equity</div>
+          <button class="apply-btn bg-indigo-600 text-white text-xs font-bold px-5 py-2 rounded-lg" onclick="openApply('CodeNest Package Manager')">Apply Now →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="job-card bg-white rounded-xl p-6" data-category="content">
+      <div class="flex flex-wrap items-start justify-between gap-4">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-1"><span class="text-lg">🔊</span><h3 class="text-base font-bold text-gray-800">Technical Content Writer — FAA Documentation</h3></div>
+          <p class="text-xs text-gray-500 mb-3">FAA.ZONE · Remote · Part-time or Full-time</p>
+          <p class="text-sm text-gray-600 mb-3">Write technical documentation, sector briefs, and ecosystem guides for FAA.ZONE and OmniGrid. Translate complex grid logic into clear, accessible content.</p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="tag tag-remote">🌍 Remote</span><span class="tag tag-junior">Entry/Mid</span><span class="tag tag-new">New</span>
+            <span class="tag" style="background:#f0fdf4;color:#166534">Technical Writing</span>
+            <span class="tag" style="background:#eff6ff;color:#1e40af">Markdown</span>
+            <span class="tag" style="background:#faf5ff;color:#7e22ce">Docs</span>
+          </div>
+        </div>
+        <div class="text-right">
+          <div class="text-sm font-bold text-indigo-700 mb-1">R18 000 – R35 000/mo</div>
+          <div class="text-xs text-gray-400 mb-3">+ Scroll Rewards</div>
+          <button class="apply-btn bg-indigo-600 text-white text-xs font-bold px-5 py-2 rounded-lg" onclick="openApply('Technical Content Writer — FAA Documentation')">Apply Now →</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="no-results" class="hidden text-center py-16 text-gray-400">
+    <div class="text-4xl mb-4">🔍</div>
+    <p class="text-sm">No roles match your search. Try a different filter or keyword.</p>
+  </div>
+
+  <div class="bg-white rounded-xl shadow p-8 mt-12 mb-8">
+    <h2 class="text-xl font-bold text-gray-800 mb-6 text-center">Why Join the FAA.ZONE Ecosystem?</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="text-center p-4"><div class="text-3xl mb-2">🌍</div><h3 class="font-bold text-gray-800 mb-1 text-sm">Fully Remote</h3><p class="text-xs text-gray-500">Work from anywhere. We operate across Africa, Europe, and globally with async-first culture.</p></div>
+      <div class="text-center p-4"><div class="text-3xl mb-2">🍇</div><h3 class="font-bold text-gray-800 mb-1 text-sm">Meaningful Work</h3><p class="text-xs text-gray-500">Build infrastructure that operates at the scale of the Earth's Financial Allocation Architecture — 56 sectors, 94 repos.</p></div>
+      <div class="text-center p-4"><div class="text-3xl mb-2">🪙</div><h3 class="font-bold text-gray-800 mb-1 text-sm">Scroll Rewards</h3><p class="text-xs text-gray-500">All roles include FAA Scroll loyalty rewards, giving you stake in the ecosystem you help build.</p></div>
+      <div class="text-center p-4"><div class="text-3xl mb-2">📡</div><h3 class="font-bold text-gray-800 mb-1 text-sm">Cutting Edge Stack</h3><p class="text-xs text-gray-500">Cloudflare Workers, React 19, FIPS 204 post-quantum cryptography, Hono, D1 — always at the frontier.</p></div>
+      <div class="text-center p-4"><div class="text-3xl mb-2">🌱</div><h3 class="font-bold text-gray-800 mb-1 text-sm">Impact at Scale</h3><p class="text-xs text-gray-500">Your code runs across 94 repositories and serves sectors from Agriculture to Quantum Protocols.</p></div>
+      <div class="text-center p-4"><div class="text-3xl mb-2">📈</div><h3 class="font-bold text-gray-800 mb-1 text-sm">Equity Participation</h3><p class="text-xs text-gray-500">Senior roles carry equity. Grow with the ecosystem from the ground floor of something original.</p></div>
+    </div>
+  </div>
+
+  <footer class="text-center text-xs text-gray-400 pt-6 border-t">
+    <p>FAA.ZONE™ Careers · Powered by OmniGrid · GC7:FSP2021121654:4400302974:VM9s:BL1501:GHOST7CHAIN:FAA13713</p>
+    <p class="mt-1">
+      <a href="/public/omnigrid_admin_portal.html" class="text-indigo-400 hover:text-indigo-600">← Admin Portal</a> &nbsp;|&nbsp;
+      <a href="../admin/admin-portal-approval.html" class="text-indigo-400 hover:text-indigo-600">🔐 Access Portal</a> &nbsp;|&nbsp;
+      <a href="mailto:careers@faa.zone" class="text-indigo-400 hover:text-indigo-600">careers@faa.zone</a>
+    </p>
   </footer>
 </div>
 
-<!-- APPLY MODAL -->
-<div class="modal-overlay" id="modalOverlay" hidden onclick="closeModalOutside(event)">
-  <div class="modal" role="dialog" aria-modal="true">
-    <div class="modal-header">
-      <div class="modal-title" id="modalTitle">Role Title</div>
-      <button class="modal-close" onclick="closeModal()" aria-label="Close">×</button>
+<div id="apply-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+  <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-lg w-full mx-4">
+    <h3 class="text-lg font-bold text-gray-800 mb-1">Apply: <span id="modal-role"></span></h3>
+    <p class="text-xs text-gray-400 mb-5">Remote · FAA.ZONE Ecosystem</p>
+    <div class="space-y-3">
+      <input type="text" placeholder="Full name" class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+      <input type="email" placeholder="Email address" class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+      <input type="url" placeholder="GitHub / Portfolio / LinkedIn URL" class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+      <textarea rows="4" placeholder="Why do you want this role? What will you bring to the FAA ecosystem?" class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"></textarea>
     </div>
-    <div class="modal-ref" id="modalRef">REF: FAA-ZONE · — · REMOTE · 2026</div>
-
-    <form onsubmit="submitApp(event)">
-      <label>FULL NAME</label>
-      <input type="text" placeholder="Your full name" required>
-
-      <label>EMAIL ADDRESS</label>
-      <input type="email" placeholder="you@example.com" required>
-
-      <label>LINKEDIN / PORTFOLIO URL</label>
-      <input type="url" placeholder="https://linkedin.com/in/...">
-
-      <label>WHY FAA.ZONE? (BRIEF)</label>
-      <textarea placeholder="Tell us what draws you to this role and the ecosystem..."></textarea>
-
-      <button type="submit" class="modal-submit">SUBMIT APPLICATION →</button>
-    </form>
-    <div class="modal-note">Applications reviewed within 5 business days. All roles are fully remote. No third-party agencies.</div>
+    <div class="flex gap-3 mt-5">
+      <button onclick="submitApplication()" class="apply-btn bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-2 rounded-lg text-sm flex-1">Submit Application</button>
+      <button onclick="closeModal()" class="border text-gray-500 hover:bg-gray-50 font-medium px-4 py-2 rounded-lg text-sm">Cancel</button>
+    </div>
+    <div id="modal-status" class="mt-3 hidden text-sm text-green-600 font-medium"></div>
   </div>
 </div>
 
 <script>
-  let activeDept = 'all';
-
-  function setDept(el) {
-    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-    el.classList.add('active');
-    activeDept = el.dataset.dept;
-    filterJobs();
-  }
-
-  function filterJobs() {
-    const q = document.getElementById('searchInput').value.toLowerCase();
-    const cards = document.querySelectorAll('.job-card');
-    let visible = 0;
-
-    cards.forEach(card => {
-      const deptMatch = activeDept === 'all' || card.dataset.dept === activeDept;
-      const searchMatch = !q || card.dataset.search.includes(q) || card.querySelector('.job-title').textContent.toLowerCase().includes(q);
-      const show = deptMatch && searchMatch;
-      card.hidden = !show;
-      if (show) visible++;
-    });
-
-    document.getElementById('noResults').hidden = visible > 0;
-  }
-
-  function openModal(title, ref) {
-    document.getElementById('modalTitle').textContent = title;
-    document.getElementById('modalRef').textContent = `REF: ${ref} · FAA.ZONE · REMOTE · 2026`;
-    document.getElementById('modalOverlay').hidden = false;
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeModal() {
-    document.getElementById('modalOverlay').hidden = true;
-    document.body.style.overflow = '';
-  }
-
-  function closeModalOutside(e) {
-    if (e.target === document.getElementById('modalOverlay')) closeModal();
-  }
-
-  function submitApp(e) {
-    e.preventDefault();
-    const btn = e.target.querySelector('.modal-submit');
-    btn.textContent = '✓ APPLICATION RECEIVED';
-    btn.style.background = 'var(--apple-green)';
-    btn.style.color = '#0a0a0a';
-    btn.disabled = true;
-    setTimeout(() => closeModal(), 2200);
-  }
-
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+let activeFilter = 'all';
+function filterJobs(category, btn) {
+  activeFilter = category;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+function searchJobs(q) { applyFilters(q); }
+function applyFilters(search = document.getElementById('search').value) {
+  const cards = document.querySelectorAll('.job-card');
+  let visible = 0;
+  cards.forEach(card => {
+    const catMatch = activeFilter === 'all' || card.dataset.category === activeFilter;
+    const searchMatch = !search || card.textContent.toLowerCase().includes(search.toLowerCase());
+    if (catMatch && searchMatch) { card.style.display = ''; visible++; }
+    else { card.style.display = 'none'; }
+  });
+  document.getElementById('no-results').classList.toggle('hidden', visible > 0);
+  document.getElementById('open-count').textContent = visible;
+}
+function openApply(role) {
+  document.getElementById('modal-role').textContent = role;
+  document.getElementById('apply-modal').classList.remove('hidden');
+  document.getElementById('modal-status').classList.add('hidden');
+}
+function closeModal() { document.getElementById('apply-modal').classList.add('hidden'); }
+function submitApplication() {
+  const el = document.getElementById('modal-status');
+  el.textContent = '✅ Application submitted! We will be in touch within 48 hours.';
+  el.classList.remove('hidden');
+  setTimeout(closeModal, 2500);
+}
 </script>
-
-</body></html>
+</body>
+</html>
