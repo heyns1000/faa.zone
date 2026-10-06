@@ -25,9 +25,9 @@ full dashboard opens any screen from the URL hash. The 3-line function added bef
 
 - `legal_popi.html`, `legal_paia.html` (VaultPrayer footer): no POPI Act or PAIA manual exists in any repo searched,
   including `footer.global.repo`. Needs the owner's legal text; not invented here.
+- 2 controls with no action in any version: "Explore Banimal™'s World" and "Load More Prayers".
 
 ## Fixed from the global footer
 
 - VaultPrayer's "Terms & Conditions (Legal)" link (`legal_terms.html`, missing) now opens
   `../00-global-footer/terms.html`, the global footer repo's terms page (blob `30d5cb7d`).
-- 2 controls with no action in any version: "Explore Banimal™'s World" and "Load More Prayers".
